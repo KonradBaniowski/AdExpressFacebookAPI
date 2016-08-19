@@ -20,13 +20,14 @@ using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.LS;
 using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
 using TNS.Ares.Constantes;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class AlertService : IAlertService
     {
         private IApplicationUserManager _userManager;
-
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public AlertService(IApplicationUserManager userManager)
         {
             _userManager = userManager;
@@ -35,14 +36,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public string GetRedirectUrl(WebSession session, string idSession, AlertOccurence occ)
         {
             string redirectUrl = string.Empty;
+            WebSession webSession = null;
 
+            if (!string.IsNullOrEmpty(idSession))
+                session.IdSession = idSession;
             try
             {
-                WebSession webSession = null;
-
-                if (!string.IsNullOrEmpty(idSession))
-                    session.IdSession = idSession;
-
                 TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(session.CustomerLogin.Login, session.CustomerLogin.PassWord, session.SiteLanguage);
                 if (!newRight.CanAccessToAdExpress())
                 {
@@ -152,9 +151,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                 };
             }
-            catch (System.Exception exc)
+            catch (System.Exception ex)
             {
-                //Todo throw exception
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idSession,session.UserAgent, session.CustomerLogin.Login, session.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
 
             return redirectUrl;
@@ -164,21 +164,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var response = new SaveAlertResponse();
             var webSession = (WebSession)WebSession.Load(request.IdWebSession);
-            if (ValidateFields(request))
+            try
             {
-                if(!IsValidEmail(request.Email))
+
+                if (ValidateFields(request))
                 {
-                    response.Message = GestionWeb.GetWebWord(LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
-                    return response;
+                    if (!IsValidEmail(request.Email))
+                    {
+                        response.Message = GestionWeb.GetWebWord(LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
+                        return response;
+                    }
+                    else
+                    {
+                        response = SaveAlertData(request, webSession);
+                    }
                 }
                 else
                 {
-                    response = SaveAlertData(request,webSession);
+                    response.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                response.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", request.IdWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
             return response;
         }
@@ -215,23 +224,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                //occurrenceDate = (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly) ?request.OccurrenceDate):-1;
-                Int64 idAlertSchedule = 0;
-                AlertHourCollection alertHourCollection = alertDAL.GetAlertHours();
-                for (int i = 0; i < alertHourCollection.Count; i++)
-                {
-                    if (alertHourCollection[i].HoursSchedule.Ticks == (new TimeSpan(18, 0, 0)).Ticks)
+                try {
+                    //occurrenceDate = (request.Type == Constantes.Alerts.AlertPeriodicity.Monthly || request.Type == Constantes.Alerts.AlertPeriodicity.Weekly) ?request.OccurrenceDate):-1;
+                    Int64 idAlertSchedule = 0;
+                    AlertHourCollection alertHourCollection = alertDAL.GetAlertHours();
+                    for (int i = 0; i < alertHourCollection.Count; i++)
                     {
-                        idAlertSchedule = alertHourCollection[i].IdAlertSchedule;
+                        if (alertHourCollection[i].HoursSchedule.Ticks == (new TimeSpan(18, 0, 0)).Ticks)
+                        {
+                            idAlertSchedule = alertHourCollection[i].IdAlertSchedule;
+                        }
+                    }
+                    //var periodicityType = (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), request.Type);
+                    var idAlert = alertDAL.InsertAlertData(request.AlertTitle, webSession.ToBinaryData(), webSession.CurrentModule, request.Type,
+                                                  request.OccurrenceDate, request.Email, webSession.CustomerLogin.IdLogin, idAlertSchedule);
+                    if (idAlert > 0)
+                    {
+                        result.Success = true;
+                        result.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertCreationSucceeded, webSession.SiteLanguage);
                     }
                 }
-                //var periodicityType = (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), request.Type);
-                 var idAlert= alertDAL.InsertAlertData(request.AlertTitle, webSession.ToBinaryData(), webSession.CurrentModule,request.Type,
-                                               request.OccurrenceDate, request.Email, webSession.CustomerLogin.IdLogin, idAlertSchedule);
-                if (idAlert > 0)
+                catch (Exception ex)
                 {
-                    result.Success = true;
-                    result.Message = GestionWeb.GetWebWord(LanguageConstantes.AlertCreationSucceeded, webSession.SiteLanguage);
+                    string message = "";
+                    logger.Log(LogLevel.Error, message);
                 }
             }
             return result;

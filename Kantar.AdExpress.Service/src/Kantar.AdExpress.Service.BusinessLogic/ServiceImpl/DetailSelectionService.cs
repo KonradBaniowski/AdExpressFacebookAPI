@@ -23,11 +23,14 @@ using TNS.Ares.Alerts.DAL;
 using TNSDomain = TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class DetailSelectionService : IDetailSelectionService
+
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public DetailSelectionResponse GetDetailSelection(string idWebSession)
         {
             var _webSession = (WebSession)WebSession.Load(idWebSession);
@@ -56,9 +59,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 long id = Int64.Parse(idUnivers);
                 var webSession = (WebSession)WebSession.Load(idWebSession);
                 Dictionary<int, AdExpressUniverse> adExpressUniverse = null;
-                if (TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.IsUniverseBelongToClientDescription(webSession, id, WebConstantes.LoadableUnivers.GENERIC_UNIVERSE))
+                if (UniversListDataAccess.IsUniverseBelongToClientDescription(webSession, id, WebConstantes.LoadableUnivers.GENERIC_UNIVERSE))
                 {
-                    adExpressUniverse = (Dictionary<int, AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(id, webSession);
+                    adExpressUniverse = (Dictionary<int, AdExpressUniverse>)UniversListDataAccess.GetObjectUniverses(id, webSession);
                     if (adExpressUniverse !=null && adExpressUniverse.Count>0)
                         result = GetUniversDetails(webSession, adExpressUniverse);
                 } 

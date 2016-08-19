@@ -34,6 +34,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<int> MediaCommon { get; set; }
         public ControllerDetails ControllerDetails { get; set;}
         public bool MultipleSelection { get; set; }
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
     public class ControllerDetails

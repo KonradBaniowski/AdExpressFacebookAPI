@@ -18,11 +18,13 @@ using TNS.AdExpress.Domain.Classification;
 using System.Data;
 using TNS.AdExpress.Web.Core.DataAccess.Session;
 using TNS.AdExpress.Domain.Web;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class OptionMediaScheduleService : IOptionMediaScheduleService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private WebSession _customerWebSession = null;
         private WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
         private WebNavigation.Module _currentModule;
@@ -36,252 +38,264 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
 
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
-            _currentModule = WebNavigation.ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-
             OptionsMediaSchedule options = new OptionsMediaSchedule();
-
-            options.SiteLanguage = _customerWebSession.SiteLanguage;
-
-            #region GenericDetailLevelOption
-            GenericDetailLevelOption genericDetailLevelOption = new GenericDetailLevelOption();
-
-            #region on vérifie que le niveau sélectionné à le droit d'être utilisé
-            bool canAddDetail = false;
-            switch (_componentProfile)
+            try
             {
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    try
-                    {
-                        canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
-                    }
-                    catch { }
-                    if (!canAddDetail)
-                    {
-                        // Niveau de détail par défaut
-                        ArrayList levelsIds = new ArrayList();
-                        switch (_customerWebSession.CurrentModule)
+                _currentModule = WebNavigation.ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                options.SiteLanguage = _customerWebSession.SiteLanguage;
+
+                #region GenericDetailLevelOption
+                GenericDetailLevelOption genericDetailLevelOption = new GenericDetailLevelOption();
+
+                #region on vérifie que le niveau sélectionné à le droit d'être utilisé
+                bool canAddDetail = false;
+                switch (_componentProfile)
+                {
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                        try
                         {
-                            case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
-                                break;
-                            case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.sector);
-                                break;
-                            default:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
-                                break;
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
                         }
-                        _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
-                    }
-                    break;
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    try
-                    {
-                        canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
-                    }
-                    catch { }
-                    if (!canAddDetail)
-                    {
-                        // Niveau de détail par défaut
-                        ArrayList levelsIds = new ArrayList();
-                        levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                        _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
-                    }
-                    break;
-            }
-            #endregion
-
-            #region Niveau de détaille par défaut
-            genericDetailLevelOption.DefaultDetail = new SelectControl();
-            genericDetailLevelOption.DefaultDetail.Id = "defaultDetail";
-            genericDetailLevelOption.DefaultDetail.Items = new List<SelectItem>();
-            genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            int DefaultDetailLevelId = 0;
-            bool containsSlogan = false;
-            ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
-            foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
-            {
-                if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
-                {
-                    containsSlogan = false;
-                    foreach (DetailLevelItemInformation.Levels level in currentLevel.LevelIds)
-                    {
-                        if (level == DetailLevelItemInformation.Levels.slogan)
-                            containsSlogan = true;
-                    }
-                    if (containsSlogan)
-                        genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString(), slogan = true });
-                    else
-                        genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString(), slogan = false });
+                        catch { }
+                        if (!canAddDetail)
+                        {
+                            // Niveau de détail par défaut
+                            ArrayList levelsIds = new ArrayList();
+                            switch (_customerWebSession.CurrentModule)
+                            {
+                                case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
+                                    break;
+                                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.sector);
+                                    break;
+                                default:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
+                                    break;
+                            }
+                            _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                        }
+                        break;
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                        try
+                        {
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
+                        }
+                        catch { }
+                        if (!canAddDetail)
+                        {
+                            // Niveau de détail par défaut
+                            ArrayList levelsIds = new ArrayList();
+                            levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                            _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                        }
+                        break;
                 }
-                DefaultDetailLevelId++;
-            }
-            genericDetailLevelOption.DefaultDetail.SelectedId = "0";
-            #endregion
+                #endregion
 
-            #region Niveau de détaille par personnalisé
-            // Obtient les niveaux de détail sauvegardés		
-            ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
-            genericDetailLevelOption.CustomDetail = new SelectControl();
-            genericDetailLevelOption.CustomDetail.Id = "customDetail";
-            genericDetailLevelOption.CustomDetail.Items = new List<SelectItem>();
-            genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
-            {
-                if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                #region Niveau de détaille par défaut
+                genericDetailLevelOption.DefaultDetail = new SelectControl();
+                genericDetailLevelOption.DefaultDetail.Id = "defaultDetail";
+                genericDetailLevelOption.DefaultDetail.Items = new List<SelectItem>();
+                genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
+                int DefaultDetailLevelId = 0;
+                bool containsSlogan = false;
+                ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
+                foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
                 {
-                    containsSlogan = false;
-                    foreach (DetailLevelItemInformation.Levels level in currentGenericLevel.LevelIds)
+                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
                     {
-                        if (level == DetailLevelItemInformation.Levels.slogan)
-                            containsSlogan = true;
+                        containsSlogan = false;
+                        foreach (DetailLevelItemInformation.Levels level in currentLevel.LevelIds)
+                        {
+                            if (level == DetailLevelItemInformation.Levels.slogan)
+                                containsSlogan = true;
+                        }
+                        if (containsSlogan)
+                            genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString(), slogan = true });
+                        else
+                            genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString(), slogan = false });
                     }
-                    if (containsSlogan)
-                        genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString(), slogan = true });
-                    else
-                        genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString(), slogan = false });
-                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    DefaultDetailLevelId++;
                 }
-            }
-            #endregion
+                genericDetailLevelOption.DefaultDetail.SelectedId = "0";
+                #endregion
 
-            #region Niveau de détaille par défaut
-
-            #region L1
-            if (_nbDetailLevelItemList >= 1)
-            {
-                genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
-            }
-            #endregion
-
-            #region L2
-            if (_nbDetailLevelItemList >= 2)
-            {
-                genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
-            }
-            #endregion
-
-            #region L3
-            if (_nbDetailLevelItemList >= 3)
-            {
-                genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
-            }
-            #endregion
-
-            #region L4
-            if (_nbDetailLevelItemList >= 4)
-            {
-                genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
-            }
-            #endregion
-
-            #endregion
-
-            options.GenericDetailLevel = genericDetailLevelOption;
-
-
-            #endregion
-
-            #region PeriodDetailOption
-            PeriodDetailOption PeriodDetail = new PeriodDetailOption();
-
-            PeriodDetail.PeriodDetailType = new SelectControl();
-            PeriodDetail.PeriodDetailType.Id = "periodDetailType";
-            PeriodDetail.PeriodDetailType.Items = new List<SelectItem>();
-            PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
-            PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
-            DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
-            if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
-            {
-                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
-            }
-
-            if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
-            {
-                if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
-                    < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                #region Niveau de détaille par personnalisé
+                // Obtient les niveaux de détail sauvegardés		
+                ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
+                genericDetailLevelOption.CustomDetail = new SelectControl();
+                genericDetailLevelOption.CustomDetail.Id = "customDetail";
+                genericDetailLevelOption.CustomDetail.Items = new List<SelectItem>();
+                genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
+                foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    {
+                        containsSlogan = false;
+                        foreach (DetailLevelItemInformation.Levels level in currentGenericLevel.LevelIds)
+                        {
+                            if (level == DetailLevelItemInformation.Levels.slogan)
+                                containsSlogan = true;
+                        }
+                        if (containsSlogan)
+                            genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString(), slogan = true });
+                        else
+                            genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString(), slogan = false });
+                        _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    }
                 }
+                #endregion
+
+                #region Niveau de détaille par défaut
+
+                #region L1
+                if (_nbDetailLevelItemList >= 1)
+                {
+                    genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
+                }
+                #endregion
+
+                #region L2
+                if (_nbDetailLevelItemList >= 2)
+                {
+                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
+                }
+                #endregion
+
+                #region L3
+                if (_nbDetailLevelItemList >= 3)
+                {
+                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
+                }
+                #endregion
+
+                #region L4
+                if (_nbDetailLevelItemList >= 4)
+                {
+                    genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
+                }
+                #endregion
+
+                #endregion
+
+                options.GenericDetailLevel = genericDetailLevelOption;
+
+
+                #endregion
+
+                #region PeriodDetailOption
+                PeriodDetailOption PeriodDetail = new PeriodDetailOption();
+
+                PeriodDetail.PeriodDetailType = new SelectControl();
+                PeriodDetail.PeriodDetailType.Id = "periodDetailType";
+                PeriodDetail.PeriodDetailType.Items = new List<SelectItem>();
+                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
+                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
+                DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
+                if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                {
+                    PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
+                }
+
+                if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
+                {
+                    if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                    {
+                        _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                    }
+                }
+
+                PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
+
+                options.PeriodDetail = PeriodDetail;
+                #endregion
+
+                _customerWebSession.Save();
             }
-
-            PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
-
-            options.PeriodDetail = PeriodDetail;
-            #endregion
-
-            _customerWebSession.Save();
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
             return options;
         }
 
         public void SetOptions(string idWebSession, UserFilter userFilter)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-            _currentModule = WebNavigation.ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-
-            #region GenericDetailLevelFilter
-            ArrayList levels = new ArrayList();
-
-            ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
-            foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
+            try
             {
-                if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                _currentModule = WebNavigation.ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+
+                #region GenericDetailLevelFilter
+                ArrayList levels = new ArrayList();
+
+                ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
+                foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    {
+                        _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    }
                 }
-            }
 
-            if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
-            {
-                _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
-            }
-            if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
-            {
-                _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
-            }
-            if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L4DetailValue);
-            }
-            if (levels.Count > 0)
-            {
-                _customerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
-            }
-            #endregion
+                if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
+                {
+                    _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
+                }
+                if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
+                {
+                    _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
+                }
+                if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L4DetailValue);
+                }
+                if (levels.Count > 0)
+                {
+                    _customerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+                }
+                #endregion
 
-            switch (_currentModule.Id)
-            {
-                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
-                    break;
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
-                    break;
+                switch (_currentModule.Id)
+                {
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                        _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                        _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                        break;
+                }
+
+                #region PeriodDetailFilter
+                _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
+                #endregion
+
+                _customerWebSession.Save();
             }
-
-            #region PeriodDetailFilter
-            _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
-            #endregion
-
-            _customerWebSession.Save();
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
         }
 
         #region Generic Detail Level Option Methodes

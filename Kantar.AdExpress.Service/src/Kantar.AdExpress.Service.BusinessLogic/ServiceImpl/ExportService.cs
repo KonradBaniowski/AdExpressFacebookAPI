@@ -17,6 +17,7 @@ using System.Reflection;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.Classification;
 using AnubisCst = TNS.AdExpress.Anubis.Constantes;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -26,187 +27,196 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         protected string StartDate = string.Empty;
         protected string EndDate = string.Empty;
         private string _idUnit = string.Empty;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public ExportResponse Export (ExportRequest request)
         {
             ExportResponse response = new ExportResponse
             {
                 Message = string.Empty
             };
-            #region Validation
             var webSession = (WebSession)WebSession.Load(request.WebSessionId);
+            try {
+                #region Validation
 
-            AnubisCst.Result.type resultType = (request.ExportType == "4") ? AnubisCst.Result.type.miysis : AnubisCst.Result.type.miysisPptx;
 
-            request.ExportType = (request.ExportType == "5") ? GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage) 
-                                    : GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
+                AnubisCst.Result.type resultType = (request.ExportType == "4") ? AnubisCst.Result.type.miysis : AnubisCst.Result.type.miysisPptx;
 
-            List <int> sel = new List<int>();
-            Int64 idStaticNavSession = 0;
-            string zoomDate = string.Empty;
+                request.ExportType = (request.ExportType == "5") ? GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage)
+                                        : GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
 
-            try
-            {
-                #region Process
-                if (string.IsNullOrEmpty(request.FileName) || string.IsNullOrEmpty(request.Email) || request.FileName.Length == 0 || request.Email.Length == 0)
+                List<int> sel = new List<int>();
+                Int64 idStaticNavSession = 0;
+                string zoomDate = string.Empty;
+
+                try
                 {
-                    response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
-                }
-                else if (webSession.CurrentModule == WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(request.FileName) && request.FileName.Length > FileMaxLength)
-                {
-                    response.Message = String.Format(GestionWeb.GetWebWord(WebCst.LanguageConstantes.MaxLengthExceeded, webSession.SiteLanguage), FileMaxLength.ToString());
-                }
-                else if (!IsValidEmail(request.Email))
-                {
-                    response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
-                }
-                else
-                {
-                    webSession.ExportedPDFFileName = CheckedAccentText(request.FileName);
-                    string[] mails = new string[1];
-                    mails[0] = request.Email;
-                    webSession.EmailRecipient = mails;
-                    if (request.ExportType == GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage))
-                        request.ExportType = string.Empty;
-
-                    switch (webSession.CurrentModule)
+                    #region Process
+                    if (string.IsNullOrEmpty(request.FileName) || string.IsNullOrEmpty(request.Email) || request.FileName.Length == 0 || request.Email.Length == 0)
                     {
-                        case WebCst.Module.Name.BILAN_CAMPAGNE:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.mnevis);
-                            break;                        
-                        case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
-                        case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
-                        case WebCst.Module.Name.ANALYSE_PLAN_MEDIA:
-                        case WebCst.Module.Name.ANALYSE_PORTEFEUILLE:
-                        case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
-                        case WebCst.Module.Name.ALERTE_PORTEFEUILLE:
-                        case WebCst.Module.Name.CELEBRITIES:
+                        response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.AlertEmptyFields, webSession.SiteLanguage);
+                    }
+                    else if (webSession.CurrentModule == WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(request.FileName) && request.FileName.Length > FileMaxLength)
+                    {
+                        response.Message = String.Format(GestionWeb.GetWebWord(WebCst.LanguageConstantes.MaxLengthExceeded, webSession.SiteLanguage), FileMaxLength.ToString());
+                    }
+                    else if (!IsValidEmail(request.Email))
+                    {
+                        response.Message = GestionWeb.GetWebWord(WebCst.LanguageConstantes.NotValidEmail, webSession.SiteLanguage);
+                    }
+                    else
+                    {
+                        webSession.ExportedPDFFileName = CheckedAccentText(request.FileName);
+                        string[] mails = new string[1];
+                        mails[0] = request.Email;
+                        webSession.EmailRecipient = mails;
+                        if (request.ExportType == GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage))
+                            request.ExportType = string.Empty;
 
-                            if (WebCst.Module.Name.ANALYSE_CONCURENTIELLE == webSession.CurrentModule && !string.IsNullOrEmpty(request.ExportType) && Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
-                            {
-                                //TODO
-                                //CheckBoxList groupAdByCheckBoxList = askremoteexportwebControl1.GroupAdByCheckBoxList;
-                                //foreach (ListItem it in groupAdByCheckBoxList.Items)
-                                //{
-                                //    if (it.Selected) sel.Add(int.Parse(it.Value));
-                                //}
-                                if (sel.Count > 0)
-                                    webSession.CreativesExportOptions = sel;
-                                idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.dedoum);
+                        switch (webSession.CurrentModule)
+                        {
+                            case WebCst.Module.Name.BILAN_CAMPAGNE:
+                                idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.mnevis);
+                                break;
+                            case WebCst.Module.Name.ANALYSE_CONCURENTIELLE:
+                            case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
+                            case WebCst.Module.Name.ANALYSE_PLAN_MEDIA:
+                            case WebCst.Module.Name.ANALYSE_PORTEFEUILLE:
+                            case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
+                            case WebCst.Module.Name.ALERTE_PORTEFEUILLE:
+                            case WebCst.Module.Name.CELEBRITIES:
 
-                            }
-                            else
-                            {
-                                #region Classification Filter Init
-                                string id = string.Empty;
-                                string Level = string.Empty;
-                                //if (Page.Request.QueryString.Get("id") != null) id = Page.Request.QueryString.Get("id").ToString();
-                                //if (Page.Request.QueryString.Get("Level") != null) Level = Page.Request.QueryString.Get("Level").ToString();
-
-                                if (id.Length > 0 && Level.Length > 0)
+                                if (WebCst.Module.Name.ANALYSE_CONCURENTIELLE == webSession.CurrentModule && !string.IsNullOrEmpty(request.ExportType) && Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
                                 {
-                                    SetProduct(int.Parse(id), int.Parse(Level), webSession);
-                                }
-                                #endregion
+                                    //TODO
+                                    //CheckBoxList groupAdByCheckBoxList = askremoteexportwebControl1.GroupAdByCheckBoxList;
+                                    //foreach (ListItem it in groupAdByCheckBoxList.Items)
+                                    //{
+                                    //    if (it.Selected) sel.Add(int.Parse(it.Value));
+                                    //}
+                                    if (sel.Count > 0)
+                                        webSession.CreativesExportOptions = sel;
+                                    idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.dedoum);
 
-                                #region Period Detail
-                                DateTime begin;
-                                DateTime end;
-                                if (!string.IsNullOrEmpty(zoomDate))
-                                {
-                                    if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.weekly)
-                                    {
-                                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
-                                        end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
-                                    }
-                                    else
-                                    {
-                                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
-                                        end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
-                                    }
-                                    begin = Dates.Max(begin,
-                                        Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
-                                    end = Dates.Min(end,
-                                        Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
-
-                                    webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
                                 }
                                 else
                                 {
-                                    begin = Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
-                                    end = Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
-                                    if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                                    #region Classification Filter Init
+                                    string id = string.Empty;
+                                    string Level = string.Empty;
+                                    //if (Page.Request.QueryString.Get("id") != null) id = Page.Request.QueryString.Get("id").ToString();
+                                    //if (Page.Request.QueryString.Get("Level") != null) Level = Page.Request.QueryString.Get("Level").ToString();
+
+                                    if (id.Length > 0 && Level.Length > 0)
                                     {
-                                        webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                                        SetProduct(int.Parse(id), int.Parse(Level), webSession);
                                     }
+                                    #endregion
+
+                                    #region Period Detail
+                                    DateTime begin;
+                                    DateTime end;
+                                    if (!string.IsNullOrEmpty(zoomDate))
+                                    {
+                                        if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.weekly)
+                                        {
+                                            begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
+                                            end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateWeek);
+                                        }
+                                        else
+                                        {
+                                            begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
+                                            end = Dates.GetPeriodEndDate(zoomDate, ConstantesPeriod.Type.dateToDateMonth);
+                                        }
+                                        begin = Dates.Max(begin,
+                                            Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                                        end = Dates.Min(end,
+                                            Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+
+                                        webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                                    }
+                                    else
+                                    {
+                                        begin = Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                                        end = Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                                        if (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                                        {
+                                            webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                                        }
+                                    }
+                                    webSession.PeriodBeginningDate = begin.ToString("yyyyMMdd");
+                                    webSession.PeriodEndDate = end.ToString("yyyyMMdd");
+                                    switch (webSession.PeriodType)
+                                    {
+                                        case ConstantesPeriod.Type.currentYear:
+                                        case ConstantesPeriod.Type.dateToDateMonth:
+                                        case ConstantesPeriod.Type.dateToDateWeek:
+                                        case ConstantesPeriod.Type.LastLoadedMonth:
+                                        case ConstantesPeriod.Type.LastLoadedWeek:
+                                        case ConstantesPeriod.Type.nextToLastYear:
+                                        case ConstantesPeriod.Type.nLastMonth:
+                                        case ConstantesPeriod.Type.nLastWeek:
+                                        case ConstantesPeriod.Type.nLastYear:
+                                        case ConstantesPeriod.Type.previousWeek:
+                                        case ConstantesPeriod.Type.previousYear:
+                                            webSession.PeriodType = ConstantesPeriod.Type.dateToDate;
+                                            break;
+                                    }
+                                    webSession.CustomerPeriodSelected = new CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate);
+                                    #endregion
+
+                                    if (!string.IsNullOrEmpty(_idUnit))
+                                        webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
+
+                                    idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, AnubisCst.Result.type.apis) :
+                                        ExportResultsDAL.Save(webSession, resultType);
                                 }
-                                webSession.PeriodBeginningDate = begin.ToString("yyyyMMdd");
-                                webSession.PeriodEndDate = end.ToString("yyyyMMdd");
-                                switch (webSession.PeriodType)
-                                {
-                                    case ConstantesPeriod.Type.currentYear:
-                                    case ConstantesPeriod.Type.dateToDateMonth:
-                                    case ConstantesPeriod.Type.dateToDateWeek:
-                                    case ConstantesPeriod.Type.LastLoadedMonth:
-                                    case ConstantesPeriod.Type.LastLoadedWeek:
-                                    case ConstantesPeriod.Type.nextToLastYear:
-                                    case ConstantesPeriod.Type.nLastMonth:
-                                    case ConstantesPeriod.Type.nLastWeek:
-                                    case ConstantesPeriod.Type.nLastYear:
-                                    case ConstantesPeriod.Type.previousWeek:
-                                    case ConstantesPeriod.Type.previousYear:
-                                        webSession.PeriodType = ConstantesPeriod.Type.dateToDate;
-                                        break;
-                                }
-                                webSession.CustomerPeriodSelected = new CustomerPeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate);
-                                #endregion
+                                break;
 
-                                if (!string.IsNullOrEmpty(_idUnit))
-                                    webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
+                            case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                                idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.pachet);
+                                break;
+                            case WebCst.Module.Name.INDICATEUR:
+                                idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.hotep);
+                                break;
 
-                                idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, AnubisCst.Result.type.apis) :
-                                    ExportResultsDAL.Save(webSession, resultType);
-                            }
-                            break;
+                            //case WebCst.Module.Name.VP:
+                            //    if (!string.IsNullOrEmpty(request.ExportType))
+                            //    {
+                            //        if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode())
+                            //        {
+                            //            if (!string.IsNullOrEmpty(_idDataPromotion)) webSession.IdPromotion = long.Parse(_idDataPromotion);
+                            //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket);
+                            //        }
+                            //        else if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
+                            //        {
+                            //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
+                            //        }
+                            //    }
+                            //    break;
 
-                        case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.pachet);
-                            break;
-                        case WebCst.Module.Name.INDICATEUR:
-                            idStaticNavSession = ExportResultsDAL.Save(webSession, AnubisCst.Result.type.hotep);
-                            break;                     
-                        
-                        //case WebCst.Module.Name.VP:
-                        //    if (!string.IsNullOrEmpty(request.ExportType))
-                        //    {
-                        //        if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode())
-                        //        {
-                        //            if (!string.IsNullOrEmpty(_idDataPromotion)) webSession.IdPromotion = long.Parse(_idDataPromotion);
-                        //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket);
-                        //        }
-                        //        else if (Convert.ToInt32(request.ExportType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
-                        //        {
-                        //            idStaticNavSession = ExportResultsDAL.Save(webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
-                        //        }
-                        //    }
-                        //    break;
-                        
-                        default :
-                            throw new Exception(" Impossssile d'identifier le module.");
+                            default:
+                                throw new Exception(" Impossssile d'identifier le module.");
 
+                        }
+                    }
+                    #endregion
+                    response.Success = true;
+                    response.Message = (webSession.SiteLanguage == 33) ? "Votre demande a été prise en compte" : "You have successfully created your export file. You will receive an email shortly.";
+                }
+                catch (System.Exception ex)
+                {
+                    if (ex.GetType() != typeof(System.Threading.ThreadAbortException))
+                    {
+                        throw (ex);
                     }
                 }
                 #endregion
-                response.Success = true;
-                response.Message = (webSession.SiteLanguage == 33) ? "Votre demande a été prise en compte" : "You have successfully created your export file. You will receive an email shortly.";
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                if (ex.GetType() != typeof(System.Threading.ThreadAbortException))
-                {
-                    throw (ex);
-                }
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", request.WebSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
-            #endregion            
             return response;
         }
         private bool IsValidEmail(string email)

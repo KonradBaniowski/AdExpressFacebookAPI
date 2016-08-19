@@ -27,6 +27,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
     public class UniversGroupsResponse
     {
+        public UniversGroupsResponse()
+        {
+            UniversGroups = new List<UserUniversGroup>();
+        }
         public List<UserUniversGroup> UniversGroups { get; set; }
         public int SiteLanguage { get; set; }
         public bool CanSetDefaultUniverse { get; set; }

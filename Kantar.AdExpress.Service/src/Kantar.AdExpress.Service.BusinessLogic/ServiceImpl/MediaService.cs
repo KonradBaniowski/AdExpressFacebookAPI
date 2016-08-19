@@ -17,29 +17,42 @@ using TNS.AdExpress.Domain.Web;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using VhCstes = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TNS.AdExpress.Domain.Translation;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MediaService : IMediaService
     {
         private WebSession _webSession = null;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public MediaResponse GetMedia(string idWebSession)
         {
-            
+
             var webSession = (WebSession)WebSession.Load(idWebSession);
-            var result = new MediaResponse(webSession.SiteLanguage, webSession.CurrentModule);            
-            result.MediaCommon = Array.ConvertAll(Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(','), Convert.ToInt32).ToList();
-            result.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
-            webSession.SelectionUniversMedia.Nodes.Clear();
-            webSession.PrincipalMediaUniverses.Clear();
-            webSession.Save();
-            if (webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR || webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE)
-            {                
-                result = GetAnalysisVehicleList(webSession,result);
-            }
-            else
+            var result = new MediaResponse(webSession.SiteLanguage, webSession.CurrentModule);
+            try
             {
-                result = GetDefaultVehicleList(webSession, result);
+                string[] media = Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(',');
+                result.MediaCommon = Array.ConvertAll(media, Convert.ToInt32).ToList();
+                result.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
+                webSession.SelectionUniversMedia.Nodes.Clear();
+                webSession.PrincipalMediaUniverses.Clear();
+                webSession.Save();
+                if (webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR || webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE)
+                {
+                    result = GetAnalysisVehicleList(webSession, result);
+                }
+                else
+                {
+                    result = GetDefaultVehicleList(webSession, result);
+                }
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+                result.ErrorMessage = message;
             }
             return result;
         }
@@ -48,10 +61,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new List<Core.Domain.Media>();
             var _webSession = (WebSession)WebSession.Load(idWebSession);
-            var vehiclesInfos = VehiclesInformation.GetAll();            
-            var myMedia = GetMyMedia(_webSession);
+            try
+            {
+                var vehiclesInfos = VehiclesInformation.GetAll();
+                result = GetMyMedia(_webSession);
+            }
+             catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
             //DetailLevelItemInformation.Levels.vehicle       
-            return myMedia;
+            return result;
         }
 
         private List<Core.Domain.Media> GetMyMedia(WebSession _webSession)
@@ -66,7 +87,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 | BindingFlags.Public, null, param, null, null);
             DataTable data = classficationDAL.GetMediaType().Tables[0];
             List<Core.Domain.Media> result = new List<Core.Domain.Media>();
-            foreach ( var item in data.AsEnumerable())
+            foreach (var item in data.AsEnumerable())
             {
                 int id = int.Parse(item.ItemArray[0].ToString());
                 if (VehiclesInformation.Contains(id))
@@ -94,9 +115,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory cLevel = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
             return factoryLevels.CreateClassificationLevelListDAL(detailLevelItemInformation, idMedias);
-          
-            
-                //return levels[idMedias];
+
+
+            //return levels[idMedias];
 
         }
 
@@ -209,7 +230,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
-            
+
             foreach (var item in dtVehicle.AsEnumerable())
             {
                 int id = int.Parse(item.ItemArray[0].ToString());
@@ -223,8 +244,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
             }
             #endregion
-            response.Media = vehiclesList;            
+            response.Media = vehiclesList;
             return response;
-    }
+        }
     }
 }

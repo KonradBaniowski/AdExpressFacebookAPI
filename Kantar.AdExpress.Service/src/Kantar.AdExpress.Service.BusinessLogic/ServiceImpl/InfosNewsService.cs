@@ -1,13 +1,11 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -18,48 +16,56 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class InfosNewsService : IInfosNewsService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private WebSession _customerSession { get; set; }
 
         public List<Documents> GetInfosNews(string idWebSession)
         {
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             DomainResults.InfoNews infoNewsInformations = WebApplicationParameters.InfoNewsInformations;
-            List<DomainResults.InfoNewsItem> sortedInfoNewsItems = (infoNewsInformations != null) ? infoNewsInformations.GetSortedInfoNewsItems() : null;
-            string[] files = null;
             List<Documents> documents = new List<Documents>();
-            int nbFilesAdded = 0;
-
-            if (sortedInfoNewsItems != null && sortedInfoNewsItems.Count > 0)
+            try
             {
-                //For each directory
-                for (int i = 0; i < sortedInfoNewsItems.Count; i++)
+                List<DomainResults.InfoNewsItem> sortedInfoNewsItems = (infoNewsInformations != null) ? infoNewsInformations.GetSortedInfoNewsItems() : null;
+                string[] files = null;
+                int nbFilesAdded = 0;
+
+                if (sortedInfoNewsItems != null && sortedInfoNewsItems.Count > 0)
                 {
-                    files = GetDirectoryFiles(sortedInfoNewsItems[i].PhysicalPath);
-                    if (files != null && files.Length > 0)
+                    //For each directory
+                    for (int i = 0; i < sortedInfoNewsItems.Count; i++)
                     {
-                        //Siort files by alpabetical label
-                        Array.Sort(files, Comparer.Default);
-
-                        List<InfosNews> infosNews = new List<InfosNews>();
-
-                        //Show all directoy's files						
-                        for (int j = files.Length - 1; j >= 0; j--)
+                        files = GetDirectoryFiles(sortedInfoNewsItems[i].PhysicalPath);
+                        if (files != null && files.Length > 0)
                         {
-                            if (Path.GetExtension(files[j].ToString()).ToUpper().Equals(".DB")) continue; ;
-                            //Limitation of Nb files to show							
-                            if (sortedInfoNewsItems[i].NbMaxItemsToShow > -1 && nbFilesAdded == sortedInfoNewsItems[i].NbMaxItemsToShow) break;
+                            //Siort files by alpabetical label
+                            Array.Sort(files, Comparer.Default);
 
-                            infosNews.Add(new InfosNews { Label = FormatFileName(sortedInfoNewsItems[i].Id, Path.GetFileNameWithoutExtension(files[j].ToString())), Url = sortedInfoNewsItems[i].VirtualPath + Path.GetFileName(files[j].ToString()) });
+                            List<InfosNews> infosNews = new List<InfosNews>();
 
-                            nbFilesAdded++;
+                            //Show all directoy's files						
+                            for (int j = files.Length - 1; j >= 0; j--)
+                            {
+                                if (Path.GetExtension(files[j].ToString()).ToUpper().Equals(".DB")) continue; ;
+                                //Limitation of Nb files to show							
+                                if (sortedInfoNewsItems[i].NbMaxItemsToShow > -1 && nbFilesAdded == sortedInfoNewsItems[i].NbMaxItemsToShow) break;
+
+                                infosNews.Add(new InfosNews { Label = FormatFileName(sortedInfoNewsItems[i].Id, Path.GetFileNameWithoutExtension(files[j].ToString())), Url = sortedInfoNewsItems[i].VirtualPath + Path.GetFileName(files[j].ToString()) });
+
+                                nbFilesAdded++;
+                            }
+                            nbFilesAdded = 0;
+                            documents.Add(new Documents { Id = sortedInfoNewsItems[i].Id.GetHashCode(), Label = GestionWeb.GetWebWord(sortedInfoNewsItems[i].WebTextId, _customerSession.SiteLanguage), InfosNews = infosNews });
                         }
-                        nbFilesAdded = 0;
-                        documents.Add(new Documents { Id = sortedInfoNewsItems[i].Id.GetHashCode(), Label = GestionWeb.GetWebWord(sortedInfoNewsItems[i].WebTextId, _customerSession.SiteLanguage), InfosNews = infosNews });
-                    }
 
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
             return documents;
         }
 

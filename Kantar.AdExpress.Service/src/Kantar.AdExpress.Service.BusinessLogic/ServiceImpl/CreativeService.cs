@@ -15,16 +15,19 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Web;
 using System.Collections;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class CreativeService : ICreativeService
     {
+        #region Private & protected variables
         private WebSession _customerWebSession = null;
         private int _fromDate;
         private int _toDate;
         private long? _idVehicle = long.MinValue;
         private long _columnSetId;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
 		/// Liste des éléments de détail par défaut
 		/// </summary>
@@ -69,7 +72,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// Option Html Code
         /// </summary>
         protected string _optionHtml = string.Empty;
-
+        #endregion
         public InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> evaliantFilter)
         {
             InsertionCreativeResponse creativeResponse = new InsertionCreativeResponse();
@@ -128,7 +131,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (isVehicleChanged)
                 {
                     if(evaliantFilter != null)
-                        LoadCustomFilters(evaliantFilter);
+                        LoadCustomFilters(idWebSession,evaliantFilter);
                 }
 
                 foreach (GenericColumnItemInformation column in tmp)
@@ -173,19 +176,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 creativeResponse.Message = GestionWeb.GetWebWord(959, _customerWebSession.SiteLanguage);
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
 
             return creativeResponse;
 
         }
 
-        public void LoadCustomFilters(List<EvaliantFilter> evaliantFilter)
+        private void LoadCustomFilters(string idWebSession,List<EvaliantFilter> evaliantFilter)
         {
-            _customFilterValues = new Dictionary<GenericColumnItemInformation.Columns, List<string>>();
-            foreach(EvaliantFilter filter in evaliantFilter)
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+            try
             {
-                if(filter !=null)
-                _customFilterValues.Add((GenericColumnItemInformation.Columns)filter.IdFilter, filter.ValuesFilter);
+                _customFilterValues = new Dictionary<GenericColumnItemInformation.Columns, List<string>>();
+                foreach (EvaliantFilter filter in evaliantFilter)
+                {
+                    if (filter != null)
+                        _customFilterValues.Add((GenericColumnItemInformation.Columns)filter.IdFilter, filter.ValuesFilter);
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
         }
 
@@ -193,41 +207,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
             SpotResponse spotResponse = new SpotResponse
             {
                 SiteLanguage = _customerWebSession.SiteLanguage
             };
 
-            //L'utilisateur a accès au créations en lecture ?
-            var vehicleName = VehiclesInformation.Get(idVehicle).Id;
-            _hasCreationReadRights = _customerWebSession.CustomerLogin.ShowCreatives(vehicleName);
+            try {
+                //L'utilisateur a accès au créations en lecture ?
+                var vehicleName = VehiclesInformation.Get(idVehicle).Id;
+                _hasCreationReadRights = _customerWebSession.CustomerLogin.ShowCreatives(vehicleName);
 
-            if (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
-            {
-                //L'utilisateur a accès aux créations en téléchargement
-                _hasCreationDownloadRights = true;
+                if (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+                {
+                    //L'utilisateur a accès aux créations en téléchargement
+                    _hasCreationDownloadRights = true;
+                }
+
+
+                CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
+                var param = new object[6];
+
+                param[0] = vehicleName;
+                param[1] = idVersion;
+                param[2] = string.Empty;
+                param[3] = _customerWebSession;
+                param[4] = _hasCreationReadRights;
+                param[5] = _hasCreationDownloadRights;
+                var result = (TNS.AdExpressI.Insertions.CreativeResult.ICreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                    | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+
+                result.SetCreativePaths();
+
+                spotResponse.PathDownloadingFile = result.PathDownloadingFile;
+                spotResponse.PathReadingFile = result.PathReadingFile;
             }
-
-
-            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativePopUp];
-            if (cl == null) throw (new NullReferenceException("Core layer is null for the creative pop up"));
-            var param = new object[6];
-
-            param[0] = vehicleName;
-            param[1] = idVersion;
-            param[2] = string.Empty;
-            param[3] = _customerWebSession;
-            param[4] = _hasCreationReadRights;
-            param[5] = _hasCreationDownloadRights;
-            var result = (TNS.AdExpressI.Insertions.CreativeResult.ICreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
-                , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false, System.Reflection.BindingFlags.CreateInstance
-                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
-
-            result.SetCreativePaths();
-
-            spotResponse.PathDownloadingFile = result.PathDownloadingFile;
-            spotResponse.PathReadingFile = result.PathReadingFile;
+            catch(Exception ex )
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
             return spotResponse;
 
         }
@@ -235,99 +255,108 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-            IInsertionsResult creativeResult = InitCreativeCall(_customerWebSession, moduleId);
-
-            List<VehicleInformation> Vehicles = creativeResult.GetPresentVehicles(ids, idUnivers, slogan);
-
             List<List<string>> ListRetour = new List<List<string>>();
-            string vehicle = string.Empty;
-            for (int i = 0; i < Vehicles.Count; i++)
+            try
             {
-                switch (Vehicles[i].Id)
+                #region My homework: refactoring
+                IInsertionsResult creativeResult = InitCreativeCall(_customerWebSession, moduleId);
+                List<VehicleInformation> Vehicles = creativeResult.GetPresentVehicles(ids, idUnivers, slogan);
+                
+                string vehicle = string.Empty;
+                for (int i = 0; i < Vehicles.Count; i++)
                 {
-                    case CstDBClassif.Vehicles.names.newspaper:
-                        vehicle = GestionWeb.GetWebWord(2620, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.magazine:
-                        vehicle = GestionWeb.GetWebWord(2621, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.press:
-                        vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.pressClipping:
-                        vehicle = GestionWeb.GetWebWord(2955, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.internationalPress:
-                        vehicle = GestionWeb.GetWebWord(646, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.radio:
-                        vehicle = GestionWeb.GetWebWord(644, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.radioGeneral:
-                        vehicle = GestionWeb.GetWebWord(2630, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.radioSponsorship:
-                        vehicle = GestionWeb.GetWebWord(2632, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.radioMusic:
-                        vehicle = GestionWeb.GetWebWord(2631, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tv:
-                        vehicle = GestionWeb.GetWebWord(1300, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tvGeneral:
-                        vehicle = GestionWeb.GetWebWord(2633, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tvClipping:
-                        vehicle = GestionWeb.GetWebWord(2956, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tvSponsorship:
-                        vehicle = GestionWeb.GetWebWord(2634, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tvAnnounces:
-                        vehicle = GestionWeb.GetWebWord(2635, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                        vehicle = GestionWeb.GetWebWord(2636, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.others:
-                        vehicle = GestionWeb.GetWebWord(647, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.outdoor:
-                        vehicle = GestionWeb.GetWebWord(1302, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.dooh:
-                        vehicle = GestionWeb.GetWebWord(3049, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.instore:
-                        vehicle = GestionWeb.GetWebWord(2665, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.indoor:
-                        vehicle = GestionWeb.GetWebWord(2644, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.adnettrack:
-                        vehicle = GestionWeb.GetWebWord(648, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.directMarketing:
-                    case CstDBClassif.Vehicles.names.mailValo:
-                        vehicle = GestionWeb.GetWebWord(2989, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.internet:
-                    case CstDBClassif.Vehicles.names.czinternet:
-                        vehicle = GestionWeb.GetWebWord(1301, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.evaliantMobile:
-                        vehicle = GestionWeb.GetWebWord(2577, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.cinema:
-                        vehicle = GestionWeb.GetWebWord(2726, _customerWebSession.SiteLanguage);
-                        break;
-                    case CstDBClassif.Vehicles.names.editorial:
-                        vehicle = GestionWeb.GetWebWord(2801, _customerWebSession.SiteLanguage);
-                        break;
-                }
+                    switch (Vehicles[i].Id)
+                    {
+                        case CstDBClassif.Vehicles.names.newspaper:
+                            vehicle = GestionWeb.GetWebWord(2620, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.magazine:
+                            vehicle = GestionWeb.GetWebWord(2621, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.press:
+                            vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.pressClipping:
+                            vehicle = GestionWeb.GetWebWord(2955, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.internationalPress:
+                            vehicle = GestionWeb.GetWebWord(646, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.radio:
+                            vehicle = GestionWeb.GetWebWord(644, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.radioGeneral:
+                            vehicle = GestionWeb.GetWebWord(2630, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.radioSponsorship:
+                            vehicle = GestionWeb.GetWebWord(2632, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.radioMusic:
+                            vehicle = GestionWeb.GetWebWord(2631, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tv:
+                            vehicle = GestionWeb.GetWebWord(1300, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tvGeneral:
+                            vehicle = GestionWeb.GetWebWord(2633, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tvClipping:
+                            vehicle = GestionWeb.GetWebWord(2956, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tvSponsorship:
+                            vehicle = GestionWeb.GetWebWord(2634, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tvAnnounces:
+                            vehicle = GestionWeb.GetWebWord(2635, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                            vehicle = GestionWeb.GetWebWord(2636, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.others:
+                            vehicle = GestionWeb.GetWebWord(647, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.outdoor:
+                            vehicle = GestionWeb.GetWebWord(1302, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.dooh:
+                            vehicle = GestionWeb.GetWebWord(3049, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.instore:
+                            vehicle = GestionWeb.GetWebWord(2665, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.indoor:
+                            vehicle = GestionWeb.GetWebWord(2644, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.adnettrack:
+                            vehicle = GestionWeb.GetWebWord(648, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.directMarketing:
+                        case CstDBClassif.Vehicles.names.mailValo:
+                            vehicle = GestionWeb.GetWebWord(2989, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.internet:
+                        case CstDBClassif.Vehicles.names.czinternet:
+                            vehicle = GestionWeb.GetWebWord(1301, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.evaliantMobile:
+                            vehicle = GestionWeb.GetWebWord(2577, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.cinema:
+                            vehicle = GestionWeb.GetWebWord(2726, _customerWebSession.SiteLanguage);
+                            break;
+                        case CstDBClassif.Vehicles.names.editorial:
+                            vehicle = GestionWeb.GetWebWord(2801, _customerWebSession.SiteLanguage);
+                            break;
+                    }
 
-                ListRetour.Add(new List<string> { Vehicles[i].DatabaseId.ToString(), vehicle });
+                    ListRetour.Add(new List<string> { Vehicles[i].DatabaseId.ToString(), vehicle });
+                }
+                #endregion
+            }
+            catch (Exception ex )
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
             }
 
             return ListRetour;
@@ -336,17 +365,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public IInsertionsResult InitCreativeCall(WebSession custSession, long moduleId)
         {
-            //**TODO : IdVehicules not null
-
-            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
-            if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
-            var param = new object[2];
-            param[0] = custSession;
-            param[1] = moduleId;
-            var result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
-                + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
-                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
-
+            IInsertionsResult result = null;
+            try
+            {
+                //**TODO : IdVehicules not null
+                CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
+                var param = new object[2];
+                param[0] = custSession;
+                param[1] = moduleId;
+                result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
+                    + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                    | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", custSession.IdSession, custSession.UserAgent, custSession.CustomerLogin.Login, custSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
+                logger.Log(LogLevel.Error, message);
+            }
             return result;
         }
     }
