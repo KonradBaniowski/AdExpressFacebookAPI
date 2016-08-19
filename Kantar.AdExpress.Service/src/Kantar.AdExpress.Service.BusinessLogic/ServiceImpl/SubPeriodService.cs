@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.Date;
@@ -15,7 +16,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class SubPeriodService : ISubPeriodService
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public SubPeriod GetSubPeriod(string idWebSession, string zoomDate)
         {
             SubPeriod subPeriod = new SubPeriod();
@@ -153,8 +154,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex )
             {
-                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", CustomerSession.IdSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
-                logger.Log(LogLevel.Error, message);
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", CustomerSession.IdSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             return subPeriod;
         }

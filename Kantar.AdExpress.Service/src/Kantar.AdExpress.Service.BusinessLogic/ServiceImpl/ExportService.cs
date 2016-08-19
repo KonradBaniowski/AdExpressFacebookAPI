@@ -18,6 +18,7 @@ using TNS.AdExpress.Constantes.Customer;
 using TNS.AdExpress.Constantes.Classification;
 using AnubisCst = TNS.AdExpress.Anubis.Constantes;
 using NLog;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -27,7 +28,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         protected string StartDate = string.Empty;
         protected string EndDate = string.Empty;
         private string _idUnit = string.Empty;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public ExportResponse Export (ExportRequest request)
         {
             ExportResponse response = new ExportResponse
@@ -214,8 +215,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}, user agent: {1}, Login: {2}, password: {3}, error: {4}, StackTrace: {5}", request.WebSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace);
-                logger.Log(LogLevel.Error, message);
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", request.WebSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             return response;
         }

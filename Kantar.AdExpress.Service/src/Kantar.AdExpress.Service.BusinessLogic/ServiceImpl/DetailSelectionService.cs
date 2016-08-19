@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     public class DetailSelectionService : IDetailSelectionService
 
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public DetailSelectionResponse GetDetailSelection(string idWebSession)
         {
             var _webSession = (WebSession)WebSession.Load(idWebSession);

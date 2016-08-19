@@ -21,7 +21,7 @@ namespace Km.AdExpressClientWeb.Controllers
     public class AccountController : Controller
     {
         private IApplicationUserManager _userManager;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public AccountController(IApplicationUserManager userManager)
         {
             _userManager = userManager;
@@ -95,21 +95,21 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 case SignInStatus.Success:
                     message = string.Format("The user {0} has been sucessfully logged with the following password {1}.", model.Email, model.Password);
-                    logger.Log(LogLevel.Info, message);
+                    Logger.Log(LogLevel.Info, message);
                     return RedirectToAction("webSession", new { SiteLanguage = model.SiteLanguage });
                 case SignInStatus.LockedOut:
                     message = string.Format("The user {0} has been locked out with the following password {1}.", model.Email, model.Password);
-                    logger.Log(LogLevel.Info, message);
+                    Logger.Log(LogLevel.Info, message);
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
                     message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. A verification code will be sent shortly.", model.Email, model.Password);
-                    logger.Log(LogLevel.Info, message);
+                    Logger.Log(LogLevel.Info, message);
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
                     ModelState.AddModelError("", GestionWeb.GetWebWord(880, Convert.ToInt32(model.SiteLanguage)));
                     model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
                     message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. The login page will be reloaded.", model.Email, model.Password);
-                    logger.Log(LogLevel.Info, message);
+                    Logger.Log(LogLevel.Info, message);
                     return View(model);
             }
         }
