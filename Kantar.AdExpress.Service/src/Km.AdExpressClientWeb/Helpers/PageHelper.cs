@@ -82,7 +82,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Action = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ANALYSE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,
                 Controller = controller,
                 IconCssClass = "fa fa-file-text",
-                Position = CurrentPosition
+                Position = CurrentPosition,
+                IsDisabled= IsMarketSelectionDisabled(webSession.CurrentModule)
             };
             model.Add(market);
             var media = new NavigationNode
@@ -95,7 +96,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Controller = controller,
                 IconCssClass = "fa fa-eye",
                 Position = CurrentPosition,
-                IsDisabled = isSelectionDisabled(webSession.CurrentModule)
+                IsDisabled = IsMediaSelectionDisabled(webSession.CurrentModule)
             };
             model.Add(media);
             var dates = new NavigationNode
@@ -262,7 +263,7 @@ namespace Km.AdExpressClientWeb.Helpers
             return text;
         }
 
-        bool isSelectionDisabled(long module)
+        bool IsMediaSelectionDisabled(long module)
         {
             bool isDisabled = false;
             switch (module)
@@ -283,6 +284,12 @@ namespace Km.AdExpressClientWeb.Helpers
                     break;
             }
 
+            return isDisabled;
+        }
+
+        bool IsMarketSelectionDisabled (long module)
+        {
+            bool isDisabled = (module == Module.Name.NEW_CREATIVES);
             return isDisabled;
         }
 
