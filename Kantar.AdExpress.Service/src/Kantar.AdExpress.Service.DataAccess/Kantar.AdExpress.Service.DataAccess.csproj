@@ -140,6 +140,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Core\Kantar.AdExpress.Service.Core.csproj">
       <Project>{1d6fbd14-eee6-45db-88b9-d99386d23e53}</Project>
       <Name>Kantar.AdExpress.Service.Core</Name>

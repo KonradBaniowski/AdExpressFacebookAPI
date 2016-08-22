@@ -8,14 +8,15 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using TNS.AdExpress.Domain.Web;
 
 namespace Kantar.AdExpress.Service.DataAccess
 {
     public class AdExpressContext : DbContext
     {
         const string schemaMau = "MAU01";
-        const string schema = "ADEXPR03";
-        const string connectionString = "adexpr03";
+        static string schema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+        static string connectionString = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 
         public AdExpressContext() : base(connectionString)
         {
