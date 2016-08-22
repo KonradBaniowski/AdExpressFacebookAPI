@@ -47,10 +47,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
         private const string RESULTS = "Results";
+        private const string MEDIAAGENCY = "MediaAgency";
+        private const string NEW_CREATIVES = "NewCreatives";
+        private const string FACEBOOK = "SocialMedia";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
-        private const string FACEBOOK = "SocialMedia";
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
         private const int OUTDOOR = 8;
@@ -245,6 +247,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.INDICATEUR:
                                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                                case CstWeb.Module.Name.NEW_CREATIVES:
                                     AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                                     SetDefaultMarketUniverse(response, univers, request, _webSession);
                                     break;
@@ -586,7 +590,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
         {
-            bool result = false;
+            bool result = true;
             try
             {
 
@@ -856,6 +860,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.INDICATEUR:
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                 case CstWeb.Module.Name.CELEBRITIES:
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                     return true;
                 default: return false;
             }
@@ -945,6 +951,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentModuleCode = CstWeb.LanguageConstantes.FacebookCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIAAGENCY : SELECTION;
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? NEW_CREATIVES : SELECTION;
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;

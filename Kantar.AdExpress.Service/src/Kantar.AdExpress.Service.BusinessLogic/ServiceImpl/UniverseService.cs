@@ -1167,6 +1167,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                 case WebConstantes.Module.Name.FACEBOOK:
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
                     schema = WebApplicationParameters.DataBaseDescription.
                     GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                     break;
@@ -1359,6 +1361,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;
                     currentController = "Selection";
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = WebConstantes.LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = "Selection";
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = WebConstantes.LanguageConstantes.NewCreatives;
+                    currentController = "Selection";
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;

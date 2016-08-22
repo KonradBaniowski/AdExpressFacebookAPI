@@ -43,7 +43,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string INDEX = "Index";
         private const int CALENDARSTUDYID = 8;
         private const int SLIDINGSTUDYID = 5;
-        public SelectionController (IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
+        public SelectionController(IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
             _mediaService = mediaService;
             _webSessionService = webSessionService;
@@ -66,12 +66,11 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load Branches
             var result = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            #endregion
             if (result.Success)
             {
                 model.CurrentModule = result.ControllerDetails.ModuleId;
                 model.MaxUniverseItems = result.MaxUniverseItems;
-                #endregion
-
                 #region Load each label's text in the appropriate language
                 var helper = new Helpers.PageHelper();
                 //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
@@ -135,7 +134,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(request);
                 if (result.Success)
                 {
-                    var controller = (nextStep==MARKET|| nextStep==MEDIA || nextStep == PERIOD)? SELECTION:result.ControllerDetails.Name;
+                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                     var redirectUrl = context.Action(nextStep, controller);
                     return Json(new { ErrorMessage = errorMessage, RedirectUrl = redirectUrl });
@@ -166,7 +165,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     Branches = new List<Models.Shared.UniversBranch>(),
                     Trees = new List<Models.Shared.Tree>(),
                     Dimension = Dimension.media,
-                    UniversGroups = new UserUniversGroupsModel()
+                    UniversGroups = new UserUniversGroupsModel(),
+                    CanRefineMediaSupport = true
                 };
                 model.UniversGroups = new UserUniversGroupsModel
                 {
@@ -197,20 +197,24 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
                 model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
-                var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
-                model.CurrentModule = response.ControllerDetails.ModuleId;
-                model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
-                foreach (var item in response.Trees)
+                model.CanRefineMediaSupport = result.CanRefineMediaSupport;
+                if (result.CanRefineMediaSupport)
                 {
-                    Models.Shared.Tree tree = new Models.Shared.Tree
+                    var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
+                    model.CurrentModule = response.ControllerDetails.ModuleId;
+                    model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
+                    foreach (var item in response.Trees)
                     {
-                        Id = item.Id,
-                        LabelId = item.LabelId,
-                        AccessType = item.AccessType,
-                        UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
-                    };
-                    tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
-                    model.Trees.Add(tree);
+                        Models.Shared.Tree tree = new Models.Shared.Tree
+                        {
+                            Id = item.Id,
+                            LabelId = item.LabelId,
+                            AccessType = item.AccessType,
+                            UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
+                        };
+                        tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                        model.Trees.Add(tree);
+                    }
                 }
                 #endregion
                 return View(model);
@@ -219,7 +223,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 return View("Error");
             }
-            
+
         }
 
         public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
@@ -237,7 +241,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
                 response = _webSessionService.SaveMediaSelection(request);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-                
+
                 if (response.Success)
                 {
                     //var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : response.ControllerDetails.Name;
@@ -332,17 +336,17 @@ namespace Km.AdExpressClientWeb.Controllers
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            int studyId = (isComparativeStudy) ? CALENDARSTUDYID:0;
+            int studyId = (isComparativeStudy) ? CALENDARSTUDYID : 0;
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep, studyId);
             PeriodResponse response = _periodService.CalendarValidation(request);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
-            string action= (this._controller==SELECTION && nextStep== INDEX)? MARKET:nextStep;
+            string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
             {
                 url = context.Action(action, this._controller);
-                jsonModel = Json(new { Success= true, RedirectUrl = url });
+                jsonModel = Json(new { Success = true, RedirectUrl = url });
             }
             else
             {
@@ -351,13 +355,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep, bool isComparativeStudy=false)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep, bool isComparativeStudy = false)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            int studyId =(isComparativeStudy)?SLIDINGSTUDYID :0;//TO BE VERIFIED
+            int studyId = (isComparativeStudy) ? SLIDINGSTUDYID : 0;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
             var response = _periodService.SlidingDateValidation(request);
             this._controller = response.ControllerDetails.Name;
@@ -375,6 +379,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        
-        }
+
+    }
 }

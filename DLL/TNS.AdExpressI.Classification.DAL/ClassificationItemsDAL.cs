@@ -687,7 +687,8 @@ namespace TNS.AdExpressI.Classification.DAL
 
                 case WebConstantes.Module.Name.FACEBOOK:
                     return GetFacebookClassificationBrand(dimension);
-
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                    return GetMediaAgencyClassificationBrand(dimension);
                 default:
                     return GetDefaultClassificationBrand(dimension);
             }
@@ -877,7 +878,18 @@ namespace TNS.AdExpressI.Classification.DAL
                     return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
                 case Dimension.media:
                     return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                case Dimension.advertisingAgency:
+                //case Dimension.advertisingAgency:
+                //    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+        }
+
+        private View GetMediaAgencyClassificationBrand(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
                     return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
                 default:
                     throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));

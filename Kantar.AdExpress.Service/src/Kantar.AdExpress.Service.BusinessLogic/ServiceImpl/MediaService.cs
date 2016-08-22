@@ -25,6 +25,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     public class MediaService : IMediaService
     {
         private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private const string SELECTION = "Selection";
+        private const string PORTFOLIO = "Portfolio";
+        private const string LOSTWON = "LostWon";
+        private const string PRESENTABSENT = "PresentAbsent";
+        private const string MEDIASCHEDULE = "MediaSchedule";
+        private const string ANALYSIS = "Analysis";
+        private const string RESULTS = "Results";
+        private const string MEDIAAGENCY = "MediaAgency";
+        private const string NEW_CREATIVES = "NewCreatives";
+        private const string FACEBOOK = "SocialMedia";
         public MediaResponse GetMedia(string idWebSession)
         {
 
@@ -130,37 +140,47 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                     currentModuleCode = CstWeb.LanguageConstantes.MediaScheduleCode;
-                    currentController = "Selection";
+                    currentController = SELECTION;
                     currentModuleIcon = "icon-chart";
                     break;
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                     currentModuleCode = CstWeb.LanguageConstantes.PortfolioCode;
-                    currentController = "Portfolio";
+                    currentController = PORTFOLIO;
                     currentModuleIcon = "icon-layers";
                     break;
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.LostWonCode;
-                    currentController = "LostWon";
+                    currentController = LOSTWON;
                     currentModuleIcon = "icon-calculator";
                     break;
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                     currentModuleCode = CstWeb.LanguageConstantes.PresentAbsentCode;
-                    currentController = "PresentAbsent";
+                    currentController = PRESENTABSENT;
                     currentModuleIcon = "icon-equalizer";
                     break;
                 case CstWeb.Module.Name.INDICATEUR:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Selection";
+                    currentController = SELECTION;
                     break;
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalysisDetailedReport;
-                    currentController = "Selection";
+                    currentController = SELECTION;
                     currentModuleIcon = "icon-book-open";
                     break;
                 case CstWeb.Module.Name.FACEBOOK:
                     currentModuleCode = CstWeb.LanguageConstantes.FacebookCode;
-                    currentController = "Selection";
+                    currentController = SELECTION;
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = SELECTION;
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
+                    currentController =  SELECTION;
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;

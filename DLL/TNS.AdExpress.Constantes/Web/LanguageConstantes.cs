@@ -138,6 +138,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Close = 2371;
         public const long NotAvailableSession = 2455;
         public const long Receiver = 2483;
+        public const long NewCreatives=2534;
         public const long UnityError = 2541;
         public const long PreSelection = 2571;
         public const long DeleteRequestMessageConfirm = 2572;
@@ -165,6 +166,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertInfoMessage = 2616;
         public const long AlertCreationSucceeded = 2660;
         public const long ComparativeStudyUnvailableForCurrentYear = 2807;
+        public const long MediaAgencyAnalysis = 2809;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
         public const long MaxLengthExceeded = 2946;

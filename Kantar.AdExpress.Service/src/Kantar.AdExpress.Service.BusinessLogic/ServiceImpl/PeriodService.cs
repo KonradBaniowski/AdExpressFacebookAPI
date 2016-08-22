@@ -30,6 +30,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string ANALYSIS = "Analysis";
         private const string FACEBOOK = "SocialMedia";
         private const string RESULTS = "Results";
+        private const string MEDIAAGENCY = "MediaAgency";
+        private const string NEW_CREATIVES = "NewCreatives";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
         public const string YYYY01 = "yyyy01";
@@ -176,38 +178,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             switch (currentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    currentModuleCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
+                    currentModuleCode = LanguageConstantes.MediaScheduleCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
                     currentModuleIcon = "icon-chart";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.PortfolioCode;
-                    currentController = "Portfolio";
+                    currentModuleCode = LanguageConstantes.PortfolioCode;
+                    currentController = PORTFOLIO;
                     currentModuleIcon = "icon-layers";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.LostWonCode;
-                    currentController = "LostWon";
+                    currentModuleCode = LanguageConstantes.LostWonCode;
+                    currentController = LOSTWON;
                     currentModuleIcon = "icon-calculator";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
-                    currentController = "PresentAbsent";
+                    currentModuleCode = LanguageConstantes.PresentAbsentCode;
+                    currentController = PRESENTABSENT;
                     currentModuleIcon = "icon-equalizer";
                     break;
                 case WebConstantes.Module.Name.INDICATEUR:
-                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Selection";
+                    currentModuleCode = LanguageConstantes.AnalysisGraphics;
+                    currentController = SELECTION;
                     break;
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
+                    currentModuleCode = LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
                     currentModuleIcon = "icon-book-open";
                     break;
                 case WebConstantes.Module.Name.FACEBOOK:
-                    currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;
+                    currentModuleCode = LanguageConstantes.FacebookCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = LanguageConstantes.NewCreatives;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? NEW_CREATIVES : SELECTION;
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;

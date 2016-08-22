@@ -88,6 +88,8 @@
                     </div>
                 </div>
             </div>
+            @if (Model.CanRefineMediaSupport)
+            {
             <div class="panel panel-primary panel-results optional-area">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     <div class="panel-heading head-results" role="tab" id="headingTwo">
@@ -253,6 +255,7 @@
                     </div>
                 </div>
             </div>
+            }
         </div>
 
         @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">

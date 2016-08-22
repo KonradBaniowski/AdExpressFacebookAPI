@@ -40,7 +40,7 @@
         RedirectToOldWebSite(@Module.Name.TENDACES);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+        @*RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);*@
 
         //Redirect to Tendencies
         @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
@@ -242,7 +242,7 @@
                 <div class="tile-second">
                     @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
                 {
-                        <a class="tile-body text-center" id="@Module.Name.ANALYSE_MANDATAIRES">
+                        <a href="@Url.Action("Market", "Selection" )"class="tile-body text-center module-done" id="@Module.Name.ANALYSE_MANDATAIRES">
                             <div class="flip-container-second">
                                 <div class="front-second">
                                     <i class="icon-picture sli-size-small green"></i>
