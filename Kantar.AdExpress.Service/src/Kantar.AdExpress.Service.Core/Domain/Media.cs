@@ -22,7 +22,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
             MediaCommon = new List<int>();
             SiteLanguage = siteLanguage;
             MultipleSelection = (currentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA|| currentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES) ? true : false;
-            CanRefineMediaSupport = (currentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES)? false :true;
+            CanRefineMediaSupport = (currentModule == CstWeb.Module.Name.NEW_CREATIVES)? false :true;
         }
         public MediaResponse()
         {
