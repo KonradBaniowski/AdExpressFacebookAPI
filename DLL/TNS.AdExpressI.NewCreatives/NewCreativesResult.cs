@@ -425,7 +425,7 @@ namespace TNS.AdExpressI.NewCreatives {
                             , (long)parution));
                         break;
                     case WebCst.CustomerSessions.Period.DisplayLevel.dayly:
-                        headers.Root.Add(new Header(true, Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString(), _webSession.SiteLanguage), (long)parution));
+                        headers.Root.Add(new Header(true, Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long)parution));
                         break;
                     default:
                         break;
