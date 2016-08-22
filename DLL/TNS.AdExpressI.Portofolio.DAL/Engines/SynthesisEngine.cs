@@ -754,6 +754,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
@@ -791,6 +792,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case DBClassificationConstantes.Vehicles.names.others:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataTvAlert : TableIds.dataTv, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataOutDoorAlert : TableIds.dataOutDoor, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.indoor:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInDoorAlert : TableIds.dataInDoor, _webSession.IsSelectRetailerDisplay).Label;
@@ -1100,7 +1102,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 sql = "select  min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date";
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
-                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.dooh
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                 sql = "select min(DATE_CAMPAIGN_BEGINNING) first_date, max(DATE_CAMPAIGN_END) last_date";
 

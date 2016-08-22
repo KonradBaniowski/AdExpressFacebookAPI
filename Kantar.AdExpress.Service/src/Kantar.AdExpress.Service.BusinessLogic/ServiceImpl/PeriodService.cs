@@ -15,6 +15,7 @@ using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections.Generic;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -29,11 +30,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string ANALYSIS = "Analysis";
         private const string FACEBOOK = "SocialMedia";
         private const string RESULTS = "Results";
+        private const string MEDIAAGENCY = "MediaAgency";
+        private const string NEW_CREATIVES = "NewCreatives";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
         public const string YYYY01 = "yyyy01";
         public const string YYYY12 = "yyyy12";
         #endregion
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         WebSession _customerSession = null;
         public WebConstantes.globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.currentDay;
         public WebConstantes.globalCalendar.comparativePeriodType comparativePeriodCalendarType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
@@ -67,8 +71,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Success = false;
-
                 result.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             return result;
 
@@ -122,12 +127,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         GetDefaultPeriod(_customerSession, result);
                         break;
                 }
+                result.Success = true;
             }
             catch (Exception ex)
             {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace);
+                Logger.Log(LogLevel.Error, message);
                 result.Success = false;
-
-                result.ErrorMessage = "Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
+                result.ErrorMessage = message; //"Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
             }
             return result;
         }
@@ -136,27 +143,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             var result = new PeriodResponse();
             _customerSession = (WebSession)WebSession.Load(request.IdWebSession);
-            result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, request.NextStep);
-            result.SiteLanguage = _customerSession.SiteLanguage;
-            switch (_customerSession.CurrentModule)
+            try
             {
-                case WebConstantes.Module.Name.INDICATEUR:
-                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    AnalysisSlidingValidation(request, result, _customerSession);
-                    break;
-                case WebConstantes.Module.Name.FACEBOOK:
-                    SocialMediaSlidingValidation(request, result, _customerSession);
-                    break;
-                default:
-                    DefaultSlidingPeriodValidation(request, result, _customerSession);
-                    break;
+                result.ControllerDetails = GetCurrentControllerDetails(_customerSession.CurrentModule, request.NextStep);
+                result.SiteLanguage = _customerSession.SiteLanguage;
+                switch (_customerSession.CurrentModule)
+                {
+                    case WebConstantes.Module.Name.INDICATEUR:
+                    case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                        AnalysisSlidingValidation(request, result, _customerSession);
+                        break;
+                    case WebConstantes.Module.Name.FACEBOOK:
+                        SocialMediaSlidingValidation(request, result, _customerSession);
+                        break;
+                    default:
+                        DefaultSlidingPeriodValidation(request, result, _customerSession);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             return result;
-        }
-
-        private void ClearPeriod(WebSession _customerSession)
-        {
-            throw new NotImplementedException();
         }
 
         private ControllerDetails GetCurrentControllerDetails(long currentModule, string nextStep = "")
@@ -167,38 +178,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             switch (currentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    currentModuleCode = WebConstantes.LanguageConstantes.MediaScheduleCode;
+                    currentModuleCode = LanguageConstantes.MediaScheduleCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
                     currentModuleIcon = "icon-chart";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.PortfolioCode;
-                    currentController = "Portfolio";
+                    currentModuleCode = LanguageConstantes.PortfolioCode;
+                    currentController = PORTFOLIO;
                     currentModuleIcon = "icon-layers";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.LostWonCode;
-                    currentController = "LostWon";
+                    currentModuleCode = LanguageConstantes.LostWonCode;
+                    currentController = LOSTWON;
                     currentModuleIcon = "icon-calculator";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.PresentAbsentCode;
-                    currentController = "PresentAbsent";
+                    currentModuleCode = LanguageConstantes.PresentAbsentCode;
+                    currentController = PRESENTABSENT;
                     currentModuleIcon = "icon-equalizer";
                     break;
                 case WebConstantes.Module.Name.INDICATEUR:
-                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisGraphics;
-                    currentController = "Selection";
+                    currentModuleCode = LanguageConstantes.AnalysisGraphics;
+                    currentController = SELECTION;
                     break;
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                    currentModuleCode = WebConstantes.LanguageConstantes.AnalysisDetailedReport;
+                    currentModuleCode = LanguageConstantes.AnalysisDetailedReport;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSIS : SELECTION;
                     currentModuleIcon = "icon-book-open";
                     break;
                 case WebConstantes.Module.Name.FACEBOOK:
-                    currentModuleCode = WebConstantes.LanguageConstantes.FacebookCode;
+                    currentModuleCode = LanguageConstantes.FacebookCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = LanguageConstantes.NewCreatives;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? NEW_CREATIVES : SELECTION;
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;
@@ -280,7 +301,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region Try-Catch block
                 try
                 {
-                    SaveSocialMediaCalendarData( _customerSession, result, startDate, endDate);
+                    SaveSocialMediaCalendarData(_customerSession, result, startDate, endDate);
                     _customerSession.Save();
                 }
                 catch (Exception ex)
@@ -415,7 +436,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        private PeriodResponse SaveSocialMediaCalendarData( WebSession webSession, PeriodResponse result, DateTime startDate, DateTime endDate)
+        private PeriodResponse SaveSocialMediaCalendarData(WebSession webSession, PeriodResponse result, DateTime startDate, DateTime endDate)
         {
 
             webSession.PeriodType = CstPeriodType.dateToDate;
@@ -437,13 +458,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 HandleSlidingData(request, webSession, result);
             }
-            catch (TNS.AdExpress.Domain.Exceptions.NoDataException)
+            catch (TNS.AdExpress.Domain.Exceptions.NoDataException exception)
             {
                 result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, exception.InnerException + exception.Message);
+                Logger.Log(LogLevel.Error, message);
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
 
             #endregion
@@ -670,6 +695,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 response.Success = false;
                 response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
         }
 

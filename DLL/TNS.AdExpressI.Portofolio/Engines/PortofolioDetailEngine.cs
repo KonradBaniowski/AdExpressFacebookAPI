@@ -278,6 +278,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:

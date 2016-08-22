@@ -8,6 +8,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
     public class SubPeriod
     {
+        public string LeaveZoom { get; set; }
+
         public string PeriodLabel { get; set; }
 
         public string FirstPeriodLabel { get; set; }

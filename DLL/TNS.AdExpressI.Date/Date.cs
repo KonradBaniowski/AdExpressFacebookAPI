@@ -631,6 +631,7 @@ namespace TNS.AdExpressI.Date {
                 case Vehicles.names.tvNonTerrestrials:
                 case Vehicles.names.others:
                 case Vehicles.names.outdoor:
+                case Vehicles.names.dooh:
                 case Vehicles.names.instore:
                 case Vehicles.names.indoor:
                 case Vehicles.names.cinema:

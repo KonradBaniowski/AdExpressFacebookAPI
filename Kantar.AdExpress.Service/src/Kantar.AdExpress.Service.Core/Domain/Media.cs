@@ -21,7 +21,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
             Media = new List<Core.Domain.Media>();
             MediaCommon = new List<int>();
             SiteLanguage = siteLanguage;
-            MultipleSelection = (currentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA) ? true : false;
+            MultipleSelection = (currentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA|| currentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES) ? true : false;
+            CanRefineMediaSupport = (currentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES)? false :true;
         }
         public MediaResponse()
         {
@@ -34,6 +35,9 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<int> MediaCommon { get; set; }
         public ControllerDetails ControllerDetails { get; set;}
         public bool MultipleSelection { get; set; }
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public bool CanRefineMediaSupport { get; set;}
     }
 
     public class ControllerDetails

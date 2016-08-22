@@ -27,11 +27,13 @@ using ClassificationCst = TNS.AdExpress.Constantes.Classification;
 using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.Classification.Universe;
 using Kantar.AdExpress.Service.Core.Domain;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public partial class OptionService : IOptionService
     {
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         private WebSession _customerWebSession = null;
         private WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
         private WebNavigation.Module _currentModule;
@@ -45,721 +47,738 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
 
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
-            _currentModule = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule);
-
             Options options = new Options();
-
-            options.SiteLanguage = _customerWebSession.SiteLanguage;
-
-            switch (_customerWebSession.CurrentModule)
+            try
             {
-                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
-                    _nbDetailLevelItemList = 4;
-                    break;
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
-                    _nbDetailLevelItemList = 3;
-                    break;
-            }
+                _currentModule = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule);
+                options.SiteLanguage = _customerWebSession.SiteLanguage;
+                switch (_customerWebSession.CurrentModule)
+                {
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
+                        _nbDetailLevelItemList = 4;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                        _nbDetailLevelItemList = 3;
+                        break;
+                }
 
-            #region GenericDetailLevelOption
-            GenericDetailLevelOption genericDetailLevelOption = new GenericDetailLevelOption();
+                #region GenericDetailLevelOption
+                GenericDetailLevelOption genericDetailLevelOption = new GenericDetailLevelOption();
 
-            #region on vérifie que le niveau sélectionné à le droit d'être utilisé
-            bool canAddDetail = false;
-            switch (_componentProfile)
-            {
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    try
-                    {
-                        canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
-                    }
-                    catch { }
-                    if (!canAddDetail)
-                    {
-                        // Niveau de détail par défaut
-                        ArrayList levelsIds = new ArrayList();
-                        switch (_customerWebSession.CurrentModule)
+                #region on vérifie que le niveau sélectionné à le droit d'être utilisé
+                bool canAddDetail = false;
+                switch (_componentProfile)
+                {
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                        try
                         {
-                            case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
-                                break;
-                            case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.sector);
-                                break;
-                            default:
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
-                                levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
-                                break;
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
                         }
-                        _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
-                    }
-                    break;
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    try
-                    {
-                        canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
-                    }
-                    catch { }
-                    if (!canAddDetail)
-                    {
-                        // Niveau de détail par défaut
-                        ArrayList levelsIds = new ArrayList();
-                        levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                        _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
-                    }
-                    break;
-            }
-            #endregion
+                        catch { }
+                        if (!canAddDetail)
+                        {
+                            // Niveau de détail par défaut
+                            ArrayList levelsIds = new ArrayList();
+                            switch (_customerWebSession.CurrentModule)
+                            {
+                                case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
+                                    break;
+                                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.sector);
+                                    break;
+                                default:
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
+                                    levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
+                                    break;
+                            }
+                            _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                        }
+                        break;
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                        try
+                        {
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
+                        }
+                        catch { }
+                        if (!canAddDetail)
+                        {
+                            // Niveau de détail par défaut
+                            ArrayList levelsIds = new ArrayList();
+                            levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                            _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                        }
+                        break;
+                }
+                #endregion
 
-            #region Niveau de détaille par défaut
-            genericDetailLevelOption.DefaultDetail = new SelectControl();
-            genericDetailLevelOption.DefaultDetail.Id = "defaultDetail";
-            genericDetailLevelOption.DefaultDetail.Items = new List<SelectItem>();
-            genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            int DefaultDetailLevelId = 0;
-            ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
-            foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
-            {
-                if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
-                    genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString() });
-                DefaultDetailLevelId++;
-            }
-            switch (_componentProfile)
-            {
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    _customerGenericDetailLevel = _customerWebSession.GenericMediaDetailLevel;
-                    break;
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    _customerGenericDetailLevel = _customerWebSession.GenericProductDetailLevel;
-                    break;
-            }
-            if (_customerWebSession.GenericMediaDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels)
-            {
-                int index = -1;
+                #region Niveau de détaille par défaut
+                genericDetailLevelOption.DefaultDetail = new SelectControl();
+                genericDetailLevelOption.DefaultDetail.Id = "defaultDetail";
+                genericDetailLevelOption.DefaultDetail.Items = new List<SelectItem>();
+                genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
+                int DefaultDetailLevelId = 0;
+                ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
                 foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
                 {
-                    index++;
-                    if (currentLevel.EqualLevelItems(_customerGenericDetailLevel))
-                        genericDetailLevelOption.DefaultDetail.SelectedId = index.ToString();
+                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
+                        genericDetailLevelOption.DefaultDetail.Items.Add(new SelectItem { Text = currentLevel.GetLabel(_customerWebSession.SiteLanguage), Value = DefaultDetailLevelId.ToString() });
+                    DefaultDetailLevelId++;
                 }
-            }
-            if (_customerGenericDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels)
-            {
-                //						
-                foreach (GenericDetailLevelSaved currentLevel in _genericDetailLevelsSaved.Values)
+                switch (_componentProfile)
                 {
-                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule) && currentLevel.EqualLevelItems(_customerWebSession.GenericMediaDetailLevel))
-                        genericDetailLevelOption.DefaultDetail.SelectedId = currentLevel.Id.ToString();
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                        _customerGenericDetailLevel = _customerWebSession.GenericMediaDetailLevel;
+                        break;
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                        _customerGenericDetailLevel = _customerWebSession.GenericProductDetailLevel;
+                        break;
                 }
-            }
-            switch (_componentProfile)
-            {
-                case WebConstantes.GenericDetailLevel.ComponentProfile.media:
-                    _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
-                    break;
-                case WebConstantes.GenericDetailLevel.ComponentProfile.product:
-                    _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
-                    break;
-            }
-            #endregion
-
-            #region Niveau de détaille par personnalisé
-            // Obtient les niveaux de détail sauvegardés		
-            ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
-            genericDetailLevelOption.CustomDetail = new SelectControl();
-            genericDetailLevelOption.CustomDetail.Id = "customDetail";
-            genericDetailLevelOption.CustomDetail.Items = new List<SelectItem>();
-            genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
-            {
-                if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                if (_customerWebSession.GenericMediaDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels)
                 {
-                    genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString() });
-                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
-                }
-            }
-            #endregion
-
-            #region Niveau de détaille par défaut
-
-            #region L1
-            if (_nbDetailLevelItemList >= 1)
-            {
-                genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
-            }
-            #endregion
-
-            #region L2
-            if (_nbDetailLevelItemList >= 2)
-            {
-                genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
-            }
-            #endregion
-
-            #region L3
-            if (_nbDetailLevelItemList >= 3)
-            {
-                genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
-            }
-            #endregion
-
-            #region L4
-            if (_nbDetailLevelItemList >= 4)
-            {
-                genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
-            }
-            #endregion
-
-            #endregion
-
-            options.GenericDetailLevel = genericDetailLevelOption;
-
-
-            #endregion
-
-            #region PeriodDetailOption
-            PeriodDetailOption PeriodDetail = new PeriodDetailOption();
-
-            PeriodDetail.PeriodDetailType = new SelectControl();
-            PeriodDetail.PeriodDetailType.Id = "periodDetailType";
-            PeriodDetail.PeriodDetailType.Items = new List<SelectItem>();
-            PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
-            PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
-            DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
-            if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
-            {
-                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
-            }
-
-            if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
-            {
-                if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
-                    < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
-                {
-                    _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
-                }
-            }
-
-            PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
-
-            options.PeriodDetail = PeriodDetail;
-            #endregion
-
-            #region resultTypeOption
-            if (WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA != _customerWebSession.CurrentModule)
-            {
-                ResultTypeOption resultTypeOption = new ResultTypeOption();
-
-                resultTypeOption.ResultType = new SelectControl();
-                resultTypeOption.ResultType.Id = "resultType";
-                resultTypeOption.ResultType.Items = new List<SelectItem>();
-
-                List<long> resultToShow = new List<long>();
-                var selectedMediaUniverse = GetSelectedUniverseMedia(_customerWebSession);
-                List<WebNavigation.ResultPageInformation> resultPages = _currentModule.GetValidResultsPage(selectedMediaUniverse);
-
-                foreach (WebNavigation.ResultPageInformation current in resultPages)
-                {
-                    if (!CanShowResult(_customerWebSession, current)) continue;
-                    resultToShow.Add(current.Id);
-                    resultTypeOption.ResultType.Items.Add(new SelectItem
+                    int index = -1;
+                    foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
                     {
-                        Text = GestionWeb.GetWebWord(current.IdWebText,
-                        _customerWebSession.SiteLanguage),
-                        Value = current.Id.ToString()
-                    });
+                        index++;
+                        if (currentLevel.EqualLevelItems(_customerGenericDetailLevel))
+                            genericDetailLevelOption.DefaultDetail.SelectedId = index.ToString();
+                    }
                 }
-                SetDefaultTab(resultToShow, _customerWebSession, resultTypeOption, options);
-            }
-
-            #endregion
-
-
-
-            #region Options by Vehicle
-            string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
-            string[] vehicles = vehicleListId.Split(',');
-            bool autopromoEvaliantOption = false;
-            bool insertOption = false;
-            foreach (string cVehicle in vehicles)
-            {
-                switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                if (_customerGenericDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels)
                 {
-                    case Vehicles.names.adnettrack:
-                    case Vehicles.names.evaliantMobile:
-                    case Vehicles.names.mms:
-                        autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                    //						
+                    foreach (GenericDetailLevelSaved currentLevel in _genericDetailLevelsSaved.Values)
+                    {
+                        if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule) && currentLevel.EqualLevelItems(_customerWebSession.GenericMediaDetailLevel))
+                            genericDetailLevelOption.DefaultDetail.SelectedId = currentLevel.Id.ToString();
+                    }
+                }
+                switch (_componentProfile)
+                {
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.media:
+                        _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                         break;
-                    case Vehicles.names.press:
-                    case Vehicles.names.newspaper:
-                    case Vehicles.names.magazine:
-                    case Vehicles.names.internationalPress:
-                        if (WebApplicationParameters.AllowInsetOption) insertOption = true;
+                    case WebConstantes.GenericDetailLevel.ComponentProfile.product:
+                        _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
                         break;
                 }
-            }
-            #endregion
-            #region UnitOption
+                #endregion
 
-            UnitOption unitOption = new UnitOption();
+                #region Niveau de détaille par personnalisé
+                // Obtient les niveaux de détail sauvegardés		
+                ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
+                genericDetailLevelOption.CustomDetail = new SelectControl();
+                genericDetailLevelOption.CustomDetail.Id = "customDetail";
+                genericDetailLevelOption.CustomDetail.Items = new List<SelectItem>();
+                genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
+                foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
+                {
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    {
+                        genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = currentGenericLevel.GetLabel(_customerWebSession.SiteLanguage), Value = currentGenericLevel.Id.ToString() });
+                        _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    }
+                }
+                #endregion
 
-            unitOption.Unit = new SelectControl();
-            unitOption.Unit.Id = "unit";
-            unitOption.Unit.Items = new List<SelectItem>();
-            var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
-            var vehicleInformation = VehiclesInformation.Get(Convert.ToInt64(vehicles[0])); 
-            List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
-            for (int i = 0; i < units.Count; i++)
-            {
-                unitInformationDictionary.Add(units[i].Id, units[i]);
-            }
-            //if (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit))
-            //{
+                #region Niveau de détaille par défaut
+
+                #region L1
+                if (_nbDetailLevelItemList >= 1)
+                {
+                    genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
+                }
+                #endregion
+
+                #region L2
+                if (_nbDetailLevelItemList >= 2)
+                {
+                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
+                }
+                #endregion
+
+                #region L3
+                if (_nbDetailLevelItemList >= 3)
+                {
+                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
+                }
+                #endregion
+
+                #region L4
+                if (_nbDetailLevelItemList >= 4)
+                {
+                    genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
+                }
+                #endregion
+
+                #endregion
+
+                options.GenericDetailLevel = genericDetailLevelOption;
+
+
+                #endregion
+
+                #region PeriodDetailOption
+                PeriodDetailOption PeriodDetail = new PeriodDetailOption();
+
+                PeriodDetail.PeriodDetailType = new SelectControl();
+                PeriodDetail.PeriodDetailType.Id = "periodDetailType";
+                PeriodDetail.PeriodDetailType.Items = new List<SelectItem>();
+                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
+                PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
+                DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
+                if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                {
+                    PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
+                }
+
+                if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
+                {
+                    if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                    {
+                        _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+                    }
+                }
+
+                PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
+
+                options.PeriodDetail = PeriodDetail;
+                #endregion
+
+                #region resultTypeOption
+                if (WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA != _customerWebSession.CurrentModule)
+                {
+                    ResultTypeOption resultTypeOption = new ResultTypeOption();
+
+                    resultTypeOption.ResultType = new SelectControl();
+                    resultTypeOption.ResultType.Id = "resultType";
+                    resultTypeOption.ResultType.Items = new List<SelectItem>();
+
+                    List<long> resultToShow = new List<long>();
+                    var selectedMediaUniverse = GetSelectedUniverseMedia(_customerWebSession);
+                    List<WebNavigation.ResultPageInformation> resultPages = _currentModule.GetValidResultsPage(selectedMediaUniverse);
+
+                    foreach (WebNavigation.ResultPageInformation current in resultPages)
+                    {
+                        if (!CanShowResult(_customerWebSession, current)) continue;
+                        resultToShow.Add(current.Id);
+                        resultTypeOption.ResultType.Items.Add(new SelectItem
+                        {
+                            Text = GestionWeb.GetWebWord(current.IdWebText,
+                            _customerWebSession.SiteLanguage),
+                            Value = current.Id.ToString()
+                        });
+                    }
+                    SetDefaultTab(resultToShow, _customerWebSession, resultTypeOption, options);
+                }
+
+                #endregion
+
+
+
+                #region Options by Vehicle
+                string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
+                string[] vehicles = vehicleListId.Split(',');
+                bool autopromoEvaliantOption = false;
+                bool insertOption = false;
+                foreach (string cVehicle in vehicles)
+                {
+                    switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                    {
+                        case Vehicles.names.adnettrack:
+                        case Vehicles.names.evaliantMobile:
+                        case Vehicles.names.mms:
+                            autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                            break;
+                        case Vehicles.names.press:
+                        case Vehicles.names.newspaper:
+                        case Vehicles.names.magazine:
+                        case Vehicles.names.internationalPress:
+                            if (WebApplicationParameters.AllowInsetOption) insertOption = true;
+                            break;
+                    }
+                }
+                #endregion
+                #region UnitOption
+
+                UnitOption unitOption = new UnitOption();
+
+                unitOption.Unit = new SelectControl();
+                unitOption.Unit.Id = "unit";
+                unitOption.Unit.Items = new List<SelectItem>();
+                var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+                var vehicleInformation = VehiclesInformation.Get(Convert.ToInt64(vehicles[0]));
+                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                for (int i = 0; i < units.Count; i++)
+                {
+                    unitInformationDictionary.Add(units[i].Id, units[i]);
+                }
+                //if (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit))
+                //{
                 _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
-            //}
-            foreach (UnitInformation currentUnit in units)
-            {
-                if (currentUnit.Id != ConstantesSession.Unit.volume || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                //}
+                foreach (UnitInformation currentUnit in units)
                 {
-                    if (currentUnit.Id != ConstantesSession.Unit.volumeMms || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
-                        unitOption.Unit.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentUnit.WebTextId, _customerWebSession.SiteLanguage), Value = currentUnit.Id.GetHashCode().ToString() });
-                    else if (_customerWebSession.Unit == ConstantesSession.Unit.volumeMms)
+                    if (currentUnit.Id != ConstantesSession.Unit.volume || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                    {
+                        if (currentUnit.Id != ConstantesSession.Unit.volumeMms || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
+                            unitOption.Unit.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentUnit.WebTextId, _customerWebSession.SiteLanguage), Value = currentUnit.Id.GetHashCode().ToString() });
+                        else if (_customerWebSession.Unit == ConstantesSession.Unit.volumeMms)
+                            _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    }
+                    else if (_customerWebSession.Unit == ConstantesSession.Unit.volume)
                         _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
                 }
-                else if (_customerWebSession.Unit == ConstantesSession.Unit.volume)
-                    _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-            }
 
-            if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
-            {
-                if (ContainsDefaultCurrency(units))
-                    _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-                else
-                    _customerWebSession.Unit = units[0].Id;
-            }
-
-            unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
-
-            options.UnitOption = unitOption;
-            #endregion
-            #region InsertionOption
-            InsertionOption insertionOption = new InsertionOption();
-
-            insertionOption.Insertion = new SelectControl();
-            insertionOption.Insertion.Id = "insertion";
-            insertionOption.Insertion.Visible = insertOption;
-            insertionOption.Insertion.Items = new List<SelectItem>();
-
-            List<ConstantesSession.Insert> inserts = WebCore.Utilities.Units.getInserts();
-            for (int j = 0; j < inserts.Count; j++)
-            {
-                insertionOption.Insertion.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.InsertsTraductionCodes[(ConstantesSession.Insert)inserts[j]], _customerWebSession.SiteLanguage), Value = ((int)(ConstantesSession.Insert)inserts[j]).ToString() });
-            }
-
-            insertionOption.Insertion.SelectedId = _customerWebSession.Insert.GetHashCode().ToString();
-
-            options.InsertionOption = insertionOption;
-            #endregion
-
-            #region AutoPromoOption
-            AutoPromoOption autoPromoOption = new AutoPromoOption();
-
-            autoPromoOption.AutoPromo = new SelectControl();
-            autoPromoOption.AutoPromo.Id = "autoPromo";
-            autoPromoOption.AutoPromo.Visible = autopromoEvaliantOption;
-            autoPromoOption.AutoPromo.Items = new List<SelectItem>();
-
-            ArrayList autoPromoItems = new ArrayList();
-            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.total], _customerWebSession.SiteLanguage), Value = "0" });
-            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoAdvertiser], _customerWebSession.SiteLanguage), Value = "1" });
-            autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoHoldingCompany], _customerWebSession.SiteLanguage), Value = "2" });
-
-            autoPromoOption.AutoPromo.SelectedId = _customerWebSession.AutoPromo.GetHashCode().ToString();
-
-            options.AutoPromoOption = autoPromoOption;
-            #endregion
-
-            #region FormatOption
-            FormatOption formatOption = new FormatOption();
-
-            formatOption.Format = new SelectControl();
-            formatOption.Format.Id = "format";
-            formatOption.Format.Visible = autopromoEvaliantOption;
-            formatOption.Format.Items = new List<SelectItem>();
-
-            var activeBannersFormatList = new List<FilterItem>(_customerWebSession.GetValidFormatList(_customerWebSession.GetVehiclesSelected()).Values);
-            if (activeBannersFormatList.Count > 0)
-            {
-                foreach (FilterItem item in activeBannersFormatList)
+                if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
                 {
-                    formatOption.Format.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                    if (ContainsDefaultCurrency(units))
+                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    else
+                        _customerWebSession.Unit = units[0].Id;
                 }
 
-                if (string.IsNullOrEmpty(_customerWebSession.SelectedBannersFormatList))
-                    formatOption.Format.SelectedId = string.Join(",", activeBannersFormatList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
-                else formatOption.Format.SelectedId = _customerWebSession.SelectedBannersFormatList;
-            }
-            else
-            {
-                formatOption.Format.Visible = false;
-            }
+                unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
 
-            options.FormatOption = formatOption;
-            #endregion
+                options.UnitOption = unitOption;
+                #endregion
+                #region InsertionOption
+                InsertionOption insertionOption = new InsertionOption();
 
-            #region PurchaseModeOption
-            bool showPurchaseMode = false;
-            if (WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
-                && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-                && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-                showPurchaseMode = true;
+                insertionOption.Insertion = new SelectControl();
+                insertionOption.Insertion.Id = "insertion";
+                insertionOption.Insertion.Visible = insertOption;
+                insertionOption.Insertion.Items = new List<SelectItem>();
+
+                List<ConstantesSession.Insert> inserts = WebCore.Utilities.Units.getInserts();
+                for (int j = 0; j < inserts.Count; j++)
+                {
+                    insertionOption.Insertion.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.InsertsTraductionCodes[(ConstantesSession.Insert)inserts[j]], _customerWebSession.SiteLanguage), Value = ((int)(ConstantesSession.Insert)inserts[j]).ToString() });
+                }
+
+                insertionOption.Insertion.SelectedId = _customerWebSession.Insert.GetHashCode().ToString();
+
+                options.InsertionOption = insertionOption;
+                #endregion
+
+                #region AutoPromoOption
+                AutoPromoOption autoPromoOption = new AutoPromoOption();
+
+                autoPromoOption.AutoPromo = new SelectControl();
+                autoPromoOption.AutoPromo.Id = "autoPromo";
+                autoPromoOption.AutoPromo.Visible = autopromoEvaliantOption;
+                autoPromoOption.AutoPromo.Items = new List<SelectItem>();
+
+                ArrayList autoPromoItems = new ArrayList();
+                autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.total], _customerWebSession.SiteLanguage), Value = "0" });
+                autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoAdvertiser], _customerWebSession.SiteLanguage), Value = "1" });
+                autoPromoOption.AutoPromo.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord((int)ConstantesSession.AutoPromoTraductionCodes[ConstantesSession.AutoPromo.exceptAutoPromoHoldingCompany], _customerWebSession.SiteLanguage), Value = "2" });
+
+                autoPromoOption.AutoPromo.SelectedId = _customerWebSession.AutoPromo.GetHashCode().ToString();
+
+                options.AutoPromoOption = autoPromoOption;
+                #endregion
+
+                #region FormatOption
+                FormatOption formatOption = new FormatOption();
+
+                formatOption.Format = new SelectControl();
+                formatOption.Format.Id = "format";
+                formatOption.Format.Visible = autopromoEvaliantOption;
+                formatOption.Format.Items = new List<SelectItem>();
+
+                var activeBannersFormatList = new List<FilterItem>(_customerWebSession.GetValidFormatList(_customerWebSession.GetVehiclesSelected()).Values);
+                if (activeBannersFormatList.Count > 0)
+                {
+                    foreach (FilterItem item in activeBannersFormatList)
+                    {
+                        formatOption.Format.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                    }
+
+                    if (string.IsNullOrEmpty(_customerWebSession.SelectedBannersFormatList))
+                        formatOption.Format.SelectedId = string.Join(",", activeBannersFormatList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                    else formatOption.Format.SelectedId = _customerWebSession.SelectedBannersFormatList;
+                }
+                else
+                {
+                    formatOption.Format.Visible = false;
+                }
+
+                options.FormatOption = formatOption;
+                #endregion
+
+                #region PurchaseModeOption
+                bool showPurchaseMode = false;
+                if (WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
+                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                    showPurchaseMode = true;
 
                 PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
 
-            purchaseModeOption.PurchaseMode = new SelectControl();
-            purchaseModeOption.PurchaseMode.Id = "purchaseMode";
-            purchaseModeOption.PurchaseMode.Visible = autopromoEvaliantOption;
-            purchaseModeOption.PurchaseMode.Items = new List<SelectItem>();
+                purchaseModeOption.PurchaseMode = new SelectControl();
+                purchaseModeOption.PurchaseMode.Id = "purchaseMode";
+                purchaseModeOption.PurchaseMode.Visible = autopromoEvaliantOption;
+                purchaseModeOption.PurchaseMode.Items = new List<SelectItem>();
 
-            Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
-            if (showPurchaseMode && VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
-            {
-                var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
-                if (purchaseModeList.Count > 0)
+                Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
+                if (showPurchaseMode && VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
                 {
-                    foreach (FilterItem item in purchaseModeList)
+                    var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                    if (purchaseModeList.Count > 0)
                     {
-                        purchaseModeOption.PurchaseMode.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
-                    }
+                        foreach (FilterItem item in purchaseModeList)
+                        {
+                            purchaseModeOption.PurchaseMode.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                        }
 
-                    if (string.IsNullOrEmpty(_customerWebSession.SelectedPurchaseModeList))
-                        purchaseModeOption.PurchaseMode.SelectedId = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
-                    else purchaseModeOption.PurchaseMode.SelectedId = _customerWebSession.SelectedPurchaseModeList;
+                        if (string.IsNullOrEmpty(_customerWebSession.SelectedPurchaseModeList))
+                            purchaseModeOption.PurchaseMode.SelectedId = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                        else purchaseModeOption.PurchaseMode.SelectedId = _customerWebSession.SelectedPurchaseModeList;
+                    }
+                    else
+                    {
+                        purchaseModeOption.PurchaseMode.Visible = false;
+                    }
                 }
                 else
                 {
                     purchaseModeOption.PurchaseMode.Visible = false;
                 }
-            }
-            else
-            {
-                purchaseModeOption.PurchaseMode.Visible = false;
-            }
 
-            options.PurchaseModeOption = purchaseModeOption;
-            #endregion
+                options.PurchaseModeOption = purchaseModeOption;
+                #endregion
 
-            #region initializeMedia
-            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
-            {
-                CheckBoxOption initializeMedia = new CheckBoxOption();
-                initializeMedia.Id = "initializeMedia";
-
-                if (_customerWebSession.PrincipalMediaUniverses.Count > 0)
+                #region initializeMedia
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
                 {
-                    initializeMedia.Enabled = true;
+                    CheckBoxOption initializeMedia = new CheckBoxOption();
+                    initializeMedia.Id = "initializeMedia";
+
+                    if (_customerWebSession.PrincipalMediaUniverses.Count > 0)
+                    {
+                        initializeMedia.Enabled = true;
+                    }
+                    else
+                    {
+                        initializeMedia.Enabled = false;
+                    }
+
+                    options.InitializeMedia = initializeMedia;
+                }
+                #endregion
+
+                #region initializeProduct
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+                {
+                    CheckBoxOption initializeProduct = new CheckBoxOption();
+                    initializeProduct.Id = "initializeProduct";
+
+                    if (_customerWebSession.PrincipalProductUniverses.Count > 0
+                        || _customerWebSession.SecondaryProductUniverses.Count > 0)
+                    {
+                        initializeProduct.Enabled = true;
+                    }
+                    else
+                    {
+                        initializeProduct.Enabled = false;
+                    }
+
+                    options.InitializeProduct = initializeProduct;
+                }
+                #endregion
+
+                #region PDM
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                  || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+                {
+                    CheckBoxOption pdm = new CheckBoxOption();
+                    pdm.Id = "pdmEvol";
+                    if (_customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
+                        || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
+                        )
+                        pdm.Value = true;
+                    else pdm.Value = _customerWebSession.Percentage;
+                    options.PDM = pdm;
+                }
+                #endregion
+
+                switch (_customerWebSession.CurrentModule)
+                {
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                        options.GenericColumnDetailLevelOption = GetGenericColumnLevelDetailOptions();
+                        break;
+                }
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                {
+                    options.ComparativeStudy = _customerWebSession.ComparativeStudy;
+                    _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
+                    options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
                 }
                 else
+                    options.ComparativeStudy = false;
+
+                if (WebApplicationParameters.UseRetailer)
                 {
-                    initializeMedia.Enabled = false;
-                }
-
-                options.InitializeMedia = initializeMedia;
-            }
-            #endregion
-
-            #region initializeProduct
-            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
-                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
-            {
-                CheckBoxOption initializeProduct = new CheckBoxOption();
-                initializeProduct.Id = "initializeProduct";
-
-                if (_customerWebSession.PrincipalProductUniverses.Count > 0
-                    || _customerWebSession.SecondaryProductUniverses.Count > 0)
-                {
-                    initializeProduct.Enabled = true;
+                    options.IsSelectRetailerDisplay = _customerWebSession.IsSelectRetailerDisplay;
                 }
                 else
-                {
-                    initializeProduct.Enabled = false;
-                }
+                    options.IsSelectRetailerDisplay = false;
 
-                options.InitializeProduct = initializeProduct;
+
+                _customerWebSession.Save();
             }
-            #endregion
-
-            #region PDM
-            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-              || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE)
+            catch (Exception ex)
             {
-                CheckBoxOption pdm = new CheckBoxOption();
-                pdm.Id = "pdmEvol";
-                if (_customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
-                    || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
-                    )
-                    pdm.Value = true;
-                else    pdm.Value = _customerWebSession.Percentage;
-                options.PDM = pdm;
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-            #endregion
-
-            switch (_customerWebSession.CurrentModule)
-            {
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    options.GenericColumnDetailLevelOption = GetGenericColumnLevelDetailOptions();
-                    break;
-            }
-
-            if (WebApplicationParameters.UseComparativeMediaSchedule)
-            {
-                options.ComparativeStudy = _customerWebSession.ComparativeStudy;
-                _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
-                options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
-            }
-            else
-                options.ComparativeStudy = false;
-
-            if (WebApplicationParameters.UseRetailer)
-            {
-                options.IsSelectRetailerDisplay = _customerWebSession.IsSelectRetailerDisplay;
-            }
-            else
-                options.IsSelectRetailerDisplay = false;
-
-
-            _customerWebSession.Save();
-
             return options;
         }
 
         public void SetOptions(string idWebSession, UserFilter userFilter)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-            _currentModule = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule);
-
-            switch (_customerWebSession.CurrentModule)
+            try
             {
-                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
-                    _nbDetailLevelItemList = 4;
-                    break;
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    _nbDetailLevelItemList = 3;
-                    _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
-                    break;
-            }
-
-            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
-                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
-            {
-                SetGenericColumnLevelDetailOptions(userFilter);
-                _customerWebSession.Percentage = userFilter.PDM;
-            }
-               
-
-            #region GenericDetailLevelFilter
-            ArrayList levels = new ArrayList();
-
-            ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
-            foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
-            {
-                if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                _currentModule = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule);
+                switch (_customerWebSession.CurrentModule)
                 {
-                    _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
-                }
-            }
-
-            if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
-            {
-                _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
-                _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels;
-            }
-            if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
-            {
-                _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
-                _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels;
-            }
-            if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
-            }
-            if (_nbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L4DetailValue);
-            }
-            if (levels.Count > 0)
-            {
-                _customerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
-            }
-
-
-            #endregion
-
-            switch (_customerWebSession.CurrentModule)
-            {
-                case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                    _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
-                    break;
-                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-                    _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
-                    #region  resultTypeFilter
-                    _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
-                    #endregion
-                    break;
-            }
-
-
-            #region PeriodDetailFilter
-            _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
-            #endregion
-
-            #region UnitFilter
-            _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
-            #endregion
-
-            #region Options by Vehicle
-            Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
-            string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
-            string[] vehicles = vehicleListId.Split(',');
-            bool autopromoEvaliantOption = false;
-            bool insertOption = false;
-            foreach (string cVehicle in vehicles)
-            {
-                switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
-                {
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
-                        autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
+                        _nbDetailLevelItemList = 4;
                         break;
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
-                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-                        insertOption = true;
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                        _nbDetailLevelItemList = 3;
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                         break;
                 }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                {
+                    SetGenericColumnLevelDetailOptions(userFilter);
+                    _customerWebSession.Percentage = userFilter.PDM;
+                }
+
+
+                #region GenericDetailLevelFilter
+                ArrayList levels = new ArrayList();
+
+                ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
+                foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
+                {
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    {
+                        _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
+                    }
+                }
+
+                if (userFilter.GenericDetailLevelFilter.DefaultDetailValue >= 0)
+                {
+                    _customerGenericDetailLevel = (GenericDetailLevel)GetDefaultDetailLevels()[userFilter.GenericDetailLevelFilter.DefaultDetailValue];
+                    _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels;
+                }
+                if (userFilter.GenericDetailLevelFilter.CustomDetailValue >= 0)
+                {
+                    _customerGenericDetailLevel = (GenericDetailLevel)_genericDetailLevelsSaved[(Int64)userFilter.GenericDetailLevelFilter.CustomDetailValue];
+                    _customerGenericDetailLevel.FromControlItem = WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels;
+                }
+                if (_nbDetailLevelItemList >= 1 && userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 2 && userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 3 && userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
+                }
+                if (_nbDetailLevelItemList >= 4 && userFilter.GenericDetailLevelFilter.L4DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L4DetailValue);
+                }
+                if (levels.Count > 0)
+                {
+                    _customerGenericDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+                }
+
+
+                #endregion
+
+                switch (_customerWebSession.CurrentModule)
+                {
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                        _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                        _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                        #region  resultTypeFilter
+                        _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
+                        #endregion
+                        break;
+                }
+
+
+                #region PeriodDetailFilter
+                _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
+                #endregion
+
+                #region UnitFilter
+                _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                #endregion
+
+                #region Options by Vehicle
+                Dictionary<Int64, VehicleInformation> VehicleInformationList = _customerWebSession.GetVehiclesSelected();
+                string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
+                string[] vehicles = vehicleListId.Split(',');
+                bool autopromoEvaliantOption = false;
+                bool insertOption = false;
+                foreach (string cVehicle in vehicles)
+                {
+                    switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                    {
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mms:
+                            autopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
+                            break;
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
+                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
+                            insertOption = true;
+                            break;
+                    }
+                }
+                #endregion
+
+                #region InsertionFilter
+                if (insertOption)
+                    _customerWebSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
+                #endregion
+
+                #region AutoPromoFilter
+                if (autopromoEvaliantOption)
+                    _customerWebSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
+                #endregion
+
+                #region FormatFilter
+                if (autopromoEvaliantOption)
+                    _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
+                #endregion
+
+                #region PurchaseModeFilter
+                if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId))
+                {
+                    _customerWebSession.SelectedPurchaseModeList = (!string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes))
+                        ? userFilter.PurchaseModeFilter.PurchaseModes : string.Empty;
+                }
+
+                #endregion
+
+                #region initializeMedia
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && userFilter.InitializeMedia)
+                    _customerWebSession.PrincipalMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                #endregion
+
+                #region initializeProduct
+                if ((_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE) && userFilter.InitializeProduct)
+                {
+                    _customerWebSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                    _customerWebSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+
+                }
+                #endregion
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                {
+                    _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
+                    _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
+                }
+
+                if (WebApplicationParameters.UseRetailer)
+                {
+                    _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
+                }
+
+                _customerWebSession.Save();
             }
-            #endregion
-
-            #region InsertionFilter
-            if (insertOption)
-                _customerWebSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
-            #endregion
-
-            #region AutoPromoFilter
-            if (autopromoEvaliantOption)
-                _customerWebSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
-            #endregion
-
-            #region FormatFilter
-            if (autopromoEvaliantOption)
-                _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
-            #endregion
-
-            #region PurchaseModeFilter
-            if (VehiclesInformation.Contains(Vehicles.names.mms) && VehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.mms).DatabaseId)  )
-            {             
-                _customerWebSession.SelectedPurchaseModeList = (!string.IsNullOrEmpty(userFilter.PurchaseModeFilter.PurchaseModes)) 
-                    ? userFilter.PurchaseModeFilter.PurchaseModes :string.Empty;               
-            }
-              
-            #endregion
-
-            #region initializeMedia
-            if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && userFilter.InitializeMedia)
-                _customerWebSession.PrincipalMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            #endregion
-
-            #region initializeProduct
-            if ((_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
-                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-                || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE) && userFilter.InitializeProduct)
+            catch (Exception ex)
             {
-                _customerWebSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                _customerWebSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-            #endregion
-
-            if (WebApplicationParameters.UseComparativeMediaSchedule)
-            {
-                _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
-                _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
-            }
-
-            if (WebApplicationParameters.UseRetailer)
-            {
-                _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
-            }
-
-            _customerWebSession.Save();
         }
 
         public SaveLevelsResponse SaveCustomDetailLevels(string idWebSession, string levels, string type)
         {
             SaveLevelsResponse response = new SaveLevelsResponse();
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
-            if (levels.Length > 0 && type.Length > 0)
+            try
             {
-                WebConstantes.GenericDetailLevel.Type detailLevelType = (WebConstantes.GenericDetailLevel.Type)int.Parse(type);
-                int levelId;
-                string[] levelList = levels.Split(',');
-                ArrayList levelIds = new ArrayList();
-                foreach (string currentLevel in levelList)
+                if (levels.Length > 0 && type.Length > 0)
                 {
-                    if (currentLevel.Length > 0)
+                    WebConstantes.GenericDetailLevel.Type detailLevelType = (WebConstantes.GenericDetailLevel.Type)int.Parse(type);
+                    int levelId;
+                    string[] levelList = levels.Split(',');
+                    ArrayList levelIds = new ArrayList();
+                    foreach (string currentLevel in levelList)
                     {
-                        levelId = int.Parse(currentLevel);
-                        if (levelId > 0) levelIds.Add(levelId);
+                        if (currentLevel.Length > 0)
+                        {
+                            levelId = int.Parse(currentLevel);
+                            if (levelId > 0) levelIds.Add(levelId);
+                        }
                     }
-                }
 
-                if (levelIds.Count > 0)
-                {
-                    GenericDetailLevel genericDetailLevel = new GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.savedLevels, detailLevelType);
-                    if (IsDetailLevelsAlreadySaved(genericDetailLevel))
-                    {//Tests if detail levels are already saved
-                        response.CustomDetailLavelsId = -1;
-                        response.Message = GestionWeb.GetWebWord(2256, _customerWebSession.SiteLanguage);
+                    if (levelIds.Count > 0)
+                    {
+                        GenericDetailLevel genericDetailLevel = new GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.savedLevels, detailLevelType);
+                        if (IsDetailLevelsAlreadySaved(genericDetailLevel))
+                        {//Tests if detail levels are already saved
+                            response.CustomDetailLavelsId = -1;
+                            response.Message = GestionWeb.GetWebWord(2256, _customerWebSession.SiteLanguage);
+                        }
+                        else
+                        {
+                            Int64 listId = TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Save(_customerWebSession, genericDetailLevel);
+
+                            response.CustomDetailLavelsId = listId;
+                            response.CustomDetailLavelsLabel = genericDetailLevel.GetLabel(_customerWebSession.SiteLanguage);
+                            response.Message = "Le niveau de détail a bien été enregistré";
+                        }
                     }
                     else
                     {
-                        Int64 listId = TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Save(_customerWebSession, genericDetailLevel);
-
-                        response.CustomDetailLavelsId = listId;
-                        response.CustomDetailLavelsLabel = genericDetailLevel.GetLabel(_customerWebSession.SiteLanguage);
-                        response.Message = "Le niveau de détail a bien été enregistré";
+                        response.CustomDetailLavelsId = -1;
+                        response.Message = GestionWeb.GetWebWord(1945, _customerWebSession.SiteLanguage);
                     }
                 }
-                else
-                {
-                    response.CustomDetailLavelsId = -1;
-                    response.Message = GestionWeb.GetWebWord(1945, _customerWebSession.SiteLanguage);
-                }
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
 
             return response;
@@ -1091,6 +1110,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS
                         || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
                 case ClassificationCst.DB.Vehicles.names.outdoor:
+                case ClassificationCst.DB.Vehicles.names.dooh:
                 case ClassificationCst.DB.Vehicles.names.instore:
                 case ClassificationCst.DB.Vehicles.names.indoor:
                 case ClassificationCst.DB.Vehicles.names.cinema:

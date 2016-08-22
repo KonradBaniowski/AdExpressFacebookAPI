@@ -197,7 +197,7 @@ namespace Km.AdExpressClientWeb.Helpers
             catch (AggregateException ex)
             {
                 Logger.Error("{0} {1} {2}", message.Method, (response != null ? response.StatusCode.ToString() : "-"), message.RequestUri);
-                Logger.Error(ex.InnerException);
+                Logger.Error(ex.InnerException +ex.Message, ex.StackTrace);
                 if (throwIfNotSuccess)
                 {
                     throw ex.InnerException;
@@ -288,7 +288,7 @@ namespace Km.AdExpressClientWeb.Helpers
             catch (AggregateException ex)
             {
                 Logger.Error("{0} {1} {2}", message.Method, (response != null ? response.StatusCode.ToString() : "-"), message.RequestUri);
-                Logger.Error(ex.InnerException);
+                Logger.Error(ex.InnerException +ex.Message, ex.StackTrace);
                 throw ex.InnerException;
             }
         }

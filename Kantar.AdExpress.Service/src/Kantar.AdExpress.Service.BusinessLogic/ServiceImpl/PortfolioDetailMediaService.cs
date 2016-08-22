@@ -22,64 +22,90 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.WebResultUI;
 using System.Reflection;
 using TNS.AdExpressI.Portofolio;
+using NLog;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class PortfolioDetaimMediaService : IPortfolioDetailMediaService
     {
         private WebSession _customerWebSession = null;
-
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
 
         public GridResult GetDetailMediaGridResult(string idWebSession, string idMedia, string dayOfWeek, string ecran)
         {
             GridResult GridResultResponse = new GridResult();
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+            try
+            {
+                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran);
 
-            IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran);
-
-            GridResultResponse = detailMediaResult.GetDetailMediaPopUpGridResult();
-
+                GridResultResponse = detailMediaResult.GetDetailMediaPopUpGridResult();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return GridResultResponse;
         }
 
 
         public IPortofolioResults InitDetailMediaCall(WebSession custSession, string dayOfWeek, string ecran)
         {
-            TNS.AdExpress.Domain.Web.Navigation.Module module = custSession.CustomerLogin.GetModule(custSession.CurrentModule);
-            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-            var parameters = new object[3];
-            parameters[0] = custSession;
-            parameters[1] = ecran;
-            parameters[2] = dayOfWeek;
-            var portofolioResult = (TNS.AdExpressI.Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
-                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-
+            IPortofolioResults portofolioResult = null;
+            try
+            {
+                TNS.AdExpress.Domain.Web.Navigation.Module module = custSession.CustomerLogin.GetModule(custSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                var parameters = new object[3];
+                parameters[0] = custSession;
+                parameters[1] = ecran;
+                parameters[2] = dayOfWeek;
+                portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}",
+                                _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message,
+                                ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return portofolioResult;
         }
 
         public bool IsIndeRadioMessage(string idWebSession)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
-
-            //Les indes Radio
-            if (WebApplicationParameters.CountryCode.Equals(WebCst.CountryCode.FRANCE)
-                && Vehicle == CstDBClassif.Vehicles.names.radio
-                //&& (_customerWebSession.GenericInsertionColumns != null && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion)) 
-                )
+            bool result = false;
+            try
             {
-                #region Columns levels (Generic)
-                VehicleInformation vehicleInfos = VehiclesInformation.Get(Vehicle);
-                var columnItems = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicleInfos.DetailColumnId);
-                var isColumnTopDif = columnItems.Any(column => column.Id == GenericColumnItemInformation.Columns.idTopDiffusion);
-                #endregion
-
-                if (isColumnTopDif)
+                //Les indes Radio
+                if (WebApplicationParameters.CountryCode.Equals(WebCst.CountryCode.FRANCE)
+                    && Vehicle == CstDBClassif.Vehicles.names.radio
+                    //&& (_customerWebSession.GenericInsertionColumns != null && _customerWebSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.idTopDiffusion)) 
+                    )
                 {
-                    return true;
+                    #region Columns levels (Generic)
+                    VehicleInformation vehicleInfos = VehiclesInformation.Get(Vehicle);
+                    var columnItems = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(vehicleInfos.DetailColumnId);
+                    var isColumnTopDif = columnItems.Any(column => column.Id == GenericColumnItemInformation.Columns.idTopDiffusion);
+                    #endregion
+
+                    if (isColumnTopDif)
+                    {
+                        result = true;
+                    }
                 }
             }
-            return false;
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return result;
         }
 
         private CstDBClassif.Vehicles.names Vehicle

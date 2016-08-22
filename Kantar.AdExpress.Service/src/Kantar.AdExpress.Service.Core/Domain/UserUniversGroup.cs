@@ -27,6 +27,10 @@ namespace Kantar.AdExpress.Service.Core.Domain
 
     public class UniversGroupsResponse
     {
+        public UniversGroupsResponse()
+        {
+            UniversGroups = new List<UserUniversGroup>();
+        }
         public List<UserUniversGroup> UniversGroups { get; set; }
         public int SiteLanguage { get; set; }
         public bool CanSetDefaultUniverse { get; set; }
@@ -68,6 +72,32 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public UniversType UniversType { get; set; }
         public int SiteLanguage { get; set; }
         public Labels Labels { get; set; }
+    }
+
+    public class SearchItemsCriteria
+    {
+        public SearchItemsCriteria()
+        {
+            MediaIds = new List<int>();
+        }
+        public SearchItemsCriteria(string webSessionId, Dimension dimension, int universeLevel)
+        {
+            WebSessionId = webSessionId;
+            Dimension = dimension;
+            UniverseLevel = universeLevel;
+            MediaIds = new List<int>();
+        }
+        public SearchItemsCriteria( string webSessionId, Dimension dimension, int universeLevel, List<int> mediaIds)
+        {
+            WebSessionId = webSessionId;
+            Dimension = dimension;
+            UniverseLevel = universeLevel;
+            MediaIds = mediaIds;
+        }
+        public string WebSessionId { get; set; }
+        public Dimension Dimension { get; set; }
+        public int UniverseLevel { get; set; }
+        public List<int> MediaIds { get; set; }
     }
     
     public enum UniversType

@@ -8,55 +8,64 @@ using TNS.AdExpress.Web.Core.Sessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
+using NLog;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public partial class OptionService
     {
         protected GenericDetailLevel _genericColumnDetailLevel = null;
-
         private GenericColumnDetailLevelOption GetGenericColumnLevelDetailOptions()
         {
             GenericColumnDetailLevelOption genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
-            _genericColumnDetailLevel = _customerWebSession.GenericColumnDetailLevel;
-
-            #region on vérifie que le niveau sélectionné à le droit d'être utilisé
-            bool canAddDetail = false;
             try
             {
-                canAddDetail = CanAddColumnDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule);
-            }
-            catch { }
-            if (!canAddDetail)
-            {
-                // Niveau de détail par défaut
-                ArrayList levelsIds = new ArrayList();
-                levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
-                _customerWebSession.GenericColumnDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
-            }
-            #endregion
+                _genericColumnDetailLevel = _customerWebSession.GenericColumnDetailLevel;
 
-            #region Initialisation Niveau de détaille colonne
-            if (_nbColumnDetailLevelItemList == 1)
-            {
-                genericColumnDetailLevelOption = ColumnDetailLevelItemInit();
-                genericColumnDetailLevelOption.L1Detail.Visible = true;
-            }
-            #endregion
+                #region on vérifie que le niveau sélectionné à le droit d'être utilisé
+                bool canAddDetail = false;
+                try
+                {
+                    canAddDetail = CanAddColumnDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule);
+                }
+                catch { }
+                if (!canAddDetail)
+                {
+                    // Niveau de détail par défaut
+                    ArrayList levelsIds = new ArrayList();
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
+                    _customerWebSession.GenericColumnDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                }
+                #endregion
 
-            if (_nbColumnDetailLevelItemList == 1 && _genericColumnDetailLevel.GetNbLevels == 1 && _genericColumnDetailLevel.LevelIds[0] != null)
+                #region Initialisation Niveau de détaille colonne
+                if (_nbColumnDetailLevelItemList == 1)
+                {
+                    genericColumnDetailLevelOption = ColumnDetailLevelItemInit();
+                    genericColumnDetailLevelOption.L1Detail.Visible = true;
+                }
+                #endregion
+
+                if (_nbColumnDetailLevelItemList == 1 && _genericColumnDetailLevel.GetNbLevels == 1 && _genericColumnDetailLevel.LevelIds[0] != null)
+                {
+                    genericColumnDetailLevelOption.L1Detail.SelectedId = ((DetailLevelItemInformation.Levels)_genericColumnDetailLevel.LevelIds[0]).GetHashCode().ToString();
+                }
+            }
+            catch (Exception ex)
             {
-                genericColumnDetailLevelOption.L1Detail.SelectedId = ((DetailLevelItemInformation.Levels)_genericColumnDetailLevel.LevelIds[0]).GetHashCode().ToString();
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
 
             return genericColumnDetailLevelOption;
         }
 
-        private void SetGenericColumnLevelDetailOptions( UserFilter userFilter)
+        private void SetGenericColumnLevelDetailOptions(UserFilter userFilter)
         {
             ArrayList levels = new ArrayList();
 
-            if (_nbColumnDetailLevelItemList == 1  )
+            if (_nbColumnDetailLevelItemList == 1)
             {
                 levels.Add(userFilter.GenericColumnDetailLevelFilter.L1DetailValue);
             }
@@ -73,10 +82,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
             genericColumnDetailLevelOption.L1Detail = new SelectControl();
             genericColumnDetailLevelOption.L1Detail.Id = "columnDetail";
-           
+
             var selectItems = new List<SelectItem>();
             List<DetailLevelItemInformation> allowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
-            allowedColumnDetailLevelItems.ForEach(p => {
+            allowedColumnDetailLevelItems.ForEach(p =>
+            {
                 selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(p.WebTextId, _customerWebSession.SiteLanguage), Value = p.Id.GetHashCode().ToString() });
             });
             genericColumnDetailLevelOption.L1Detail.Items = selectItems;
@@ -92,16 +102,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private List<DetailLevelItemInformation> GetAllowedColumnDetailLevelItems()
         {
             var levels = new List<DetailLevelItemInformation>();
-            List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
-            ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;           
+            try
+            {
+                List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
+                ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
 
-            List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
+                List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
 
-            foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
-                if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
-                    && vehicleAllowedColumnLevelList.Contains(currentLevel.Id))
-                    levels.Add(currentLevel);
-
+                foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
+                    if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
+                        && vehicleAllowedColumnLevelList.Contains(currentLevel.Id))
+                        levels.Add(currentLevel);
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return levels;
 
         }
@@ -112,20 +129,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// <returns>Detail level list</returns>
         private List<DetailLevelItemInformation.Levels> GetVehicleAllowedColumnsLevelItems()
         {
-
             List<Int64> vehicleList = new List<Int64>();
-            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-            if (listStr != null && listStr.Length > 0)
+            try
             {
-                string[] list = listStr.Split(',');
-                for (int i = 0; i < list.Length; i++)
-                    vehicleList.Add(Convert.ToInt64(list[i]));
+                string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (listStr != null && listStr.Length > 0)
+                {
+                    string[] list = listStr.Split(',');
+                    for (int i = 0; i < list.Length; i++)
+                        vehicleList.Add(Convert.ToInt64(list[i]));
+                }
+                else
+                {
+                    //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                    string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                    vehicleList.Add(Convert.ToInt64(Vehicle));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-                vehicleList.Add(Convert.ToInt64(Vehicle));
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             return VehiclesInformation.GetColumnsDetailLevelList(vehicleList);
         }

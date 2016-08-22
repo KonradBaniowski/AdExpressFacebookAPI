@@ -166,6 +166,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Selections.Medias
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataRadio, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.instore:
@@ -224,6 +225,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                 case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.cinema:
@@ -239,7 +241,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Selections.Medias
                     #region Media selection
                     if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE)
                         mediaList += webSession.GetSelection((TreeNode)webSession.ReferenceUniversMedia, CustormerConstantes.Right.type.mediaAccess) + ",";
-                    else {
+                    else
+                    {
                         while (webSession.CompetitorUniversMedia[positionUnivers] != null)
                         {
                             mediaList += webSession.GetSelection((TreeNode)webSession.CompetitorUniversMedia[positionUnivers], CustormerConstantes.Right.type.mediaAccess) + ",";

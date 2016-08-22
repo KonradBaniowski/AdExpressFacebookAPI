@@ -11,6 +11,7 @@ $(".dropdown-menu.bg-blue li > a").on('click', function (e) {
     $(this).parents('.input-group-btn').find('.btn.btn-default.select-recherche').attr("data-branch", selValue);
     //CLEAN PANEL ON CHANGE BRANCH
     $("[id^='groupSelectable'] [id^='containerSelectable']").parents('.panel-default').html('');
+    //autoPopulateFirstUniverseLevel();
 });
 
 //Touche ENTER 
@@ -112,6 +113,45 @@ function SelectSelectableElement(selectableContainer, elementsToSelect) {
     selectableContainer.data("ui-selectableScroll")._mouseStop(null);
 
 };
+
+function autoPopulateFirstUniverseLevel()
+    {
+        var moduleId = $('#CurrentModule').val();
+        var dimension = $('#Dimension').val();
+        var idBranch = $('#branch').attr("data-branch");
+        var firstUniverse = parseFloat($("#branch" + idBranch + " :first-child").attr('data-universe'));;
+        var params = {
+                idUniverse: firstUniverse,
+                dimension: dimension
+            };
+
+        $("#branch" + idBranch + " > div").each(function () {
+            var DIS = $(this);
+            var universe = parseFloat($(this).attr('data-universe'))
+            var universeLabel = $(this).attr('data-label') + "\{NB_ELEM\}";
+            if (universe === firstUniverse) {
+                $.ajax({
+                    url: '/Universe/GetCategoryItems',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: JSON.stringify(params),
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        alert("error");
+                    },
+                    success: function (response) {
+                        DIS.populateSelectableContainers(universe, universeLabel, response.data, response.total, DIS);
+
+                    }
+                });
+            }
+            else {
+                if ((universe == 4 && (moduleId != 196 || moduleId != 17109)) || (universe != 4) || (universe == 5 && moduleId != 17109)) { // universe 4 (SubGroup) is not shown by default only for MediaSchedule 
+                    DIS.populateSelectableContainers(universe, universeLabel, null, 0, DIS);
+                }
+            }
+        })
+    }
 
 //clean l element selectionnée
 $(document).on('click', '.tab-content li > .pull-right', function () {

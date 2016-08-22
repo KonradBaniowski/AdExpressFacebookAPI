@@ -542,6 +542,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
                                     case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, cssClasse));
                                         break;
@@ -570,6 +571,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
                                     case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;

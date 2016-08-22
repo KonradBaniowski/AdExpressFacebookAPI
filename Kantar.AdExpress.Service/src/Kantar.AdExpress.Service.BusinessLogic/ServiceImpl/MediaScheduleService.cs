@@ -26,22 +26,36 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.AdExpressI.MediaSchedule.Style;
 using TNS.AdExpressI.Classification.DAL;
+using NLog;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MediaScheduleService : IMediaScheduleService
     {
         private WebSession CustomerSession = null;
-
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public object[,] GetMediaScheduleData(string idWebSession)
         {
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
-            
-            return mediaScheduleResult.ComputeData();
+            object[,] result = null;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
+                result = mediaScheduleResult.ComputeData();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return result;
         }
 
         public GridResult GetGridResult(string idWebSession, string zoomDate)
         {
+            GridResult girdResult = new GridResult();
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
             IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate);
 
             return mediaScheduleResult.GetGridResult();
@@ -50,38 +64,49 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public MSCreatives GetMSCreatives(string idWebSession, string zoomDate)
         {
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-
-            #region MSCreatives
-            object[] paramMSCraetives = new object[2];
-            paramMSCraetives[0] = CustomerSession;
-            paramMSCraetives[1] = CustomerSession.CurrentModule;
-
-            MediaSchedulePeriod period = new MediaSchedulePeriod(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodEndDate, CustomerSession.DetailPeriod);
-
-            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
-            if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
-            var resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
-                + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
-                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
-
+            VehicleInformation vehicle = new VehicleInformation();
+            MSCreatives result = new MSCreatives();
             ResultTable data = null;
-            string[] vehicles = CustomerSession.GetSelection(CustomerSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
-            string filters = string.Empty;
-            int fromDate = Convert.ToInt32(period.Begin.ToString("yyyyMMdd"));
-            int toDate = Convert.ToInt32(period.End.ToString("yyyyMMdd"));
-            #endregion
+            try
+            {
 
-            VehicleInformation vehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
-            data = resultMSCreatives.GetMSCreatives(vehicle, fromDate, toDate, filters, -1, zoomDate);
+                #region MSCreatives
+                object[] paramMSCraetives = new object[2];
+                paramMSCraetives[0] = CustomerSession;
+                paramMSCraetives[1] = CustomerSession.CurrentModule;
+                MediaSchedulePeriod period = new MediaSchedulePeriod(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodEndDate, CustomerSession.DetailPeriod);
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
+                var resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                    | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
+                string[] vehicles = CustomerSession.GetSelection(CustomerSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
+                string filters = string.Empty;
+                int fromDate = Convert.ToInt32(period.Begin.ToString("yyyyMMdd"));
+                int toDate = Convert.ToInt32(period.End.ToString("yyyyMMdd"));
+                #endregion
 
-            switch(vehicle.Id) {
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                    return GetEvaliantCreatives(data, vehicle);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                    return GetEvaliantMobileCreatives(data, vehicle);
-                default:
-                    return GetCreatives(data, vehicle);
+                vehicle = VehiclesInformation.Get(Int64.Parse(vehicles[0]));
+                data = resultMSCreatives.GetMSCreatives(vehicle, fromDate, toDate, filters, -1, zoomDate);
+                switch (vehicle.Id)
+                {
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                        result= GetEvaliantCreatives(data, vehicle);
+                        break;
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                        result= GetEvaliantMobileCreatives(data, vehicle);
+                        break;
+                    default:
+                        result = GetCreatives(data, vehicle);
+                        break;
+                }
             }
+            catch(Exception ex )
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return result;          
         }
 
         private MSCreatives GetCreatives(ResultTable data, VehicleInformation vehicle)
@@ -120,6 +145,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
+                    || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.dooh
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
                     || vehicle.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo)
                 creatives.Items = creatives.Items.OrderBy(i => i.NbVisuals).ToList();
@@ -206,7 +232,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return creatives;
         }
 
-        public void SetMSCreatives(string idWebSession, ArrayList slogans) {
+        public void SetMSCreatives(string idWebSession, ArrayList slogans)
+        {
 
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
@@ -218,93 +245,100 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
         {
-           
+
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-            MediaScheduleData result = null;
-            MediaSchedulePeriod period = null;
-            Int64 moduleId = CustomerSession.CurrentModule;
-            ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
-            WebConstantes.CustomerSessions.Unit oldUnit = CustomerSession.Unit;
-            // TODO : Commented temporarily for new AdExpress
-            //if (UseCurrentUnit) webSession.Unit = CurrentUnit;
-            object[] param = null;
-            long oldCurrentTab = CustomerSession.CurrentTab;
-            System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
-
-            #region Period Detail
-            DateTime begin;
-            DateTime end;
-            if (!string.IsNullOrEmpty(zoomDate))
+            IMediaScheduleResults mediaScheduleResult = null;
+            try
             {
-                if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                MediaSchedulePeriod period = null;
+                Int64 moduleId = CustomerSession.CurrentModule;
+                ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
+                WebConstantes.CustomerSessions.Unit oldUnit = CustomerSession.Unit;
+                // TODO : Commented temporarily for new AdExpress
+                //if (UseCurrentUnit) webSession.Unit = CurrentUnit;
+                object[] param = null;
+                long oldCurrentTab = CustomerSession.CurrentTab;
+                System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
+
+                #region Period Detail
+                DateTime begin;
+                DateTime end;
+                if (!string.IsNullOrEmpty(zoomDate))
                 {
-                    begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
-                    end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
+                    {
+                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                        end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    }
+                    else
+                    {
+                        begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                        end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    }
+                    begin = Dates.Max(begin,
+                        Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
+                    end = Dates.Min(end,
+                        Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType));
+
+                    CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+                    if (CustomerSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && CustomerSession.CurrentModule
+                        == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, CustomerSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
+
                 }
                 else
                 {
-                    begin = Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
-                    end = Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    begin = Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType);
+                    end = Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType);
+                    if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                    {
+                        CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                    }
+
+                    if (CustomerSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && CustomerSession.CurrentModule
+                        == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, CustomerSession.DetailPeriod, CustomerSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, CustomerSession.DetailPeriod);
+
                 }
-                begin = Dates.Max(begin,
-                    Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType));
-                end = Dates.Min(end,
-                    Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType));
+                #endregion
 
-                CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-                if (CustomerSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && CustomerSession.CurrentModule
-                    == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
-                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, CustomerSession.ComparativePeriodType);
-                else
-                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
-
-            }
-            else
-            {
-                begin = Dates.GetPeriodBeginningDate(CustomerSession.PeriodBeginningDate, CustomerSession.PeriodType);
-                end = Dates.GetPeriodEndDate(CustomerSession.PeriodEndDate, CustomerSession.PeriodType);
-                if (CustomerSession.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                if (zoomDate.Length > 0)
                 {
-                    CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                    param = new object[3];
+                    param[2] = zoomDate;
                 }
-
-                if (CustomerSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && CustomerSession.CurrentModule
-                    == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
-                    period = new MediaSchedulePeriod(begin, end, CustomerSession.DetailPeriod, CustomerSession.ComparativePeriodType);
                 else
-                    period = new MediaSchedulePeriod(begin, end, CustomerSession.DetailPeriod);
+                {
+                    param = new object[2];
+                }
+                CustomerSession.CurrentModule = module.Id;
+                if (CustomerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) CustomerSession.CurrentTab = 0;
+                CustomerSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
+                param[0] = CustomerSession;
+                param[1] = period;
+                mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
+                mediaScheduleResult.Module = module;
+
+                CustomerSession.CurrentModule = moduleId;
+                CustomerSession.DetailPeriod = periodDisplay;
+                CustomerSession.CurrentTab = oldCurrentTab;
+                CustomerSession.Unit = oldUnit;
+                CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
+                
             }
-            #endregion
-
-            if (zoomDate.Length > 0)
+            catch (Exception ex)
             {
-                param = new object[3];
-                param[2] = zoomDate;
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-            else
-            {
-                param = new object[2];
-            }
-            CustomerSession.CurrentModule = module.Id;
-            if (CustomerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) CustomerSession.CurrentTab = 0;
-            CustomerSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
-            param[0] = CustomerSession;
-            param[1] = period;
-            var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
-                , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-
-            mediaScheduleResult.Module = module;
-
-            CustomerSession.CurrentModule = moduleId;
-            CustomerSession.DetailPeriod = periodDisplay;
-            CustomerSession.CurrentTab = oldCurrentTab;
-            CustomerSession.Unit = oldUnit;
-            CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
-
             return mediaScheduleResult;
         }
 
@@ -410,6 +444,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
         #endregion
-    
+
     }
 }

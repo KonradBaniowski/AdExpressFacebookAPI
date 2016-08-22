@@ -120,6 +120,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:
@@ -244,6 +245,7 @@ namespace TNS.AdExpressI.Date.DAL {
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataRadio, _session.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, _session.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.indoor:
@@ -302,6 +304,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship:
                 case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.dooh:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:

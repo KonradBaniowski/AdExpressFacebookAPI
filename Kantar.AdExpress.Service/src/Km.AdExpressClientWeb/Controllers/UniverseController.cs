@@ -447,12 +447,14 @@ namespace Km.AdExpressClientWeb.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCategoryItems()
+        public JsonResult GetCategoryItems( int idUniverse, Dimension dimension, List<int> idMedia)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetGategoryItems(idWebSession, out totalItems);
+            //List<int> id = new List<int> { idMedia };
+            Domain.SearchItemsCriteria criteria = new Domain.SearchItemsCriteria(idWebSession, dimension, idUniverse, idMedia);
+            var model = _universeService.GetGategoryItems(criteria, out totalItems);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 

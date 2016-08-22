@@ -21,6 +21,8 @@ using TNS.FrameWork.Date;
 using System.IO;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Portofolio.VehicleView;
+using NLog;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -28,70 +30,87 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession _customerSession = null;
         protected VehicleInformation _vehicleInformation;
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         protected string _subFolder { get; set; }
 
         public GridResult GetGridResult(string idWebSession)
         {
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
-            _customerSession = (WebSession)WebSession.Load(idWebSession);
-
-
-            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-            var parameters = new object[1];
-            parameters[0] = _customerSession;
-            var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
-                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-            switch (_customerSession.CurrentTab)
+            IPortofolioResults portofolioResult = null;
+            GridResult gridResult = new GridResult();
+            try
             {
+                var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                var parameters = new object[1];
+                parameters[0] = _customerSession;
+                portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                switch (_customerSession.CurrentTab)
+                {
 
-                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
-                    return portofolioResult.GetDetailMediaGridResult(false);
-
-                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-                    return portofolioResult.GetStructureGridResult(false);
-
-                default:
-                    return portofolioResult.GetGridResult();
-
-
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        gridResult = portofolioResult.GetDetailMediaGridResult(false);
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        gridResult = portofolioResult.GetStructureGridResult(false);
+                        break;
+                    default:
+                        gridResult = portofolioResult.GetGridResult();
+                        break;
+                }
             }
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return gridResult;
         }
 
         public List<GridResult> GetGraphGridResult(string idWebSession)
         {
-
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-
-
-
-            TNS.AdExpress.Domain.Web.Navigation.Module module = _customerSession.CustomerLogin.GetModule(_customerSession.CurrentModule);
-            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-            object[] parameters = new object[1];
-            parameters[0] = _customerSession;
-            IPortofolioResults portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-
-
-            return portofolioResult.GetGraphGridResult();
-
+            List<GridResult> result = new List<GridResult>();
+            try
+            {
+                TNS.AdExpress.Domain.Web.Navigation.Module module = _customerSession.CustomerLogin.GetModule(_customerSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                object[] parameters = new object[1];
+                parameters[0] = _customerSession;
+                IPortofolioResults portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                result = portofolioResult.GetGraphGridResult();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return result;
         }
 
 
         public ResultTable GetResultTable(string idWebSession)
         {
             ResultTable data = null;
-            var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-
-            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-            var parameters = new object[1];
-            parameters[0] = _customerSession;
-            var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
-                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
-                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
-            data = portofolioResult.GetResultTable();
+            try
+            {
+                var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                var parameters = new object[1];
+                parameters[0] = _customerSession;
+                var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                data = portofolioResult.GetResultTable();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message); ;
+            }
             return data;
         }
 
@@ -99,15 +118,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             List<VehicleCover> vehicleCovers = new List<VehicleCover>();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
-            _vehicleInformation = GetVehicleInformation();
-
-            if (ShowVehicleItems(resultType))
+            try
             {
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
-                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
-                      || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
-                      )
+                _vehicleInformation = GetVehicleInformation();
+
+                if (ShowVehicleItems(resultType) && HasCovers(_vehicleInformation.Id))
                 {
                     vehicleCovers = new List<VehicleCover>();
                     TNS.AdExpress.Domain.Web.Navigation.Module module = _customerSession.CustomerLogin.GetModule(_customerSession.CurrentModule);
@@ -123,13 +138,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                     var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_customerSession.SiteLanguage].Localization);
                     string day = string.Empty;
-
-
-
                     itemsCollection.ForEach(p =>
                     {
-                        //Set vehicle cover
-                        day = string.Format("{0} {1}", DayString.GetCharacters(p.ParutionDate, cultureInfo),
+                            //Set vehicle cover
+                            day = string.Format("{0} {1}", DayString.GetCharacters(p.ParutionDate, cultureInfo),
                       DateString.dateTimeToDD_MM_YYYY(p.ParutionDate, _customerSession.SiteLanguage));
                         long mediaId = (p.CoverItem != null && p.CoverItem.CoverLinkItem != null) ? p.CoverItem.CoverLinkItem.MediaId : 0;
                         string src = (p.CoverItem != null && !string.IsNullOrEmpty(p.CoverItem.Src)) ? p.CoverItem.Src : string.Empty;
@@ -145,8 +157,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
 
 
-                        //TODO : enlever le chemin en dur
-                        var vehicleCover = new VehicleCover
+                            //TODO : enlever le chemin en dur
+                            var vehicleCover = new VehicleCover
                         {
                             DayN = p.ParutionDate.ToString("yyyyMMdd"),
                             ParutionDate = day,
@@ -154,68 +166,75 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             Id = mediaId,
                             Invest = p.TotalInvestment,
                             NbInser = p.InsertionNumber,
-                            Src =  src,
+                            Src = src,
                             Media = media,
                             NbPage = nbPage
                         };
                         vehicleCovers.Add(vehicleCover);
 
                     });
-
-
                 }
             }
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return vehicleCovers;
         }
 
 
-        public List<VehiclePage> GetVehiclePages(string idWebSession, string mediaId, string dateMediaNum,string dateCoverNum, string nbPage, string media, string subFolder = null)
+        public List<VehiclePage> GetVehiclePages(string idWebSession, string mediaId, string dateMediaNum, string dateCoverNum, string nbPage, string media, string subFolder = null)
         {
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             _subFolder = subFolder;
             List<VehiclePage> vehiclePages = new List<VehiclePage>();
-
-            string pathWeb = string.Format("{0}/{1}/{2}/{3}",
+            try
+            {
+                string pathWeb = string.Format("{0}/{1}/{2}/{3}",
                 WebConstantes.CreationServerPathes.IMAGES, mediaId, dateCoverNum,
                 (string.IsNullOrEmpty(_subFolder)) ? "imagette" : _subFolder);
 
-            string pathWebZoom = string.Format("{0}/{1}/{2}",
-              WebConstantes.CreationServerPathes.IMAGES, mediaId, dateCoverNum);
+                string pathWebZoom = string.Format("{0}/{1}/{2}",
+                  WebConstantes.CreationServerPathes.IMAGES, mediaId, dateCoverNum);
 
 
-            string path = string.Format("{0}{1}\\{2}\\{3}",
-                WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE, mediaId, dateCoverNum,
-                (string.IsNullOrEmpty(_subFolder)) ? "imagette" : _subFolder);
+                string path = string.Format("{0}{1}\\{2}\\{3}",
+                    WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE, mediaId, dateCoverNum,
+                    (string.IsNullOrEmpty(_subFolder)) ? "imagette" : _subFolder);
 
-            string[] files = Directory.GetFiles(path, "*.jpg");
-            Array.Sort(files);
+                string[] files = Directory.GetFiles(path, "*.jpg");
+                Array.Sort(files);
 
-            var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_customerSession.SiteLanguage].Localization);
-            var dayDT = new DateTime(int.Parse(dateMediaNum.Substring(0, 4)),
-                int.Parse(dateMediaNum.Substring(4, 2)), int.Parse(dateMediaNum.ToString().Substring(6, 2)));
-            string day = string.Format("{0} {1}", DayString.GetCharacters(dayDT, cultureInfo),
-                Dates.DateToString(dayDT, _customerSession.SiteLanguage));
-            if (files.Length > 0)
-            {
-                foreach (string name in files)
+                var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_customerSession.SiteLanguage].Localization);
+                var dayDT = new DateTime(int.Parse(dateMediaNum.Substring(0, 4)),
+                    int.Parse(dateMediaNum.Substring(4, 2)), int.Parse(dateMediaNum.ToString().Substring(6, 2)));
+                string day = string.Format("{0} {1}", DayString.GetCharacters(dayDT, cultureInfo),
+                    Dates.DateToString(dayDT, _customerSession.SiteLanguage));
+                if (files.Length > 0)
                 {
-                    //TODO : enlever le chemin en dur
-                    var vehiclePage = new VehiclePage
+                    foreach (string name in files)
                     {
-                        NbPage = nbPage,
-                        ParutionDate = day,
-                        CoverDate = dateCoverNum,
-                        Src = string.Format("{0}/{1}", pathWeb, Path.GetFileName(name)),
-                        SrcZoom = string.Format("{0}/{1}", pathWebZoom, Path.GetFileName(name)),
-                        Title = media
+                        //TODO : enlever le chemin en dur
+                        var vehiclePage = new VehiclePage
+                        {
+                            NbPage = nbPage,
+                            ParutionDate = day,
+                            CoverDate = dateCoverNum,
+                            Src = string.Format("{0}/{1}", pathWeb, Path.GetFileName(name)),
+                            SrcZoom = string.Format("{0}/{1}", pathWebZoom, Path.GetFileName(name)),
+                            Title = media
 
-                    };
-                    vehiclePages.Add(vehiclePage);
+                        };
+                        vehiclePages.Add(vehiclePage);
+                    }
                 }
             }
-
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return vehiclePages;
         }
 
@@ -258,6 +277,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 throw (new Exception("Impossible to retreive vehicle selection", err));
             }
+        }
+        private bool HasCovers(DBClassificationConstantes.Vehicles.names id)
+        {
+            bool hasCovers = false;
+            switch (id)
+            {
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    hasCovers = true;
+                    break;
+                default:
+                    break;
+            }
+            return hasCovers;
         }
 
 

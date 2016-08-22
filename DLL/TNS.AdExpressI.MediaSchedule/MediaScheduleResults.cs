@@ -2332,6 +2332,16 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (tableWidth > 1140)
                 gridResult.NeedFixedColumns = true;
 
+            gridResult.HasMSCreatives = false;
+
+            if (Vehicles != null && Vehicles.Count == 1 && oMediaScheduleData.VersionsDetail.Count > 0)
+            {
+                if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Vehicles[0].DatabaseId) && _session.CustomerLogin.ShowCreatives(Vehicles[0].Id))
+                {
+                    gridResult.HasMSCreatives = true;
+                }
+            }
+
             gridResult.HasMSCreatives = oMediaScheduleData.VersionsDetail.Count > 0 ? true : false;
             gridResult.HasData = true;
             gridResult.Columns = columns;
@@ -2980,6 +2990,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
                                     case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, cssClasse));
                                         break;
@@ -3008,6 +3019,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
                                     case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;

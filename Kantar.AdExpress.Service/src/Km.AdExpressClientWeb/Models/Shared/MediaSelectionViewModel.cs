@@ -29,6 +29,10 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public Dimension Dimension { get; set; }
 
         public UserUniversGroupsModel UniversGroups { get; set; }
+
+        public long CurrentModule { get; set; }
+
+        public bool CanRefineMediaSupport { get; set; }
     }
 
     public class Media

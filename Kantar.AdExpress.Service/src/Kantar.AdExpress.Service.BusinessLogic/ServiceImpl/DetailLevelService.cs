@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -16,6 +13,8 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System.Collections;
+using NLog;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -23,75 +22,79 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private List<GenericDetailLevel> defaultDetailItemList = null;
         private List<DetailLevelItemInformation> allowedDetailItemList = null;
-
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId, bool isVehicleChanged)
         {
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
             List<DetailLevel> detailLevelList = new List<DetailLevel>();
             ArrayList levels = new ArrayList();
-
-            allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(vehicleId);
-            defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(vehicleId);
-
-            if (isVehicleChanged)
+            try
             {
-                foreach (GenericDetailLevel detailItem in defaultDetailItemList)
-                    levels = detailItem.LevelIds;
+                allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(vehicleId);
+                defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(vehicleId);
 
-                CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
-                CustomerSession.Save();
-            }
-
-            for (int i = 1; i < 4; i ++) {
-                DetailLevel detaiLevelltmp = new DetailLevel();
-                detaiLevelltmp.Items = new List<DetailLevelItems>();
-                detaiLevelltmp.level = i;
-                DetailLevelItemInformation.Levels loadDetailLevel = new DetailLevelItemInformation.Levels();
-
-                if (((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.outdoor))
-                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.instore))
-                    || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INDOOR_ACCESS_FLAG))
-                    && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.indoor))
-                    || (VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.outdoor
-                        && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.instore
-                        && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.indoor)
-                    )
+                if (isVehicleChanged)
                 {
+                    foreach (GenericDetailLevel detailItem in defaultDetailItemList)
+                        levels = detailItem.LevelIds;
 
-                    if (CustomerSession.DetailLevel.LevelIds.Count >= i)
-                    {
-                        loadDetailLevel = (DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[i - 1];
-                    }
-
-                    foreach (DetailLevelItemInformation currentDetailLevelItem in allowedDetailItemList)
-                    {
-                        
-                        if (CanAddDetailLevelItem(CustomerSession, currentDetailLevelItem))
-                        {
-
-                            DetailLevelItems tmpDetailLevelItems = new DetailLevelItems
-                            {
-                                Label = GestionWeb.GetWebWord(currentDetailLevelItem.WebTextId, CustomerSession.SiteLanguage),
-                                DetailLevel = currentDetailLevelItem.Id.GetHashCode().ToString()
-                            };
-
-                            if (loadDetailLevel == currentDetailLevelItem.Id)
-                            {
-                                tmpDetailLevelItems.IsSelected = true;
-                            }
-
-
-                            detaiLevelltmp.Items.Add(tmpDetailLevelItems);
-                        }
-                    }
+                    CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    CustomerSession.Save();
                 }
 
-                detailLevelList.Add(detaiLevelltmp);
+                for (int i = 1; i < 4; i++) {
+                    DetailLevel detaiLevelltmp = new DetailLevel();
+                    detaiLevelltmp.Items = new List<DetailLevelItems>();
+                    detaiLevelltmp.level = i;
+                    DetailLevelItemInformation.Levels loadDetailLevel = new DetailLevelItemInformation.Levels();
+
+                    if (((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.outdoor))
+                        || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_DOOH_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.dooh))
+                        || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.instore))
+                        || ((CustomerSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == DBClassificationConstantes.Vehicles.names.indoor))
+                        || (VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.outdoor
+                            && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.instore
+                            && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.dooh
+                            && VehiclesInformation.DatabaseIdToEnum(vehicleId) != DBClassificationConstantes.Vehicles.names.indoor)
+                        )
+                    {
+
+                        if (CustomerSession.DetailLevel.LevelIds.Count >= i)
+                        {
+                            loadDetailLevel = (DetailLevelItemInformation.Levels)CustomerSession.DetailLevel.LevelIds[i - 1];
+                        }
+
+                        foreach (DetailLevelItemInformation currentDetailLevelItem in allowedDetailItemList)
+                        {
+
+                            if (CanAddDetailLevelItem(CustomerSession, currentDetailLevelItem))
+                            {
+
+                                DetailLevelItems tmpDetailLevelItems = new DetailLevelItems
+                                {
+                                    Label = GestionWeb.GetWebWord(currentDetailLevelItem.WebTextId, CustomerSession.SiteLanguage),
+                                    DetailLevel = currentDetailLevelItem.Id.GetHashCode().ToString()
+                                };
+
+                                if (loadDetailLevel == currentDetailLevelItem.Id)
+                                {
+                                    tmpDetailLevelItems.IsSelected = true;
+                                }
+
+
+                                detaiLevelltmp.Items.Add(tmpDetailLevelItems);
+                            }
+                        }
+                    }
+
+                    detailLevelList.Add(detaiLevelltmp);
+                }
             }
-
-
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
             return detailLevelList;
         }
 
@@ -101,25 +104,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
             ArrayList levels = new ArrayList();
+            try {
+                if (userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
+                }
+                if (userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
+                }
+                if (userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
+                {
+                    levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
+                }
+                if (levels.Count > 0)
+                {
+                    CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+                }
 
-            if (userFilter.GenericDetailLevelFilter.L1DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L1DetailValue);
+                CustomerSession.Save();
             }
-            if (userFilter.GenericDetailLevelFilter.L2DetailValue >= 0)
+            catch (Exception ex)
             {
-                levels.Add(userFilter.GenericDetailLevelFilter.L2DetailValue);
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-            if (userFilter.GenericDetailLevelFilter.L3DetailValue >= 0)
-            {
-                levels.Add(userFilter.GenericDetailLevelFilter.L3DetailValue);
-            }
-            if (levels.Count > 0)
-            {
-                CustomerSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
-            }
-
-            CustomerSession.Save();
 
         }
 

@@ -107,6 +107,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             #endregion
             _siteLanguage = result.SiteLanguage;
+            model.CurrentModule = result.ControllerDetails.ModuleId;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
             ViewBag.SiteLanguage = _siteLanguage;
             var marketNode = new NavigationNode { Position = 1 };
@@ -168,6 +169,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
             var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 1, 0);
+            model.CurrentModule = response.ControllerDetails.ModuleId;
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {

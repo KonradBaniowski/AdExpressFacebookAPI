@@ -32,9 +32,7 @@ using TNS.AdExpress.Domain.Layers;
 using System.Windows.Forms;
 using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
-using TNS.AdExpressI.Classification.DAL;
-using System.Web.Configuration;
-using TNS.AdExpress.Domain.Results;
+using NLog;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -49,15 +47,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
         private const string RESULTS = "Results";
+        private const string MEDIAAGENCY = "MediaAgency";
+        private const string NEW_CREATIVES = "NewCreatives";
+        private const string FACEBOOK = "SocialMedia";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         private const int MaxItemsPerLevel = 100;
-        private const string FACEBOOK = "SocialMedia";
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
+        private const int OUTDOOR = 8;
+        private const int DOOH = 22;
         private const string FcbMarketErrorMsg = "Please select at maximum 5 advertisers or brands.";
         #endregion
         private WebSession _webSession = null;
+        private static Logger Logger= LogManager.GetCurrentClassLogger();
         public WebSessionResponse SaveMediaSelection(SaveMediaSelectionRequest request)
         {
             var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
@@ -78,6 +81,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && request.MediaIds.Contains(OUTDOOR) && request.MediaIds.Contains(DOOH))
+                    {
+                        response.ErrorMessage = GestionWeb.GetWebWord(3080, _webSession.SiteLanguage);
+                        return response;
+                    }
                     _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
                     List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                     System.Windows.Forms.TreeNode tmpNode;
@@ -192,12 +200,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
             }
-            catch (System.Exception exc)
+            catch (System.Exception ex)
             {
-                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException))
                 {
-                    response.ErrorMessage = exc.Message;
+                    response.ErrorMessage = ex.Message;
                 }
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
             #endregion
             return response;
@@ -210,69 +220,78 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 StudyStep = StudyStep.Market
             };
             var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
-            response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep);
-            IsValidMarketRequest(request, _webSession, response);
-
-            if (response.Success)
+            try
             {
-                #region Fix max items per level
-                if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
-                {
-                    response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
-                }
-                #endregion
+                response.ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep);
+                IsValidMarketRequest(request, _webSession, response);
 
-                #region try catch block
-                else
+                if (response.Success)
                 {
-                    try
+                    #region Fix max items per level
+                    if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                     {
-                        switch (_webSession.CurrentModule)
+                        response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                    }
+                    #endregion
+
+                    #region try catch block
+                    else
+                    {
+                        try
                         {
-                            case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
-                            case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
-                            case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                            case CstWeb.Module.Name.INDICATEUR:
-                            case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
-                            case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
-                                AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                                SetDefaultMarketUniverse(response, univers, request, _webSession);
-                                break;
-                            case CstWeb.Module.Name.FACEBOOK:
-                                Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
-                                _webSession.PrincipalProductUniverses = universes;
-                                response.Success = true;
-                                _webSession.Save();
-                                break;
-                            default:
-                                break;
+                            switch (_webSession.CurrentModule)
+                            {
+                                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                                case CstWeb.Module.Name.INDICATEUR:
+                                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                                case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                                case CstWeb.Module.Name.NEW_CREATIVES:
+                                    AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
+                                    SetDefaultMarketUniverse(response, univers, request, _webSession);
+                                    break;
+                                case CstWeb.Module.Name.FACEBOOK:
+                                    Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
+                                    _webSession.PrincipalProductUniverses = universes;
+                                    response.Success = true;
+                                    _webSession.Save();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        catch (SecurityException)
+                        {
+                            _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                            _webSession.Save();
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
+                        }
+                        catch (CapacityException)
+                        {
+                            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                            _webSession.Save();
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
+                        }
+                        catch (Exception)
+                        {
+                            response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
                         }
                     }
-
-                    catch (SecurityException)
-                    {
-                        _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
-                        _webSession.Save();
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
-                    }
-                    catch (CapacityException)
-                    {
-                        _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-                        _webSession.Save();
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
-                    }
-                    catch (Exception)
-                    {
-                        response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(922, _webSession.SiteLanguage));
-                    }
+                    #endregion
                 }
-                #endregion
+                else if (_webSession.CurrentModule != CstWeb.Module.Name.FACEBOOK)
+                {
+                    response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                }
             }
-            else if (_webSession.CurrentModule != CstWeb.Module.Name.FACEBOOK)
+            catch (Exception ex)
             {
-                response.ErrorMessage = GestionWeb.GetWebWord(2299, _webSession.SiteLanguage);
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-
             return response;
         }
 
@@ -287,250 +306,329 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-
+        //Start from here
         public void SaveCurrentModule(string webSessionId, int moduleId)
         {
             _webSession = (WebSession)WebSession.Load(webSessionId);
-
-            Int64 tmp = _webSession.CurrentModule = moduleId;
-            if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR)
-                _webSession.CurrentTab = TNS.AdExpress.Constantes.FrameWork.Results.SynthesisRecap.SYNTHESIS;//Règle : planche synthèse par défaut dans le module indicateurs
-            else
-            {
-                if (_webSession.CurrentTab == 0) _webSession.OnSetResult();
-                else
-                    _webSession.CurrentTab = 0;
-            }
-            _webSession.ModuleTraductionCode = (int)WebNavigation.ModulesList.GetModuleWebTxt(tmp);
-
-            _webSession.ReachedModule = false;
-            _webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
-            _webSession.CurrentUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
-            _webSession.CurrentUniversProduct = new System.Windows.Forms.TreeNode("produit");
-
-            _webSession.SelectionUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
-            _webSession.SelectionUniversMedia = new System.Windows.Forms.TreeNode("media");
-            _webSession.SelectionUniversProduct = new System.Windows.Forms.TreeNode("produit");
-
-            _webSession.ReferenceUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
-            _webSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
-            _webSession.ReferenceUniversProduct = new System.Windows.Forms.TreeNode("produit");
-            _webSession.SelectionUniversProgramType = new System.Windows.Forms.TreeNode("programtype");
-            _webSession.SelectionUniversSponsorshipForm = new System.Windows.Forms.TreeNode("sponsorshipform");
-            _webSession.CurrentUniversProgramType = new System.Windows.Forms.TreeNode("programtype");
-            _webSession.CurrentUniversSponsorshipForm = new System.Windows.Forms.TreeNode("sponsorshipform");
-
-            _webSession.CompetitorUniversAdvertiser = new Hashtable(5);
-            //_webSession.CompetitorUniversAdvertiser.Add(0, new System.Windows.Forms.TreeNode("advertiser"));
-            _webSession.CompetitorUniversMedia = new Hashtable(5);
-            _webSession.CompetitorUniversProduct = new Hashtable(5);
-
-            _webSession.TemporaryTreenode = null;
-            _webSession.PeriodLength = 0;
-            _webSession.PeriodBeginningDate = "";
-            _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
-            _webSession.PeriodEndDate = "";
-            _webSession.Graphics = true;
-
-            _webSession.Unit = UnitsInformation.DefaultCurrency;
-
-            TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
-            if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-            TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-            _webSession.PreformatedProductDetail = productDetailLevelUtilities.GetDefaultPreformatedProductDetails(_webSession);
-
-            _webSession.LastReachedResultUrl = "";
-            _webSession.Percentage = false;
-            _webSession.ProductDetailLevel = null;
-            if (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && _webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
-            {
-
-                TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
-                if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-                TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)
-                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class
-                    , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
-                _webSession.PreformatedMediaDetail = mediaDetailLevelUtilities.GetDefaultPreformatedMediaDetails(_webSession);
-
-                #region Niveau de détail media (Generic)
-
-                ArrayList levels = mediaDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
-                _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                _webSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                #endregion
-
-                #region Niveau de détail produit (Generic)
-                CstWeb.GenericDetailLevel.SelectedFrom selectedFrom;
-                // Initialisation à annonceur
-                levels.Clear();
-
-
-                levels = productDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
-                switch (_webSession.CurrentModule)
-                {
-                    case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
-                        selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
-                        break;
-                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
-                        selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels;
-                        break;
-                    default:
-                        selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
-                        break;
-                }
-                _webSession.GenericProductDetailLevel = new GenericDetailLevel(levels, selectedFrom);
-                #endregion
-
-                #region Niveau de détail colonne (Generic)
-                levels.Clear();
-                levels.Add(3);
-                _webSession.GenericColumnDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                #endregion
-            }
-            _webSession.MediaDetailLevel = null;
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PRESSE
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_RADIO
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_TELEVISION
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PAN_EURO
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_EVALIANT
-            )
-                _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units;
-
-            else if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
-            )
-                _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period;
-            else
-                _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.media_X_Year;
-
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
-            {
-                _webSession.SelectionUniversMedia.Nodes.Clear();
-                System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("TELEVISION");
-                tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.tv), "TELEVISION");
-                _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-            }
-
-
-            #region paramètres rajoutés pour Bilan de campagne
-            //Setting vehicle as press for APPM
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE)
-            {
-                System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
-                tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.press.GetHashCode(), GestionWeb.GetWebWord(1298, _webSession.SiteLanguage));
-                tmpNode.Checked = true;
-                _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-            }
-            #endregion
-
-            #region paramètres rajoutés pour tableaux de bord
-            _webSession.DetailPeriodBeginningDate = "";
-            _webSession.DetailPeriodEndDate = "";
-            _webSession.Format = CstWeb.Repartition.Format.Total;
-            _webSession.TimeInterval = CstWeb.Repartition.timeInterval.Total;
-            _webSession.NamedDay = CstWeb.Repartition.namedDay.Total;
-            #endregion
-
-            //Rajouté le 17/08/05 par D.V. Mussuma
-            _webSession.CurrentUniversAEPMWave = new System.Windows.Forms.TreeNode("wave");
-            _webSession.CurrentUniversAEPMTarget = new System.Windows.Forms.TreeNode("target");
-            _webSession.CurrentUniversOJDWave = new System.Windows.Forms.TreeNode("ojdWave");
-            _webSession.SelectionUniversAEPMWave = new System.Windows.Forms.TreeNode("wave");
-            _webSession.SelectionUniversAEPMTarget = new System.Windows.Forms.TreeNode("target");
-            _webSession.SelectionUniversOJDWave = new System.Windows.Forms.TreeNode("ojdWave");
-
-            #region Paramètres pour les accroches - G Ragneau - 23/12/2005
-            _webSession.IdSlogans = new ArrayList();
-            _webSession.SloganColors = new Hashtable();
-            _webSession.SloganIdZoom = long.MinValue;
-            #endregion
-
-            //Rajouté le 14/12/05 par D.V. Mussuma
-            _webSession.PercentageAlignment = CstWeb.Percentage.Alignment.none;
-
-            //Initialisaiton des tris des tableaux génériques (G.Ragneau - 12/10/2007)
-            _webSession.Sort = 0;
-            _webSession.SortKey = string.Empty;
-
-            _webSession.SelectedBannersFormatList = string.Empty;
-            if (WebApplicationParameters.UsePurchaseMode && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
-            {
-                var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
-                _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
-            }
-
-            _webSession.ComparativeStudy = false;
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
-            {
-                _webSession.Evolution = false;
-            }
-
-            _webSession.IsSelectRetailerDisplay = false;
-
-            //Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
-
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-                || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
-            {
-
-                SetRecapDefaultMediaSelection();
-                SetRecapDefaultPeriodSelection();
-            }
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
-                _webSession.SetDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
-
-            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
-                _webSession.SetDates(WebApplicationParameters.RolexDateConfigurations.DateTypeDefault);
-
-
-            //Nouveaux univers produit
-            _webSession.PrincipalProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            _webSession.SecondaryProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            //Nouveaux univers media
-            _webSession.PrincipalMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            _webSession.SecondaryMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            //New advertising agency univers
-            _webSession.PrincipalAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            _webSession.SecondaryAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            //Profession universes
-            _webSession.PrincipalProfessionUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
-            if (WebApplicationParameters.VpConfigurationDetail != null)
-                _webSession.PersonnalizedLevel = WebApplicationParameters.VpConfigurationDetail.DefaultPersoLevel;
-            else
-                _webSession.PersonnalizedLevel = DetailLevelItemInformation.Levels.vpBrand;
-
-            //Campaign type 
-            _webSession.CampaignType = TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.notDefined;
-
-            //Avertisement Type
-            _webSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-            _webSession.SelectedLocations = new List<long>();
-            _webSession.SelectedPresenceTypes = new List<long>();
-
-            _webSession.IsExcluWeb = false;
-
-            //Initialisation de customerPeriod
             try
             {
-                if (_webSession.CustomerPeriodSelected != null)
-                    _webSession.CustomerPeriodSelected = null;
-            }
-            catch (System.Exception) { }
+                Int64 tmp = _webSession.CurrentModule = moduleId;
+                if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR)
+                    _webSession.CurrentTab = TNS.AdExpress.Constantes.FrameWork.Results.SynthesisRecap.SYNTHESIS;//Règle : planche synthèse par défaut dans le module indicateurs
+                else
+                {
+                    if (_webSession.CurrentTab == 0) _webSession.OnSetResult();
+                    else
+                        _webSession.CurrentTab = 0;
+                }
+                _webSession.ModuleTraductionCode = (int)WebNavigation.ModulesList.GetModuleWebTxt(tmp);
 
-            //Intiliaze Facebook module Criteria
-            if (_webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+                _webSession.ReachedModule = false;
+                _webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
+                _webSession.CurrentUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
+                _webSession.CurrentUniversProduct = new System.Windows.Forms.TreeNode("produit");
+
+                _webSession.SelectionUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
+                _webSession.SelectionUniversMedia = new System.Windows.Forms.TreeNode("media");
+                _webSession.SelectionUniversProduct = new System.Windows.Forms.TreeNode("produit");
+
+                _webSession.ReferenceUniversAdvertiser = new System.Windows.Forms.TreeNode("advertiser");
+                _webSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
+                _webSession.ReferenceUniversProduct = new System.Windows.Forms.TreeNode("produit");
+                _webSession.SelectionUniversProgramType = new System.Windows.Forms.TreeNode("programtype");
+                _webSession.SelectionUniversSponsorshipForm = new System.Windows.Forms.TreeNode("sponsorshipform");
+                _webSession.CurrentUniversProgramType = new System.Windows.Forms.TreeNode("programtype");
+                _webSession.CurrentUniversSponsorshipForm = new System.Windows.Forms.TreeNode("sponsorshipform");
+
+                _webSession.CompetitorUniversAdvertiser = new Hashtable(5);
+                //_webSession.CompetitorUniversAdvertiser.Add(0, new System.Windows.Forms.TreeNode("advertiser"));
+                _webSession.CompetitorUniversMedia = new Hashtable(5);
+                _webSession.CompetitorUniversProduct = new Hashtable(5);
+
+                _webSession.TemporaryTreenode = null;
+                _webSession.PeriodLength = 0;
+                _webSession.PeriodBeginningDate = "";
+                _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
+                _webSession.PeriodEndDate = "";
+                _webSession.Graphics = true;
+
+                _webSession.Unit = UnitsInformation.DefaultCurrency;
+
+                TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
+                if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                _webSession.PreformatedProductDetail = productDetailLevelUtilities.GetDefaultPreformatedProductDetails(_webSession);
+
+                _webSession.LastReachedResultUrl = "";
+                _webSession.Percentage = false;
+                _webSession.ProductDetailLevel = null;
+                if (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && _webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                {
+
+                    TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
+                    if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                    TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)
+                        AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class
+                        , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                    _webSession.PreformatedMediaDetail = mediaDetailLevelUtilities.GetDefaultPreformatedMediaDetails(_webSession);
+
+                    #region Niveau de détail media (Generic)
+
+                    ArrayList levels = mediaDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
+                    _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    _webSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    #endregion
+
+                    #region Niveau de détail produit (Generic)
+                    CstWeb.GenericDetailLevel.SelectedFrom selectedFrom;
+                    // Initialisation à annonceur
+                    levels.Clear();
+
+
+                    levels = productDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
+                    switch (_webSession.CurrentModule)
+                    {
+                        case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
+                            selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
+                            break;
+                        case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
+                            selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels;
+                            break;
+                        default:
+                            selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
+                            break;
+                    }
+                    _webSession.GenericProductDetailLevel = new GenericDetailLevel(levels, selectedFrom);
+                    #endregion
+
+                    #region Niveau de détail colonne (Generic)
+                    levels.Clear();
+                    levels.Add(3);
+                    _webSession.GenericColumnDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    #endregion
+                }
+                _webSession.MediaDetailLevel = null;
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PRESSE
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_RADIO
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_TELEVISION
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PAN_EURO
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_EVALIANT
+                )
+                    _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units;
+
+                else if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
+                )
+                    _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period;
+                else
+                    _webSession.PreformatedTable = CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.media_X_Year;
+
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                {
+                    _webSession.SelectionUniversMedia.Nodes.Clear();
+                    System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("TELEVISION");
+                    tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.tv), "TELEVISION");
+                    _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                }
+
+
+                #region paramètres rajoutés pour Bilan de campagne
+                //Setting vehicle as press for APPM
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE)
+                {
+                    System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
+                    tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.press.GetHashCode(), GestionWeb.GetWebWord(1298, _webSession.SiteLanguage));
+                    tmpNode.Checked = true;
+                    _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                }
+                #endregion
+
+                #region paramètres rajoutés pour tableaux de bord
+                _webSession.DetailPeriodBeginningDate = "";
+                _webSession.DetailPeriodEndDate = "";
+                _webSession.Format = CstWeb.Repartition.Format.Total;
+                _webSession.TimeInterval = CstWeb.Repartition.timeInterval.Total;
+                _webSession.NamedDay = CstWeb.Repartition.namedDay.Total;
+                #endregion
+
+                //Rajouté le 17/08/05 par D.V. Mussuma
+                _webSession.CurrentUniversAEPMWave = new System.Windows.Forms.TreeNode("wave");
+                _webSession.CurrentUniversAEPMTarget = new System.Windows.Forms.TreeNode("target");
+                _webSession.CurrentUniversOJDWave = new System.Windows.Forms.TreeNode("ojdWave");
+                _webSession.SelectionUniversAEPMWave = new System.Windows.Forms.TreeNode("wave");
+                _webSession.SelectionUniversAEPMTarget = new System.Windows.Forms.TreeNode("target");
+                _webSession.SelectionUniversOJDWave = new System.Windows.Forms.TreeNode("ojdWave");
+
+                #region Paramètres pour les accroches - G Ragneau - 23/12/2005
+                _webSession.IdSlogans = new ArrayList();
+                _webSession.SloganColors = new Hashtable();
+                _webSession.SloganIdZoom = long.MinValue;
+                #endregion
+
+                //Rajouté le 14/12/05 par D.V. Mussuma
+                _webSession.PercentageAlignment = CstWeb.Percentage.Alignment.none;
+
+                //Initialisaiton des tris des tableaux génériques (G.Ragneau - 12/10/2007)
+                _webSession.Sort = 0;
+                _webSession.SortKey = string.Empty;
+
+                _webSession.SelectedBannersFormatList = string.Empty;
+                if (WebApplicationParameters.UsePurchaseMode && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_PURCHASE_MODE_DISPLAY_FLAG))
+                {
+                    var purchaseModeList = new List<FilterItem>(PurchaseModeList.GetList().Values);
+                    _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                }
+
+                _webSession.ComparativeStudy = false;
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    _webSession.Evolution = false;
+                }
+
+                _webSession.IsSelectRetailerDisplay = false;
+
+                //Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
+
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                    || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+                {
+
+                    SetRecapDefaultMediaSelection();
+                    SetRecapDefaultPeriodSelection();
+                }
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+                    _webSession.SetDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
+
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
+                    _webSession.SetDates(WebApplicationParameters.RolexDateConfigurations.DateTypeDefault);
+
+
+                //Nouveaux univers produit
+                _webSession.PrincipalProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.SecondaryProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                //Nouveaux univers media
+                _webSession.PrincipalMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.SecondaryMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                //New advertising agency univers
+                _webSession.PrincipalAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.SecondaryAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                //Profession universes
+                _webSession.PrincipalProfessionUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+
+                if (WebApplicationParameters.VpConfigurationDetail != null)
+                    _webSession.PersonnalizedLevel = WebApplicationParameters.VpConfigurationDetail.DefaultPersoLevel;
+                else
+                    _webSession.PersonnalizedLevel = DetailLevelItemInformation.Levels.vpBrand;
+
+                //Campaign type 
+                _webSession.CampaignType = TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.notDefined;
+
+                //Avertisement Type
+                _webSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.SelectedLocations = new List<long>();
+                _webSession.SelectedPresenceTypes = new List<long>();
+
+                _webSession.IsExcluWeb = false;
+
+                //Initialisation de customerPeriod
+                try
+                {
+                    if (_webSession.CustomerPeriodSelected != null)
+                        _webSession.CustomerPeriodSelected = null;
+                }
+                catch (System.Exception) { }
+
+                //Intiliaze Facebook module Criteria
+                if (_webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+                {
+                    SetSocialMediaDefaultSelection();
+                }
+
+                _webSession.Save();
+
+            }
+            catch (Exception ex)
             {
-                SetSocialMediaDefaultSelection();
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
             }
-
-            _webSession.Save();
         }
 
         public int GetSiteLanguage(string webSessionId)
         {
             var webSession = (WebSession)WebSession.Load(webSessionId);
             return webSession.SiteLanguage;
+        }
+
+        /// <summary>
+        /// Get allowed units 
+        /// </summary>
+        /// <param name="vehicleSelection">List of media joined by commas</param>
+        /// <returns>Allowed units</returns>
+        public static List<CstWeb.CustomerSessions.Unit> GetAllowedUnits(List<CstWeb.CustomerSessions.Unit> unitList, List<CstWeb.CustomerSessions.Unit> AllowedUnitEnumList)
+        {
+            List<CstWeb.CustomerSessions.Unit> temp = new List<CstWeb.CustomerSessions.Unit>();
+            if (AllowedUnitEnumList != null && AllowedUnitEnumList.Count > 0)
+            {
+                foreach (var item in unitList)
+                {
+                    if (AllowedUnitEnumList.Contains(item))
+                    {
+                        temp.Add(item);
+                    }
+                }
+                return temp;
+            }
+            return unitList;
+        }
+
+        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            _webSession.SiteLanguage = siteLanguage;
+            _webSession.Save();
+        }
+        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
+        {
+            bool result = true;
+            try
+            {
+
+                if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
+                {
+                    var vehiclesSelected = webSession.GetVehiclesSelected();
+
+                    if (vehiclesSelected != null && vehiclesSelected.Count > 0)
+                    {
+                        var param = new object[1];
+                        param[0] = _webSession;
+                        var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
+                        if (clMediaU == null)
+                            throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                        var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
+                                                        AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                                                            string.Format("{0}Bin\\{1}"
+                                                                          , AppDomain.CurrentDomain.BaseDirectory,
+                                                                          clMediaU.AssemblyName), clMediaU.Class, false,
+                                                            BindingFlags.CreateInstance
+                                                            | BindingFlags.Instance | BindingFlags.Public, null, param, null,
+                                                            null);
+
+                        var activeVehicles =
+                            mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
+                                                                         universe);
+                        result = (activeVehicles.Count == vehiclesSelected.Count);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSession.IdSession, webSession.UserAgent, webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+            return result;
         }
 
         #region Méthodes internes
@@ -704,70 +802,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
         }
-        #endregion
-
-        #region To be deplaced
-        /// <summary>
-        /// Get allowed units 
-        /// </summary>
-        /// <param name="vehicleSelection">List of media joined by commas</param>
-        /// <returns>Allowed units</returns>
-        public static List<CstWeb.CustomerSessions.Unit> GetAllowedUnits(List<CstWeb.CustomerSessions.Unit> unitList, List<CstWeb.CustomerSessions.Unit> AllowedUnitEnumList)
-        {
-            List<CstWeb.CustomerSessions.Unit> temp = new List<CstWeb.CustomerSessions.Unit>();
-            if (AllowedUnitEnumList != null && AllowedUnitEnumList.Count > 0)
-            {
-                foreach (var item in unitList)
-                {
-                    if (AllowedUnitEnumList.Contains(item))
-                    {
-                        temp.Add(item);
-                    }
-                }
-                return temp;
-            }
-            return unitList;
-        }
-
-        #endregion
-        public void UpdateSiteLanguage(string webSessionId, int siteLanguage)
-        {
-            _webSession = (WebSession)WebSession.Load(webSessionId);
-            _webSession.SiteLanguage = siteLanguage;
-            _webSession.Save();
-        }
-        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
-        {
-            if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)//&&IsCheckUniverseLevels
-            {
-                var vehiclesSelected = webSession.GetVehiclesSelected();
-
-                if (vehiclesSelected != null && vehiclesSelected.Count > 0)
-                {
-                    var param = new object[1];
-                    param[0] = _webSession;
-                    var clMediaU = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.mediaDetailLevelUtilities];
-                    if (clMediaU == null)
-                        throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-                    var mediaDetailLevelUtilities = (FctUtilities.MediaDetailLevel)
-                                                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
-                                                        string.Format("{0}Bin\\{1}"
-                                                                      , AppDomain.CurrentDomain.BaseDirectory,
-                                                                      clMediaU.AssemblyName), clMediaU.Class, false,
-                                                        BindingFlags.CreateInstance
-                                                        | BindingFlags.Instance | BindingFlags.Public, null, param, null,
-                                                        null);
-
-                    var activeVehicles =
-                        mediaDetailLevelUtilities.GetAllowedVehicles(webSession.GetVehiclesSelected().Keys.ToList(),
-                                                                     universe);
-                    return (activeVehicles.Count == vehiclesSelected.Count);
-
-                }
-            }
-            return true;
-        }
-
+        #endregion     
+       
         #region Private Methods
         private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
@@ -824,6 +860,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.INDICATEUR:
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                 case CstWeb.Module.Name.CELEBRITIES:
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                     return true;
                 default: return false;
             }
@@ -913,6 +951,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentModuleCode = CstWeb.LanguageConstantes.FacebookCode;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? FACEBOOK : SELECTION;
                     currentModuleIcon = "icon-social-facebook";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                    currentModuleCode = CstWeb.LanguageConstantes.MediaAgencyAnalysis;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIAAGENCY : SELECTION;
+                    currentModuleIcon = "icon-picture";
+                    break;
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                    currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? NEW_CREATIVES : SELECTION;
+                    currentModuleIcon = "icon-picture";
                     break;
                 default:
                     break;
@@ -1006,7 +1054,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.Success = false;
                     response.ErrorMessage = GestionWeb.GetWebWord(2299, webSession.SiteLanguage);
-                    return ;
+                    return;
                 }
                 List<UniversLevel> advertisers = request.Trees.SelectMany(p => p.UniversLevels)
                                                                 .Where(x => x.Id == ADVERTISERID && x.UniversItems.Count > 0)
@@ -1143,7 +1191,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                int year =int.Parse(period.Substring(0,4));
+                int year = int.Parse(period.Substring(0, 4));
                 int month = int.Parse(period.Substring(4, 2));
                 int endDay = DateTime.DaysInMonth(year, month);
                 string startDate = new DateTime(year, month, 01).ToString("yyyyMMdd");

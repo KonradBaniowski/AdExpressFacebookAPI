@@ -125,6 +125,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             DetailLevelViewModel model = new DetailLevelViewModel { Labels = LoadPageLabels(_webSessionService.GetSiteLanguage(idWebSession)) , Items = detailLevel};
 
+            ViewBag.SiteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
+            
             return PartialView("_DetailLevel", model);
         }
 

@@ -5,14 +5,14 @@
         @if (!Model.HideExistButton)
         {
         <span id="leave-zoom" class="orange link-cursor">
-                    <i class="fa fa-arrow-left"></i> Sortir du mode zoom
+                    <i class="fa fa-arrow-left"></i> @Model.LeaveZoom
         </span>
         }
         <div id="sub-period-container" class="panel panel-default panel-cotes">
             <div class="panel-heading second">
                 <div class="sub-period-info">
                     <h5>
-                        <strong>Navigation par @Model.PeriodLabel:</strong><span id="subPeriodLabel" class="sub-period-label">@Model.FirstPeriodLabel</span>
+                        <strong>@Model.PeriodLabel</strong><span id="subPeriodLabel" class="sub-period-label">@Model.FirstPeriodLabel</span>
                     </h5>
                 </div>
                 <div class="btn-group btn-group-margin" role="group" aria-label="...">

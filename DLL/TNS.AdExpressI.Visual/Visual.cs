@@ -169,6 +169,7 @@ namespace TNS.AdExpressI.Visual
                     return WebCst.CreationServerPathes.IMAGES;
                 case Vehicles.names.indoor:
                 case Vehicles.names.outdoor:
+                case Vehicles.names.dooh:
                     return WebCst.CreationServerPathes.IMAGES_OUTDOOR;
                 case Vehicles.names.internet:
                     return WebCst.CreationServerPathes.CREA_ADNETTRACK;

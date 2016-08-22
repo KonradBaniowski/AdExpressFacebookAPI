@@ -45,6 +45,7 @@ namespace TNS.AdExpressI.Insertions.DAL.France {
                 case Vehicles.names.newspaper:
                     return ",id_media,format as advertDimension, visual as associated_file";
                 case Vehicles.names.outdoor:
+                case Vehicles.names.dooh:
                 case Vehicles.names.indoor:
                     return ",id_media,type_board as advertDimension, associated_file as associated_file";
                 case Vehicles.names.mailValo:

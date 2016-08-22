@@ -76,6 +76,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
             #region Load Branches
             var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            model.CurrentModule = result.ControllerDetails.ModuleId;
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -163,6 +164,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
             var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 1, 0);
+            model.CurrentModule = response.ControllerDetails.ModuleId;
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {

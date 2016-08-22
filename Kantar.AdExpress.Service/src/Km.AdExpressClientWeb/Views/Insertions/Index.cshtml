@@ -1,4 +1,5 @@
 ﻿@model Km.AdExpressClientWeb.Models.Shared.InsertionCreativeViewModel
+@using TNS.AdExpress.Domain.Web;
 
 @{
     ViewBag.Title = "Insertions";
@@ -83,9 +84,46 @@
 
 
 @section Scripts {
-    <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
-    <script src="~/IgniteUI/js/infragistics.core.js"></script>
-    <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+
+    @switch (Model.SiteLanguage.ToString())
+        {
+            case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+            <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.UK:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            break;
+        default:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+    }
 
     <script id="colSpotTmpl" type="text/template">
         {{if ${10}.startsWith('[') && ${10}.endsWith(']') }}
@@ -488,7 +526,9 @@
                 var active = "active";
                 datas = datas.split('],[');
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
-                infos = datas[1].replace(/\[|\]/g, '').split(";");
+                paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
+                infos = datas[2].replace(/\[|\]/g, '').split(";");
+                try { format = datas[3].replace(/\[|\]/g, ''); } catch (e) { format = ""; }
                 if (visus.length > 1) {
                     for (i = 0; i < visus.length; i++) {
                         if (i != 0) active = "";
@@ -496,7 +536,14 @@
                     }
                 } else {
                     $(this).attr("id", "visu");
-                    $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>')
+                    if (visus[0] == "")
+                        $(this).html('<span class="fa big iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '"></span>');
+                    else
+                        $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
+
+                    //Lien mp4,mp3,flv,... du visuel (onclick)
+                    if (paramsLink[0] != "")
+                        $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="' + format + '" >' + $(this).html() + '</a></div>');
                 }
                 for (j = infos.length - 1; j >= 0; j--) {
                     if (infos[j] != "" && (infos[j].indexOf(":") >= 0)) {
