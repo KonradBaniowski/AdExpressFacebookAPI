@@ -1370,7 +1370,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.NEW_CREATIVES:
                     currentModuleCode = WebConstantes.LanguageConstantes.NewCreatives;
                     currentController = "Selection";
-                    currentModuleIcon = "icon-picture";
+                    currentModuleIcon = "icon-camrecorder";
                     break;
                 default:
                     break;

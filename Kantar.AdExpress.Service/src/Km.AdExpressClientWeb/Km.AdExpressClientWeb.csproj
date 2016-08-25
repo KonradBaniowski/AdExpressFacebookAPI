@@ -185,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
+    <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ProductClassAnalysisExportController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
@@ -1545,6 +1546,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
+    <Content Include="Scripts\Results\result-newCreatives.js" />
     <Content Include="Scripts\Results\socialMedia-results.js" />
     <Content Include="Scripts\Results\result-analysis.js" />
     <Content Include="Scripts\Results\result.js" />
@@ -1657,6 +1659,8 @@
     <Content Include="Views\Home\_HomeNewsFr.cshtml" />
     <Content Include="Views\Home\_HomeNewsFi.cshtml" />
     <Content Include="Views\Shared\_ExportTypeResults.cshtml" />
+    <Content Include="Views\NewCreatives\Results.cshtml" />
+    <Content Include="Views\NewCreatives\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

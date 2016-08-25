@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService\IAlertService.cs" />
+    <Compile Include="BusinessService\INewCreativesService.cs" />
     <Compile Include="BusinessService\IAnalysisService.cs" />
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
     <Compile Include="BusinessService\IApplicationUserManager.cs" />

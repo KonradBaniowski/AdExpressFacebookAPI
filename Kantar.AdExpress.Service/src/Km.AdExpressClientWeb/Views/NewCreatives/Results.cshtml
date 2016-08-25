@@ -1,0 +1,116 @@
+﻿@model Km.AdExpressClientWeb.Models.Shared.ResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
+@{
+    ViewBag.Title = "Results";
+    var _controller = "NewCreatives";
+    Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var newCreativesResults = string.Format("/{0}/Results", _controller);
+}
+
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+    @Html.Partial("Presentation", Model.Presentation)
+    @Html.Partial("DetailSelection")
+    @Html.HiddenFor(e => e.Labels.ResultError)
+    @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_ExportTypeResults", Model)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+</div>
+<div class="h20"></div>
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
+            <div id="grid" class="hide">
+            </div>
+            <div id="gridLoader">
+                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+            </div>
+        </center>
+    </div>
+</div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="current-url" value="@newCreativesResults" />
+@section Scripts {
+    @switch (Model.Presentation.SiteLanguage.ToString())
+    {
+        case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+            <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.UK:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            break;
+        default:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+    }
+
+    <script>
+    $(document).ready(function () {
+
+        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+        // Set text for select picker
+        $.fn.selectpicker.defaults = {
+            all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
+        };
+    });
+    </script>
+
+    @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/newCreatives-results")
+}
