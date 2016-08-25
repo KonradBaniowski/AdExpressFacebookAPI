@@ -31,6 +31,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
+        private const string NEW_CREATIVES = "NewCreatives";
         const int ExportFormattedResult = 1;
         const int ExportResultWithValue = 2;
         const int ExportGrossResult = 3;
@@ -68,6 +69,10 @@ namespace Km.AdExpressClientWeb.Helpers
                     break;
                 case Module.Name.FACEBOOK:
                     resultController = FACEBOOK;
+                    controller = SELECTION;
+                    break;
+                case Module.Name.NEW_CREATIVES:
+                    resultController = NEW_CREATIVES;
                     controller = SELECTION;
                     break;
             }

@@ -3,9 +3,9 @@
 @using TNS.AdExpress.Domain.Web;
 @{
     ViewBag.Title = "Results";
-    var _controller = "Analysis";
+    var _controller = "NewCreatives";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
-    var analysisResults = string.Format("/{0}/Results", _controller);
+    var newCreativesResults = string.Format("/{0}/Results", _controller);
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -34,7 +34,7 @@
 </div>
 <div class="h20"></div>
 <div class="row">
-    <div class="col-md-12 analysis">
+    <div class="col-md-12">
         <center>
             <p id="gridEmpty" style="display:none">@GestionWeb.GetWebWord(2106, Model.Presentation.SiteLanguage)</p>
             <div id="grid" class="hide">
@@ -57,7 +57,7 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="current-url" value="@analysisResults" />
+<input type="hidden" id="current-url" value="@newCreativesResults" />
 @section Scripts {
     @switch (Model.Presentation.SiteLanguage.ToString())
     {
@@ -99,7 +99,7 @@
             break;
     }
 
-<script>
+    <script>
     $(document).ready(function () {
 
         if (typeof jQuery === "undefined") { throw new Error("jQuery") }
@@ -109,7 +109,8 @@
             all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
         };
     });
-</script>
+    </script>
 
-    @Scripts.Render("~/bundles/analysis-results")
+    @Scripts.Render("~/bundles/results")
+    @Scripts.Render("~/bundles/newCreatives-results")
 }

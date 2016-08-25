@@ -22,7 +22,6 @@ using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using FctWeb = TNS.AdExpress.Web.Functions;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 
 using TNS.AdExpress;
@@ -41,12 +40,14 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.NewCreatives.DAL;
 using TNS.AdExpressI.NewCreatives.Exceptions;
 
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.Collections;
 using TNS.FrameWork.WebResultUI;
 
 using TNS.Classification.Universe;
 using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpressI.NewCreatives {
@@ -425,7 +426,7 @@ namespace TNS.AdExpressI.NewCreatives {
                             , (long)parution));
                         break;
                     case WebCst.CustomerSessions.Period.DisplayLevel.dayly:
-                        headers.Root.Add(new Header(true, Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long)parution));
+                        headers.Root.Add(new Header(true, FctUtilities.Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long)parution));
                         break;
                     default:
                         break;
@@ -458,6 +459,348 @@ namespace TNS.AdExpressI.NewCreatives {
             tab[iCurLine, iCol] = new CellCreativesLink(cellLevels[i], _webSession, _webSession.GenericProductDetailLevel, string.Empty, -1);
         }
 
+
+        public GridResult GetGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            
+            //TODO : mettre au l'init du module
+            TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
+            if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+            TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+            _webSession.PreformatedProductDetail = productDetailLevelUtilities.GetDefaultPreformatedProductDetails(_webSession);
+            /**************************/
+
+            ResultTable resultTable = GetData();
+            string mediaSchedulePath = "/MediaSchedulePopUp";
+            string insertionPath = "/Insertions";
+            string versionPath = "/Creative";
+            LineStart cLineStart = null;
+            int nbLines = 0;
+
+            if (resultTable == null || resultTable.DataColumnsNumber == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
+
+            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+            object[,] gridData = null;
+            if (_webSession.CurrentTab != DynamicAnalysis.SYNTHESIS)
+            {
+                for (int i = 0; i < resultTable.LinesNumber; i++)
+                {
+                    cLineStart = resultTable.GetLineStart(i);
+                    if (!(cLineStart is LineHide))
+                        nbLines++;
+                }
+                if (nbLines == 0)
+                {
+                    gridResult.HasData = false;
+                    return gridResult;
+                }
+                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            }
+            else
+            {
+                nbLines = resultTable.LinesNumber;
+                gridData = new object[nbLines, resultTable.ColumnsNumber];
+            }//+2 car ID et PID en plus  -  //_data.LinesNumber 
+
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+            //Hierachical ids for Treegrid
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+            if (_webSession.CurrentTab != DynamicAnalysis.SYNTHESIS)
+            {
+                columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
+                schemaFields.Add(new { name = "GAD" });
+            }
+
+            List<object> groups = null;
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+            string format = string.Empty;
+            List<object> subGroups = null;
+
+            //Headers
+            if (resultTable.NewHeaders != null)
+            {
+                for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
+                {
+                    groups = null;
+                    string colKey = string.Empty;
+                    if (resultTable.NewHeaders.Root[j].Count > 0)
+                    {
+                        groups = new List<object>();
+
+                        int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
+                        for (int g = 0; g < nbGroupItems; g++)
+                        {
+                            //Manage sub groups items (stynthesis result)
+                            if (resultTable.NewHeaders.Root[j][g].Count > 0)
+                            {
+                                #region Sub group synthesis
+
+                                subGroups = new List<object>();
+
+                                int nbSubGroupitems = resultTable.NewHeaders.Root[j][g].Count;
+
+                                for (int sg = 0; sg < nbSubGroupitems; sg++)
+                                {
+                                    colKey = string.Format("sg{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
+                                    //cell format sub group
+                                    if (resultTable != null && resultTable.LinesNumber > 0)
+                                    {
+                                        var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
+
+                                        if (cell is CellPercent || cell is CellPDM)
+                                        {
+                                            format = "percent";
+                                            colKey += "-pdm";
+                                        }
+                                        else if (cell is CellEvol)
+                                        {
+                                            format = "percent";
+                                            colKey += "-evol";
+                                        }
+                                        else if (cell is CellDuration)
+                                        {
+                                            format = "duration";
+                                            colKey += "-unit";
+                                        }
+                                        else if (cell is CellUnit)
+                                        {
+                                            format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
+                                            colKey += "-unit";
+                                        }
+                                    }
+
+                                    subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                    schemaFields.Add(new { name = colKey });
+
+                                }
+
+                                colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, group = subGroups });
+                                //schemaFields.Add(new { name = colKey });
+
+
+                                #endregion
+                            }
+                            else
+                            {
+                                //No sub groups items
+                                #region /No sub groups items
+                                colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+                                //cell format
+                                if (resultTable != null && resultTable.LinesNumber > 0)
+                                {
+                                    var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
+
+                                    if (cell is CellPercent || cell is CellPDM)
+                                    {
+                                        format = "percent";
+                                        colKey += "-pdm";
+                                    }
+                                    else if (cell is CellEvol)
+                                    {
+                                        format = "percent";
+                                        colKey += "-evol";
+                                    }
+                                    else if (cell is CellDuration)
+                                    {
+                                        format = "duration";
+                                        colKey += "-unit";
+                                    }
+                                    else if (cell is CellUnit)
+                                    {
+                                        format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
+                                        colKey += "-unit";
+                                    }
+                                }
+
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                schemaFields.Add(new { name = colKey });
+                                #endregion
+
+                            }
+
+
+                        }
+
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
+                        columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
+                    }
+                    else
+                    {
+                        colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        if (j == 0)
+                        {
+                            if (_webSession.CurrentTab == DynamicAnalysis.SYNTHESIS)
+                            {
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true });
+                            }
+                            else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                        }
+                        else
+                        {
+                            if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1401, _webSession.SiteLanguage)) //Total
+                            {
+                                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
+                                colKey += "-unit";
+
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            }
+                            else if(resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1236, _webSession.SiteLanguage)) // Pourcentage
+                            {
+                                format = "percent";
+                                colKey += "-pdm";
+
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            }
+                            else
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                        }
+                        schemaFields.Add(new { name = colKey });
+                    }
+
+                }
+            }
+
+            //table body rows
+            int currentLine = 0;
+            for (int i = 0; i < resultTable.LinesNumber; i++) //
+            {
+                cLineStart = resultTable.GetLineStart(i);
+                if (cLineStart is LineHide)
+                    continue;
+
+                gridData[currentLine, 0] = i; // Pour column ID
+                gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+
+                for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
+                {
+                    var cell = resultTable[i, k];
+                    var link = string.Empty;
+                    if (cell is CellMediaScheduleLink)
+                    {
+
+                        var c = cell as CellMediaScheduleLink;
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                           , mediaSchedulePath
+                           , link);
+                            }
+                        }
+                        gridData[currentLine, k + 2] = link;
+
+                    }
+                    else if (cell is CellOneLevelInsertionsLink)
+                    {
+                        var c = cell as CellOneLevelInsertionsLink;
+
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                         , insertionPath
+                         , link);
+                            }
+
+                        }
+                        gridData[currentLine, k + 2] = link;
+                    }
+                    else if (cell is CellOneLevelCreativesLink)
+                    {
+                        var c = cell as CellOneLevelCreativesLink;
+
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                         , versionPath
+                         , link);
+                            }
+
+                        }
+                        gridData[currentLine, k + 2] = link;
+                    }
+                    else
+                    {
+                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM)
+                        {
+                            double value = ((CellUnit)cell).Value;
+
+                            if (double.IsInfinity(value))
+                                gridData[currentLine, k + 2] = "Infinity";
+                            else if (double.IsNaN(value))
+                                gridData[currentLine, k + 2] = null;
+                            else
+                                gridData[currentLine, k + 2] = value / 100;
+                        }
+                        else if (cell is CellUnit)
+                        {
+                            if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
+                            {
+                                if (_webSession.CurrentTab == DynamicAnalysis.SYNTHESIS)
+                                {
+                                    gridData[currentLine, k + 1] = Units.ConvertUnitValue(((CellUnit)cell).Value, _webSession.Unit);
+                                }
+                                else gridData[currentLine, k + 2] = Units.ConvertUnitValue(((CellUnit)cell).Value, _webSession.Unit);
+                            }
+                            else
+                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
+                        }
+                        else if (cell is AdExpressCellLevel)
+                        {
+                            string label = ((AdExpressCellLevel)cell).RawString();
+                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+
+                            if (gadParams.Length > 0)
+                                gridData[currentLine, 2] = gadParams;
+                            else
+                                gridData[currentLine, 2] = "";
+
+                            gridData[currentLine, k + 2] = label;
+                        }
+                        else
+                        {
+                            if (_webSession.CurrentTab == DynamicAnalysis.SYNTHESIS)
+                            {
+                                gridData[currentLine, k + 1] = cell.ToString(); //RenderString()
+                            }
+                            else gridData[currentLine, k + 2] = cell.ToString(); //RenderString()
+                        }
+                    }
+                }
+                currentLine++;
+            }
+            gridResult.NeedFixedColumns = true;
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+            gridResult.Unit = _webSession.Unit.ToString();
+
+            return gridResult;
+        }
     }
 
 }

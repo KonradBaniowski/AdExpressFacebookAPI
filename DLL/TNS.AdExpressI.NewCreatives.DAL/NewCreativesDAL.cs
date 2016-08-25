@@ -28,7 +28,6 @@ using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Utilities;
@@ -147,9 +146,9 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
-                        dataTableNameForGad = ", " + schAdExpr03.Sql + WebFunctions.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
-                        dataFieldsForGad = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad();
-                        dataJointForGad = "and " + WebFunctions.SQLGenerator.GetJointForGad(table.Prefix);
+                        dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
+                        dataJointForGad = "and " + SQLGenerator.GetJointForGad(table.Prefix);
                     }
                     catch(SQLGeneratorException) { ;}
                 }

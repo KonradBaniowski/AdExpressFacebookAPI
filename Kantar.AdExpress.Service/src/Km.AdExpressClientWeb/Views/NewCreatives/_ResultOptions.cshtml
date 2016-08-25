@@ -1,0 +1,172 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
+@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
+@{
+    var optionsNb = 1;
+    var classHide = "";
+}
+
+<div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-primary panel-options">
+        <a role="button" data-toggle="collapse" data-parent="#media-accordion" href="#collapseContainerOne" aria-expanded="true" aria-controls="collapseContainerOne">
+            <div class="panel-heading head-results" role="tab" id="headingOne">
+                <h3 class="panel-title pull-left orange">
+
+                    <i class="fa fa-cog text-lg orange"></i> @GestionWeb.GetWebWord(792, Model.SiteLanguage)
+                    <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                </h3>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+        <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-sans text-left options-control">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.PeriodDetail.PeriodDetailType.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.PeriodDetail.PeriodDetailType.Items)
+                                            {
+                                                if (item.Value == Model.PeriodDetail.PeriodDetailType.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(1886, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseHeight" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.DefaultDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.DefaultDetail.Items)
+                                            {
+                                                if (item.Value == Model.GenericDetailLevel.DefaultDetail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (@Model.FormatOption.Format.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        Format
+                                    </p>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.FormatOption.Format.Id" class="selectdatepicker" multiple>
+                                                @foreach (var item in Model.FormatOption.Format.Items)
+                                                {
+                                                    if (Model.FormatOption.Format.SelectedId.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <div class='row'>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="panel-primary panel-options-results">
+                            <div class="panel-heading head-options-results">
+                                <p class="panel-title options ">
+                                    @GestionWeb.GetWebWord(1896, Model.SiteLanguage)
+                                </p>
+                            </div>
+                            <div id="collapseNine" class="panel-collapse collapse in">
+                                <div class="panel-body mi-padder">
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1897, Model.SiteLanguage)</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <small class="pader-v-mi orange">@GestionWeb.GetWebWord(1899, Model.SiteLanguage)</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L2Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L2Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="selectoptioncontainer">
+                                        <select id="@Model.GenericDetailLevel.L3Detail.Id" class="selectdatepicker">
+                                            @foreach (var item in Model.GenericDetailLevel.L3Detail.Items)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="padder-btn btn-options pull-right">
+                        <button id="validate-options" class="btn btn-valider">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

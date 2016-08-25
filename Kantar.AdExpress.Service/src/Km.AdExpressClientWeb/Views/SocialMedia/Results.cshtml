@@ -14,18 +14,18 @@
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
     @Html.Hidden("ExportController", "SocialMediaExport")
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-6 col-sm-6">
         <div class="custom-button selectexporttype select-universe-choice">
         </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-6 col-sm-6">
         @Html.Partial("_ExportTypeResults", Model)
     </div>
 </div>

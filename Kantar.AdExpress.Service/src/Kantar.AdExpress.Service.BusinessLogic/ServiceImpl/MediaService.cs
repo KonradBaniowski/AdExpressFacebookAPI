@@ -180,7 +180,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.NEW_CREATIVES:
                     currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
                     currentController =  SELECTION;
-                    currentModuleIcon = "icon-picture";
+                    currentModuleIcon = "icon-camrecorder";
                     break;
                 default:
                     break;

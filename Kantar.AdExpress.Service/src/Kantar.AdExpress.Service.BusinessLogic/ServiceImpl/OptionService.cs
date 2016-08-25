@@ -61,6 +61,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case WebConstantes.Module.Name.NEW_CREATIVES:
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                         _nbDetailLevelItemList = 3;
                         break;
@@ -562,6 +563,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case WebConstantes.Module.Name.NEW_CREATIVES:
                         _nbDetailLevelItemList = 3;
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                         break;
@@ -634,6 +636,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
                         #endregion
                         break;
+                    case WebConstantes.Module.Name.NEW_CREATIVES:
+                        _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                        break;
                 }
 
 
@@ -642,7 +647,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region UnitFilter
-                _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                if(_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
+                    _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
                 #endregion
 
                 #region Options by Vehicle
@@ -676,7 +682,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region AutoPromoFilter
-                if (autopromoEvaliantOption)
+                if (autopromoEvaliantOption && _customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
                     _customerWebSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
                 #endregion
 

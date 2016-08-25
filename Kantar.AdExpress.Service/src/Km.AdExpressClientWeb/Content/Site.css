@@ -1,4 +1,9 @@
-﻿
+﻿/**Scrollbar toujours visible**/
+html {
+    overflow-y:scroll;
+}
+
+
 .bb-alert {
     position: fixed;
     bottom: 25%;
