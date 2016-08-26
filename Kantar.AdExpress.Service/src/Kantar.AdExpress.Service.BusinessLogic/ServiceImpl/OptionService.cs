@@ -708,7 +708,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region FormatFilter
-                if (autopromoEvaliantOption)
+                if (autopromoEvaliantOption && userFilter.FormatFilter.Formats != null)
                     _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
                 #endregion
 

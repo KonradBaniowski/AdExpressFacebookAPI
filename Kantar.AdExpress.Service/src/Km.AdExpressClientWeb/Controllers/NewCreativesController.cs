@@ -55,7 +55,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Presentation = pageHelper.LoadPresentationBar(_siteLanguage, result.ControllerDetails),
                 Labels = LabelsHelper.LoadPageLabels(_siteLanguage),
                 IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.TABLEAU_DYNAMIQUE, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.NEW_CREATIVES, _siteLanguage)
             };
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
@@ -64,7 +64,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult NewCreativesResult(ResultTable.SortOrder sortOrder, int columnIndex)
+        public JsonResult NewCreativesResult()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();

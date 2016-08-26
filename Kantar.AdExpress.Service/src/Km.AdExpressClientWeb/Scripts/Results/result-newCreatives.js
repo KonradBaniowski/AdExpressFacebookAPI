@@ -72,23 +72,23 @@
 
     CallNewCreativesResult();
 
-    //$('#export-type').removeClass("hide");
-    //$('#export-type').selectpicker();
-    //$('#btn-export').on('click', function (e) {
-    //    var selectedValue = $('#export-type').val();
-    //    var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
-    //    switch (selectedValue) {
-    //        case "1":
-    //            window.open('/ProductClassAnalysisExport/Index' + params, "_blank");
-    //            break;
-    //        case "2":
-    //            window.open('/ProductClassAnalysisExport/ResultBrut', "_blank");
-    //            break;
-    //        default:
-    //            window.open('/ProductClassAnalysisExport/Index' + params, "_blank");
-    //            break;
-    //    }
-    //});
+    $('#export-type').removeClass("hide");
+    $('#export-type').selectpicker();
+    $('#btn-export').on('click', function (e) {
+        var selectedValue = $('#export-type').val();
+        var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+        switch (selectedValue) {
+            case "1":
+                window.open('/NewCreativesExport/Index' + params, "_blank");
+                break;
+            case "2":
+                window.open('/NewCreativesExport/ResultBrut', "_blank");
+                break;
+            default:
+                window.open('/NewCreativesExport/Index' + params, "_blank");
+                break;
+        }
+    });
 
     $('#periodDetailType').selectpicker();
 
@@ -249,17 +249,12 @@
 
     function CallNewCreativesResult() {
         $("#gridEmpty").hide();
-        var params = {
-            sortOrder: sortOrder,
-            columnIndex: columnIndex
-        };
 
         $.ajax({
             url: '/NewCreatives/NewCreativesResult',
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",
-            data: params,
             error: function (xmlHttpRequest, errorText, thrownError) {
                 var message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
                 bootbox.alert(message);
@@ -322,6 +317,11 @@
                         name: "ColumnFixing",
                         fixingDirection: "left",
                         columnSettings: colsFixed
+                    },
+                    {
+                        name: "Sorting",
+                        type: "local",
+                        applySortedColumnCss: false
                     }
                     ]
             })
@@ -352,16 +352,6 @@
                         var elementWidth = element.width();
                         var childWidth = child.width();
 
-                        //if (elementWidth == childWidth || (elementWidth - childWidth) <= 20) {
-                        //    var str = child.html();
-                        //    str = str.replace(/&nbsp;/g, " ");
-                        //    if (str.length > 6)
-                        //        str = str.substring(0, str.length - 6) + "...";
-                        //    else
-                        //        str = str.substring(0, str.length - 3) + ".";
-
-                        //    child.html(str);
-                        //}
                         element.addClass("ui-iggrid-colheaderasc-ktr");
                         if (sortOrder == "ASC")
                             element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
@@ -377,7 +367,22 @@
         }
     }
 
-    //Export
+    $(document).on('click', '*[id*=grid_table_g]', function (event) {
+        var element = $(this);
+        sortFunc(element);
+    });
+
+    var sortFunc = function (field) {
+        var index = field[0].id.split("-")[0].split("_g")[1];
+        if (sortOrder == "NONE")
+            sortOrder = "ASC";
+        else if (sortOrder == "ASC")
+            sortOrder = "DESC";
+        else if (sortOrder == "DESC")
+            sortOrder = "ASC";
+        columnIndex = parseInt(index);
+    }
+
     $("#btn-save-result").click(function () {
         $("#exportResultModal").modal("show");
     });

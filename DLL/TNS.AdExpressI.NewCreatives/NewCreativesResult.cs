@@ -50,12 +50,14 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Units;
 #endregion
 
-namespace TNS.AdExpressI.NewCreatives {
-    
+namespace TNS.AdExpressI.NewCreatives
+{
+
     /// <summary>
     /// Default new creatives
     /// </summary>
-    public abstract class NewCreativesResult:INewCreativesResult {
+    public abstract class NewCreativesResult : INewCreativesResult
+    {
 
         #region Constantes
         protected const int PROD_COL = 1164;
@@ -104,19 +106,22 @@ namespace TNS.AdExpressI.NewCreatives {
         /// <summary>
         /// Get User session
         /// </summary>
-        public WebSession WebSession {
+        public WebSession WebSession
+        {
             get { return _webSession; }
         }
         /// <summary>
         /// Get Current Vehicle
         /// </summary>
-        public VehicleInformation VehicleInformationObject {
+        public VehicleInformation VehicleInformationObject
+        {
             get { return _vehicleInformation; }
         }
         /// <summary>
         /// Get Current Module
         /// </summary>
-        public Navigation.Module CurrentModule {
+        public Navigation.Module CurrentModule
+        {
             get { return _module; }
         }
         #endregion
@@ -126,7 +131,8 @@ namespace TNS.AdExpressI.NewCreatives {
         /// Constructor
         /// </summary>
         /// <param name="session">user session</param>
-        public NewCreativesResult(WebSession session) {
+        public NewCreativesResult(WebSession session)
+        {
             _webSession = session;
             _idSectors = GetSectorIds();
             _beginingDate = session.PeriodBeginningDate;
@@ -135,7 +141,7 @@ namespace TNS.AdExpressI.NewCreatives {
 
             #region Sélection du vehicle
             string vehicleSelection = session.GetSelection(session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
-            if(vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new NewCreativesException("Uncorrect Media Selection"));
+            if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new NewCreativesException("Uncorrect Media Selection"));
             _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
             #endregion
 
@@ -148,7 +154,8 @@ namespace TNS.AdExpressI.NewCreatives {
         /// Compute new creatives
         /// </summary>
         /// <returns>Compute Data</returns>
-        public ResultTable GetData(){
+        public ResultTable GetData()
+        {
 
             #region Variables
             ResultTable tab = null;
@@ -168,7 +175,7 @@ namespace TNS.AdExpressI.NewCreatives {
             #endregion
 
             #region Chargement des données
-            if(_module.CountryDataAccessLayer == null) 
+            if (_module.CountryDataAccessLayer == null)
                 throw (new NullReferenceException("DAL layer is null for the portofolio result"));
             var parameters = new object[4];
             parameters[0] = _webSession;
@@ -182,7 +189,7 @@ namespace TNS.AdExpressI.NewCreatives {
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             ds = newCreativesDAL.GetData();
 
-            if(ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) dt = ds.Tables[0];
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) dt = ds.Tables[0];
             else return (tab);
             #endregion
 
@@ -212,13 +219,15 @@ namespace TNS.AdExpressI.NewCreatives {
             tab.AddNewLine(LineType.total);
             tab[iCurLine, 1] = cellLevels[0] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805, _webSession.SiteLanguage), 0, iCurLine, _webSession);
             int iCol = 3;
-            if (_showCreative) {
-                iCol++;                
+            if (_showCreative)
+            {
+                iCol++;
                 SetCellCreativesLink(tab, iCurLine, iCol, cellLevels, 0);
             }
-            if (_showMediaSchedule) { 
-                iCol++; 
-                tab[iCurLine, iCol] = new CellMediaScheduleLink(cellLevels[0], _webSession); 
+            if (_showMediaSchedule)
+            {
+                iCol++;
+                tab[iCurLine, iCol] = new CellMediaScheduleLink(cellLevels[0], _webSession);
             }
             initLine(tab, iCurLine, cellFactory, cellLevels[0]);
             #endregion
@@ -226,19 +235,25 @@ namespace TNS.AdExpressI.NewCreatives {
             i = 1;
             long dCurLevel = 0;
             DetailLevelItemInformation.Levels level;
-            foreach(DataRow row in dt.Rows) {
+            foreach (DataRow row in dt.Rows)
+            {
                 //pour chaque niveau
-                for(i = 1; i <= iNbLevels; i++) {
+                for (i = 1; i <= iNbLevels; i++)
+                {
                     //nouveau niveau i
                     dCurLevel = _webSession.GenericProductDetailLevel.GetIdValue(row, i);
-                    if(dCurLevel >= 0 && (cellLevels[i] == null || dCurLevel != cellLevels[i].Id)) {
-                        for(int j = i + 1; j < cellLevels.Length; j++) {
+                    if (dCurLevel >= 0 && (cellLevels[i] == null || dCurLevel != cellLevels[i].Id))
+                    {
+                        for (int j = i + 1; j < cellLevels.Length; j++)
+                        {
                             cellLevels[j] = null;
                         }
                         iCurLine = tab.AddNewLine(lineTypes[i]);
                         tab[iCurLine, 1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _webSession.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _webSession);
-                        if(_webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == i) {
-                            if(row["id_address"] != DBNull.Value) {
+                        if (_webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == i)
+                        {
+                            if (row["id_address"] != DBNull.Value)
+                            {
                                 cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
                             }
                         }
@@ -246,11 +261,13 @@ namespace TNS.AdExpressI.NewCreatives {
 
                         // version
                         iCol = 3;
-                        if(_showCreative){
-                            iCol++;                           
+                        if (_showCreative)
+                        {
+                            iCol++;
                             SetCellCreativesLink(tab, iCurLine, iCol, cellLevels, i);
                         }
-                        if (_showMediaSchedule) {
+                        if (_showMediaSchedule)
+                        {
                             iCol++;
                             tab[iCurLine, iCol] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
                         }
@@ -276,15 +293,16 @@ namespace TNS.AdExpressI.NewCreatives {
 
             //pourcentage
             i++;
-            if(parent == null) 
+            if (parent == null)
                 oTab[cLine, i] = new CellVersionNbPDM(null);
-            else 
+            else
                 oTab[cLine, i] = new CellVersionNbPDM((CellIdsNumber)oTab[parent.LineIndexInResultTable, 2]);
             i++;
             if (_showCreative) i++;
             if (_showMediaSchedule) i++;
             //initialisation des autres colonnes
-            for(int j = i; j < oTab.DataColumnsNumber + 1; j++) {
+            for (int j = i; j < oTab.DataColumnsNumber + 1; j++)
+            {
                 oTab[cLine, j] = cellFactory.Get(0.0);
             }
         }
@@ -294,12 +312,14 @@ namespace TNS.AdExpressI.NewCreatives {
         protected delegate void SetLine(ResultTable oTab, Int32 iLineIndex, DataRow dr);
         protected void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
         {
-            if(row != null) {
+            if (row != null)
+            {
                 Int32 lCol = oTab.GetHeadersIndexInResultTable(row["date_creation"].ToString());
                 //Get values
                 string[] tIds = row[_webSession.GetSelectedUnit().Id.ToString()].ToString().Split(',');
                 //Affect value
-                for(int i = 0; i < tIds.Length; i++) {
+                for (int i = 0; i < tIds.Length; i++)
+                {
                     oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, Convert.ToInt64(tIds[i]));
                     oTab.AffectValueAndAddToHierarchy(1, cLine, 3, Convert.ToInt64(tIds[i]));
                     oTab.AffectValueAndAddToHierarchy(1, cLine, 2, Convert.ToInt64(tIds[i]));
@@ -313,13 +333,15 @@ namespace TNS.AdExpressI.NewCreatives {
         /// Get sector ID
         /// </summary>
         /// <returns>Sector ID value</returns>
-        protected virtual string GetSectorIds() {
-        
-            if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
+        protected virtual string GetSectorIds()
+        {
+
+            if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
             {
                 NomenclatureElementsGroup nomenclatureElementsGroup = _webSession.PrincipalProductUniverses[0].GetGroup(0);
-                if(nomenclatureElementsGroup != null) {
-                    return nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.SECTOR);                   
+                if (nomenclatureElementsGroup != null)
+                {
+                    return nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.SECTOR);
                 }
             }
             return ("");
@@ -334,7 +356,8 @@ namespace TNS.AdExpressI.NewCreatives {
         /// <param name="dt">table de données</param>
         /// <returns>nombre de ligne du tableau de résultats</returns>
         /// <param name="parutions">Parutions</param>
-        protected virtual int GetCalendarSize(DataTable dt, ArrayList parutions) {
+        protected virtual int GetCalendarSize(DataTable dt, ArrayList parutions)
+        {
 
             #region Variable
             Int64 OldL1Id = -1;
@@ -350,36 +373,42 @@ namespace TNS.AdExpressI.NewCreatives {
             int dateTmp = -1;
             #endregion
 
-            foreach(DataRow dr in dt.Rows) {
+            foreach (DataRow dr in dt.Rows)
+            {
                 cL1Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 1);
-                if(cL1Id >= 0 && cL1Id != OldL1Id) {
+                if (cL1Id >= 0 && cL1Id != OldL1Id)
+                {
                     nbL1Id++;
                     OldL1Id = cL1Id;
                     OldL2Id = OldL3Id = -1;
                 }
                 cL2Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 2);
-                if(cL2Id >= 0 && OldL2Id != cL2Id) {
+                if (cL2Id >= 0 && OldL2Id != cL2Id)
+                {
                     nbL2Id++;
                     OldL2Id = cL2Id;
                     OldL3Id = -1;
                 }
                 cL3Id = _webSession.GenericProductDetailLevel.GetIdValue(dr, 3);
-                if(cL3Id >= 0 && OldL3Id != cL3Id) {
+                if (cL3Id >= 0 && OldL3Id != cL3Id)
+                {
                     nbL3Id++;
                     OldL3Id = cL3Id;
                 }
-                
+
                 //if(!parutions.Contains(dr["date_creation"])) {
                 //    parutions.Add(dr["date_creation"]);
                 //}
                 dateTmp = int.Parse(dr["date_creation"].ToString());
-                if(!parutions.Contains(dateTmp)) {
+                if (!parutions.Contains(dateTmp))
+                {
                     parutions.Add(dateTmp);
                 }
 
             }
 
-            if((nbL1Id > 0) || (nbL2Id > 0) || (nbL3Id > 0)) {
+            if ((nbL1Id > 0) || (nbL2Id > 0) || (nbL3Id > 0))
+            {
                 nbLine = nbL1Id + nbL2Id + nbL3Id + 1;
             }
             return (int)nbLine;
@@ -390,7 +419,8 @@ namespace TNS.AdExpressI.NewCreatives {
         /// <summary>
         /// Calendar Headers and Cell factory
         /// </summary>
-        protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
+        protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions)
+        {
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
             CellPDM cellPDM = null;
 
@@ -403,18 +433,21 @@ namespace TNS.AdExpressI.NewCreatives {
             // Add Creative column
             if (_showCreative)
             {
-                headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(VERSION_COL, _webSession.SiteLanguage), VERSION_COL));               
+                headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(VERSION_COL, _webSession.SiteLanguage), VERSION_COL));
             }
 
-            if (_showMediaSchedule) {
+            if (_showMediaSchedule)
+            {
                 // Media schedule column
                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
             }
 
             // Une colonne par date de parution
             parutions.Sort();
-            foreach(Int32 parution in parutions) {
-                switch(_webSession.DetailPeriod) {
+            foreach (Int32 parution in parutions)
+            {
+                switch (_webSession.DetailPeriod)
+                {
                     case WebCst.CustomerSessions.Period.DisplayLevel.monthly:
                         headers.Root.Add(new Header(true
                             , MonthString.GetCharacters(int.Parse(parution.ToString().Substring(4, 2)), cultureInfo, 0) + " " + parution.ToString().Substring(0, 4)
@@ -431,9 +464,10 @@ namespace TNS.AdExpressI.NewCreatives {
                     default:
                         break;
                 }
-                
+
             }
-            if(!_webSession.Percentage) {
+            if (!_webSession.Percentage)
+            {
                 cellFactory = _webSession.GetCellUnitFactory();
             }
             else {
@@ -454,7 +488,7 @@ namespace TNS.AdExpressI.NewCreatives {
                   _webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)));
         }
 
-        protected virtual  void SetCellCreativesLink(ResultTable tab, int iCurLine, int iCol, AdExpressCellLevel[] cellLevels,int i)
+        protected virtual void SetCellCreativesLink(ResultTable tab, int iCurLine, int iCol, AdExpressCellLevel[] cellLevels, int i)
         {
             tab[iCurLine, iCol] = new CellCreativesLink(cellLevels[i], _webSession, _webSession.GenericProductDetailLevel, string.Empty, -1);
         }
@@ -463,7 +497,7 @@ namespace TNS.AdExpressI.NewCreatives {
         public GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
-            
+
             //TODO : mettre au l'init du module
             TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
             if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
@@ -473,8 +507,6 @@ namespace TNS.AdExpressI.NewCreatives {
 
             ResultTable resultTable = GetData();
             string mediaSchedulePath = "/MediaSchedulePopUp";
-            string insertionPath = "/Insertions";
-            string versionPath = "/Creative";
             LineStart cLineStart = null;
             int nbLines = 0;
 
@@ -487,26 +519,20 @@ namespace TNS.AdExpressI.NewCreatives {
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             object[,] gridData = null;
-            if (_webSession.CurrentTab != DynamicAnalysis.SYNTHESIS)
+
+            for (int i = 0; i < resultTable.LinesNumber; i++)
             {
-                for (int i = 0; i < resultTable.LinesNumber; i++)
-                {
-                    cLineStart = resultTable.GetLineStart(i);
-                    if (!(cLineStart is LineHide))
-                        nbLines++;
-                }
-                if (nbLines == 0)
-                {
-                    gridResult.HasData = false;
-                    return gridResult;
-                }
-                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+                cLineStart = resultTable.GetLineStart(i);
+                if (!(cLineStart is LineHide))
+                    nbLines++;
             }
-            else
+            if (nbLines == 0)
             {
-                nbLines = resultTable.LinesNumber;
-                gridData = new object[nbLines, resultTable.ColumnsNumber];
-            }//+2 car ID et PID en plus  -  //_data.LinesNumber 
+                gridResult.HasData = false;
+                return gridResult;
+            }
+            gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            
 
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
@@ -517,167 +543,54 @@ namespace TNS.AdExpressI.NewCreatives {
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            if (_webSession.CurrentTab != DynamicAnalysis.SYNTHESIS)
-            {
-                columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
-                schemaFields.Add(new { name = "GAD" });
-            }
 
-            List<object> groups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             string format = string.Empty;
-            List<object> subGroups = null;
 
             //Headers
             if (resultTable.NewHeaders != null)
             {
                 for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
                 {
-                    groups = null;
                     string colKey = string.Empty;
-                    if (resultTable.NewHeaders.Root[j].Count > 0)
+
+                    colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                    if (j == 0)
                     {
-                        groups = new List<object>();
-
-                        int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
-                        for (int g = 0; g < nbGroupItems; g++)
-                        {
-                            //Manage sub groups items (stynthesis result)
-                            if (resultTable.NewHeaders.Root[j][g].Count > 0)
-                            {
-                                #region Sub group synthesis
-
-                                subGroups = new List<object>();
-
-                                int nbSubGroupitems = resultTable.NewHeaders.Root[j][g].Count;
-
-                                for (int sg = 0; sg < nbSubGroupitems; sg++)
-                                {
-                                    colKey = string.Format("sg{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
-                                    //cell format sub group
-                                    if (resultTable != null && resultTable.LinesNumber > 0)
-                                    {
-                                        var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
-
-                                        if (cell is CellPercent || cell is CellPDM)
-                                        {
-                                            format = "percent";
-                                            colKey += "-pdm";
-                                        }
-                                        else if (cell is CellEvol)
-                                        {
-                                            format = "percent";
-                                            colKey += "-evol";
-                                        }
-                                        else if (cell is CellDuration)
-                                        {
-                                            format = "duration";
-                                            colKey += "-unit";
-                                        }
-                                        else if (cell is CellUnit)
-                                        {
-                                            format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
-                                            colKey += "-unit";
-                                        }
-                                    }
-
-                                    subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                                    schemaFields.Add(new { name = colKey });
-
-                                }
-
-                                colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, group = subGroups });
-                                //schemaFields.Add(new { name = colKey });
-
-
-                                #endregion
-                            }
-                            else
-                            {
-                                //No sub groups items
-                                #region /No sub groups items
-                                colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
-                                //cell format
-                                if (resultTable != null && resultTable.LinesNumber > 0)
-                                {
-                                    var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
-
-                                    if (cell is CellPercent || cell is CellPDM)
-                                    {
-                                        format = "percent";
-                                        colKey += "-pdm";
-                                    }
-                                    else if (cell is CellEvol)
-                                    {
-                                        format = "percent";
-                                        colKey += "-evol";
-                                    }
-                                    else if (cell is CellDuration)
-                                    {
-                                        format = "duration";
-                                        colKey += "-unit";
-                                    }
-                                    else if (cell is CellUnit)
-                                    {
-                                        format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
-                                        colKey += "-unit";
-                                    }
-                                }
-
-                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                                schemaFields.Add(new { name = colKey });
-                                #endregion
-
-                            }
-
-
-                        }
-
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
-                        columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "${" + colKey + "}" });
+                        columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                     }
                     else
                     {
-                        colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        if (j == 0)
+                        if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage))  //Plan Media
                         {
-                            if (_webSession.CurrentTab == DynamicAnalysis.SYNTHESIS)
-                            {
-                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true });
-                            }
-                            else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
-                            columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", allowSorting = false });
+                        }
+                        else if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1236, _webSession.SiteLanguage)) //Pourcentage
+                        {
+                            format = "percent";
+                            colKey += "-versionNbPdm";
+
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                         }
                         else
                         {
-                            if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1401, _webSession.SiteLanguage)) //Total
-                            {
-                                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
-                                colKey += "-unit";
+                            format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_webSession.Unit).StringFormat);
+                            colKey += "-unit";
 
-                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                            }
-                            else if(resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1236, _webSession.SiteLanguage)) // Pourcentage
-                            {
-                                format = "percent";
-                                colKey += "-pdm";
-
-                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                            }
-                            else
-                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
-                            columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                         }
-                        schemaFields.Add(new { name = colKey });
+
+                        columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                     }
+                    schemaFields.Add(new { name = colKey });
 
                 }
             }
 
             //table body rows
             int currentLine = 0;
-            for (int i = 0; i < resultTable.LinesNumber; i++) //
+            for (int i = 0; i < resultTable.LinesNumber; i++)
             {
                 cLineStart = resultTable.GetLineStart(i);
                 if (cLineStart is LineHide)
@@ -704,55 +617,21 @@ namespace TNS.AdExpressI.NewCreatives {
                            , link);
                             }
                         }
-                        gridData[currentLine, k + 2] = link;
+                        gridData[currentLine, k + 1] = link;
 
-                    }
-                    else if (cell is CellOneLevelInsertionsLink)
-                    {
-                        var c = cell as CellOneLevelInsertionsLink;
-
-                        if (c != null)
-                        {
-                            link = c.GetLink();
-                            if (!string.IsNullOrEmpty(link))
-                            {
-                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
-                         , insertionPath
-                         , link);
-                            }
-
-                        }
-                        gridData[currentLine, k + 2] = link;
-                    }
-                    else if (cell is CellOneLevelCreativesLink)
-                    {
-                        var c = cell as CellOneLevelCreativesLink;
-
-                        if (c != null)
-                        {
-                            link = c.GetLink();
-                            if (!string.IsNullOrEmpty(link))
-                            {
-                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
-                         , versionPath
-                         , link);
-                            }
-
-                        }
-                        gridData[currentLine, k + 2] = link;
                     }
                     else
                     {
-                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM)
+                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM || cell is CellVersionNbPDM)
                         {
                             double value = ((CellUnit)cell).Value;
 
                             if (double.IsInfinity(value))
-                                gridData[currentLine, k + 2] = "Infinity";
+                                gridData[currentLine, k + 1] = "Infinity";
                             else if (double.IsNaN(value))
-                                gridData[currentLine, k + 2] = null;
+                                gridData[currentLine, k + 1] = null;
                             else
-                                gridData[currentLine, k + 2] = value / 100;
+                                gridData[currentLine, k + 1] = value / 100;
                         }
                         else if (cell is CellUnit)
                         {
@@ -762,30 +641,20 @@ namespace TNS.AdExpressI.NewCreatives {
                                 {
                                     gridData[currentLine, k + 1] = Units.ConvertUnitValue(((CellUnit)cell).Value, _webSession.Unit);
                                 }
-                                else gridData[currentLine, k + 2] = Units.ConvertUnitValue(((CellUnit)cell).Value, _webSession.Unit);
+                                else gridData[currentLine, k + 1] = Units.ConvertUnitValue(((CellUnit)cell).Value, _webSession.Unit);
                             }
                             else
-                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 1] = ((CellUnit)cell).Value;
                         }
                         else if (cell is AdExpressCellLevel)
                         {
                             string label = ((AdExpressCellLevel)cell).RawString();
-                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
 
-                            if (gadParams.Length > 0)
-                                gridData[currentLine, 2] = gadParams;
-                            else
-                                gridData[currentLine, 2] = "";
-
-                            gridData[currentLine, k + 2] = label;
+                            gridData[currentLine, k + 1] = label;
                         }
                         else
                         {
-                            if (_webSession.CurrentTab == DynamicAnalysis.SYNTHESIS)
-                            {
-                                gridData[currentLine, k + 1] = cell.ToString(); //RenderString()
-                            }
-                            else gridData[currentLine, k + 2] = cell.ToString(); //RenderString()
+                            gridData[currentLine, k + 1] = cell.ToString(); //RenderString()
                         }
                     }
                 }

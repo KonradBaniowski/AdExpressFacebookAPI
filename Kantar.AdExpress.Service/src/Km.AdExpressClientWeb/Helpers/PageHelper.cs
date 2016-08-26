@@ -363,7 +363,7 @@ namespace Km.AdExpressClientWeb.Helpers
 
         public static List<ExportTypeViewModel> GetExportTypes(string countryCode,int currentModule,int siteLanguage)
         {
-                       List<ExportTypeViewModel> exportTypeViewModels = new List<ExportTypeViewModel>();
+            List<ExportTypeViewModel> exportTypeViewModels = new List<ExportTypeViewModel>();
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportFormattedResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage), Visible = true });
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportResultWithValue, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage), Visible = true });
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPdfResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage), Visible = true });
@@ -388,6 +388,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
+                case Module.Name.NEW_CREATIVES:
                     ids.Add(ExportFormattedResult);
                     ids.Add( ExportGrossResult );
                     break;                             
