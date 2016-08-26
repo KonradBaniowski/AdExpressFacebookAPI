@@ -64,7 +64,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult NewCreativesResult(ResultTable.SortOrder sortOrder, int columnIndex)
+        public JsonResult NewCreativesResult()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
