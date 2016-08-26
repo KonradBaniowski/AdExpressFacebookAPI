@@ -336,7 +336,7 @@ $('#move-item').on('click', function () {
     }
 });
 
-$('.panel.panel-primary.panel-results.optional-area').on('click', function(event)
+$('div#headingTwo').on('click', function (event)
 {
     event.preventDefault();
     var moduleId = $('#CurrentModule').val();
