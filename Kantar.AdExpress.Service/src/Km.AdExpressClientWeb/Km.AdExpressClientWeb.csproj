@@ -17,7 +17,7 @@
     <AssemblyName>Km.AdExpressClientWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -184,6 +184,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdvertisingAgencyController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
     <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -1661,6 +1662,8 @@
     <Content Include="Views\Shared\_ExportTypeResults.cshtml" />
     <Content Include="Views\NewCreatives\Results.cshtml" />
     <Content Include="Views\NewCreatives\_ResultOptions.cshtml" />
+    <Content Include="Views\AdvertisingAgency\Index.cshtml" />
+    <Content Include="Views\AdvertisingAgency\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
