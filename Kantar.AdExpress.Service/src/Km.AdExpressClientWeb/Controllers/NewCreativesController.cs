@@ -55,7 +55,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Presentation = pageHelper.LoadPresentationBar(_siteLanguage, result.ControllerDetails),
                 Labels = LabelsHelper.LoadPageLabels(_siteLanguage),
                 IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.TABLEAU_DYNAMIQUE, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.NEW_CREATIVES, _siteLanguage)
             };
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);

@@ -564,7 +564,7 @@ namespace TNS.AdExpressI.NewCreatives
                     {
                         if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage))  //Plan Media
                         {
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", allowSorting = false });
                         }
                         else if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1236, _webSession.SiteLanguage)) //Pourcentage
                         {
@@ -584,7 +584,6 @@ namespace TNS.AdExpressI.NewCreatives
                         columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                     }
                     schemaFields.Add(new { name = colKey });
-
 
                 }
             }
