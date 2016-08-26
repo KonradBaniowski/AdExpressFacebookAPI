@@ -65,6 +65,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                         _nbDetailLevelItemList = 3;
                         break;
+                    case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                        _nbDetailLevelItemList = 4;
+                        break;
                 }
 
                 #region GenericDetailLevelOption
@@ -193,6 +197,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_nbDetailLevelItemList >= 1)
                 {
                     genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
+                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                        genericDetailLevelOption.L1Detail.SelectedId = DetailLevelItemInformation.Levels.groupMediaAgency.GetHashCode().ToString();
                 }
                 #endregion
 
@@ -200,6 +206,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_nbDetailLevelItemList >= 2)
                 {
                     genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
+                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                        genericDetailLevelOption.L2Detail.SelectedId = DetailLevelItemInformation.Levels.agency.GetHashCode().ToString();
                 }
                 #endregion
 
@@ -207,6 +215,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_nbDetailLevelItemList >= 3)
                 {
                     genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
+                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                        genericDetailLevelOption.L3Detail.SelectedId = DetailLevelItemInformation.Levels.advertiser.GetHashCode().ToString();
                 }
                 #endregion
 
@@ -281,8 +291,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 #endregion
 
-
-
                 #region Options by Vehicle
                 string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
                 string[] vehicles = vehicleListId.Split(',');
@@ -306,6 +314,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 #endregion
+
                 #region UnitOption
 
                 UnitOption unitOption = new UnitOption();
@@ -349,6 +358,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 options.UnitOption = unitOption;
                 #endregion
+
                 #region InsertionOption
                 InsertionOption insertionOption = new InsertionOption();
 
@@ -521,6 +531,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                 }
 
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    options.GenericColumnDetailLevelOption = GetGenericMediaColumnLevelDetailOptions();
+                    options.GenericColumnDetailLevelOption.L1Detail.Visible = true;
+                    options.GenericColumnDetailLevelOption.L1Detail.SelectedId = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString();
+                    _customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode();
+                }
+
                 if (WebApplicationParameters.UseComparativeMediaSchedule)
                 {
                     options.ComparativeStudy = _customerWebSession.ComparativeStudy;
@@ -640,6 +658,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
                         break;
                 }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                    SetGenericMediaColumnLevelDetailOptions(userFilter);
 
 
                 #region PeriodDetailFilter
@@ -1043,6 +1064,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         #endregion
 
+        #region GetSelectedUniverseMedia
         protected MediaItemsList GetSelectedUniverseMedia(WebSession webSession)
         {
             MediaItemsList selectedUniverseMedia = new MediaItemsList();
@@ -1050,7 +1072,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             selectedUniverseMedia.VehicleList = webSession.GetSelection(webSession.SelectionUniversMedia, Right.type.vehicleAccess);
             return selectedUniverseMedia;
         }
+        #endregion
 
+        #region CanShowResult
         /// <summary>
         /// Determine si un résultat doit être montré.
         /// </summary>
@@ -1077,6 +1101,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default: return true;
             }
         }
+        #endregion
+
+        #region CanShowProductClassAnalysisResult
         /// <summary>
         /// Check if a result can be shown
         /// </summary>
@@ -1096,6 +1123,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return true;
         }
+        #endregion
+
+        #region CanShowPortofolioResult
         /// <summary>
         /// Determine si un résultat doit être montré.
         /// </summary>
@@ -1146,11 +1176,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default: throw new Exception("ResultsOptionsWebControl : Vehicle unknown.");
             }
         }
+        #endregion
 
+        #region CanShowPresentAbsentResult
         protected bool CanShowPresentAbsentResult(WebSession webSession, WebNavigation.ResultPageInformation current)
         {
             return (webSession.PrincipalMediaUniverses.Count > 1 || current.Id == FrameWorkResults.CompetitorMarketShare.PORTEFEUILLE);
         }
+        #endregion
+
+        #region CanShowSynthesisResult
         /// <summary>
         /// Can Show Synthesis Result
         /// </summary>
@@ -1168,7 +1203,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return true;
         }
+        #endregion
 
+        #region SetDefaultTab
         /// <summary>
         /// Set default current tab
         /// </summary>
@@ -1231,9 +1268,90 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
             }
         }
+        #endregion
 
+        private GenericColumnDetailLevelOption GetGenericMediaColumnLevelDetailOptions()
+        {
+            GenericColumnDetailLevelOption genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
+            try
+            {
+                genericColumnDetailLevelOption.L1Detail = new SelectControl();
+                genericColumnDetailLevelOption.L1Detail.Id = "columnDetail";
 
+                var selectItems = new List<SelectItem>();
 
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1382, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.category.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.media))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(18, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString() });
+
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1976, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.title.GetHashCode().ToString() });
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1142, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.media))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1544, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1860, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSeller.GetHashCode().ToString() });
+
+                selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(2969, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicleTitle.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1383, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.mediaSeller.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(2812, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.media) && HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1862, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.mediaSellerMedia.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(2813, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.mediaSeller))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(2970, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.mediaSellerTitle.GetHashCode().ToString() });
+
+                if (HasMediaClassifLevel(DetailLevelItemInformation.Levels.media))
+                    selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(1143, _customerWebSession.SiteLanguage), Value = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString() });
+
+                genericColumnDetailLevelOption.L1Detail.Items = selectItems;
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+            }
+
+            return genericColumnDetailLevelOption;
+        }
+
+        private void SetGenericMediaColumnLevelDetailOptions(UserFilter userFilter)
+        {
+            _customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)userFilter.GenericColumnDetailLevelFilter.L1DetailValue;
+        }
+
+        private bool HasMediaClassifLevel(DetailLevelItemInformation.Levels level)
+        {
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            bool hasMediaLevel = false;
+            if (!string.IsNullOrEmpty(listStr))
+            {
+                List<string> arrStr = new List<string>(listStr.Split(','));
+                List<Int64> idMedias = arrStr.ConvertAll(Convert.ToInt64);
+
+                List<DetailLevelItemInformation> levelInfos = VehiclesInformation.GetSelectionDetailLevelList(idMedias);
+                foreach (DetailLevelItemInformation currentDetailLevelItem in levelInfos)
+                {
+                    if (currentDetailLevelItem.Id == level)
+                    {
+                        hasMediaLevel = true; break;
+                    }
+                }
+
+            }
+            return hasMediaLevel;
+        }
 
     }
 }

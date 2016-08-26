@@ -4127,6 +4127,16 @@ namespace TNS.AdExpress.Web.Core.Sessions
         }
 
         /// <summary>
+        /// Indique si des produits ont été sélectionnés
+        /// </summary>
+        /// <returns>True si des produits ont été enregistrées, false sinon</returns>
+        public bool IsCurrentUniversAdvertisingAgnecySelected()
+        {
+            if (this.PrincipalAdvertisingAgnecyUniverses.Count > 0) return (true);
+            else return (false);
+        }
+
+        /// <summary>
         /// Retourne le nombre d'univers produit sélectionné
         /// </summary>
         /// <returns></returns>

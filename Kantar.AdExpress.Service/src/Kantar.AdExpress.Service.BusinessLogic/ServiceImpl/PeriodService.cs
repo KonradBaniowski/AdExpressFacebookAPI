@@ -30,7 +30,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string ANALYSIS = "Analysis";
         private const string FACEBOOK = "SocialMedia";
         private const string RESULTS = "Results";
-        private const string MEDIAAGENCY = "MediaAgency";
+        private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string NEW_CREATIVES = "NewCreatives";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
@@ -213,7 +213,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                     currentModuleCode = LanguageConstantes.MediaAgencyAnalysis;
-                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIASCHEDULE : SELECTION;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ADVERTISING_AGENCY : SELECTION;
                     currentModuleIcon = "icon-picture";
                     break;
                 case WebConstantes.Module.Name.NEW_CREATIVES:

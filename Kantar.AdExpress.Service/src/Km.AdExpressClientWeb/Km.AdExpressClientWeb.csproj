@@ -1547,6 +1547,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Results\portfolio-vehicle-view.js" />
+    <Content Include="Scripts\Results\result-advertisingAgency.js" />
     <Content Include="Scripts\Results\result-newCreatives.js" />
     <Content Include="Scripts\Results\socialMedia-results.js" />
     <Content Include="Scripts\Results\result-analysis.js" />
@@ -1664,6 +1665,7 @@
     <Content Include="Views\NewCreatives\_ResultOptions.cshtml" />
     <Content Include="Views\AdvertisingAgency\Index.cshtml" />
     <Content Include="Views\AdvertisingAgency\Results.cshtml" />
+    <Content Include="Views\AdvertisingAgency\_ResultOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

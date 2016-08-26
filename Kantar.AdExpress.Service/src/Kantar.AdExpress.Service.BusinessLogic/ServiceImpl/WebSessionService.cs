@@ -47,7 +47,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
         private const string RESULTS = "Results";
-        private const string MEDIAAGENCY = "MediaAgency";
+        private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string NEW_CREATIVES = "NewCreatives";
         private const string FACEBOOK = "SocialMedia";
         private const int _nbMaxItemByLevel = 1000;
@@ -266,12 +266,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         catch (SecurityException)
                         {
                             _webSession.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                            _webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
                             _webSession.Save();
                             response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2285, _webSession.SiteLanguage));
                         }
                         catch (CapacityException)
                         {
                             _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                            _webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
                             _webSession.Save();
                             response.ErrorMessage = String.Format("{0} - {1}", FrameWorkSelection.error.SECURITY_EXCEPTION, GestionWeb.GetWebWord(2286, _webSession.SiteLanguage));
                         }
@@ -954,7 +956,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                     currentModuleCode = CstWeb.LanguageConstantes.MediaAgencyAnalysis;
-                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? MEDIAAGENCY : SELECTION;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ADVERTISING_AGENCY : SELECTION;
                     currentModuleIcon = "icon-picture";
                     break;
                 case CstWeb.Module.Name.NEW_CREATIVES:
@@ -1004,7 +1006,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         public bool IsAllSelectionStep(string webSessionId)
         {
             _webSession = (WebSession)WebSession.Load(webSessionId);
-            return _webSession.isMediaSelected() && _webSession.isDatesSelected() && _webSession.IsCurrentUniversProductSelected();
+            if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES)
+                return _webSession.isMediaSelected() && _webSession.isDatesSelected() && _webSession.IsCurrentUniversAdvertisingAgnecySelected();
+            else
+                return _webSession.isMediaSelected() && _webSession.isDatesSelected() && _webSession.IsCurrentUniversProductSelected();
         }
 
         private List<UserUnivers> GetUniverses(Dimension dimension, WebSession webSession, long idGroup = 0, bool getDefaultUniverse = false)
@@ -1113,7 +1118,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else
                     {
-                        webSession.PrincipalProductUniverses = universDictionary;
+                        if (webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES)
+                            webSession.PrincipalAdvertisingAgnecyUniverses = universDictionary;
+                        else
+                            webSession.PrincipalProductUniverses = universDictionary;
                         response.Success = true;
                         webSession.Save();
                         webSession.Source.Close();

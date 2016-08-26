@@ -32,7 +32,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
         private const string RESULTS = "Results";
-        private const string MEDIAAGENCY = "MediaAgency";
+        private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string NEW_CREATIVES = "NewCreatives";
         private const string FACEBOOK = "SocialMedia";
         public MediaResponse GetMedia(string idWebSession)

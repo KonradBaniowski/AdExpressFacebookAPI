@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessService\IAdvertisingAgencyService.cs" />
     <Compile Include="BusinessService\IAlertService.cs" />
     <Compile Include="BusinessService\INewCreativesService.cs" />
     <Compile Include="BusinessService\IAnalysisService.cs" />

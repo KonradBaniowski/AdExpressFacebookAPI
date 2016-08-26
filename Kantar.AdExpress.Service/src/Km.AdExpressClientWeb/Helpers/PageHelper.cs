@@ -32,6 +32,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSIS = "Analysis";
         private const string NEW_CREATIVES = "NewCreatives";
+        private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         const int ExportFormattedResult = 1;
         const int ExportResultWithValue = 2;
         const int ExportGrossResult = 3;
@@ -75,13 +76,24 @@ namespace Km.AdExpressClientWeb.Helpers
                     resultController = NEW_CREATIVES;
                     controller = SELECTION;
                     break;
+                case Module.Name.ANALYSE_MANDATAIRES:
+                    resultController = ADVERTISING_AGENCY;
+                    controller = SELECTION;
+                    break;
             }
             //var ctr = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? controller : SELECTION;
             #region   nav Bar.
+            bool marketActive = false;
+
+            if (webSession.CurrentModule == Module.Name.ANALYSE_MANDATAIRES)
+                marketActive = webSession.IsCurrentUniversAdvertisingAgnecySelected();
+            else
+                marketActive = webSession.IsCurrentUniversProductSelected();
+
             var market = new NavigationNode
             {
                 Id = 1,
-                IsActive = webSession.IsCurrentUniversProductSelected(),
+                IsActive = marketActive,
                 Description = MARKET,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Market, siteLanguage),
                 Action = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ANALYSE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? INDEX : MARKET,

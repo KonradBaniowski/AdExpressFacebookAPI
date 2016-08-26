@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
 using System;
@@ -15,12 +16,14 @@ namespace Km.AdExpressClientWeb.Controllers
     public class AdvertisingAgencyController : Controller
     {
         private IWebSessionService _webSessionService;
+        private IOptionService _optionService;
         private const string _controller = "AdvertisingAgency";
         private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
-        public AdvertisingAgencyController(IWebSessionService webSessionService)
+        public AdvertisingAgencyController(IWebSessionService webSessionService, IOptionService optionService)
         {
             _webSessionService = webSessionService;
+            _optionService = optionService;
         }
 
         public ActionResult Index()
@@ -50,5 +53,44 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
+        public ActionResult ResultOptions()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            Options options = _optionService.GetOptions(idWebSession);
+            return PartialView("_ResultOptions", options);
+        }
+
+        public void SetResultOptions(UserFilter userFilter)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            _optionService.SetOptions(idWebSession, userFilter);
+        }
+
+        public JsonResult SaveCustomDetailLevels(string levels, string type)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            JsonResult jsonModel = new JsonResult();
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            Kantar.AdExpress.Service.Core.Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type);
+            jsonModel = Json(new { Id = response.CustomDetailLavelsId, Label = response.CustomDetailLavelsLabel, Message = response.Message });
+
+            return jsonModel;
+        }
+
+        public JsonResult RemoveCustomDetailLevels(string detailLevel)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            JsonResult jsonModel = new JsonResult();
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            string message = _optionService.RemoveCustomDetailLevels(idWebSession, detailLevel);
+            jsonModel = Json(new { Message = message });
+
+            return jsonModel;
+        }
     }
 }

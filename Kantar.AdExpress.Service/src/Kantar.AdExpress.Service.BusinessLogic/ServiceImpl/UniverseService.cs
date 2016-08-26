@@ -961,7 +961,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var adExpressUniverse = (Dictionary<int, AdExpressUniverse>)UniversListDataAccess.GetObjectUniverses(universeId, webSession);
                 if (adExpressUniverse != null && adExpressUniverse.Count > 0)
                 {
-                    webSession.PrincipalProductUniverses = adExpressUniverse;
+                    if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                        webSession.PrincipalAdvertisingAgnecyUniverses = adExpressUniverse;
+                    else
+                        webSession.PrincipalProductUniverses = adExpressUniverse;
                     webSession.Save();
                 }
             }
@@ -1279,7 +1282,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 else
                                 {
-                                    webSession.PrincipalProductUniverses = universes;
+                                    if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                                        webSession.PrincipalAdvertisingAgnecyUniverses = universes;
+                                    else
+                                        webSession.PrincipalProductUniverses = universes;
                                     webSession.Save();
                                 }
                             }
@@ -1439,7 +1445,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             if (success)
             {
-                webSession.PrincipalProductUniverses = universes;
+                if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                    webSession.PrincipalAdvertisingAgnecyUniverses = universes;
+                else
+                    webSession.PrincipalProductUniverses = universes;
                 webSession.Save();
             }
 
