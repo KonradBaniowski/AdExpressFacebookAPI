@@ -57,8 +57,12 @@ namespace Km.AdExpressClientWeb
                       "~/Content/options-control.css",
                       "~/Content/spinner.css"));
 
+            bundles.Add(new StyleBundle("~/Content/css/FI").Include(
+                        "~/Content/site-Fi.css"
+                    ));
+
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
-                  "~/Scripts/module-selection/module-selection.js")); 
+                  "~/Scripts/module-selection/module-selection.js"));
             bundles.Add(new ScriptBundle("~/bundles/account").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/Account/account.js"));

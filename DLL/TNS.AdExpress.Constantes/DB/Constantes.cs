@@ -82,7 +82,11 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Langue Anglaise
 		/// </summary>
 		public const int ENGLISH=44;
-	}
+        /// <summary>
+        /// Langue Finnoise
+        /// </summary>
+        public const int FINNOIS = 35;
+    }
 
 	#endregion
 

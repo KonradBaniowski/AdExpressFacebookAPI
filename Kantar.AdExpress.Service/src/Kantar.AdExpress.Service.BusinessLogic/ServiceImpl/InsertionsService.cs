@@ -275,7 +275,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 param[0] = vehicleName;
                 param[1] = idVersion;
-                param[2] = string.Empty;
+                param[2] = idVersion;
                 param[3] = _customerWebSession;
                 param[4] = _hasCreationReadRights;
                 param[5] = _hasCreationDownloadRights;

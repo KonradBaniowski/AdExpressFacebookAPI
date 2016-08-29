@@ -1,0 +1,9 @@
+﻿.flip-container > .front > h3{
+    font-size: 20px;
+}
+
+.adaptSize{
+    font-size: 20px;
+    font-size: 1.5vw;
+}
+

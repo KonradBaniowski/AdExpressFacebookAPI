@@ -563,7 +563,9 @@
     <Content Include="Configuration\7\WebLanguages.xml" />
     <Content Include="Configuration\7\WebThemes.xml" />
     <Content Include="Configuration\ErrorMail.xml" />
-    <Content Include="Configuration\WebParameters.xml" />
+    <Content Include="Configuration\WebParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap.css" />
@@ -600,6 +602,7 @@
     <Content Include="Content\img\o.gif" />
     <Content Include="Content\img\r.gif" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\site-Fi.css" />
     <Content Include="Content\spinner.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

@@ -40,6 +40,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CalendarFormatMonths = "MM/YYYY";
         private const string CALENDARLANGUAGEEN = "En";
         private const string CALENDARLANGUAGEFR = "fr";
+        private const string CALENDARLANGUAGEFI = "fi";
         private const string INDEX = "Index";
         private const int CALENDARSTUDYID = 8;
         private const int SLIDINGSTUDYID = 5;
@@ -300,6 +301,9 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     case TNS.AdExpress.Constantes.DB.Language.ENGLISH:
                         periodModel.LanguageName = CALENDARLANGUAGEEN;
+                        break;
+                    case TNS.AdExpress.Constantes.DB.Language.FINNOIS:
+                        periodModel.LanguageName = CALENDARLANGUAGEFI;
                         break;
                     default:
                         periodModel.LanguageName = CALENDARLANGUAGEEN;
