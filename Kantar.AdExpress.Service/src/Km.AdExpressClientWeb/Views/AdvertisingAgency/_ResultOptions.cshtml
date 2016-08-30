@@ -123,42 +123,6 @@
                             @Html.Raw("</div><div class='row'>");
                         }
                     }
-                    <div class="col-md-4">
-                        <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
-                            <div class="panel-heading head-options-results">
-                                <p class="panel-title options ">
-                                    @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
-                                </p>
-                            </div>
-                            <div id="collapseFour" class="panel-collapse collapse in">
-                                <div class="panel-body mi-padder">
-                                    <div class="selectoptioncontainer">
-                                        <select id="@Model.PeriodDetail.PeriodDetailType.Id" class="selectdatepicker">
-                                            @foreach (var item in Model.PeriodDetail.PeriodDetailType.Items)
-                                            {
-                                                if (item.Value == Model.PeriodDetail.PeriodDetailType.SelectedId)
-                                                {
-                                                    <option value="@item.Value" selected>@item.Text</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @{
-                        optionsNb++;
-                        if (optionsNb == 3)
-                        {
-                            optionsNb = 0;
-                            @Html.Raw("</div><div class='row'>");
-                        }
-                    }
                     @if (@Model.FormatOption.Format.Visible)
                     {
                         <div class="col-md-4">
@@ -363,48 +327,67 @@
                         }
                     }
                     <div class="col-md-4">
-                        @if (WebApplicationParameters.UseComparativeMediaSchedule)
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.ComparativeStudy)
+                            {
+                                <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" checked />
+                            }
+                            else
+                            {
+                                classHide = "hide";
+                                <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" />
+                            }
+                            <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.SiteLanguage)</label>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.Evol.Value)
+                            {
+                                <input id="set-evol" type="checkbox" name="set-evol" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-evol" type="checkbox" name="set-evol" class="with-font" />
+                            }
+                            <label for="set-evol">@GestionWeb.GetWebWord(1168, Model.SiteLanguage)</label>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDM.Value)
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdm" type="checkbox" name="set-pdm" class="with-font" />
+                            }
+                            <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
+                        </div>
+                        <div class="checkbox padder media-schedule-option">
+                            @if (Model.PDV.Value)
+                            {
+                                <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font" checked />
+                            }
+                            else
+                            {
+                                <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font" />
+                            }
+                            <label for="set-pdv">@GestionWeb.GetWebWord(1166, Model.SiteLanguage)</label>
+                        </div>
+                        @if (WebApplicationParameters.UseRetailer)
                         {
                             <div class="checkbox padder media-schedule-option">
-                                @if (Model.ComparativeStudy)
+                                @if (Model.IsSelectRetailerDisplay)
                                 {
-                                    <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" checked />
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" checked />
                                 }
                                 else
                                 {
-                                    classHide = "hide";
-                                    <input id="comparative-study" type="checkbox" name="comparative-study" class="with-font" />
+                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" />
                                 }
-                                <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.SiteLanguage)</label>
-                            </div>
-                            <div id="comparative-period-type" class="@classHide">
-                                <div class="padder-radio media-schedule-option">
-                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
-                                    {
-                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" checked />
-                                    }
-                                    else
-                                    {
-                                        <input id="date-to-date" name="date-to-date" type="radio" class="with-font" value="1" />
-                                    }
-                                    <label for="date-to-date">@GestionWeb.GetWebWord(2294, Model.SiteLanguage)</label>
-                                </div>
-                                <div class="padder-radio media-schedule-option">
-                                    @if (Model.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
-                                    {
-                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" checked />
-                                    }
-                                    else
-                                    {
-                                        <input id="comparative-week-date" name="comparative-week-date" type="radio" class="with-font" value="0" />
-                                    }
-                                    <label for="comparative-week-date">@GestionWeb.GetWebWord(2295, Model.SiteLanguage)</label>
-                                </div>
+                                <label for="retailer-display">@GestionWeb.GetWebWord(2857, Model.SiteLanguage)</label>
                             </div>
                         }
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="padder-btn btn-options pull-right">
                         <button id="validate-options" class="btn btn-valider">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>

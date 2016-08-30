@@ -36,9 +36,9 @@
     function GenericDetailLevelFilter() {
         this.DefaultDetailValue = $('#defaultDetail').val();
         this.CustomDetailValue = -1;
-        this.L1DetailValue = -1;
-        this.L2DetailValue = -1;
-        this.L3DetailValue = -1;
+        this.L1DetailValue = $('#l1Detail').val();
+        this.L2DetailValue = $('#l2Detail').val();
+        this.L3DetailValue = $('#l3Detail').val();
         this.L4DetailValue = -1;
     }
 
@@ -52,11 +52,6 @@
 
     function UnitFilter() {
         this.Unit = $('#unit').val();
-    }
-
-
-    function InsertionFilter() {
-        this.Insertion = $('#insertion').val();
     }
 
     function AutoPromoFilter() {
@@ -80,6 +75,9 @@
         this.FormatFilter = new FormatFilter();
         this.PurchaseModeFilter = new PurchaseModeFilter();
         this.ComparativeStudy = false;
+        this.Evol = false;
+        this.PDM = false;
+        this.PDV = false;
     }
 
     var userFilter = new UserFilter();
@@ -94,11 +92,12 @@
                 $("#grid").igTreeGrid({
                     dataSource: ds.dataView(),
                     columns: cols,
-                    height: "580px",
+                    height: "530px",
                     autoGenerateColumns: false,
-                    primaryKey: "ID_PRODUCT",
+                    primaryKey: "ID",
                     foreignKey: "PID",
                     width: "1140px",
+                    autofitLastColumn: false,
                     features: [
                         {
                             name: "MultiColumnHeaders"
@@ -109,14 +108,14 @@
                             pageSize: 100
                         },
                         {
-                            name: "Sorting",
-                            type: "local",
-                            applySortedColumnCss: false
-                        },
-                        {
                             name: "ColumnFixing",
                             fixingDirection: "left",
                             columnSettings: colsFixed
+                        },
+                        {
+                            name: "Sorting",
+                            type: "local",
+                            applySortedColumnCss: false
                         }
                     ]
                 })
@@ -127,8 +126,9 @@
                     columns: cols,
                     height: "530px",
                     autoGenerateColumns: false,
-                    primaryKey: "ID_PRODUCT",
+                    primaryKey: "ID",
                     foreignKey: "PID",
+                    width: "100%",
                     features: [
                         {
                             name: "MultiColumnHeaders"
@@ -137,7 +137,8 @@
                             name: "Paging",
                             mode: "allLevels",
                             pageSize: 100
-                        },
+                        }
+                           ,
                         {
                             name: "Sorting",
                             type: "local",
@@ -147,7 +148,13 @@
                 })
             }
 
-            gridWidth = $("#grid_table_container").width();
+            gridWidth = $("#grid_table_headers").width();
+            gridWidth += $("#grid_table_headers_fixed").width();
+
+            if (gridWidth > 1140)
+                gridWidth = 1140;
+
+            $("#grid").igTreeGrid("option", "width", gridWidth + "px");
 
             $("#grid").igTreeGrid({
                 rowCollapsed: function (evt, ui) {
@@ -163,6 +170,14 @@
     function UnitFormatter(val) {
         if (val > 0)
             return $.ig.formatter(val, "number");
+
+        return "";
+    }
+
+    function PercentFormatter(val) {
+        alert(val);
+        if (val > 0)
+            return $.ig.formatter(val, "percent");
 
         return "";
     }
@@ -212,16 +227,41 @@
         if (columns != null) {
 
             columns.forEach(function (elem) {
-                if (elem.key == "PERIOD" || elem.key == "PERIOD_COMP") {
+                if (elem.group != null && elem.group != 'undefined') {
+                    for (var i = 0, len = elem.group.length; i < len; i++) {
+                        if (elem.group[i].key.indexOf("unit") > -1) {
+                            if (unit == "duration")
+                                elem.group[i].formatter = DurationFormatter;
+                            else if (unit == "pages")
+                                elem.group[i].formatter = PageFormatter;
+                            else
+                                elem.group[i].formatter = UnitFormatter;
+                        }
+                        if (elem.group[i].key.indexOf("evol") > -1) {
+                            elem.group[i].formatter = EvolFormatter;
+                        }
+                        if (elem.group[i].key.indexOf("pdm") > -1) {
+                            elem.group[i].formatter = PercentFormatter;
+                        }
+                        if (elem.group[i].key.indexOf("pdv") > -1) {
+                            elem.group[i].formatter = PercentFormatter;
+                        }
+                    }
+                } else if (elem.key.indexOf("unit") > -1) {
                     if (unit == "duration")
                         elem.formatter = DurationFormatter;
                     else if (unit == "pages")
                         elem.formatter = PageFormatter;
                     else
                         elem.formatter = UnitFormatter;
-                }
-                else if (elem.key == "EVOL") {
+                } else if (elem.key.indexOf("evol") > -1) {
                     elem.formatter = EvolFormatter;
+                }
+                else if (elem.key.indexOf("pdm") > -1) {
+                    elem.formatter = PercentFormatter;
+                }
+                else if (elem.key.indexOf("pdv") > -1) {
+                    elem.formatter = PercentFormatter;
                 }
             });
 
@@ -231,12 +271,56 @@
         return columns;
     }
 
+    $("#gadModal").on('shown.bs.modal', function (event) {
+        var link = $(event.relatedTarget);// Button that triggered the modal
+        var datas = link.data('gad').toString(); // Extract info from data-* attributes
+        datas = datas.replace(/\[|\]/g, '');
+        datas = datas.split(",");
+
+        if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+            alert("Les infos Gad ne sont pas disponibles.");
+        }
+        else {
+            var params = {
+                idAddress: datas[2],
+                advertiser: datas[1]
+            };
+            CallGadInfos(params);
+        }
+    });
+
+    function CallGadInfos(params) {
+        $.ajax({
+            url: '/Gad/GadInfos',
+            contentType: "application/x-www-form-urlencoded",
+            type: "GET",
+            datatype: "json",
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                $('#gadModal').html(data);
+                $("#btn-gad-detail").click(function (event) {
+                    var link = $(event.target);// Button that triggered the modal
+                    var datas = link.data('gad').toString(); // Extract info from data-* attributes
+
+                    if (datas === null || datas == "" || datas == 0 || datas == "0") {
+                        alert("Le lien vers Gad n'est pas disponible.");
+                    }
+                    else {
+                        window.open(datas, "_blank");
+                    }
+                });
+            }
+        });
+    }
+
     function CallAdvertisingAgencyResult() {
 
         $("#gridMessage").addClass("hide");
 
         $.ajax({
-            url: 'AdvertisingAgency/AdvertisingAgencyResult',
+            url: 'AdvertisingAgencyResult',
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",
@@ -248,7 +332,6 @@
                     cols = GetColumnsFormatter(data.columns, data.unit);
                     colsFixed = data.columnsfixed;
                     needFixedColumns = data.needfixedcolumns;
-                    hasMSCreatives = data.hasMSCreatives;
 
                     var schema = new $.ig.DataSchema("array", {
                         fields: data.schema
@@ -372,6 +455,54 @@
         userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
     });
 
+    if ($("#set-evol").prop('checked') == true) {
+        userFilter.Evol = true;
+    }
+    else {
+        userFilter.Evol = false;
+    }
+
+    $("#set-evol").click(function () {
+        if ($(this).prop('checked') == true) {
+            userFilter.Evol = true;
+        }
+        else {
+            userFilter.Evol = false;
+        }
+    });
+
+    if ($("#set-pdm").prop('checked') == true) {
+        userFilter.PDM = true;
+    }
+    else {
+        userFilter.PDM = false;
+    }
+
+    $("#set-pdm").click(function () {
+        if ($(this).prop('checked') == true) {
+            userFilter.PDM = true;
+        }
+        else {
+            userFilter.PDM = false;
+        }
+    });
+
+    if ($("#set-pdv").prop('checked') == true) {
+        userFilter.PDV = true;
+    }
+    else {
+        userFilter.PDV = false;
+    }
+
+    $("#set-pdv").click(function () {
+        if ($(this).prop('checked') == true) {
+            userFilter.PDV = true;
+        }
+        else {
+            userFilter.PDV = false;
+        }
+    });
+
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
 
@@ -384,7 +515,7 @@
             type: type
         };
         $.ajax({
-            url: 'MediaSchedule/SaveCustomDetailLevels',
+            url: 'SaveCustomDetailLevels',
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",
@@ -409,7 +540,7 @@
             detailLevel: detailLevel
         };
         $.ajax({
-            url: 'MediaSchedule/RemoveCustomDetailLevels',
+            url: 'RemoveCustomDetailLevels',
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",

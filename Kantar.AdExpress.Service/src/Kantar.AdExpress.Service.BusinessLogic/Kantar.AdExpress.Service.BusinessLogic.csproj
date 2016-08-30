@@ -75,6 +75,7 @@
     <Compile Include="App_Start\AutoMapperConfigBL.cs" />
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceImpl\AdvertisingAgencyService.cs" />
     <Compile Include="ServiceImpl\AlertService.cs" />
     <Compile Include="ServiceImpl\NewCreativesService.cs" />
     <Compile Include="ServiceImpl\AnalysisService.cs" />
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.AdvertisingAgency\TNS.AdExpressI.AdvertisingAgency.csproj">
+      <Project>{f714f160-ebad-464f-9d83-adae37de761d}</Project>
+      <Name>TNS.AdExpressI.AdvertisingAgency</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
       <Project>{b731e9a2-0dbf-43a6-a89e-6dc27d96ffd4}</Project>
