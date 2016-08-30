@@ -94,6 +94,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return detailLevelList;
         }
@@ -128,6 +130,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
 
         }

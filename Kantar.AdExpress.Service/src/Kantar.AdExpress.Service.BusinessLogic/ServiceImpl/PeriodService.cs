@@ -74,6 +74,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return result;
 
@@ -135,6 +137,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Logger.Log(LogLevel.Error, message);
                 result.Success = false;
                 result.ErrorMessage = message; //"Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
+                throw;
             }
             return result;
         }
@@ -166,6 +169,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.ErrorMessage = ex.Message;
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return result;
         }
@@ -463,12 +468,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, exception.InnerException + exception.Message);
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
 
             #endregion
@@ -697,6 +706,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
         }
 

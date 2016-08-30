@@ -43,6 +43,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 gridResultResponse.Message = string.Format("{0}.{1}", GestionWeb.GetWebWord(1973, _customerSession.SiteLanguage), GestionWeb.GetWebWord(2099, _customerSession.SiteLanguage));
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return gridResultResponse;
         }
@@ -64,6 +66,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return data;
         }

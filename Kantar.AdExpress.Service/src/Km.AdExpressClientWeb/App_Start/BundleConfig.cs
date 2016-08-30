@@ -57,9 +57,19 @@ namespace Km.AdExpressClientWeb
                       "~/Content/options-control.css",
                       "~/Content/spinner.css"));
 
+
+            #region CSS spécifique par langues
+            //Francais 
+            bundles.Add(new StyleBundle("~/Content/css/FR"));
+
+            //Anglais 
+            bundles.Add(new StyleBundle("~/Content/css/EN"));
+
+            // Finnois
             bundles.Add(new StyleBundle("~/Content/css/FI").Include(
-                        "~/Content/site-Fi.css"
-                    ));
+                "~/Content/site-Fi.css"
+            ));
+            #endregion
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                   "~/Scripts/module-selection/module-selection.js"));
