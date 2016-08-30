@@ -339,8 +339,12 @@
                             }
                             <label for="comparative-study">@GestionWeb.GetWebWord(1118, Model.SiteLanguage)</label>
                         </div>
-                        <div class="checkbox padder media-schedule-option">
-                            @if (Model.Evol.Value)
+                        <div id="evol-container" class="checkbox padder media-schedule-option">
+                            @if (!Model.Evol.Enabled)
+                            {
+                                <input id="set-evol" type="checkbox" name="set-evol" class="with-font" disable />
+                            }
+                            else if (Model.Evol.Value)
                             {
                                 <input id="set-evol" type="checkbox" name="set-evol" class="with-font" checked />
                             }
@@ -372,20 +376,6 @@
                             }
                             <label for="set-pdv">@GestionWeb.GetWebWord(1166, Model.SiteLanguage)</label>
                         </div>
-                        @if (WebApplicationParameters.UseRetailer)
-                        {
-                            <div class="checkbox padder media-schedule-option">
-                                @if (Model.IsSelectRetailerDisplay)
-                                {
-                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" checked />
-                                }
-                                else
-                                {
-                                    <input id="retailer-display" type="checkbox" name="retailer-display" class="with-font" />
-                                }
-                                <label for="retailer-display">@GestionWeb.GetWebWord(2857, Model.SiteLanguage)</label>
-                            </div>
-                        }
                     </div>
                 </div>
                 <div class="row">

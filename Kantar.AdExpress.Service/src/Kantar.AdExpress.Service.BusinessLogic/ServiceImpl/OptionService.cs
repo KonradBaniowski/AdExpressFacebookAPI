@@ -545,6 +545,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     CheckBoxOption evol = new CheckBoxOption();
                     evol.Id = "analysisEvol";
                     evol.Value = _customerWebSession.Evolution;
+                    evol.Enabled = false;
                     #endregion
 
                     #region PDM

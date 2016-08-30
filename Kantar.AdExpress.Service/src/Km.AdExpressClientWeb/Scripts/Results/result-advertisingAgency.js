@@ -229,22 +229,44 @@
             columns.forEach(function (elem) {
                 if (elem.group != null && elem.group != 'undefined') {
                     for (var i = 0, len = elem.group.length; i < len; i++) {
-                        if (elem.group[i].key.indexOf("unit") > -1) {
-                            if (unit == "duration")
-                                elem.group[i].formatter = DurationFormatter;
-                            else if (unit == "pages")
-                                elem.group[i].formatter = PageFormatter;
-                            else
-                                elem.group[i].formatter = UnitFormatter;
+
+                        if (elem.group[i].group != null && elem.group[i].group != 'undefined') {
+                            if (elem.group[i].group[0].key.indexOf("unit") > -1) {
+                                if (unit == "duration")
+                                    elem.group[i].group[0].formatter = DurationFormatter;
+                                else if (unit == "pages")
+                                    elem.group[i].group[0].formatter = PageFormatter;
+                                else
+                                    elem.group[i].group[0].formatter = UnitFormatter;
+                            }
+                            if (elem.group[i].group[0].key.indexOf("evol") > -1) {
+                                elem.group[i].group[0].formatter = EvolFormatter;
+                            }
+                            if (elem.group[i].group[0].key.indexOf("pdm") > -1) {
+                                elem.group[i].group[0].formatter = PercentFormatter;
+                            }
+                            if (elem.group[i].group[0].key.indexOf("pdv") > -1) {
+                                elem.group[i].group[0].formatter = PercentFormatter;
+                            }
                         }
-                        if (elem.group[i].key.indexOf("evol") > -1) {
-                            elem.group[i].formatter = EvolFormatter;
-                        }
-                        if (elem.group[i].key.indexOf("pdm") > -1) {
-                            elem.group[i].formatter = PercentFormatter;
-                        }
-                        if (elem.group[i].key.indexOf("pdv") > -1) {
-                            elem.group[i].formatter = PercentFormatter;
+                        else {
+                            if (elem.group[i].key.indexOf("unit") > -1) {
+                                if (unit == "duration")
+                                    elem.group[i].formatter = DurationFormatter;
+                                    else if (unit == "pages")
+                                    elem.group[i].formatter = PageFormatter;
+                                else
+                                    elem.group[i].formatter = UnitFormatter;
+                            }
+                            if (elem.group[i].key.indexOf("evol") > -1) {
+                                elem.group[i].formatter = EvolFormatter;
+                            }
+                            if (elem.group[i].key.indexOf("pdm") > -1) {
+                                elem.group[i].formatter = PercentFormatter;
+                                }
+                                if (elem.group[i].key.indexOf("pdv") > -1) {
+                                elem.group[i].formatter = PercentFormatter;
+                            }
                         }
                     }
                 } else if (elem.key.indexOf("unit") > -1) {
@@ -376,6 +398,8 @@
 
     CallAdvertisingAgencyResult();
 
+    $("#evol-container").addClass("disabledbutton");
+
     if ($("#comparative-study").prop('checked') == true) {
         userFilter.ComparativeStudy = true;
     }
@@ -386,11 +410,15 @@
     $("#comparative-study").click(function () {
         if ($(this).prop('checked') == true) {
             userFilter.ComparativeStudy = true;
-            $("#comparative-period-type").removeClass("hide");
+            $("#set-evol").prop('disabled', false);
+            $("#evol-container").removeClass("disabledbutton");
         }
         else {
             userFilter.ComparativeStudy = false;
-            $("#comparative-period-type").addClass("hide");
+            $("#evol-container").addClass("disabledbutton");
+            $("#set-evol").prop('disabled', true);
+            $("#set-evol").prop('checked', false);
+            userFilter.Evol = false;
         }
     });
     
@@ -481,6 +509,8 @@
     $("#set-pdm").click(function () {
         if ($(this).prop('checked') == true) {
             userFilter.PDM = true;
+            userFilter.PDV = false;
+            $("#set-pdv").prop('checked', false);
         }
         else {
             userFilter.PDM = false;
@@ -497,6 +527,8 @@
     $("#set-pdv").click(function () {
         if ($(this).prop('checked') == true) {
             userFilter.PDV = true;
+            userFilter.PDM = false;
+            $("#set-pdm").prop('checked', false);
         }
         else {
             userFilter.PDV = false;
