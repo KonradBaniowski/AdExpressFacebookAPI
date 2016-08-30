@@ -52,7 +52,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string FACEBOOK = "SocialMedia";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
-        private const int MaxItemsPerLevel = 100;
+        //TODO : A checker pour 100 ou 1000
+        private const int MaxItemsPerLevel = 1000;
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
         private const int OUTDOOR = 8;
@@ -208,6 +209,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             #endregion
             return response;
@@ -293,6 +296,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return response;
         }
@@ -553,6 +558,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
         }
 
@@ -629,6 +636,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSession.IdSession, webSession.UserAgent, webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
+
+                throw;
             }
             return result;
         }
