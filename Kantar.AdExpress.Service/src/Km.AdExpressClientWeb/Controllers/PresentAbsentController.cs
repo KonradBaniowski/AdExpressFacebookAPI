@@ -514,6 +514,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
                 ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage),
             };
+
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
+
             return result;
         }
         #endregion

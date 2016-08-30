@@ -191,6 +191,7 @@ $('#Results').on('click', function (e) {
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
         if (page == "Dates" || page == "Market") {
+            strHtml += "<li>" + $('#Node_' + page).val() + "</li>";
             gotoResult = false;
             return;
         }
@@ -198,7 +199,6 @@ $('#Results').on('click', function (e) {
     if (gotoResult) {
         var nextUrl = $(this).attr('href').split('/').pop();
         if (nextUrl === "MediaSchedule") {
-            strHtml += "<li>" + page + "</li>";
             //nextUrl = "Index";
             nextUrl = "Market";
         }
@@ -206,7 +206,7 @@ $('#Results').on('click', function (e) {
         NextStep(nextUrl, dis)
     }
     else {
-        strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+        strHtml = $('#Labels_NavigationNodeRequired').val() + "<ul>" + strHtml + "</ul>";
         bootbox.alert(strHtml);
     }
 });

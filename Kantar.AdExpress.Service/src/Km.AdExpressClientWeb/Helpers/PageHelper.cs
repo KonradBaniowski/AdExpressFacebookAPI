@@ -41,11 +41,13 @@ namespace Km.AdExpressClientWeb.Helpers
 
       
 
-        public List<NavigationNode> LoadNavBar(string idWebSession, string controller, int siteLanguage = -1, int CurrentPosition = 0)
+        public NavigationBarViewModel LoadNavBar(string idWebSession, string controller, int siteLanguage = -1, int CurrentPosition = 0)
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
-            var model = new List<NavigationNode>();
+            NavigationBarViewModel model = new NavigationBarViewModel();
+            model.Labels = new Labels();
+            model.Labels.NavigationNodeRequired = GestionWeb.GetWebWord(LanguageConstantes.NavigationNodeRequired, siteLanguage);
             var webSession = (WebSession)WebSession.Load(idWebSession);
             string resultController = string.Empty;
             switch (webSession.CurrentModule)
@@ -90,6 +92,8 @@ namespace Km.AdExpressClientWeb.Helpers
             else
                 marketActive = webSession.IsCurrentUniversProductSelected();
 
+            model.NavigationNodes = new List<NavigationNode>();
+
             var market = new NavigationNode
             {
                 Id = 1,
@@ -102,7 +106,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Position = CurrentPosition,
                 IsDisabled= IsMarketSelectionDisabled(webSession.CurrentModule)
             };
-            model.Add(market);
+            model.NavigationNodes.Add(market);
             var media = new NavigationNode
             {
                 Id = 2,
@@ -115,7 +119,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Position = CurrentPosition,
                 IsDisabled = IsMediaSelectionDisabled(webSession.CurrentModule)
             };
-            model.Add(media);
+            model.NavigationNodes.Add(media);
             var dates = new NavigationNode
             {
                 Id = 3,
@@ -127,7 +131,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IconCssClass = "fa fa-calendar",
                 Position = CurrentPosition
             };
-            model.Add(dates);
+            model.NavigationNodes.Add(dates);
             var result = new NavigationNode
             {
                 Id = 4,
@@ -139,7 +143,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IconCssClass = "fa fa-check",
                 Position = CurrentPosition
             };
-            model.Add(result);
+            model.NavigationNodes.Add(result);
             #endregion
             return model;
         }
@@ -203,6 +207,9 @@ namespace Km.AdExpressClientWeb.Helpers
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
                 FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage)
             };
+
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;
         }

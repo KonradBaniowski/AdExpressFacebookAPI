@@ -184,7 +184,7 @@ $('#Results').on('click', function (e) {
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
         if (page == "Dates") {
-            strHtml += "<li>" + page + "</li>";
+            strHtml += "<li>" + $('#Node_' + page).val() + "</li>";
             gotoResult = false;
         }
     });
@@ -197,7 +197,7 @@ $('#Results').on('click', function (e) {
         NextStep(nextUrl, dis)
     }
     else {
-        strHtml = "Veuillez compléter le(s) paramètre(s) suivant(s) : <ul>" + strHtml + "</ul>";
+        strHtml = $('#Labels_NavigationNodeRequired').val() + "<ul>" + strHtml + "</ul>";
         bootbox.alert(strHtml);
     }
 });

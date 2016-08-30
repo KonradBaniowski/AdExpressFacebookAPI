@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "PeriodSelection";
-    var _controller = Model.NavigationBar.First().Controller;
+    var _controller = Model.NavigationBar.NavigationNodes.First().Controller;
 }
 
 <div class="row">
@@ -447,12 +447,12 @@
                             $.each(items, function (index, value) {
                                 var page = $(value).attr('id');
                                 if (page == "Media") {
-                                    strHtml += "<li>" + page + "</li>";
+                                    strHtml += "<li>" + $('#Node_' + page).val() + "</li>";
                                     gotoResult = false;
                                 }
                             });
                             if (!gotoResult) {
-                                strHtml = "@GestionWeb.GetWebWord(3053, Model.PeriodViewModel.SiteLanguage)" + "<ul>" + strHtml + "</ul>";
+                                strHtml = $('#Labels_NavigationNodeRequired').val() + "<ul>" + strHtml + "</ul>";
                                 bootbox.alert(strHtml);
                                 return false;
                             }

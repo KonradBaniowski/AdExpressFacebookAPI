@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.I18n
 {
@@ -146,6 +147,10 @@ namespace Km.AdExpressClientWeb.I18n
                 FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage),
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage)
             };
+
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
+
             return result;
         }
     }

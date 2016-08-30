@@ -62,6 +62,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSelectedUnivers = 926;
         public const long EmptyUnivers = 927;
         public const long NoSavedUniversCode = 930;
+        public const long PreSelectionWithoutEvaliant = 944;
         public const long KeyWordLabelCode = 972;
         public const long Configuration = 990;
         public const long Help = 992;
@@ -190,6 +191,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Market = 3048;
         public const long YourModule = 3051;
         public const long NewsDescr = 3052;
+        public const long NavigationNodeRequired = 3053;
         public const long ContactUsLabel = 3055;
         public const long SomeFigures = 3056;
         public const long Connection = 3057;

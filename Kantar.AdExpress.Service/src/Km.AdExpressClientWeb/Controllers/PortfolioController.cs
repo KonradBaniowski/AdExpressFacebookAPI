@@ -570,6 +570,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 TotalInvestLabel = GestionWeb.GetWebWord(LanguageConstantes.TotalInvestLabel, siteLanguage),//1399
                 NbPage = GestionWeb.GetWebWord(LanguageConstantes.NbPage, siteLanguage),//1385
             };
+
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
+
             return result;
         }
 

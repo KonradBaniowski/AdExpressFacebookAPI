@@ -3,7 +3,7 @@
 @using TNS.AdExpress.Domain.Web;
 @{
     ViewBag.Title = "Results";
-    var _controller = Model.NavigationBar.First().Controller;
+    var _controller = Model.NavigationBar.NavigationNodes.First().Controller;
     var _exportController = "PresentAbsentExport";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
 }
