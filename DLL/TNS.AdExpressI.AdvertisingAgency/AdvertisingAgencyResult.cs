@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Data;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Selection;
-using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstRight = TNS.AdExpress.Constantes.Customer.Right;
@@ -21,7 +20,10 @@ using TNS.AdExpressI.AdvertisingAgency.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Result;
-
+using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Units;
+using FctWeb = TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.AdvertisingAgency
 {
@@ -70,8 +72,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
 
             _session = session;
             _module = ModulesList.GetModule(session.CurrentModule);
-            begin = WebFunctions.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            end = WebFunctions.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            begin = Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            end = Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             if (_session.DetailPeriod == CstPeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
             {
                 _session.DetailPeriod = CstPeriod.DisplayLevel.monthly;
@@ -131,8 +133,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
 
             #region Periods Indexes
             var comparativePeriod = new MediaSchedulePeriod(_period.Begin.AddMonths(-12), _period.End.AddMonths(-12), _session.DetailPeriod);
-            DateTime begin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime periodEndDate = FctUtilities.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            DateTime begin = Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime periodEndDate = Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int yearN = Convert.ToInt32(_session.PeriodBeginningDate.Substring(0, 4));
             int yearN1 = _session.ComparativeStudy ? yearN - 1 : -1;
             Int32 DATA_YEAR_N = FIRST_DATA_INDEX;
@@ -1132,12 +1134,207 @@ namespace TNS.AdExpressI.AdvertisingAgency
         }
         #endregion
 
+        public GridResult GetGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            ResultTable resultTable = GetResult();
+            string mediaSchedulePath = "/MediaSchedulePopUp";
+            LineStart cLineStart = null;
+            int nbLines = 0;
+
+            if (resultTable == null || resultTable.DataColumnsNumber == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
+            for (int i = 0; i < resultTable.LinesNumber; i++)
+            {
+                cLineStart = resultTable.GetLineStart(i);
+                if (!(cLineStart is LineHide))
+                    nbLines++;
+            }
+            if (nbLines == 0)
+            {
+                gridResult.HasData = false;
+                return gridResult;
+            }
+            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+            //Hierachical ids for Treegrid
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+            columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
+            schemaFields.Add(new { name = "GAD" });
+            List<object> groups = null;
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            string format = string.Empty;
+
+            //Headers
+            if (resultTable.NewHeaders != null)
+            {
+                for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
+                {
+                    groups = null;
+                    string colKey = string.Empty;
+                    if (resultTable.NewHeaders.Root[j].Count > 0)
+                    {
+                        groups = new List<object>();
+
+                        int nbGroupItems = resultTable.NewHeaders.Root[j].Count;
+                        for (int g = 0; g < nbGroupItems; g++)
+                        {
+                            colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
+
+                            if (resultTable != null && resultTable.LinesNumber > 0)
+                            {
+                                var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
+
+                                if (cell is CellPercent || cell is CellPDM)
+                                {
+                                    format = "percent";
+                                }
+                                else if (cell is CellEvol)
+                                {
+                                    format = "percent";
+                                    colKey += "-evol";
+                                }
+                                else if (cell is CellDuration)
+                                {
+                                    format = "duration";
+                                    colKey += "-unit";
+                                }
+                                else if (cell is CellUnit)
+                                {
+                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                    colKey += "-unit";
+                                }
+                            }
+
+                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            schemaFields.Add(new { name = colKey });
+                        }
+                        //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
+                        columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
+                    }
+                    else
+                    {
+                        colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                        if (j == 0)
+                        {
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+                        }
+                        else
+                        {
+                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
+                        }
+                        schemaFields.Add(new { name = colKey });
+                    }
+
+                }
+            }
+
+            //table body rows
+            int currentLine = 0;
+            for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
+            {
+                cLineStart = resultTable.GetLineStart(i);
+                if (cLineStart is LineHide)
+                    continue;
+
+                gridData[currentLine, 0] = i; // Pour column ID
+                gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
+
+                for (int k = 1; k < resultTable.ColumnsNumber - 1; k++)
+                {
+                    var cell = resultTable[currentLine, k];
+                    var link = string.Empty;
+                    if (cell is CellMediaScheduleLink)
+                    {
+
+                        var c = cell as CellMediaScheduleLink;
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                               , mediaSchedulePath
+                               , link);
+                            }
+                        }
+                        gridData[currentLine, k + 2] = link;
+
+                    }
+
+                    else
+                    {
+                        if (cell is CellPercent || cell is CellEvol || cell is CellPDM)
+                        {
+                            double value = ((CellUnit)cell).Value;
+
+                            if (double.IsInfinity(value))
+                                gridData[currentLine, k + 2] = (value < 0) ? "-Infinity" : "+Infinity";
+                            else if (double.IsNaN(value))
+                                gridData[currentLine, k + 2] = null;
+                            else
+                                gridData[currentLine, k + 2] = value / 100;
+                        }
+                        else if (cell is CellUnit)
+                        {
+                            if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
+                                gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                            else
+                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
+                        }
+                        else if (cell is AdExpressCellLevel)
+                        {
+                            string label = ((AdExpressCellLevel)cell).RawString();
+                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+
+                            if (gadParams.Length > 0)
+                                gridData[currentLine, 2] = gadParams;
+                            else
+                                gridData[currentLine, 2] = "";
+
+                            gridData[currentLine, k + 2] = label;
+                        }
+                        else
+                        {
+                            gridData[currentLine, k + 2] = cell.RenderString();
+                        }
+                    }
+                }
+                currentLine++;
+            }
+            gridResult.NeedFixedColumns = true;
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+            gridResult.Unit = _session.Unit.ToString();
+
+            return gridResult;
+        }
+
+        #region CanAddHeader
         private bool CanAddHeader(List<long> cId, List<long> oldcId, List<int> DATA_MEDIA_INDEXES, HeaderBase[] MEDIA_IDS, int i)
         {
             if (DATA_MEDIA_INDEXES.Count == 3)
                 return (cId[0] != oldcId[0] || (DATA_MEDIA_INDEXES.Count > 1 && cId[1] != oldcId[1]) || (DATA_MEDIA_INDEXES.Count > 2 && cId[2] != oldcId[2]));
             else return (MEDIA_IDS[i] == null || (cId[i] != MEDIA_IDS[i].Id || (i > 0 && oldcId[0] != cId[0])));
         }
+        #endregion
 
         #region Private Methods
         /// <summary>

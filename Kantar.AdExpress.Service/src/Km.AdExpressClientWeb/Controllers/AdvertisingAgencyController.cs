@@ -2,6 +2,7 @@
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace Km.AdExpressClientWeb.Controllers
     {
         private IWebSessionService _webSessionService;
         private IOptionService _optionService;
+        private IAdvertisingAgencyService _advertisingAgencyService;
         private const string _controller = "AdvertisingAgency";
         private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
-        public AdvertisingAgencyController(IWebSessionService webSessionService, IOptionService optionService)
+        public AdvertisingAgencyController(IWebSessionService webSessionService, IOptionService optionService, IAdvertisingAgencyService advertisingAgencyService)
         {
             _webSessionService = webSessionService;
             _optionService = optionService;
+            _advertisingAgencyService = advertisingAgencyService;
         }
 
         public ActionResult Index()
@@ -51,6 +54,22 @@ namespace Km.AdExpressClientWeb.Controllers
             };
 
             return View(model);
+        }
+
+        public JsonResult AdvertisingAgencyResult()
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            var gridResult = _advertisingAgencyService.GetGridResult(idWebSession);
+            if (!gridResult.HasData)
+                return null;
+            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel.MaxJsonLength = Int32.MaxValue;
+
+            return jsonModel;
         }
 
         public ActionResult ResultOptions()

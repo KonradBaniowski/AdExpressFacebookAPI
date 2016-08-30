@@ -16,12 +16,12 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using FctWeb = TNS.AdExpress.Web.Functions;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections;
 using TNS.AdExpress.Web.Core.Exceptions;
 using CstDB = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.AdvertisingAgency.DAL
 {
@@ -101,7 +101,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             {
                 try
                 {
-                    dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                    dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad("");
                 }
                 catch (SQLGeneratorException) { ;}
             }
@@ -241,16 +241,16 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             try
             {
                 // Get the name of the data table
-                tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId, _session.IsSelectRetailerDisplay);
-                unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
+                tableName = SQLGenerator.GetDataTableName(periodBreakDown, vehicleId, _session.IsSelectRetailerDisplay);
+                unitFieldName = SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
                 // Get the classification table
                 productTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
                 // Get the media classification table
                 mediaTableName = mediaDetailLevel.GetSqlTables(_schAdexpr03.Label);
                 if (productTableName.Length > 0) productTableName += ",";
                 // Get unit field
-                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
+                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitAlias = SQLGenerator.GetUnitAlias(_session);
 
                 //Get Table GAD
                 Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
@@ -287,8 +287,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     try
                     {
                         dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+                        dataJointForGad = "and " + SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }
                     catch (SQLGeneratorException) { ;}
                 }
@@ -377,7 +377,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 || (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m)
                 )
             {
-                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+                sql.Append(SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             }
 
             // Autopromo
@@ -502,14 +502,14 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
             // Exclude product if radio selected)
             GetExcludeProudcts(sql);
             #endregion
 
             #region Nomenclature Produit (Niveau de détail)
             // Product level
-            sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Sélection produit
@@ -529,7 +529,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #region Media classification
 
             #region Rights
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
@@ -715,8 +715,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 mediaTableName = mediaDetailLevel.GetSqlTables(_schAdexpr03.Label);
                 if (productTableName.Length > 0) productTableName += ",";
                 // Get unit field
-                dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
-                unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
+                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
+                unitAlias = SQLGenerator.GetUnitAlias(_session);
 
                 // Get classification fields				
                 mediaFieldName = GetAdnettrackSqlFields(detailLevel);
@@ -734,8 +734,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     try
                     {
                         dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+                        dataJointForGad = "and " + SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }
                     catch (SQLGeneratorException) { ;}
                 }
@@ -854,14 +854,14 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
             // Exclude product if radio selected)
             GetExcludeProudcts(sql);
             #endregion
 
             #region Nomenclature Produit (Niveau de détail)
             // Product level
-            sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Sélection produit
@@ -881,7 +881,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #region Media classification
 
             #region Rights
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection

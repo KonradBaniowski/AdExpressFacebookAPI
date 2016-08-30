@@ -64,11 +64,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.21630, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.24420, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -89,10 +89,6 @@
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.AdvertisingAgency.DAL\TNS.AdExpressI.AdvertisingAgency.DAL.csproj">
       <Project>{499DA15C-BCE1-45A2-86C1-C20C5370BEB7}</Project>

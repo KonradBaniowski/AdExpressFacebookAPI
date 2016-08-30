@@ -227,6 +227,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    // Niveau de détail par défaut
+                    ArrayList levelsIds = new ArrayList();
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.groupMediaAgency);
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.agency);
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                    _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                }
                 #endregion
 
                 options.GenericDetailLevel = genericDetailLevelOption;
@@ -347,6 +356,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
 
                 if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
+                {
+                    if (ContainsDefaultCurrency(units))
+                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    else
+                        _customerWebSession.Unit = units[0].Id;
+                }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     if (ContainsDefaultCurrency(units))
                         _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
@@ -522,6 +539,31 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    #region Evolution
+                    CheckBoxOption evol = new CheckBoxOption();
+                    evol.Id = "analysisEvol";
+                    evol.Value = _customerWebSession.Evolution;
+                    #endregion
+
+                    #region PDM
+                    CheckBoxOption pdm = new CheckBoxOption();
+                    pdm.Id = "pdmEvol";
+                    pdm.Value = _customerWebSession.PDM;
+                    #endregion
+
+                    #region PDV
+                    CheckBoxOption pdv = new CheckBoxOption();
+                    pdv.Id = "pdvEvol";
+                    pdv.Value = _customerWebSession.PDV;
+                    #endregion
+
+                    options.Evol = evol;
+                    options.PDM = pdm;
+                    options.PDV = pdv;
+                }
+
                 switch (_customerWebSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -539,7 +581,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode();
                 }
 
-                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     options.ComparativeStudy = _customerWebSession.ComparativeStudy;
                     _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
@@ -583,6 +625,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                     case WebConstantes.Module.Name.NEW_CREATIVES:
                         _nbDetailLevelItemList = 3;
+                        _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                        _nbDetailLevelItemList = 4;
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.product;
                         break;
                 }
@@ -650,9 +696,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
                         _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
-                        #region  resultTypeFilter
                         _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
-                        #endregion
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                        _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
                         break;
                     case WebConstantes.Module.Name.NEW_CREATIVES:
                         _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
@@ -698,7 +745,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region InsertionFilter
-                if (insertOption)
+                if (insertOption && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                     _customerWebSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
                 #endregion
 
@@ -737,7 +784,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
-                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    _customerWebSession.Evolution = userFilter.Evol;
+                    _customerWebSession.PDM = userFilter.PDM;
+                    _customerWebSession.PDV = userFilter.PDV;
+                }
+
+                    if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
                     _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
