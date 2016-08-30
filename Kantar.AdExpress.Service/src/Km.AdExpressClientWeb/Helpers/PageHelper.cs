@@ -402,6 +402,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.TABLEAU_DYNAMIQUE:
                 case Module.Name.INDICATEUR:                 
                 case Module.Name.FACEBOOK:
+                case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
                     break;
                 default:
