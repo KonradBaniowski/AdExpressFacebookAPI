@@ -1,11 +1,15 @@
-﻿@model  List<Km.AdExpressClientWeb.Models.NavigationNode>
+﻿@model  Km.AdExpressClientWeb.Models.NavigationBarViewModel
 
     <div class="col-xs-1 margin-b text-left">&nbsp;</div>
     <div class="col-xs-10 margin-b text-left">
+        @Html.HiddenFor(e => e.Labels.NavigationNodeRequired)
         <center>
             <ul class="timeline">
-                @foreach (var navigation in Model)
+                @foreach (var navigation in Model.NavigationNodes)
                 {
+                    var idNode = "Node_" + navigation.Description;
+                    <input type="hidden" value="@navigation.Title" id="@idNode" />
+
                     var currentPosition = "";
                     if (navigation.Position == navigation.Id)
                     {

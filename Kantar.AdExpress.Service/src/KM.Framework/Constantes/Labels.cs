@@ -110,6 +110,7 @@ namespace KM.Framework.Constantes
         public string GenericLevelDetailColumnLabel { get; set; } //w2300
         public string SelectMedia { get; set; }//1017
         public string PreSelection { get; set; }//2571
+        public string PreSelectionWithoutEvaliant { get; set; }//944
         public string HomeLabel { get; set; } // 3047
         public string CreateAlert { get; set; }
         public string SaveAlert2 { get; set; }//2609
@@ -157,5 +158,6 @@ namespace KM.Framework.Constantes
         public string FacebookModalTitle { get; set; }
         public string FacebookDescription { get; set; }
         public string NiveauxPersonalises { get; set; }
+        public string NavigationNodeRequired { get; set; }//3053
     }
 }

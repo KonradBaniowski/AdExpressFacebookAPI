@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "MediaSelection";
     var array = @Html.Raw(Json.Encode(Model.ErrorMessage));
-    var _controller = Model.NavigationBar.First().Controller;
+    var _controller = Model.NavigationBar.NavigationNodes.First().Controller;
 }
 <div class="row">
     @Html.HiddenFor(e => e.Dimension)
@@ -38,7 +38,7 @@
                         </a>
 
                         <span class="pull-right">
-                            <small class="v-super">@Model.Labels.PreSelection </small>
+                            <small class="v-super">@Model.Labels.PreSelection</small>
                             <label class="i-switch" id="switch">
                                 <input type="checkbox" for="switch" id="preselection">
                                 <i></i>

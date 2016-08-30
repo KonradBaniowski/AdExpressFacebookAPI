@@ -26,7 +26,5 @@ namespace Km.AdExpressClientWeb.Models
 
         public bool IsDisabled{ get; set; }
 
-
-
-}
+    }
 }

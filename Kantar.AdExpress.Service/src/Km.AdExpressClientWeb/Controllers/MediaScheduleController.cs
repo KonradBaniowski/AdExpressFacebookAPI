@@ -500,6 +500,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
                 Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
             };
+
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
+
             return result;
         }
         #endregion

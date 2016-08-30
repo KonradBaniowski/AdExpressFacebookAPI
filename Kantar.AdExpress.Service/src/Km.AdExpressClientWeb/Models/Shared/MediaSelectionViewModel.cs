@@ -15,7 +15,7 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public bool Multiple { get; set; }
         public List<int> IdMediasCommon { get; set; }
 
-        public List<NavigationNode> NavigationBar { get; set; }
+        public NavigationBarViewModel NavigationBar { get; set; }
 
         public ErrorMessage ErrorMessage { get; set; }
 
