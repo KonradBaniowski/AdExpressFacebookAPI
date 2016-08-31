@@ -577,6 +577,7 @@
     <Content Include="Configuration\33\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
+    <Content Include="Content\img\Banniere-AdExpress_social.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />
     <Content Include="Content\img\bann_adexpress_top100.jpg" />
     <Content Include="Content\img\evaliantFormat\AVI.png" />
@@ -1514,6 +1515,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

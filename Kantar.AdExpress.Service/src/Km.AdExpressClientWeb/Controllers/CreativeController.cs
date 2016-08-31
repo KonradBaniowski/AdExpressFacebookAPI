@@ -1,5 +1,6 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
+using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using Newtonsoft.Json;
@@ -45,9 +46,12 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(idUnivers);
             model.paramsUrl.Add(moduleId);
             model.paramsUrl.Add(idVehicle);
-            var result = _webSessionService.GetSiteLanguage(idWebSession);
-            model.SiteLanguage = result;
-            model.Labels = LoadPageLabels(result);
+            var _siteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
+            model.SiteLanguage = _siteLanguage;
+            model.Labels = LoadPageLabels(_siteLanguage);
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
 
             return View(model);
         }

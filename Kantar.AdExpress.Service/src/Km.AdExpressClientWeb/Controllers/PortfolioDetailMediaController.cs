@@ -21,6 +21,7 @@ using TNS.Classification.Universe;
 using Km.AdExpressClientWeb.Models.Shared;
 using KM.Framework.Constantes;
 using TNS.AdExpress.Domain.Web;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -64,6 +65,9 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 model.Labels.IndeRadioMessage = GestionWeb.GetWebWord(LanguageConstantes.IndeRadioMessage, customerSession.SiteLanguage);
             }
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(customerSession.SiteLanguage);
+            ViewBag.SiteLanguage = customerSession.SiteLanguage;
 
             return View(model);
         }

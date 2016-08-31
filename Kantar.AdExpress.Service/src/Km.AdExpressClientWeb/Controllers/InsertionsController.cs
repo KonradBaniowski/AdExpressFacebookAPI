@@ -49,9 +49,12 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(idUnivers);
             model.paramsUrl.Add(moduleId);
             model.paramsUrl.Add(idVehicle);
-            var result = _webSessionService.GetSiteLanguage(idWebSession);
-            model.SiteLanguage = result;
-            model.Labels = LoadPageLabels(result);
+            int _siteLanguage = _webSessionService.GetSiteLanguage(idWebSession);
+            model.SiteLanguage = _siteLanguage;
+            model.Labels = LoadPageLabels(_siteLanguage);
+
+            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+            ViewBag.SiteLanguage = _siteLanguage;
 
             return View(model);
         }
