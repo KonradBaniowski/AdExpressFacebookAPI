@@ -2857,3 +2857,8 @@ ul.ui-selectable {
     text-decoration:underline;
 }
 
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+

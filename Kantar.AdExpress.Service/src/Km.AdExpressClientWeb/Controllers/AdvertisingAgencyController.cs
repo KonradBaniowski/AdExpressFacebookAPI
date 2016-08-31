@@ -50,7 +50,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Presentation = pageHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = pageHelper.LoadPageLabels(result.WebSession.SiteLanguage, _controller),
                 IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_MANDATAIRES, _siteLanguage)
             };
 
             return View(model);
@@ -65,7 +65,7 @@ namespace Km.AdExpressClientWeb.Controllers
             if (!gridResult.HasData)
                 return null;
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit };
             JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 

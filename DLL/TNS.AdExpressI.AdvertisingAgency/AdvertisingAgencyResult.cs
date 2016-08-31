@@ -1173,6 +1173,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
             schemaFields.Add(new { name = "GAD" });
             List<object> groups = null;
+            List<object> subGroups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = string.Empty;
 
@@ -1217,8 +1218,18 @@ namespace TNS.AdExpressI.AdvertisingAgency
                                 }
                             }
 
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
-                            schemaFields.Add(new { name = colKey });
+                            if(resultTable.NewHeaders.Root[j][g].Count > 0)
+                            {
+                                subGroups = new List<object>();
+                                subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][0].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = "subgr" + colKey, group = subGroups });
+                                schemaFields.Add(new { name = colKey });
+                            }
+                            else
+                            {
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                schemaFields.Add(new { name = colKey });
+                            }
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
                         columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
