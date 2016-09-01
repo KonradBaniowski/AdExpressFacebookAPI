@@ -26,6 +26,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string PRESENTABSENT = "PresentAbsent";
         private const string MEDIASCHEDULE = "MediaSchedule";
         private const string ANALYSIS = "Analysis";
+        private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         #endregion
         public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService, IDetailSelectionService detailSelectionService)
         {
@@ -437,6 +438,9 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     case Module.Name.TABLEAU_DYNAMIQUE:
                         controller = ANALYSIS;
+                        break;
+                    case Module.Name.ANALYSE_MANDATAIRES:
+                        controller = ADVERTISING_AGENCY;
                         break;
                 };
                 response.Message = "Redirecting to the result page.";

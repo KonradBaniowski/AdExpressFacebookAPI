@@ -433,9 +433,16 @@
         });
     }
 
+    $("#resultModal").on('shown.bs.modal', function (event) {
+        var params = {
+            id: 0
+        };
+        CallUserResult(params);
+    });
+
     function CallUserResult(params) {
         $.ajax({
-            url: 'Universe/UserResult',
+            url: '/Universe/UserResult',
             contentType: "application/x-www-form-urlencoded",
             type: "GET",
             datatype: "json",
@@ -461,7 +468,7 @@
                 saveResult: resultName
             };
             $.ajax({
-                url: 'Universe/SaveUserResult',
+                url: '/Universe/SaveUserResult',
                 contentType: "application/x-www-form-urlencoded",
                 type: "POST",
                 datatype: "json",
