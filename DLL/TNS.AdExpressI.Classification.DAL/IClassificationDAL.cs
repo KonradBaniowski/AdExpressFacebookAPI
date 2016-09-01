@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Data;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 
@@ -39,6 +40,7 @@ namespace TNS.AdExpressI.Classification.DAL
     {
         string DBSchema { set; }
 
+        Dictionary<long, string> Filters { set; }
 
         /// <summary>
         /// This method provides SQL queries to get the media classification level's items.

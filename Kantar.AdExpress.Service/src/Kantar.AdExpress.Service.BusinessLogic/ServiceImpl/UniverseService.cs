@@ -62,6 +62,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                   cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
+                
+                //Exclude ZZ Inconnu
+                if(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES) {
+                    Dictionary<long, string> filters;
+                    filters = new Dictionary<long, string>();
+                    filters.Add(19, "9999,999");
+                    filters.Add(20, "9999,999,2990");
+                    classficationDAL.Filters = filters;
+                }
+
                 DataTable data = classficationDAL.GetItems(request.LevelId, request.Keyword).Tables[0];
                 foreach (var item in data.AsEnumerable())
                 {
@@ -103,6 +113,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),
                   cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 classficationDAL.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+
+                //Exclude ZZ Inconnu
+                if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    Dictionary<long, string> filters;
+                    filters = new Dictionary<long, string>();
+                    filters.Add(19, "9999,999");
+                    filters.Add(20, "9999,999,2990");
+                    classficationDAL.Filters = filters;
+                }
+
                 DataTable data = classficationDAL.GetItems(levelId, selectedClassificationItemsIds, selectedLevelId).Tables[0];
 
                 foreach (var item in data.AsEnumerable())
@@ -939,6 +960,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                   cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 classficationDAL.DBSchema = GetSchema(webSession.CurrentModule);
+
+                //Exclude ZZ Inconnu
+                if (webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
+                    Dictionary<long, string> filters;
+                    filters = new Dictionary<long, string>();
+                    filters.Add(19, "9999,999");
+                    filters.Add(20, "9999,999,2990");
+                    classficationDAL.Filters = filters;
+                }
+
                 DataTable data = classficationDAL.GetItems(levelId, "*").Tables[0];
                 foreach (var item in data.AsEnumerable())
                 {
