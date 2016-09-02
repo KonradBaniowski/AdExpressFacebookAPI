@@ -248,6 +248,14 @@
     <script id="pageNameTmpl" type="text/template">
         <a class="pageNameFacebookLink" data-pagefb="${IdPageFacebook}" >${PageName}</a>
     </script>
+
+    <script id="fanTmpl" type="text/template">
+        <div class="numericAlignment">
+            {{if parseInt(${NumberFan}) != 0}}
+            ${NumberFan}
+            {{/if}}
+        </div>
+    </script>
     
 
     <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
@@ -292,4 +300,5 @@
 
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")
+    @Scripts.Render("~/bundles/detail-selection")
 }

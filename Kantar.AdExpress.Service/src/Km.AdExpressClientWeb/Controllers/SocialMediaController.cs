@@ -84,6 +84,7 @@ namespace Km.AdExpressClientWeb.Controllers
             List<object> schemaFields = new List<object>();
             List<DataFacebook> data = new List<DataFacebook>();
             List<DataFacebook> datas = new List<DataFacebook>();
+            List<DataFacebook> datasTmp = new List<DataFacebook>();
             HttpResponseMessage response = new HttpResponseMessage();
             DataFacebook par = new DataFacebook();
             List<object> combos = new List<object>();
@@ -98,10 +99,10 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new { headerText = "IdPage", key = "IdPage", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "IdPage" });
             
-            columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "350" });
+            columns.Add(new { headerText = "", key = "PageName", dataType = "string", width = "380" });
             schemaFields.Add(new { name = "PageName" });
-            columns.Add(new { headerText = "", key = "checkBox", dataType = "string", width = "30" });
-            schemaFields.Add(new { name = "checkBox" });
+            //columns.Add(new { headerText = "", key = "checkBox", dataType = "string", width = "30" });
+            //schemaFields.Add(new { name = "checkBox" });
             columns.Add(new { headerText = "Posts", key = "IdPageFacebook", dataType = "string", width = "84" });
             schemaFields.Add(new { name = "IdPageFacebook" });
             columns.Add(new { headerText = "URL Page", key = "Url", dataType = "string", width = "80" });
@@ -128,17 +129,21 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                bool concurSelected = true;
-                int IndexListRef = 1;
-                if (universeMarket.Count < 2)
-                {
-                    concurSelected = false;
-                    IndexListRef = 0;
-                }
+                bool concurSelected = false;
+                //int IndexListRef = 1;
+                //if (universeMarket.Count < 2)
+                //{
+                //    concurSelected = false;
+                //    IndexListRef = 0;
+                //}
 
-                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
-                postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                //postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 1 = Concurrents; 0 = Référents
+                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
 
                 response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelRef).Result;
@@ -155,7 +160,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                     NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                     NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
-                    NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
+                    NumberFan = 0,//data.Where(e => e.PID == -1).Sum(a => a.NumberFan)
                     NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
                     NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
                     NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
@@ -164,6 +169,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.Add(par);
                 datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
+                datas = datas.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
 
                 combos.Add(new { Text = "Tout", Value = "*", Selected = true , Level = 0});
                 combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
@@ -182,9 +188,14 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (universeMarket.Count > 1)
                 {
+                    concurSelected = true;
+                    //Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 1 = Référents; 0 = Concurrents
+                    //postModelConc.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    //postModelConc.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
                     Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
-                    postModelConc.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModelConc.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    postModelConc.IdAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelConc.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
                     response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelConc).Result;
                     content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -206,15 +217,17 @@ namespace Km.AdExpressClientWeb.Controllers
                         IdPageFacebook = string.Join(",", data.Where(e => e.PID == -1).Select(e => e.IdPageFacebook).ToList()),
                         NbPage = data.Where(e => e.PID == -1).Sum(a => a.NbPage),
                         NumberComment = data.Where(e => e.PID == -1).Sum(a => a.NumberComment),
-                        NumberFan = data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
+                        NumberFan = 0,//data.Where(e => e.PID == -1).Sum(a => a.NumberFan),
                         NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
                         NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
                         NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
                         PageName = "Concurrents"
                     };
-                    datas.Add(par);
-                    datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
-                    datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
+                    datasTmp.Add(par);
+                    datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    datasTmp.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
+                    datasTmp = datasTmp.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
+                    datas.AddRange(datasTmp);
 
                     combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
                     data.Where(e => e.PID == 2).ToList().ForEach(j =>
@@ -256,7 +269,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
         
-
         public JsonResult GetFilterPost()
         {
             List<SelectListItem> combo = new List<SelectListItem>()
@@ -348,8 +360,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModelRef.IdPages = ids.Split(',').Select(long.Parse).ToList();
                 if (!postModelRef.IdPages.Any())
                 {
-                    postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    postModelRef.IdAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelRef.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
                 }
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPostUri"]), postModelRef).Result;
@@ -423,15 +435,19 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                int IndexListRef = 1;
-                if (universeMarket.Count < 2)
-                {
-                    IndexListRef = 0;
-                }
+                //int IndexListRef = 1;
+                //if (universeMarket.Count < 2)
+                //{
+                //    IndexListRef = 0;
+                //}
 
-                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
-                postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                //postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI"), postModelRef).Result;
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -469,19 +485,29 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
+                //if (universeMarket.Count > 1)
+                //{
+
+                //    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                //    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //}
+                //else
+                //{
+                //    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //}
+
+
+                postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
                 if (universeMarket.Count > 1)
                 {
-
-                    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
-
-                    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
-                }
-                else
-                {
-                    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    postModel.IdAdvertisersConcur = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsConcur = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
                 }
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/Plurimedia"), postModel).Result;
@@ -490,6 +516,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<KPIPercentPageFacebookContract> data = JsonConvert.DeserializeObject<List<KPIPercentPageFacebookContract>>(content);
+
+                //TODO: a faire autrement
+                //data = data.Where(e => e.Month != DateTime.Now.ToString("yyyyMM")).ToList();
+
                 if (data.Count == 0)
                 {
                     data.Add(new KPIPercentPageFacebookContract());
@@ -513,14 +543,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception("Pas de concurrents");
                 }
 
-                Domain.PostModel postModelConcur = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                Domain.PostModel postModelConcur = _webSessionService.GetPostModel(idSession); //Params : 1 = Concurrents; 0 = Référents
                 List<long> advertiserIds = new List<long>();
-                advertiserIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList());
                 advertiserIds.AddRange(universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList());
+                advertiserIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList());
 
                 List<long> brandIds = new List<long>();
-                brandIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList());
                 brandIds.AddRange(universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList());
+                brandIds.AddRange(universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList());
 
                 postModelConcur.IdAdvertisers = advertiserIds;
                 postModelConcur.IdBrands = brandIds;
@@ -531,6 +561,21 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<KPIClassificationContract> data = JsonConvert.DeserializeObject<List<KPIClassificationContract>>(content);
+
+                //TODO: a faire autrement
+                data.ToList().ForEach(e =>
+                {
+                    if(universeMarket[0].UniversLevels.First().UniversItems.Where(j => j.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList().Contains(e.Id)
+                        || universeMarket[0].UniversLevels.First().UniversItems.Where(j => j.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList().Contains(e.Id))
+                    {
+                        e.UniverseMarket = 0; // 0 = referent, 1 = concurrent
+                    }
+                    else{
+                        e.UniverseMarket = 1;// 0 = referent, 1 = concurrent
+                    }
+                });
+
+                data = data.OrderByDescending(l => l.UniverseMarket).ThenByDescending(e => e.Label).ToList();
                 //if (data.Count == 0)
                 //{
                 //    data.Add(new KPIClassificationContract());
@@ -554,19 +599,28 @@ namespace Km.AdExpressClientWeb.Controllers
                 postModel.IdAdvertisersConcur = new List<long>();
                 postModel.IdBrandsConcur = new List<long>();
 
+                //if (universeMarket.Count > 1)
+                //{
+
+                //    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                //    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //}
+                //else
+                //{
+                //    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //}
+
+                postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
                 if (universeMarket.Count > 1)
                 {
-
-                    postModel.IdAdvertisersConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsConcur = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
-
-                    postModel.IdAdvertisersRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsRef = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
-                }
-                else
-                {
-                    postModel.IdAdvertisersRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModel.IdBrandsRef = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    postModel.IdAdvertisersConcur = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModel.IdBrandsConcur = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
                 }
 
                 HttpResponseMessage response = client.PostAsJsonAsync(new Uri("http://localhost:9990/api/KPI/PlurimediaStacked"), postModel).Result;
@@ -579,6 +633,22 @@ namespace Km.AdExpressClientWeb.Controllers
                     data.Add(new PDVByMediaPageFacebookContract());
                 else if (data.Count == 0)
                     data.Add(new PDVByMediaPageFacebookContract());
+
+
+                //TODO: a faire autrement
+                data.ToList().ForEach(e =>
+                {
+                    if (universeMarket[0].UniversLevels.First().UniversItems.Where(j => j.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList().Contains(e.Id)
+                        || universeMarket[0].UniversLevels.First().UniversItems.Where(j => j.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList().Contains(e.Id))
+                    {
+                        e.UniverseMarket = 0; // 0 = referent, 1 = concurrent
+                    }
+                    else {
+                        e.UniverseMarket = 1;// 0 = referent, 1 = concurrent
+                    }
+                });
+
+                data = data.OrderByDescending(l => l.UniverseMarket).ThenByDescending(e => e.Label).ToList();
 
                 return PartialView("GetPlurimediaStackedChart", data);
             }

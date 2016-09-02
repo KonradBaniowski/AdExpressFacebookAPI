@@ -520,31 +520,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case 1: // N last months
                     webSession.PeriodLength = request.SelectedValue;
                     months = 1 - webSession.PeriodLength;
-                    startDateFormat = YYYYMM;
-                    endDateFormat = YYYYMM;
+                    startDateFormat = "yyyyMM01";
+                    endDateFormat = "yyyyMMdd";
                     webSession.PeriodType = CstPeriodType.nLastMonth;
-                    webSession.DetailPeriod = CstPeriodDetail.dayly;
+                    webSession.DetailPeriod = CstPeriodDetail.monthly;
                     break;
                 case 8:// Current year
-                    startDateFormat = YYYY01;
-                    endDateFormat = YYYYMM;
+                    startDateFormat = "yyyy0101";
+                    endDateFormat = "yyyyMMdd";
                     webSession.PeriodType = CstPeriodType.currentYear;
                     webSession.PeriodLength = 1;
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
                     break;
                 case 4:// Previous year
-                    startDateFormat = YYYY01;
-                    endDateFormat = YYYY12;
+                    startDateFormat = "yyyy0101";
+                    endDateFormat = "yyyy12dd";
                     webSession.PeriodType = CstPeriodType.previousYear;
                     webSession.PeriodLength = 1;
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
                     years = 1;
                     break;
-                case 5: // Previous Month
-                    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    webSession.PeriodType = CstPeriodType.previousMonth;
+                case 9:// N-2 year
+                    startDateFormat = "yyyy0101";
+                    endDateFormat = "yyyy12dd";
+                    webSession.PeriodType = CstPeriodType.nextToLastYear;
                     webSession.PeriodLength = 1;
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
+                    years = 2;
                     break;
                 default:
                     break;
@@ -563,9 +565,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                 {
                     //previous month
-                    var endDate = new DateTime(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month));
-                    webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM01");
-                    webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+                    var endDate = new DateTime(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month));
+                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                    webSession.PeriodEndDate = endDate.ToString(endDateFormat);
                 }
 
                 webSession.Save();

@@ -98,9 +98,10 @@
 
                 <div class="panel-heading-choix nav-tabs-alt">
                     <ul class="nav nav-tabs" role="tablist">
-                        @foreach (var tree in Model.Trees)
+
+                        @if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
                         {
-                            if (Model.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.FACEBOOK)
+                            foreach (var tree in Model.Trees.AsEnumerable().Reverse())
                             {
                                 <li @(tree == Model.Trees.LastOrDefault() ? "class=active" : "" )>
                                     <a data-target="#tab-@(tree.Id)"
@@ -112,7 +113,10 @@
                                     </a>
                                 </li>
                             }
-                            else
+                        }
+                        else
+                        {
+                            foreach (var tree in Model.Trees)
                             {
                                 <li @(tree == Model.Trees.First(e => e.AccessType == AccessType.includes) ? "class=active" : "" )>
                                     @*<li @(tree.IsDefaultActive ? "class=active" : "" )>*@
@@ -126,6 +130,7 @@
                                 </li>
                             }
                         }
+
                     </ul>
                 </div>
                 <div class="tab-content">

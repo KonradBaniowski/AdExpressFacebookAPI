@@ -2862,3 +2862,10 @@ ul.ui-selectable {
     opacity: 0.4;
 }
 
+#objectPost{
+    background-image: url("img/spin1.gif");   
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+
