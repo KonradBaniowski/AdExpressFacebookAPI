@@ -185,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyController.cs" />
+    <Compile Include="Controllers\AdvertisingAgencyExportController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
     <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -1680,6 +1681,7 @@
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\LostWon\" />
     <Folder Include="Models\PresentAbsent\" />
+    <Folder Include="Views\AdvertisingAgencyExport\" />
     <Folder Include="Views\AnalyseSectoExport\" />
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
