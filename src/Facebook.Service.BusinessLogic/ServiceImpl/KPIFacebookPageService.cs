@@ -121,7 +121,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 }
                 percentByMonth.Add(percentFind);
             }
-
+            List<string> allowedMonth = new List<string>();
             List<KPIPercentPageFacebookContract> percentFBByMonth = new List<KPIPercentPageFacebookContract>();
             foreach (var item in facebookAll)
             {
@@ -134,6 +134,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     percentFind.ConcurrentFBPercent = 100 - percentFind.ReferentFBPercent;
                     percentFind.Month = item.DateMediaNum.ToString();
                 }
+                allowedMonth.Add(item.DateMediaNum.ToString().Substring(0, 6));
                 percentFBByMonth.Add(percentFind);
             }
             var dico = percentFBByMonth.ToDictionary(e => long.Parse(e.Month.Substring(0, 6)).ToString(), x => x);
@@ -147,6 +148,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     item.ConcurrentFBPercent = elem.ConcurrentFBPercent;
                 }
             }
+
+            percentByMonth = percentByMonth.Where(e => allowedMonth.Contains(e.Month.ToString())).ToList();
 
             return percentByMonth;
         }
@@ -332,12 +335,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             for (int j = YearNEnd; j <= YearNBegin; j++)
             {
                 string propertyName = "Expenditure_Euro_N";
-                if (j == 0){
+                if (j == 0)
+                {
                     propertyName += "_";
                 }
                 else
                 {
-                    propertyName += j.ToString();
+                    propertyName += j.ToString() + "_";
                 }
 
                 if (YearNEnd == YearNBegin)
@@ -349,9 +353,9 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 }
                 else
                 {
-                    if (j != 0){
-                        propertyName += "_";
-                    }
+                    //if (j != 0){
+                    //    propertyName += "_";
+                    //}
                     if (j == YearNBegin)
                     {
                         for (int k = MonthNBegin; k <= 12; k++)
@@ -413,10 +417,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 }).OrderBy(r => r.Month).ToList();
 
                 return kpiResult;
-
             }
-            else
-                 if (brands != null && brands.Any())
+            else if (brands != null && brands.Any())
             {
                 var kpiResult = res.Select(e => new KPIClassificationContract
                 {

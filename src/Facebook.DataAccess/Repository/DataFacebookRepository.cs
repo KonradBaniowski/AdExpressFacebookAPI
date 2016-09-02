@@ -208,6 +208,7 @@ namespace Facebook.DataAccess.Repository
             var query = (from d in context.DataFacebook
                          where d.DateMediaNum >= Begin && d.DateMediaNum <= End
                          select d);
+            List<DataFacebook> tmp = null;
 
             var includedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Product));
             var excludedProduct = Criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Product));
@@ -242,7 +243,18 @@ namespace Facebook.DataAccess.Repository
             var res = (from g in query
                        where g.IdLanguageData == idLanguage
                        select g);
-            return res.ToList();
+
+            try
+            {
+                tmp = res.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return tmp;
+            
         }
 
         public List<DataFacebook> GetKPIPlurimediaDataFacebook(long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
