@@ -34,4 +34,7 @@
     var link = "/SocialMedia/GetPostHtml?id=" + id;
     $("#objectPost").attr('src', link);
     $("#objectPost").show();
+    document.getElementById('objectPost').onload = function () {
+        $("#objectPost").css("background", "none");
+    }
 </script>

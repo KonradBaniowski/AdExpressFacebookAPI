@@ -604,6 +604,7 @@
     <Content Include="Content\img\logo_kantarmedia.png" />
     <Content Include="Content\img\o.gif" />
     <Content Include="Content\img\r.gif" />
+    <Content Include="Content\img\spin1.gif" />
     <Content Include="Content\options-control.css" />
     <Content Include="Content\site-Fi.css" />
     <Content Include="Content\spinner.css" />

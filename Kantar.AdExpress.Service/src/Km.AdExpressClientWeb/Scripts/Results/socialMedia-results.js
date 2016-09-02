@@ -29,37 +29,13 @@
         return "";
     }
 
-    function PageFormatter(val) {
-        if (val > 0)
-            return $.ig.formatter(val, "number", "#,##0.###");
-
-        return "";
-    }
-
-    function DurationFormatter(val) {
-
-        if (val == 0)
-            return "";
-
-        var s = val.toString();
-        var nbToFillWithZero = 6 - s.length;
-        for (var i = 0; i < nbToFillWithZero; i++)
-            s = "0" + s;
-        return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
-    }
-
     function GetColumnsFormatter(columns, unit) {
 
         if (columns != null) {
 
             columns.forEach(function (elem) {
                 if (elem.key != "ID" && elem.key != "PID" && elem.key != "PageName" && elem.key != "IdPage") {
-                    if (unit == "duration")
-                        elem.formatter = DurationFormatter;
-                    else if (unit == "pages")
-                        elem.formatter = PageFormatter;
-                    else
-                        elem.formatter = UnitFormatter;
+                    elem.formatter = UnitFormatter;
                 }
             });
 
@@ -70,6 +46,7 @@
     }
 
     function CallSocialMediaResult() {
+        $("#exportCharts").hide();
         $("#gridEmpty").hide();
         $.ajax({
             url: '/SocialMedia/SocialMediaResult',
@@ -114,6 +91,9 @@
                             cols[i].template = $("#checkBoxTmpl").html();
                         if (cols[i].key == "PageName")
                             cols[i].template = $("#pageNameTmpl").html();
+                        if (cols[i].key == "NumberFan") {
+                            cols[i].template = $("#fanTmpl").html();
+                        }
                     }
 
                     var schema = new $.ig.DataSchema("array", {
@@ -129,15 +109,17 @@
 
                     ds.dataBind();
 
-                    CallReferChart();
+                    
                     CallTopPostsAll();
                     if (data.concurSelected) {
                         $("#resaccord > #volet3").show();
+                        CallReferChart(data.concurSelected);
                         CallPDMChart();
                         CallConcurChart();
                         CallPlurimediaStackedChart();
                     }
                     else {
+                        CallReferChart(data.concurSelected);
                         $("#resaccord > #volet3").hide();
                     }
 
@@ -344,6 +326,11 @@ function getData(e) {
         var arrayData = [];
         $.each(data, function (indexLike, value) {
             var datas = $(value).attr('name').split(",");
+            var elem = {
+                "DAY": "J0",
+                Data: 0
+            };
+            arrayData.push(elem);
             $.each(datas, function (index, value) {
                 index = index + 1;
                 var elem = {
@@ -768,6 +755,8 @@ function getDataConcurKPI(e) {
     var data = $(".elmtsChartConcur");
     var serieType = $('#seriesType').val();
     var labelKPISelected = serieType.substr(0, 1).toUpperCase() + serieType.substr(1)
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    intTabBrush = 0;
 
     var listSerie = [];
     var arrayMonth = [];
@@ -791,9 +780,12 @@ function getDataConcurKPI(e) {
         listSerie.push(
                 {
                     dataSource: arrayData,
-                    type: "spline",
+                    type: (arrayMonth.length < 2) ? "point" : "spline",
+                    markerType: (arrayMonth.length < 2) ? "circle" : "unset",
                     isHighlightingEnabled: true,
                     isTransitionInEnabled: true,
+                    markerBrush: brushes[intTabBrush],
+                    markerOutline: brushes[intTabBrush],
                     name: label,
                     title: label,
                     xAxis: "Month",
@@ -804,6 +796,7 @@ function getDataConcurKPI(e) {
                     tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item." + labelKPISelected + "}</label></div>"
                 }
             );
+        intTabBrush = (intTabBrush < brushes.length - 1) ? intTabBrush + 1 : 0
     });
 
     //var series = $(".selector").igMap("option", "series");
@@ -815,10 +808,10 @@ function getDataConcurKPI(e) {
         height: "300px",
         title: "Saisonnalité des " + serieType.toUpperCase(),
         subtitle: "Annonceur ou marque / mois par mois",
-        titleTextColor: "white",
-        subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        titleTextColor: "white",
+        subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -849,6 +842,8 @@ function getDataConcurExpenditure(e) {
 
     var disExpenditure = $("#chartConcurExpenditure");
     var data = $(".elmtsChartConcur");
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    intTabBrush = 0;
 
     var listSerie = [];
     var arrayMonth = [];
@@ -869,11 +864,14 @@ function getDataConcurExpenditure(e) {
         listSerie.push(
                 {
                     dataSource: arrayData,
-                    type: "spline",
+                    type: (arrayMonth.length < 2) ? "point" : "spline",
+                    markerType: (arrayMonth.length < 2) ? "circle" : "unset",
                     isHighlightingEnabled: true,
                     isTransitionInEnabled: true,
                     name: label,
                     title: label,
+                    markerBrush: brushes[intTabBrush],
+                    markerOutline: brushes[intTabBrush],
                     xAxis: "Month",
                     yAxis: "ExpenditureAxe",
                     valueMemberPath: "Expenditure",
@@ -882,7 +880,7 @@ function getDataConcurExpenditure(e) {
                     tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item.Expenditure}</label></div>"
                 }
             );
-
+        intTabBrush = (intTabBrush < brushes.length - 1) ? intTabBrush + 1 : 0
     });
 
     disExpenditure.igDataChart({
@@ -891,10 +889,10 @@ function getDataConcurExpenditure(e) {
         width: "100%",
         title: "Saisonnalité des B€X",
         subtitle: "Annonceur ou marque / mois par mois",
-        titleTextColor: "white",
-        subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
         outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        titleTextColor: "white",
+        subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -1152,7 +1150,7 @@ function getDataPlurimediaStacked(e) {
     });
 }
 
-function CallReferChart() {
+function CallReferChart(concurSelected) {
     $.ajax({
         url: '/SocialMedia/GetReferChart',
         contentType: "application/x-www-form-urlencoded",
@@ -1171,6 +1169,10 @@ function CallReferChart() {
             $('#KPIButtonFix').affix({
                 offset: { top: $('#KPIButtonFix').offset().top }
             });
+
+            if (!concurSelected) {
+                $("#exportCharts").show();
+            }
         }
     });
 }
@@ -1225,6 +1227,7 @@ function CallPlurimediaStackedChart() {
             $('#Stacked-chart').html('').append(data);
             getDataPlurimediaStacked();
             $(".mediaLoaderPlurimediaStacked").hide();
+            $("#exportCharts").show();
         }
     });
 }

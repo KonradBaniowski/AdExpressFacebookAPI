@@ -51,6 +51,7 @@ $(function () {
         var trees = [];
         $.each($('.nav.nav-tabs > li a'), function (index, elem) {
             var itemContainer = $(elem).attr('data-target');
+            var itemId = $(elem).attr('data-tab');
             var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
             var UniversLvl = [];
             $.each($(itemContainer + ' .panel-group .panel-body'), function (index, elem) {
@@ -71,7 +72,7 @@ $(function () {
                 UniversLvl.push(UnisLvl);
             });
             var stuff = {
-                Id: index,//itemContainer,
+                Id: itemId,//index
                 AccessType: accessType,
                 UniversLevels: UniversLvl
             };

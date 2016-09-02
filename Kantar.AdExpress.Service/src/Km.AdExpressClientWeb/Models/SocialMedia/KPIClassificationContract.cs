@@ -17,6 +17,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
             Comment = 0;
             Post = 0;
             Expenditure = 0;
+            UniverseMarket = 0;
         }
 
         public string Label { get; set; }
@@ -27,5 +28,6 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long Comment { get; set; }
         public long Post { get; set; }
         public long Expenditure { get; set; }
+        public long UniverseMarket { get; set; }
     }
 }
