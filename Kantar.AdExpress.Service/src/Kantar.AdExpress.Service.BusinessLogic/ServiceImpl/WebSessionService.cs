@@ -883,15 +883,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(trees.Count);
             try
             {
-                int index = trees.Count - 1;
+                int index = 0;
+                int indexFb = trees.Count - 1;
                 foreach (Tree tree in trees)
                 {
+                    NomenclatureElementsGroup treeNomenclatureEG = null;
                     AdExpressUniverse adExpressUniverse = new AdExpressUniverse(dimension)
                     {
                         Security = security
                     };
                     Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-                    NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(index, tree.AccessType);
+                    if (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK)
+                        treeNomenclatureEG = new NomenclatureElementsGroup(indexFb, tree.AccessType);
+                    else
+                        treeNomenclatureEG = new NomenclatureElementsGroup(index, tree.AccessType);
                     if (tree.UniversLevels.Any())
                     {
                         foreach (var level in tree.UniversLevels.Where(x => x.UniversItems != null))
@@ -912,7 +917,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         int key = (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK) ? index : 0;
                         adExpressUniverse.AddGroup(key, treeNomenclatureEG);
                         adExpressUniverses.Add(index, adExpressUniverse);
-                        index--;
+                        index++;
+                        indexFb--;
                     }
                 }
             }

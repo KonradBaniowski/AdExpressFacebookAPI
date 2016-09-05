@@ -1478,3 +1478,73 @@ function AppendUniverseComboBox(data) {
         $(".custom-button.selectexporttype.select-universe-choice").show();
     }
 }
+
+$("#btn-save-result").click(function () {
+    $("#resultModal").modal("show");
+});
+
+$("#resultModal").on('shown.bs.modal', function (event) {
+    var params = {
+        id: 0
+    };
+    CallUserResult(params);
+});
+
+$("#resultModal").on('hide.bs.modal', function () {
+    $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
+});
+
+function SaveResultEvents() {
+    $("#folders").on('change', function (event) {
+        var idFolder = $("#folders").val();
+        var idResult = $('#results').val();
+        var params = {
+            id: idFolder
+        };
+        CallUserResult(params);
+    });
+}
+
+function CallUserResult(params) {
+    $.ajax({
+        url: "/Universe/UserResult",
+        contentType: "application/x-www-form-urlencoded",
+        type: "GET",
+        datatype: "json",
+        data: params,
+        error: function (xmlHttpRequest, errorText, thrownError) {
+        },
+        success: function (data) {
+            $('#resultModal').html(data);
+            SaveResultEvents();
+            CallSaveResult();
+        }
+    });
+}
+
+function CallSaveResult() {
+    $('#btnSaveResult').on('click', function (e) {
+        var idFolder = $("#folders").val();
+        var idResult = $('#results').val();
+        var resultName = $('#resultName').val();
+        var params = {
+            folderId: idFolder,
+            saveAsResultId: idResult,
+            saveResult: resultName
+        };
+        $.ajax({
+            url: "/Universe/SaveUserResult",
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            datatype: "json",
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data != null && data != "") {
+                    bootbox.alert(data.Message);
+                }
+            }
+        });
+    });
+}
