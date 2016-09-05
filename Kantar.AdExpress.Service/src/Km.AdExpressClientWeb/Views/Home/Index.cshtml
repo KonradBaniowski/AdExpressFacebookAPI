@@ -34,13 +34,13 @@
         RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
 
         //Redirect to New Creative
-        @*RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);*@
+        RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);
 
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.TENDACES);
 
         //Redirect to Tendencies
-        @*RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);*@
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
 
         //Redirect to Tendencies
         @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
@@ -242,7 +242,7 @@
                 <div class="tile-second">
                     @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
                 {
-                        <a href="@Url.Action("Market", "Selection" )"class="tile-body text-center module-done" id="@Module.Name.ANALYSE_MANDATAIRES">
+                        <a @*href="@Url.Action("Market", "Selection" )"*@ class="tile-body text-center @*module-done*@" id="@Module.Name.ANALYSE_MANDATAIRES">
                             <div class="flip-container-second">
                                 <div class="front-second">
                                     <i class="icon-picture sli-size-small green"></i>
@@ -307,7 +307,7 @@
                 <div class="tile-second">
                     @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
                 {
-                        <a href="@Url.Action("MediaSelection", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.NEW_CREATIVES">
+                        <a @*href="@Url.Action("MediaSelection", "Selection" )"*@ class="tile-body text-center @*module-done*@" id="@Module.Name.NEW_CREATIVES">
                             <div class="flip-container-second">
                                 <div class="front-second">
                                     <i class="icon-camrecorder sli-size-small green"></i>
