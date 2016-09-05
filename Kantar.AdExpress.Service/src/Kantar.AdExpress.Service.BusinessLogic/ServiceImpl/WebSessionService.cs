@@ -883,7 +883,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(trees.Count);
             try
             {
-                int index = 0;
+                int index = trees.Count - 1;
                 foreach (Tree tree in trees)
                 {
                     AdExpressUniverse adExpressUniverse = new AdExpressUniverse(dimension)
@@ -912,7 +912,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         int key = (webSession.CurrentModule == CstWeb.Module.Name.FACEBOOK) ? index : 0;
                         adExpressUniverse.AddGroup(key, treeNomenclatureEG);
                         adExpressUniverses.Add(index, adExpressUniverse);
-                        index++;
+                        index--;
                     }
                 }
             }

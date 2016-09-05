@@ -246,6 +246,9 @@
     </script>
 
     <script id="pageNameTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
+        {{/if}}
         <a class="pageNameFacebookLink" data-pagefb="${IdPageFacebook}" >${PageName}</a>
     </script>
 

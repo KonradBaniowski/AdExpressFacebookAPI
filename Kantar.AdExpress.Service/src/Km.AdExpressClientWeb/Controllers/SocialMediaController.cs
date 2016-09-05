@@ -167,7 +167,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     PageName = "Référents"
                 };
                 datas.Add(par);
-                datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                //datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; e.NumberFan = 0; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
                 datas = datas.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
 
@@ -224,7 +225,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         PageName = "Concurrents"
                     };
                     datasTmp.Add(par);
-                    datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    //datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; e.NumberFan = 0; return e; }).ToList());
                     datasTmp.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
                     datasTmp = datasTmp.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
                     datas.AddRange(datasTmp);

@@ -81,8 +81,8 @@
                     needFixedColumns = data.needfixedcolumns;
 
                     for (i = 0; i < cols.length; i++) {
-                        if (cols[i].key == "PageName")
-                            cols[i].template = $("#titleTmpl").html();
+                        //if (cols[i].key == "PageName")
+                        //    cols[i].template = $("#titleTmpl").html();
                         if (cols[i].key == "IdPageFacebook")
                             cols[i].template = $("#linkToPostTmpl").html();
                         if (cols[i].key == "Url")
@@ -998,8 +998,8 @@ function getDataConcurDecompositionEngagement(e) {
         var currentElmnt = $(this);
         $.each(datas, function (index, value) {
             elem.Like = elem.Like + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
-            elem.Comment = elem.Comment + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
-            elem.Share = elem.Share + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index])
+            elem.Comment = elem.Comment + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]),
+            elem.Share = elem.Share + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index])
         });
 
         listSerie.push(
@@ -1370,6 +1370,11 @@ function getDataZoom(e) {
             thickness: 5
         };
         var datas = $(value).attr('value').split(",");
+        var elem = {
+            "DAY": "J0",
+            Data: 0
+        };
+        arrayData.push(elem);
         $.each(datas, function (index, value) {
             index = index + 1;
             var elem = {

@@ -219,6 +219,11 @@ function getData(e) {
                     thickness: 5
                 };
                 var datas = $(value).attr('value').split(",");
+                var elem = {
+                    "DAY": "J0",
+                    Data: 0
+                };
+                arrayData.push(elem);
                 $.each(datas, function (index, value) {
                     index = index + 1;
                     var elem = {
