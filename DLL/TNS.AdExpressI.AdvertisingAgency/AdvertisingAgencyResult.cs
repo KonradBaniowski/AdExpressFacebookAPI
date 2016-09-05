@@ -1184,6 +1184,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 {
                     groups = null;
                     string colKey = string.Empty;
+                    string subColKey = string.Empty;
                     if (resultTable.NewHeaders.Root[j].Count > 0)
                     {
                         groups = new List<object>();
@@ -1196,34 +1197,27 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             if (resultTable != null && resultTable.LinesNumber > 0)
                             {
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
-
-                                if (cell is CellPercent || cell is CellPDM)
-                                {
-                                    format = "percent";
-                                }
-                                else if (cell is CellEvol)
-                                {
-                                    format = "percent";
-                                    colKey += "-evol";
-                                }
-                                else if (cell is CellDuration)
-                                {
-                                    format = "duration";
-                                    colKey += "-unit";
-                                }
-                                else if (cell is CellUnit)
-                                {
-                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
-                                    colKey += "-unit";
-                                }
+                                GetColKeyAndFormat(cell, ref colKey, ref format);
                             }
 
                             if(resultTable.NewHeaders.Root[j][g].Count > 0)
                             {
+                                int nbSubGroupItems = resultTable.NewHeaders.Root[j][g].Count;
                                 subGroups = new List<object>();
-                                subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][0].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                for (int sg = 0; sg < nbSubGroupItems; sg++)
+                                {
+                                    subColKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable);
+
+                                    if (resultTable != null && resultTable.LinesNumber > 0)
+                                    {
+                                        var cell = resultTable[0, resultTable.NewHeaders.Root[j][g][sg].IndexInResultTable];
+                                        GetColKeyAndFormat(cell, ref subColKey, ref format);
+                                    }
+
+                                    subGroups.Add(new { headerText = resultTable.NewHeaders.Root[j][g][sg].Label, key = subColKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                                    schemaFields.Add(new { name = subColKey });
+                                }
                                 groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = "subgr" + colKey, group = subGroups });
-                                schemaFields.Add(new { name = colKey });
                             }
                             else
                             {
@@ -1392,6 +1386,31 @@ namespace TNS.AdExpressI.AdvertisingAgency
                     return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(18, _session.SiteLanguage);
                 default:
                     return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(363, _session.SiteLanguage);
+            }
+        }
+
+        private void GetColKeyAndFormat(ICell cell, ref string colKey, ref string format) {
+
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+
+            if (cell is CellPercent || cell is CellPDM)
+            {
+                format = "percent";
+            }
+            else if (cell is CellEvol)
+            {
+                format = "percent";
+                colKey += "-evol";
+            }
+            else if (cell is CellDuration)
+            {
+                format = "duration";
+                colKey += "-unit";
+            }
+            else if (cell is CellUnit)
+            {
+                format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                colKey += "-unit";
             }
         }
         #endregion

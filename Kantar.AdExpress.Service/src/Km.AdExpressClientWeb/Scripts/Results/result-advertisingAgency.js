@@ -231,22 +231,25 @@
                     for (var i = 0, len = elem.group.length; i < len; i++) {
 
                         if (elem.group[i].group != null && elem.group[i].group != 'undefined') {
-                            if (elem.group[i].group[0].key.indexOf("unit") > -1) {
-                                if (unit == "duration")
-                                    elem.group[i].group[0].formatter = DurationFormatter;
-                                else if (unit == "pages")
-                                    elem.group[i].group[0].formatter = PageFormatter;
-                                else
-                                    elem.group[i].group[0].formatter = UnitFormatter;
-                            }
-                            if (elem.group[i].group[0].key.indexOf("evol") > -1) {
-                                elem.group[i].group[0].formatter = EvolFormatter;
-                            }
-                            if (elem.group[i].group[0].key.indexOf("pdm") > -1) {
-                                elem.group[i].group[0].formatter = PercentFormatter;
-                            }
-                            if (elem.group[i].group[0].key.indexOf("pdv") > -1) {
-                                elem.group[i].group[0].formatter = PercentFormatter;
+
+                            for (var j = 0, l = elem.group[i].group.length; j < l; j++) {
+                                if (elem.group[i].group[j].key.indexOf("unit") > -1) {
+                                    if (unit == "duration")
+                                        elem.group[i].group[j].formatter = DurationFormatter;
+                                    else if (unit == "pages")
+                                        elem.group[i].group[j].formatter = PageFormatter;
+                                    else
+                                        elem.group[i].group[j].formatter = UnitFormatter;
+                                }
+                                if (elem.group[i].group[j].key.indexOf("evol") > -1) {
+                                    elem.group[i].group[j].formatter = EvolFormatter;
+                                }
+                                if (elem.group[i].group[j].key.indexOf("pdm") > -1) {
+                                    elem.group[i].group[j].formatter = PercentFormatter;
+                                }
+                                if (elem.group[i].group[j].key.indexOf("pdv") > -1) {
+                                    elem.group[i].group[j].formatter = PercentFormatter;
+                                }
                             }
                         }
                         else {
@@ -544,6 +547,22 @@
 
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
+
+    var sortOrder = "NONE";
+    var columnIndex = 1;
+
+    $('#btn-export').on('click', function (e) {
+        var selectedValue = $('#export-type').val();
+        var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+        switch (selectedValue) {
+            case "1":
+                window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
+                break;
+            default:
+                window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
+                break;
+        }
+    });
 
     $('#save-custom-detail-levels').on('click', function (e) {
         var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val() + ',' + $('#l4Detail').val();

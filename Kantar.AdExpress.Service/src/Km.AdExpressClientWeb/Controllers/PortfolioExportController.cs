@@ -21,6 +21,7 @@ using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.FrameWork.WebResultUI;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -208,7 +209,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (data.NewHeaders != null)
             {
-                nbRowTotal = NbRow(data.NewHeaders.Root) - 1;
+                nbRowTotal = NbRow(data.NewHeaders.Root, session) - 1;
 
                 HeaderBase headerBase = data.NewHeaders.Root;
 
@@ -244,7 +245,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     }
                 }
 
-                DrawHeaders(headerBase, sheet, rowStart, columnStart);
+                DrawHeaders(headerBase, sheet, session, rowStart, columnStart);
             }
 
             rowStart += nbRowTotal;
@@ -1325,7 +1326,7 @@ namespace Km.AdExpressClientWeb.Controllers
             cell.SetStyle(style);
         }
 
-        private int NbRow(HeaderBase root)
+        private int NbRow(HeaderBase root, WebSession session)
         {
             int nbRow = 1;
             int maxRow = 0;
@@ -1333,9 +1334,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             foreach (HeaderBase item in root)
             {
-                if (item is HeaderGroup)
+                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count> 0) || item is HeaderGroup)
                 {
-                    int tmp = NbRow(item);
+                    int tmp = NbRow(item, session);
 
                     if (tmp > maxRow)
                         maxRow = tmp;
@@ -1350,18 +1351,18 @@ namespace Km.AdExpressClientWeb.Controllers
             return nbRow + maxRow;
         }
 
-        private int NbColumn(HeaderBase root)
+        private int NbColumn(HeaderBase root, WebSession session)
         {
             int nbCol = 0;
             int maxCol = 0;
 
-            if (root is HeaderGroup)
+            if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && root.Count > 0) || root is HeaderGroup)
             {
                 foreach (HeaderBase item in root)
                 {
-                    if (item is HeaderGroup)
+                    if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
                     {
-                        int tmp = NbColumn(item);
+                        int tmp = NbColumn(item, session);
 
                         maxCol += tmp;
                     }
@@ -1379,9 +1380,9 @@ namespace Km.AdExpressClientWeb.Controllers
             return nbCol + maxCol;
         }
 
-        private void DrawHeaders(HeaderBase head, Worksheet sheet, int rowStart, int colStart)
+        private void DrawHeaders(HeaderBase head, Worksheet sheet, WebSession session, int rowStart, int colStart)
         {
-            int nbRowTotal = NbRow(head) - 1;
+            int nbRowTotal = NbRow(head, session) - 1;
 
             foreach (var item in head)
             {
@@ -1390,12 +1391,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (header is HeaderMediaSchedule || header is HeaderCreative || header is HeaderInsertions)
                     continue;
 
-                int ronSpan = nbRowTotal - (NbRow(header) - 1);
-                int colSpan = NbColumn(header);
+                int rowSpan = nbRowTotal - (NbRow(header, session) - 1);
+                int colSpan = NbColumn(header, session);
 
-                if (colSpan > 1 || ronSpan > 1)
+                if (colSpan > 1 || rowSpan > 1)
                 {
-                    Range range = sheet.Cells.CreateRange(rowStart, colStart, ronSpan, colSpan);
+                    Range range = sheet.Cells.CreateRange(rowStart, colStart, rowSpan, colSpan);
                     range.Merge();
 
                     sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(header.Label);
@@ -1411,8 +1412,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);
                 }
 
-                if (header is HeaderGroup)
-                    DrawHeaders(header, sheet, rowStart + 1, colStart);
+                if (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && header.Count > 0)
+                {
+                        DrawHeaders(header, sheet, session, rowStart + rowSpan, colStart);
+                }
+                else if (header is HeaderGroup)
+                {
+                        DrawHeaders(header, sheet, session, rowStart + 1, colStart);
+                }
 
                 colStart += colSpan;
             }
