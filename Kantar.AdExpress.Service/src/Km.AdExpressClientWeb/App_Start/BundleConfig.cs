@@ -169,7 +169,7 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/universe/universe-market.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/analysis-results").Include(
-                        "~/Scripts/Results/result.js",
+                        //"~/Scripts/Results/result.js",
                         "~/Scripts/Results/result-analysis.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Scripts/detail-selection/detail-selection.js",

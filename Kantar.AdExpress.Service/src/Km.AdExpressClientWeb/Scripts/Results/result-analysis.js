@@ -77,7 +77,7 @@
     CallAnalysisResult();
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
-    $('#btn-export').on('click', function (e) {
+    $('#btn-export').unbind('click').on('click', function (e) {
         var selectedValue = $('#export-type').val();
         var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
         switch (selectedValue) {
@@ -91,6 +91,28 @@
                 window.open('/ProductClassAnalysisExport/Index' + params, "_blank");
                 break;
         }
+    });
+
+    $(document).on('click', '#btn-create-alert', function (event) {
+        $('#btn-create-alert').off();
+        var params = {
+
+        };
+        $.ajax({
+            url: '/Alert/CreateAlert',
+            contentType: 'application/json',
+            type: 'POST',
+            datatype: 'JSON',
+            //data: JSON.stringify(params),
+            error: function (xmlHttpRequest, errorText, thrownError) {
+                bootbox.alert("An error occurred while processing your request.");
+            },
+            success: function (response) {
+                $('#alertModal .modal-content').html('');
+                $('#alertModal .modal-content').append(response);
+                $('#alertModal').modal('show');
+            }
+        });
     });
 
     $('#mediaDetail').selectpicker();
