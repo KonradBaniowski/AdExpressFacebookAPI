@@ -2725,6 +2725,18 @@ ul.ui-selectable {
     background-color: white !important;
 }
 
+.legendStackChart.ui-corner-all.ui-widget-content.ui-chart-legend{
+    color: white;
+    background-color: rgba(0,0,0,0.3) !important;
+}
+
+
+.legendStackChart .ui-chart-legend-item-text{
+    padding-left:3px;
+    padding-bottom : 6px;
+    text-transform: uppercase;
+}
+
 .ui-chart-tooltip {
     background-color: white;
 }
