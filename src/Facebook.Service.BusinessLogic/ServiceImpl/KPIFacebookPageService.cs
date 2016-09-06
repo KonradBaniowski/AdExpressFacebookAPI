@@ -156,7 +156,6 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
         public List<PDVByMediaPageFacebookContract> GetKPIPlurimediaStacked(int IdLogin, long Begin, long End, List<long> AdvertiserRef, List<long> AdvertiserCon, List<long> BrandRef, List<long> BrandCon, int idLanguage)
         {
-
             IEnumerable<DataFacebook> queryDataFB = null;
             IEnumerable<DataDisplay> queryDataDisplay = null;
             IEnumerable<DataSearch> queryDataSearch = null;

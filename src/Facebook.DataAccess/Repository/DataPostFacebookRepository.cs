@@ -49,6 +49,9 @@ namespace Facebook.DataAccess.Repository
             var endDate = new DateTime(Convert.ToInt32(end.ToString().Substring(0, 4)), Convert.ToInt32(end.ToString().Substring(4, 2)),
                 Convert.ToInt32(end.ToString().Substring(6, 2)));
 
+            //Dernière minutes de la journée
+            endDate = endDate.AddDays(1).AddTicks(-1);
+
             var includedProduct = criteria.Where(e => e.TypeCriteria == (TypeCriteria.Include) && e.TypeNomenclature == (TypeNomenclature.Product));
             var excludedProduct = criteria.Where(e => e.TypeCriteria == (TypeCriteria.Exclude) && e.TypeNomenclature == (TypeNomenclature.Product));
 
@@ -104,7 +107,7 @@ namespace Facebook.DataAccess.Repository
                           join ap in context.Products on new { pd = df.IdProduct } equals new { pd = ap.ProductId }
                           orderby ap.Advertiser
                           where df.DateMediaNum >= begin && df.DateMediaNum <= end
-                          && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate.Date
+                          && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate
                           && ap.LanguageId == idLanguage
                           select new PostFacebook
                           {
