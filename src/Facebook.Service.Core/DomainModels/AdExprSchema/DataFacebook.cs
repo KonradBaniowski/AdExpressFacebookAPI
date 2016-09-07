@@ -11,8 +11,8 @@ namespace Facebook.Service.Core.DomainModels.AdExprSchema
         public long DateMediaNum { get; set; }
         public long IdDataFacebook { get; set; }
         public long IdLanguageData { get; set; }
-        public long Expenditure { get; set; }
-        public long ExpenditureLocal { get; set; }
+        public double Expenditure { get; set; }
+        public double ExpenditureLocal { get; set; }
         public long NumberFan { get; set; }
         public long NumberLocalFan { get; set; }
         public long NumberPost { get; set; }

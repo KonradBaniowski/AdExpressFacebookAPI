@@ -14,7 +14,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public long Id { get; set; }
         public string Label { get; set; }
 
-        public long Expenditure { get; set; }
+        public double Expenditure { get; set; }
 
     }
 }

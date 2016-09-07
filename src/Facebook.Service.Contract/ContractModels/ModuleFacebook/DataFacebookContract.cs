@@ -22,7 +22,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public long NumberShare { get; set; }
         public long NumberFan { get; set; }
         public long NumberComment { get; set; }
-        public long Expenditure { get; set; }
+        public double Expenditure { get; set; }
         //public List<PageFacebookContract> PageFacebookContracts { get; set; }
     }
 

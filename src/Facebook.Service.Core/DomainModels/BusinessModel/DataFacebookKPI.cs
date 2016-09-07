@@ -17,7 +17,7 @@ namespace Facebook.Service.Core.DomainModels.BusinessModel
         public long NumberComment { get; set; }
         public long NumberShare { get; set; }
         public long NumberFan { get; set; }
-        public long Expenditure { get; set; }
+        public double Expenditure { get; set; }
         public string Label { get; set; }
         public long Commitment { get; set; }
         //public string BrandLabel { get; set; }

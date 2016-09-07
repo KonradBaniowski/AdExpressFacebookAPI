@@ -15,7 +15,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public long Share { get; set; }
         public long Comment { get; set; }
         public long Post { get; set; }
-        public long Expenditure { get; set; }
+        public double Expenditure { get; set; }
         public long Commitment { get; set; }
 
     }

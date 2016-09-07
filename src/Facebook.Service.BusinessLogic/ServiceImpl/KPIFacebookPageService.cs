@@ -299,11 +299,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             resultats.GroupBy(e => e.IdVehicle).ToList().ForEach(k =>
                   {
-                      long total = k.Sum(j => j.Expenditure);
+                      double total = k.Sum(j => j.Expenditure);
                       k.ToList().ForEach(item =>
                         {
                             double pdv = ((double)item.Expenditure / (double)total) * 100.00;
-                            item.Expenditure = (long)pdv;
+                            item.Expenditure = (double)pdv;
                         }
                       );
                 }

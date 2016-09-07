@@ -11,7 +11,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public string Month { get; set; }
         public long ReferentPercent { get; set; }
         public long ConcurrentPercent { get; set; }
-        public long ReferentFBPercent { get; set; }
-        public long ConcurrentFBPercent { get; set; }
+        public double ReferentFBPercent { get; set; }
+        public double ConcurrentFBPercent { get; set; }
     }
 }
