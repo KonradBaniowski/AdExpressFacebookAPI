@@ -25,5 +25,8 @@ namespace Km.AdExpressClientWeb.Models.Contact
         public string QuestionTag { get; set; }
         public string Comment { get; set; }
         public string RedirectUrl { get; set; }
+
+        public string ClientServicePhoneNumber { get; set; }
+        public string ClientServiceEmail { get; set; }
     }
 }

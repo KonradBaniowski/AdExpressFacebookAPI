@@ -17,7 +17,7 @@ namespace Km.AdExpressClientWeb.Controllers
     [Authorize]
     public class ContactController : Controller
     {
-        public ActionResult Index(string returnUrl="/", int siteLanguage = -1)
+        public ActionResult Index(string returnUrl = "/", int siteLanguage = -1)
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
@@ -32,6 +32,17 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Labels = LabelsHelper.LoadPageLabels(siteLanguage);
             model.Labels.CurrentController = "Contact";
             model.PresentationModel = LoadPresentationBar(siteLanguage, false);
+            switch (WebApplicationParameters.CountryCode)
+            {
+                case CountryCode.FINLAND:
+                    model.ClientServicePhoneNumber = "+358 9 613 500";
+                    model.ClientServiceEmail = "tnsfinland@tnsglobal.com";
+                    break;
+                default:
+                    model.ClientServicePhoneNumber = "01 30 74 87 78";
+                    model.ClientServiceEmail = "sc.adexpress@kantarmedia.com";
+                    break;
+            }
             return View(model);
         }
 
@@ -55,7 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Labels.CurrentController = "Contact";
             model.RedirectUrl = string.Format("{0}?siteLanguage={1}", returnUrl, siteLanguage);
             model.PresentationModel = LoadPresentationBar(siteLanguage, false);
-          
+
             JsonResult jsonModel = Json(model, JsonRequestBehavior.AllowGet);
             return jsonModel;
         }
@@ -66,10 +77,18 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var body = "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
                 var message = new MailMessage();
-                message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
-                message.To.Add(new MailAddress("romain.vacquerie@kantarmedia.com"));
+              
+                switch (WebApplicationParameters.CountryCode)
+                {
+                    case CountryCode.FINLAND:
+                        message.To.Add(new MailAddress("tnsfinland@tnsglobal.com"));
+                        break;
+                    default:
+                        message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
+                        break;
+                }
                 message.Subject = form.QuestionTag;
-                message.Body = string.Format(body, 
+                message.Body = string.Format(body,
                     form.Name,
                     form.Mail,
                     form.Country,
@@ -81,7 +100,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 using (var smtp = new SmtpClient())
                 {
                     smtp.Send(message);
-                  
+
                 }
             }
             return RedirectToAction("Index", "Home");
