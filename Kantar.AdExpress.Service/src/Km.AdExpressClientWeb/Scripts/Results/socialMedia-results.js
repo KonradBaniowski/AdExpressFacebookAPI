@@ -19,8 +19,8 @@
     var needFixedColumns = false;
     var gridWidth;
 
-    LoadSocialMediaUniverses();
     CallSocialMediaResult();
+    LoadSocialMediaUniverses();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -373,7 +373,7 @@ function getData(e) {
                 isTransitionInEnabled: true,
                 isHighlightingEnabled: true,
                 thickness: 3,
-                showTooltip: true
+                showTooltip: true,
             }]
         });
     });
@@ -416,6 +416,7 @@ function getDataReferKPI(e) {
                 outline: "#FFE100",
                 showTooltip: true,
                 tooltipTemplate: "LikeTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "spline",
@@ -430,7 +431,8 @@ function getDataReferKPI(e) {
                 outline: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
-                thickness: 3
+                thickness: 3,
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "column",
@@ -444,7 +446,8 @@ function getDataReferKPI(e) {
                 brush: "#B8DC00",
                 outline: "#B8DC00",
                 showTooltip: true,
-                tooltipTemplate: "ShareTooltipTemplate"
+                tooltipTemplate: "ShareTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "column",
@@ -458,7 +461,8 @@ function getDataReferKPI(e) {
                 brush: "#00C8FF",
                 outline: "#00C8FF",
                 showTooltip: true,
-                tooltipTemplate: "CommentTooltipTemplate"
+                tooltipTemplate: "CommentTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             }
     ];
 
@@ -502,6 +506,8 @@ function getDataReferKPI(e) {
 
         series: listSerie.slice(0, 2)
     });
+
+    $("#legendChartKPIFb").igChartLegend({ width: "100%" });
 
     $('#seriesType').on('change', function () {
         var serieType = $(this).val();
@@ -624,7 +630,8 @@ function getDataReferExpenditure(e) {
                 brush: "#FF8C00",
                 outline: "#FF8C00",
                 showTooltip: true,
-                tooltipTemplate: "ExpenditureTooltipTemplate"
+                tooltipTemplate: "ExpenditureTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "spline",
@@ -755,7 +762,7 @@ function getDataConcurKPI(e) {
     var data = $(".elmtsChartConcur");
     var serieType = $('#seriesType').val();
     var labelKPISelected = serieType.substr(0, 1).toUpperCase() + serieType.substr(1)
-    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"];
     intTabBrush = 0;
 
     var listSerie = [];
@@ -808,8 +815,8 @@ function getDataConcurKPI(e) {
         height: "300px",
         title: "Saisonnalité des " + serieType.toUpperCase(),
         subtitle: "Annonceur ou marque / mois par mois",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -842,7 +849,7 @@ function getDataConcurExpenditure(e) {
 
     var disExpenditure = $("#chartConcurExpenditure");
     var data = $(".elmtsChartConcur");
-    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"];
     intTabBrush = 0;
 
     var listSerie = [];
@@ -889,8 +896,8 @@ function getDataConcurExpenditure(e) {
         width: "100%",
         title: "Saisonnalité des B€X",
         subtitle: "Annonceur ou marque / mois par mois",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -946,7 +953,8 @@ function getDataConcurEngagement(e) {
                     yAxis: "yAxis",
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
-                    radius: 0
+                    radius: 0,
+                    legend: { element: "legendChartFb" },
                 }
             );
 
@@ -961,8 +969,8 @@ function getDataConcurEngagement(e) {
         subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -972,6 +980,7 @@ function getDataConcurEngagement(e) {
                     name: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -981,6 +990,8 @@ function getDataConcurEngagement(e) {
 
         series: listSerie
     });
+
+    $("#legendChartFb").igChartLegend({ width: "100%" });
 }
 
 function getDataConcurDecompositionEngagement(e) {
@@ -1056,7 +1067,8 @@ function getDataConcurDecompositionEngagement(e) {
                     type: "numericX",
                     name: "EngagementAxe",
                     title: "KPI",
-                    labelTextColor: "white"
+                    labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -1122,8 +1134,8 @@ function getDataPlurimediaStacked(e) {
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         dataSource: arrayData,
         //overviewPlusDetailPaneVisibility: "visible",
         axes: [

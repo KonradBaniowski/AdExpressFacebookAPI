@@ -1503,7 +1503,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             else
             {
-                success = UniversListDataAccess.UpdateDefaultFcbUniverses(defaultUniverse.Id, idSelectedUniverse, webSession);
+                success = UniversListDataAccess.UpdateDefaultFcbUniverses(idSelectedUniverse, defaultUniverse.Id, webSession);
             }
             if (success)
             {

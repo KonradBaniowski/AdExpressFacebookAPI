@@ -372,6 +372,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
+                data = data.OrderBy(e => e.DateCreationPost).ToList();
                 if(data.Count == 0)
                 {
                     return null;
