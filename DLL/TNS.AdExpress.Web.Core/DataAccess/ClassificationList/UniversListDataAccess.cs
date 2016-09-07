@@ -1936,12 +1936,19 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
 
 
                 //mise à jour de la session
-                string sql = " UPDATE  " + universeTable.Sql + " ";
-                sql += " SET  IS_DEFAULT = 1 ";
-                sql += " WHERE  ID_UNIVERSE_CLIENT=" + newDefaultUniverse + "; ";
-                sql = " UPDATE  " + universeTable.Sql + " ";
-                sql += " SET  IS_DEFAULT = 0 ";
-                sql += " WHERE  ID_UNIVERSE_CLIENT=" + oldDefaultUniverse + "; ";
+                string sql = "BEGIN UPDATE " + universeTable.Sql;
+                sql += " SET IS_DEFAULT=1";
+                sql += " WHERE ID_UNIVERSE_CLIENT=" + newDefaultUniverse + ";";
+
+                if(oldDefaultUniverse != 0)
+                {
+                    sql += "UPDATE " + universeTable.Sql;
+                    sql += " SET IS_DEFAULT=0";
+                    sql += " WHERE ID_UNIVERSE_CLIENT=" + oldDefaultUniverse + ";";
+                }
+                sql+= " END;";
+
+
 
                 //Exécution de la requête
                 sqlCommand = new OracleCommand(sql);

@@ -19,8 +19,8 @@
     var needFixedColumns = false;
     var gridWidth;
 
-    LoadSocialMediaUniverses();
     CallSocialMediaResult();
+    LoadSocialMediaUniverses();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -954,7 +954,7 @@ function getDataConcurEngagement(e) {
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
                     radius: 0,
-                    legend: { element: "legendChartFb" }
+                    legend: { element: "legendChartFb" },
                 }
             );
 
@@ -980,6 +980,7 @@ function getDataConcurEngagement(e) {
                     name: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -1066,7 +1067,8 @@ function getDataConcurDecompositionEngagement(e) {
                     type: "numericX",
                     name: "EngagementAxe",
                     title: "KPI",
-                    labelTextColor: "white"
+                    labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
