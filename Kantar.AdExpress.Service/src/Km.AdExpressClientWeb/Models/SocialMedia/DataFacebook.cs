@@ -54,7 +54,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long NumberLike { get; set; }
         public long NumberComment { get; set; }
         public long NumberShare { get; set; }
-        public long Commitment { get; set; }
+        public long Engagement { get; set; }
         public string Brand { get; set; }
     }
 
@@ -70,7 +70,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public Dictionary<string, string> LikesChart { get; set; }
         public string NumberComments { get; set; }
         public string NumberShares { get; set; }
-        public string Commitments { get; set; }
+        public string Engagement { get; set; }
         public string ListMonths { get; set; }
     }
 

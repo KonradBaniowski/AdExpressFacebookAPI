@@ -1680,7 +1680,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\HomePageValues\" />
+    <Folder Include="Content\img\HomePageValues\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\LostWon\" />
     <Folder Include="Models\PresentAbsent\" />

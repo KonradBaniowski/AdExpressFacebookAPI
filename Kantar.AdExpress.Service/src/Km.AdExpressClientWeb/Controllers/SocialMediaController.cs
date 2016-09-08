@@ -340,8 +340,8 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "PageName" });
             columns.Add(new { headerText = "Date", key = "DateCreationPost", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "DateCreationPost" });
-            columns.Add(new { headerText = "Commitment", key = "Commitment", dataType = "number", width = "100px", format="number",columnCssClass="numericAlignment" });
-            schemaFields.Add(new { name = "Commitment" });
+            columns.Add(new { headerText = "Engagement", key = "Engagement", dataType = "number", width = "100px", format="number",columnCssClass="numericAlignment" });
+            schemaFields.Add(new { name = "Engagement" });
             columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
             columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
