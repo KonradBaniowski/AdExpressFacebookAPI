@@ -651,6 +651,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case ModuleName.ANALYSE_CONCURENTIELLE:
                         case ModuleName.TABLEAU_DYNAMIQUE:
                         case ModuleName.ANALYSE_MANDATAIRES:
+                        case ModuleName.NEW_CREATIVES:
+                        case ModuleName.FACEBOOK:
 
                             #region Retrieving data
                             DataTable dtModulesList = right.GetCustomerModuleListHierarchy();
@@ -854,7 +856,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_PLAN_MEDIA
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
                                 || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
-                                  || webSessionSave.CurrentModule == ModuleName.CELEBRITIES)
+                                || webSessionSave.CurrentModule == ModuleName.CELEBRITIES
+                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK)
                             {
 
                                 int oldYear = 2000;
@@ -1015,7 +1018,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_PLAN_MEDIA
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
                                 || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
-                                || webSessionSave.CurrentModule == ModuleName.CELEBRITIES)
+                                || webSessionSave.CurrentModule == ModuleName.CELEBRITIES
+                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK)
                             {
                                 if (!verifCustomerPeriod)
                                     UpdateGlobalDates(webSessionSave.PeriodType, webSessionSave, FirstDayNotEnable, webSession);

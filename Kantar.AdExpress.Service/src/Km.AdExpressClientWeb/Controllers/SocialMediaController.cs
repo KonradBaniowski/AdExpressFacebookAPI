@@ -167,7 +167,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     PageName = "Référents"
                 };
                 datas.Add(par);
-                datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                //datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
+                datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; e.NumberFan = 0; return e; }).ToList());
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
                 datas = datas.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
 
@@ -224,7 +225,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         PageName = "Concurrents"
                     };
                     datasTmp.Add(par);
-                    datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    //datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());
+                    datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; e.NumberFan = 0; return e; }).ToList());
                     datasTmp.AddRange(data.Where(e => e.PID != -1 && e.PID != 2).Select(e => e).ToList());
                     datasTmp = datasTmp.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
                     datas.AddRange(datasTmp);
@@ -338,8 +340,8 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "PageName" });
             columns.Add(new { headerText = "Date", key = "DateCreationPost", dataType = "string", width = "150px" });
             schemaFields.Add(new { name = "DateCreationPost" });
-            columns.Add(new { headerText = "Commitment", key = "Commitment", dataType = "number", width = "100px", format="number",columnCssClass="numericAlignment" });
-            schemaFields.Add(new { name = "Commitment" });
+            columns.Add(new { headerText = "Engagement", key = "Engagement", dataType = "number", width = "100px", format="number",columnCssClass="numericAlignment" });
+            schemaFields.Add(new { name = "Engagement" });
             columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
             columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "75px", format = "number", columnCssClass = "numericAlignment" });
@@ -370,6 +372,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     throw new Exception(response.StatusCode.ToString());
 
                 List<DataPostFacebook> data = JsonConvert.DeserializeObject<List<DataPostFacebook>>(content);
+                data = data.OrderBy(e => e.DateCreationPost).ToList();
                 if(data.Count == 0)
                 {
                     return null;

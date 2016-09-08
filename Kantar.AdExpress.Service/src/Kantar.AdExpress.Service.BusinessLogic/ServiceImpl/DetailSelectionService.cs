@@ -237,8 +237,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 }
                                 else
                                 {
-                                    model.Label = GestionWeb.GetWebWord(2270, SiteLanguage);
-                                    model.LabelId = 2270;
+                                    model.Label = (index == 0) ? GestionWeb.GetWebWord(3039, SiteLanguage) : GestionWeb.GetWebWord(2869, SiteLanguage);
+                                    model.LabelId = (index == 0) ? 3039 : 2869;
                                 }
                                 #region populate Universlevels
                                 model.UniversLevels = new List<Core.Domain.UniversLevel>();

@@ -596,12 +596,14 @@
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\kantarmedia-bg-contact.jpg" />
     <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\KM_BP.png" />
+    <Content Include="Content\img\logo_kantarmedia.png" />
     <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
     <Content Include="Content\img\logo_adexpress.png" />
-    <Content Include="Content\img\logo_kantarmedia.png" />
+    <Content Include="Content\img\logo_kantarmedia_old.png" />
     <Content Include="Content\img\o.gif" />
     <Content Include="Content\img\r.gif" />
     <Content Include="Content\img\spin1.gif" />
@@ -1682,7 +1684,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\HomePageValues\" />
+    <Folder Include="Content\img\HomePageValues\" />
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\LostWon\" />
     <Folder Include="Models\PresentAbsent\" />

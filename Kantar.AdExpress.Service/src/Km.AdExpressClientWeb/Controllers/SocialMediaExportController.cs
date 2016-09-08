@@ -62,15 +62,19 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
-                int IndexListRef = 1;
-                if (universeMarket.Count < 2)
-                {
-                    IndexListRef = 0;
-                }
+                //int IndexListRef = 1;
+                //if (universeMarket.Count < 2)
+                //{
+                //    IndexListRef = 0;
+                //}
 
-                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
-                postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                //Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Concurrents; 1 = Référents
+                //postModelRef.IdAdvertisers = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                //postModelRef.IdBrands = universeMarket[IndexListRef].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+
+                Domain.PostModel postModelRef = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
+                postModelRef.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                postModelRef.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
                 response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelRef).Result;
                 content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -80,7 +84,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
                 vals.Add("Référents");
                 vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NbPage).ToString());
-                vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
+                vals.Add("");//vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
                 vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberPost).ToString());
                 vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberLike).ToString());
                 vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberShare).ToString());
@@ -136,8 +140,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (universeMarket.Count > 1)
                 {
                     Domain.PostModel postModelConc = _webSessionService.GetPostModel(idSession); //Params : 0 = Référents; 1 = Concurrents
-                    postModelConc.IdAdvertisers = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
-                    postModelConc.IdBrands = universeMarket[0].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
+                    postModelConc.IdAdvertisers = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.ADVERTISER).Select(z => z.Id).ToList();
+                    postModelConc.IdBrands = universeMarket[1].UniversLevels.First().UniversItems.Where(e => e.IdLevelUniverse == TNSClassificationLevels.BRAND).Select(z => z.Id).ToList();
 
                     response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["FacebookPageUri"]), postModelConc).Result;
                     content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -147,7 +151,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     data = JsonConvert.DeserializeObject<List<DataFacebook>>(content);
                     vals.Add("Concurrents");
                     vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NbPage).ToString());
-                    vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
+                    vals.Add(""); //vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberFan).ToString());
                     vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberPost).ToString());
                     vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberLike).ToString());
                     vals.Add(data.Where(e => e.PID == -1).Sum(a => a.NumberShare).ToString());
@@ -200,8 +204,6 @@ namespace Km.AdExpressClientWeb.Controllers
                        });
                    });
 
-                   
-
                 }
 
             }
@@ -209,8 +211,6 @@ namespace Km.AdExpressClientWeb.Controllers
             gridResultExport.HasData = true;
             gridResultExport.Columns = columns;
             gridResultExport.Data = gridData;
-
-
 
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
@@ -260,7 +260,7 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new InfragisticColumn { HeaderText = "Brand", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Page", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Date", Hidden = false });
-            columns.Add(new InfragisticColumn { HeaderText = "Commitment", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Engagement", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Like", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Share", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Comment", Hidden = false });
@@ -297,7 +297,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     item.Brand.ToString(),
                                                     item.PageName.ToString(),
                                                     item.DateCreationPost.ToString(),
-                                                    item.Commitment.ToString(),
+                                                    item.Engagement.ToString(),
                                                     item.NumberLike.ToString(),
                                                     item.NumberShare.ToString(),
                                                     item.NumberComment.ToString()

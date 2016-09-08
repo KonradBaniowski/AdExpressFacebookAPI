@@ -19,8 +19,8 @@
     var needFixedColumns = false;
     var gridWidth;
 
-    LoadSocialMediaUniverses();
     CallSocialMediaResult();
+    LoadSocialMediaUniverses();
 
     function UnitFormatter(val) {
         if (val > 0)
@@ -81,8 +81,8 @@
                     needFixedColumns = data.needfixedcolumns;
 
                     for (i = 0; i < cols.length; i++) {
-                        if (cols[i].key == "PageName")
-                            cols[i].template = $("#titleTmpl").html();
+                        //if (cols[i].key == "PageName")
+                        //    cols[i].template = $("#titleTmpl").html();
                         if (cols[i].key == "IdPageFacebook")
                             cols[i].template = $("#linkToPostTmpl").html();
                         if (cols[i].key == "Url")
@@ -373,7 +373,7 @@ function getData(e) {
                 isTransitionInEnabled: true,
                 isHighlightingEnabled: true,
                 thickness: 3,
-                showTooltip: true
+                showTooltip: true,
             }]
         });
     });
@@ -416,6 +416,7 @@ function getDataReferKPI(e) {
                 outline: "#FFE100",
                 showTooltip: true,
                 tooltipTemplate: "LikeTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "spline",
@@ -430,7 +431,8 @@ function getDataReferKPI(e) {
                 outline: "#FF0080",
                 showTooltip: true,
                 tooltipTemplate: "PostTooltipTemplate",
-                thickness: 3
+                thickness: 3,
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "column",
@@ -444,7 +446,8 @@ function getDataReferKPI(e) {
                 brush: "#B8DC00",
                 outline: "#B8DC00",
                 showTooltip: true,
-                tooltipTemplate: "ShareTooltipTemplate"
+                tooltipTemplate: "ShareTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "column",
@@ -458,7 +461,8 @@ function getDataReferKPI(e) {
                 brush: "#00C8FF",
                 outline: "#00C8FF",
                 showTooltip: true,
-                tooltipTemplate: "CommentTooltipTemplate"
+                tooltipTemplate: "CommentTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             }
     ];
 
@@ -502,6 +506,8 @@ function getDataReferKPI(e) {
 
         series: listSerie.slice(0, 2)
     });
+
+    $("#legendChartKPIFb").igChartLegend({ width: "100%" });
 
     $('#seriesType').on('change', function () {
         var serieType = $(this).val();
@@ -577,7 +583,7 @@ function getDataReferExpenditure(e) {
     disExpenditure.igDataChart({
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des B€X vs POST",
+        title: "Saisonnalité des BEX vs POST",
         subtitle: "Mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
@@ -624,7 +630,8 @@ function getDataReferExpenditure(e) {
                 brush: "#FF8C00",
                 outline: "#FF8C00",
                 showTooltip: true,
-                tooltipTemplate: "ExpenditureTooltipTemplate"
+                tooltipTemplate: "ExpenditureTooltipTemplate",
+                legend: { element: "legendChartKPIFb" }
             },
             {
                 type: "spline",
@@ -718,7 +725,7 @@ function getDataPDM(e) {
         height: "300px",
         width: "100%",
         title: "PDM des référents vs univers Marché",
-        subtitle: "INVESTISSMENTS PLURIMEDIA et B€X / mois par mois",
+        subtitle: "INVESTISSMENTS PLURIMEDIA et BEX / mois par mois",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -755,7 +762,7 @@ function getDataConcurKPI(e) {
     var data = $(".elmtsChartConcur");
     var serieType = $('#seriesType').val();
     var labelKPISelected = serieType.substr(0, 1).toUpperCase() + serieType.substr(1)
-    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"];
     intTabBrush = 0;
 
     var listSerie = [];
@@ -808,8 +815,8 @@ function getDataConcurKPI(e) {
         height: "300px",
         title: "Saisonnalité des " + serieType.toUpperCase(),
         subtitle: "Annonceur ou marque / mois par mois",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -842,7 +849,7 @@ function getDataConcurExpenditure(e) {
 
     var disExpenditure = $("#chartConcurExpenditure");
     var data = $(".elmtsChartConcur");
-    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"];
+    brushes = ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"];
     intTabBrush = 0;
 
     var listSerie = [];
@@ -887,10 +894,10 @@ function getDataConcurExpenditure(e) {
         dataSource: arrayMonth,
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des B€X",
+        title: "Saisonnalité des BEX",
         subtitle: "Annonceur ou marque / mois par mois",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -946,7 +953,8 @@ function getDataConcurEngagement(e) {
                     yAxis: "yAxis",
                     valueMemberPath: concurMemberPathLabel,
                     showTooltip: true,
-                    radius: 0
+                    radius: 0,
+                    legend: { element: "legendChartFb" },
                 }
             );
 
@@ -961,8 +969,8 @@ function getDataConcurEngagement(e) {
         subtitle: "Ventilé par annonceur ou marque",
         titleTextColor: "white",
         subtitleTextColor: "white",
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         horizontalZoomable: true,
         verticalZoomable: true,
         //overviewPlusDetailPaneVisibility: "visible",
@@ -972,6 +980,7 @@ function getDataConcurEngagement(e) {
                     name: "EngagementAxe",
                     title: "Engagement",
                     labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -981,6 +990,8 @@ function getDataConcurEngagement(e) {
 
         series: listSerie
     });
+
+    $("#legendChartFb").igChartLegend({ width: "100%" });
 }
 
 function getDataConcurDecompositionEngagement(e) {
@@ -998,8 +1009,8 @@ function getDataConcurDecompositionEngagement(e) {
         var currentElmnt = $(this);
         $.each(datas, function (index, value) {
             elem.Like = elem.Like + Number(currentElmnt.children(".likeConcur").attr('name').split(",")[index]),
-            elem.Comment = elem.Comment + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index]),
-            elem.Share = elem.Share + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index])
+            elem.Comment = elem.Comment + Number(currentElmnt.children(".commentConcur").attr('name').split(",")[index]),
+            elem.Share = elem.Share + Number(currentElmnt.children(".shareConcur").attr('name').split(",")[index])
         });
 
         listSerie.push(
@@ -1056,7 +1067,8 @@ function getDataConcurDecompositionEngagement(e) {
                     type: "numericX",
                     name: "EngagementAxe",
                     title: "KPI",
-                    labelTextColor: "white"
+                    labelTextColor: "white",
+                    minimumValue: 0,
                 }, {
                     name: "yAxis",
                     type: "categoryY",
@@ -1117,13 +1129,13 @@ function getDataPlurimediaStacked(e) {
         height: "300px",
         width: "100%",
         title: "PDV annonceurs ou marques ventilées par Media",
-        subtitle: "INVESTISSEMENTS et B€X",
+        subtitle: "INVESTISSEMENTS et BEX",
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
         verticalZoomable: true,
-        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
-        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0"],
+        brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
+        outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         dataSource: arrayData,
         //overviewPlusDetailPaneVisibility: "visible",
         axes: [
@@ -1370,6 +1382,11 @@ function getDataZoom(e) {
             thickness: 5
         };
         var datas = $(value).attr('value').split(",");
+        var elem = {
+            "DAY": "J0",
+            Data: 0
+        };
+        arrayData.push(elem);
         $.each(datas, function (index, value) {
             index = index + 1;
             var elem = {
@@ -1472,4 +1489,74 @@ function AppendUniverseComboBox(data) {
         $('#universe-choice').selectpicker();
         $(".custom-button.selectexporttype.select-universe-choice").show();
     }
+}
+
+$("#btn-save-result").click(function () {
+    $("#resultModal").modal("show");
+});
+
+$("#resultModal").on('shown.bs.modal', function (event) {
+    var params = {
+        id: 0
+    };
+    CallUserResult(params);
+});
+
+$("#resultModal").on('hide.bs.modal', function () {
+    $("#resultModal").html('<div class="modal-dialog"><div class="modal-content"></div></div>)');
+});
+
+function SaveResultEvents() {
+    $("#folders").on('change', function (event) {
+        var idFolder = $("#folders").val();
+        var idResult = $('#results').val();
+        var params = {
+            id: idFolder
+        };
+        CallUserResult(params);
+    });
+}
+
+function CallUserResult(params) {
+    $.ajax({
+        url: "/Universe/UserResult",
+        contentType: "application/x-www-form-urlencoded",
+        type: "GET",
+        datatype: "json",
+        data: params,
+        error: function (xmlHttpRequest, errorText, thrownError) {
+        },
+        success: function (data) {
+            $('#resultModal').html(data);
+            SaveResultEvents();
+            CallSaveResult();
+        }
+    });
+}
+
+function CallSaveResult() {
+    $('#btnSaveResult').on('click', function (e) {
+        var idFolder = $("#folders").val();
+        var idResult = $('#results').val();
+        var resultName = $('#resultName').val();
+        var params = {
+            folderId: idFolder,
+            saveAsResultId: idResult,
+            saveResult: resultName
+        };
+        $.ajax({
+            url: "/Universe/SaveUserResult",
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            datatype: "json",
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                if (data != null && data != "") {
+                    bootbox.alert(data.Message);
+                }
+            }
+        });
+    });
 }

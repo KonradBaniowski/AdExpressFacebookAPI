@@ -84,6 +84,8 @@
 
                     </div>
                 </div>
+                <div id="legendChartKPIFb" class="legendStackChart" style="float: left; margin-bottom:10px; margin-top:10px;"></div>
+                <div id="legendChartFb" class="legendStackChart" style="float: left"></div>
             </div>
         </div>
 
@@ -246,6 +248,9 @@
     </script>
 
     <script id="pageNameTmpl" type="text/template">
+        {{if parseInt(${IdPage}) != 0}}
+        <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
+        {{/if}}
         <a class="pageNameFacebookLink" data-pagefb="${IdPageFacebook}" >${PageName}</a>
     </script>
 
@@ -274,7 +279,7 @@
     </script>
 
     <script id="ExpenditureTooltipTemplate" type="text/x-ig-tmpl">
-        <div><label class='bold'>${item.Expenditure}</label> B€X</div>
+        <div><label class='bold'>${item.Expenditure}</label> BEX</div>
         <div>Mois: <label class='bold'>${item.Month}</label></div>
     </script>
 
@@ -297,7 +302,7 @@
         <div>Facebook Référents: <label class='bold'>${item.ReferentFBPercent}</label> %</div>
         <div>Mois: <label class='bold'>${item.Month}</label></div>
     </script>
-
+    
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")
     @Scripts.Render("~/bundles/detail-selection")
