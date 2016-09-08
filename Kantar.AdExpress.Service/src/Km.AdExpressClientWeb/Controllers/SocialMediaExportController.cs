@@ -260,7 +260,7 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new InfragisticColumn { HeaderText = "Brand", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Page", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Date", Hidden = false });
-            columns.Add(new InfragisticColumn { HeaderText = "Commitment", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Engagement", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Like", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Share", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Comment", Hidden = false });
@@ -297,7 +297,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     item.Brand.ToString(),
                                                     item.PageName.ToString(),
                                                     item.DateCreationPost.ToString(),
-                                                    item.Commitment.ToString(),
+                                                    item.Engagement.ToString(),
                                                     item.NumberLike.ToString(),
                                                     item.NumberShare.ToString(),
                                                     item.NumberComment.ToString()
