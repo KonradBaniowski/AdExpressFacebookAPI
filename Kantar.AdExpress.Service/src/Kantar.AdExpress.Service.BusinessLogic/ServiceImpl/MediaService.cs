@@ -42,12 +42,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var result = new MediaResponse(webSession.SiteLanguage, webSession.CurrentModule);
             try
             {
-                if(WebApplicationParameters.CountryCode != CstWeb.CountryCode.IRELAND)
-                {
-                    string[] media = Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(',');
-                    result.MediaCommon = Array.ConvertAll(media, Convert.ToInt32).ToList();
-                }
-                
+                string[] media = Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(',');
+                result.MediaCommon = Array.ConvertAll(media, Convert.ToInt32).ToList();
+
                 result.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
                 webSession.SelectionUniversMedia.Nodes.Clear();
                 webSession.PrincipalMediaUniverses.Clear();
