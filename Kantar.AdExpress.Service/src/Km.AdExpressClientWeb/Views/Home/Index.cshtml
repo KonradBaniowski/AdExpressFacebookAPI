@@ -24,7 +24,7 @@
                 var mo = moduleId;
 
                 var link = '@Model.WebSiteUri' + 'index.aspx?l=' + lo + '&p=' + pa + '&m=' + mo;
-                
+
                 window.open(link, "_blank");
                 return false;
             });
@@ -34,13 +34,13 @@
         RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
 
         //Redirect to New Creative
-        RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);
+        @*RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);*@
 
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.TENDACES);
 
         //Redirect to Tendencies
-        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
+        @*@RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);*@
 
         //Redirect to Tendencies
         @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
@@ -48,9 +48,9 @@
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);*@
 
-        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
+        @*RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
 
-        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_PROGRAMMES);
+        RedirectToOldWebSite(@Module.Name.ANALYSE_DES_PROGRAMMES);*@
 
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PAN_EURO);
         RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PRESSE);
