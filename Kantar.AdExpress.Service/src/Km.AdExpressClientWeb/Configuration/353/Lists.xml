@@ -5,6 +5,7 @@
   <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="Excart" listIds="999"/>
   <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="subScriberEncart" listIds="1983"/>
   -->
+  <list group="media"         keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll"                   listIds ="0,2"/>
   <!--<list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="thematicTv"                         listIds ="35"/>
   <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="digitalTv"                          listIds ="78"/>
   <list group="category"      keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="applicationMobile"                  listIds ="231"/>
