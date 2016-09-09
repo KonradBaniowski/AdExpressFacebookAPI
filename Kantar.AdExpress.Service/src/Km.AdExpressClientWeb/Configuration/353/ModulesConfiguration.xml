@@ -69,6 +69,18 @@
             </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <selection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="11" name="vehicle"/>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="7">
+              <allowedUniverseBranch id="7" name="vehicle\category\media"/>
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
@@ -148,7 +160,32 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
+          <selection id="6" name="media" traductioncode="799" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
+              <!--<allowedUniverseLevel id="28" name="media_Seller"/>-->
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="8">
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+              <!--<allowedUniverseBranch id="13" name="title\media"/>-->
+              <!--<allowedUniverseBranch id="14" name="media_Sellermedia"/>-->
+            </allowedUniverseBranches>
+          </selection>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">-->
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">
             <loadableUnivers>
@@ -448,8 +485,33 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">-->
+          <selection id="6" name="media" traductioncode="799" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
+              <!--<allowedUniverseLevel id="28" name="media_Seller"/>-->
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="8">
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+              <!--<allowedUniverseBranch id="13" name="title\media"/>-->
+              <!--<allowedUniverseBranch id="14" name="media_Sellermedia"/>-->
+            </allowedUniverseBranches>
+          </selection>
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">          
             <loadableUnivers>
               <type id="8" name="category_media"/>
@@ -735,9 +797,34 @@
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
-          <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/PortofolioMediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+          <!--<selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/PortofolioMediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
+          <selection id="6" name="media" traductioncode="799" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
+              <!--<allowedUniverseLevel id="28" name="media_Seller"/>-->
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="8">
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+              <!--<allowedUniverseBranch id="13" name="title\media"/>-->
+              <!--<allowedUniverseBranch id="14" name="media_Sellermedia"/>-->
+            </allowedUniverseBranches>
+          </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/PortofolioGlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
