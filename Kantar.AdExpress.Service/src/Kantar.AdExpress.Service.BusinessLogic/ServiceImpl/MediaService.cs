@@ -44,6 +44,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string[] media = Lists.GetIdList(CstWeb.GroupList.ID.media, CstWeb.GroupList.Type.mediaInSelectAll).Split(',');
                 result.MediaCommon = Array.ConvertAll(media, Convert.ToInt32).ToList();
+
                 result.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
                 webSession.SelectionUniversMedia.Nodes.Clear();
                 webSession.PrincipalMediaUniverses.Clear();
@@ -207,13 +208,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string ids = vehiclesInfos.Select(p => p.Value.DatabaseId.ToString()).Aggregate((c, n) => c + "," + n);
             var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
             VehicleInformation vehicleInfo = new VehicleInformation();
-            vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+            if (vehiclesInfos.ContainsKey(VhCstes.plurimedia))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+            else
+                vehicleInfo = null;
             webSession.SelectionUniversMedia.Nodes.Clear();
             webSession.PrincipalMediaUniverses.Clear();
             foreach (var item in vehiclesInfos.Values)
             {
                 //Added temporarily for Finland
-                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND) && vehicleInfo.DatabaseId == item.DatabaseId)
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND) && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
                     continue;
 
                 Core.Domain.Media media = new Core.Domain.Media();

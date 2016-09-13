@@ -1524,8 +1524,10 @@
     <Content Include="Content\pdf\AdExpress_Version-Optimisée.pdf" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
+    <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -1683,6 +1685,9 @@
     <Content Include="Views\AdvertisingAgency\Index.cshtml" />
     <Content Include="Views\AdvertisingAgency\Results.cshtml" />
     <Content Include="Views\AdvertisingAgency\_ResultOptions.cshtml" />
+    <Content Include="Views\Home\_ModulesFr.cshtml" />
+    <Content Include="Views\Home\_ModulesFi.cshtml" />
+    <Content Include="Views\Home\_ModulesIr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
