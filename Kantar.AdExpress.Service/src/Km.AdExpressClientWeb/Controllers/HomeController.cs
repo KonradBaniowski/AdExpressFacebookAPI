@@ -72,8 +72,24 @@ namespace Km.AdExpressClientWeb.Controllers
 
             List<Documents> documents = new List<Documents>();
 
-            //Added temporarily for Finland
-            if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            //Added temporarily for Finland and ireland
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.IRELAND))
+            {
+                documents.Add(new Documents()
+                {
+                    Id = 3,
+                    Label = "Documents",
+                    InfosNews = new List<InfosNews>()
+                            {
+                                new InfosNews()
+                                {
+                                    Label = "Sample PDF",
+                                    Url = "SamplePDFDocument.pdf"
+                                }
+                            }
+                });
+            }
+            else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
                 documents = _infosNewsService.GetInfosNews(idWS);
                 documents.Add(new Documents()

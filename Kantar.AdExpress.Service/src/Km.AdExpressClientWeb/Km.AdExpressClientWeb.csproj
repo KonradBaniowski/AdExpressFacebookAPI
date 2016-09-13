@@ -1521,6 +1521,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
+    <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
