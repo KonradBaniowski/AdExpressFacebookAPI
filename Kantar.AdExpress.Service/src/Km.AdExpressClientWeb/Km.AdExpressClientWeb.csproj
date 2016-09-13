@@ -577,6 +577,12 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Configuration\33\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
+    <Content Include="Content\img\33\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\33\logo_kantarmedia.png" />
+    <Content Include="Content\img\353\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\353\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\Banniere-AdExpress_social.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />
@@ -1521,6 +1527,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
+    <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

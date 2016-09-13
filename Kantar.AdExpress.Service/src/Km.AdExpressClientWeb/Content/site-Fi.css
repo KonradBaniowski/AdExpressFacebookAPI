@@ -6,3 +6,12 @@
     font-size: 20px;
 }
 
+.navbar-brand > img {
+    margin-top:2px;
+}
+
+.login-footer .img-logo {
+    margin-top: 100px;
+    max-width: 430px;
+}
+
