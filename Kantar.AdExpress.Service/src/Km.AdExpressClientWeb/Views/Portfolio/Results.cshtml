@@ -6,6 +6,11 @@
     var _controller = Model.NavigationBar.NavigationNodes.First().Controller;
     var _exportController = "PortfolioExport";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
+    var isCarouselVisible = "false";
+    if (WebApplicationParameters.CountryCode != TNS.AdExpress.Constantes.Web.CountryCode.IRELAND)
+    {
+        isCarouselVisible = "true";
+    }
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -243,6 +248,8 @@
             var needFixedColumns = false;
             var zoomDate = '';
             var previousSubPeriodLabel;
+           
+          
 
             function GetItems(idItems) {
                 var items = '';
@@ -465,6 +472,7 @@
 
                 return columns;
             }
+          
 
             function CallPortfolioResult() {
                 $("#gridEmpty").hide();
@@ -520,10 +528,12 @@
                             $("#gridEmpty").show();
                         }
 
-                        if (userFilter.ResultTypeFilter.ResultType == "0" || userFilter.ResultTypeFilter.ResultType == "3") {
+                       
+                         if (@isCarouselVisible && (userFilter.ResultTypeFilter.ResultType == "0" || userFilter.ResultTypeFilter.ResultType == "3")) {
                             $("#carou-vehicleView").hide();
-                            VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
-                        }
+                             VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
+
+                         }
                     }
                 });
             }
