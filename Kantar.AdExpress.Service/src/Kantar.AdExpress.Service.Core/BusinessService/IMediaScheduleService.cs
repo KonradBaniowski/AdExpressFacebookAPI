@@ -16,6 +16,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         GridResult GetGridResult(string idWebSession, string zoomDate);
         MSCreatives GetMSCreatives(string idWebSession, string zoomDate);
         void SetMSCreatives(string idWebSession, ArrayList slogans);
-        void SetProductLevel(string idWebSession, int id, int level);
+        void SetProductLevel(string idWebSession, Int64 id, int level);
     }
 }

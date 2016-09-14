@@ -49,7 +49,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.paramsUrl.Add(level);
             model.paramsUrl.Add(string.IsNullOrEmpty(zoomDate) ? zoomDate : string.Empty);
             model.SiteLanguage = customerSession.SiteLanguage;
-            _mediaSchedule.SetProductLevel(idWebSession, int.Parse(id), int.Parse(level));
+            _mediaSchedule.SetProductLevel(idWebSession, Int64.Parse(id), int.Parse(level));
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(customerSession.SiteLanguage);
             ViewBag.SiteLanguage = customerSession.SiteLanguage;
