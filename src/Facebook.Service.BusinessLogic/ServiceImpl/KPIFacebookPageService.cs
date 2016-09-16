@@ -62,9 +62,9 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
                 pluriRef = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && Advertiser.Contains(e.IdAdvertiser));
 
-                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allAdvertiser.Contains(e.IdAdvertiser) && e.IdLanguageData == idLanguage);
+                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allAdvertiser.Contains(e.IdAdvertiser)/* && e.IdLanguageData == idLanguage*/);
 
-                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Advertiser.Contains(e.IdAdvertiser) && e.IdLanguageData == idLanguage);
+                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Advertiser.Contains(e.IdAdvertiser) /*&& e.IdLanguageData == idLanguage*/);
 
             }
             else if ((Brand != null && Brand.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
@@ -74,9 +74,9 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
                 pluriRef = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && Brand.Contains(e.IdAdvertiser));
 
-                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allBrand.Contains(e.IdAdvertiser) && e.IdLanguageData == idLanguage);
+                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allBrand.Contains(e.IdAdvertiser)/* && e.IdLanguageData == idLanguage*/);
 
-                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Brand.Contains(e.IdAdvertiser) && e.IdLanguageData == idLanguage);
+                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Brand.Contains(e.IdAdvertiser) /*&& e.IdLanguageData == idLanguage*/);
             }
 
             pluriAll = pluriAll.GroupBy(e => e.MonthMediaNum)
@@ -402,6 +402,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             var res = _uow.DataFacebookRepository.GetKPIClassificationDataFacebook(criteriaData, begin, end, advertisers, brands, idLanguage);
             if (advertisers != null && advertisers.Any())
             {
+                res = res.GroupBy(e => new { e.Month , e.IdAdvertiser}).Select(group => group.First()).ToList();
+
                 var kpiResult = res.Select(e => new KPIClassificationContract
                 {
                     Id = e.IdAdvertiser,
@@ -419,6 +421,8 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             }
             else if (brands != null && brands.Any())
             {
+                res = res.GroupBy(e => new { e.Month , e.IdBrand}).Select(group => group.First()).ToList();
+
                 var kpiResult = res.Select(e => new KPIClassificationContract
                 {
                     Id = e.IdBrand,

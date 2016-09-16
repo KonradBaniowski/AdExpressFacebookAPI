@@ -56,7 +56,7 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
             }
             var res = (from g in query
-                       where g.IdLanguageData == idLanguage
+                       //where g.IdLanguageData == idLanguage
                        select g);
             return res.ToList();
         }

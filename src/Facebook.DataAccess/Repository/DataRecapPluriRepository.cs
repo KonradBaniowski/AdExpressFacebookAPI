@@ -51,13 +51,13 @@ namespace Facebook.DataAccess.Repository
 
                
                 var res = (from g in query
-                           where g.IdLanguageData == idLanguage
+                           //where g.IdLanguageData == idLanguage
                            select g);
 
 
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand })
                                   join c in context.Brand on new { id = g.Key.IdBrand } equals new { id = c.Id }
-                                  where c.IdLanguage == idLanguage
+                                  //where c.IdLanguage == idLanguage
                                   select new RecapPluriExpenditure
                                   {
                                       Id = g.Key.IdBrand,
@@ -112,12 +112,12 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
 
                 var res = (from g in query
-                           where g.IdLanguageData == idLanguage
+                           //where g.IdLanguageData == idLanguage
                            select g);
 
                 var advertiserQuery = (from g in query.GroupBy(p => new { p.IdAdvertiser })
                                   join c in context.Advertiser on new { id = g.Key.IdAdvertiser } equals new { id = c.IdAdvertiser }
-                                  where c.IdLanguage == idLanguage
+                                  //where c.IdLanguage == idLanguage
                                   select new RecapPluriExpenditure
                                   {
                                       Id = g.Key.IdAdvertiser,
@@ -164,6 +164,8 @@ namespace Facebook.DataAccess.Repository
 
                 result = advertiserQuery.ToList();
             }
+
+            result = result.GroupBy(e => e.Id).Select(group => group.First()).ToList();
 
             return result;
         }

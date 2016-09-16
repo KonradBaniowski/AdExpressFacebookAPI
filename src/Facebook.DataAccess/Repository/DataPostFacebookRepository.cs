@@ -25,7 +25,7 @@ namespace Facebook.DataAccess.Repository
             var query = (from dp in context.DataPostFacebook
                          join ap in context.Products on dp.IdBrand equals ap.BrandId
                          where dp.IdPostFacebook == idPostFacebook
-                         && ap.LanguageId == idLanguage
+                         //&& ap.LanguageId == idLanguage
                          select new PostFacebook
                          {
                              IdPostFacebook = dp.IdPostFacebook,
@@ -108,7 +108,7 @@ namespace Facebook.DataAccess.Repository
                           orderby ap.Advertiser
                           where df.DateMediaNum >= begin && df.DateMediaNum <= end
                           && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate
-                          && ap.LanguageId == idLanguage
+                          //&& ap.LanguageId == idLanguage
                           select new PostFacebook
                           {
                               IdPostFacebook = dp.IdPostFacebook,

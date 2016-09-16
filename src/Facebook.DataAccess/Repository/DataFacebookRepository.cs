@@ -70,8 +70,8 @@ namespace Facebook.DataAccess.Repository
                 query = query.Include(a => a.Brand)
                     .Where(e => Brand.Contains(e.IdBrand));
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.IdPageFacebook, p.IdLanguageData })
-                                  join c in context.Brand on new { id = g.Key.IdBrand, IdLanguage = g.Key.IdLanguageData } equals new { id = c.Id, IdLanguage = c.IdLanguage }
-                                  where c.IdLanguage == idLanguage
+                                  join c in context.Brand on new { id = g.Key.IdBrand /*, IdLanguage = g.Key.IdLanguageData*/ } equals new { id = c.Id /*, IdLanguage = c.IdLanguage*/ }
+                                  /*where c.IdLanguage == idLanguage*/
                                   select new DataFacebookKPI
                                   {
                                       IdAdvertiser = g.Key.IdBrand,
@@ -95,8 +95,8 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
 
                 var tata = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.IdPageFacebook, p.IdLanguageData })
-                            join c in context.Advertiser on new { g.Key.IdAdvertiser, IdLanguage = g.Key.IdLanguageData } equals new { c.IdAdvertiser, IdLanguage = c.IdLanguage }
-                            where c.IdLanguage == idLanguage
+                            join c in context.Advertiser on new { g.Key.IdAdvertiser /*, IdLanguage = g.Key.IdLanguageData*/ } equals new { c.IdAdvertiser /*, IdLanguage = c.IdLanguage*/ }
+                            //where c.IdLanguage == idLanguage
                             select new DataFacebookKPI
                             {
                                 IdAdvertiser = g.Key.IdAdvertiser,
@@ -152,7 +152,7 @@ namespace Facebook.DataAccess.Repository
 
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand, p.DateMediaNum })
                                   join c in context.Brand on new { id = g.Key.IdBrand } equals new { id = c.Id }
-                                  where c.IdLanguage == idLanguage
+                                  //where c.IdLanguage == idLanguage
                                   select new DataFacebookKPI
                                   {
                                       IdBrand = g.Key.IdBrand,
@@ -181,7 +181,7 @@ namespace Facebook.DataAccess.Repository
 
                 var advertiserQuery = (from g in query.GroupBy(p => new { p.IdAdvertiser, p.DateMediaNum })
                                        join c in context.Advertiser on new { id = g.Key.IdAdvertiser } equals new { id = c.IdAdvertiser }
-                                       where c.IdLanguage == idLanguage                                                                      
+                                       //where c.IdLanguage == idLanguage                                                                      
                                        select new DataFacebookKPI
                                        {
                                            IdAdvertiser = g.Key.IdAdvertiser,
@@ -241,7 +241,7 @@ namespace Facebook.DataAccess.Repository
                     .Where(e => Advertiser.Contains(e.IdAdvertiser));
             }
             var res = (from g in query
-                       where g.IdLanguageData == idLanguage
+                       //where g.IdLanguageData == idLanguage
                        select g);
 
             try
