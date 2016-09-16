@@ -8,9 +8,19 @@
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
-
-
 <div class="row">
+    @Html.HiddenFor(e => e.Labels.SeasonalityOfLabel)
+    @Html.HiddenFor(e => e.Labels.PDMChartTitleLabel)
+    @Html.HiddenFor(e => e.Labels.EngagementLevel)
+    @Html.HiddenFor(e => e.Labels.CumulKPILabel)
+    @Html.HiddenFor(e => e.Labels.PluriStackedChartTitleLabel)
+
+    @Html.HiddenFor(e => e.Labels.MonthByMonthLabel)
+    @Html.HiddenFor(e => e.Labels.PDMChartSubTitleLabel)
+    @Html.HiddenFor(e => e.Labels.AdvertiserOrBrandMonthByMonthLabel)
+    @Html.HiddenFor(e => e.Labels.VentilatedByAdvertiserOrBrandLabel)
+    @Html.HiddenFor(e => e.Labels.InvestAndBEXLabel)
+
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
     @Html.Hidden("ExportController", "SocialMediaExport")
@@ -63,7 +73,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="unity" class="optionsChartContainer">
-                                    <label for="unity">Unité</label>
+                                    <label for="unity">@(Model.Labels.UnityLabel)</label>
                                     <select id="seriesType" class="selectdatepicker">
                                         <option value="like" selected="selected">Like</option>
                                         <option value="share">Share</option>
@@ -73,12 +83,12 @@
                             </div>
                             <div class="col-md-12 margin-top-10">
                                 <div id="combo" class="optionsChartContainer">
-                                    <label for="wombocombo">TOP 3 des posts</label>
+                                    <label for="wombocombo">@(Model.Labels.TopPostsFBLabel)</label>
                                     <select id="pageAdverBrandTypeCombo" class="selectdatepicker"></select>
                                 </div>
                             </div>
                             <div class="col-md-12 margin-top-10">
-                                <a id="exportCharts" class="btn btn-save-univers pull-right"><i class="fa fa-bar-chart"></i> Exporter</a>
+                                <a id="exportCharts" class="btn btn-save-univers pull-right"><i class="fa fa-bar-chart"></i> @(Model.Labels.Export)</a>
                             </div>
                         </div>
 
@@ -98,7 +108,7 @@
                 <a data-toggle="collapse" href="#accord2">
                     <div class="panel-heading head-results">
                         <h3 class="panel-title">
-                            <i class="fa fa-bar-chart"></i> Sélections Référentes
+                            <i class="fa fa-bar-chart"></i> @(Model.Labels.ReferentsSelectorLabel)
                         </h3>
                     </div>
                 </a>
@@ -121,7 +131,7 @@
                 <a data-toggle="collapse" href="#accord3">
                     <div class="panel-heading head-results">
                         <h3 class="panel-title">
-                            <i class="fa fa-line-chart"></i> Sélections Concurrentes
+                            <i class="fa fa-line-chart"></i> @(Model.Labels.CompetingSelectorLabel)
                         </h3>
                     </div>
                 </a>

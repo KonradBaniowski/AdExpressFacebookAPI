@@ -11,7 +11,7 @@ namespace TNS.AdExpress.Constantes.Web
     public class LanguageConstantes
     {
         #region Please insert any new code in the correct order
-        
+
         public const long Cancel = 000;
         public const long NameCode = 67;
         public const long CompanyCode = 68;
@@ -23,6 +23,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaCode = 190;
         public const long Plurimedia = 210;
         public const long DroppedSuccessfully = 286;
+        public const long UnityLabel = 304;
         public const long Media = 363;
         public const long FiltreLabel = 518;
         public const long QuestionTag3Code = 647;
@@ -55,7 +56,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectPeriodErrorMsg = 886;
         public const long UserSavedUniversCode = 893;
         public const long MonAdExpressDescription = 904;
-        public const long MoveSelectedResult = 911; 
+        public const long MoveSelectedResult = 911;
         public const long SelectUniversGroup = 917;
         public const long ExceptionMsg = 922;
         public const long NoUniversGroup = 925;
@@ -67,7 +68,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Configuration = 990;
         public const long Help = 992;
         public const long Capacity = 1000;
-        public const long SelectMedia=1017;
+        public const long SelectMedia = 1017;
         public const long MediaRequiredCode = 1052;
         public const long MailCode = 1136;
         public const long UpdatesCalendar = 1253;
@@ -139,7 +140,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Close = 2371;
         public const long NotAvailableSession = 2455;
         public const long Receiver = 2483;
-        public const long NewCreatives=2534;
+        public const long NewCreatives = 2534;
         public const long UnityError = 2541;
         public const long PreSelection = 2571;
         public const long DeleteRequestMessageConfirm = 2572;
@@ -210,8 +211,22 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ClientService = 3073;
         public const long FacebookDescription = 3074;
         public const long FacebookPost = 3075;
+        public const long AllLabel = 3082;
+        public const long SeasonalityOfLabel = 3083;
+        public const long PDMChartTitleLabel = 3084;
+        public const long EngagementLevel = 3085;
+        public const long CumulKPILabel = 3086;
+        public const long PluriStackedChartTitleLabel = 3087;
+        public const long MonthByMonthLabel = 3088;
+        public const long PDMChartSubTitleLabel = 3089;
+        public const long AdvertiserOrBrandMonthByMonthLabel = 3090;
+        public const long VentilatedByAdvertiserOrBrandLabel = 3091;
+        public const long InvestAndBEXLabel = 3092;
+        public const long ReferentsSelectorLabel = 3093;
+        public const long CompetingSelectorLabel = 3094;
+        public const long TopPostsFBLabel = 3095;
         public const long EveryDay = 000000;
-        public const long MoveResultTitle = 00000;        
+        public const long MoveResultTitle = 00000;
         #endregion
     }
 }

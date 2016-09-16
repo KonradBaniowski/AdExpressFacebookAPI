@@ -53,6 +53,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
+        public ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran)
+        {
+            ResultTable ResultResponse;
+
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+            try
+            {
+                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran);
+
+                ResultResponse = detailMediaResult.GetDetailMediaPopUpResult();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
+                Logger.Log(LogLevel.Error, message);
+
+                throw;
+            }
+            return ResultResponse;
+        }
+
+
         public IPortofolioResults InitDetailMediaCall(WebSession custSession, string dayOfWeek, string ecran)
         {
             IPortofolioResults portofolioResult = null;

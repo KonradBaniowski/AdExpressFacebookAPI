@@ -12,6 +12,9 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
    public interface IPortfolioDetailMediaService
     {
         GridResult GetDetailMediaGridResult(string idWebSession, string idMedia,string dayOfWeek,string ecran);
+
+        ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran);
+
         bool IsIndeRadioMessage(string idWebSession);
 
     }

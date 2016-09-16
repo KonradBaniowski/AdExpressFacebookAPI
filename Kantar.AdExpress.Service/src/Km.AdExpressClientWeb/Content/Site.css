@@ -304,8 +304,8 @@ html {
         max-height:70px;
         margin:0px !important;
     }
-    .login-footer .img-logo{
-        margin-left:-30px !important; 
+    .login-footer .img-logo{ 
+        max-width:200px;
     }
 }
 

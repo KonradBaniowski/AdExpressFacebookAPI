@@ -384,7 +384,7 @@ function getDataReferKPI(e) {
     var dis = $("#chartReferKPI");
     var data = $(".elmtsChart");
     var serieType = $('#seriesType').val();
-    var title = "Saisonnalité des " + serieType.toUpperCase() + " vs POST";
+    var title = $("#Labels_SeasonalityOfLabel").val() + " " +  serieType.toUpperCase() + " vs POST";
     var arrayData = [];
     $.each(data, function () {
 
@@ -470,7 +470,7 @@ function getDataReferKPI(e) {
         width: "100%",
         height: "300px",
         title: title,
-        subtitle: "Mois par mois",
+        subtitle: $("#Labels_MonthByMonthLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -542,7 +542,7 @@ function getDataReferKPI(e) {
         dis.igDataChart("option", "series", newListSeries);
 
         var serieType = $('#seriesType').val();
-        dis.igDataChart("option", "title", "Saisonnalité des " + serieType.toUpperCase() + " vs POST");
+        dis.igDataChart("option", "title", $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase() + " vs POST");
         var axes = dis.igDataChart("option", "axes");
 
         //dis.igDataChart("option", "axes", [{ name: axes[1].name, remove: true }]);
@@ -583,8 +583,8 @@ function getDataReferExpenditure(e) {
     disExpenditure.igDataChart({
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des BEX vs POST",
-        subtitle: "Mois par mois",
+        title: $("#Labels_SeasonalityOfLabel").val() + " " + "BEX vs POST",
+        subtitle: $("#Labels_MonthByMonthLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -724,8 +724,8 @@ function getDataPDM(e) {
     disPDM.igDataChart({
         height: "300px",
         width: "100%",
-        title: "PDM des référents vs univers Marché",
-        subtitle: "INVESTISSMENTS PLURIMEDIA et BEX / mois par mois",
+        title: $("#Labels_PDMChartTitleLabel").val(),
+        subtitle: $("#Labels_PDMChartSubTitleLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
@@ -813,8 +813,8 @@ function getDataConcurKPI(e) {
         dataSource: arrayMonth,
         width: "100%",
         height: "300px",
-        title: "Saisonnalité des " + serieType.toUpperCase(),
-        subtitle: "Annonceur ou marque / mois par mois",
+        title: $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase(),
+        subtitle: $("#Labels_AdvertiserOrBrandMonthByMonthLabel").val(),
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
@@ -894,8 +894,8 @@ function getDataConcurExpenditure(e) {
         dataSource: arrayMonth,
         height: "300px",
         width: "100%",
-        title: "Saisonnalité des BEX",
-        subtitle: "Annonceur ou marque / mois par mois",
+        title: $("#Labels_SeasonalityOfLabel").val() + " " + "BEX",
+        subtitle: $("#Labels_AdvertiserOrBrandMonthByMonthLabel").val(),
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         titleTextColor: "white",
@@ -965,8 +965,8 @@ function getDataConcurEngagement(e) {
         dataSource: arrayData,
         height: "300px",
         width: "100%",
-        title: "Niveau d’ENGAGEMENT",
-        subtitle: "Ventilé par annonceur ou marque",
+        title: $("#Labels_EngagementLevel").val(),
+        subtitle: $("#Labels_VentilatedByAdvertiserOrBrandLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
@@ -1054,8 +1054,8 @@ function getDataConcurDecompositionEngagement(e) {
         dataSource: [{ Like: 0, Share: 0, Comment: 0, Label: "" }],
         height: "300px",
         width: "100%",
-        title: "Cumul des LIKE, SHARE et COMMENT",
-        subtitle: "Ventilé par annonceur ou marque",
+        title: $("#Labels_CumulKPILabel").val(),
+        subtitle: $("#Labels_VentilatedByAdvertiserOrBrandLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         brushes: ["#FFE100", "#B8DC00", "#00C8FF"],
@@ -1118,7 +1118,7 @@ function getDataPlurimediaStacked(e) {
                 name: "PDV",
                 xAxis: "MediaAxe",
                 yAxis: "PDVAxe",
-                type: "stacked100Column",
+                type: "stackedColumn",
                 series: listSubSeries,
             };
             return seriesObj;
@@ -1128,8 +1128,8 @@ function getDataPlurimediaStacked(e) {
     disPDM.igDataChart({
         height: "300px",
         width: "100%",
-        title: "PDV annonceurs ou marques ventilées par Media",
-        subtitle: "INVESTISSEMENTS et BEX",
+        title: $("#Labels_PluriStackedChartTitleLabel").val(),
+        subtitle: $("#Labels_InvestAndBEXLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
         horizontalZoomable: true,
