@@ -201,15 +201,22 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             queryDataSearch = queryDataSearch.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataRecapPluri = queryDataRecapPluri.Select(e => e).ToList();
 
-            //long minMonth = queryDataFB.Min(e => e.DateMediaNum);
-            //if (queryDataDisplay.Min(e => e.DateMediaNum) < minMonth)
-            //    minMonth = queryDataDisplay.Min(e => e.DateMediaNum);
-            //if (queryDataSearch.Min(e => e.DateMediaNum) < minMonth)
-            //    minMonth = queryDataSearch.Min(e => e.DateMediaNum);
 
-            //queryDataFB = queryDataFB.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
-            //queryDataDisplay = queryDataDisplay.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
-            //queryDataSearch = queryDataSearch.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+            long minMonth = 0;
+            if (queryDataFB.Count() > 0)
+                minMonth = queryDataFB.Max(e => e.DateMediaNum);
+
+            if (queryDataDisplay.Count() > 0 && queryDataDisplay.Max(e => e.DateMediaNum) < minMonth)
+                minMonth = queryDataDisplay.Max(e => e.DateMediaNum);
+            if (queryDataSearch.Count() > 0 && queryDataSearch.Max(e => e.DateMediaNum) < minMonth)
+                minMonth = queryDataSearch.Max(e => e.DateMediaNum);
+
+            if(minMonth != 0)
+            {
+                queryDataFB = queryDataFB.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+                queryDataDisplay = queryDataDisplay.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+                queryDataSearch = queryDataSearch.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
+            }
 
             if (isAdvertiser)
             {
@@ -295,8 +302,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 );
             }
 
-            resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, End));
-
+            if(minMonth !=0 )
+                resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, minMonth));
+            else
+                resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, End));
+            
             resultats.GroupBy(e => e.IdVehicle).ToList().ForEach(k =>
                   {
                       double total = k.Sum(j => j.Expenditure);
@@ -309,6 +319,14 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 }
             );
 
+            resultats.ForEach(elem =>
+                {
+                    if (minMonth != 0)
+                        elem.MaxDataCommon = minMonth;
+                    else
+                        elem.MaxDataCommon = End;
+                }
+            );
 
             return resultats;
 
@@ -402,7 +420,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             var res = _uow.DataFacebookRepository.GetKPIClassificationDataFacebook(criteriaData, begin, end, advertisers, brands, idLanguage);
             if (advertisers != null && advertisers.Any())
             {
-                res = res.GroupBy(e => new { e.Month , e.IdAdvertiser}).Select(group => group.First()).ToList();
+                //res = res.GroupBy(e => new { e.Month , e.IdAdvertiser}).Select(group => group.First()).ToList();
 
                 var kpiResult = res.Select(e => new KPIClassificationContract
                 {
@@ -421,7 +439,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             }
             else if (brands != null && brands.Any())
             {
-                res = res.GroupBy(e => new { e.Month , e.IdBrand}).Select(group => group.First()).ToList();
+                //res = res.GroupBy(e => new { e.Month , e.IdBrand}).Select(group => group.First()).ToList();
 
                 var kpiResult = res.Select(e => new KPIClassificationContract
                 {

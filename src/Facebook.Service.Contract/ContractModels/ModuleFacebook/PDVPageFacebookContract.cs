@@ -16,5 +16,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
 
         public double Expenditure { get; set; }
 
+        public long MaxDataCommon { get; set; }
+
     }
 }
