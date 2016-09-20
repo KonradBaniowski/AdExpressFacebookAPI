@@ -41,6 +41,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ContactDescriptionCode = 764;
         public const long SaveUniversCode = 769;
         public const long LoadUniversCode = 770;
+        public const long PDMLabel = 806;
         public const long MyResultsDescription = 827;
         public const long ResultsCode = 829;
         public const long DroppingFailed = 830;
@@ -71,6 +72,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectMedia = 1017;
         public const long MediaRequiredCode = 1052;
         public const long MailCode = 1136;
+        public const long PDVLabel = 1166;
         public const long UpdatesCalendar = 1253;
         public const long Periodicity = 1293;
         public const long Monthly = 1294;
@@ -114,6 +116,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PortfolioDescriptionCode = 2199;
         public const long MediaScheduleDescriptionCode = 2200;
         public const long AnalysisDetailedReportDescription = 2203;
+        public const long MonthLabel = 2290;
         public const long StudyPeriodCode = 2291;
         public const long ComparativePeriodCode = 2292;
         public const long ComparativePeriodTypeCode = 2293;
@@ -225,6 +228,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ReferentsSelectorLabel = 3093;
         public const long CompetingSelectorLabel = 3094;
         public const long TopPostsFBLabel = 3095;
+        public const long SelectUniverseMarketLabel = 3096;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
         #endregion

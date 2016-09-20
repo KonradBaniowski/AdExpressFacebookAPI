@@ -2354,5 +2354,7 @@
     <item mnemonic="w3093" type="System.String">Sélections référentes</item>
     <item mnemonic="w3094" type="System.String">Sélections concurrentes</item>
     <item mnemonic="w3095" type="System.String">Top 3 des posts</item>
+
+    <item mnemonic="w3096" type="System.String">Sélectionner un univers marché</item>
   </items>
 </localization>

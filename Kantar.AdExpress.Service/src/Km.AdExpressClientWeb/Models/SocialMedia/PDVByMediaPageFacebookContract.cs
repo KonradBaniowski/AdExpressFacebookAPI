@@ -18,5 +18,7 @@ namespace Km.AdExpressClientWeb.Models.SocialMedia
         public long Expenditure { get; set; }
 
         public long UniverseMarket { get; set; }
+
+        public long MaxDataCommon { get; set; }
     }
 }

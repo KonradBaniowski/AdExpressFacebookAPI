@@ -174,7 +174,9 @@ namespace KM.Framework.Constantes
         public string ReferentsSelectorLabel { get; set; } //3093
         public string CompetingSelectorLabel { get; set; } //3094
         public string TopPostsFBLabel { get; set; } //3095
-
-
+        public string SelectUniverseMarketLabel { get; set; }//3096
+        public string MonthLabel { get; set; }//2290
+        public string PDMLabel { get; set; }//806
+        public string PDVLabel { get; set; }//1166
     }
 }

@@ -186,6 +186,7 @@
     /** Change universe **/
     $(document).on("click", "#btn-universe-choice", function (event) {
         var selectedValue = $('#universe-choice').val();
+
         var params = {
             universeId: selectedValue
         };
@@ -482,7 +483,7 @@ function getDataReferKPI(e) {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Mois",
+                    title: $("#Labels_MonthLabel").val(),
                     labelTextColor: "white",
                 }, {
                     type: "numericY",
@@ -596,7 +597,7 @@ function getDataReferExpenditure(e) {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Mois",
+                    title: $("#Labels_MonthLabel").val(),
                     labelTextColor: "white"
                 }, {
                     type: "numericY",
@@ -737,14 +738,14 @@ function getDataPDM(e) {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Mois",
+                    title: $("#Labels_MonthLabel").val(),
                     labelTextColor: "white",
                     isTransitionInEnabled: true,
                     isHighlightingEnabled: true
                 }, {
                     type: "numericY",
                     name: "PDMAxe",
-                    title: "PDM (%)",
+                    title: $("#Labels_PDMLabel").val() + " (%)",
                     majorStroke: "white",
                     labelTextColor: "white",
                     isTransitionInEnabled: true,
@@ -800,7 +801,7 @@ function getDataConcurKPI(e) {
                     showTooltip: true,
                     valueMemberPath: labelKPISelected,
                     thickness: 3,
-                    tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item." + labelKPISelected + "}</label></div>"
+                    tooltipTemplate: "<div>"+$('#Labels_MonthLabel').val()+": <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item." + labelKPISelected + "}</label></div>"
                 }
             );
         intTabBrush = (intTabBrush < brushes.length - 1) ? intTabBrush + 1 : 0
@@ -827,7 +828,7 @@ function getDataConcurKPI(e) {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Mois",
+                    title: $("#Labels_MonthLabel").val(),
                     labelTextColor: "white",
                 }, {
                     type: "numericY",
@@ -884,7 +885,7 @@ function getDataConcurExpenditure(e) {
                     valueMemberPath: "Expenditure",
                     thickness: 3,
                     showTooltip: true,
-                    tooltipTemplate: "<div>Mois: <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item.Expenditure}</label></div>"
+                    tooltipTemplate: "<div>"+$('#Labels_MonthLabel').val()+": <label class='bold'>${item.Month}</label></div><div>" + label + ": <label class='bold'>${item.Expenditure}</label></div>"
                 }
             );
         intTabBrush = (intTabBrush < brushes.length - 1) ? intTabBrush + 1 : 0
@@ -908,7 +909,7 @@ function getDataConcurExpenditure(e) {
                     type: "categoryX",
                     name: "Month",
                     label: "Month",
-                    title: "Mois",
+                    title: $("#Labels_MonthLabel").val(),
                     labelTextColor: "white"
                 }, {
                     type: "numericY",
@@ -1085,26 +1086,29 @@ function getDataPlurimediaStacked(e) {
 
     var disPDM = $("#chartConcurPlurimediaStacked");
     var data = $(".elmtsChartPDVByMediaConcur");
+    var maxDataCommon = $(".elmtsChartPDVByMediaConcur").children(".maxDataCommonConcur").attr('name');
 
     var arrayData = [];
     var listSubSeries = [];
     $.each(data, function () {
         listSubSeries = [];
         var media = $(this).children(".labelMediaConcur").attr('name');
-        var elem = { "Media": media };
+        var idMedia = $(this).children(".idMediaConcur").attr('name');
+        var id = $(this).children(".idConcur").attr('name');
         var currentElmnt = $(this);
+        var elem = { "Media": media, "idMedia": idMedia };
         var datas = currentElmnt.children(".idAdvertiserBrandConcur").attr('name').split(",");
         $.each(datas, function (index, value) {
             var label = currentElmnt.children(".labelAdvertiserBrandConcur").attr('name').split(",")[index];
-            elem[label] = Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]);
+            elem[value] = Number(currentElmnt.children(".expenditureConcur").attr('name').split(",")[index]);
 
             listSubSeries.push({
                 name: label,
                 title: label,
                 type: "stackedFragment",
-                valueMemberPath: label,
+                valueMemberPath: value,
                 showTooltip: true,
-                tooltipTemplate: "<div>Media: <label class='bold'>${item.Media}</label></div><div>" + label + ": <label class='bold'>${item."+label+"} %</label></div>"
+                tooltipTemplate: "<div>Media: <label class='bold'>${item.Media}</label></div><div>" + label + ": <label class='bold'>${item."+value+"} %</label></div>"
             });
 
         });
@@ -1118,7 +1122,7 @@ function getDataPlurimediaStacked(e) {
                 name: "PDV",
                 xAxis: "MediaAxe",
                 yAxis: "PDVAxe",
-                type: "stackedColumn",
+                type: "stacked100Column",
                 series: listSubSeries,
             };
             return seriesObj;
@@ -1143,14 +1147,14 @@ function getDataPlurimediaStacked(e) {
                     type: "categoryX",
                     name: "MediaAxe",
                     label: "Media",
-                    title: "Media",
+                    title: "Media" + " (" + maxDataCommon.substring(4, 6) + "/" + maxDataCommon.substring(2, 4) + ")",
                     labelTextColor: "white",
                     isTransitionInEnabled: true,
                     isHighlightingEnabled: true
                 }, {
                     type: "numericY",
                     name: "PDVAxe",
-                    title: "PDV (%)",
+                    title: $("#Labels_PDVLabel").val() +" (%)",
                     majorStroke: "white",
                     labelTextColor: "white",
                     isTransitionInEnabled: true,
@@ -1469,7 +1473,7 @@ function AppendUniverseComboBox(data) {
         htmlArr.push("  <select id='universe-choice' class='selectdatepicker'>");
         //Default
         htmlArr.push(" <option value='0'>");
-        htmlArr.push("Sélectionner un univers marché");
+        htmlArr.push($("#Labels_SelectUniverseMarketLabel").val());
         htmlArr.push("</option>");
         $.each(data, function (i, val) {
             htmlArr.push(" <option value='");
@@ -1483,7 +1487,7 @@ function AppendUniverseComboBox(data) {
             htmlArr.push("</option>");
         });
         htmlArr.push("  </select>&nbsp;");
-        htmlArr.push("  <button class='btn btn-save' id='btn-universe-choice' title='Sélectionner un univers marché'><i class='fa fa-check fa-file-excel-size'></i></button>");//<!--btn-universe-choice-->
+        htmlArr.push("  <button class='btn btn-save' id='btn-universe-choice' title='" + $("#Labels_SelectUniverseMarketLabel").val() + "'><i class='fa fa-check fa-file-excel-size'></i></button>");//<!--btn-universe-choice-->
         //htmlArr.push(" </div>"); //<!--pull-right custom-button selectexporttype-->      
         $(".custom-button.selectexporttype.select-universe-choice").html(htmlArr.join(""));
         $('#universe-choice').selectpicker();

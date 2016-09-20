@@ -222,6 +222,10 @@ namespace Km.AdExpressClientWeb.Helpers
                 CompetingSelectorLabel = GestionWeb.GetWebWord(LanguageConstantes.CompetingSelectorLabel, siteLanguage),
                 TopPostsFBLabel = GestionWeb.GetWebWord(LanguageConstantes.TopPostsFBLabel, siteLanguage),
                 Export = GestionWeb.GetWebWord(LanguageConstantes.Export, siteLanguage),
+                SelectUniverseMarketLabel = GestionWeb.GetWebWord(LanguageConstantes.SelectUniverseMarketLabel, siteLanguage),
+                PDMLabel = GestionWeb.GetWebWord(LanguageConstantes.PDMLabel, siteLanguage),
+                PDVLabel = GestionWeb.GetWebWord(LanguageConstantes.PDVLabel, siteLanguage),
+                MonthLabel = GestionWeb.GetWebWord(LanguageConstantes.MonthLabel, siteLanguage),
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

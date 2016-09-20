@@ -21,6 +21,11 @@
     @Html.HiddenFor(e => e.Labels.VentilatedByAdvertiserOrBrandLabel)
     @Html.HiddenFor(e => e.Labels.InvestAndBEXLabel)
 
+    @Html.HiddenFor(e => e.Labels.SelectUniverseMarketLabel)
+    @Html.HiddenFor(e => e.Labels.MonthLabel)
+    @Html.HiddenFor(e => e.Labels.PDMLabel)
+    @Html.HiddenFor(e => e.Labels.PDVLabel)
+
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
     @Html.Hidden("ExportController", "SocialMediaExport")
