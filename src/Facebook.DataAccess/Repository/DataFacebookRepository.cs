@@ -31,6 +31,20 @@ namespace Facebook.DataAccess.Repository
             return new List<DataFacebook>();
         }
 
+        public long GetLastLoadedMonth()
+        {
+
+            var result  = (from g in context.DataFacebook
+                              group g by true into p
+                              select new 
+                              {
+                                  max = p.Max(e => e.DateMediaNum)
+                              });
+
+            return result.First().max;
+        }
+
+
         public List<DataFacebookKPI> GetDataFacebook(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
         {
             var query = (from d in context.DataFacebook
@@ -232,7 +246,7 @@ namespace Facebook.DataAccess.Repository
             if (Brand != null && Brand.Count > 0)
             {
                 query = query.Include(a => a.Brand)
-                   .Where(e => Advertiser.Contains(e.IdBrand));
+                   .Where(e => Brand.Contains(e.IdBrand));
             }
             else
             if (Advertiser != null && Advertiser.Count > 0)

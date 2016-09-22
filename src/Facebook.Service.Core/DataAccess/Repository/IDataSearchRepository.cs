@@ -11,5 +11,7 @@ namespace Facebook.Service.Core.DataAccess.Repository
     public interface IDataSearchRepository : IGenericRepository<DataSearch>
     {
         List<DataSearch> GetDataSearchWithCriteria(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage);
+
+        RecapPluriExpenditure GetLastLoadedMonth();
     }
 }

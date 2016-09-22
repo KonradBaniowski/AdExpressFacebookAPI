@@ -10,6 +10,7 @@ using Facebook.Service.Core.DataAccess;
 using Facebook.Service.Core.DomainModels.BusinessModel;
 using Facebook.Service.Core.DomainModels.AdExprSchema;
 using Facebook.Service.Core.DomainModels.RecpaSchema;
+using System.Reflection;
 
 namespace Facebook.Service.BusinessLogic.ServiceImpl
 {
@@ -70,13 +71,13 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             else if ((Brand != null && Brand.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
             {
                 var allBrand = Brand.Concat(BrandCon).ToList();
-                pluriAll = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && allBrand.Contains(e.IdAdvertiser));
+                pluriAll = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && allBrand.Contains(e.IdBrand));
 
-                pluriRef = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && Brand.Contains(e.IdAdvertiser));
+                pluriRef = _uow.WebPlanMediaMonthRepository.Find(e => e.MonthMediaNum >= YYYYMMDDBegin && e.MonthMediaNum <= YYYYMMDDEnd && Brand.Contains(e.IdBrand));
 
-                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allBrand.Contains(e.IdAdvertiser)/* && e.IdLanguageData == idLanguage*/);
+                facebookAll = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && allBrand.Contains(e.IdBrand)/* && e.IdLanguageData == idLanguage*/);
 
-                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Brand.Contains(e.IdAdvertiser) /*&& e.IdLanguageData == idLanguage*/);
+                facebookRef = _uow.DataFacebookRepository.Find(e => e.DateMediaNum >= Begin && e.DateMediaNum <= End && Brand.Contains(e.IdBrand) /*&& e.IdLanguageData == idLanguage*/);
             }
 
             pluriAll = pluriAll.GroupBy(e => e.MonthMediaNum)
@@ -113,7 +114,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 var percentFind = new KPIPercentPageFacebookContract();
                 var x = pluriRef.Where(e => e.MonthMediaNum == item.MonthMediaNum).FirstOrDefault();
 
-                if (x != null && x.TotalUnite.HasValue && item.TotalUnite.HasValue)
+                if (x != null && x.TotalUnite.HasValue && item.TotalUnite.HasValue && x.TotalUnite != 0 && item.TotalUnite != 0)
                 {
                     percentFind.ReferentPercent = (x.TotalUnite.Value * 100) / item.TotalUnite.Value;
                     percentFind.ConcurrentPercent = 100 - percentFind.ReferentPercent;
@@ -142,14 +143,14 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             foreach (var item in percentByMonth)
             {
                 KPIPercentPageFacebookContract elem = null;
-                if (dico.TryGetValue(item.Month, out elem))
+                if (item.Month != null && dico.TryGetValue(item.Month, out elem))
                 {
                     item.ReferentFBPercent = elem.ReferentFBPercent;
                     item.ConcurrentFBPercent = elem.ConcurrentFBPercent;
                 }
             }
 
-            percentByMonth = percentByMonth.Where(e => allowedMonth.Contains(e.Month.ToString())).ToList();
+            percentByMonth = percentByMonth.Where(e => e.Month != null && allowedMonth.Contains(e.Month.ToString())).ToList();
 
             return percentByMonth;
         }
@@ -160,26 +161,38 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             IEnumerable<DataDisplay> queryDataDisplay = null;
             IEnumerable<DataSearch> queryDataSearch = null;
             IEnumerable<RecapPluriExpenditure> queryDataRecapPluri = null;
+            long minMonth = 0;
+
 
             List<PDVByMediaPageFacebookContract> resultats = new List<PDVByMediaPageFacebookContract>();
-            
+            List<RecapPluriExpenditure> sumAllRecaps = new List<RecapPluriExpenditure>();
+
             bool isAdvertiser = true;
 
             var criteria = _rightsvc.GetCriteria2(IdLogin);
             var criteriaData = _mapper.Map<List<CriteriaData>>(criteria);
+
+            sumAllRecaps.Add(_uow.DataRecapPluriRepository.GetLastLoadedMonth());
+            sumAllRecaps.Add(_uow.DataDisplayRepository.GetLastLoadedMonth());
+            sumAllRecaps.Add(_uow.DataSearchRepository.GetLastLoadedMonth());
+            minMonth = GetLastLoadedMonthPluris(sumAllRecaps);
+
+            long minMonthFb = _uow.DataFacebookRepository.GetLastLoadedMonth();
+            if (minMonthFb < minMonth)
+                minMonth = minMonthFb;
 
             if ((AdvertiserRef != null && AdvertiserRef.Count() != 0) && (AdvertiserCon != null && AdvertiserCon.Count() != 0))
             {
 
                 var allAdvertiser = AdvertiserRef.Concat(AdvertiserCon).ToList();
 
-                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, minMonth, allAdvertiser, null, idLanguage);
 
-                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, minMonth, allAdvertiser, null, idLanguage);
 
-                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, minMonth, allAdvertiser, null, idLanguage);
 
-                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, End, allAdvertiser, null, idLanguage);
+                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, minMonth, allAdvertiser, null, idLanguage);
             }
             else if ((BrandRef != null && BrandRef.Count() != 0) && (BrandCon != null && BrandCon.Count() != 0))
             {
@@ -187,36 +200,19 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
                 var allBrand = BrandRef.Concat(BrandCon).ToList();
 
-                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataFB = _uow.DataFacebookRepository.GetKPIDataFacebook(criteriaData, Begin, minMonth, null, allBrand, idLanguage);
 
-                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataDisplay = _uow.DataDisplayRepository.GetDataDisplayWithCriteria(criteriaData, Begin, minMonth, null, allBrand, idLanguage);
 
-                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, End, null, allBrand, idLanguage);
+                queryDataSearch = _uow.DataSearchRepository.GetDataSearchWithCriteria(criteriaData, Begin, minMonth, null, allBrand, idLanguage);
 
-                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, End, allBrand, null, idLanguage);
+                queryDataRecapPluri = _uow.DataRecapPluriRepository.GetDataRecapPluri(criteriaData, Begin, minMonth, null, allBrand, idLanguage);
             }
 
             queryDataFB = queryDataFB.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataDisplay = queryDataDisplay.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataSearch = queryDataSearch.Select(e => e).OrderBy(r => r.DateMediaNum).ToList();
             queryDataRecapPluri = queryDataRecapPluri.Select(e => e).ToList();
-
-
-            long minMonth = 0;
-            if (queryDataFB.Count() > 0)
-                minMonth = queryDataFB.Max(e => e.DateMediaNum);
-
-            if (queryDataDisplay.Count() > 0 && queryDataDisplay.Max(e => e.DateMediaNum) < minMonth)
-                minMonth = queryDataDisplay.Max(e => e.DateMediaNum);
-            if (queryDataSearch.Count() > 0 && queryDataSearch.Max(e => e.DateMediaNum) < minMonth)
-                minMonth = queryDataSearch.Max(e => e.DateMediaNum);
-
-            if(minMonth != 0)
-            {
-                queryDataFB = queryDataFB.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
-                queryDataDisplay = queryDataDisplay.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
-                queryDataSearch = queryDataSearch.Where(e => e.DateMediaNum <= minMonth).OrderBy(r => r.DateMediaNum).ToList();
-            }
 
             if (isAdvertiser)
             {
@@ -302,11 +298,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                 );
             }
 
-            if(minMonth !=0 )
+            if (minMonth != 0)
                 resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, minMonth));
             else
                 resultats.AddRange(setPlurimediaExpenditure(queryDataRecapPluri, isAdvertiser, Begin, End));
-            
+
             resultats.GroupBy(e => e.IdVehicle).ToList().ForEach(k =>
                   {
                       double total = k.Sum(j => j.Expenditure);
@@ -316,7 +312,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                             item.Expenditure = (double)pdv;
                         }
                       );
-                }
+                  }
             );
 
             resultats.ForEach(elem =>
@@ -330,6 +326,50 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
 
             return resultats;
 
+        }
+
+        private long GetLastLoadedMonthPluris(List<RecapPluriExpenditure> sumAllRecaps, long minValueRecap = 0)
+        {
+            List<long> minsLoaded = new List<long>();
+
+
+            //foreach(RecapPluriExpenditure elem in sumAllRecaps)
+            //{
+            //    if (elem == null)
+            //        continue;
+
+            //    foreach (PropertyInfo propertyInfo in elem.GetType().GetProperties())
+            //    {
+            //        if (propertyInfo.Name.StartsWith("Expenditure") &&  propertyInfo.GetValue(elem,null).ToString() == "0")
+            //            minsLoaded.Add(propertyInfo.Name);
+            //    }
+            //}
+
+            ////Plus petit denominateur commun
+            //minsLoaded = minsLoaded.GroupBy(s => s).Where(grp => grp.Count() == sumAllRecaps.Count()).Select(grp => grp.First()).ToList();
+
+            //var a = minsLoaded.Min(e => e);
+
+            DateTime today = DateTime.Today;
+
+            sumAllRecaps.ForEach(elem =>
+                {
+                    if (elem.Expenditure_Euro_N_2 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 1 , DateTime.DaysInMonth(today.Year, 1)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_3 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 2, DateTime.DaysInMonth(today.Year, 2)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_4 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 3, DateTime.DaysInMonth(today.Year, 3)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_5 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 4, DateTime.DaysInMonth(today.Year, 4)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_6 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 5, DateTime.DaysInMonth(today.Year, 5)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_7 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 6, DateTime.DaysInMonth(today.Year, 6)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_8 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 7, DateTime.DaysInMonth(today.Year, 7)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_9 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 8, DateTime.DaysInMonth(today.Year, 8)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_10 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 9, DateTime.DaysInMonth(today.Year, 9)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_11 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 10, DateTime.DaysInMonth(today.Year, 10)).ToString("yyyyMMdd")));
+                    else if (elem.Expenditure_Euro_N_12 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 11, DateTime.DaysInMonth(today.Year, 11)).ToString("yyyyMMdd")));
+                    else minsLoaded.Add(long.Parse(new DateTime(today.Year, 12, DateTime.DaysInMonth(today.Year, 12)).ToString()));
+                }
+            );
+
+            return minsLoaded.Min();
         }
 
         private List<PDVByMediaPageFacebookContract> setPlurimediaExpenditure(IEnumerable<RecapPluriExpenditure> queryDataRecapPluri, bool isAdvertiser, long Begin, long End)

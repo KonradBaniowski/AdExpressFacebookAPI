@@ -70,6 +70,9 @@ namespace Facebook.DataAccess
         public DbSet<DataDisplay> DataDisplay { get; set; }
         public DbSet<DataSearch> DataSearch { get; set; }
         public DbSet<RecapPluri> DataRecapPluri { get; set; }
+        public DbSet<RecapPluriSegment> DataRecapPluriSegment { get; set; }
+        public DbSet<RecapDisplaySegment> DataRecapDisplaySegment { get; set; }
+        public DbSet<RecapSearchSegment> DataRecapSearchSegment { get; set; }
         public DbSet<Service.Core.DomainModels.AdExprSchema.Advertiser> Advertiser { get; set; }
         public DbSet<DataPostFacebook> DataPostFacebook { get; set; }
         public DbSet<Service.Core.DomainModels.AdExprSchema.Brand> Brand { get; set; }

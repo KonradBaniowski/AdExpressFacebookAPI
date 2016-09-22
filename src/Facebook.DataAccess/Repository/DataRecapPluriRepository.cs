@@ -21,6 +21,89 @@ namespace Facebook.DataAccess.Repository
         {
         }
 
+
+        //public RecapPluriExpenditure GetLastLoadedMonth()
+        //{
+        //    StringBuilder query = new StringBuilder();
+        //    query.Append("SELECT ");
+
+        //    for (int i = 2; i >= 0; i--)
+        //    {
+        //        string prop = "exp_Euro_N";
+        //        if (i != 0)
+        //        prop += i.ToString();
+
+        //        for (int j = 1; j < 13; j++)
+        //        {
+        //            query.AppendFormat("SUM({0}) AS {1},", prop + "_" + j.ToString(), prop.Replace("exp", "Expenditure"));
+        //        }
+        //    }
+
+        //    query.Length--; //Reomve last char (here th ",")
+        //    query.Append(" FROM RECAP01.RECAP_PLURI");
+
+        //    var test = context.Database.SqlQuery<RecapPluriExpenditure>(query.ToString());
+        //    var res = test.ToList();
+
+        //    return test;
+
+        //}
+
+
+        public RecapPluriExpenditure GetLastLoadedMonth()
+        {
+            List<RecapPluriExpenditure> result = null;
+
+            var query = (from p in context.DataRecapPluriSegment
+                         group p by p.IdLanguageData into g
+                             select new RecapPluriExpenditure
+                             {
+                                 Expenditure_Euro_N_1 = g.Sum(a => a.Expenditure_Euro_N_1),
+                                 Expenditure_Euro_N_2 = g.Sum(a => a.Expenditure_Euro_N_2),
+                                 Expenditure_Euro_N_3 = g.Sum(a => a.Expenditure_Euro_N_3),
+                                 Expenditure_Euro_N_4 = g.Sum(a => a.Expenditure_Euro_N_4),
+                                 Expenditure_Euro_N_5 = g.Sum(a => a.Expenditure_Euro_N_5),
+                                 Expenditure_Euro_N_6 = g.Sum(a => a.Expenditure_Euro_N_6),
+                                 Expenditure_Euro_N_7 = g.Sum(a => a.Expenditure_Euro_N_7),
+                                 Expenditure_Euro_N_8 = g.Sum(a => a.Expenditure_Euro_N_8),
+                                 Expenditure_Euro_N_9 = g.Sum(a => a.Expenditure_Euro_N_9),
+                                 Expenditure_Euro_N_10 = g.Sum(a => a.Expenditure_Euro_N_10),
+                                 Expenditure_Euro_N_11 = g.Sum(a => a.Expenditure_Euro_N_11),
+                                 Expenditure_Euro_N_12 = g.Sum(a => a.Expenditure_Euro_N_12),
+
+                                 Expenditure_Euro_N1_1 = g.Sum(a => a.Expenditure_Euro_N1_1),
+                                 Expenditure_Euro_N1_2 = g.Sum(a => a.Expenditure_Euro_N1_2),
+                                 Expenditure_Euro_N1_3 = g.Sum(a => a.Expenditure_Euro_N1_3),
+                                 Expenditure_Euro_N1_4 = g.Sum(a => a.Expenditure_Euro_N1_4),
+                                 Expenditure_Euro_N1_5 = g.Sum(a => a.Expenditure_Euro_N1_5),
+                                 Expenditure_Euro_N1_6 = g.Sum(a => a.Expenditure_Euro_N1_6),
+                                 Expenditure_Euro_N1_7 = g.Sum(a => a.Expenditure_Euro_N1_7),
+                                 Expenditure_Euro_N1_8 = g.Sum(a => a.Expenditure_Euro_N1_8),
+                                 Expenditure_Euro_N1_9 = g.Sum(a => a.Expenditure_Euro_N1_9),
+                                 Expenditure_Euro_N1_10 = g.Sum(a => a.Expenditure_Euro_N1_10),
+                                 Expenditure_Euro_N1_11 = g.Sum(a => a.Expenditure_Euro_N1_11),
+                                 Expenditure_Euro_N1_12 = g.Sum(a => a.Expenditure_Euro_N1_12),
+
+                                 Expenditure_Euro_N2_1 = g.Sum(a => a.Expenditure_Euro_N2_1),
+                                 Expenditure_Euro_N2_2 = g.Sum(a => a.Expenditure_Euro_N2_2),
+                                 Expenditure_Euro_N2_3 = g.Sum(a => a.Expenditure_Euro_N2_3),
+                                 Expenditure_Euro_N2_4 = g.Sum(a => a.Expenditure_Euro_N2_4),
+                                 Expenditure_Euro_N2_5 = g.Sum(a => a.Expenditure_Euro_N2_5),
+                                 Expenditure_Euro_N2_6 = g.Sum(a => a.Expenditure_Euro_N2_6),
+                                 Expenditure_Euro_N2_7 = g.Sum(a => a.Expenditure_Euro_N2_7),
+                                 Expenditure_Euro_N2_8 = g.Sum(a => a.Expenditure_Euro_N2_8),
+                                 Expenditure_Euro_N2_9 = g.Sum(a => a.Expenditure_Euro_N2_9),
+                                 Expenditure_Euro_N2_10 = g.Sum(a => a.Expenditure_Euro_N2_10),
+                                 Expenditure_Euro_N2_11 = g.Sum(a => a.Expenditure_Euro_N2_11),
+                                 Expenditure_Euro_N2_12 = g.Sum(a => a.Expenditure_Euro_N2_12)
+                             });
+
+            result = query.ToList();
+
+            return result.First();
+        }
+
+
         public List<RecapPluriExpenditure> GetDataRecapPluri(List<CriteriaData> Criteria, long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage)
         {
             var query = (from d in context.DataRecapPluri select d);
@@ -43,17 +126,16 @@ namespace Facebook.DataAccess.Repository
 
             if (predicate != null)
                 query = query.AsExpandable().Where(predicate);
-
+            
             if (Brand != null && Brand.Count > 0)
             {
                 query = query.Include(a => a.Brand)
-                   .Where(e => Advertiser.Contains(e.IdBrand));
+                   .Where(e => Brand.Contains(e.IdBrand));
 
                
                 var res = (from g in query
                            //where g.IdLanguageData == idLanguage
                            select g);
-
 
                 var brandQuery = (from g in query.GroupBy(p => new { p.IdBrand })
                                   join c in context.Brand on new { id = g.Key.IdBrand } equals new { id = c.Id }
@@ -101,8 +183,6 @@ namespace Facebook.DataAccess.Repository
                                       Expenditure_Euro_N2_11 = g.Sum(a => a.Expenditure_Euro_N2_11),
                                       Expenditure_Euro_N2_12 = g.Sum(a => a.Expenditure_Euro_N2_12)
                                   });
-
-
 
                 result = brandQuery.ToList();
             }

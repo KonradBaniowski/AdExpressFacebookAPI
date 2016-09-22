@@ -40,7 +40,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                Advertiser = p.Advertiser,
                Brand = p.Brand,
                DateCreationPost = GetDate(p.DateCreationPost, idLanguage),//p.DateCreationPost.ToString(),
-               Commitment = LastKPI(p.Commitments),
+               Engagement = LastKPI(p.Commitments),
                NumberComment = LastKPI(p.NumberComments),
                NumberLike = LastKPI(p.NumberLikes),
                NumberShare = LastKPI(p.NumberShares),

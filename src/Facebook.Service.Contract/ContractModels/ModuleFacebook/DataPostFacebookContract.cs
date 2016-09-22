@@ -17,7 +17,7 @@ namespace Facebook.Service.Contract.ContractModels.ModuleFacebook
         public long NumberLike { get; set; }
         public long NumberComment { get; set; }
         public long NumberShare { get; set; }
-        public long Commitment { get; set; }
+        public long Engagement { get; set; }
       
     }
 

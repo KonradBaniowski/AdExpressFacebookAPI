@@ -23,5 +23,6 @@ namespace Facebook.Service.Core.DataAccess.Repository
         /// <param name="idLanguage"></param>
         /// <returns></returns>
         List<DataFacebook> GetKPIPlurimediaDataFacebook(long Begin, long End, List<long> Advertiser, List<long> Brand, int idLanguage);
+        long GetLastLoadedMonth();
     }
 }

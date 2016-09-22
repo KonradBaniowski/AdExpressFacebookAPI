@@ -82,7 +82,10 @@
     <Compile Include="DomainModels\RecpaSchema\AdvertiserRecap.cs" />
     <Compile Include="DomainModels\RecpaSchema\BrandRecap.cs" />
     <Compile Include="DomainModels\RecpaSchema\DataRecap.cs" />
+    <Compile Include="DomainModels\RecpaSchema\RecapDisplaySegment.cs" />
     <Compile Include="DomainModels\RecpaSchema\RecapPluri.cs" />
+    <Compile Include="DomainModels\RecpaSchema\RecapPluriSegment.cs" />
+    <Compile Include="DomainModels\RecpaSchema\RecapSearchSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
