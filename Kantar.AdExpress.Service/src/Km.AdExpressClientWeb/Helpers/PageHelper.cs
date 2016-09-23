@@ -323,10 +323,10 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_PLAN_MEDIA:
                 case Module.Name.TABLEAU_DYNAMIQUE:
                 case Module.Name.INDICATEUR:
-                case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     isDisabled = false;
                     break;
                 case Module.Name.FACEBOOK:
+                case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     isDisabled = true;
                     break;
                 default:

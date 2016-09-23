@@ -71,7 +71,9 @@
                     <form class="form-horizontal">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-period margin-b-20">
                             <h4>@GestionWeb.GetWebWord(785, Model.PeriodViewModel.SiteLanguage)</h4>
-                            @if (Model.PeriodViewModel.IsSlidingYearsNbVisible && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+                            @if (Model.PeriodViewModel.IsSlidingYearsNbVisible && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR 
+                                && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+                                && Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
                             {
                             <div class="selectdatecontainer">
                                 <select id="year-sliding" class="selectdatepicker" selectedperiod="0">
@@ -107,14 +109,17 @@
                                 <label class="col-sm-8">@GestionWeb.GetWebWord(784, Model.PeriodViewModel.SiteLanguage)</label>
                             </div>
                             <div class="selectdatecontainer">
-                                <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
-                                    <option>--</option>
-                                    @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
+                                @if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                                {
+                                    <select id="day-sliding" class="selectdatepicker" selectedperiod="3">
+                                        <option>--</option>
+                                        @for (int i = 1; i <= Model.PeriodViewModel.SlidingDaysNb; i++)
                                         {
-                                        <option>@i</option>
+                                            <option>@i</option>
                                         }
-                                </select>
-                                <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
+                                    </select>
+                                    <label class="col-sm-8">@GestionWeb.GetWebWord(1974, Model.PeriodViewModel.SiteLanguage)</label>
+                                }
                             </div>
                             }
                             <div class="sep-div "></div>
@@ -138,10 +143,13 @@
                                     <input id="next-week" name="single-date" type="radio" class="with-font" value="4" selectedperiod="6" />
                                     <label for="next-week">@GestionWeb.GetWebWord(789, Model.PeriodViewModel.SiteLanguage)</label>
                                 </div>
-                                <div>
-                                    <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
-                                    <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.PeriodViewModel.SiteLanguage)</label>
-                                </div>
+                                    if (Model.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                                    {
+                                    <div>
+                                        <input id="previous-day" name="single-date" type="radio" class="with-font" value="5" selectedperiod="7" />
+                                        <label for="previous-day">@GestionWeb.GetWebWord(1975, Model.PeriodViewModel.SiteLanguage)</label>
+                                    </div>
+                                    }
                                 }
                                 else
                                 {

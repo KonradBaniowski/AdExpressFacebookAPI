@@ -252,6 +252,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                                 case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                                 case CstWeb.Module.Name.NEW_CREATIVES:
+                                case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                                     AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                                     SetDefaultMarketUniverse(response, univers, request, _webSession);
                                     break;
