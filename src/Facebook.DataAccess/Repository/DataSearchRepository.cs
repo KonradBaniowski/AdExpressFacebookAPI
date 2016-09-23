@@ -39,33 +39,7 @@ namespace Facebook.DataAccess.Repository
                              Expenditure_Euro_N_9 = g.Sum(a => a.Expenditure_Euro_N_9),
                              Expenditure_Euro_N_10 = g.Sum(a => a.Expenditure_Euro_N_10),
                              Expenditure_Euro_N_11 = g.Sum(a => a.Expenditure_Euro_N_11),
-                             Expenditure_Euro_N_12 = g.Sum(a => a.Expenditure_Euro_N_12),
-
-                             Expenditure_Euro_N1_1 = g.Sum(a => a.Expenditure_Euro_N1_1),
-                             Expenditure_Euro_N1_2 = g.Sum(a => a.Expenditure_Euro_N1_2),
-                             Expenditure_Euro_N1_3 = g.Sum(a => a.Expenditure_Euro_N1_3),
-                             Expenditure_Euro_N1_4 = g.Sum(a => a.Expenditure_Euro_N1_4),
-                             Expenditure_Euro_N1_5 = g.Sum(a => a.Expenditure_Euro_N1_5),
-                             Expenditure_Euro_N1_6 = g.Sum(a => a.Expenditure_Euro_N1_6),
-                             Expenditure_Euro_N1_7 = g.Sum(a => a.Expenditure_Euro_N1_7),
-                             Expenditure_Euro_N1_8 = g.Sum(a => a.Expenditure_Euro_N1_8),
-                             Expenditure_Euro_N1_9 = g.Sum(a => a.Expenditure_Euro_N1_9),
-                             Expenditure_Euro_N1_10 = g.Sum(a => a.Expenditure_Euro_N1_10),
-                             Expenditure_Euro_N1_11 = g.Sum(a => a.Expenditure_Euro_N1_11),
-                             Expenditure_Euro_N1_12 = g.Sum(a => a.Expenditure_Euro_N1_12),
-
-                             Expenditure_Euro_N2_1 = g.Sum(a => a.Expenditure_Euro_N2_1),
-                             Expenditure_Euro_N2_2 = g.Sum(a => a.Expenditure_Euro_N2_2),
-                             Expenditure_Euro_N2_3 = g.Sum(a => a.Expenditure_Euro_N2_3),
-                             Expenditure_Euro_N2_4 = g.Sum(a => a.Expenditure_Euro_N2_4),
-                             Expenditure_Euro_N2_5 = g.Sum(a => a.Expenditure_Euro_N2_5),
-                             Expenditure_Euro_N2_6 = g.Sum(a => a.Expenditure_Euro_N2_6),
-                             Expenditure_Euro_N2_7 = g.Sum(a => a.Expenditure_Euro_N2_7),
-                             Expenditure_Euro_N2_8 = g.Sum(a => a.Expenditure_Euro_N2_8),
-                             Expenditure_Euro_N2_9 = g.Sum(a => a.Expenditure_Euro_N2_9),
-                             Expenditure_Euro_N2_10 = g.Sum(a => a.Expenditure_Euro_N2_10),
-                             Expenditure_Euro_N2_11 = g.Sum(a => a.Expenditure_Euro_N2_11),
-                             Expenditure_Euro_N2_12 = g.Sum(a => a.Expenditure_Euro_N2_12)
+                             Expenditure_Euro_N_12 = g.Sum(a => a.Expenditure_Euro_N_12)
                          });
 
             result = query.ToList();

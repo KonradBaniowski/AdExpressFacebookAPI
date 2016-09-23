@@ -180,6 +180,11 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
             long minMonthFb = _uow.DataFacebookRepository.GetLastLoadedMonth();
             if (minMonthFb < minMonth)
                 minMonth = minMonthFb;
+            if (End < minMonth)
+                minMonth = End;
+
+            if (Begin > minMonth)
+                return resultats;
 
             if ((AdvertiserRef != null && AdvertiserRef.Count() != 0) && (AdvertiserCon != null && AdvertiserCon.Count() != 0))
             {
