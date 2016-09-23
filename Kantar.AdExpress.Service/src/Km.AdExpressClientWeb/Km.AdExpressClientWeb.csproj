@@ -1700,14 +1700,6 @@
     <Folder Include="Models\Creative\" />
     <Folder Include="Models\LostWon\" />
     <Folder Include="Models\PresentAbsent\" />
-    <Folder Include="Views\AdvertisingAgencyExport\" />
-    <Folder Include="Views\AnalyseSectoExport\" />
-    <Folder Include="Views\ExportResult\" />
-    <Folder Include="Views\Gad\" />
-    <Folder Include="Views\Image\" />
-    <Folder Include="Views\Pdf\" />
-    <Folder Include="Views\SocialMediaExport\" />
-    <Folder Include="Views\Universe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
