@@ -309,7 +309,9 @@
     <Content Include="Configuration\353\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\353\Units.xml" />
+    <Content Include="Configuration\353\Units.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\353\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -323,7 +325,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configuration\353\WebLanguages.xml" />
+    <Content Include="Configuration\353\WebLanguages.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\353\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

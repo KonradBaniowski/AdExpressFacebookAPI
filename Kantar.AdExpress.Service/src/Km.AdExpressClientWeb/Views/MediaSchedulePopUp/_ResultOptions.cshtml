@@ -18,34 +18,37 @@
         <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-sans text-left options-control">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
-                            <div class="panel-heading head-options-results">
-                                <p class="panel-title options ">
-                                    @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
-                                </p>
-                            </div>
-                            <div id="collapseFour" class="panel-collapse collapse in">
-                                <div class="panel-body mi-padder">
-                                    <div class="selectoptioncontainer">
-                                        <select id="@Model.PeriodDetail.PeriodDetailType.Id" class="selectdatepicker">
-                                            @foreach (var item in Model.PeriodDetail.PeriodDetailType.Items)
-                                            {
-                                                if (item.Value == Model.PeriodDetail.PeriodDetailType.SelectedId)
+                    @if (Model.PeriodDetail.PeriodDetailType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.PeriodDetail.PeriodDetailType.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.PeriodDetail.PeriodDetailType.Items)
                                                 {
-                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                    if (item.Value == Model.PeriodDetail.PeriodDetailType.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            }
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div class="col-md-4">
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">

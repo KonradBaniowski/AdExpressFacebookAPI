@@ -39,9 +39,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             object[,] result = null;
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
             try
             {
-                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "");
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "", "");
                 result = mediaScheduleResult.ComputeData();
             }
             catch (Exception ex)
@@ -58,7 +59,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             GridResult girdResult = new GridResult();
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, "");
+
+            return mediaScheduleResult.GetGridResult();
+        }
+
+        public GridResult GetGridResult(string idWebSession, string zoomDate, string idVehicle)
+        {
+            GridResult girdResult = new GridResult();
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle);
 
             return mediaScheduleResult.GetGridResult();
         }
@@ -247,7 +257,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate, string idVehicle)
         {
 
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -264,6 +274,34 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 object[] param = null;
                 long oldCurrentTab = CustomerSession.CurrentTab;
                 System.Windows.Forms.TreeNode oldReferenceUniversMedia = CustomerSession.ReferenceUniversMedia;
+
+                if (!string.IsNullOrEmpty(idVehicle))
+                {
+                    if (!string.IsNullOrEmpty(zoomDate))
+                    {
+                        param = new object[4];
+                        param[2] = Int64.Parse(idVehicle);
+                        param[3] = zoomDate;
+                    }
+                    else
+                    {
+                        param = new object[3];
+                        param[2] = Int64.Parse(idVehicle);
+                    }
+                    CustomerSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(zoomDate))
+                    {
+                        param = new object[3];
+                        param[2] = zoomDate;
+                    }
+                    else
+                    {
+                        param = new object[2];
+                    }
+                }
 
                 #region Period Detail
                 DateTime begin;
@@ -311,15 +349,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
-                if (zoomDate.Length > 0)
-                {
-                    param = new object[3];
-                    param[2] = zoomDate;
-                }
-                else
-                {
-                    param = new object[2];
-                }
+                
+                
                 CustomerSession.CurrentModule = module.Id;
                 if (CustomerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) CustomerSession.CurrentTab = 0;
                 CustomerSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");

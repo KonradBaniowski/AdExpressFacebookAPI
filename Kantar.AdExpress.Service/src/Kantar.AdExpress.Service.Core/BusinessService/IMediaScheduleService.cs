@@ -14,6 +14,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
         object[,] GetMediaScheduleData(string idWebSession);
         GridResult GetGridResult(string idWebSession, string zoomDate);
+        GridResult GetGridResult(string idWebSession, string zoomDate, string isVehicle);
         MSCreatives GetMSCreatives(string idWebSession, string zoomDate);
         void SetMSCreatives(string idWebSession, ArrayList slogans);
         void SetProductLevel(string idWebSession, int id, int level);

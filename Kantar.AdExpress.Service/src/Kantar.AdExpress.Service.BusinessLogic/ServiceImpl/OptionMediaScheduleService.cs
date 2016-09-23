@@ -34,7 +34,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         protected WebConstantes.GenericDetailLevel.Type _genericColumnDetailLevelType;
         protected int _nbColumnDetailLevelItemList = 1;
 
-        public OptionsMediaSchedule GetOptions(string idWebSession)
+        public OptionsMediaSchedule GetOptions(string idWebSession, bool isAdNetTrack)
         {
 
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
@@ -54,7 +54,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.GenericDetailLevel.ComponentProfile.media:
                         try
                         {
-                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
+                            if (isAdNetTrack)
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericAdNetTrackDetailLevel, _customerWebSession.CurrentModule);
+                            else
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
                         }
                         catch { }
                         if (!canAddDetail)
@@ -75,7 +78,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
                                     break;
                             }
-                            _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                            if (isAdNetTrack)
+                                _customerWebSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                            else
+                                _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
                         }
                         break;
                     case WebConstantes.GenericDetailLevel.ComponentProfile.product:
@@ -211,6 +217,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
 
+                if (isAdNetTrack)
+                    PeriodDetail.PeriodDetailType.Visible = false;
+                else
+                    PeriodDetail.PeriodDetailType.Visible = true;
+
                 options.PeriodDetail = PeriodDetail;
                 #endregion
 
@@ -226,7 +237,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return options;
         }
 
-        public void SetOptions(string idWebSession, UserFilter userFilter)
+        public void SetOptions(string idWebSession, UserFilter userFilter, bool isAdNetTrack)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
@@ -278,7 +289,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 switch (_currentModule.Id)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                        _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
+                        if (isAdNetTrack)
+                            _customerWebSession.GenericAdNetTrackDetailLevel = _customerGenericDetailLevel;
+                        else
+                            _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                         break;
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:

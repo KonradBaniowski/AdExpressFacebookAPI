@@ -315,6 +315,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configuration\353\Plugins\Miysis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\35\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

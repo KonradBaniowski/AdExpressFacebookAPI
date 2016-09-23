@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{967EEEBB-6FB5-4D38-A1A5-2746B4CAA403}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.Ares.AdExpress.PdfPMSrvIr</RootNamespace>
+    <AssemblyName>TNS.Ares.AdExpress.PdfPMSrvIr</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.Classification.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWorks.LSConnectivity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWorks.LSConnectivity.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.LinkSystem, Version=3.5.2.0, Culture=neutral, PublicKeyToken=32c946e5f5c6d4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.LinkSystem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PdfPMService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PdfPMService.Designer.cs">
+      <DependentUpon>PdfPMService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Miysis\TNS.AdExpress.Anubis.Miysis.csproj">
+      <Project>{789382e6-1d15-43ba-94c9-ab4252a522eb}</Project>
+      <Name>TNS.AdExpress.Anubis.Miysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{a4dede88-c99e-495f-98f2-e2762520f4be}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core.Default\TNS.AdExpress.Web.Core.Default.csproj">
+      <Project>{2bf58eca-f114-4f1e-93a4-d15342fa8751}</Project>
+      <Name>TNS.AdExpress.Web.Core.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Common.DAL.Russia\TNS.AdExpressI.Common.DAL.Russia.csproj">
+      <Project>{d5e70526-fcbe-49ba-bed2-3330f5b5d0d9}</Project>
+      <Name>TNS.AdExpressI.Common.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj">
+      <Project>{04d00adf-5026-4790-9d76-8b9f6f0b6f47}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
+      <Project>{446aa1fa-2ce3-49d1-99cc-6ebaeccda911}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj">
+      <Project>{dea1a6a0-32d0-4624-b216-a95b13070078}</Project>
+      <Name>TNS.AdExpressI.Insertions.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.Appm\TNS.AdExpressI.MediaSchedule.Appm.csproj">
+      <Project>{df4ce6ab-ed48-4758-ae27-c7ab587b0b19}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.Appm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Appm\TNS.AdExpressI.MediaSchedule.DAL.Appm.csproj">
+      <Project>{b29f06c7-452a-4754-a988-060f8ee0fcf6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL.Appm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Default\TNS.AdExpressI.MediaSchedule.DAL.Default.csproj">
+      <Project>{8368962f-842e-481b-9c86-5e5609abccc9}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Finland\TNS.AdExpressI.MediaSchedule.DAL.Finland.csproj">
+      <Project>{86fbed0b-cd32-4a72-bdb8-d323558ac6df}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL.Finland</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
+      <Project>{39325692-d25f-400c-8e46-080bcb3b3524}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.Default\TNS.AdExpressI.MediaSchedule.Default.csproj">
+      <Project>{218c0e5b-6602-4e4e-b469-1d8479223288}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303c6b21-ca16-4d7b-8edb-e8869b2b3ec9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5d4c60a4-d7d0-4725-9ba8-57ef44677bc4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfPM\TNS.Ares.AdExpress.PdfPM.csproj">
+      <Project>{d35abd23-df9a-4b83-af3e-775f25d6e148}</Project>
+      <Name>TNS.Ares.AdExpress.PdfPM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
+      <Project>{3ddc18b6-8ab8-489f-a0c5-2118ce19d795}</Project>
+      <Name>TNS.Ares.AdExpress</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\LinkServerParameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\LsClientConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Russia.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Russia.dll" /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -28,7 +28,7 @@
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>
     <schema enumId="4" description="Product class analysis" label="recap01"/>
-    <schema enumId="5" description="Web" label="webnav01"/>
+    <schema enumId="5" description="Web" label="webnav02"/>
     <schema enumId="10" description="Alert" label="mau01"/>
     <schema enumId="11" description="Promotion monitoring tables" label="promo03"/>
     <schema enumId="12" description="Rolex tables" label="rolex03"/>
