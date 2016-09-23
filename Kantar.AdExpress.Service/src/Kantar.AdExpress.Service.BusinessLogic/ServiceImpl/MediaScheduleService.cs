@@ -387,7 +387,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// <param name="webSession">session</param>
         /// <param name="id">Element ID</param>
         /// <param name="level">Element Classification level</param>
-        public void SetProductLevel(string idWebSession, int id, int level)
+        public void SetProductLevel(string idWebSession, Int64 id, int level)
         {
             WebSession customerSession = (WebSession)WebSession.Load(idWebSession);
             var currentLevel = (DetailLevelItemInformation.Levels)customerSession.GenericProductDetailLevel.GetDetailLevelItemInformation(level);
@@ -406,7 +406,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             SetSessionProductDetailLevel(customerSession, id, level);
         }
 
-        private void SetSessionProductDetailLevel(WebSession webSession, int id, DetailLevelItemInformation.Levels level)
+        private void SetSessionProductDetailLevel(WebSession webSession, Int64 id, DetailLevelItemInformation.Levels level)
         {
             var tree = new System.Windows.Forms.TreeNode();
             CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];

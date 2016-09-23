@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Configuration;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -126,7 +127,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var cla = new ClaimsPrincipal(User.Identity);
                 string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
+                _siteLanguage = _webSessionService.GetWebSession(idSession).WebSession.SiteLanguage;
                 List<Domain.Tree> universeMarket = _detailSelectionService.GetMarket(idSession);
 
                 bool concurSelected = false;
@@ -164,7 +165,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
                     NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
                     NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
-                    PageName = "Référents"
+                    PageName = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Referent, _siteLanguage)
                 };
                 datas.Add(par);
                 //datas.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 1; return e; }).ToList());
@@ -172,7 +173,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 datas.AddRange(data.Where(e => e.PID != -1 && e.PID != 1).Select(e => e).ToList());
                 datas = datas.OrderBy(d => d.PID).ThenBy(e => e.PageName).ToList();
 
-                combos.Add(new { Text = "Tout", Value = "*", Selected = true , Level = 0});
+                combos.Add(new { Text = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.AllLabel, _siteLanguage), Value = "*", Selected = true , Level = 0});
                 combos.Add(new { Text = par.PageName, Value = par.IdPageFacebook, Level = 0 });
                 data.Where(e => e.PID == 1).ToList().ForEach(j =>
                     {
@@ -222,7 +223,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         NumberLike = data.Where(e => e.PID == -1).Sum(a => a.NumberLike),
                         NumberPost = data.Where(e => e.PID == -1).Sum(a => a.NumberPost),
                         NumberShare = data.Where(e => e.PID == -1).Sum(a => a.NumberShare),
-                        PageName = "Concurrents"
+                        PageName = GestionWeb.GetWebWord(WebConstantes.LanguageConstantes.Concurrent, _siteLanguage)
                     };
                     datasTmp.Add(par);
                     //datasTmp.AddRange(data.Where(e => e.PID == -1).Select(e => { e.PID = 2; return e; }).ToList());

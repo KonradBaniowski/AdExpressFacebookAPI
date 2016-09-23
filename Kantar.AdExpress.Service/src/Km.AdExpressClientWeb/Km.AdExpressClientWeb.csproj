@@ -66,6 +66,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\Infragistics.Web.Mvc.Documents.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -190,6 +194,7 @@
     <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\NewCreativesExportController.cs" />
+    <Compile Include="Controllers\PortfolioDetailMediaExportController.cs" />
     <Compile Include="Controllers\ProductClassAnalysisExportController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -577,6 +582,12 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Configuration\33\HomeNumbers.xml" />
     <Content Include="Content\icon-kantar.css" />
+    <Content Include="Content\img\33\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\33\logo_kantarmedia.png" />
+    <Content Include="Content\img\353\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\353\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\Banniere-AdExpress_social.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />

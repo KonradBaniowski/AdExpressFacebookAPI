@@ -11,6 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         GridResult GetGridResult(string idWebSession);
 
         ResultTable GetResultTable(string idWebSession);
+
         List<GridResult> GetGraphGridResult(string idWebSession);
 
         List<VehicleCover> GetVehicleCovers(string idWebSession, int resultType);

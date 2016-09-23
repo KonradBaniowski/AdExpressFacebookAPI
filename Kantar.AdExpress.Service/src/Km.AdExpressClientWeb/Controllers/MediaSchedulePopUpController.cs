@@ -60,7 +60,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else
             {
-                _mediaSchedule.SetProductLevel(idWebSession, int.Parse(id), int.Parse(level));
+                _mediaSchedule.SetProductLevel(idWebSession, Int64.Parse(id), int.Parse(level));
             }
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(customerSession.SiteLanguage);

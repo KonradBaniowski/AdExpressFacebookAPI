@@ -96,5 +96,7 @@ namespace TNS.AdExpressI.Portofolio {
 
         List<GridResult> GetGraphGridResult();
 
+        ResultTable GetDetailMediaPopUpResult();
+
     }
 }

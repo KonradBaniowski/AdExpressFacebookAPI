@@ -216,6 +216,9 @@ namespace TNS.AdExpressI.Portofolio
                     case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                         result = new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _showInsertions, _showCreatives);
                         break;
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, true);
+                        break;
                     case AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
                         result = new Engines.CalendarEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
                         break;
@@ -1249,6 +1252,16 @@ namespace TNS.AdExpressI.Portofolio
 
             return gridResult;
 
+        }
+
+        public ResultTable GetDetailMediaPopUpResult()
+        {
+            GridResult gridResult = new GridResult();
+            gridResult.HasData = false;
+
+            ResultTable _data = GetInsertionDetailResultTable(false);
+
+            return _data;
         }
 
 

@@ -159,5 +159,24 @@ namespace KM.Framework.Constantes
         public string FacebookDescription { get; set; }
         public string NiveauxPersonalises { get; set; }
         public string NavigationNodeRequired { get; set; }//3053
+        public string UnityLabel { get; set; }//304
+        public string AllLabel { get; set; }//3082
+        public string SeasonalityOfLabel { get; set; } //3083
+        public string PDMChartTitleLabel { get; set; } //3084
+        public string EngagementLevel { get; set; } //3085
+        public string CumulKPILabel { get; set; } //3086
+        public string PluriStackedChartTitleLabel { get; set; } //3087
+        public string MonthByMonthLabel { get; set; } //3088
+        public string PDMChartSubTitleLabel { get; set; } //3089
+        public string AdvertiserOrBrandMonthByMonthLabel { get; set; } //3090
+        public string VentilatedByAdvertiserOrBrandLabel { get; set; } //3091
+        public string InvestAndBEXLabel { get; set; } //3092
+        public string ReferentsSelectorLabel { get; set; } //3093
+        public string CompetingSelectorLabel { get; set; } //3094
+        public string TopPostsFBLabel { get; set; } //3095
+        public string SelectUniverseMarketLabel { get; set; }//3096
+        public string MonthLabel { get; set; }//2290
+        public string PDMLabel { get; set; }//806
+        public string PDVLabel { get; set; }//1166
     }
 }

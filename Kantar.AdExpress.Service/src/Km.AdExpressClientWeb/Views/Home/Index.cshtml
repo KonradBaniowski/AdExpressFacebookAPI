@@ -34,18 +34,18 @@
         RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
 
         //Redirect to New Creative
-        @*RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);*@
+        RedirectToOldWebSite(@Module.Name.NEW_CREATIVES);
 
         //Redirect to Tendencies
         RedirectToOldWebSite(@Module.Name.TENDACES);
 
-        //Redirect to Tendencies
-        @*@RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);*@
+        //Redirect to analyse mandataires
+        RedirectToOldWebSite(@Module.Name.ANALYSE_MANDATAIRES);
 
-        //Redirect to Tendencies
+        //Redirect to indicateurs
         @*RedirectToOldWebSite(@Module.Name.INDICATEUR);
 
-        //Redirect to Tendencies
+        //Redirect to analysis
         RedirectToOldWebSite(@Module.Name.TABLEAU_DYNAMIQUE);*@
 
         @*RedirectToOldWebSite(@Module.Name.ANALYSE_DES_DISPOSITIFS);
@@ -107,17 +107,17 @@
                     <div class="tile-body text-center">
                         <div class="list-group">
                             @if (item.InfosNews != null)
-                {
-                    foreach (var e in item.InfosNews)
-                    {
-                        if (item.Label == "Documents")
-                        {
-                                        <a href="@Url.Action("Pdf","PDF", new { fileName = @e.Url })" class="list-group-item text-left" target="_blank">@e.Label</a>
-            }
+                            {
+                                foreach (var e in item.InfosNews)
+                                {
+                                    if (item.Label == "Documents")
+                                    {
+                                            <a href="@Url.Action("Pdf","PDF", new { fileName = @e.Url })" class="list-group-item text-left" target="_blank">@e.Label</a>
+                                    }
                                     else
                                     {
-                                        <a href="@e.Url" class="list-group-item text-left" target="_blank">@e.Label</a>
-        }
+                                            <a href="@e.Url" class="list-group-item text-left" target="_blank">@e.Label</a>
+                                    }
                                 }
                             }
                         </div>

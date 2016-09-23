@@ -39,7 +39,7 @@ namespace Km.AdExpressClientWeb.Helpers
         const int ExportPdfResult = 4;
         const int ExportPptResult = 5;
 
-      
+
 
         public NavigationBarViewModel LoadNavBar(string idWebSession, string controller, int siteLanguage = -1, int CurrentPosition = 0)
         {
@@ -104,7 +104,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Controller = controller,
                 IconCssClass = "fa fa-file-text",
                 Position = CurrentPosition,
-                IsDisabled= IsMarketSelectionDisabled(webSession.CurrentModule)
+                IsDisabled = IsMarketSelectionDisabled(webSession.CurrentModule)
             };
             model.NavigationNodes.Add(market);
             var media = new NavigationNode
@@ -205,7 +205,27 @@ namespace Km.AdExpressClientWeb.Helpers
                 WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
                 ResultError = ConvertToHtmlString(GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage)),
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
-                FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage)
+                FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage),
+                UnityLabel = GestionWeb.GetWebWord(LanguageConstantes.UnityLabel, siteLanguage),
+                AllLabel = GestionWeb.GetWebWord(LanguageConstantes.UnityLabel, siteLanguage),
+                SeasonalityOfLabel = GestionWeb.GetWebWord(LanguageConstantes.SeasonalityOfLabel, siteLanguage),
+                PDMChartTitleLabel = GestionWeb.GetWebWord(LanguageConstantes.PDMChartTitleLabel, siteLanguage),
+                EngagementLevel = GestionWeb.GetWebWord(LanguageConstantes.EngagementLevel, siteLanguage),
+                CumulKPILabel = GestionWeb.GetWebWord(LanguageConstantes.CumulKPILabel, siteLanguage),
+                PluriStackedChartTitleLabel = GestionWeb.GetWebWord(LanguageConstantes.PluriStackedChartTitleLabel, siteLanguage),
+                MonthByMonthLabel = GestionWeb.GetWebWord(LanguageConstantes.MonthByMonthLabel, siteLanguage),
+                PDMChartSubTitleLabel = GestionWeb.GetWebWord(LanguageConstantes.PDMChartSubTitleLabel, siteLanguage),
+                AdvertiserOrBrandMonthByMonthLabel = GestionWeb.GetWebWord(LanguageConstantes.AdvertiserOrBrandMonthByMonthLabel, siteLanguage),
+                VentilatedByAdvertiserOrBrandLabel = GestionWeb.GetWebWord(LanguageConstantes.VentilatedByAdvertiserOrBrandLabel, siteLanguage),
+                InvestAndBEXLabel = GestionWeb.GetWebWord(LanguageConstantes.InvestAndBEXLabel, siteLanguage),
+                ReferentsSelectorLabel = GestionWeb.GetWebWord(LanguageConstantes.ReferentsSelectorLabel, siteLanguage),
+                CompetingSelectorLabel = GestionWeb.GetWebWord(LanguageConstantes.CompetingSelectorLabel, siteLanguage),
+                TopPostsFBLabel = GestionWeb.GetWebWord(LanguageConstantes.TopPostsFBLabel, siteLanguage),
+                Export = GestionWeb.GetWebWord(LanguageConstantes.Export, siteLanguage),
+                SelectUniverseMarketLabel = GestionWeb.GetWebWord(LanguageConstantes.SelectUniverseMarketLabel, siteLanguage),
+                PDMLabel = GestionWeb.GetWebWord(LanguageConstantes.PDMLabel, siteLanguage),
+                PDVLabel = GestionWeb.GetWebWord(LanguageConstantes.PDVLabel, siteLanguage),
+                MonthLabel = GestionWeb.GetWebWord(LanguageConstantes.MonthLabel, siteLanguage),
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
@@ -311,7 +331,7 @@ namespace Km.AdExpressClientWeb.Helpers
             return isDisabled;
         }
 
-        bool IsMarketSelectionDisabled (long module)
+        bool IsMarketSelectionDisabled(long module)
         {
             bool isDisabled = false; // (module == Module.Name.NEW_CREATIVES);
             return isDisabled;
@@ -368,19 +388,19 @@ namespace Km.AdExpressClientWeb.Helpers
             return returnValue;
         }
 
-        public static List<ExportTypeViewModel> GetExportTypes(string countryCode,int currentModule,int siteLanguage)
+        public static List<ExportTypeViewModel> GetExportTypes(string countryCode, int currentModule, int siteLanguage)
         {
             List<ExportTypeViewModel> exportTypeViewModels = new List<ExportTypeViewModel>();
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportFormattedResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage), Visible = true });
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportResultWithValue, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage), Visible = true });
             exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPdfResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage), Visible = true });
-           
+
             switch (countryCode)
             {
                 case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportGrossResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage), Visible = true });
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
-                    break;               
+                    break;
             }
 
             SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
@@ -391,16 +411,16 @@ namespace Km.AdExpressClientWeb.Helpers
         {
             List<int> ids = new List<int>();
             switch (currentModule)
-            {            
+            {
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
                 case Module.Name.NEW_CREATIVES:
                     ids.Add(ExportFormattedResult);
-                    ids.Add( ExportGrossResult );
-                    break;                             
+                    ids.Add(ExportGrossResult);
+                    break;
                 case Module.Name.TABLEAU_DYNAMIQUE:
-                case Module.Name.INDICATEUR:                 
+                case Module.Name.INDICATEUR:
                 case Module.Name.FACEBOOK:
                 case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
