@@ -1862,14 +1862,30 @@
               <allowedUniverseBranch id="3" name="brand\product"/>
             </allowedUniverseBranches>
           </selection>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <selection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="11" name="vehicle"/>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+              <allowedUniverseLevel id="27" name="title"/>
+              <allowedUniverseLevel id="28" name="media_Seller"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="12">
+              <allowedUniverseBranch id="12" name="interest_center\media"/>
+              <allowedUniverseBranch id="14" name="media_Seller\media"/>
+              <allowedUniverseBranch id="13" name="title\media"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/SponsorshipDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SponsorshipDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
-        <optionalSelections>
+        <!--<optionalSelections>
           <optionalSelection id="3" name="Vehicle" traductioncode="2053" url="/Private/Selection/RefineOneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" optionalNextUrl="/Private/Selection/RefineMediaUniverseSelection.aspx">
           </optionalSelection>
           <optionalSelection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/RefineMediaUniverseSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/RefineMediaUniverseSelectionHelp.aspx">
           </optionalSelection>
-        </optionalSelections>
+        </optionalSelections>-->
         <results>
           <page id="0" resultid="56" name="Résultats" traductioncode="2048" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  remoteTextUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SponsorshipResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>

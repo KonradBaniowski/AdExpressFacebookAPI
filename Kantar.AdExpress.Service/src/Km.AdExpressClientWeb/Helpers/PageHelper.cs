@@ -33,6 +33,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string ANALYSIS = "Analysis";
         private const string NEW_CREATIVES = "NewCreatives";
         private const string ADVERTISING_AGENCY = "AdvertisingAgency";
+        private const string CAMPAIGN_ANALYSIS = "CampaignAnalysis";
         const int ExportFormattedResult = 1;
         const int ExportResultWithValue = 2;
         const int ExportGrossResult = 3;
@@ -80,6 +81,10 @@ namespace Km.AdExpressClientWeb.Helpers
                     break;
                 case Module.Name.ANALYSE_MANDATAIRES:
                     resultController = ADVERTISING_AGENCY;
+                    controller = SELECTION;
+                    break;
+                case Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    resultController = CAMPAIGN_ANALYSIS;
                     controller = SELECTION;
                     break;
             }
@@ -318,6 +323,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_PLAN_MEDIA:
                 case Module.Name.TABLEAU_DYNAMIQUE:
                 case Module.Name.INDICATEUR:
+                case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     isDisabled = false;
                     break;
                 case Module.Name.FACEBOOK:

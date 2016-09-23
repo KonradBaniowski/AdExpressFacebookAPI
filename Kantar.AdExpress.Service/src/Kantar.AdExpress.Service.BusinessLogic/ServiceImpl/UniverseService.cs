@@ -1233,6 +1233,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.FACEBOOK:
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 case WebConstantes.Module.Name.NEW_CREATIVES:
+                case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     schema = WebApplicationParameters.DataBaseDescription.
                     GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                     break;
