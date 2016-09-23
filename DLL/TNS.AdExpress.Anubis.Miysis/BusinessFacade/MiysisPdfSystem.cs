@@ -219,6 +219,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pdf")
                     + "<br><br>"
                     + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), "http://km-adexpress.kantarmedia.fr"),
+                    //+ String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), "http://adexpress.kantarmedia.ie"),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 try
                 {

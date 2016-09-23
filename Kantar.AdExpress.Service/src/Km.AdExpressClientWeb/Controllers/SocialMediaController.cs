@@ -634,9 +634,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 List<PDVByMediaPageFacebookContract> data = JsonConvert.DeserializeObject<List<PDVByMediaPageFacebookContract>>(content);
                 if (data == null)
-                    data.Add(new PDVByMediaPageFacebookContract());
+                    return null;
                 else if (data.Count == 0)
-                    data.Add(new PDVByMediaPageFacebookContract());
+                    return null;
 
 
                 //TODO: a faire autrement

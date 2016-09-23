@@ -29,7 +29,7 @@
 <div class="row">
     <div class="col-md-12">
         <div id="resultOptions">
-            @Html.Action("ResultOptions", "MediaSchedulePopUp")
+            @Html.Action("ResultOptions", "MediaSchedulePopUp", new { isAdNetTrack = Model.IsAdNetTrack })
         </div>
     </div>
 </div>
@@ -145,6 +145,7 @@
             this.Id = "@(Model.paramsUrl[0])";
             this.Level = "@(Model.paramsUrl[1])";
             this.ZoomDate = "@(Model.paramsUrl[2])";
+            this.IdVehicle = "@(Model.paramsUrl[3])";
         }
 
         var paramsUrl = new ParamsUrl();
@@ -238,7 +239,8 @@
             var params = {
                 id: paramsUrl.Id,
                 level: paramsUrl.Level,
-                zoomDate: zoomDateParam
+                zoomDate: zoomDateParam,
+                idVehicle : paramsUrl.IdVehicle
             };
             $.ajax({
                 url: '@Url.Action("MediaScheduleResult", "MediaSchedulePopUp")',
@@ -381,12 +383,18 @@
         }
 
         function CallSetOptions() {
+            var params = {
+                userFilter: userFilter,
+                isAdNetTrack: '@Model.IsAdNetTrack'
+                };
+            
             $.ajax({
                 url: '@Url.Action("SetResultOptions", "MediaSchedulePopUp")',
                 contentType: "application/x-www-form-urlencoded",
                 type: "POST",
+                data: params,
                 datatype: "json",
-                data: userFilter,
+                //data: userFilter,
                 error: function (xmlHttpRequest, errorText, thrownError) {
                 },
                 success: function (data) {
@@ -610,8 +618,23 @@
             });
 
             function ResetLnLevel(lx, ly) {
-                if ($(lx).val() == $(ly).val())
+                if ($(lx).val() == $(ly).val()) {
                     $(ly).selectpicker('val', '-1');
+                    switch (ly) {
+                        case "#l1Detail":
+                            userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                            break;
+                        case "#l2Detail":
+                            userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                            break;
+                        case "#l3Detail":
+                            userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+                            break;
+                        case "#l4Detail":
+                            userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+                            break;
+                    }
+                }
             }
 
             $('#l1Detail').on('change', function (e) {

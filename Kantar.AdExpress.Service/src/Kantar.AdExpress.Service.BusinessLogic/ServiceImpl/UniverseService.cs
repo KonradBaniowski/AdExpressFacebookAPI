@@ -77,7 +77,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     var UItem = new UniversItem
                     {
-                        Id = int.Parse(item.ItemArray[0].ToString()),
+                        Id = Int64.Parse(item.ItemArray[0].ToString()),
                         Label = item.ItemArray[1].ToString()
                     };
                     result.Add(UItem);
@@ -130,7 +130,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     var UItem = new UniversItem
                     {
-                        Id = int.Parse(item.ItemArray[0].ToString()),
+                        Id = Int64.Parse(item.ItemArray[0].ToString()),
                         Label = item.ItemArray[1].ToString()
                     };
                     result.Add(UItem);
@@ -977,7 +977,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     var UItem = new UniversItem
                     {
-                        Id = int.Parse(item.ItemArray[0].ToString()),
+                        Id = Int64.Parse(item.ItemArray[0].ToString()),
                         Label = item.ItemArray[1].ToString()
                     };
                     result.Add(UItem);

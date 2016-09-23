@@ -1241,7 +1241,8 @@ function CallPlurimediaStackedChart() {
         },
         success: function (data) {
             $('#Stacked-chart').html('').append(data);
-            getDataPlurimediaStacked();
+            if (data != "")
+                getDataPlurimediaStacked();
             $(".mediaLoaderPlurimediaStacked").hide();
             $("#exportCharts").show();
         }

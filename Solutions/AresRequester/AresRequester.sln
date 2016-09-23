@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.Ares.Alerts.DAL.Default
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.Ares.RequesterSrv", "..\..\Services\TNS.Ares.RequesterSrv\TNS.Ares.RequesterSrv.csproj", "{117BC878-7920-49D3-BB58-E74960045F0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.Ares.RequesterSrvIr", "..\..\Services\TNS.Ares.RequesterSrvIr\TNS.Ares.RequesterSrvIr.csproj", "{007C4929-7CEF-48E5-A2D9-647EF829078A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,12 @@ Global
 		{117BC878-7920-49D3-BB58-E74960045F0E}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{117BC878-7920-49D3-BB58-E74960045F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117BC878-7920-49D3-BB58-E74960045F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007C4929-7CEF-48E5-A2D9-647EF829078A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
