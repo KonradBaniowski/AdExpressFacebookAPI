@@ -9,7 +9,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IOptionMediaScheduleService
     {
-        OptionsMediaSchedule GetOptions(string idWebSession);
-        void SetOptions(string idWebSession, UserFilter userFilter);
+        OptionsMediaSchedule GetOptions(string idWebSession, bool isAdNetTrack);
+        void SetOptions(string idWebSession, UserFilter userFilter, bool isAdNetTrack);
     }
 }

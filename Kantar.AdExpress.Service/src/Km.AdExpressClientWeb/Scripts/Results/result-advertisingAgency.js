@@ -39,7 +39,7 @@
         this.L1DetailValue = $('#l1Detail').val();
         this.L2DetailValue = $('#l2Detail').val();
         this.L3DetailValue = $('#l3Detail').val();
-        this.L4DetailValue = -1;
+        this.L4DetailValue = $('#l4Detail').val();
     }
 
     function GenericColumnDetailLevelFilter() {
@@ -692,8 +692,23 @@
     });
 
     function ResetLnLevel(lx, ly) {
-        if ($(lx).val() == $(ly).val())
+        if ($(lx).val() == $(ly).val()) {
             $(ly).selectpicker('val', '-1');
+            switch(ly) {
+                case "#l1Detail":
+                    userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                    break;
+                case "#l2Detail":
+                    userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                    break;
+                case "#l3Detail":
+                    userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+                    break;
+                case "#l4Detail":
+                    userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+                    break;
+            }
+        }
     }
 
     $('#l1Detail').on('change', function (e) {

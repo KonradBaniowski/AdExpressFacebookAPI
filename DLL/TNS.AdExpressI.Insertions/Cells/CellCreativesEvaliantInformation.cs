@@ -864,7 +864,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             {
                 t.AppendFormat("{0}: ", GestionWeb.GetWebWord(2156, _session.SiteLanguage));
 
-                t.AppendFormat("<a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                t.AppendFormat("<a href='{0}?idSession={1}&level={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&idVehicle={8}' target='_blank'>{7}</a>",
                     mediaSchedulePath,
                     _session.IdSession,
                     CstFmk.Results.AdNetTrackMediaSchedule.Type.advertiser.GetHashCode(),
@@ -877,7 +877,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 );
                 if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
                 {
-                    t.AppendFormat(" | <a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                    t.AppendFormat(" | <a href='{0}?idSession={1}&level={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&idVehicle={8}' target='_blank'>{7}</a>",
                     mediaSchedulePath,
                         _session.IdSession,
                         CstFmk.Results.AdNetTrackMediaSchedule.Type.product.GetHashCode(),
@@ -889,7 +889,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                         _vehicle.DatabaseId
                     );
                 }
-                t.AppendFormat(" | <a href='javascript:window.open(\"{0}?idSession={1}&idLevel={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&vehicleId={8}\",  \"_blank\", \"toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700\")'>{7}</a>",
+                t.AppendFormat(" | <a href='{0}?idSession={1}&level={2}&id={3}&zoomDate={4}&universId={5}&moduleId={6}&idVehicle={8}' target='_blank'>{7}</a>",
                     mediaSchedulePath,
                     _session.IdSession,
                     CstFmk.Results.AdNetTrackMediaSchedule.Type.visual.GetHashCode(),

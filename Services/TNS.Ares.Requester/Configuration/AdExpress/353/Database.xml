@@ -22,7 +22,7 @@
   </defaultConnections>
   <schemas>
     <schema enumId="2" description="Right" label="mau01"/>
-    <schema enumId="5" description="webnav01" label="webnav01"/>
+    <schema enumId="5" description="webnav01" label="webnav02"/>
     <schema enumId="10" description="Alert" label="mau01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
