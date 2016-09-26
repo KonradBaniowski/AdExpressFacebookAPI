@@ -187,6 +187,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentController =  SELECTION;
                     currentModuleIcon = "icon-camrecorder";
                     break;
+                case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalyseDispositifsLabel;
+                    currentController = SELECTION;
+                    currentModuleIcon = "icon-puzzle";
+                    break;
                 default:
                     break;
             }

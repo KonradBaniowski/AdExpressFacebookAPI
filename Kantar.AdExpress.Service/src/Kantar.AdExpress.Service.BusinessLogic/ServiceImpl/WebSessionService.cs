@@ -50,6 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string NEW_CREATIVES = "NewCreatives";
         private const string FACEBOOK = "SocialMedia";
+        private const string ANALYSE_DES_DISPOSITIFS = "CampaignAnalysis";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         //TODO : A checker pour 100 ou 1000
@@ -979,6 +980,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? NEW_CREATIVES : SELECTION;
                     currentModuleIcon = "icon-camrecorder";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalyseDispositifsLabel;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSE_DES_DISPOSITIFS : SELECTION;
+                    currentModuleIcon = "icon-puzzle";
                     break;
                 default:
                     break;

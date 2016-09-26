@@ -228,9 +228,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentModuleIcon = "icon-camrecorder";
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                    currentModuleCode = LanguageConstantes.AnalysisLabel;
+                    currentModuleCode = LanguageConstantes.AnalyseDispositifsLabel;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSE_DES_DISPOSITIFS : SELECTION;
-                    currentModuleIcon = "icon-camrecorder";
+                    currentModuleIcon = "icon-puzzle";
                     break;
                 default:
                     break;

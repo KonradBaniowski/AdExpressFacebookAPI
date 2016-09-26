@@ -81,6 +81,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TotalInvestLabel = 1399;
         public const long Insertion = 1400;
         public const long MediaSelected = 1487;
+        public const long TendancesLabel = 1500;
         public const long FileName = 1746;
         public const long AlertEmptyFields = 1748;
         public const long UniversProduct = 1759;
@@ -100,6 +101,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ExportGrossResult = 2014;
         public const long ExportPdfResult = 2017;
         public const long NotValidEmail = 2041;
+        public const long AnalyseDispositifsLabel = 2048;
         public const long RefineCode = 2053;
         public const long NewsLabel = 2080;
         public const long WarningBackNavigatorCode = 2099;
