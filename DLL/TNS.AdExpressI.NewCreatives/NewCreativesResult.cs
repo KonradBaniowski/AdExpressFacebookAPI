@@ -507,6 +507,7 @@ namespace TNS.AdExpressI.NewCreatives
 
             ResultTable resultTable = GetData();
             string mediaSchedulePath = "/MediaSchedulePopUp";
+            string creativePath = "/Creative";
             LineStart cLineStart = null;
             int nbLines = 0;
 
@@ -562,7 +563,8 @@ namespace TNS.AdExpressI.NewCreatives
                     }
                     else
                     {
-                        if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage))  //Plan Media
+                        if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage)
+                            || resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1994, _webSession.SiteLanguage))  //Plan Media
                         {
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", allowSorting = false });
                         }
@@ -587,6 +589,8 @@ namespace TNS.AdExpressI.NewCreatives
 
                 }
             }
+
+
 
             //table body rows
             int currentLine = 0;
@@ -613,12 +617,27 @@ namespace TNS.AdExpressI.NewCreatives
                             if (!string.IsNullOrEmpty(link))
                             {
                                 link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
-                           , mediaSchedulePath
-                           , link);
+                            , mediaSchedulePath
+                            , link);
                             }
                         }
                         gridData[currentLine, k + 1] = link;
 
+                    }
+                    else if (cell is CellCreativesLink)
+                    {
+                        var c = cell as CellCreativesLink;
+                        if (c != null)
+                        {
+                            link = c.GetLink();
+                            if (!string.IsNullOrEmpty(link))
+                            {
+                                link = string.Format("<center><a href='{0}?{1}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                            , creativePath
+                            , link);
+                            }
+                        }
+                        gridData[currentLine, k + 1] = link;
                     }
                     else
                     {
@@ -654,12 +673,14 @@ namespace TNS.AdExpressI.NewCreatives
                         }
                         else
                         {
-                            gridData[currentLine, k + 1] = cell.ToString(); //RenderString()
+                            gridData[currentLine, k + 1] = cell.ToString();
                         }
                     }
                 }
                 currentLine++;
             }
+
+               
             gridResult.NeedFixedColumns = true;
             gridResult.HasData = true;
             gridResult.Columns = columns;

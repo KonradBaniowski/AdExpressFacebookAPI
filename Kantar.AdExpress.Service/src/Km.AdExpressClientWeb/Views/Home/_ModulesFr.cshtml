@@ -244,7 +244,7 @@
         <div class="tile-second">
             @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
             {
-                <a class="tile-body text-center" id="@Module.Name.NEW_CREATIVES">
+                <a  href="@Url.Action("MediaSelection", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.NEW_CREATIVES">
                     <div class="flip-container-second">
                         <div class="front-second">
                             <i class="icon-camrecorder sli-size-small green"></i>

@@ -53,10 +53,13 @@ namespace TNS.AdExpress.Web.Core.Result {
             if(ShowLink()) {
                 if(_moduleId<0)_moduleId=_webSession.CurrentModule;
                 object[] args={_webSession.IdSession,_linkRules.GetHierarchy(),_zoomDate,_universId,_moduleId};
-                return (string.Format(_link,args));
+                //return (string.Format(_link,args));
+
+                return string.Format("ids={0}&zoomDate={1}&idUnivers={2}&moduleId={3}", _linkRules.GetHierarchy(), _zoomDate, _universId, _moduleId);
             }
             return ("");
         }
         #endregion
+
     }
 }
