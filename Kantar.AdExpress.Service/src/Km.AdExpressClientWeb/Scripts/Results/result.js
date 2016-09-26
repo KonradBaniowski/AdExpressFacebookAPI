@@ -84,6 +84,25 @@ $(document).on('click', '#btnSaveAlert', function (event) {
     });
 });
 
+////TODO: Temporaire pour MediaSchedule (à modifier dans BLL)
+//$(document).on('click', '*[id*=grid_table_PERIOD]', function (event) {
+//    sortFuncMediaSchedule(2);
+//});
+//$(document).on('click', '*[id*=grid_table_PDM]', function (event) {
+//    sortFuncMediaSchedule(3);
+//});
+
+//var sortFuncMediaSchedule = function (index) {
+//    columnIndex = index;
+//    if (sortOrder == "NONE")
+//        sortOrder = "ASC";
+//    else if (sortOrder == "ASC")
+//        sortOrder = "DESC";
+//    else if (sortOrder == "DESC")
+//        sortOrder = "ASC";
+//}
+///***********************************************************/
+
 $(document).on('click', '*[id*=grid_table_g]', function (event) {
     var element = $(this);
     sortFunc(element);
@@ -91,19 +110,22 @@ $(document).on('click', '*[id*=grid_table_g]', function (event) {
 
 var sortFunc = function (field) {
     var index = field[0].id.split("-")[0].split("_g")[1];
-    if (sortOrder == "NONE")
-        sortOrder = "ASC";
-    else if (sortOrder == "ASC")
-        sortOrder = "DESC";
-    else if (sortOrder == "DESC")
-        sortOrder = "ASC";
-    columnIndex = parseInt(index);
+    testIndex = parseInt(index);
+    if (!isNaN(testIndex)) {
+        columnIndex = testIndex;
+        if (sortOrder == "NONE")
+            sortOrder = "ASC";
+        else if (sortOrder == "ASC")
+            sortOrder = "DESC";
+        else if (sortOrder == "DESC")
+            sortOrder = "ASC";
+    }
 }
 
 $(document).on('click', '#btn-export', function (event) {
     event.preventDefault();
     var selectedValue = $('#export-type').val();
-    var paramsExport = "";
+    var paramsExport = "?sortOrder=NONE&columnIndex=1";
     if (sortOrder != null && columnIndex != null)
         paramsExport = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
 

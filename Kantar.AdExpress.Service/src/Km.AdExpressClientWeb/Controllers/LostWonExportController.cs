@@ -28,7 +28,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         // GET: LostWonExport
-        public ActionResult Index()
+        public ActionResult Index(ResultTable.SortOrder sortOrder, int columnIndex)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -42,7 +42,7 @@ namespace Km.AdExpressClientWeb.Controllers
             document.Worksheets.Clear();
 
             export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
-            export.Export(document, data, session);
+            export.Export(document, data, session, false, sortOrder, columnIndex);
 
             string documentFileNameRoot;
             documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
