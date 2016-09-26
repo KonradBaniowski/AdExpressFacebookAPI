@@ -1,4 +1,7 @@
-﻿$(document).on('click', '#btn-create-alert', function (event) {
+﻿var sortOrder = "NONE";
+var columnIndex = 1;
+
+$(document).on('click', '#btn-create-alert', function (event) {
     $('#btn-create-alert').off();
     var params = {
 
@@ -81,16 +84,36 @@ $(document).on('click', '#btnSaveAlert', function (event) {
     });
 });
 
+$(document).on('click', '*[id*=grid_table_g]', function (event) {
+    var element = $(this);
+    sortFunc(element);
+});
+
+var sortFunc = function (field) {
+    var index = field[0].id.split("-")[0].split("_g")[1];
+    if (sortOrder == "NONE")
+        sortOrder = "ASC";
+    else if (sortOrder == "ASC")
+        sortOrder = "DESC";
+    else if (sortOrder == "DESC")
+        sortOrder = "ASC";
+    columnIndex = parseInt(index);
+}
+
 $(document).on('click', '#btn-export', function (event) {
     event.preventDefault();
     var selectedValue = $('#export-type').val();
+    var paramsExport = "";
+    if (sortOrder != null && columnIndex != null)
+        paramsExport = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+
     var params = {
         exportType: selectedValue
     };
     var controller = $('#ExportController').val();
     switch (selectedValue) {
         case "1":
-            window.open('/' + controller + '/Index', "_blank");
+            window.open('/' + controller + '/Index' + paramsExport, "_blank");
             break;
         case "2":
             window.open('/' + controller + '/ResultValue', "_blank");

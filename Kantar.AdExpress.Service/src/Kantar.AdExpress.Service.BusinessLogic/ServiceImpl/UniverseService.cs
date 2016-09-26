@@ -337,6 +337,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
@@ -1275,6 +1276,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.INDICATEUR:
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
