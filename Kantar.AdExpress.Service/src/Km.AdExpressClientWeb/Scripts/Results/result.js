@@ -208,3 +208,16 @@ $(document).on('click', '#btnExport', function (event) {
         }
     });
 });
+
+$(document).on('click', '*[class*=ui-iggrid-sortableheader]', function (event) {
+    $(".customColumnSizeSort").removeClass("customColumnSizeSort");
+
+    var element = $(this).find(".ui-iggrid-headertext");
+    element.each(function () {
+        this.style.setProperty('width', '80%', 'important');
+    });
+    element.addClass("customColumnSizeSort");
+
+    element = $(this).find(".ui-iggrid-colindicator");
+    element.css("margin-right", "-8px");
+});

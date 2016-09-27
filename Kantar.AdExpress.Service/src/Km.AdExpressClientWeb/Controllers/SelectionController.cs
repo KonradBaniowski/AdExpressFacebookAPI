@@ -267,12 +267,18 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _periodService.GetPeriod(idSession);
             if (result.Success)
             {
+
                 PeriodViewModel periodModel = new PeriodViewModel((int)result.ControllerDetails.ModuleId);
                 periodModel.SlidingYearsNb = WebApplicationParameters.DataNumberOfYear;
                 periodModel.IsSlidingYearsNbVisible = true;
                 periodModel.SiteLanguage = result.SiteLanguage;
                 periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
                 periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
+                if (result.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_DISPOSITIFS)
+                {
+                    DateTime now = DateTime.Now;
+                    periodModel.EndYear = string.Format("{0}-{1}-{2}", result.EndYear, now.ToString("MM"), DateTime.DaysInMonth(now.Year, now.Month));
+                }
                 switch (result.ControllerDetails.ModuleId)
                 {
                     case Module.Name.ANALYSE_PLAN_MEDIA:

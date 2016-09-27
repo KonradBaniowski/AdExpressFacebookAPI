@@ -2883,4 +2883,7 @@ ul.ui-selectable {
     background-position: 50% 50%;
 }
 
-
+.customColumnSizeSort{
+    font-size:9px !important;
+    padding-top: 2px;
+}
