@@ -15,7 +15,7 @@ namespace Km.AdExpressClientWeb.Models
         /// <summary>
         /// Nombre de semaines à afficher pour la Sélection de périodes glissantes
         /// </summary>
-        private const int WEEKS_NUMBER = 53;
+        private int WEEKS_NUMBER = 53;
         /// <summary>
         /// Nombre de mois à afficher pour la Sélection de périodes glissantes
         /// </summary>
@@ -38,7 +38,12 @@ namespace Km.AdExpressClientWeb.Models
             {
                 MONTHS_NUMBER = 6;
             }
-               
+            if (currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
+            {
+                MONTHS_NUMBER = 24;
+                WEEKS_NUMBER = 106;
+            }
+
         }
 
         public int SlidingYearsNb
