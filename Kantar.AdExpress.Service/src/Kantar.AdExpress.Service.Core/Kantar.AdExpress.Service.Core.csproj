@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessService\ICampaignAnalysisService.cs" />
     <Compile Include="BusinessService\IAdvertisingAgencyService.cs" />
     <Compile Include="BusinessService\IAlertService.cs" />
     <Compile Include="BusinessService\INewCreativesService.cs" />
@@ -133,6 +134,8 @@
     <Compile Include="Domain\ResultOptions\Options.cs" />
     <Compile Include="Domain\ResultOptions\OptionsAnalysis.cs" />
     <Compile Include="Domain\ResultOptions\OptionsMediaSchedule.cs" />
+    <Compile Include="Domain\ResultOptions\PercentageFilter.cs" />
+    <Compile Include="Domain\ResultOptions\PercentageOption.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailFilter.cs" />
     <Compile Include="Domain\ResultOptions\PeriodDetailOption.cs" />
     <Compile Include="Domain\ResultOptions\PurchaseModeFilter.cs" />

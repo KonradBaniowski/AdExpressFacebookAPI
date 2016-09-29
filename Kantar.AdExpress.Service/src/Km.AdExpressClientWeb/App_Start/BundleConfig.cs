@@ -185,6 +185,11 @@ namespace Km.AdExpressClientWeb
             "~/Scripts/bootstrap-datetimepicker.js",
             "~/Scripts/detail-selection/detail-selection.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/campaignAnalysis-results").Include(
+            "~/Scripts/Results/result-campaignAnalysis.js",
+            "~/Scripts/bootstrap-datetimepicker.js",
+            "~/Scripts/detail-selection/detail-selection.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/socialMedia-results").Include(
             "~/Scripts/Results/socialMedia-results.js"));
 

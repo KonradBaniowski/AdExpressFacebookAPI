@@ -44,5 +44,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public CheckBoxOption PDV { get; set; }
 
         public bool IsSelectRetailerDisplay { get; set; }
+
+        public PercentageOption PercentageOption { get; set; }
     }
 }
