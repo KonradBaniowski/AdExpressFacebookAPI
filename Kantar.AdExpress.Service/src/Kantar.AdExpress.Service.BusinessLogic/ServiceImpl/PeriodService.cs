@@ -47,6 +47,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public PeriodResponse CalendarValidation(PeriodSaveRequest request)
         {
+
+            comparativePeriodCalendarType = request.ComparativePeriodType;
+
             var result = new PeriodResponse();
             try
             {
