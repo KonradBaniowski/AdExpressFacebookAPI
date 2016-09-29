@@ -35,10 +35,25 @@ namespace Km.AdExpressClientWeb.Controllers
             var model = new ExportResultModel
             {
                 RememberEmail = false,
-                Labels= LabelsHelper.LoadPageLabels(siteLanguage),
-                ExportType = (exportType=="4")? GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage)
-                                                : GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage)
+                Labels= LabelsHelper.LoadPageLabels(siteLanguage)
             };
+
+            switch (exportType)
+            {
+                case "4":
+                    model.ExportType = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage);
+                    break;
+                case "5":
+                    model.ExportType = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage);
+                    break;
+                case "6":
+                    model.ExportType = GestionWeb.GetWebWord(LanguageConstantes.ExportSpotsResult, siteLanguage);
+                    break;
+                default:
+                    model.ExportType = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage);
+                    break;
+            }
+
             return PartialView("ExportResult", model);
         }
 

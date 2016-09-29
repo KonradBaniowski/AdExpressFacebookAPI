@@ -414,18 +414,18 @@
     var sortOrder = "NONE";
     var columnIndex = 1;
 
-    $('#btn-export').on('click', function (e) {
-        var selectedValue = $('#export-type').val();
-        var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
-        switch (selectedValue) {
-            case "1":
-                window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
-                break;
-            default:
-                window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
-                break;
-        }
-    });
+    //$('#btn-export').on('click', function (e) {
+    //    var selectedValue = $('#export-type').val();
+    //    var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+    //    switch (selectedValue) {
+    //        case "1":
+    //            window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
+    //            break;
+    //        default:
+    //            window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
+    //            break;
+    //    }
+    //});
 
     $('#save-custom-detail-levels').on('click', function (e) {
         var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val() + ',' + $('#l4Detail').val();

@@ -14,7 +14,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
-    @Html.Hidden("ExportController", "TestExport")
+    @Html.Hidden("ExportController", "CompaignAnalysisExport")
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -52,6 +52,12 @@
     </div>
 </div>
 <div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>

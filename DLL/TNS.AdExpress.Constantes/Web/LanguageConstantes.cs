@@ -176,6 +176,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MediaAgencyAnalysis = 2809;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
+        public const long ExportSpotsResult = 2942;
         public const long MaxLengthExceeded = 2946;
         public const long IndeRadioMessage = 3018;
         public const long ExportPptResult = 3031;
