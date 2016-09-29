@@ -42,5 +42,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool PDV { get; set; }
 
         public bool IsSelectRetailerDisplay { get; set; }
+
+        public PercentageFilter PercentageFilter { get; set; }
     }
 }
