@@ -59,14 +59,14 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
             NextStep = nextStep ?? string.Empty;
             ComparativePeriodType = comparativePeriodType;
         }
-        public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId)
+        public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId, globalCalendar.comparativePeriodType comparativePeriodType = globalCalendar.comparativePeriodType.dateToDate)
         {
             IdWebSession = idWebSesion;
             SelectedPeriod = selectedPeriod;
             SelectedValue = selectedValue;
             NextStep = nextStep ?? string.Empty;
             StudyId = studyId;
-            ComparativePeriodType = globalCalendar.comparativePeriodType.dateToDate;
+            ComparativePeriodType = comparativePeriodType;
         }
         #endregion
         public string StartDate { get; set; }

@@ -2342,13 +2342,13 @@
     <item mnemonic="w3083" type="System.String">Saisonnalité des</item>
     <item mnemonic="w3084" type="System.String">PDM des référents vs univers Marché</item>
     <item mnemonic="w3085" type="System.String">Niveau d'ENGAGEMENT</item>
-    <item mnemonic="w3086" type="System.String">Cumul des LIKE, SHARE et COMMENT</item>
-    <item mnemonic="w3087" type="System.String">PDV annonceurs ou marques ventillées par media</item>
+    <item mnemonic="w3086" type="System.String">Cumul des LIKES, SHARES et COMMENTS</item>
+    <item mnemonic="w3087" type="System.String">PDV annonceurs ou marques ventilées par media</item>
     
     <item mnemonic="w3088" type="System.String">Mois par mois</item>
     <item mnemonic="w3089" type="System.String">INVESTISSEMENTS PLURIMEDIA et BEX / mois par mois</item>
     <item mnemonic="w3090" type="System.String">Annonceur ou marque / mois par mois</item>
-    <item mnemonic="w3091" type="System.String">Ventillé par annonceur ou marque</item>
+    <item mnemonic="w3091" type="System.String">Ventilé par annonceur ou marque</item>
     <item mnemonic="w3092" type="System.String">INVESTISSEMENTS et BEX</item>
 
     <item mnemonic="w3093" type="System.String">Sélections référentes</item>

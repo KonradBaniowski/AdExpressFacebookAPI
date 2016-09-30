@@ -357,7 +357,7 @@ function getData(e) {
                     name: "Value",
                     type: "numericY",
                     minimumValue: 0,
-                    title: serieType.toUpperCase(),
+                    title: serieType.toUpperCase() + "S",
                     majorStroke: "white",
                     labelTextColor: "white"
                 }
@@ -385,7 +385,7 @@ function getDataReferKPI(e) {
     var dis = $("#chartReferKPI");
     var data = $(".elmtsChart");
     var serieType = $('#seriesType').val();
-    var title = $("#Labels_SeasonalityOfLabel").val() + " " +  serieType.toUpperCase() + " vs POST";
+    var title = $("#Labels_SeasonalityOfLabel").val() + " " +  serieType.toUpperCase() + "S vs POSTS";
     var arrayData = [];
     $.each(data, function () {
 
@@ -409,7 +409,7 @@ function getDataReferKPI(e) {
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "like",
-                title: "Like",
+                title: "Likes",
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Like",
@@ -440,7 +440,7 @@ function getDataReferKPI(e) {
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "share",
-                title: "Share",
+                title: "Shares",
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Share",
@@ -455,7 +455,7 @@ function getDataReferKPI(e) {
                 isHighlightingEnabled: true,
                 isTransitionInEnabled: true,
                 name: "comment",
-                title: "Comment",
+                title: "Comments",
                 xAxis: "Month",
                 yAxis: "KPI",
                 valueMemberPath: "Comment",
@@ -497,7 +497,7 @@ function getDataReferKPI(e) {
                     type: "numericY",
                     name: "PostsAxe",
                     labelLocation: "outsideRight",
-                    title: "POST",
+                    title: "POSTS",
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
@@ -543,7 +543,7 @@ function getDataReferKPI(e) {
         dis.igDataChart("option", "series", newListSeries);
 
         var serieType = $('#seriesType').val();
-        dis.igDataChart("option", "title", $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase() + " vs POST");
+        dis.igDataChart("option", "title", $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase() + "S vs POSTS");
         var axes = dis.igDataChart("option", "axes");
 
         //dis.igDataChart("option", "axes", [{ name: axes[1].name, remove: true }]);
@@ -584,7 +584,7 @@ function getDataReferExpenditure(e) {
     disExpenditure.igDataChart({
         height: "300px",
         width: "100%",
-        title: $("#Labels_SeasonalityOfLabel").val() + " " + "BEX vs POST",
+        title: $("#Labels_SeasonalityOfLabel").val() + " " + "BEX vs POSTS",
         subtitle: $("#Labels_MonthByMonthLabel").val(),
         titleTextColor: "white",
         subtitleTextColor: "white",
@@ -610,7 +610,7 @@ function getDataReferExpenditure(e) {
                     type: "numericY",
                     name: "PostsAxe",
                     labelLocation: "outsideRight",
-                    title: "POST",
+                    title: "POSTS",
                     minimumValue: 0,
                     majorStroke: "rgba(0,0,0,0)",
                     stroke: "rgba(0,0,0,0)",
@@ -814,7 +814,7 @@ function getDataConcurKPI(e) {
         dataSource: arrayMonth,
         width: "100%",
         height: "300px",
-        title: $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase(),
+        title: $("#Labels_SeasonalityOfLabel").val() + " " + serieType.toUpperCase() + "S",
         subtitle: $("#Labels_AdvertiserOrBrandMonthByMonthLabel").val(),
         brushes: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
         outlines: ["#3C6BBF", "#8D3CC0", "#2B6077", "#14C896", "#B8292F", "#3C7EC0", "#B2912F", "#4D4D4D", "#60BD68", "#DECF3F"],
@@ -833,7 +833,7 @@ function getDataConcurKPI(e) {
                 }, {
                     type: "numericY",
                     name: "KPIAxe",
-                    title: serieType.toUpperCase(),
+                    title: serieType.toUpperCase() + "S",
                     labelTextColor: "white",
                 }
         ],
@@ -1026,20 +1026,20 @@ function getDataConcurDecompositionEngagement(e) {
                         outline: "transparent",
                         series: [{
                             name: "like",
-                            title: "Like",
+                            title: "Likes",
                             type: "stackedFragment",
                             valueMemberPath: "Like",
                             showTooltip: true,
                         }, {
                             name: "share",
-                            title: "Share",
+                            title: "Shares",
                             type: "stackedFragment",
                             valueMemberPath: "Share",
                             showTooltip: true,
                         },
                         {
                             name: "comment",
-                            title: "Comment",
+                            title: "Comments",
                             type: "stackedFragment",
                             valueMemberPath: "Comment",
                             showTooltip: true,
@@ -1417,7 +1417,7 @@ function getDataZoom(e) {
                 name: "Value",
                 type: "numericY",
                 minimumValue: 0,
-                title: serieType.toUpperCase(),
+                title: serieType.toUpperCase() + "S",
             }
         ],
 

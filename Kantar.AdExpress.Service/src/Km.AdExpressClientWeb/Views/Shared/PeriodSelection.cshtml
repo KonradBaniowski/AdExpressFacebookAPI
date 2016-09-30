@@ -339,38 +339,38 @@
             }
             $('#Market').on('click', function (e) {
                 e.preventDefault();
-
+                
+                nextStep = "Index";
                 var verif = SlidingDateValidation("Index", true);
 
                 if (!verif){
                     CalendarValidation("Index");
-                    nextStep = "Index";
                 }
 
             });
 
             $('#Media').on('click', function (e) {
                 e.preventDefault();
-
+        
+                nextStep = "MediaSelection";
                 var verif = SlidingDateValidation("MediaSelection", true);
 
                 if (!verif){
                     CalendarValidation("MediaSelection");
-                    nextStep = "MediaSelection";
                 }
 
             });
 
             $('#Results').on('click', function (e) {
                 e.preventDefault();
-
+        
+                nextStep = "Results";
                 var verifNavig = CheckNavigation($(this));
                 if (verifNavig) {
                     var verif = SlidingDateValidation("Results", true);
 
                     if (!verif){
                         CalendarValidation("Results");
-                        nextStep = "Results";
                     }
 
                 }
@@ -395,6 +395,7 @@
 
                 if(passSelectionComparative)
                 {
+                    $('#selectionComparativeModal').modal('hide');
                     var startDate = $('#begin-date-value').val();
                     var endDate = $('#end-date-value').val();
                     var isComparativeStudy = $('#isComparativeStudy').is(":checked");
@@ -458,32 +459,48 @@
                         bootbox.alert(@Html.Raw(Json.Encode(Model.ErrorMessage.EmptySelection)));
                     return false;
                 }
-                var isComparativeStudy = $('#isComparativeStudy').is(":checked");
-                var params = {
-                    selectedPeriod: selectedPeriod,
-                    selectedValue: selectedValue,
-                    nextStep: nextStepParam,
-                    isComparativeStudy: isComparativeStudy
-                };
 
-                $.ajax({
-                    url: '@Url.Action("SlidingDateValidation", _controller)',
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "POST",
-                    datatype: "json",
-                    data: params,
-                    error: function (xmlHttpRequest, errorText, thrownError) {
-                    },
-                    success: function (data) {
-                        if (data.Success == true) {
-                            document.location = data.RedirectUrl;
-                        }
-                        else
-                        {
-                            bootbox.alert(data.ErrorMessage);
-                        }
+                var module = @Model.CurrentModule;
+                var portfModul = @TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE;
+                if (module == portfModul && !passSelectionComparative){
+                    $('#selectionComparativeModal').modal('show');
+                }else{
+                    passSelectionComparative = true;
+                }
+
+                if(passSelectionComparative)
+                {
+                    var isComparativeStudy = $('#isComparativeStudy').is(":checked");
+                    var params = {
+                        selectedPeriod: selectedPeriod,
+                        selectedValue: selectedValue,
+                        nextStep: nextStepParam,
+                        isComparativeStudy: isComparativeStudy
+                    };
+
+                    if (module == portfModul){
+                        params.comparativePeriodType = comparativePeriodCalendarType;
                     }
-                });
+
+                    $.ajax({
+                        url: '@Url.Action("SlidingDateValidation", _controller)',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        datatype: "json",
+                        data: params,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            if (data.Success == true) {
+                                document.location = data.RedirectUrl;
+                            }
+                            else
+                            {
+                                bootbox.alert(data.ErrorMessage);
+                            }
+                        }
+                    });
+                }
 
                 return true;
             }
@@ -546,13 +563,21 @@
             });
 
             $('#validateSelectionComparative').on('click', function (e) {
+                $('#selectionComparativeModal').modal('hide');
+
                 if($('#dateWeekComparative').is(':checked'))
                     comparativePeriodCalendarType = 0; //comparativeWeekDate
                 else if($('#dateToDate').is(':checked'))
                     comparativePeriodCalendarType = 1; //datetodate
 
                 passSelectionComparative = true;
-                CalendarValidation(nextStep)
+
+                if (selectedPeriod != -1){
+                    SlidingDateValidation(nextStep, true);
+                }else{
+                    CalendarValidation(nextStep)
+                }
+                
             });
 
         });
