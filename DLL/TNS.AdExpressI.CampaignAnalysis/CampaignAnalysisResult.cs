@@ -305,7 +305,7 @@ namespace TNS.AdExpressI.CampaignAnalysis
                         {
                             if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
                             {
-                               gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, webSession.Unit);
+                               gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, GetUnit(cell));
                             }
                             else
                                 gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
@@ -347,9 +347,15 @@ namespace TNS.AdExpressI.CampaignAnalysis
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 
             if (cell is CellPercent)
+            {
+                key += "-percent";
                 return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            }
             else if (cell is CellEvol)
-                return new { headerText = headerText, key = key + "-evol", dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            {
+                key += "-evol";
+                return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            }
             else if (cell is CellDuration)
             {
                 key += "-unit-duration";
@@ -403,6 +409,28 @@ namespace TNS.AdExpressI.CampaignAnalysis
             }
             else
                 return new { headerText = headerText, key = key, dataType = "string", width = width };
+        }
+
+        private static CustomerSessions.Unit GetUnit(ICell cell)
+        {
+            if (cell is CellDuration)
+                return CustomerSessions.Unit.duration;
+            else if (cell is CellEuro)
+                return CustomerSessions.Unit.euro;
+            else if (cell is CellGRP)
+                return CustomerSessions.Unit.grp;
+            else if (cell is CellInsertion)
+                return CustomerSessions.Unit.insertion;
+            else if (cell is CellKEuro)
+                return CustomerSessions.Unit.kEuro;
+            else if (cell is CellMMC)
+                return CustomerSessions.Unit.mmPerCol;
+            else if (cell is CellPage)
+                return CustomerSessions.Unit.pages;
+            else if (cell is CellVolume)
+                return CustomerSessions.Unit.volume;
+            else
+                return CustomerSessions.Unit.none;
         }
 
         #region Méthodes internes

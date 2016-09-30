@@ -156,7 +156,7 @@
     }
 
     function PercentFormatter(val) {
-
+        
         if (val > 0)
             return $.ig.formatter(val, "percent");
 
@@ -218,6 +218,8 @@
                             else
                                 elem.group[i].formatter = UnitFormatter;
                         }
+                        if (elem.group[i].key.indexOf("percent") > -1)
+                            elem.group[i].formatter = PercentFormatter;
                         if (elem.group[i].key.indexOf("evol") > -1) {
                             elem.group[i].formatter = EvolFormatter;
                         }
@@ -229,7 +231,10 @@
                         elem.formatter = PageFormatter;
                     else
                         elem.formatter = UnitFormatter;
-                } else if (elem.key.indexOf("evol") > -1) {
+                } 
+                else if (elem.key.indexOf("percent") > -1)
+                        elem.formatter = PercentFormatter;
+                else if (elem.key.indexOf("evol") > -1) {
                     elem.formatter = EvolFormatter;
                 }
             });
