@@ -311,6 +311,10 @@ $(window).scroll(function () {
     $('#KPIButtonFix').width($('#KPIButtonFix').parent().width());
 });
 
+function UnitFormatterAxis(val) {
+    return $.ig.formatter(val, "number");
+}
+
 function getData(e) {
 
     $("[id^='chart-']").each(function (index) {
@@ -982,7 +986,10 @@ function getDataConcurEngagement(e) {
                     title: "Engagement",
                     labelTextColor: "white",
                     minimumValue: 0,
-                }, {
+                    labelAngle: 45,
+                    formatLabel: function (item) { return UnitFormatterAxis(item);}
+                },
+                {
                     name: "yAxis",
                     type: "categoryY",
                     overlap: -.1
@@ -1070,6 +1077,8 @@ function getDataConcurDecompositionEngagement(e) {
                     title: "KPI",
                     labelTextColor: "white",
                     minimumValue: 0,
+                    labelAngle: 45,
+                    formatLabel: function (item) { return UnitFormatterAxis(item); }
                 }, {
                     name: "yAxis",
                     type: "categoryY",

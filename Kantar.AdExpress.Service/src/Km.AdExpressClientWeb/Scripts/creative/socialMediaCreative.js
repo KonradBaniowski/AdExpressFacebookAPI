@@ -336,13 +336,16 @@ $(document).on("click", ".btn-group.btn-group-margin > .btn.btn-default", functi
     $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
     $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
     $(this).prop('disabled', true);
-    $(".sub-period-btn").on('mouseenter', function (e) {
-        previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
-        $("#subPeriodLabel").text($(this).attr("periodlabel"));
-    });
-    $(".sub-period-btn").on('mouseleave', function (e) {
-        $("#subPeriodLabel").text(previousSubPeriodLabel);
-    });
+    previousSubPeriodLabel = $(this).attr("periodlabel");
+    $("#subPeriodLabel").text($(this).attr("periodlabel"));
+});
+
+$(document).on("mouseenter", ".sub-period-btn", function (e) {
+    previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+    $("#subPeriodLabel").text($(this).attr("periodlabel"));
+});
+$(document).on("mouseleave", ".sub-period-btn", function (e) {
+    $("#subPeriodLabel").text(previousSubPeriodLabel);
 });
 
 $(document).on("click", "#btn-export", function (event) {
