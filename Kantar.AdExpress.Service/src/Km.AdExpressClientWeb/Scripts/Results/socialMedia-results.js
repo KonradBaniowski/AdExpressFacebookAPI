@@ -715,7 +715,7 @@ function getDataPDM(e) {
                 xAxis: "Month",
                 yAxis: "PDMAxe",
                 valueMemberPath: "ReferentFBPercent",
-                brush: "#FF0080", outline: "#FF0080",
+                brush: "#000000", outline: "#000000",
                 thickness: 3,
                 showTooltip: true,
                 tooltipTemplate: "referentFaceBookPDMTooltipTemplate"
