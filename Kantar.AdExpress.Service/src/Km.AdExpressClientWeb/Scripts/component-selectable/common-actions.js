@@ -96,7 +96,7 @@ function SelectedItems(event, ui) {
             });
         }
         else {
-            bootbox.alert("Would you please select an item.");
+            //bootbox.alert("Would you please select an item.");
             return false;
         }
     });
