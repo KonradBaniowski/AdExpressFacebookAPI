@@ -108,7 +108,7 @@ namespace Facebook.DataAccess.Repository
                           orderby ap.Advertiser
                           where df.DateMediaNum >= begin && df.DateMediaNum <= end
                           && dp.DateCreationPost >= beginDate.Date && dp.DateCreationPost <= endDate
-                          //&& ap.LanguageId == idLanguage
+                          && ap.LanguageId == idLanguage
                           select new PostFacebook
                           {
                               IdPostFacebook = dp.IdPostFacebook,
@@ -124,7 +124,6 @@ namespace Facebook.DataAccess.Repository
                           });
 
             return query2.Distinct().ToList();
-
 
         }
     }
