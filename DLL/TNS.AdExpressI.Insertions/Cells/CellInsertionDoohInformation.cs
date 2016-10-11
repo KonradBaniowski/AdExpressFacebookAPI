@@ -41,10 +41,10 @@ namespace TNS.AdExpressI.Insertions.Cells
             string tmpLink = "[],";
             bool isImage = false;
 
-            //if (_visuals.Count > 0)
-            //{
-            //    isImage = _visuals[0].Contains("jpg") ? true : false;
-            //}
+            if (_visuals.Count > 0)
+            {
+                isImage = _visuals[0].Contains("jpg") ? true : false;
+            }
 
             if (isImage)
             {

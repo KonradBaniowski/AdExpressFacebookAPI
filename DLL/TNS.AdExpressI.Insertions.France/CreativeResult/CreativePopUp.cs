@@ -127,6 +127,39 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
 
         }
 
+        protected override void IsDoohFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            // _idSlogan contains the name of the creative file : 8******.mp4
+            // We need to remove 8 at the beginning in order to check date media in Slogan table
+            string idSlogan = _idSlogan.Substring(1);
+            SetDAL();
+            _dateMedia = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(idSlogan, VehiclesInformation.Get(_vehicle))
+                : _dal.GetVersionMinParutionDate(idSlogan, _vehicleInformation);
+
+            if (!string.IsNullOrEmpty(_dateMedia))
+            {
+
+                const string format = "{0}\\{1}\\{2}.{3}";
+                var objArray = new object[4]
+                    {
+                        CreationServerPathes.LOCAL_PATH_VIDEO,
+                        this._dateMedia.Substring(0, 4),
+                        _idSlogan,
+                        MP4_EXTENSION
+                    };
+
+                realFormatFound = false;
+                IsVideoFileFound = windowsFormatFound = File.Exists(string.Format(format, objArray));
+
+            }
+            else
+            {
+                realFormatFound = false;
+                IsVideoFileFound = windowsFormatFound = false;
+            }
+
+        }
+
         protected override void IsRadioFileExists(ref bool realFormatFound, ref bool windowsFormatFound)
         {
             SetDAL();
@@ -169,6 +202,19 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             if (!string.IsNullOrEmpty(_dateMedia))
                 _pathDownloadingFile = string.Format("{0}/{1}/{2}/3{3}.{4}", CreationServerPathes.DOWNLOAD_TV_SERVER,
                     _dateMedia.Substring(0, 4), "240", _idSlogan, MP4_EXTENSION);
+        }
+
+        protected override void GetDoohCreativePathes()
+        {
+            SetDateMedia();
+            if (HasCreationReadRights && !string.IsNullOrEmpty(_dateMedia))
+                _pathReadingFile = string.Format("{0}/{1}/{2}.{3}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _dateMedia.Substring(0, 4), _idSlogan, MP4_EXTENSION);
+            if (!HasCreationDownloadRights)
+                return;
+            if (!string.IsNullOrEmpty(_dateMedia))
+                _pathDownloadingFile = string.Format("{0}/{1}/{2}.{3}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _dateMedia.Substring(0, 4), _idSlogan, MP4_EXTENSION);
         }
 
         protected override void GetRadioCreativePathes()
@@ -352,7 +398,13 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             if (!string.IsNullOrEmpty(_dateMedia))
                 return;
             SetDAL();
-            _dateMedia = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(_idSlogan, VehiclesInformation.Get(_vehicle)) : _dal.GetVersionMinParutionDate(_idSlogan, _vehicleInformation);
+
+            string idSlogan = _idSlogan;
+
+            if (_vehicle == Vehicles.names.dooh)
+                idSlogan = _idSlogan.Substring(1);
+
+            _dateMedia = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(idSlogan, VehiclesInformation.Get(_vehicle)) : _dal.GetVersionMinParutionDate(idSlogan, _vehicleInformation);
         }
     }
 }
