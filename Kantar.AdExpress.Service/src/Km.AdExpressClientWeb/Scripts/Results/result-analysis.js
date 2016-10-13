@@ -319,6 +319,7 @@
                         var elem = $(this).find(".ui-iggrid-headertext");
                         elem.each(function () {
                             this.style.setProperty('width', '80%', 'important');
+                            this.style.setProperty('margin-left', '-3px');
                         });
                         elem.addClass("customColumnSizeSort");
 

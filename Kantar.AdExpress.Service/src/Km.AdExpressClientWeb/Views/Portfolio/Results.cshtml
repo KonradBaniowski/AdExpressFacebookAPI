@@ -248,8 +248,8 @@
             var needFixedColumns = false;
             var zoomDate = '';
             var previousSubPeriodLabel;
-           
-          
+
+
 
             function GetItems(idItems) {
                 var items = '';
@@ -472,7 +472,7 @@
 
                 return columns;
             }
-          
+
 
             function CallPortfolioResult() {
                 $("#gridEmpty").hide();
@@ -514,12 +514,21 @@
                                 ds.dataBind();
                             }
 
-                            if (userFilter.ResultTypeFilter.ResultType == "4") {
+                            if (userFilter.ResultTypeFilter.ResultType == "4"){
                                 $("#ChartPanel").show();
                                 $("#accord1").collapse('show');
                                 $("#accord2").collapse('show');
                                 CallPortfolioGraphResult();
                             }
+
+                            if (userFilter.ResultTypeFilter.ResultType == "3"){
+                                $(".exportTypes.bootstrap-select").hide();
+                                $("#btn-export").hide();
+                            }else{
+                                $(".exportTypes.bootstrap-select").show();
+                                $("#btn-export").show();
+                            }
+
                         }
                         else {
                             $("#GridPanel").show();
@@ -528,7 +537,7 @@
                             $("#gridEmpty").show();
                         }
 
-                       
+
                          if (@isCarouselVisible && (userFilter.ResultTypeFilter.ResultType == "0" || userFilter.ResultTypeFilter.ResultType == "3")) {
                             $("#carou-vehicleView").hide();
                              VehicleCarouselAsync(userFilter.ResultTypeFilter.ResultType, LABEL_NB_INSERTION, LABEL_TOTAL_INVEST);
@@ -594,7 +603,6 @@
                     }
                 });
             }
-
 
             function CallSetOptions() {
                 $("#globalLoader").removeClass("hide");
@@ -931,7 +939,7 @@
                             break;
                         case "#l3Detail":
                             userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                            break;                       
+                            break;
                     }
                 }
             }

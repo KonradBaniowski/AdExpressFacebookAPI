@@ -241,6 +241,7 @@ $(document).on('click', '*[class*=ui-iggrid-sortableheader]', function (event) {
     var element = $(this).find(".ui-iggrid-headertext");
     element.each(function () {
         this.style.setProperty('width', '80%', 'important');
+        this.style.setProperty('margin-left', '-3px');
     });
     element.addClass("customColumnSizeSort");
 

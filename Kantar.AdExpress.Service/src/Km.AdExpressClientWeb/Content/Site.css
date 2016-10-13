@@ -2887,3 +2887,23 @@ ul.ui-selectable {
     font-size:9px !important;
     padding-top: 2px;
 }
+
+
+/*.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar{
+    width: 1em; 
+}
+
+.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar,
+.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+}
+
+.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.5); 
+}*/
+
+
+/*.ui-iggrid-scrolldiv.ui-widget-content{
+    padding-right:15px !important;
+}*/
+

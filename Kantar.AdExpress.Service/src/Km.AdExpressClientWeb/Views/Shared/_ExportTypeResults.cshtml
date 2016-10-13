@@ -1,7 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.Shared.ResultsViewModel
 
 <div class="pull-right custom-button selectexporttype">
-    <select id="export-type" class="selectdatepicker hide">
+    <select id="export-type" class="selectdatepicker exportTypes hide">
         @foreach (var item in Model.ExportTypeViewModels)
         {
             if (item.Visible)
