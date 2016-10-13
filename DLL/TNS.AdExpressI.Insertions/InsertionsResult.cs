@@ -28,6 +28,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Results;
 using System.Text;
 using TNS.AdExpress.Domain.Insertions;
+using System.Collections;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -1578,7 +1579,7 @@ namespace TNS.AdExpressI.Insertions
                 case Vehicles.names.dooh:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DOOH_CREATION_ACCESS_FLAG))
                         break;
-                    AddVisuals(row, visuals, GetCreativePathOutDoor);
+                    AddVisualsDooh(row, visuals, GetCreativePathOutDoor, GetCreativePathVideoDooh);
                     break;
                 case Vehicles.names.instore:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INSTORE_CREATION_ACCESS_FLAG))
@@ -1642,6 +1643,30 @@ namespace TNS.AdExpressI.Insertions
                 visuals.AddRange(files.Select(s => getCreativePath(s, false)));
             }
         }
+
+        /// <summary>
+        /// Add Visuals
+        /// </summary>
+        /// <param name="row">Data row</param>
+        /// <param name="visuals">Visuals list</param>
+        /// <param name="getCreativePath">extact creative path</param>
+        protected virtual void AddVisualsDooh(DataRow row, List<string> visuals, Func<string, bool, string> getCreativeImagePath, Func<string, string> getCreativeVideoPath)
+        {
+            if (row["associated_file"] != DBNull.Value)
+            {
+                if (row["associated_file"].ToString().ToUpper().Contains("MP4"))
+                {
+                    var files = row["associated_file"].ToString().Split(',');
+                    visuals.AddRange(files.Select(s => getCreativeVideoPath(s)));
+                }
+                else if (row["associated_file"].ToString().Contains("jpg"))
+                {
+                    var files = row["associated_file"].ToString().Split(',');
+                    visuals.AddRange(files.Select(s => getCreativeImagePath(s, false)));
+                }
+            }
+        }
+
         /// <summary>
         /// Add Visuals
         /// </summary>
@@ -1818,6 +1843,12 @@ namespace TNS.AdExpressI.Insertions
                 , file);
 
         }
+
+        protected virtual string GetCreativePathVideoDooh(string file)
+        {
+            return file.ToUpper().Replace(".MP4","");
+        }
+
         protected virtual string GetCreativePathInStore(string file, bool bigSize)
         {
             string imagette = (bigSize) ? string.Empty : "/Imagette";
@@ -1979,7 +2010,28 @@ namespace TNS.AdExpressI.Insertions
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
+
+            TNS.AdExpress.Domain.Level.GenericDetailLevel saveLevels = null;
+
+            try
+            {
+                saveLevels = _session.DetailLevel;
+            }
+            catch
+            {
+                saveLevels = null;
+            }
+
+            _session.DetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(new ArrayList());
+
             ResultTable _data = GetCreatives(vehicle, fromDate, toDate, filters, universId, zoomDate);
+
+            if (saveLevels != null)
+            {
+                _session.DetailLevel = saveLevels;
+            }
+
+            _session.Save();
 
             if (_data != null)
             {

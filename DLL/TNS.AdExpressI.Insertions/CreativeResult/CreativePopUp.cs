@@ -389,9 +389,14 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                 case CstClassificationVehicle.names.tvSponsorship:
                 case CstClassificationVehicle.names.tvAnnounces:
                 case CstClassificationVehicle.names.tvNonTerrestrials:
-
+                
                     IsTvFileExists(out realFormatFound, out windowsFormatFound);
                     GetTvCreativePathes();
+                    break;
+                case CstClassificationVehicle.names.dooh:
+
+                    IsDoohFileExists(out realFormatFound, out windowsFormatFound);
+                    GetDoohCreativePathes();
                     break;
 
                 case CstClassificationVehicle.names.others:
@@ -520,6 +525,17 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
 
         #endregion
 
+        #region GetDoohCreativePathes
+
+        /// <summary>
+        /// Get Dooh Creative Pathes
+        /// </summary>
+        protected virtual void GetDoohCreativePathes()
+        {
+            throw new NotImplementedException("IsDoohFileExists NotImplementedException");
+        }
+
+        #endregion
 
         #region IsTvFileExists
 
@@ -538,6 +554,20 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
             realFormatFound = isCreativeExists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO, RM_EXTENSION);
 
             windowsFormatFound = isCreativeExists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO, WMV_EXTENSION);
+        }
+
+        #endregion
+
+        #region IsDoohFileExists
+
+        /// <summary>
+        /// Is Dooh File Exists
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Format Found</param>
+        protected virtual void IsDoohFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            throw new NotImplementedException("IsDoohFileExists NotImplementedException");
         }
 
         #endregion

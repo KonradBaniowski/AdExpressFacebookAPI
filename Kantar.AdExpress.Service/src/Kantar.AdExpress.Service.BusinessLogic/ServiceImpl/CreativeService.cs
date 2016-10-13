@@ -166,8 +166,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     saveLevels = null;
                 }
+
                 _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
-                //creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
+
+                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
+
                 if (saveLevels != null)
                 {
                     _customerWebSession.DetailLevel = saveLevels;
@@ -175,7 +178,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 _customerWebSession.Save();
 
-                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
+                //creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
 
             }
             catch (Exception ex)
