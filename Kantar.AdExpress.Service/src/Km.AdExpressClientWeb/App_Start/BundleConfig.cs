@@ -60,13 +60,16 @@ namespace Km.AdExpressClientWeb
 
             #region CSS spécifique par langues
             //Francais 
-            bundles.Add(new StyleBundle("~/Content/css/FR"));
+            bundles.Add(new StyleBundle("~/Content/css/33/FR"));
 
             //Anglais 
-            bundles.Add(new StyleBundle("~/Content/css/EN"));
+            bundles.Add(new StyleBundle("~/Content/css/33/EN"));
+            bundles.Add(new StyleBundle("~/Content/css/35/EN").Include(
+                "~/Content/site-Fi_en.css"
+            ));
 
             // Finnois
-            bundles.Add(new StyleBundle("~/Content/css/FI").Include(
+            bundles.Add(new StyleBundle("~/Content/css/35/FI").Include(
                 "~/Content/site-Fi.css"
             ));
             #endregion
