@@ -1752,11 +1752,11 @@ namespace TNS.AdExpressI.Insertions.DAL
                     , listMediaAccess.Substring(0, listMediaAccess.Length), tData.Prefix);
             }
 
-            if (_session.SecondaryMediaUniverses != null && _session.SecondaryMediaUniverses.Count > 0)
+            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
             {
                 sql.Append((vehicle.Id == Vehicles.names.mailValo)
-                               ? _session.SecondaryMediaUniverses[0].GetSqlConditions(tData.Prefix, true, ReplaceMailValoByVmc)
-                               : _session.SecondaryMediaUniverses[0].GetSqlConditions(tData.Prefix, true));
+                               ? _session.PrincipalMediaUniverses[0].GetSqlConditions(tData.Prefix, true, ReplaceMailValoByVmc)
+                               : _session.PrincipalMediaUniverses[0].GetSqlConditions(tData.Prefix, true));
 
             }
             #endregion
