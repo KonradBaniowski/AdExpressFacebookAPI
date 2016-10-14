@@ -225,6 +225,9 @@ namespace TNS.AdExpressI.Portofolio
                     case AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
                         result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
                         break;
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        result = GetStructureEngine(true);
+                        break;
                     default:
                         throw (new PortofolioException("Impossible to identified current tab "));
                 }
@@ -1098,7 +1101,8 @@ namespace TNS.AdExpressI.Portofolio
             }
         }
 
-        public GridResult GetStructureGridResult(bool excel)
+
+        public Engines.StructureEngine GetStructureEngine(bool excel)
         {
             Engines.StructureEngine result = null;
             switch (_vehicleInformation.Id)
@@ -1128,7 +1132,13 @@ namespace TNS.AdExpressI.Portofolio
                 default:
                     throw new PortofolioException("Vehicle unknown.");
             }
-            return result.GetGridResult();
+            return result;
+        }
+
+
+        public GridResult GetStructureGridResult(bool excel)
+        {
+            return GetStructureEngine(excel).GetGridResult();
         }
 
         public GridResult GetDetailMediaGridResult(bool excel)

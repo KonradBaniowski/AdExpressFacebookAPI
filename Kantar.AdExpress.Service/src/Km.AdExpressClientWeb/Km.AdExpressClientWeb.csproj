@@ -597,6 +597,7 @@
     <Content Include="Content\img\353\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\353\logo_kantarmedia.png" />
     <Content Include="Content\img\35\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\logo_kantarmedia2.png" />
     <Content Include="Content\img\35\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\Banniere-AdExpress_social.jpg" />
@@ -629,6 +630,7 @@
     <Content Include="Content\img\r.gif" />
     <Content Include="Content\img\spin1.gif" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\site-Fi_en.css" />
     <Content Include="Content\site-Fi.css" />
     <Content Include="Content\spinner.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -1544,6 +1546,7 @@
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
+    <None Include="Properties\PublishProfiles\DEMO_FINLAND.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
