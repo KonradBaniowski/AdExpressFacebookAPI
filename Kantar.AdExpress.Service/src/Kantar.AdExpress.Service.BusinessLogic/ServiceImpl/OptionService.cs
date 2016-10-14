@@ -55,6 +55,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 switch (_customerWebSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
                         _nbDetailLevelItemList = 4;
                         break;
@@ -272,7 +273,35 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region resultTypeOption
-                if (WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA != _customerWebSession.CurrentModule)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                {
+                    ResultTypeOption resultTypeOption = new ResultTypeOption();
+                    resultTypeOption.ResultType = new SelectControl();
+                    resultTypeOption.ResultType.Id = "resultType";
+                    resultTypeOption.ResultType.Visible = true;
+                    resultTypeOption.ResultType.Items = new List<SelectItem>();
+
+
+                    resultTypeOption.ResultType.Items.Add(new SelectItem
+                    {
+                        Text = string.Format("{0} / {1}", "Autres Dimensions", "Periode"),
+                        Value = ConstantesSession.PreformatedDetails.PreformatedTables.othersDimensions_X_Period.GetHashCode().ToString()
+                    });
+                    resultTypeOption.ResultType.Items.Add(new SelectItem
+                    {
+                        Text = string.Format("{0} / {1}", "Autres Dimensions", "Supports"),
+                        Value = ConstantesSession.PreformatedDetails.PreformatedTables.othersDimensions_X_Media.GetHashCode().ToString()
+                    });
+                    // "Produits+Supports / Année"
+                    resultTypeOption.ResultType.Items.Add(new SelectItem
+                    {
+                        Text = string.Format("{0} / {1}", "Autres Dimensions", "Unites"),
+                        Value = ConstantesSession.PreformatedDetails.PreformatedTables.othersDimensions_X_Units.GetHashCode().ToString()
+                    });
+                    resultTypeOption.ResultType.SelectedId = _customerWebSession.PreformatedTable.GetHashCode().ToString();
+                    options.ResultTypeOption = resultTypeOption;
+                }
+                else if (WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA != _customerWebSession.CurrentModule)
                 {
                     ResultTypeOption resultTypeOption = new ResultTypeOption();
 
@@ -374,6 +403,41 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
 
                 options.UnitOption = unitOption;
+                #endregion
+
+                #region PercentageOption
+
+                PercentageOption percentageOption = new PercentageOption();
+
+                percentageOption.Percentage = new SelectControl();
+                percentageOption.Percentage.Id = "percentage";
+                percentageOption.Percentage.Items = new List<SelectItem>();
+
+                percentageOption.Percentage.Items.Add(new SelectItem { Text = "----------------------", Value = WebConstantes.Percentage.Alignment.none.GetHashCode().ToString() });
+                percentageOption.Percentage.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2065, _customerWebSession.SiteLanguage), Value = WebConstantes.Percentage.Alignment.vertical.GetHashCode().ToString() });
+
+                if (_customerWebSession.PreformatedTable != ConstantesSession.PreformatedDetails.PreformatedTables.othersDimensions_X_Units)
+                    percentageOption.Percentage.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2064, _customerWebSession.SiteLanguage), Value = WebConstantes.Percentage.Alignment.horizontal.GetHashCode().ToString() });
+
+                try
+                {
+                    foreach (var item in percentageOption.Percentage.Items)
+                        if (_customerWebSession.PercentageAlignment.GetHashCode().ToString() == item.Value)
+                            percentageOption.Percentage.SelectedId = item.Value;
+
+                }
+                catch (System.Exception)
+                {
+                    try
+                    {
+                        percentageOption.Percentage.SelectedId = WebConstantes.Percentage.Alignment.none.GetHashCode().ToString();
+                    }
+                    catch (System.Exception)
+                    {
+                    }
+                }
+
+                options.PercentageOption = percentageOption;
                 #endregion
 
                 #region InsertionOption
@@ -620,6 +684,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 switch (_customerWebSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
                         _nbDetailLevelItemList = 4;
                         break;
@@ -693,6 +758,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 switch (_customerWebSession.CurrentModule)
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                         _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                         break;
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -714,12 +780,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
                 #region PeriodDetailFilter
-                _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                    _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
                 #endregion
 
                 #region UnitFilter
                 if(_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
                     _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                #endregion
+
+                #region PercentageFilter
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                    _customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)userFilter.PercentageFilter.Percentage;
                 #endregion
 
                 #region Options by Vehicle
@@ -748,12 +820,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region InsertionFilter
-                if (insertOption && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                if (insertOption 
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
                     _customerWebSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
                 #endregion
 
                 #region AutoPromoFilter
-                if (autopromoEvaliantOption && _customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
+                if (autopromoEvaliantOption 
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
                     _customerWebSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
                 #endregion
 
@@ -786,6 +862,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 }
                 #endregion
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                    _customerWebSession.PreformatedTable = (ConstantesSession.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {

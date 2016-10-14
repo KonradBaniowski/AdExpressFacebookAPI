@@ -162,7 +162,33 @@ $(document).on('click', '#btn-export', function (event) {
                     for (var i = 0; i < cookies.length; i++) {
                         var eachCookie = cookies[i].split("=");
                         var cookieName = eachCookie[0];
-                        if ( cookieName.indexOf("mail") > -1) {
+                        if (cookieName.indexOf("mail") > -1) {
+                            var cookieValue = eachCookie[1];
+                            $('#email').val(cookieValue);
+                        }
+                    }
+                }
+            });
+            break;
+        case "6":
+            $.ajax({
+                url: '/ExportResult/CreateExport',
+                contentType: 'application/json',
+                type: 'POST',
+                datatype: 'JSON',
+                data: JSON.stringify(params),
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                    bootbox.alert("An error occurred while processing your request.");
+                },
+                success: function (response) {
+                    $('#exportResultModal .modal-content').html('');
+                    $('#exportResultModal .modal-content').append(response);
+                    $('#exportResultModal').modal('show');
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var eachCookie = cookies[i].split("=");
+                        var cookieName = eachCookie[0];
+                        if (cookieName.indexOf("mail") > -1) {
                             var cookieValue = eachCookie[1];
                             $('#email').val(cookieValue);
                         }
@@ -207,4 +233,18 @@ $(document).on('click', '#btnExport', function (event) {
             bootbox.alert(response.Message);
         }
     });
+});
+
+$(document).on('click', '*[class*=ui-iggrid-sortableheader]', function (event) {
+    $(".customColumnSizeSort").removeClass("customColumnSizeSort");
+
+    var element = $(this).find(".ui-iggrid-headertext");
+    element.each(function () {
+        this.style.setProperty('width', '80%', 'important');
+        this.style.setProperty('margin-left', '-3px');
+    });
+    element.addClass("customColumnSizeSort");
+
+    element = $(this).find(".ui-iggrid-colindicator");
+    element.css("margin-right", "-8px");
 });

@@ -22,6 +22,25 @@ namespace TNS.AdExpress.Web.Core.Result {
             : base(cellLevel, webSession, genericDetailLevel,"",-1) {
             _linkRules=new SponsorshipShowLinkRules(cellLevel,webSession,genericDetailLevel);
 		}
-		#endregion
+        #endregion
+
+        #region Implémentation de GetLink
+        /// <summary>
+        /// Obtient l'adresse du lien
+        /// </summary>
+        /// <returns>Adresse du lien</returns>
+        public override string GetLink()
+        {
+            if (ShowLink())
+            {
+                _link = "ids={0}&zoomDate={1}&idUnivers={2}&moduleId={3}";
+                if (_moduleId < 0) _moduleId = _webSession.CurrentModule;
+                object[] args = { _linkRules.GetHierarchy(), _zoomDate, _universId, _moduleId };
+                return (string.Format(_link, args));
+            }
+            return ("");
+        }
+        #endregion
+
     }
 }

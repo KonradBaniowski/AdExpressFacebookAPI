@@ -62,7 +62,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string FcbMarketErrorMsg = "Please select at maximum 5 advertisers or brands.";
         #endregion
         private WebSession _webSession = null;
-        private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         public WebSessionResponse SaveMediaSelection(SaveMediaSelectionRequest request)
         {
             var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
@@ -208,7 +208,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
 
                 throw;
@@ -296,7 +296,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
 
                 throw;
@@ -558,7 +558,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
 
                 throw;
@@ -599,6 +599,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.SiteLanguage = siteLanguage;
             _webSession.Save();
         }
+
         public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
         {
             bool result = true;
@@ -636,13 +637,61 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSession.IdSession, webSession.UserAgent, webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSession.IdSession, webSession.UserAgent, webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 Logger.Log(LogLevel.Error, message);
 
                 throw;
             }
             return result;
         }
+
+        public PostModel GetPostModel(string webSessionId, string period)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            PostModel pM = new PostModel();
+            if (string.IsNullOrEmpty(period))
+            {
+                pM.BeginDate = long.Parse(_webSession.PeriodBeginningDate);
+                pM.EndDate = long.Parse(_webSession.PeriodEndDate);
+            }
+            else
+            {
+                int year = int.Parse(period.Substring(0, 4));
+                int month = int.Parse(period.Substring(4, 2));
+                int endDay = DateTime.DaysInMonth(year, month);
+                string startDate = new DateTime(year, month, 01).ToString("yyyyMMdd");
+                string endDate = new DateTime(year, month, endDay).ToString("yyyyMMdd");
+                pM.BeginDate = long.Parse(startDate);
+                pM.EndDate = long.Parse(endDate);
+            }
+            pM.IdLogin = (int)_webSession.CustomerLogin.IdLogin;
+            pM.IdLanguage = _webSession.DataLanguage;
+
+            return pM;
+        }
+
+        #region Dates sélectionnées
+
+        //public string GetDateSelected(string webSessionId, bool dateFormatText = true)
+        //{
+
+        //    _webSession = (WebSession)WebSession.Load(webSessionId);
+
+        //    StringBuilder html = new StringBuilder();
+        //    string startDate = "";
+        //    string endDate = "";
+
+        //    if (dateFormatText)
+        //    {
+        //        startDate = FctUtilities.Dates.getPeriodTxt(_webSession, _webSession.PeriodBeginningDate);
+        //        endDate = FctUtilities.Dates.getPeriodTxt(_webSession, _webSession.PeriodEndDate);
+        //    }
+
+
+        //    return null;
+        //}
+        #endregion
+
 
         #region Méthodes internes
 
@@ -815,8 +864,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
         }
-        #endregion     
-       
+        #endregion
+
         #region Private Methods
         private AdExpressUnivers GetUnivers(List<Tree> trees, WebSession webSession, Dimension dimension, Security security)
         {
@@ -930,6 +979,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return adExpressUniverses;
         }
+
         private ControllerDetails GetCurrentControllerDetails(long currentModule, string nextStep = "")
         {
             long currentModuleCode = 0;
@@ -998,6 +1048,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             };
             return current;
         }
+
         private bool SetDefaultUnivers(SaveMediaSelectionRequest request, WebSession _webSession, WebSessionResponse response)
         {
             bool success = false;
@@ -1115,6 +1166,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             }
         }
+
         private bool CheckFacebookItems(List<long> level)
         {
             int maxItems = int.Parse(System.Configuration.ConfigurationManager.AppSettings["FacebookMaxItems"]);
@@ -1163,6 +1215,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 response.Success = true;
             }
         }
+
         private void SetFacebookMarketUniverse(WebSessionResponse response, WebSession webSession, SaveMarketSelectionRequest request)
         {
             Dictionary<int, AdExpressUniverse> adExpressUniverses = new Dictionary<int, AdExpressUniverse>(request.Trees.Count);
@@ -1208,31 +1261,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             response.Success = true;
             webSession.Save();
 
-        }
-
-        public PostModel GetPostModel(string webSessionId, string period)
-        {
-            _webSession = (WebSession)WebSession.Load(webSessionId);
-            PostModel pM = new PostModel();
-            if (string.IsNullOrEmpty(period))
-            {
-                pM.BeginDate = long.Parse(_webSession.PeriodBeginningDate);
-                pM.EndDate = long.Parse(_webSession.PeriodEndDate);
-            }
-            else
-            {
-                int year = int.Parse(period.Substring(0, 4));
-                int month = int.Parse(period.Substring(4, 2));
-                int endDay = DateTime.DaysInMonth(year, month);
-                string startDate = new DateTime(year, month, 01).ToString("yyyyMMdd");
-                string endDate = new DateTime(year, month, endDay).ToString("yyyyMMdd");
-                pM.BeginDate = long.Parse(startDate);
-                pM.EndDate = long.Parse(endDate);
-            }
-            pM.IdLogin = (int)_webSession.CustomerLogin.IdLogin;
-            pM.IdLanguage = _webSession.DataLanguage;
-
-            return pM;
         }
 
         private List<long> GetFacebookSelectedItems(SaveMarketSelectionRequest request, int idTree)

@@ -47,6 +47,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public PeriodResponse CalendarValidation(PeriodSaveRequest request)
         {
+
+            comparativePeriodCalendarType = request.ComparativePeriodType;
+
             var result = new PeriodResponse();
             try
             {
@@ -690,7 +693,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             try
             {
                 globalCalendar.periodDisponibilityType periodCalendarDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
-                globalCalendar.comparativePeriodType comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
+                comparativePeriodCalendarType = request.ComparativePeriodType;
 
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
                 IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);

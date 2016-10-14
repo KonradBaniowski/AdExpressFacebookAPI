@@ -653,6 +653,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case ModuleName.ANALYSE_MANDATAIRES:
                         case ModuleName.NEW_CREATIVES:
                         case ModuleName.FACEBOOK:
+                        case ModuleName.ANALYSE_DES_DISPOSITIFS:
 
                             #region Retrieving data
                             DataTable dtModulesList = right.GetCustomerModuleListHierarchy();
@@ -857,7 +858,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
                                 || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
                                 || webSessionSave.CurrentModule == ModuleName.CELEBRITIES
-                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK)
+                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK
+                                || webSessionSave.CurrentModule == ModuleName.ANALYSE_DES_DISPOSITIFS)
                             {
 
                                 int oldYear = 2000;
@@ -1019,7 +1021,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 || webSessionSave.CurrentModule == ModuleName.ANALYSE_MANDATAIRES
                                 || webSessionSave.CurrentModule == ModuleName.NEW_CREATIVES
                                 || webSessionSave.CurrentModule == ModuleName.CELEBRITIES
-                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK)
+                                || webSessionSave.CurrentModule == ModuleName.FACEBOOK
+                                || webSessionSave.CurrentModule == ModuleName.ANALYSE_DES_DISPOSITIFS)
                             {
                                 if (!verifCustomerPeriod)
                                     UpdateGlobalDates(webSessionSave.PeriodType, webSessionSave, FirstDayNotEnable, webSession);

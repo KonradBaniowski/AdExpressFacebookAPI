@@ -112,13 +112,13 @@ namespace Km.AdExpressClientWeb.Controllers
             schemaFields.Add(new { name = "NbPage" });
             columns.Add(new { headerText = "Fan", key = "NumberFan", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberFan" });
-            columns.Add(new { headerText = "Post", key = "NumberPost", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Posts", key = "NumberPost", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberPost" });
-            columns.Add(new { headerText = "Like", key = "NumberLike", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Likes", key = "NumberLike", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberLike" });
-            columns.Add(new { headerText = "Comment", key = "NumberComment", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Comments", key = "NumberComment", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberComment" });
-            columns.Add(new { headerText = "Share", key = "NumberShare", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
+            columns.Add(new { headerText = "Shares", key = "NumberShare", dataType = "number", width = "84", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "NumberShare" });
             columns.Add(new { headerText = "Brand exposure", key = "Expenditure", dataType = "number", width = "92", format = "number", columnCssClass = "numericAlignment" });
             schemaFields.Add(new { name = "Expenditure" });

@@ -2319,7 +2319,7 @@
     <item mnemonic="w3061" type="System.String">Numéro SIRET</item>
     <item mnemonic="w3062" type="System.String">Recherche</item>
     <item mnemonic="w3063" type="System.String">Analyses</item>
-    <item mnemonic="w3064" type="System.String">Facebook</item>
+    <item mnemonic="w3064" type="System.String">Social Media</item>
     <item mnemonic="w3065" type="System.String">En cours de construction</item>
     <item mnemonic="w3066" type="System.String"> est disponible sur &lt;a href="{0}"&gt;AdExpress&lt;/a&gt;.</item>
     <item mnemonic="w3067" type="System.String">Univers par défaut</item>
@@ -2342,13 +2342,13 @@
     <item mnemonic="w3083" type="System.String">Saisonnalité des</item>
     <item mnemonic="w3084" type="System.String">PDM des référents vs univers Marché</item>
     <item mnemonic="w3085" type="System.String">Niveau d'ENGAGEMENT</item>
-    <item mnemonic="w3086" type="System.String">Cumul des LIKE, SHARE et COMMENT</item>
-    <item mnemonic="w3087" type="System.String">PDV annonceurs ou marques ventillées par media</item>
+    <item mnemonic="w3086" type="System.String">Cumul des LIKES, SHARES et COMMENTS</item>
+    <item mnemonic="w3087" type="System.String">PDV annonceurs ou marques ventilées par media</item>
     
     <item mnemonic="w3088" type="System.String">Mois par mois</item>
     <item mnemonic="w3089" type="System.String">INVESTISSEMENTS PLURIMEDIA et BEX / mois par mois</item>
     <item mnemonic="w3090" type="System.String">Annonceur ou marque / mois par mois</item>
-    <item mnemonic="w3091" type="System.String">Ventillé par annonceur ou marque</item>
+    <item mnemonic="w3091" type="System.String">Ventilé par annonceur ou marque</item>
     <item mnemonic="w3092" type="System.String">INVESTISSEMENTS et BEX</item>
 
     <item mnemonic="w3093" type="System.String">Sélections référentes</item>

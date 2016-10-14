@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
+using TNS.FrameWork.Date;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -31,6 +32,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private IUniverseService _universeService;
         private IPeriodService _periodService;
         private string _controller;
+        private int _periodLength = 23;
+
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
         private const string SELECTION = "Selection";
@@ -44,6 +47,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string INDEX = "Index";
         private const int CALENDARSTUDYID = 8;
         private const int SLIDINGSTUDYID = 5;
+
         public SelectionController(IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
             _mediaService = mediaService;
@@ -267,12 +271,22 @@ namespace Km.AdExpressClientWeb.Controllers
             var result = _periodService.GetPeriod(idSession);
             if (result.Success)
             {
+
                 PeriodViewModel periodModel = new PeriodViewModel((int)result.ControllerDetails.ModuleId);
                 periodModel.SlidingYearsNb = WebApplicationParameters.DataNumberOfYear;
                 periodModel.IsSlidingYearsNbVisible = true;
                 periodModel.SiteLanguage = result.SiteLanguage;
                 periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
                 periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
+                if (result.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_DISPOSITIFS)
+                {
+                    DateTime now = DateTime.Now;
+                    periodModel.StartYear = string.Format("{0}-{1}-01", result.StartYear, now.AddMonths(-_periodLength).Month);
+
+                    if (now.Month == 12)
+                        now = now.AddMonths(1);
+                    periodModel.EndYear = string.Format("{0}-{1}-{2}", result.EndYear, now.ToString("MM"), DateTime.DaysInMonth(now.Year, now.Month));
+                }
                 switch (result.ControllerDetails.ModuleId)
                 {
                     case Module.Name.ANALYSE_PLAN_MEDIA:

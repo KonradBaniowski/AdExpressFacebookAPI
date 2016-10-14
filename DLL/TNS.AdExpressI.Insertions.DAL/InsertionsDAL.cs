@@ -1136,7 +1136,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             var ds = _session.Source.Fill(sql.ToString());
 
-            if (ds != null && ds.Tables[0] != null)
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
                 minDate = Convert.ToString(ds.Tables[0].Rows[0][0]);
             }

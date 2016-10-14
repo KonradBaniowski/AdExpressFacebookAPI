@@ -711,7 +711,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellUnit)cell).Value;
 
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
                     sheet.Cells[cellRow, cellCol].Value = "";
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 100;
@@ -723,7 +723,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellUnit)cell).Value;
 
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
                     sheet.Cells[cellRow, cellCol].Value = "";
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 100;
@@ -737,7 +737,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellPage)cell).Value;
 
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
                     sheet.Cells[cellRow, cellCol].Value = "";
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
@@ -753,7 +753,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellKEuro)cell).Value;
 
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
                     sheet.Cells[cellRow, cellCol].Value = "";
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
@@ -1300,7 +1300,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             Style style = cell.GetStyle();
 
-            style.Number = 3;
+            style.Number = 4;
 
             cell.SetStyle(style);
         }

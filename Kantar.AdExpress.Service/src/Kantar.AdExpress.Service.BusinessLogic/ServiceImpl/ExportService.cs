@@ -39,11 +39,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             try {
                 #region Validation
 
-
-                AnubisCst.Result.type resultType = (request.ExportType == "4") ? AnubisCst.Result.type.miysis : AnubisCst.Result.type.miysisPptx;
-
-                request.ExportType = (request.ExportType == "5") ? GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage)
-                                        : GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
+                AnubisCst.Result.type resultType = new AnubisCst.Result.type();
+                switch (request.ExportType)
+                {
+                    case "4":
+                        resultType = AnubisCst.Result.type.miysis;
+                        request.ExportType = GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPdfResult, webSession.SiteLanguage);
+                        break;
+                    case "5":
+                        resultType = AnubisCst.Result.type.miysisPptx;
+                        request.ExportType = GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportPptResult, webSession.SiteLanguage);
+                        break;
+                    case "6":
+                        resultType = AnubisCst.Result.type.pachet;
+                        request.ExportType = GestionWeb.GetWebWord(WebCst.LanguageConstantes.ExportSpotsResult, webSession.SiteLanguage);
+                        break;
+                    default:
+                        resultType = AnubisCst.Result.type.miysis;
+                        break;
+                }
 
                 List<int> sel = new List<int>();
                 Int64 idStaticNavSession = 0;

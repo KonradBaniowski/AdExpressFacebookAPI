@@ -315,6 +315,15 @@
                         var elementWidth = element.width();
                         var childWidth = child.width();
 
+                        $(".customColumnSizeSort").removeClass("customColumnSizeSort");
+                        var elem = $(this).find(".ui-iggrid-headertext");
+                        elem.each(function () {
+                            this.style.setProperty('width', '80%', 'important');
+                            this.style.setProperty('margin-left', '-3px');
+                        });
+                        elem.addClass("customColumnSizeSort");
+
+
                         //if (elementWidth == childWidth || (elementWidth - childWidth) <= 20) {
                         //    var str = child.html();
                         //    str = str.replace(/&nbsp;/g, " ");
@@ -327,9 +336,9 @@
                         //}
                         element.addClass("ui-iggrid-colheaderasc-ktr");
                         if (sortOrder == "ASC")
-                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
+                            element.append('<div class="ui-iggrid-indicatorcontainer" style="margin-right:-8px !important;"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
                         else
-                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-desc ui-icon ui-icon-arrowthick-1-s"></span></div>');
+                            element.append('<div class="ui-iggrid-indicatorcontainer" style="margin-right:-8px !important;"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-desc ui-icon ui-icon-arrowthick-1-s"></span></div>');
                     }
                 }
 

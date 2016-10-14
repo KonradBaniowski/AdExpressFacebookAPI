@@ -49,10 +49,10 @@ namespace Km.AdExpressClientWeb.Controllers
             columns.Add(new InfragisticColumn { HeaderText = "", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Page", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Fan", Hidden = false });
-            columns.Add(new InfragisticColumn { HeaderText = "Post", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Posts", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Like", Hidden = false });
-            columns.Add(new InfragisticColumn { HeaderText = "Share", Hidden = false });
-            columns.Add(new InfragisticColumn { HeaderText = "Comment", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Shares", Hidden = false });
+            columns.Add(new InfragisticColumn { HeaderText = "Comments", Hidden = false });
             columns.Add(new InfragisticColumn { HeaderText = "Brand exposure", Hidden = false });
 
             using (var client = new HttpClient())

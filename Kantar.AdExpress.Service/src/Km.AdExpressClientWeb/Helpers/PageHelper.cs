@@ -39,6 +39,7 @@ namespace Km.AdExpressClientWeb.Helpers
         const int ExportGrossResult = 3;
         const int ExportPdfResult = 4;
         const int ExportPptResult = 5;
+        const int ExportSpotsResult = 6;
 
 
 
@@ -406,6 +407,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportGrossResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage), Visible = true });
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportSpotsResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportSpotsResult, siteLanguage), Visible = true });
                     break;
             }
 
@@ -418,6 +420,13 @@ namespace Km.AdExpressClientWeb.Helpers
             List<int> ids = new List<int>();
             switch (currentModule)
             {
+                case Module.Name.ANALYSE_PLAN_MEDIA:
+                    ids.Add(ExportFormattedResult);
+                    ids.Add(ExportGrossResult);
+                    ids.Add(ExportPdfResult);
+                    ids.Add(ExportResultWithValue);
+                    ids.Add(ExportPptResult);
+                    break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
@@ -430,6 +439,10 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.FACEBOOK:
                 case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
+                    break;
+                case Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    ids.Add(ExportFormattedResult);
+                    ids.Add(ExportSpotsResult);
                     break;
                 default:
                     break;

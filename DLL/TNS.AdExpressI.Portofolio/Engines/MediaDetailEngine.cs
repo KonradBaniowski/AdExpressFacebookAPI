@@ -453,8 +453,6 @@ namespace TNS.AdExpressI.Portofolio.Engines
 		/// <returns>HTML Code</returns>
 		protected GridResult GetDetailMediaGridResult()
         {
-
-           
           
             UnitInformation unitInformation = null;
             string unitWebText = string.Empty;          

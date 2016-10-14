@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
 {
@@ -40,6 +41,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
             EndDate = endDate;
             NextStep = nextStep??string.Empty;
             StudyId = studyId;
+            ComparativePeriodType = globalCalendar.comparativePeriodType.dateToDate;
         }
         public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep)
         {
@@ -47,14 +49,24 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
             StartDate = startDate;
             EndDate = endDate;
             NextStep = nextStep ?? string.Empty;
+            ComparativePeriodType = globalCalendar.comparativePeriodType.dateToDate;
         }
-        public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId)
+        public PeriodSaveRequest(string idWebSesion, string startDate, string endDate, string nextStep, globalCalendar.comparativePeriodType comparativePeriodType = globalCalendar.comparativePeriodType.dateToDate)
+        {
+            IdWebSession = idWebSesion;
+            StartDate = startDate;
+            EndDate = endDate;
+            NextStep = nextStep ?? string.Empty;
+            ComparativePeriodType = comparativePeriodType;
+        }
+        public PeriodSaveRequest(string idWebSesion, int selectedPeriod, int selectedValue, string nextStep, int studyId, globalCalendar.comparativePeriodType comparativePeriodType = globalCalendar.comparativePeriodType.dateToDate)
         {
             IdWebSession = idWebSesion;
             SelectedPeriod = selectedPeriod;
             SelectedValue = selectedValue;
             NextStep = nextStep ?? string.Empty;
             StudyId = studyId;
+            ComparativePeriodType = comparativePeriodType;
         }
         #endregion
         public string StartDate { get; set; }
@@ -64,5 +76,6 @@ namespace Kantar.AdExpress.Service.Core.Domain.BusinessService
         public string IdWebSession { get; set; }
         public int SelectedValue { get; set; }
         public int SelectedPeriod { get; set; }
+        public globalCalendar.comparativePeriodType ComparativePeriodType { get; set; }
     }
 }

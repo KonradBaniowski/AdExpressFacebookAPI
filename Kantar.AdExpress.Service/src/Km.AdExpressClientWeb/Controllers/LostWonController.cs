@@ -243,17 +243,18 @@ namespace Km.AdExpressClientWeb.Controllers
                 EmptySelection = GestionWeb.GetWebWord(885, result.SiteLanguage),
                 PeriodErrorMessage = GestionWeb.GetWebWord(1855, result.SiteLanguage)
             };
+            model.CurrentModule = result.ControllerDetails.ModuleId;
 
             return View(model);
         }
 
-        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep)
+        public JsonResult CalendarValidation(string selectedStartDate, string selectedEndDate, string nextStep, globalCalendar.comparativePeriodType comparativePeriodType)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
-            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep, comparativePeriodType);
             PeriodResponse response = _periodService.CalendarValidation(request);
             var controller = response.ControllerDetails.Name;
             string action = (controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
@@ -270,14 +271,14 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep)
+        public JsonResult SlidingDateValidation(int selectedPeriod, int selectedValue, string nextStep, globalCalendar.comparativePeriodType comparativePeriodType)
         {
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
             int studyId = 5;//TO BE VERIFIED
-            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep,studyId);
+            PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep,studyId, comparativePeriodType);
             var response = _periodService.SlidingDateValidation(request);
             var controller = response.ControllerDetails.Name;
             string action = (controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
