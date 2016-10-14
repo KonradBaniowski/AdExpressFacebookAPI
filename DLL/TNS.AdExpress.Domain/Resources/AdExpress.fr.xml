@@ -2356,5 +2356,8 @@
     <item mnemonic="w3095" type="System.String">Top 3 des posts</item>
 
     <item mnemonic="w3096" type="System.String">Sélectionner un univers marché</item>
+    
+    <item mnemonic="w3097" type="System.String">Le délai d'attente s'est écoulé avant la fin de l'opération. Vous pouvez :</item>
+    <item mnemonic="w3098" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
   </items>
 </localization>
