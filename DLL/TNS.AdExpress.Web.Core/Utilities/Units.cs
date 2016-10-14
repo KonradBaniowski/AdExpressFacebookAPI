@@ -99,7 +99,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return ConvertToDuration(value);
                 case CstWeb.CustomerSessions.Unit.kEuro:
                 case CstWeb.CustomerSessions.Unit.kpln:
-                    return Math.Round(ConvertToKEuro(value));               
+                    return Math.Round(ConvertToKEuro(value));
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    if (value is CellIdsNumber) return  ((CellIdsNumber)value).Value;
+                    return Convert.ToDouble(value.ToString());
                 default:
                     return Convert.ToDouble(value);
             }
