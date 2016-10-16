@@ -971,14 +971,15 @@ namespace Km.AdExpressClientWeb.Controllers
                                         currentColMediaPlan++;
                                         break;
                                     }
-                                    if (data[i, j].GetType() == typeof(MediaPlanItem))
+                                    //if (data[i, j].GetType() == typeof(MediaPlanItem))
+                                    if (data[i, j] is MediaPlanItem)
                                     {
                                         switch (((MediaPlanItem)data[i, j]).GraphicItemType)
                                         {
                                             case DetailledMediaPlan.graphicItemType.present:
                                                 if (_showValues)
                                                 {
-                                                    sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
+                                                    //sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
                                                     SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
                                                     SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
@@ -995,7 +996,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 }
                                                 else
                                                 {
-                                                    sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
+                                                    //sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
 
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {

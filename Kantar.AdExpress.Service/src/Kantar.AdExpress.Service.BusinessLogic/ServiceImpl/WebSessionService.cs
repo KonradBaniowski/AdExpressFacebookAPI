@@ -55,6 +55,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const int MediaRequiredCode = 1052;
         //TODO : A checker pour 100 ou 1000
         private const int MaxItemsPerLevel = 1000;
+        private const int PresentAbsentMaxItemsPerLevel = 200;
         private const int ADVERTISERID = 6;
         private const int BRANDID = 8;
         private const int OUTDOOR = 8;
@@ -75,11 +76,35 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Try Catch block
             try
             {
+                bool maxSizeErr = true;
                 if (request.MediaSupportRequired && !request.Trees.Any())
                 {
+                    maxSizeErr = false;
                     response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
                 }
                 else
+                {
+                    #region Fix max items per level
+                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
+                    {
+                        if (request.Trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null && x.UniversItems.Count > PresentAbsentMaxItemsPerLevel).Any()).Any())
+                        {
+                            maxSizeErr = false;
+                            response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                        }
+                    }
+                    else
+                    {
+                        if (request.Trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null && x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
+                        {
+                            maxSizeErr = false;
+                            response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                        }
+                    }
+                    #endregion
+                }
+
+                if (maxSizeErr)
                 {
                     #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
@@ -231,15 +256,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 if (response.Success)
                 {
+                    bool maxSizeErr = true;
                     #region Fix max items per level
-                    if (request.Trees.Where(p => p.UniversLevels.Where(x => x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
+
+                    if (request.Trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null && x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
                     {
+                        maxSizeErr = false;
                         response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
                     }
                     #endregion
 
                     #region try catch block
-                    else
+                    if(maxSizeErr)
                     {
                         try
                         {
