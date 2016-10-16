@@ -408,23 +408,30 @@
                     },
                     success: function (data) {
                         if (data != null && data != "" && data.success) {
-                            dataTreeGrid = data.datagrid;
-                            cols = GetColumnsFormatter(data.columns, data.unit);
-                            colsFixed = data.columnsfixed;
-                            needFixedColumns = data.needfixedcolumns;
+                            if (data.hasMoreThanMaxRowsAllowed) {
+                                $("#gridLoader").addClass("hide");
+                                $("#gridEmpty").show();
+                                $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                            }
+                            else {
+                                dataTreeGrid = data.datagrid;
+                                cols = GetColumnsFormatter(data.columns, data.unit);
+                                colsFixed = data.columnsfixed;
+                                needFixedColumns = data.needfixedcolumns;
 
-                            var schema = new $.ig.DataSchema("array", {
-                                fields: data.schema
-                            });
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data.schema
+                                });
 
-                            ds = new $.ig.DataSource({
-                                type: "json",
-                                schema: schema,
-                                dataSource: dataTreeGrid,
-                                callback: renderGrid
-                            });
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataTreeGrid,
+                                    callback: renderGrid
+                                });
 
-                            ds.dataBind();
+                                ds.dataBind();
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");

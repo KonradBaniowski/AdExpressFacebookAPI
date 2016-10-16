@@ -414,23 +414,31 @@
                     },
                     success: function (data) {
                         if (data != null && data != "") {
-                            dataTreeGrid = data.datagrid;
-                            cols = GetColumnsFormatter(data.columns, data.unit);
-                            colsFixed = data.columnsfixed;
-                            needFixedColumns = data.needfixedcolumns;
 
-                            var schema = new $.ig.DataSchema("array", {
-                                fields: data.schema
-                            });
+                            if (data.hasMoreThanMaxRowsAllowed) {
+                                $("#gridLoader").addClass("hide");
+                                $("#gridEmpty").show();
+                                $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                            }
+                            else {
+                                dataTreeGrid = data.datagrid;
+                                cols = GetColumnsFormatter(data.columns, data.unit);
+                                colsFixed = data.columnsfixed;
+                                needFixedColumns = data.needfixedcolumns;
 
-                            ds = new $.ig.DataSource({
-                                type: "json",
-                                schema: schema,
-                                dataSource: dataTreeGrid,
-                                callback: renderGrid
-                            });
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data.schema
+                                });
 
-                            ds.dataBind();
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataTreeGrid,
+                                    callback: renderGrid
+                                });
+
+                                ds.dataBind();
+                            }
                         }
                         else {
                             $("#gridLoader").addClass("hide");
@@ -775,7 +783,7 @@
                             break;
                         case "#l3Detail":
                             userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                            break;                        
+                            break;
                     }
                 }
             }

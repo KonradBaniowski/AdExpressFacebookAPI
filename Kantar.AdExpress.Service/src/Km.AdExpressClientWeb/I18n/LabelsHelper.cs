@@ -147,7 +147,9 @@ namespace Km.AdExpressClientWeb.I18n
                 FacebookModalTitle = GestionWeb.GetWebWord(LanguageConstantes.FacebookPost, siteLanguage),
                 EmptyGrid = GestionWeb.GetWebWord(LanguageConstantes.EmptyGrid, siteLanguage),
                 Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
-                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
+                MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

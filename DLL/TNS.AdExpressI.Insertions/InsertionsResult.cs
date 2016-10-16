@@ -1908,26 +1908,18 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
 
-        private void ComputeGridData(GridResult gridResult, ResultTable _data)
+        private void ComputeGridData(GridResult gridResult, ResultTable _data, int nbLine)
         {
             _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
-            int i, j, k,l,  nbLine;
+            int i, j, k,l;
             //int creativeIndexInResultTable = -1;
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
-            nbLine = 0;
-            l = 0;
 
-            for (int startline = 0; startline < _data.LinesNumber; startline++)
-            {
-                if (!(_data[startline, 0] is LineHide))//Filtre (LineHide)
-                {
-                    nbLine++;
-                }
-            }
+            l = 0;
             object[,] gridData = new object[nbLine, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
 
 
@@ -1992,10 +1984,26 @@ namespace TNS.AdExpressI.Insertions
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
             ResultTable _data = GetInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
+            int nbLines = 0;
 
             if (_data != null)
             {
-                ComputeGridData(gridResult, _data);
+                for (int startline = 0; startline < _data.LinesNumber; startline++)
+                {
+                    if (!(_data[startline, 0] is LineHide))//Filtre (LineHide)
+                    {
+                        nbLines++;
+                    }
+                }
+
+                if (nbLines > Core.MAX_ALLOWED_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
+                ComputeGridData(gridResult, _data, nbLines);
             }
             else
             {
@@ -2010,6 +2018,7 @@ namespace TNS.AdExpressI.Insertions
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
+            int nbLines = 0;
 
             TNS.AdExpress.Domain.Level.GenericDetailLevel saveLevels = null;
 
@@ -2035,8 +2044,23 @@ namespace TNS.AdExpressI.Insertions
 
             if (_data != null)
             {
+                for (int startline = 0; startline < _data.LinesNumber; startline++)
+                {
+                    if (!(_data[startline, 0] is LineHide))//Filtre (LineHide)
+                    {
+                        nbLines++;
+                    }
+                }
+
+                if (nbLines > Core.MAX_ALLOWED_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
                 gridResult.Filter = BuildCustomFilter(ref _data, columnFilters, availableFilterValues, customFilterValues);
-                ComputeGridData(gridResult, _data);
+                ComputeGridData(gridResult, _data, nbLines);
             }
             else
             {

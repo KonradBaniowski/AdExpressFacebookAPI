@@ -338,6 +338,15 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (!gridResult.HasData) return null;
 
+                if (gridResult.HasMoreThanMaxRowsAllowed)
+                {
+                    var response = new { hasMoreThanMaxRowsAllowed = true, success = true };
+                    jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+
                 string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
                 var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema,
@@ -514,7 +523,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 WarningBackNavigator = GestionWeb.GetWebWord(LanguageConstantes.WarningBackNavigatorCode, siteLanguage),
                 ResultError = GestionWeb.GetWebWord(LanguageConstantes.ResultErrorCode, siteLanguage),
                 Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
-                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
+                MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

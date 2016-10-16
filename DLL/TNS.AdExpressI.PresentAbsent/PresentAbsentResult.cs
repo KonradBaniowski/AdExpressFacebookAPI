@@ -2043,6 +2043,13 @@ namespace TNS.AdExpressI.PresentAbsent
                     gridResult.HasData = false;
                     return gridResult;
                 }
+                else if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
                 gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             }
             else

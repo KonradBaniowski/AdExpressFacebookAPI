@@ -233,7 +233,9 @@ namespace Km.AdExpressClientWeb.Helpers
                 PDVLabel = GestionWeb.GetWebWord(LanguageConstantes.PDVLabel, siteLanguage),
                 MonthLabel = GestionWeb.GetWebWord(LanguageConstantes.MonthLabel, siteLanguage),
                 Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
-                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
+                MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

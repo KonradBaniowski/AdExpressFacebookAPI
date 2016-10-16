@@ -258,29 +258,37 @@
                 },
                 success: function (data) {
                     if (data != null && data != "") {
-                        dataTreeGrid = data.datagrid;
-                        cols = data.columns;
-                        colsFixed = data.columnsfixed;
-                        needFixedColumns = data.needfixedcolumns;
-                        hasMSCreatives = data.hasMSCreatives;
 
-                        if (hasMSCreatives)
-                            CallMSCreativesResult();
-                        else
-                            $('#msCreativesResult').addClass("hide");
+                        if (data.hasMoreThanMaxRowsAllowed) {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridMessage").removeClass("hide");
+                            $("#gridMessage").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                        }
+                        else {
+                            dataTreeGrid = data.datagrid;
+                            cols = data.columns;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
+                            hasMSCreatives = data.hasMSCreatives;
 
-                        var schema = new $.ig.DataSchema("array", {
-                            fields: data.schema
-                        });
+                            if (hasMSCreatives)
+                                CallMSCreativesResult();
+                            else
+                                $('#msCreativesResult').addClass("hide");
 
-                        ds = new $.ig.DataSource({
-                            type: "json",
-                            schema: schema,
-                            dataSource: dataTreeGrid,
-                            callback: renderGrid
-                        });
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
 
-                        ds.dataBind();
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            ds.dataBind();
+                        }
                     }
                     else {
                         $("#gridLoader").addClass("hide");
@@ -393,7 +401,7 @@
                 userFilter: userFilter,
                 isAdNetTrack: '@Model.IsAdNetTrack'
                 };
-            
+
             $.ajax({
                 url: '@Url.Action("SetResultOptions", "MediaSchedulePopUp")',
                 contentType: "application/x-www-form-urlencoded",

@@ -240,23 +240,31 @@
             },
             success: function (data) {
                 if (data != null && data != "") {
-                    dataTreeGrid = data.datagrid;
-                    cols = data.columns;
-                    colsFixed = data.columnsfixed;
-                    needFixedColumns = data.needfixedcolumns;
+                    if (data.hasMoreThanMaxRowsAllowed) {
+                        var message = $('#Labels_MaxAllowedRows').val() + '<br \>' +$('#Labels_MaxAllowedRowsBis').val();
+                        $("#gridLoader").addClass("hide");
+                        $("#gridEmpty").show();
+                        $("#gridEmpty").html(message);
+                    }
+                    else {
+                        dataTreeGrid = data.datagrid;
+                        cols = data.columns;
+                        colsFixed = data.columnsfixed;
+                        needFixedColumns = data.needfixedcolumns;
 
-                    var schema = new $.ig.DataSchema("array", {
-                        fields: data.schema
-                    });
+                        var schema = new $.ig.DataSchema("array", {
+                            fields: data.schema
+                        });
 
-                    ds = new $.ig.DataSource({
-                        type: "json",
-                        schema: schema,
-                        dataSource: dataTreeGrid,
-                        callback: renderGrid
-                    });
+                        ds = new $.ig.DataSource({
+                            type: "json",
+                            schema: schema,
+                            dataSource: dataTreeGrid,
+                            callback: renderGrid
+                        });
 
-                    ds.dataBind();
+                        ds.dataBind();
+                    }
                 }
                 else {
                     $("#gridLoader").addClass("hide");

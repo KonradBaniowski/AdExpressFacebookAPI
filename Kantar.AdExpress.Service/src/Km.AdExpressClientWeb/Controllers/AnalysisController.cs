@@ -95,13 +95,24 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            JsonResult jsonModel;
 
             var gridResult = _analysisService.GetGridResult(idWebSession, sortOrder, columnIndex);
             if (!gridResult.HasData)
                 return null;
+
+            if (gridResult.HasMoreThanMaxRowsAllowed)
+            {
+                var response = new { hasMoreThanMaxRowsAllowed = true };
+                jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
             var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
-            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;

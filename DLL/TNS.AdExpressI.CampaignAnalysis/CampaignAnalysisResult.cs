@@ -84,6 +84,7 @@ namespace TNS.AdExpressI.CampaignAnalysis
                 gridResult.HasData = false;
                 return gridResult;
             }
+            
 
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
@@ -100,7 +101,14 @@ namespace TNS.AdExpressI.CampaignAnalysis
                 gridResult.HasData = false;
                 return gridResult;
             }
-                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            else if (nbLines > Core.MAX_ALLOWED_ROWS_NB)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return (gridResult);
+            }
+
+            gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
 
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
