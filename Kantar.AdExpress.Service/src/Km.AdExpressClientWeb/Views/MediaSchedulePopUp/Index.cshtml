@@ -248,7 +248,13 @@
                 type: "POST",
                 datatype: "json",
                 data: params,
+                timeout: 300000, //5 min
                 error: function (xmlHttpRequest, errorText, thrownError) {
+                    if (errorText == 'timeout') {
+                        $("#gridLoader").addClass("hide");
+                        $("#gridMessage").removeClass("hide");
+                        $("#gridMessage").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                    }
                 },
                 success: function (data) {
                     if (data != null && data != "") {

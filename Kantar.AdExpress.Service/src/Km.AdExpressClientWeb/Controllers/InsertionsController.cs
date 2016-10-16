@@ -150,7 +150,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
                 VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage),
                 Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                NiveauxPersonalises = GestionWeb.GetWebWord(LanguageConstantes.NiveauxPersonalises, siteLanguage)
+                NiveauxPersonalises = GestionWeb.GetWebWord(LanguageConstantes.NiveauxPersonalises, siteLanguage),
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
             };
 
             return result;

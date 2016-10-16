@@ -1,6 +1,7 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using Km.AdExpressClientWeb.Helpers;
+using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models.Shared;
 using Newtonsoft.Json;
 using System;
@@ -44,6 +45,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 paramsUrl = new List<string>(),
                 SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default
+                Labels = LabelsHelper.LoadPageLabels(customerSession.SiteLanguage)
             };
 
             model.paramsUrl.Add(id);

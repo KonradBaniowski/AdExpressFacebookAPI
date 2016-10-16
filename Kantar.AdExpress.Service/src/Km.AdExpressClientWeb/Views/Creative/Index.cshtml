@@ -296,8 +296,15 @@
                 type: "POST",
                 datatype: "json",
                 data: parameters,
+                timeout: 300000, //5 min
                 error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("Erreur");
+                    if (errorText == 'timeout') {
+                        $("#gridLoader").hide();
+                        $("#gridEmpty").show();
+                        $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                    }
+                    else
+                        alert("Erreur");
                 },
                 success: function (data) {
                     if (data != null && data != "") {
@@ -457,7 +464,7 @@
             $("#objectFLV").hide();
             $("#objectHTML5").hide();
             $("#mediaLoader").show();
-            
+
             $("#creativeModal").on('shown.bs.modal', function (event) {
                 $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
                 var button = $(event.relatedTarget);// Button that triggered the modal
@@ -563,7 +570,7 @@
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
                 paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
                 infos = datas[2].replace(/\[|\]/g, '').split(";");
-                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";} 
+                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";}
 
                 //Visuels
                 if (visus.length > 1) {
