@@ -498,7 +498,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
-                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

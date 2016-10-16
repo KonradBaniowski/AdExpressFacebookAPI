@@ -396,8 +396,15 @@
                     contentType: "application/x-www-form-urlencoded",
                     type: "POST",
                     datatype: "json",
+                    timeout: 300000, //5 min
                     error: function (xmlHttpRequest, errorText, thrownError) {
-                        bootbox.alert('@string.Format("{0}.{1}",Model.Labels.ResultError,Model.Labels.WarningBackNavigator)');
+                        if (errorText == 'timeout') {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridEmpty").show();
+                            $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                        }
+                        else
+                            bootbox.alert('@string.Format("{0}.{1}",Model.Labels.ResultError,Model.Labels.WarningBackNavigator)');
                     },
                     success: function (data) {
                         if (data != null && data != "" && data.success) {
@@ -770,7 +777,7 @@
                             break;
                         case "#l3Detail":
                             userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                            break;                       
+                            break;
                     }
                 }
             }

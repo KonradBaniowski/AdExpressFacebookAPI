@@ -404,7 +404,13 @@
                     contentType: "application/x-www-form-urlencoded",
                     type: "POST",
                     datatype: "json",
+                    timeout: 300000, //5 min
                     error: function (xmlHttpRequest, errorText, thrownError) {
+                        if (errorText == 'timeout') {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridEmpty").show();
+                            $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                        }
                     },
                     success: function (data) {
                         if (data != null && data != "") {

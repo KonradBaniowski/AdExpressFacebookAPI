@@ -223,10 +223,20 @@
             type: "POST",
             datatype: "json",
             data: params,
+            timeout: 300000, //5 min
             error: function (xmlHttpRequest, errorText, thrownError) {
-                var message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
-                bootbox.alert(message);
-                $("#gridLoader").addClass("hide");
+                var message;
+                if (errorText == 'timeout') {
+                    message = $('#Labels_Timeout').val() + '<br \>' + $('#Labels_TimeoutBis').val();
+                    $("#gridLoader").addClass("hide");
+                    $("#gridEmpty").show();
+                    $("#gridEmpty").html(message);
+                }
+                else {
+                    message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
+                    bootbox.alert(message);
+                    $("#gridLoader").addClass("hide");
+                }
             },
             success: function (data) {
                 if (data != null && data != "") {

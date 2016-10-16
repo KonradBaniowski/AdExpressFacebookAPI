@@ -299,7 +299,15 @@
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",
+            timeout: 300000, //5 min
             error: function (xmlHttpRequest, errorText, thrownError) {
+                var message;
+                if (errorText == 'timeout') {
+                    message = $('#Labels_Timeout').val() + '<br \>' + $('#Labels_TimeoutBis').val();
+                    $("#gridLoader").addClass("hide");
+                    $("#gridMessage").removeClass("hide");
+                    $("#gridMessage").html(message);
+                }
             },
             success: function (data) {
                 if (data != null && data != "") {

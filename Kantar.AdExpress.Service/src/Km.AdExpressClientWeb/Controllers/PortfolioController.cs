@@ -569,6 +569,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 NbInsertionsLabel = GestionWeb.GetWebWord(LanguageConstantes.NbInsertionsLabel, siteLanguage),//144
                 TotalInvestLabel = GestionWeb.GetWebWord(LanguageConstantes.TotalInvestLabel, siteLanguage),//1399
                 NbPage = GestionWeb.GetWebWord(LanguageConstantes.NbPage, siteLanguage),//1385
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

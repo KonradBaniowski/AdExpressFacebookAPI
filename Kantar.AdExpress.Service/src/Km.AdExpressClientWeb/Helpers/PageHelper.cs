@@ -232,6 +232,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 PDMLabel = GestionWeb.GetWebWord(LanguageConstantes.PDMLabel, siteLanguage),
                 PDVLabel = GestionWeb.GetWebWord(LanguageConstantes.PDVLabel, siteLanguage),
                 MonthLabel = GestionWeb.GetWebWord(LanguageConstantes.MonthLabel, siteLanguage),
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
