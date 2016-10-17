@@ -367,10 +367,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
                 }
-                //if (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit))
-                //{
-                _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
-                //}
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && 
+                    (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
+                {
+                    _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
+                }
+
                 foreach (UnitInformation currentUnit in units)
                 {
                     if (currentUnit.Id != ConstantesSession.Unit.volume || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
@@ -662,7 +664,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                     options.IsSelectRetailerDisplay = false;
 
-
+                _customerWebSession.ReachedModule = true;
                 _customerWebSession.Save();
             }
             catch (Exception ex)

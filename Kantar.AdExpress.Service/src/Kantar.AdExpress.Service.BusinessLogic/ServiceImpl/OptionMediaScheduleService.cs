@@ -225,6 +225,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 options.PeriodDetail = PeriodDetail;
                 #endregion
 
+                _customerWebSession.ReachedModule = true;
                 _customerWebSession.Save();
             }
             catch (Exception ex)
