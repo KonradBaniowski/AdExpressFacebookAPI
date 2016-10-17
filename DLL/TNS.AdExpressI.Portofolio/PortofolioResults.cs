@@ -258,6 +258,13 @@ namespace TNS.AdExpressI.Portofolio
             if (resultTable != null)
             {
 
+                if (resultTable.LinesNumber > WebCst.Core.MAX_ALLOWED_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
                 resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
                 object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for gad column

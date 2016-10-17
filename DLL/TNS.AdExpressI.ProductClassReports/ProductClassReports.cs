@@ -283,6 +283,13 @@ namespace TNS.AdExpressI.ProductClassReports
 
             if (resultTable != null)
             {
+                if (resultTable.LinesNumber > WebCst.Core.MAX_ALLOWED_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
                 //resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
                 resultTable.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;

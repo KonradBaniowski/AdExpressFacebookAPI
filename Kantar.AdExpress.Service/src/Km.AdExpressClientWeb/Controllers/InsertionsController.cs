@@ -66,6 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            JsonResult jsonModel;
 
             var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
 
@@ -74,10 +75,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (!reponse.GridResult.HasData)
                     return null;
 
+                if (reponse.GridResult.HasMoreThanMaxRowsAllowed)
+                {
+                    var response = new { hasMoreThanMaxRowsAllowed = true };
+                    jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+
                 if (reponse.Message == null)
                 {
                     jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                    JsonResult jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
                     return jsonModel;
@@ -150,7 +160,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 DownloadLabel = GestionWeb.GetWebWord(LanguageConstantes.DownloadLabel, siteLanguage),
                 VisuelLabel = GestionWeb.GetWebWord(LanguageConstantes.VisuelLabel, siteLanguage),
                 Submit = GestionWeb.GetWebWord(LanguageConstantes.Submit, siteLanguage),
-                NiveauxPersonalises = GestionWeb.GetWebWord(LanguageConstantes.NiveauxPersonalises, siteLanguage)
+                NiveauxPersonalises = GestionWeb.GetWebWord(LanguageConstantes.NiveauxPersonalises, siteLanguage),
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
+                MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
             };
 
             return result;

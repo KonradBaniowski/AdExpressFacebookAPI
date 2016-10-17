@@ -70,7 +70,10 @@
     </div>
 </div>
 @*<input type="hidden" id="current-url" value="/@_controller/Results" />*@
-
+@Html.HiddenFor(e => e.Labels.Timeout)
+@Html.HiddenFor(e => e.Labels.TimeoutBis)
+@Html.HiddenFor(e => e.Labels.MaxAllowedRows)
+@Html.HiddenFor(e => e.Labels.MaxAllowedRowsBis)
 @section Scripts {
     @switch (Model.Presentation.SiteLanguage.ToString())
     {

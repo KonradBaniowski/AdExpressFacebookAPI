@@ -325,6 +325,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             GridResult gridResult;
+            JsonResult jsonModel;
 
             if (string.IsNullOrEmpty(zoomDate))
                 gridResult = _mediaSchedule.GetGridResult(idWebSession, "");
@@ -334,10 +335,19 @@ namespace Km.AdExpressClientWeb.Controllers
             if (!gridResult.HasData)
                 return null;
 
+            if (gridResult.HasMoreThanMaxRowsAllowed)
+            {
+                var response = new { hasMoreThanMaxRowsAllowed = true };
+                jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
+
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
             var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit };
-            JsonResult jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+            jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
             return jsonModel;
@@ -498,7 +508,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportGrossResult = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage),
                 ExportPdfResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPdfResult, siteLanguage),
                 ExportPptResult = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage),
-                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
+                Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage),
+                Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
+                TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
+                MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

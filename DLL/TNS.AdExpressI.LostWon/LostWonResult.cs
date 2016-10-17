@@ -2047,6 +2047,13 @@ namespace TNS.AdExpressI.LostWon
                 gridResult.HasData = false;
                 return gridResult;
             }
+            else if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return (gridResult);
+            }
+
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column

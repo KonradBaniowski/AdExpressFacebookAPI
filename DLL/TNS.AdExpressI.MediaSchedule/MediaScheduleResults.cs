@@ -1700,6 +1700,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                 gridResult.HasData = false;
                 return (gridResult);
             }
+            else if(data.GetLength(0) > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return (gridResult);
+            }
             #endregion
 
             #region Init Variables

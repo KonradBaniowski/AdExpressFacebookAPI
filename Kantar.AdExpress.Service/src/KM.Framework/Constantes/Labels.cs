@@ -178,5 +178,9 @@ namespace KM.Framework.Constantes
         public string MonthLabel { get; set; }//2290
         public string PDMLabel { get; set; }//806
         public string PDVLabel { get; set; }//1166
+        public string Timeout { get; set; }//3097
+        public string TimeoutBis { get; set; }//3098
+        public string MaxAllowedRows { get; set; }//2568
+        public string MaxAllowedRowsBis { get; set; }//2569
     }
 }

@@ -296,53 +296,68 @@
                 type: "POST",
                 datatype: "json",
                 data: parameters,
+                timeout: 300000, //5 min
                 error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("Erreur");
+                    if (errorText == 'timeout') {
+                        $("#gridLoader").hide();
+                        $("#gridEmpty").show();
+                        $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                    }
+                    else
+                        alert("Erreur");
                 },
                 success: function (data) {
                     if (data != null && data != "") {
 
-                        //Filter
-                        if (data.filtertitle != null && data.filtertitle != "" && userFilter.EvaliantFilters == null) {
-                            strHtml = "";
-                            for (j = 0; j < data.filtertitle.length; j++) {
-                                strHtml += '<div class="col-md-12 titleFilter">' + data.filtertitle[j] + '</div>';
-                                strHtml += '<div class="col-md-12">';
-                                for (i = 0; i < data.filterdatas[j].length; i++) {
-                                    id = data.filterdatas[j][i].id;
-                                    label = data.filterdatas[j][i].label;
-                                    strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" >' + label + '</label>';
+                        if (data.hasMoreThanMaxRowsAllowed) {
+                            $("#gridLoader").hide();
+                            $("#gridEmpty").show();
+                            $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                        }
+                        else {
+
+                            //Filter
+                            if (data.filtertitle != null && data.filtertitle != "" && userFilter.EvaliantFilters == null) {
+                                strHtml = "";
+                                for (j = 0; j < data.filtertitle.length; j++) {
+                                    strHtml += '<div class="col-md-12 titleFilter">' + data.filtertitle[j] + '</div>';
+                                    strHtml += '<div class="col-md-12">';
+                                    for (i = 0; i < data.filterdatas[j].length; i++) {
+                                        id = data.filterdatas[j][i].id;
+                                        label = data.filterdatas[j][i].label;
+                                        strHtml += '<label class="checkbox-inline no_indent"><input type="checkbox" name="EvaliantFilter" id ="' + id + '" value="' + label + '" >' + label + '</label>';
+                                    }
+                                    strHtml += '</div>';
                                 }
-                                strHtml += '</div>';
+
+                                $("#contentFilter").html(strHtml);
+                                $("#filterEvaliantPanel").show();
                             }
 
-                            $("#contentFilter").html(strHtml);
-                            $("#filterEvaliantPanel").show();
+
+                            dataTreeGrid = data.datagrid;
+                            colsFixed = data.columnsfixed;
+                            needFixedColumns = data.needfixedcolumns;
+
+                            var schema = new $.ig.DataSchema("array", {
+                                fields: data.schema
+                            });
+
+                            cols = data.columns
+                            for (i = 0; i < cols.length; i++) {
+                                if (cols[i].key == "Visu")
+                                    cols[i].template = $("#colVisuTmpl").html();
+                            }
+
+                            ds = new $.ig.DataSource({
+                                type: "json",
+                                schema: schema,
+                                dataSource: dataTreeGrid,
+                                callback: renderGrid
+                            });
+
+                            ds.dataBind();
                         }
-
-
-                        dataTreeGrid = data.datagrid;
-                        colsFixed = data.columnsfixed;
-                        needFixedColumns = data.needfixedcolumns;
-
-                        var schema = new $.ig.DataSchema("array", {
-                            fields: data.schema
-                        });
-
-                        cols = data.columns
-                        for (i = 0; i < cols.length; i++) {
-                            if(cols[i].key == "Visu")
-                                cols[i].template = $("#colVisuTmpl").html();
-                        }
-
-                        ds = new $.ig.DataSource({
-                            type: "json",
-                            schema: schema,
-                            dataSource: dataTreeGrid,
-                            callback: renderGrid
-                        });
-
-                        ds.dataBind();
 
                     }
                     else {
@@ -457,7 +472,7 @@
             $("#objectFLV").hide();
             $("#objectHTML5").hide();
             $("#mediaLoader").show();
-            
+
             $("#creativeModal").on('shown.bs.modal', function (event) {
                 $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative' + userFilter.paramsUrl.idVehicle + '');
                 var button = $(event.relatedTarget);// Button that triggered the modal
@@ -563,7 +578,7 @@
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
                 paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
                 infos = datas[2].replace(/\[|\]/g, '').split(";");
-                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";} 
+                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";}
 
                 //Visuels
                 if (visus.length > 1) {

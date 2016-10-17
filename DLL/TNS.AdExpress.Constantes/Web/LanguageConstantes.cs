@@ -234,6 +234,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectUniverseMarketLabel = 3096;
         public const long EveryDay = 000000;
         public const long MoveResultTitle = 00000;
+        public const long Timeout = 3097;
+        public const long TimeoutBis = 3098;
+        public const long MaxAllowedRows = 2568;
+        public const long MaxAllowedRowsBis = 2569;
         #endregion
     }
 }

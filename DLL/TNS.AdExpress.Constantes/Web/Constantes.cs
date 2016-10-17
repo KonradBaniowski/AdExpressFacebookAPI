@@ -332,7 +332,11 @@ namespace TNS.AdExpress.Constantes.Web
             /// </summary>
             selectedMmsBannersFormatList = 76
 		}
-	
+
+        /// <summary>
+        /// Max allowed rows number to display
+        /// </summary>
+        public const int MAX_ALLOWED_ROWS_NB = 10000;
 	}
 	/// <summary>
 	/// Constantes spécifiques aux sessions
