@@ -8,10 +8,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Utilities.Exceptions;
 using TNS.AdExpressI.GAD.DAL;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -19,7 +21,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     public class GadService : IGadService
     {
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public Gad GetGadInfos(string idWebSession, string idAddress, string advertiser)
+        public Gad GetGadInfos(string idWebSession, string idAddress, string advertiser, HttpContextBase httpContext)
         {
             WebSession customerWebSession = (WebSession)WebSession.Load(idWebSession);
             Gad gad = new Gad();
@@ -93,8 +95,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, customerWebSession.UserAgent, customerWebSession.CustomerLogin.Login, customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(customerWebSession.CurrentModule), customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

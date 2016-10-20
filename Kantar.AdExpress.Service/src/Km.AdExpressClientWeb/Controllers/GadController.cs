@@ -24,7 +24,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            Gad gadInfos = _gadService.GetGadInfos(idWebSession, idAddress, advertiser);
+            Gad gadInfos = _gadService.GetGadInfos(idWebSession, idAddress, advertiser, this.HttpContext);
 
             return PartialView(gadInfos);
         }

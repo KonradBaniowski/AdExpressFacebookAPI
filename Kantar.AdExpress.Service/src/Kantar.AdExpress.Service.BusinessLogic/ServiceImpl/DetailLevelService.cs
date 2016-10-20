@@ -15,6 +15,8 @@ using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System.Collections;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -23,7 +25,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private List<GenericDetailLevel> defaultDetailItemList = null;
         private List<DetailLevelItemInformation> allowedDetailItemList = null;
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId, bool isVehicleChanged)
+        public List<DetailLevel> GetDetailLevelItem(string idWebSession, int vehicleId, bool isVehicleChanged, HttpContextBase httpContext)
         {
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
             List<DetailLevel> detailLevelList = new List<DetailLevel>();
@@ -92,8 +94,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -101,7 +103,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public void SetDetailLevelItem(string idWebSession, UserFilter userFilter)
+        public void SetDetailLevelItem(string idWebSession, UserFilter userFilter, HttpContextBase httpContext)
         {
             WebSession CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
@@ -128,8 +130,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

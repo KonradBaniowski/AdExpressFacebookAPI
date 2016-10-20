@@ -28,6 +28,9 @@ using TNS.AdExpressI.MediaSchedule.Style;
 using TNS.AdExpressI.Classification.DAL;
 using NLog;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Core.Exceptions;
+using System.Web;
+using TNS.AdExpress.Web.Utilities.Exceptions;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -35,45 +38,45 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession CustomerSession = null;
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public object[,] GetMediaScheduleData(string idWebSession)
+        public object[,] GetMediaScheduleData(string idWebSession, HttpContextBase httpContext)
         {
             object[,] result = null;
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
 
             try
             {
-                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "", "");
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "", "", httpContext);
                 result = mediaScheduleResult.ComputeData();
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public GridResult GetGridResult(string idWebSession, string zoomDate)
+        public GridResult GetGridResult(string idWebSession, string zoomDate, HttpContextBase httpContext)
         {
             GridResult girdResult = new GridResult();
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, "");
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, "", httpContext);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        public GridResult GetGridResult(string idWebSession, string zoomDate, string idVehicle)
+        public GridResult GetGridResult(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext)
         {
             GridResult girdResult = new GridResult();
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
-            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle);
+            IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle, httpContext);
 
             return mediaScheduleResult.GetGridResult();
         }
 
-        public MSCreatives GetMSCreatives(string idWebSession, string zoomDate)
+        public MSCreatives GetMSCreatives(string idWebSession, string zoomDate, HttpContextBase httpContext)
         {
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
             VehicleInformation vehicle = new VehicleInformation();
@@ -115,8 +118,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch(Exception ex )
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -257,7 +260,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         }
 
-        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate, string idVehicle)
+        private IMediaScheduleResults InitMediaScheduleCall(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext)
         {
 
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -371,8 +374,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, CustomerSession.UserAgent, CustomerSession.CustomerLogin.Login, CustomerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(CustomerSession.CurrentModule), CustomerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

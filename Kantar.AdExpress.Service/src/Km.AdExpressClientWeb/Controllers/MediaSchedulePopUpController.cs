@@ -79,15 +79,15 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if(string.IsNullOrEmpty(idVehicle)) {
                 if (string.IsNullOrEmpty(zoomDate))
-                    gridResult = _mediaSchedule.GetGridResult(idWebSession, "", "");
+                    gridResult = _mediaSchedule.GetGridResult(idWebSession, "", "", this.HttpContext);
                 else
-                    gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate, "");
+                    gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate, "", this.HttpContext);
             }
             else {
                 if (string.IsNullOrEmpty(zoomDate))
-                    gridResult = _mediaSchedule.GetGridResult(idWebSession, "", idVehicle);
+                    gridResult = _mediaSchedule.GetGridResult(idWebSession, "", idVehicle, this.HttpContext);
                 else
-                    gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate, idVehicle);
+                    gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate, idVehicle, this.HttpContext);
             }
             
 
@@ -108,7 +108,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate);
+            CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate, this.HttpContext);
 
             return PartialView("_MSCreativesResult", creatives);
         }
@@ -117,7 +117,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            OptionsMediaSchedule options = _optionMediaScheduleService.GetOptions(idWebSession, isAdNetTrack);
+            OptionsMediaSchedule options = _optionMediaScheduleService.GetOptions(idWebSession, isAdNetTrack, this.HttpContext);
             return PartialView("_ResultOptions", options);
         }
 
@@ -126,7 +126,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            _optionMediaScheduleService.SetOptions(idWebSession, userFilter, isAdNetTrack);
+            _optionMediaScheduleService.SetOptions(idWebSession, userFilter, isAdNetTrack, this.HttpContext);
         }
     }
 }

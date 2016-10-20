@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
@@ -12,9 +13,9 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     {
 
 
-        InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> evaliantFilter);
-        List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, bool slogan = false);
+        InsertionCreativeResponse GetCreativeGridResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, bool isVehicleChanged, List<EvaliantFilter> evaliantFilter, HttpContextBase httpContext);
+        List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, HttpContextBase httpContext, bool slogan = false);
 
-        SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle);
+        SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle, HttpContextBase httpContext);
     }
 }

@@ -19,6 +19,8 @@ using System.Data;
 using TNS.AdExpress.Web.Core.DataAccess.Session;
 using TNS.AdExpress.Domain.Web;
 using NLog;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -34,7 +36,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         protected WebConstantes.GenericDetailLevel.Type _genericColumnDetailLevelType;
         protected int _nbColumnDetailLevelItemList = 1;
 
-        public OptionsMediaSchedule GetOptions(string idWebSession, bool isAdNetTrack)
+        public OptionsMediaSchedule GetOptions(string idWebSession, bool isAdNetTrack, HttpContextBase httpContext)
         {
 
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
@@ -230,15 +232,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return options;
         }
 
-        public void SetOptions(string idWebSession, UserFilter userFilter, bool isAdNetTrack)
+        public void SetOptions(string idWebSession, UserFilter userFilter, bool isAdNetTrack, HttpContextBase httpContext)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
@@ -310,8 +312,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

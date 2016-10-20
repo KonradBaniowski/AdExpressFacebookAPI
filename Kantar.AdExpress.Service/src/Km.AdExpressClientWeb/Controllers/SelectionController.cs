@@ -70,7 +70,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var result = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, this.HttpContext, true);
             #endregion
             if (result.Success)
             {
@@ -136,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
                 Domain.SaveMarketSelectionRequest request = new Domain.SaveMarketSelectionRequest(webSessionId, data, Dimension.product, Security.full, true, nextStep);
-                var result = _webSessionService.SaveMarketSelection(request);
+                var result = _webSessionService.SaveMarketSelection(request, this.HttpContext);
                 if (result.Success)
                 {
                     var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
@@ -158,7 +158,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _mediaService.GetMedia(webSessionId);
+            var result = _mediaService.GetMedia(webSessionId, this.HttpContext);
             if (result.Success)
             {
                 #region model data
@@ -205,7 +205,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 model.CanRefineMediaSupport = result.CanRefineMediaSupport;
                 if (result.CanRefineMediaSupport)
                 {
-                    var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
+                    var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, this.HttpContext, true);
                     model.CurrentModule = response.ControllerDetails.ModuleId;
                     model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
                     foreach (var item in response.Trees)
@@ -244,7 +244,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
-                response = _webSessionService.SaveMediaSelection(request);
+                response = _webSessionService.SaveMediaSelection(request, this.HttpContext);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
 
                 if (response.Success)
@@ -268,7 +268,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var result = _periodService.GetPeriod(idSession);
+            var result = _periodService.GetPeriod(idSession, this.HttpContext);
             if (result.Success)
             {
 
@@ -356,7 +356,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string url = string.Empty;
             int studyId = (isComparativeStudy) ? CALENDARSTUDYID : 0;
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep, studyId);
-            PeriodResponse response = _periodService.CalendarValidation(request);
+            PeriodResponse response = _periodService.CalendarValidation(request, this.HttpContext);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
@@ -381,7 +381,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string url = string.Empty;
             int studyId = (isComparativeStudy) ? SLIDINGSTUDYID : 0;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
-            var response = _periodService.SlidingDateValidation(request);
+            var response = _periodService.SlidingDateValidation(request, this.HttpContext);
             this._controller = response.ControllerDetails.Name;
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);

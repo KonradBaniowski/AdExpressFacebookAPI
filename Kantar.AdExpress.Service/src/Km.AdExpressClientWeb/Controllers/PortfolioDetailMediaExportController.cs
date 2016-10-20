@@ -36,7 +36,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var data = _portfolioDetailMediaService.GetDetailMediaResult(idWebSession, idMedia, dayOfWeek, ecran);
+            var data = _portfolioDetailMediaService.GetDetailMediaResult(idWebSession, idMedia, dayOfWeek, ecran, this.HttpContext);
 
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 

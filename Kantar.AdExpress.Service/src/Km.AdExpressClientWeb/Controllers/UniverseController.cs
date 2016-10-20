@@ -57,7 +57,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
             Domain.SearchRequest request = new Domain.SearchRequest(universeId, keyWord, idSession, dimension, idMedias);
-            var model = _universeService.GetItems(request, out totalItems);
+            var model = _universeService.GetItems(request, out totalItems, this.HttpContext);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
@@ -71,7 +71,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var model = _universeService.GetUniverses(dimension, idSession);
+            var model = _universeService.GetUniverses(dimension, idSession, this.HttpContext);
             return Json( model, JsonRequestBehavior.AllowGet);
         }
 
@@ -87,7 +87,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var idSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             int totalItems = 0;
-            var model = _universeService.GetItems(levelId, selectedClassification, selectedLevelId, idSession, dimension, idMedias, out totalItems);
+            var model = _universeService.GetItems(levelId, selectedClassification, selectedLevelId, idSession, dimension, idMedias, out totalItems, this.HttpContext);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
@@ -110,7 +110,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             if (showUserSavedGroups)
             {
-                var data = _universeService.GetUserSavedUniversGroups(webSessionId, dimension);
+                var data = _universeService.GetUserSavedUniversGroups(webSessionId, dimension, this.HttpContext);
                 result.SiteLanguage = data.SiteLanguage;
                 result.UserUniversGroups = Mapper.Map<List<UserUniversGroup>>(data.UniversGroups);
                 foreach (var group in result.UserUniversGroups)
@@ -127,7 +127,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universeService.GetTreesByUserUnivers(id, idWebSession, dimension);
+            var result = _universeService.GetTreesByUserUnivers(id, idWebSession, dimension, this.HttpContext);
             return Json(result);
         }
 
@@ -136,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universeService.GetUserUniversGroups(webSessionId, dimension);
+            var data = _universeService.GetUserUniversGroups(webSessionId, dimension, this.HttpContext);
             SaveUserUniversViewModel model = new SaveUserUniversViewModel
             {
                 Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
@@ -179,7 +179,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 //long groupId = long.Parse(id);
                 var claim = new ClaimsPrincipal(User.Identity);
                 string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                var data = _universeService.GetUserUniversGroups(webSessionId, dimension, id);
+                var data = _universeService.GetUserUniversGroups(webSessionId, dimension, this.HttpContext, id);
                 univers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                 {
                     Value = m.Id.ToString(),
@@ -209,7 +209,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 MediaIds = (media != null) ? media : new List<long>(),
                 IsDefaultUniverse =isDefaultUniverse
             };
-            var result = _universeService.SaveUserUnivers(request);
+            var result = _universeService.SaveUserUnivers(request, this.HttpContext);
             error = result.ErrorMessage;
             return error;
         }
@@ -230,7 +230,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.RenameSession(name, universId, webSessionId);
+            result = _myAdExpressService.RenameSession(name, universId, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -242,7 +242,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.MoveSession(id, idOldDirectory, idNewDirectory, webSessionId);
+            result = _myAdExpressService.MoveSession(id, idOldDirectory, idNewDirectory, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -254,7 +254,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId);
+            result = _myAdExpressService.RenameUnivers(name, universId, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -266,7 +266,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            result = _myAdExpressService.MoveUnivers(id, idOldDirectory, idNewDirectory, webSessionId);
+            result = _myAdExpressService.MoveUnivers(id, idOldDirectory, idNewDirectory, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -279,7 +279,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                result = _myAdExpressService.DeleteUnivers(universId, webSessionId);
+                result = _myAdExpressService.DeleteUnivers(universId, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -292,7 +292,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                result = _myAdExpressService.DeleteSession(universId, webSessionId);
+                result = _myAdExpressService.DeleteSession(universId, webSessionId, this.HttpContext);
             return Json(result);
         }
         public JsonResult CreateDirectory(string directoryName, string type)
@@ -305,7 +305,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                result = _myAdExpressService.CreateDirectory(directoryName, universType, webSessionId);
+                result = _myAdExpressService.CreateDirectory(directoryName, universType, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -319,7 +319,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                result = _myAdExpressService.RenameDirectory(directoryName, universType, idDirectory, webSessionId);
+                result = _myAdExpressService.RenameDirectory(directoryName, universType, idDirectory, webSessionId, this.HttpContext);
             return Json(result);
         }
         public JsonResult DropDirectory(string idDirectory, string type)
@@ -332,7 +332,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                result = _myAdExpressService.DropDirectory(idDirectory, universType, webSessionId);
+                result = _myAdExpressService.DropDirectory(idDirectory, universType, webSessionId, this.HttpContext);
             return Json(result);
         }
 
@@ -340,7 +340,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universeService.GetResultUnivers(webSessionId);
+            var data = _universeService.GetResultUnivers(webSessionId, this.HttpContext);
             SaveUserResultViewModel model = new SaveUserResultViewModel
             {
                 Title = GestionWeb.GetWebWord(908, data.SiteLanguage),
@@ -399,7 +399,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            string message = _universeService.SaveUserResult(webSessionId, folderId, saveAsResultId, saveResult);
+            string message = _universeService.SaveUserResult(webSessionId, folderId, saveAsResultId, saveResult, this.HttpContext);
 
             JsonResult jsonModel = new JsonResult();
 
@@ -421,7 +421,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var requestType = (Domain.UniversType)Enum.Parse(typeof(Domain.UniversType), type);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             if (!String.IsNullOrEmpty(webSessionId))
-                response = _myAdExpressService.LoadSession(idSession, requestType, webSessionId);
+                response = _myAdExpressService.LoadSession(idSession, requestType, webSessionId, this.HttpContext);
             if (response.Success && response.ModuleId > 0)
             {
                 var controller = string.Empty;
@@ -471,7 +471,7 @@ namespace Km.AdExpressClientWeb.Controllers
             int totalItems = 0;
             //List<int> id = new List<int> { idMedia };
             Domain.SearchItemsCriteria criteria = new Domain.SearchItemsCriteria(idWebSession, dimension, idUniverse, idMedia);
-            var model = _universeService.GetGategoryItems(criteria, out totalItems);
+            var model = _universeService.GetGategoryItems(criteria, out totalItems, this.HttpContext);
             return Json(new { data = model, total = totalItems }, JsonRequestBehavior.AllowGet);
         }
 
@@ -480,7 +480,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var identity = (ClaimsIdentity)User.Identity;
                 var idWebSession = identity.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                _universeService.ChangeMarketUniverse(universeId, idWebSession);
+                _universeService.ChangeMarketUniverse(universeId, idWebSession, this.HttpContext);
             }          
             return new EmptyResult();
         }

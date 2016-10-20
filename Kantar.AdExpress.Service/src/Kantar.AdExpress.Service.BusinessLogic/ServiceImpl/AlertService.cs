@@ -22,6 +22,8 @@ using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
 using TNS.Ares.Constantes;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -34,7 +36,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _userManager = userManager;
         }
 
-        public string GetRedirectUrl(WebSession session, string idSession, AlertOccurence occ)
+        public string GetRedirectUrl(WebSession session, string idSession, AlertOccurence occ, HttpContextBase httpContext)
         {
             string redirectUrl = string.Empty;
             WebSession webSession = null;
@@ -154,8 +156,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (System.Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idSession,session.UserAgent, session.CustomerLogin.Login, session.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, session);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
 
@@ -164,7 +166,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return redirectUrl;
         }
 
-        public SaveAlertResponse SaveAlert(SaveAlertRequest request)
+        public SaveAlertResponse SaveAlert(SaveAlertRequest request, HttpContextBase httpContext)
         {
             var response = new SaveAlertResponse();
             var webSession = (WebSession)WebSession.Load(request.IdWebSession);
@@ -180,7 +182,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else
                     {
-                        response = SaveAlertData(request, webSession);
+                        response = SaveAlertData(request, webSession, httpContext);
                     }
                 }
                 else
@@ -190,8 +192,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", request.IdWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -209,7 +211,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        private SaveAlertResponse SaveAlertData (SaveAlertRequest request, WebSession webSession)
+        private SaveAlertResponse SaveAlertData (SaveAlertRequest request, WebSession webSession, HttpContextBase httpContext)
         {
             #region Init
             var result = new SaveAlertResponse();
@@ -252,8 +254,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 catch (Exception ex)
                 {
-                    string message = "";
-                    Logger.Log(LogLevel.Error, message);
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
 
                     throw;
                 }

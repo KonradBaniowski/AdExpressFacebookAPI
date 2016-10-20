@@ -66,7 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel;
 
-            var gridResult = _campaignAnalysisService.GetGridResult(idWebSession);
+            var gridResult = _campaignAnalysisService.GetGridResult(idWebSession, this.HttpContext);
             if (!gridResult.HasData)
                 return null;
 
@@ -91,7 +91,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            Options options = _optionService.GetOptions(idWebSession);
+            Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
             return PartialView("_ResultOptions", options);
         }
 
@@ -100,7 +100,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            _optionService.SetOptions(idWebSession, userFilter);
+            _optionService.SetOptions(idWebSession, userFilter, this.HttpContext);
         }
 
         public JsonResult SaveCustomDetailLevels(string levels, string type)
@@ -109,7 +109,7 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = new JsonResult();
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            Kantar.AdExpress.Service.Core.Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type);
+            Kantar.AdExpress.Service.Core.Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type, this.HttpContext);
             jsonModel = Json(new { Id = response.CustomDetailLavelsId, Label = response.CustomDetailLavelsLabel, Message = response.Message });
 
             return jsonModel;

@@ -32,7 +32,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            ResultTable data = _newCreativesService.GetResultTable(idWebSession);
+            ResultTable data = _newCreativesService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
             ExportAspose export = new ExportAspose();
@@ -62,7 +62,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            ResultTable data = _newCreativesService.GetResultTable(idWebSession);
+            ResultTable data = _newCreativesService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
             ExportAspose export = new ExportAspose();

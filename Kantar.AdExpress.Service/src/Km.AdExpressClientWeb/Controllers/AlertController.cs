@@ -83,7 +83,7 @@ namespace Km.AdExpressClientWeb.Controllers
             WebSession session = (WebSession)this.Session["session"];
             AlertOccurence occ = (AlertOccurence)this.Session["occ"];
 
-            var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ);
+            var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ, this.HttpContext);
             return RedirectToAction("Results", redirectUrl);
         }
 
@@ -164,7 +164,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Type = periodicityType,
                 OccurrenceDate = !String.IsNullOrEmpty(date) ? int.Parse(date) : -1
                 };
-            var response = _alertService.SaveAlert(request);           
+            var response = _alertService.SaveAlert(request, this.HttpContext);           
             return Json(response,JsonRequestBehavior.AllowGet);
         }
 
