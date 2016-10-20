@@ -939,7 +939,7 @@ function getDataConcurEngagement(e) {
         var datas = $(this).children(".monthConcur").attr('name').split(",");
         var label = $(this).children(".labelConcur").attr('name');
         //var concurMemberPathLabel = "Engagement".concat($(this).children(".IdConcur").attr('name'))
-        var concurMemberPathLabel = label;
+        var concurMemberPathLabel = label.replace(/[^\w]/gi, '');
         elem[concurMemberPathLabel] = 0;
         var currentElmnt = $(this);
         $.each(datas, function (index, value) {

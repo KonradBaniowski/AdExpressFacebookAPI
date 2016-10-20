@@ -20,10 +20,15 @@ $(function () {
             datatype: 'JSON',
             data: JSON.stringify(params),
             error: function (xmlHttpRequest, errorText, thrownError) {
-
+                alert(errorText);
             },
-            success: function () {
-                document.location = url;
+            success: function (data) {
+                if (!data.success) {
+                    alert(data.message);
+                } else {
+                    document.location = url;
+                }
+                
             }
         });
     }

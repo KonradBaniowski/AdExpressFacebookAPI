@@ -478,6 +478,7 @@
                 $("#gridEmpty").hide();
                 $("#GridPanel").hide();
                 $("#allPeriodInsertions").hide();
+
                 $.ajax({
                     url: '@Url.Action("PortfolioResult", _controller)',
                     contentType: "application/x-www-form-urlencoded",
@@ -534,8 +535,6 @@
 
                                 if (userFilter.ResultTypeFilter.ResultType == "4"){
                                     $("#ChartPanel").show();
-                                    $("#accord1").collapse('show');
-                                    $("#accord2").collapse('show');
                                     CallPortfolioGraphResult();
                                 }
 
@@ -577,7 +576,7 @@
                     success: function (data) {
 
                         if (data != null && data != "") {
-
+                            $("#listCharts").html("");
                             for (i = 0; i < data.length; i++) {
                                 dataChart = data[i].datachart;
 
@@ -627,11 +626,8 @@
                 $("#resaccord").addClass("hide");
                 $("#ChartPanel").hide();
                 $("#carou-vehicleView").hide();
-                $("#accord1").collapse('show');
-                if (userFilter.ResultTypeFilter.ResultType == "4") {
+                if (userFilter.ResultTypeFilter.ResultType == "4") { 
                     $("#ChartPanel").show();
-                    $("#accord1").collapse('show');
-                    $("#accord2").collapse('show');
                 }
                 $.ajax({
                     url: '@Url.Action("SetResultOptions", _controller)',
@@ -841,6 +837,11 @@
             });
 
             $('#validate-options').on('click', function (e) {
+
+                $("#accord1").collapse('show');
+                $("#accord2").collapse('show');
+                $("#accord3").collapse('show');
+
                 $("#grid").addClass("hide");
                 $("#collapseContainerOne").collapse('hide');
 

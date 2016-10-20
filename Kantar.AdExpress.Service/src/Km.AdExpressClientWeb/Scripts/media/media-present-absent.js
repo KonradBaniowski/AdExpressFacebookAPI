@@ -46,7 +46,7 @@ $(document).ready(function () {
     function selectUnique() {
         $(this).toggleClass("tuile-medias tuile-medias-active")
         var id = $(this).attr("data-attr-id");
-        if (idList !== null && idList !== undefined) {
+        if (idList !== null && idList !== undefined && idList != id) {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;

@@ -643,6 +643,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     idMySession = Int64.Parse(idSession);
                     webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
+
+                    //Set the new product univers
+                    webSession.PrincipalProductUniverses = webSessionSave.PrincipalProductUniverses;
+                    webSession.SecondaryProductUniverses = webSessionSave.SecondaryProductUniverses;
+                    //Set the new media univers
+                    webSession.PrincipalMediaUniverses = webSessionSave.PrincipalMediaUniverses;
+                    webSession.SecondaryMediaUniverses = webSessionSave.SecondaryMediaUniverses;
+                    //New univers Advertising Agency
+                    webSession.PrincipalAdvertisingAgnecyUniverses = webSessionSave.PrincipalAdvertisingAgnecyUniverses;
+                    webSession.SecondaryAdvertisingAgnecyUniverses = webSessionSave.SecondaryAdvertisingAgnecyUniverses;
+
                     switch (webSessionSave.CurrentModule)
                     {
                         case ModuleName.ANALYSE_PLAN_MEDIA:
@@ -1253,15 +1264,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             webSession.PublicationDateType = webSessionSave.PublicationDateType;
                             #endregion
 
-                            //Set the new product univers
-                            webSession.PrincipalProductUniverses = webSessionSave.PrincipalProductUniverses;
-                            webSession.SecondaryProductUniverses = webSessionSave.SecondaryProductUniverses;
-                            //Set the new media univers
-                            webSession.PrincipalMediaUniverses = webSessionSave.PrincipalMediaUniverses;
-                            webSession.SecondaryMediaUniverses = webSessionSave.SecondaryMediaUniverses;
-                            //New univers Advertising Agency
-                            webSession.PrincipalAdvertisingAgnecyUniverses = webSessionSave.PrincipalAdvertisingAgnecyUniverses;
-                            webSession.SecondaryAdvertisingAgnecyUniverses = webSessionSave.SecondaryAdvertisingAgnecyUniverses;
                             //Profession universes
                             webSession.PrincipalProfessionUniverses = webSessionSave.PrincipalProfessionUniverses;
                             webSession.ProductDetailLevel = null;

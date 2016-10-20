@@ -19,6 +19,7 @@ using KM.Framework.Constantes;
 using TNS.AdExpress.Web.Core.Utilities;
 using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.I18n;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -138,17 +139,29 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(Home);
         }
 
-        public void CurrentModule(int idModule)
+        public ActionResult CurrentModule(int idModule)
         {
             if (idModule != 0)
             {
-                var claim = new ClaimsPrincipal(User.Identity);
-                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                _webSessionService.SaveCurrentModule(idWebSession, idModule);
+                try{
+                    var claim = new ClaimsPrincipal(User.Identity);
+                    string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                    _webSessionService.SaveCurrentModule(idWebSession, idModule);
+
+                    return this.Json(new { success = true });
+                }
+                catch(DeliveryFrequencyException ex)
+                {
+                    return this.Json(new { success = false, message = "Error !" });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error");
+                }
             }
             else
             {
-                throw new Exception("Module pb");
+                return this.Json(new { success = false, message = "Module Id not defined" });
             }
             //if here pb
         }
