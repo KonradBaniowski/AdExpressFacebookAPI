@@ -13,6 +13,8 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.CampaignAnalysis;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -21,7 +23,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private WebSession _customerSession = null;
         private static Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public GridResult GetGridResult(string idWebSession)
+        public GridResult GetGridResult(string idWebSession, HttpContextBase httpContext)
         {
             GridResult gridResult = new GridResult();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
@@ -34,8 +36,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
 
@@ -43,7 +45,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return gridResult;
         }
 
-        public ResultTable GetResultTable(string idWebSession)
+        public ResultTable GetResultTable(string idWebSession, HttpContextBase httpContext)
         {
             ResultTable data = null;
 
@@ -57,8 +59,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

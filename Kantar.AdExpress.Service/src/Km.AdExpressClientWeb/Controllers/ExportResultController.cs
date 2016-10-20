@@ -68,7 +68,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 ExportType =type,
                 WebSessionId = webSessionId
             };            
-            var response = _exportService.Export(request);
+            var response = _exportService.Export(request, this.HttpContext);
             return Json(response, JsonRequestBehavior.AllowGet);
         }
     }

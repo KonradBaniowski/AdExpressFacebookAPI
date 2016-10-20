@@ -10,13 +10,15 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Translation;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public partial class OptionService
     {
         protected GenericDetailLevel _genericColumnDetailLevel = null;
-        private GenericColumnDetailLevelOption GetGenericColumnLevelDetailOptions()
+        private GenericColumnDetailLevelOption GetGenericColumnLevelDetailOptions(HttpContextBase httpContext)
         {
             GenericColumnDetailLevelOption genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
             try
@@ -27,7 +29,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 bool canAddDetail = false;
                 try
                 {
-                    canAddDetail = CanAddColumnDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule);
+                    canAddDetail = CanAddColumnDetailLevel(_customerWebSession.GenericColumnDetailLevel, _customerWebSession.CurrentModule, httpContext);
                 }
                 catch { }
                 if (!canAddDetail)
@@ -42,7 +44,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region Initialisation Niveau de détaille colonne
                 if (_nbColumnDetailLevelItemList == 1)
                 {
-                    genericColumnDetailLevelOption = ColumnDetailLevelItemInit();
+                    genericColumnDetailLevelOption = ColumnDetailLevelItemInit(httpContext);
                     genericColumnDetailLevelOption.L1Detail.Visible = true;
                 }
                 #endregion
@@ -54,8 +56,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -79,14 +81,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerWebSession.GenericColumnDetailLevel = _genericColumnDetailLevel;
         }
 
-        protected GenericColumnDetailLevelOption ColumnDetailLevelItemInit()
+        protected GenericColumnDetailLevelOption ColumnDetailLevelItemInit(HttpContextBase httpContext)
         {
             var genericColumnDetailLevelOption = new GenericColumnDetailLevelOption();
             genericColumnDetailLevelOption.L1Detail = new SelectControl();
             genericColumnDetailLevelOption.L1Detail.Id = "columnDetail";
 
             var selectItems = new List<SelectItem>();
-            List<DetailLevelItemInformation> allowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            List<DetailLevelItemInformation> allowedColumnDetailLevelItems = GetAllowedColumnDetailLevelItems(httpContext);
             allowedColumnDetailLevelItems.ForEach(p =>
             {
                 selectItems.Add(new SelectItem { Text = GestionWeb.GetWebWord(p.WebTextId, _customerWebSession.SiteLanguage), Value = p.Id.GetHashCode().ToString() });
@@ -101,7 +103,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// Retourne les éléments des niveaux de détail colonne autorisés
         /// </summary>
         /// <returns>Niveaux de détail colonne</returns>
-        private List<DetailLevelItemInformation> GetAllowedColumnDetailLevelItems()
+        private List<DetailLevelItemInformation> GetAllowedColumnDetailLevelItems(HttpContextBase httpContext)
         {
             var levels = new List<DetailLevelItemInformation>();
             try
@@ -109,7 +111,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 List<DetailLevelItemInformation.Levels> vehicleAllowedDetailLevelList = GetVehicleAllowedDetailLevelItems();
                 ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
 
-                List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
+                List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems(httpContext);
 
                 foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
                     if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
@@ -118,8 +120,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -131,7 +133,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// Return allowed column detail level list for vehicle list seleceted
         /// </summary>
         /// <returns>Detail level list</returns>
-        private List<DetailLevelItemInformation.Levels> GetVehicleAllowedColumnsLevelItems()
+        private List<DetailLevelItemInformation.Levels> GetVehicleAllowedColumnsLevelItems(HttpContextBase httpContext)
         {
             List<Int64> vehicleList = new List<Int64>();
             try
@@ -152,8 +154,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -186,9 +188,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         /// <param name="currentColumnDetailLevel">Niveau de détail</param>
         /// <param name="module">Module courrant</param>
         /// <returns>True s'il peut être ajouté</returns>
-        protected virtual bool CanAddColumnDetailLevel(GenericDetailLevel currentColumnDetailLevel, Int64 module)
+        protected virtual bool CanAddColumnDetailLevel(GenericDetailLevel currentColumnDetailLevel, Int64 module, HttpContextBase httpContext)
         {
-            List<DetailLevelItemInformation> AllowedDetailLevelItems = GetAllowedColumnDetailLevelItems();
+            List<DetailLevelItemInformation> AllowedDetailLevelItems = GetAllowedColumnDetailLevelItems(httpContext);
             foreach (DetailLevelItemInformation currentColumnDetailLevelItem in currentColumnDetailLevel.Levels)
             {
                 if (!AllowedDetailLevelItems.Contains(currentColumnDetailLevelItem)) return (false);

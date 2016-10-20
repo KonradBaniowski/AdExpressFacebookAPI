@@ -33,6 +33,8 @@ using System.Windows.Forms;
 using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using NLog;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -64,7 +66,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         #endregion
         private WebSession _webSession = null;
         private static Logger Logger = LogManager.GetCurrentClassLogger();
-        public WebSessionResponse SaveMediaSelection(SaveMediaSelectionRequest request)
+        public WebSessionResponse SaveMediaSelection(SaveMediaSelectionRequest request, HttpContextBase httpContext)
         {
             var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
             WebSessionResponse response = new WebSessionResponse
@@ -233,8 +235,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -242,7 +244,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-        public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request)
+        public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
         {
             WebSessionResponse response = new WebSessionResponse
             {
@@ -283,7 +285,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.NEW_CREATIVES:
                                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                                     AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
-                                    SetDefaultMarketUniverse(response, univers, request, _webSession);
+                                    SetDefaultMarketUniverse(response, univers, request, _webSession, httpContext);
                                     break;
                                 case CstWeb.Module.Name.FACEBOOK:
                                     Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
@@ -324,8 +326,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -344,7 +346,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
         //Start from here
-        public void SaveCurrentModule(string webSessionId, int moduleId)
+        public void SaveCurrentModule(string webSessionId, int moduleId, HttpContextBase httpContext)
         {
             _webSession = (WebSession)WebSession.Load(webSessionId);
             try
@@ -586,8 +588,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _webSession.IdSession, _webSession.UserAgent, _webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -628,7 +630,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _webSession.Save();
         }
 
-        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession)
+        public bool IsValidUniverseLevels(AdExpressUniverse universe, WebSession webSession, HttpContextBase httpContext)
         {
             bool result = true;
             try
@@ -665,8 +667,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSession.IdSession, webSession.UserAgent, webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)WebNavigation.ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -1202,7 +1204,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return isValid;
         }
 
-        private void SetDefaultMarketUniverse(WebSessionResponse response, AdExpressUnivers univers, SaveMarketSelectionRequest request, WebSession webSession)
+        private void SetDefaultMarketUniverse(WebSessionResponse response, AdExpressUnivers univers, SaveMarketSelectionRequest request, WebSession webSession, HttpContextBase httpContext)
         {
             if (univers.AdExpressUniverse != null && univers.AdExpressUniverse.Count() > 0)
             {
@@ -1214,7 +1216,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             universDictionary = new Dictionary<int, AdExpressUniverse>();
                     universDictionary.Add(universDictionary.Count, univers.AdExpressUniverse);
 
-                    if (!IsValidUniverseLevels(univers.AdExpressUniverse, webSession))
+                    if (!IsValidUniverseLevels(univers.AdExpressUniverse, webSession, httpContext))
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(2990, webSession.SiteLanguage);
                     }

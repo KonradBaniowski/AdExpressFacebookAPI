@@ -89,7 +89,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, this.HttpContext, true);
             #endregion
           
             #region Load each label's text in the appropriate language
@@ -136,7 +136,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _mediaService.GetMedia(webSessionId);
+            var result = _mediaService.GetMedia(webSessionId, this.HttpContext);
 
             #region model data
             var model = new MediaSelectionViewModel()
@@ -177,7 +177,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, this.HttpContext, true);
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
             {
@@ -201,7 +201,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var result = _periodService.GetPeriod(idSession);
+            var result = _periodService.GetPeriod(idSession, this.HttpContext);
 
             PeriodViewModel periodModel = new PeriodViewModel();
             periodModel.SlidingYearsNb = WebApplicationParameters.DataNumberOfYear;
@@ -271,7 +271,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string url = string.Empty;
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
-            PeriodResponse response = _periodService.CalendarValidation(request);
+            PeriodResponse response = _periodService.CalendarValidation(request, this.HttpContext);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
                 url = context.Action(nextStep, _controller);
@@ -288,7 +288,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string url = string.Empty;
             int studyId = 5;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
-            var response = _periodService.SlidingDateValidation(request);
+            var response = _periodService.SlidingDateValidation(request, this.HttpContext);
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
                 url = context.Action(nextStep, _controller);
@@ -328,9 +328,9 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel;
 
             if (string.IsNullOrEmpty(zoomDate))
-                gridResult = _mediaSchedule.GetGridResult(idWebSession, "");
+                gridResult = _mediaSchedule.GetGridResult(idWebSession, "", this.HttpContext);
             else
-                gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate);
+                gridResult = _mediaSchedule.GetGridResult(idWebSession, zoomDate, this.HttpContext);
 
             if (!gridResult.HasData)
                 return null;
@@ -358,7 +358,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate);
+            CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate, this.HttpContext);
 
             return PartialView("_MSCreativesResult", creatives);
         }
@@ -386,7 +386,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var subPeriod = _subPeriodService.GetSubPeriod(idWebSession, zoomDate);
+            var subPeriod = _subPeriodService.GetSubPeriod(idWebSession, zoomDate, this.HttpContext);
 
             return PartialView("_SubPeriodSelection", subPeriod);
         }
@@ -395,7 +395,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            Options options = _optionService.GetOptions(idWebSession);
+            Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
             return PartialView("_ResultOptions", options);
         }
 
@@ -404,7 +404,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            _optionService.SetOptions(idWebSession, userFilter);
+            _optionService.SetOptions(idWebSession, userFilter, this.HttpContext);
         }
 
         public JsonResult SaveCustomDetailLevels(string levels, string type)
@@ -413,7 +413,7 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = new JsonResult();
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type);
+            Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type, this.HttpContext);
             jsonModel = Json(new { Id = response.CustomDetailLavelsId, Label = response.CustomDetailLavelsLabel, Message = response.Message });
 
             return jsonModel;
@@ -444,7 +444,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
-                response = _webSessionService.SaveMediaSelection(request);
+                response = _webSessionService.SaveMediaSelection(request, this.HttpContext);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
                 {
@@ -463,7 +463,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universService.GetBranches(webSessionId, Dimension.media, true);
+            var result = _universService.GetBranches(webSessionId, Dimension.media, this.HttpContext, true);
             return Json(result);
         }
 

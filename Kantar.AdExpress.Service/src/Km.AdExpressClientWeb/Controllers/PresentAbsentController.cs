@@ -78,7 +78,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #endregion
             #region Load Branches
-            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, true, MaxIncludeNbr, MaxExcludeNbr);
+            var result = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.product, this.HttpContext, true, MaxIncludeNbr, MaxExcludeNbr);
             #endregion
             #region Load each label's text in the appropriate language
             model.Labels = LoadPageLabels(result.SiteLanguage);
@@ -128,7 +128,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _mediaService.GetMedia(webSessionId);
+            var result = _mediaService.GetMedia(webSessionId, this.HttpContext);
 
             #region model data
             var model = new MediaSelectionViewModel()
@@ -169,7 +169,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
             };
             model.Labels = LoadPageLabels(result.SiteLanguage);
-            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, true, 1, 0);
+            var response = _universService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, this.HttpContext, true, 1, 0);
             model.CurrentModule = response.ControllerDetails.ModuleId;
             model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
             foreach (var item in response.Trees)
@@ -194,7 +194,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var cla = new ClaimsPrincipal(User.Identity);
             string idSession = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var result = _periodService.GetPeriod(idSession);
+            var result = _periodService.GetPeriod(idSession, this.HttpContext);
 
             PeriodViewModel periodModel = new PeriodViewModel();
             periodModel.SlidingYearsNb = WebApplicationParameters.DataNumberOfYear;
@@ -261,7 +261,7 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = new JsonResult();
             string url = string.Empty;
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedStartDate, selectedEndDate, nextStep);
-            PeriodResponse response = _periodService.CalendarValidation(request);
+            PeriodResponse response = _periodService.CalendarValidation(request, this.HttpContext);
             var controller = response.ControllerDetails.Name;
             string action = (controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
@@ -285,7 +285,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string url = string.Empty;
             int studyId = 5;//TO BE VERIFIED
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
-            var response = _periodService.SlidingDateValidation(request);
+            var response = _periodService.SlidingDateValidation(request, this.HttpContext);
             var controller = response.ControllerDetails.Name;
             string action = (controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
@@ -327,7 +327,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity); 
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var gridResultResponse = _presentAbsentService.GetGridResult(idWebSession);
+            var gridResultResponse = _presentAbsentService.GetGridResult(idWebSession, this.HttpContext);
 
             JsonResult jsonModel;
             if (gridResultResponse.Success)
@@ -371,7 +371,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            Options options = _optionService.GetOptions(idWebSession);
+            Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
             return PartialView("_ResultOptions", options);
         }
 
@@ -380,7 +380,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            _optionService.SetOptions(idWebSession, userFilter);
+            _optionService.SetOptions(idWebSession, userFilter, this.HttpContext);
         }
 
         public JsonResult SaveCustomDetailLevels(string levels, string type)
@@ -389,7 +389,7 @@ namespace Km.AdExpressClientWeb.Controllers
             JsonResult jsonModel = new JsonResult();
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type);
+            Domain.SaveLevelsResponse response = _optionService.SaveCustomDetailLevels(idWebSession, levels, type, this.HttpContext);
             jsonModel = Json(new { Id = response.CustomDetailLavelsId, Label = response.CustomDetailLavelsLabel, Message = response.Message });
 
             return jsonModel;
@@ -421,7 +421,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
                 Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, true, nextStep);
-                response = _webSessionService.SaveMediaSelection(request);
+                response = _webSessionService.SaveMediaSelection(request, this.HttpContext);
 
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                 if (response.Success)
@@ -448,7 +448,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 List<Tree> validTrees = trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
                 var data = Mapper.Map<List<Domain.Tree>>(validTrees);
                 Domain.SaveMarketSelectionRequest request = new Domain.SaveMarketSelectionRequest(webSessionId, data, Dimension.product, Security.full, false, nextStep);
-                var result = _webSessionService.SaveMarketSelection(request);
+                var result = _webSessionService.SaveMarketSelection(request, this.HttpContext);
                 if (result.Success)
                 {
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
@@ -469,7 +469,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _universService.GetBranches(webSessionId, Dimension.media, true);
+            var result = _universService.GetBranches(webSessionId, Dimension.media, this.HttpContext, true);
             return Json(result);
         }
 

@@ -58,7 +58,7 @@ namespace Km.AdExpressClientWeb.Controllers
             model.SiteLanguage = customerSession.SiteLanguage;
             model.Labels = LoadPageLabels(customerSession.SiteLanguage);
 
-            var isRadio = _portfolioDetailMediaService.IsIndeRadioMessage(idWebSession);
+            var isRadio = _portfolioDetailMediaService.IsIndeRadioMessage(idWebSession, this.HttpContext);
 
             //Les indes Radio
             if (isRadio)
@@ -82,7 +82,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _portfolioDetailMediaService.GetDetailMediaGridResult(idWebSession, idMedia, dayOfWeek, ecran);
+            var reponse = _portfolioDetailMediaService.GetDetailMediaGridResult(idWebSession, idMedia, dayOfWeek, ecran, this.HttpContext);
 
             try
             {

@@ -24,6 +24,8 @@ using System.Reflection;
 using TNS.AdExpressI.Portofolio;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -32,20 +34,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private WebSession _customerWebSession = null;
         private static Logger Logger= LogManager.GetCurrentClassLogger();
 
-        public GridResult GetDetailMediaGridResult(string idWebSession, string idMedia, string dayOfWeek, string ecran)
+        public GridResult GetDetailMediaGridResult(string idWebSession, string idMedia, string dayOfWeek, string ecran, HttpContextBase httpContext)
         {
             GridResult GridResultResponse = new GridResult();
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
-                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran);
+                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran, httpContext);
 
                 GridResultResponse = detailMediaResult.GetDetailMediaPopUpGridResult();
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -53,21 +55,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran)
+        public ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran, HttpContextBase httpContext)
         {
             ResultTable ResultResponse;
 
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
-                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran);
+                IPortofolioResults detailMediaResult = InitDetailMediaCall(_customerWebSession, dayOfWeek, ecran, httpContext);
 
                 ResultResponse = detailMediaResult.GetDetailMediaPopUpResult();
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -75,7 +77,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
 
-        public IPortofolioResults InitDetailMediaCall(WebSession custSession, string dayOfWeek, string ecran)
+        public IPortofolioResults InitDetailMediaCall(WebSession custSession, string dayOfWeek, string ecran, HttpContextBase httpContext)
         {
             IPortofolioResults portofolioResult = null;
             try
@@ -92,17 +94,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}",
-                                _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message,
-                                ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return portofolioResult;
         }
 
-        public bool IsIndeRadioMessage(string idWebSession)
+        public bool IsIndeRadioMessage(string idWebSession, HttpContextBase httpContext)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             bool result = false;
@@ -128,8 +128,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerWebSession.IdSession, _customerWebSession.UserAgent, _customerWebSession.CustomerLogin.Login, _customerWebSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerWebSession.CurrentModule), _customerWebSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

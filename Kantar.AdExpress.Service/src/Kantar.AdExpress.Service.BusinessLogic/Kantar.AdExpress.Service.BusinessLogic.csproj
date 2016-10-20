@@ -125,6 +125,10 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Web.Utilities\TNS.AdExpress.Web.Utilities.csproj">
+      <Project>{37A35645-337E-484F-9C81-B9009D6950A2}</Project>
+      <Name>TNS.AdExpress.Web.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.AdvertisingAgency\TNS.AdExpressI.AdvertisingAgency.csproj">
       <Project>{f714f160-ebad-464f-9d83-adae37de761d}</Project>
       <Name>TNS.AdExpressI.AdvertisingAgency</Name>

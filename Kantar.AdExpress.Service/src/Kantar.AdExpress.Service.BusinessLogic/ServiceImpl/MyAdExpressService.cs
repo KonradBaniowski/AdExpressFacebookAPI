@@ -29,13 +29,15 @@ using TNS.Alert.Domain;
 using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MyAdExpressService : IMyAdExpressService
     {
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public AdExpressResponse MoveSession(string id, string idOldDirectory, string idNewDirectory, string webSessionId)
+        public AdExpressResponse MoveSession(string id, string idOldDirectory, string idNewDirectory, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -58,15 +60,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse RenameSession(string name, string universId, string webSessionId)
+        public AdExpressResponse RenameSession(string name, string universId, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -89,14 +92,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
-        public AdExpressResponse DeleteSession(string id, string webSessionId)
+        public AdExpressResponse DeleteSession(string id, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -121,15 +125,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse RenameUnivers(string name, string universId, string webSessionId)
+        public AdExpressResponse RenameUnivers(string name, string universId, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -174,15 +179,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (System.Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse MoveUnivers(string id, string idOldGroupUnivers, string idNewGroupUnivers, string webSessionId)
+        public AdExpressResponse MoveUnivers(string id, string idOldGroupUnivers, string idNewGroupUnivers, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -207,15 +213,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse DeleteUnivers(string id, string webSessionId)
+        public AdExpressResponse DeleteUnivers(string id, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -245,15 +252,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId)
+        public AdExpressResponse CreateDirectory(string directoryName, UniversType type, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -275,14 +283,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
-        public AdExpressResponse RenameDirectory(string directoryName, UniversType type, string idDirectory, string webSessionId)
+        public AdExpressResponse RenameDirectory(string directoryName, UniversType type, string idDirectory, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -308,14 +317,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 //    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, webSession));
                 //}
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
-        public AdExpressResponse DropDirectory(string idDirectory, UniversType type, string webSessionId)
+        public AdExpressResponse DropDirectory(string idDirectory, UniversType type, string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -340,15 +350,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (System.Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             return result;
         }
 
-        public AdExpressResponse LoadSession(string idSession, UniversType type ,string webSessionId)
+        public AdExpressResponse LoadSession(string idSession, UniversType type ,string webSessionId, HttpContextBase httpContext)
         {
             var result = new AdExpressResponse
             {
@@ -370,8 +381,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (System.Exception ex)
             {
                 result.Message = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", webSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

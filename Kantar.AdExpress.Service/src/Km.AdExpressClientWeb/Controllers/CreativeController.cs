@@ -67,7 +67,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel;
 
-            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged, listEvaliantFilter);
+            var reponse = _creativeService.GetCreativeGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged, listEvaliantFilter, this.HttpContext);
 
             try
             {
@@ -108,7 +108,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _creativeService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId, true);
+            var reponse = _creativeService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId, this.HttpContext, true);
 
             jsonData = JsonConvert.SerializeObject(reponse);
             JsonResult jsonModel = Json(jsonData, JsonRequestBehavior.AllowGet);
@@ -121,7 +121,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _creativeService.GetCreativePath(idWebSession, idVersion, idVehicle);
+            var reponse = _creativeService.GetCreativePath(idWebSession, idVersion, idVehicle, this.HttpContext);
 
             return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
         }

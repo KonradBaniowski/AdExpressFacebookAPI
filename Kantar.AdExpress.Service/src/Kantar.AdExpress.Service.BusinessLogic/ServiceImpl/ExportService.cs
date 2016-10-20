@@ -19,6 +19,8 @@ using TNS.AdExpress.Constantes.Classification;
 using AnubisCst = TNS.AdExpress.Anubis.Constantes;
 using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -29,7 +31,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         protected string EndDate = string.Empty;
         private string _idUnit = string.Empty;
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public ExportResponse Export (ExportRequest request)
+        public ExportResponse Export (ExportRequest request, HttpContextBase httpContext)
         {
             ExportResponse response = new ExportResponse
             {
@@ -229,8 +231,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", request.WebSessionId, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

@@ -68,7 +68,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel;
 
-            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, isVehicleChanged);
+            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, this.HttpContext, isVehicleChanged);
 
             try
             {
@@ -110,7 +110,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId);
+            var reponse = _insertionsService.GetPresentVehicles(idWebSession, ids, idUnivers, moduleId, this.HttpContext);
 
             jsonData = JsonConvert.SerializeObject(reponse);
             JsonResult jsonModel = Json(jsonData, JsonRequestBehavior.AllowGet);
@@ -123,7 +123,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var reponse = _insertionsService.GetCreativePath(idWebSession, idVersion, idVehicle);
+            var reponse = _insertionsService.GetCreativePath(idWebSession, idVersion, idVehicle, this.HttpContext);
 
             return Json(new { PathReadingFile = reponse.PathReadingFile, PathDownloadingFile = reponse.PathDownloadingFile });
         }
@@ -134,7 +134,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            List<DetailLevel> detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged);
+            List<DetailLevel> detailLevel = _detailLevelService.GetDetailLevelItem(idWebSession, idVehicle, isVehicleChanged, this.HttpContext);
 
             DetailLevelViewModel model = new DetailLevelViewModel { Labels = LoadPageLabels(_webSessionService.GetSiteLanguage(idWebSession)) , Items = detailLevel};
 
@@ -148,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            _detailLevelService.SetDetailLevelItem(idWebSession, userFilter);
+            _detailLevelService.SetDetailLevelItem(idWebSession, userFilter, this.HttpContext);
         }       
 
         private Labels LoadPageLabels(int siteLanguage)

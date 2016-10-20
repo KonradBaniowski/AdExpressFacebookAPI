@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using TNS.AdExpress.Domain.Results;
 using TNS.FrameWork.WebResultUI;
 
@@ -11,11 +12,11 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
    public interface IPortfolioDetailMediaService
     {
-        GridResult GetDetailMediaGridResult(string idWebSession, string idMedia,string dayOfWeek,string ecran);
+        GridResult GetDetailMediaGridResult(string idWebSession, string idMedia,string dayOfWeek,string ecran, HttpContextBase httpContext);
 
-        ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran);
+        ResultTable GetDetailMediaResult(string idWebSession, string idMedia, string dayOfWeek, string ecran, HttpContextBase httpContext);
 
-        bool IsIndeRadioMessage(string idWebSession);
+        bool IsIndeRadioMessage(string idWebSession, HttpContextBase httpContext);
 
     }
 }

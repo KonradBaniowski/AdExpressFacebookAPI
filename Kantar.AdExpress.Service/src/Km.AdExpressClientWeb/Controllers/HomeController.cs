@@ -64,8 +64,8 @@ namespace Km.AdExpressClientWeb.Controllers
             var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
             var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var resList = _rightService.GetModulesList(idWS);
-            var res = _rightService.GetModules(idWS);
+            var resList = _rightService.GetModulesList(idWS, this.HttpContext);
+            var res = _rightService.GetModules(idWS, this.HttpContext);
             int siteLanguage = resList.First().Value.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
             ViewBag.SiteLanguage = siteLanguage;
@@ -91,7 +91,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
-                documents = _infosNewsService.GetInfosNews(idWS);
+                documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
                 documents.Add(new Documents()
                 {
                     Id = 3,
@@ -144,7 +144,7 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 var claim = new ClaimsPrincipal(User.Identity);
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                _webSessionService.SaveCurrentModule(idWebSession, idModule);
+                _webSessionService.SaveCurrentModule(idWebSession, idModule, this.HttpContext);
             }
             else
             {
@@ -164,7 +164,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             #region Saved Reuslt Queries
-            var result = _universService.GetResultUnivers(idWebSession);
+            var result = _universService.GetResultUnivers(idWebSession, this.HttpContext);
             foreach (var group in result.UniversGroups)
             {
                 int count = group.Count;
@@ -176,7 +176,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Saved Univers (Market & Media)
             string branch = ALLBRANCHES;
             string listUniversClientDescription = string.Empty;
-            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription, this.HttpContext);
             foreach (var group in univers.UniversGroups)
             {
                 int count = group.Count;
@@ -188,7 +188,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #region Alerts
             if (PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idWebSession))
             {
-                var alertsResponse = _universService.GetUserAlerts(idWebSession);
+                var alertsResponse = _universService.GetUserAlerts(idWebSession, this.HttpContext);
                 model.Alerts = alertsResponse.Alerts;
                 model.IsMyAlertVisible = true;
             }
@@ -209,7 +209,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 UniversType = Domain.UniversType.Result,
                 UniversGroups = new List<Domain.UserUniversGroup>()
             };
-            var result = _universService.GetResultUnivers(idWebSession);
+            var result = _universService.GetResultUnivers(idWebSession, this.HttpContext);
             foreach (var group in result.UniversGroups)
             {
                 int count = group.Count;
@@ -226,7 +226,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var model = new List<Domain.Alert>();
-            var alertsResponse = _universService.GetUserAlerts(idWebSession);
+            var alertsResponse = _universService.GetUserAlerts(idWebSession, this.HttpContext);
             model= alertsResponse.Alerts;
             return PartialView("MyAdExpressAlerts", model);
 
@@ -243,7 +243,7 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             string branch = "2,33";
             string listUniversClientDescription = string.Empty;
-            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription);
+            var univers = _universService.GetUnivers(idWebSession, branch, listUniversClientDescription, this.HttpContext);
             foreach (var group in univers.UniversGroups)
             {
                 int count = group.Count;

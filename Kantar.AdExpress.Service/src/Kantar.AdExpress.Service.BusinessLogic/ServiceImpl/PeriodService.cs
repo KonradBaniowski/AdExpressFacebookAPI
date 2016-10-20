@@ -16,6 +16,8 @@ using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Dis
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections.Generic;
 using NLog;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -45,7 +47,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
 
-        public PeriodResponse CalendarValidation(PeriodSaveRequest request)
+        public PeriodResponse CalendarValidation(PeriodSaveRequest request, HttpContextBase httpContext)
         {
 
             comparativePeriodCalendarType = request.ComparativePeriodType;
@@ -76,8 +78,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.Success = false;
                 result.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -116,7 +119,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             result.Success = true;
         }
-        public PeriodResponse GetPeriod(string idWebSession)
+        public PeriodResponse GetPeriod(string idWebSession, HttpContextBase httpContext)
         {
             var result = new PeriodResponse();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
@@ -138,7 +141,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace);
-                Logger.Log(LogLevel.Error, message);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
                 result.Success = false;
                 result.ErrorMessage = message; //"Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
                 throw;
@@ -146,7 +151,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
-        public PeriodResponse SlidingDateValidation(PeriodSaveRequest request)
+        public PeriodResponse SlidingDateValidation(PeriodSaveRequest request, HttpContextBase httpContext)
         {
             var result = new PeriodResponse();
             _customerSession = (WebSession)WebSession.Load(request.IdWebSession);
@@ -158,21 +163,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     case WebConstantes.Module.Name.INDICATEUR:
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                        AnalysisSlidingValidation(request, result, _customerSession);
+                        AnalysisSlidingValidation(request, result, _customerSession, httpContext);
                         break;
                     case WebConstantes.Module.Name.FACEBOOK:
                         SocialMediaSlidingValidation(request, result, _customerSession);
                         break;
                     default:
-                        DefaultSlidingPeriodValidation(request, result, _customerSession);
+                        DefaultSlidingPeriodValidation(request, result, _customerSession, httpContext);
                         break;
                 }
             }
             catch (Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_customerSession.CurrentModule), _customerSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -465,7 +471,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         #endregion
 
-        private void AnalysisSlidingValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession)
+        private void AnalysisSlidingValidation(PeriodSaveRequest request, PeriodResponse result, WebSession webSession, HttpContextBase httpContext)
         {
             #region TOREFACTOR           
             try
@@ -475,16 +481,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (TNS.AdExpress.Domain.Exceptions.NoDataException exception)
             {
                 result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, exception.InnerException + exception.Message);
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, exception.Message, exception.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
             catch (System.Exception ex)
             {
                 result.ErrorMessage = ex.Message;
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
@@ -688,7 +696,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodEndDate))
                 webSession.PeriodEndDate = absolutEndPeriod;
         }
-        private void DefaultSlidingPeriodValidation(PeriodSaveRequest request, PeriodResponse response, WebSession webSession)
+        private void DefaultSlidingPeriodValidation(PeriodSaveRequest request, PeriodResponse response, WebSession webSession, HttpContextBase httpContext)
         {
             try
             {
@@ -715,8 +723,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 response.Success = false;
                 response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
-                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException +ex.Message, ex.StackTrace,GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
-                Logger.Log(LogLevel.Error, message);
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }

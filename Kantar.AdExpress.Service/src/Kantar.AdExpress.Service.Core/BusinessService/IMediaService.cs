@@ -1,12 +1,12 @@
 ﻿
 using Kantar.AdExpress.Service.Core.Domain;
 using System.Collections.Generic;
-
+using System.Web;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IMediaService
     {
-        MediaResponse GetMedia(string idWebSession);
+        MediaResponse GetMedia(string idWebSession, HttpContextBase httpContext);
     }
 }
