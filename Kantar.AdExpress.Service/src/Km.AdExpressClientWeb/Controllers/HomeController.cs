@@ -146,7 +146,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 try{
                     var claim = new ClaimsPrincipal(User.Identity);
                     string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                    _webSessionService.SaveCurrentModule(idWebSession, idModule);
+                    _webSessionService.SaveCurrentModule(idWebSession, idModule, this.HttpContext);
 
                     return this.Json(new { success = true });
                 }
