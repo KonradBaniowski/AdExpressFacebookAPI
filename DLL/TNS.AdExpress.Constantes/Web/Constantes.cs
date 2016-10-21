@@ -336,8 +336,13 @@ namespace TNS.AdExpress.Constantes.Web
         /// <summary>
         /// Max allowed rows number to display
         /// </summary>
-        public const int MAX_ALLOWED_ROWS_NB = 50000;
-	}
+        public const int MAX_ALLOWED_ROWS_NB = 10000;
+
+        /// <summary>
+        /// Max allowed rows number to display in insertions/versions page
+        /// </summary>
+        public const int MAX_ALLOWED_INSERTION_VERSION_ROWS_NB = 30000;
+    }
 	/// <summary>
 	/// Constantes spécifiques aux sessions
 	/// </summary>
