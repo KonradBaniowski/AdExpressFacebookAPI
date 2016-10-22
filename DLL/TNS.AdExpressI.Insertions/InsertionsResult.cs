@@ -1996,7 +1996,7 @@ namespace TNS.AdExpressI.Insertions
                     }
                 }
 
-                if (nbLines > Core.MAX_ALLOWED_ROWS_NB)
+                if (nbLines > Core.MAX_ALLOWED_INSERTION_VERSION_ROWS_NB)
                 {
                     gridResult.HasData = true;
                     gridResult.HasMoreThanMaxRowsAllowed = true;
@@ -2052,7 +2052,7 @@ namespace TNS.AdExpressI.Insertions
                     }
                 }
 
-                if (nbLines > Core.MAX_ALLOWED_ROWS_NB)
+                if (nbLines > Core.MAX_ALLOWED_INSERTION_VERSION_ROWS_NB)
                 {
                     gridResult.HasData = true;
                     gridResult.HasMoreThanMaxRowsAllowed = true;
