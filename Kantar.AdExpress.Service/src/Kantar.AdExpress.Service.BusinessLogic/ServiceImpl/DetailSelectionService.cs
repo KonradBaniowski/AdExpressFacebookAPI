@@ -379,6 +379,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case Dimension.product:
                     result.UniversMarket = new List<Tree>();
                     result.ShowMarket = true;
+                    result.ShowUniversDetails = true;
                     result.ModuleLabel = GestionWeb.GetWebWord(468, webSession.SiteLanguage);
                     ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMarket, factoryLevels, webSession.SiteLanguage, webSession.CurrentModule);
                     break;
@@ -387,6 +388,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     //TODO //result.MediasSelectedLabel = string.Join(",", result.MediasSelected.Select(p => p.Label));
                     result.UniversMedia = new List<Tree>();
                     result.ShowUnivers = true;
+                    result.ShowUniversDetails = true;
                     result.ModuleLabel = GestionWeb.GetWebWord(363, webSession.SiteLanguage);                
                     ExtractTreeFromAdExpressUniverse(adExpressUniverse, result.UniversMedia, factoryLevels, webSession.SiteLanguage, webSession.CurrentModule);
                     break;
