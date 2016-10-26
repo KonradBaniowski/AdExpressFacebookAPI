@@ -11,6 +11,7 @@
 }
 
 .login-footer .img-logo {
-    margin-top: 100px;
+    /*margin-top: 100px;*/
+    margin-bottom:30px;
     max-width: 430px;
 }
