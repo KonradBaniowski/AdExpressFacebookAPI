@@ -114,9 +114,11 @@
             },
             success: function (data) {
                 if (data != null && data != "") {
-                    $("#customDetail")
-                    .append('<option value="' + data.Id + '">' + data.Label + '</option>')
-                    .selectpicker('refresh');
+                    if (data.Id > 0) {
+                        $("#customDetail")
+                        .append('<option value="' + data.Id + '">' + data.Label + '</option>')
+                        .selectpicker('refresh');
+                    }
                     bootbox.alert(data.Message);
                 }
             }

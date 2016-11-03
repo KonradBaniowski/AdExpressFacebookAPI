@@ -165,6 +165,7 @@ $(document).on('click', '#btn-export', function (event) {
                         if (cookieName.indexOf("mail") > -1) {
                             var cookieValue = eachCookie[1];
                             $('#email').val(cookieValue);
+                            $('#rememberEmail').prop('checked', true);
                         }
                     }
                 }
@@ -211,7 +212,7 @@ $(document).on('click', '#btnExport', function (event) {
         var date = new Date();
         date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));   // add 1 day
         document.cookie = "mail=" + email + "; expires=" + date.toGMTString();
-        console.log(document.cookie);
+        //console.log(document.cookie);
     }
     var type = $('#ExportType').val();
     var params = {

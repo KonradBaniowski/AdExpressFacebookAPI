@@ -2359,5 +2359,7 @@
     
     <item mnemonic="w3097" type="System.String">Le délai d'attente s'est écoulé avant la fin de l'opération. Vous pouvez :</item>
     <item mnemonic="w3098" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
+
+    <item mnemonic="w3099" type="System.String">Etes vous sûr de vouloir supprimer ce résultat ?</item>
   </items>
 </localization>

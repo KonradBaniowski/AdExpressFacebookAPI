@@ -598,11 +598,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     CheckBoxOption pdm = new CheckBoxOption();
                     pdm.Id = "pdmEvol";
-                    if (_customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
-                        || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
-                        )
-                        pdm.Value = true;
-                    else pdm.Value = _customerWebSession.Percentage;
+
+                    //TODO : verifier :
+                    //if (_customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.FORCES
+                    //    || _customerWebSession.CurrentTab == FrameWorkResults.CompetitorMarketShare.POTENTIELS
+                    //    )
+                    //    pdm.Value = true;
+                    //else pdm.Value = _customerWebSession.Percentage;
+                    pdm.Value = _customerWebSession.Percentage;
+
                     options.PDM = pdm;
                 }
                 #endregion

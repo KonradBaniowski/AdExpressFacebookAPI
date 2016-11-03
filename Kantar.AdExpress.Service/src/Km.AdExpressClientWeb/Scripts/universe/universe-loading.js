@@ -208,6 +208,10 @@ $(document).on('click', '#LoadUnivers', function (event) {
                         });
 
                     });
+                    $.each($('.tuile-medias-active'), function (index, item) {
+                        $(this).toggleClass("tuile-medias tuile-medias-active");
+                    });
+
                     $.each(medias, function (index, item) {
                         $('.tuile-medias[data-attr-id="' + item + '"]').toggleClass("tuile-medias tuile-medias-active");
                     });

@@ -174,6 +174,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AlertCreationSucceeded = 2660;
         public const long ComparativeStudyUnvailableForCurrentYear = 2807;
         public const long MediaAgencyAnalysis = 2809;
+        public const long DeleteUniversMessageConfirmLabel = 2856;
         public const long Concurrent = 2869;
         public const long Dates = 2882;
         public const long ExportSpotsResult = 2942;
@@ -238,6 +239,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TimeoutBis = 3098;
         public const long MaxAllowedRows = 2568;
         public const long MaxAllowedRowsBis = 2569;
+        public const long DeleteResultMessageConfirmLabel = 3099;
         #endregion
     }
 }

@@ -201,7 +201,7 @@ $(document).on('click', '.btnDeleteUnivers', function () {
     var universId = $(this).attr("data-id");
     bootbox.confirm({
         size: 'small',
-        message: $('#Labels_DeleteRequestMessageConfirmLabel').val(),
+        message: $('#Labels_DeleteUniversMessageConfirmLabel').val(),
         callback: function (confirmed) {
             if (confirmed == true) {
                 var params = {
@@ -241,7 +241,7 @@ $(document).on('click', '.btnDeleteResult', function () {
     var universId = $(this).attr("data-id");
     bootbox.confirm({
         size: 'small',
-        message: $('#Labels_DeleteRequestMessageConfirmLabel').val(),
+        message: $('#Labels_DeleteResultMessageConfirmLabel').val(),
         callback: function (confirmed) {
             if (confirmed == true) {
                 var params = {

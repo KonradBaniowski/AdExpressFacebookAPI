@@ -302,6 +302,7 @@ function NextStep(nextUrl, dis) {
 function validate() {
     var message = "";
     var nbElemInclus = $("[id^='tree'][data-access-type='1'] li[data-id]").length;
+    idList = $(".tuile-medias-active").attr("data-attr-id");
     if (nbElemInclus < 1) {
         message = $('#Labels_ErrorMininumInclude').val();
     }

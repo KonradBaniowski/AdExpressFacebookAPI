@@ -182,5 +182,7 @@ namespace KM.Framework.Constantes
         public string TimeoutBis { get; set; }//3098
         public string MaxAllowedRows { get; set; }//2568
         public string MaxAllowedRowsBis { get; set; }//2569
+        public string DeleteUniversMessageConfirmLabel { get; set; }//2856
+        public string DeleteResultMessageConfirmLabel { get; set; }//3099
     }
 }
