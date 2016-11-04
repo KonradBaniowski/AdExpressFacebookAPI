@@ -1769,6 +1769,8 @@ namespace TNS.AdExpressI.MediaSchedule {
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            List<object> columnsNotAllowedSorting = new List<object>();
+            
             int tableWidth = 0;
             string periodLabel = string.Empty;
 
@@ -1848,6 +1850,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = GestionWeb.GetWebWord(1994, _session.SiteLanguage), key = "VERSION", dataType = "string", width = "82" });
                 schemaFields.Add(new { name = "VERSION" });
                 columnsFixed.Add(new { columnKey = "VERSION", isFixed = false, allowFixing = false });
+                columnsNotAllowedSorting.Add(new { columnKey = "VERSION", allowSorting = false });
                 tableWidth += 82;
             }
             // Insertions
@@ -1857,6 +1860,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 columns.Add(new { headerText = insertionLabel, key = "INSERTION", dataType = "string", width = "82" });
                 schemaFields.Add(new { name = "INSERTION" });
                 columnsFixed.Add(new { columnKey = "INSERTION", isFixed = false, allowFixing = false });
+                columnsNotAllowedSorting.Add(new { columnKey = "INSERTION", allowSorting = false });
                 tableWidth += 82;
             }
             // TODO : Remove commented code for countries that don't use Comparative study
@@ -2353,6 +2357,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = _session.Unit.ToString();
 

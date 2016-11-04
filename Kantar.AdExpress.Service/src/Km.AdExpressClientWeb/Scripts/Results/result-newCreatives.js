@@ -11,6 +11,7 @@
     var ds;
     var cols;
     var colsFixed;
+    var columnsNotAllowedSorting;
     var needFixedColumns = false;
     var gridWidth;
     var sortOrder = "NONE";
@@ -299,6 +300,7 @@
                         dataTreeGrid = data.datagrid;
                         cols = data.columns;
                         colsFixed = data.columnsfixed;
+                        columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                         needFixedColumns = data.needfixedcolumns;
 
                         var schema = new $.ig.DataSchema("array", {
@@ -356,7 +358,8 @@
                     {
                         name: "Sorting",
                         type: "local",
-                        applySortedColumnCss: false
+                        applySortedColumnCss: false,
+                        columnSettings: columnsNotAllowedSorting
                     }
                     ]
             })

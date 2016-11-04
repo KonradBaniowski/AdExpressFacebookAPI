@@ -110,9 +110,17 @@ namespace TNS.AdExpressI.CampaignAnalysis
 
             gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
 
+            List<string> listStringNotAllowedSorting = new List<string> {
+                GestionWeb.GetWebWord(150, webSession.SiteLanguage), //Planmedia
+                GestionWeb.GetWebWord(751, webSession.SiteLanguage), //PlanMedia
+                GestionWeb.GetWebWord(1994, webSession.SiteLanguage), //Versions
+                GestionWeb.GetWebWord(2245, webSession.SiteLanguage), //Insertions
+            };
+
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            List<object> columnsNotAllowedSorting = new List<object>();
 
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -217,6 +225,11 @@ namespace TNS.AdExpressI.CampaignAnalysis
                             }
                             else
                             {
+                                if (listStringNotAllowedSorting.Contains(resultTable.NewHeaders.Root[j].Label))
+                                {
+                                    columnsNotAllowedSorting.Add(new { columnKey = colKey, allowSorting = false });
+                                }
+
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
                                 //columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
                                 columns.Add(GetColumnDef(webSession, cell, resultTable.NewHeaders.Root[j].Label, ref colKey, "*"));
@@ -343,6 +356,7 @@ namespace TNS.AdExpressI.CampaignAnalysis
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = webSession.Unit.ToString();
 

@@ -545,6 +545,7 @@ namespace TNS.AdExpressI.NewCreatives
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            List<object> columnsNotAllowedSorting= new List<object>();
 
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -570,10 +571,11 @@ namespace TNS.AdExpressI.NewCreatives
                     }
                     else
                     {
-                        if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage)
-                            || resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1994, _webSession.SiteLanguage))  //Plan Media
+                        if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(751, _webSession.SiteLanguage) //Plan Media
+                            || resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1994, _webSession.SiteLanguage))  //Versions
                         {
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", allowSorting = false });
+                            columnsNotAllowedSorting.Add(new { columnKey= colKey, allowSorting = false });
                         }
                         else if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(1236, _webSession.SiteLanguage)) //Pourcentage
                         {
@@ -693,6 +695,7 @@ namespace TNS.AdExpressI.NewCreatives
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = _webSession.Unit.ToString();
 

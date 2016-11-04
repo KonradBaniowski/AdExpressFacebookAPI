@@ -350,7 +350,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
                 var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema,
-                    columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit,
+                    columnsfixed = gridResult.ColumnsFixed,
+                    columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting,
+                    needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit,
                     success = gridResultResponse.Success
                 };
                 jsonModel = Json(obj, JsonRequestBehavior.AllowGet);

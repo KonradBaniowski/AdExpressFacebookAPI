@@ -1918,9 +1918,23 @@ namespace TNS.AdExpressI.Insertions
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
-
+            LineStart cLineStart = null;
+            int nbLines = 0;
             l = 0;
-            object[,] gridData = new object[nbLine, _data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+
+            for (int indexLineTable = 0; indexLineTable < _data.LinesNumber; indexLineTable++)
+            {
+                cLineStart = _data.GetLineStart(indexLineTable);
+                if (!(cLineStart is LineHide))
+                    nbLines++;
+            }
+            if (nbLines == 0)
+            {
+                gridResult.HasData = false;
+                return;
+            }
+
+            object[,] gridData = new object[nbLines, _data.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber
 
 
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });

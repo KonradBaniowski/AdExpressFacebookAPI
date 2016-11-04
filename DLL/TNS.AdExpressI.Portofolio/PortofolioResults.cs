@@ -265,12 +265,20 @@ namespace TNS.AdExpressI.Portofolio
                     return (gridResult);
                 }
 
+                List<string> listStringNotAllowedSorting = new List<string> {
+                    GestionWeb.GetWebWord(150, _webSession.SiteLanguage), //Planmedia
+                    GestionWeb.GetWebWord(751, _webSession.SiteLanguage), //PlanMedia
+                    GestionWeb.GetWebWord(1994, _webSession.SiteLanguage), //Versions
+                    GestionWeb.GetWebWord(2245, _webSession.SiteLanguage), //Insertions
+                };
+
                 resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
                 object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for gad column
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
+                List<object> columnsNotAllowedSorting = new List<object>();
 
                 gridResult.HasData = true;
 
@@ -354,6 +362,12 @@ namespace TNS.AdExpressI.Portofolio
                                 }
                                 else
                                 {
+
+                                    if (listStringNotAllowedSorting.Contains(resultTable.NewHeaders.Root[j].Label))
+                                    {
+                                        columnsNotAllowedSorting.Add(new { columnKey = colKey, allowSorting = false });
+                                    }
+
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
                                     columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, colWidth));
                                     //columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = colWidth });
@@ -471,6 +485,7 @@ namespace TNS.AdExpressI.Portofolio
                 gridResult.Columns = columns;
                 gridResult.Schema = schemaFields;
                 gridResult.ColumnsFixed = columnsFixed;
+                gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
                 gridResult.Data = gridData;
             }
             else

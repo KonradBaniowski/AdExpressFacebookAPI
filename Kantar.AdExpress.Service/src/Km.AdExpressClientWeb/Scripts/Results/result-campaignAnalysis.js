@@ -14,6 +14,7 @@
     var ds;
     var cols;
     var colsFixed;
+    var columnsNotAllowedSorting;
     var needFixedColumns = false;
     var zoomDate = '';
     var previousSubPeriodLabel;
@@ -96,7 +97,8 @@
                         {
                             name: "Sorting",
                             type: "local",
-                            applySortedColumnCss: false
+                            applySortedColumnCss: false,
+                            columnSettings: columnsNotAllowedSorting
                         }
                     ]
                 })
@@ -123,7 +125,8 @@
                         {
                             name: "Sorting",
                             type: "local",
-                            applySortedColumnCss: false
+                            applySortedColumnCss: false,
+                            columnSettings: columnsNotAllowedSorting
                         }
                     ]
                 })
@@ -321,6 +324,7 @@
                         dataTreeGrid = data.datagrid;
                         cols = GetColumnsFormatter(data.columns);
                         colsFixed = data.columnsfixed;
+                        columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                         needFixedColumns = data.needfixedcolumns;
 
                         var schema = new $.ig.DataSchema("array", {

@@ -2058,9 +2058,17 @@ namespace TNS.AdExpressI.PresentAbsent
                 gridData = new object[nbLines, resultTable.ColumnsNumber];
             }//+2 car ID et PID en plus  -  //_data.LinesNumber 
 
+            List<string> listStringNotAllowedSorting = new List<string> {
+                GestionWeb.GetWebWord(150, _session.SiteLanguage), //Planmedia
+                GestionWeb.GetWebWord(751, _session.SiteLanguage), //PlanMedia
+                GestionWeb.GetWebWord(1994, _session.SiteLanguage), //Versions
+                GestionWeb.GetWebWord(2245, _session.SiteLanguage), //Insertions
+            };
+
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            List<object> columnsNotAllowedSorting = new List<object>();
 
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -2218,7 +2226,15 @@ namespace TNS.AdExpressI.PresentAbsent
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             }
                             else
+                            {
+                                if (listStringNotAllowedSorting.Contains(resultTable.NewHeaders.Root[j].Label))
+                                {
+                                    columnsNotAllowedSorting.Add(new { columnKey = colKey, allowSorting = false });
+                                }
+
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
+                            }
+
                             columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                         }
                         schemaFields.Add(new { name = colKey });
@@ -2348,6 +2364,7 @@ namespace TNS.AdExpressI.PresentAbsent
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = _session.Unit.ToString();
 

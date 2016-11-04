@@ -1167,12 +1167,20 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 return (gridResult);
             }
 
+            List<string> listStringNotAllowedSorting = new List<string> {
+                GestionWeb.GetWebWord(150, _session.SiteLanguage), //Planmedia
+                GestionWeb.GetWebWord(751, _session.SiteLanguage), //PlanMedia
+                GestionWeb.GetWebWord(1994, _session.SiteLanguage), //Versions
+                GestionWeb.GetWebWord(2245, _session.SiteLanguage), //Insertions
+            };
+
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
+            List<object> columnsNotAllowedSorting = new List<object>();
 
             //Hierachical ids for Treegrid
             columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -1248,6 +1256,11 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         }
                         else
                         {
+                            if (listStringNotAllowedSorting.Contains(resultTable.NewHeaders.Root[j].Label))
+                            {
+                                columnsNotAllowedSorting.Add(new { columnKey = colKey, allowSorting = false });
+                            }
+
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*" });
                             columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                         }
@@ -1335,6 +1348,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             gridResult.Columns = columns;
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
+            gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = _session.Unit.ToString();
 

@@ -1721,7 +1721,6 @@
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
     <Folder Include="Views\Image\" />
-    <Folder Include="Views\NewFolder1\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\SocialMediaExport\" />
     <Folder Include="Views\Universe\" />
