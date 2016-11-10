@@ -649,24 +649,22 @@ input {
 
 .tile-deploy a.list-group-item {
     border: none;
-    background-color: #86a502;
+    background-color: rgb(134, 165, 2);
     font-size: 12px;
     color:white;
 }
 
     .tile-deploy a.list-group-item:hover {
-        color: #fff;
-        /*background-color: #829710;*/
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(134, 165, 2, 0.6);
     }
 
 .tile-deploy.pdf a.list-group-item {
-    background-color: #bb1415;
+    background-color: rgb(187, 20, 21);
     color: #fff;
 }
 
     .tile-deploy.pdf a.list-group-item:hover {
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(187, 20, 21, 0.6);
     }
 
 

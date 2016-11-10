@@ -2,6 +2,7 @@
 <infoNews>
   <RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.Default.dll" class="TNS.AdExpressI.InfosNews.Default.InfoNewsResult"/>
   <directories>
+    <!--
     <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/InfoNews/AdvertisingExpenditureByCategory/" physicalPath="\\TSESPWBE010\GenericInfoNews\AdvertisingExpenditureByCategory"/>
     <directory id="top150BrandAdvertisers" description="TOP 150 merkkimainostajaa" webTextId="2594" virtualPath="/InfoNews/TOP150BrandAdvertisers/" physicalPath="\\TSESPWBE010\GenericInfoNews\TOP150BrandAdvertisers"/>
     <directory id="top20Retailers" description="TOP 20 kaupan ketjua" webTextId="2595" virtualPath="/InfoNews/TOP20Retailers/" physicalPath="\\TSESPWBE010\GenericInfoNews\TOP20Retailers"/>
@@ -19,5 +20,10 @@
     <directory id="dealerVsBrandAdvertising" description="jälleenmyyjä vs. merkkimainonta" webTextId="2678" virtualPath="/InfoNews/DealerBrandAdvertising/" physicalPath="\\TSESPWBE010\GenericInfoNews\DealerBrandAdvertising"/>
     <directory id="archiveCurrentYear" description="Archive current year" webTextId="2727" virtualPath="/InfoNews/ArchiveCurrentYear/" physicalPath="\\TSESPWBE010\GenericInfoNews\ArchiveCurrentYear"/>
     <directory id="internationaTrends" description="International trends" webTextId="2728" virtualPath="/InfoNews/InternationalTrends/" physicalPath="\\TSESPWBE010\GenericInfoNews\InternationalTrends"/>
+    -->
+    
+    <directory id="AdditionalReports" description="" webTextId="3101" virtualPath="/InfoNews/AdditionalReports/" physicalPath="\\TSESPWBE010\GenericInfoNews\AdditionalReports" nbMaxItemsToShow="12" />
+    <directory id="News" description="" webTextId="3100" virtualPath="/InfoNews/News/" physicalPath="\\TSESPWBE010\GenericInfoNews\News" nbMaxItemsToShow="12" />
+    <directory id="DocumentsAndInstructions" description="" webTextId="3102" virtualPath="/InfoNews/DocumentsAndInstructions/" physicalPath="\\TSESPWBE010\GenericInfoNews\DocumentsAndInstructions" nbMaxItemsToShow="12" />
   </directories>
 </infoNews>

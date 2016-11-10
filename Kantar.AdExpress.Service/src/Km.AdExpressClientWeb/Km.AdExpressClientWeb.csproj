@@ -596,9 +596,12 @@
     <Content Include="Content\img\33\logo_kantarmedia.png" />
     <Content Include="Content\img\353\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\353\logo_kantarmedia.png" />
+    <Content Include="Content\img\35\banniere-AdExpress_FIN.jpg" />
     <Content Include="Content\img\35\logo_kantarmedia.png" />
     <Content Include="Content\img\35\logo_kantarmedia2.png" />
     <Content Include="Content\img\35\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\35\tnsLogo.png" />
+    <Content Include="Content\img\35\tnsLogo2.png" />
     <Content Include="Content\img\Bann-new-AdExpress.jpg" />
     <Content Include="Content\img\Banniere-AdExpress_social.jpg" />
     <Content Include="Content\img\bann_adexpress.jpg" />

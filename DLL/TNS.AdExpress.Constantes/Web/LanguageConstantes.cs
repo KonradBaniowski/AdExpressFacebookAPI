@@ -240,6 +240,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long MaxAllowedRows = 2568;
         public const long MaxAllowedRowsBis = 2569;
         public const long DeleteResultMessageConfirmLabel = 3099;
+        public const long TitleLabel = 3103;
         #endregion
     }
 }

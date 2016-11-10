@@ -117,6 +117,10 @@ namespace Km.AdExpressClientWeb.Controllers
                             }
                 });
             }
+            else
+            {
+                documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
+            }
 
             var encryptedPassword = EncryptQueryString(password);
             var encryptedLogin = EncryptQueryString(login);

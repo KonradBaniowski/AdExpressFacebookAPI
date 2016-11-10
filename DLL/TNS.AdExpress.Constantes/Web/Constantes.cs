@@ -3142,10 +3142,21 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// International trends
             /// </summary>
-            internationaTrends = 21
+            internationaTrends = 21,
+            /// <summary>
+            /// AdditionalReports (Finland)
+            /// </summary>
+            AdditionalReports = 22,
+            /// <summary>
+            /// News (Finland)
+            /// </summary>
+            News = 23,
+            /// <summary>
+            /// Documents And Instructions (Finland)
+            /// </summary>
+            DocumentsAndInstructions = 24
 
-
-		}
+        }
 
 		/// <summary>
 		/// Sous module ADEXNEWS

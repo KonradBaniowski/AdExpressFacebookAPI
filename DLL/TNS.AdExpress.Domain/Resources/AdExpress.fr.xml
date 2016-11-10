@@ -2361,5 +2361,12 @@
     <item mnemonic="w3098" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
 
     <item mnemonic="w3099" type="System.String">Etes vous sûr de vouloir supprimer ce résultat ?</item>
+
+    <item mnemonic="w3100" type="System.String">News</item>
+    <item mnemonic="w3101" type="System.String">Additional Reports</item>
+    <item mnemonic="w3102" type="System.String">Documents and Instructions</item>
+
+    <item mnemonic="w3103" type="System.String">Titre</item>
+
   </items>
 </localization>

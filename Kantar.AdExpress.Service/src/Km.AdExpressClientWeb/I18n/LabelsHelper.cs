@@ -151,7 +151,8 @@ namespace Km.AdExpressClientWeb.I18n
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
                 DeleteUniversMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteUniversMessageConfirmLabel, siteLanguage),
-                DeleteResultMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteResultMessageConfirmLabel, siteLanguage)
+                DeleteResultMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteResultMessageConfirmLabel, siteLanguage),
+                TitleLabel = GestionWeb.GetWebWord(LanguageConstantes.TitleLabel, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))

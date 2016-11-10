@@ -91,6 +91,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_customerSession.SiteLanguage].Localization);
             #endregion
 
+            //TODO: à faire autrement
+            if (idDirectory == ModuleInfosNews.Directories.News || idDirectory == ModuleInfosNews.Directories.AdditionalReports || idDirectory == ModuleInfosNews.Directories.DocumentsAndInstructions)
+            {
+                return fileName;
+            }
+
             #region Formatage du nom du fichier
             idMonth = int.Parse(fileName.Substring(fileName.LastIndexOf(@"_") + 5, 2));
             monthName = TNS.FrameWork.Date.MonthString.GetCharacters(idMonth, cultureInfo, 0);
