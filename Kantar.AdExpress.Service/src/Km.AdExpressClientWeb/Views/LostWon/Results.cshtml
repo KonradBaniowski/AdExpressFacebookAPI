@@ -16,6 +16,8 @@
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
     @Html.Hidden("ExportController", "LostWonExport")
+    @Html.HiddenFor(e => e.Labels.ResultError)
+    @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
         <div class="row row-sm">
             @Html.Partial("NavigationBar", Model.NavigationBar)
@@ -413,6 +415,11 @@
                             $("#gridLoader").addClass("hide");
                             $("#gridEmpty").show();
                             $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                        }
+                        else {
+                            message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
+                            bootbox.alert(message);
+                            $("#gridLoader").addClass("hide");
                         }
                     },
                     success: function (data) {

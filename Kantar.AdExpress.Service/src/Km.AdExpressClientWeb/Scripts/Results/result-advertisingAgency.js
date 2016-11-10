@@ -361,6 +361,11 @@
                     $("#gridMessage").removeClass("hide");
                     $("#gridMessage").html(message);
                 }
+                else {
+                    message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
+                    bootbox.alert(message);
+                    $("#gridLoader").addClass("hide");
+                }
             },
             success: function (data) {
                 if (data != null && data != "") {
