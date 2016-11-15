@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -36,7 +37,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            var data = _insertionsService.GetInsertionsResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle.Value, this.HttpContext);
+            var data = _insertionsService.GetInsertionsResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle.Value, this.HttpContext, true);
 
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
@@ -47,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
             document.Worksheets.Clear();
 
             export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
-            export.Export(document, data, session);
+            export.Export(document, data, session, true, ResultTable.SortOrder.NONE, 1, true);
 
             document.Worksheets.ActiveSheetIndex = 1;
 

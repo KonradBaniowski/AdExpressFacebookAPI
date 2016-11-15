@@ -212,7 +212,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return insertionResponse;
         }
 
-        public ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext)
+        public ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext, bool isExcel = false)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             ResultTable result = null;
@@ -242,7 +242,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _fromDate = Convert.ToInt32(Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
                     _toDate = Convert.ToInt32(Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
                 }
-                result = insertionResult.GetInsertions(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+
+                if (!isExcel)
+                    result = insertionResult.GetInsertions(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+                else
+                    result = insertionResult.GetInsertionsExcel(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
             }
             catch (Exception ex)
             {

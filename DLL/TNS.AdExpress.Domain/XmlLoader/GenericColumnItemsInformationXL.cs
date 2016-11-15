@@ -72,7 +72,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 			Dictionary<Int64, GenericColumnItemInformation> list = new Dictionary<Int64, GenericColumnItemInformation>();
 			XmlTextReader reader=null;
 			Int64 id=0;
-			Int64 oldId=0;
+            Int64 idLevel = 0;
+            Int64 oldId=0;
 			string name=null;
 			Int64 webTextId=0;
 			string dbId=null;
@@ -114,7 +115,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 							case "column":
 					
 								id=0;
-								name=null;
+                                idLevel = 0;
+                                name =null;
 								webTextId=0;
 								dbId=null;
 								dbLabel=null;
@@ -147,6 +149,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									dbTable=reader.GetAttribute("dbTable");
 									dbTablePrefixe=reader.GetAttribute("dbTablePrefixe");
 
+                                    if (reader.GetAttribute("idLevel") != null && reader.GetAttribute("idLevel").Length > 0) idLevel = Int64.Parse(reader.GetAttribute("idLevel"));
                                     if (reader.GetAttribute("CellType") != null && reader.GetAttribute("CellType").Length > 0) cellType = reader.GetAttribute("CellType");
                                     if (reader.GetAttribute("format") != null && reader.GetAttribute("format").Length > 0) strFormat = reader.GetAttribute("format");
 									if(reader.GetAttribute("convertNullDbId")!=null && reader.GetAttribute("convertNullDbId").Length>0)convertNullDbId=bool.Parse(reader.GetAttribute("convertNullDbId"));
@@ -175,9 +178,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									}
 
 									if((sqlOperation!=null && sqlOperation.Length>0) && (dbRelatedTablePrefixe!=null && dbRelatedTablePrefixe.Length>0))
-                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat, dbRelatedTablePrefixe, sqlOperation);
+                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat, idLevel, dbRelatedTablePrefixe, sqlOperation);
 									else
-                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat);
+                                        genericColumnItemInformation = new GenericColumnItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, cellType, strFormat, idLevel);
                                     if (reader.GetAttribute("isSum") != null && reader.GetAttribute("isSum").Length > 0) genericColumnItemInformation.IsSum = bool.Parse(reader.GetAttribute("isSum"));
                                     if (reader.GetAttribute("isCountDistinct") != null && reader.GetAttribute("isCountDistinct").Length > 0) genericColumnItemInformation.IsCountDistinct = bool.Parse(reader.GetAttribute("isCountDistinct"));
                                     if (reader.GetAttribute("isMax") != null && reader.GetAttribute("isMax").Length > 0) genericColumnItemInformation.IsMax = bool.Parse(reader.GetAttribute("isMax"));

@@ -178,71 +178,82 @@ namespace TNS.AdExpressI.Insertions.France
                 else
                 {
                     string str = string.Empty;
-                    switch (columns[index1].Id)
+                    if (_getInsertionsExcel && columns[index1].Id == GenericColumnItemInformation.Columns.dateMediaNum)
                     {
-                        case GenericColumnItemInformation.Columns.slogan:
-                            string label1 = row[columnsName[index1]].ToString();
-                            if (!this._session.CustomerLogin.CustormerFlagAccess(221L))
-                                label1 = string.Empty;
-                            if (tab[cLine, index2] == null || ((CellLabel)tab[cLine, index2]).Label.Length <= 0)
-                            {
-                                tab[cLine, index2] = new CellLabel(label1);
-                                break;
-                            }
-                            ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label1);
-                            break;
-                        case GenericColumnItemInformation.Columns.product:
-                            string label2 = row[columnsName[index1]].ToString();
-                            if (!this._session.CustomerLogin.CustormerFlagAccess(271L))
-                                label2 = string.Empty;
-                            if (tab[cLine, index2] == null || ((CellLabel)tab[cLine, index2]).Label.Length <= 0)
-                            {
-                                tab[cLine, index2] = (ICell)new CellLabel(label2);
-                                break;
-                            }
-                            ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label2);
-                            break;
-                        case GenericColumnItemInformation.Columns.associatedFile:
-                            switch (vehicle.Id)
-                            {
-                                case Vehicles.names.radio:
-                                    var sloganField = WebApplicationParameters.GenericColumnItemsInformation.Get(GenericColumnItemInformation.Columns.slogan.GetHashCode()).DataBaseIdField;
-                                    tab[cLine, index2] = row[sloganField].ToString().Length <= 0 ? new CellRadioCreativeLink(string.Empty, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio))
-                                        : new CellRadioCreativeLink(row[sloganField].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                        int num = Convert.ToInt32(row[columnsName[index1]]);
+                        int year = num / 10000;
+                        int month = (num - 10000 * year) / 100;
+                        int day = num - (10000 * year + 100 * month);
+                        tab[cLine, index2] = new CellDate(new DateTime(year, month, day), string.Format("{{0:{0}}}", columnItemInformation1.StringFormat));
+                    }
+                    else
+                    {
+                        switch (columns[index1].Id)
+                        {
+                            case GenericColumnItemInformation.Columns.slogan:
+                                string label1 = row[columnsName[index1]].ToString();
+                                if (!this._session.CustomerLogin.CustormerFlagAccess(221L))
+                                    label1 = string.Empty;
+                                if (tab[cLine, index2] == null || ((CellLabel)tab[cLine, index2]).Label.Length <= 0)
+                                {
+                                    tab[cLine, index2] = new CellLabel(label1);
                                     break;
-                                case Vehicles.names.tv:
-                                case Vehicles.names.others:
-                                    string creative = row[columnsName[index1]].ToString();
-                                    tab[cLine, index2] = creative.Length <= 0 ? new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId)
-                                        : new CellTvCreativeLink(creative, _session, vehicle.DatabaseId);
+                                }
+                                ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label1);
+                                break;
+                            case GenericColumnItemInformation.Columns.product:
+                                string label2 = row[columnsName[index1]].ToString();
+                                if (!this._session.CustomerLogin.CustormerFlagAccess(271L))
+                                    label2 = string.Empty;
+                                if (tab[cLine, index2] == null || ((CellLabel)tab[cLine, index2]).Label.Length <= 0)
+                                {
+                                    tab[cLine, index2] = (ICell)new CellLabel(label2);
                                     break;
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.dayOfWeek:
-                            int num = Convert.ToInt32(row[columnsName[index1]]);
-                            int year = num / 10000;
-                            int month = (num - 10000 * year) / 100;
-                            int day = num - (10000 * year + 100 * month);
-                            tab[cLine, index2] = new CellDate(new DateTime(year, month, day), string.Format("{{0:{0}}}", columnItemInformation1.StringFormat));
-                            break;
-                        case GenericColumnItemInformation.Columns.mailFormat:
-                            string label3 = row[columnsName[index1]].ToString() == "20" ?
-                                GestionWeb.GetWebWord(2241L, _session.SiteLanguage) : GestionWeb.GetWebWord(2240L, _session.SiteLanguage);
-                            if (tab[cLine, index2] == null)
-                            {
-                                tab[cLine, index2] = new CellLabel(label3);
+                                }
+                                ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label2);
                                 break;
-                            }
-                            ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label3);
-                            break;
-                        default:
-                            if (tab[cLine, index2] == null)
-                            {
-                                tab[cLine, index2] = new CellLabel(row[columnsName[index1]].ToString());
+                            case GenericColumnItemInformation.Columns.associatedFile:
+                                switch (vehicle.Id)
+                                {
+                                    case Vehicles.names.radio:
+                                        var sloganField = WebApplicationParameters.GenericColumnItemsInformation.Get(GenericColumnItemInformation.Columns.slogan.GetHashCode()).DataBaseIdField;
+                                        tab[cLine, index2] = row[sloganField].ToString().Length <= 0 ? new CellRadioCreativeLink(string.Empty, _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio))
+                                            : new CellRadioCreativeLink(row[sloganField].ToString(), _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                                        break;
+                                    case Vehicles.names.tv:
+                                    case Vehicles.names.others:
+                                        string creative = row[columnsName[index1]].ToString();
+                                        tab[cLine, index2] = creative.Length <= 0 ? new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId)
+                                            : new CellTvCreativeLink(creative, _session, vehicle.DatabaseId);
+                                        break;
+                                }
                                 break;
-                            }
-                            ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, row[columnsName[index1]].ToString());
-                            break;
+                            case GenericColumnItemInformation.Columns.dayOfWeek:
+                                int num = Convert.ToInt32(row[columnsName[index1]]);
+                                int year = num / 10000;
+                                int month = (num - 10000 * year) / 100;
+                                int day = num - (10000 * year + 100 * month);
+                                tab[cLine, index2] = new CellDate(new DateTime(year, month, day), string.Format("{{0:{0}}}", columnItemInformation1.StringFormat));
+                                break;
+                            case GenericColumnItemInformation.Columns.mailFormat:
+                                string label3 = row[columnsName[index1]].ToString() == "20" ?
+                                    GestionWeb.GetWebWord(2241L, _session.SiteLanguage) : GestionWeb.GetWebWord(2240L, _session.SiteLanguage);
+                                if (tab[cLine, index2] == null)
+                                {
+                                    tab[cLine, index2] = new CellLabel(label3);
+                                    break;
+                                }
+                                ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label3);
+                                break;
+                            default:
+                                if (tab[cLine, index2] == null)
+                                {
+                                    tab[cLine, index2] = new CellLabel(row[columnsName[index1]].ToString());
+                                    break;
+                                }
+                                ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, row[columnsName[index1]].ToString());
+                                break;
+                        }
                     }
                 }
             }

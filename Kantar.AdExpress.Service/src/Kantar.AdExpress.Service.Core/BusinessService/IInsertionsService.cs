@@ -16,7 +16,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         InsertionCreativeResponse GetInsertionsGridResult(string idWebSession,string ids, string zoomDate, int idUnivers, long moduleId, long? idVehicle, HttpContextBase httpContext, bool isVehicleChanged = false);
         List<List<string>> GetPresentVehicles(string idWebSession, string ids, int idUnivers, long moduleId, HttpContextBase httpContext, bool slogan = false);
 
-        ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext);
+        ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext, bool isExcel = false);
 
         SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle, HttpContextBase httpContext);
     }

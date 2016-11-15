@@ -59,7 +59,30 @@ namespace TNS.AdExpress.Domain.Level
 				throw(new ArgumentException("impossible to reteive a column item information with this Id",err));
 			}
 		}
-		#endregion
 
-	}
+        /// <summary>
+		/// Accès à la description d'un élément de la colonne par son identifiant dans la base de données
+		/// </summary>
+		public GenericColumnItemInformation GetByIdLevel(Int64 idLevel)
+        {
+            try
+            {
+                foreach(var column in _list.Values)
+                {
+                    if(column.IdLevel == idLevel)
+                    {
+                        return column;
+                    }
+                }
+
+                return null;
+            }
+            catch (System.Exception err)
+            {
+                throw (new ArgumentException("impossible to reteive a column item information with this Id", err));
+            }
+        }
+        #endregion
+
+    }
 }

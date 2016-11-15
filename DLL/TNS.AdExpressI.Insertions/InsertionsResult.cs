@@ -57,6 +57,10 @@ namespace TNS.AdExpressI.Insertions
         /// </summary>
         protected bool _getMSCreatives = false;
         /// <summary>
+        /// Get Insertions for Excel export
+        /// </summary>
+        protected bool _getInsertionsExcel = false;
+        /// <summary>
         /// Zoom indicator
         /// </summary>
         protected string _zoomDate = string.Empty;
@@ -359,6 +363,18 @@ namespace TNS.AdExpressI.Insertions
         }
         #endregion
 
+        #region GetInsertions
+        public virtual ResultTable GetInsertionsExcel(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId, string zoomDate)
+        {
+            _getCreatives = false;
+            _getInsertionsExcel = true;
+            _zoomDate = zoomDate;
+            _universId = universId;
+            return GetData(vehicle, fromDate, toDate, filters, universId);
+        }
+        #endregion
+
         #region GetCreatives
         public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters,
             int universId, string zoomDate)
@@ -615,7 +631,7 @@ namespace TNS.AdExpressI.Insertions
 
             #region Init ResultTable
             var levels = new List<DetailLevelItemInformation>();
-            if (!_getMSCreatives)
+            if (!_getMSCreatives && !_getInsertionsExcel)
             {
                 levels.AddRange(_session.DetailLevel.Levels.Cast<DetailLevelItemInformation>());
             }
@@ -628,7 +644,14 @@ namespace TNS.AdExpressI.Insertions
                 columns = _session.GenericCreativesColumns.Columns;
             }
             else
+            {
                 columns = _session.GenericInsertionColumns.Columns;
+                if (_getInsertionsExcel)
+                {
+                    columns.RemoveAll(item => item.NotInExcelExport);
+                    columns = AddLevelsAsColumns(_session.DetailLevel.Levels, columns);
+                }
+            }
 
             bool hasVisualRight = false;
             switch (vehicle.Id)
@@ -957,108 +980,119 @@ namespace TNS.AdExpressI.Insertions
                 else
                 {
                     string s = string.Empty;
-                    switch (columns[i].Id)
+                    if (_getInsertionsExcel && columns[i].Id == GenericColumnItemInformation.Columns.dateMediaNum)
                     {
-                        case GenericColumnItemInformation.Columns.associatedFile:
-                            switch (vehicle.Id)
-                            {
-                                case Vehicles.names.others:
-                                case Vehicles.names.tv:
-                                case Vehicles.names.tvGeneral:
-                                case Vehicles.names.tvSponsorship:
-                                case Vehicles.names.tvAnnounces:
-                                case Vehicles.names.tvNonTerrestrials:
-                                    s = row[columnsName[i]].ToString();
-                                    if (s.Length > 0)
-                                        tab[cLine, j] = new CellTvCreativeLink(s, _session, vehicle.DatabaseId);
-                                    else
-                                        tab[cLine, j] = new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId);
-                                    break;
-                                case Vehicles.names.radio:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
-                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                        Int32 n = Convert.ToInt32(row[columnsName[i]]);
+                        int y = n / 10000;
+                        int m = (n - (10000 * y)) / 100;
+                        int d = n - (10000 * y + 100 * m);
+                        tab[cLine, j] = new CellDate(new DateTime(y, m, d), string.Format("{{0:{0}}}", g.StringFormat));
+                    }
+                    else
+                    {
+                        switch (columns[i].Id)
+                        {
+                            case GenericColumnItemInformation.Columns.associatedFile:
+                                switch (vehicle.Id)
+                                {
+                                    case Vehicles.names.others:
+                                    case Vehicles.names.tv:
+                                    case Vehicles.names.tvGeneral:
+                                    case Vehicles.names.tvSponsorship:
+                                    case Vehicles.names.tvAnnounces:
+                                    case Vehicles.names.tvNonTerrestrials:
+                                        s = row[columnsName[i]].ToString();
+                                        if (s.Length > 0)
+                                            tab[cLine, j] = new CellTvCreativeLink(s, _session, vehicle.DatabaseId);
+                                        else
+                                            tab[cLine, j] = new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId);
+                                        break;
+                                    case Vehicles.names.radio:
+                                        tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                            _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
 
-                                    break;
-                                case Vehicles.names.radioGeneral:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
-                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
-                                    break;
-                                case Vehicles.names.radioSponsorship:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
-                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
-                                    break;
-                                case Vehicles.names.radioMusic:
-                                    tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
-                                        _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
-                                    break;
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.dayOfWeek:
-                            Int32 n = Convert.ToInt32(row[columnsName[i]]);
-                            int y = n / 10000;
-                            int m = (n - (10000 * y)) / 100;
-                            int d = n - (10000 * y + 100 * m);
-                            tab[cLine, j] = new CellDate(new DateTime(y, m, d), string.Format("{{0:{0}}}", g.StringFormat));
-                            break;
-                        case GenericColumnItemInformation.Columns.mailFormat:
-                            string cValue = row[columnsName[i]].ToString();
-                            if (cValue != CstVMCFormat.FORMAT_ORIGINAL)
-                            {
-                                cValue = GestionWeb.GetWebWord(2240, _session.SiteLanguage);
-                            }
-                            else
-                            {
-                                cValue = GestionWeb.GetWebWord(2241, _session.SiteLanguage);
-                            }
-                            if (tab[cLine, j] == null)
-                            {
-                                tab[cLine, j] = new CellLabel(cValue);
-                            }
-                            else
-                            {
-                                ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, cValue);
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.product:
-                            s = row[columnsName[i]].ToString();
-                            if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-                            {
-                                s = string.Empty;
-                            }
-                            if (tab[cLine, j] == null || ((CellLabel)tab[cLine, j]).Label.Length <= 0)
-                            {
-                                tab[cLine, j] = new CellLabel(s);
-                            }
-                            else
-                            {
-                                ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, s);
-                            }
-                            break;
-                        case GenericColumnItemInformation.Columns.slogan:
-                            s = row[columnsName[i]].ToString();
-                            if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_SLOGAN_ACCESS_FLAG))
-                            {
-                                s = string.Empty;
-                            }
-                            if (tab[cLine, j] == null || ((CellLabel)tab[cLine, j]).Label.Length <= 0)
-                            {
-                                tab[cLine, j] = new CellLabel(s);
-                            }
-                            else
-                            {
-                                ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, s);
-                            }
-                            break;
-                        default:
-                            if (tab[cLine, j] == null)
-                            {
-                                tab[cLine, j] = new CellLabel(row[columnsName[i]].ToString());
-                            }
-                            else
-                            {
-                                ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, row[columnsName[i]].ToString());
-                            }
-                            break;
+                                        break;
+                                    case Vehicles.names.radioGeneral:
+                                        tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                            _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
+                                        break;
+                                    case Vehicles.names.radioSponsorship:
+                                        tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                            _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioSponsorship));
+                                        break;
+                                    case Vehicles.names.radioMusic:
+                                        tab[cLine, j] = new CellRadioCreativeLink(row[columnsName[i]].ToString(),
+                                            _session, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioMusic));
+                                        break;
+                                }
+                                break;
+                            case GenericColumnItemInformation.Columns.dayOfWeek:
+                                Int32 n = Convert.ToInt32(row[columnsName[i]]);
+                                int y = n / 10000;
+                                int m = (n - (10000 * y)) / 100;
+                                int d = n - (10000 * y + 100 * m);
+                                tab[cLine, j] = new CellDate(new DateTime(y, m, d), string.Format("{{0:{0}}}", g.StringFormat));
+                                break;
+                            case GenericColumnItemInformation.Columns.mailFormat:
+                                string cValue = row[columnsName[i]].ToString();
+                                if (cValue != CstVMCFormat.FORMAT_ORIGINAL)
+                                {
+                                    cValue = GestionWeb.GetWebWord(2240, _session.SiteLanguage);
+                                }
+                                else
+                                {
+                                    cValue = GestionWeb.GetWebWord(2241, _session.SiteLanguage);
+                                }
+                                if (tab[cLine, j] == null)
+                                {
+                                    tab[cLine, j] = new CellLabel(cValue);
+                                }
+                                else
+                                {
+                                    ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, cValue);
+                                }
+                                break;
+                            case GenericColumnItemInformation.Columns.product:
+                                s = row[columnsName[i]].ToString();
+                                if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                                {
+                                    s = string.Empty;
+                                }
+                                if (tab[cLine, j] == null || ((CellLabel)tab[cLine, j]).Label.Length <= 0)
+                                {
+                                    tab[cLine, j] = new CellLabel(s);
+                                }
+                                else
+                                {
+                                    ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, s);
+                                }
+                                break;
+                            case GenericColumnItemInformation.Columns.slogan:
+                                s = row[columnsName[i]].ToString();
+                                if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_SLOGAN_ACCESS_FLAG))
+                                {
+                                    s = string.Empty;
+                                }
+                                if (tab[cLine, j] == null || ((CellLabel)tab[cLine, j]).Label.Length <= 0)
+                                {
+                                    tab[cLine, j] = new CellLabel(s);
+                                }
+                                else
+                                {
+                                    ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, s);
+                                }
+                                break;
+                            default:
+                                if (tab[cLine, j] == null)
+                                {
+                                    tab[cLine, j] = new CellLabel(row[columnsName[i]].ToString());
+                                }
+                                else
+                                {
+                                    ((CellLabel)tab[cLine, j]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, j]).Label, row[columnsName[i]].ToString());
+                                }
+                                break;
+                        }
                     }
                 }
 
@@ -2209,6 +2243,24 @@ namespace TNS.AdExpressI.Insertions
         }
         #endregion
 
+        #region Add Levels as Columns
+        private List<GenericColumnItemInformation> AddLevelsAsColumns(ArrayList levels, List<GenericColumnItemInformation> columns)
+        {
+            levels.Reverse(0, levels.Count);
+            foreach (var level in levels)
+            {
+                GenericColumnItemInformation column = WebApplicationParameters.GenericColumnItemsInformation.GetByIdLevel(((DetailLevelItemInformation)level).Id.GetHashCode());
+                if (column != null)
+                {
+                    if(columns.Contains(column))
+                        columns.RemoveAll(item => item.Id == column.Id);
 
+                    columns.Insert(0, column);
+                }
+            }
+
+            return columns;
+        }
+        #endregion
     }
 }

@@ -739,7 +739,56 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Date Media real
             /// </summary>
-            dateMediaReal = 179
+            dateMediaReal = 179,
+            /// <summary>
+            /// Holding Company
+            /// </summary>
+            holdingCompany = 180,
+            /// <summary>
+            /// Group Advertising Agency
+            /// </summary>
+            groupAdvertisingAgency = 181,
+            /// <summary>
+            /// Advertising Agency
+            /// </summary>
+            advertisingAgency = 182,
+            /// <summary>
+            /// Title
+            /// </summary>
+            title = 183,
+            /// <summary>
+            /// Basic Media
+            /// </summary>
+            basicMedia = 184,
+            /// <summary>
+            /// Syndicate
+            /// </summary>
+            syndicate = 185,
+            /// <summary>
+            /// Periodic
+            /// </summary>
+            periodic = 186,
+            /// <summary>
+            /// Network
+            /// </summary>
+            network = 187,
+            /// <summary>
+            /// Network Outdoor
+            /// </summary>
+            networkOutdoor = 188,
+            /// <summary>
+            /// Target
+            /// </summary>
+            target = 189,
+            /// <summary>
+            /// Wave
+            /// </summary>
+            wave = 190,
+            /// <summary>
+            /// Presence = location
+            /// </summary>
+            presence = 191
+
         }
         #endregion
 
@@ -748,6 +797,10 @@ namespace TNS.AdExpress.Domain.Level
         /// Identitifant de la Colonne
         /// </summary>
         private GenericColumnItemInformation.Columns _id;
+        /// <summary>
+		/// Identitifant du niveau de détail
+		/// </summary>
+		private Int64 _idLevel;
         /// <summary>
         /// Nom de la Colonne
         /// </summary>
@@ -874,7 +927,7 @@ namespace TNS.AdExpress.Domain.Level
         /// <param name="convertNullDbId">Doit convertir la valeur null d'un identifiant en 0</param>
         /// <param name="convertNullDbField">Doit convertir la valeur null d'un champ en 0</param>
         /// <param name="dataBaseAliasIdField">Champ libellé logique pour l'identifiant de la colonne de la base de données AdExpress 3</param>
-        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat)
+        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat, Int64 idLevel)
         {
             if (id < 0) throw (new ArgumentException("Invalid argument id"));
             if (name == null || name.Length < 1) throw (new ArgumentException("Invalid argument name"));
@@ -896,6 +949,7 @@ namespace TNS.AdExpress.Domain.Level
             _dataBaseField = dataBaseField;
             _convertNullDbId = convertNullDbId;
             _convertNullDbField = convertNullDbField;
+            _idLevel = idLevel;
             if (dataBaseAliasField != null && dataBaseAliasField.Length > 0) _dataBaseAliasField = dataBaseAliasField;
             if (dataBaseAliasIdField != null && dataBaseAliasIdField.Length > 0) _dataBaseAliasIdField = dataBaseAliasIdField;
             if (dataBaseTableName != null && dataBaseTableName.Length > 0) _dataBaseTableName = dataBaseTableName;
@@ -921,8 +975,8 @@ namespace TNS.AdExpress.Domain.Level
         /// <param name="dataBaseAliasIdField">Champ libellé logique pour l'identifiant de la colonne de la base de données AdExpress 3</param>		
         /// <param name="dbRelatedTablePrefixeForJoin">Préfixe de la table pour la colonne de la base de données AdExpress 3 pour jointure</param>
         /// <param name="sqlOperation">Opertation sql</param>
-        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat, string dbRelatedTablePrefixeForJoin, string sqlOperation)
-            : this(id, name, webTextId, dataBaseIdField, dataBaseAliasIdField, convertNullDbId, dataBaseField, dataBaseAliasField, convertNullDbField, dataBaseTableName, dataBaseTableNamePrefix, cellType, strFormat)
+        public GenericColumnItemInformation(Int64 id, string name, Int64 webTextId, string dataBaseIdField, string dataBaseAliasIdField, bool convertNullDbId, string dataBaseField, string dataBaseAliasField, bool convertNullDbField, string dataBaseTableName, string dataBaseTableNamePrefix, string cellType, string strFormat, Int64 idLevel, string dbRelatedTablePrefixeForJoin, string sqlOperation)
+            : this(id, name, webTextId, dataBaseIdField, dataBaseAliasIdField, convertNullDbId, dataBaseField, dataBaseAliasField, convertNullDbField, dataBaseTableName, dataBaseTableNamePrefix, cellType, strFormat, idLevel)
         {
 
             if (dbRelatedTablePrefixeForJoin != null && dbRelatedTablePrefixeForJoin.Length > 0) _dbRelatedTablePrefixeForJoin = dbRelatedTablePrefixeForJoin;
@@ -985,6 +1039,13 @@ namespace TNS.AdExpress.Domain.Level
         public GenericColumnItemInformation.Columns Id
         {
             get { return (_id); }
+        }
+        /// <summary>
+        /// Obtient l'id du level correspondant
+        /// </summary>
+        public Int64 IdLevel
+        {
+            get { return (_idLevel); }
         }
         /// <summary>
         /// Obtient le nom de la colonne

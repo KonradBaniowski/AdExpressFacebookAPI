@@ -49,6 +49,9 @@ namespace TNS.AdExpressI.Insertions
         ResultTable GetInsertions(VehicleInformation vehicle, int fromDate,
             int toDate, string filters, int universId, string zoomDate);
 
+        ResultTable GetInsertionsExcel(VehicleInformation vehicle, int fromDate,
+            int toDate, string filters, int universId, string zoomDate);
+
         GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate,
          int toDate, string filters, int universId, string zoomDate);
 

@@ -144,15 +144,18 @@ namespace Km.AdExpressClientWeb.Controllers
         Color ExtendedBackground = Color.FromArgb(243, 209, 97);
         #endregion
 
+        private bool _skipIndent = false;
+
         public ExportAspose()
         { }
 
 
-        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1)
+        public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
             data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
+            _skipIndent = isInsertionExport;
 
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
@@ -1316,14 +1319,17 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private void SetIndentLevel(Aspose.Cells.Cell cell, int indentLevel, bool isRight = false)
         {
-            Style style = cell.GetStyle();
+            if (!_skipIndent)
+            {
+                Style style = cell.GetStyle();
 
-            if (isRight == true)
-                style.HorizontalAlignment = TextAlignmentType.Right;
+                if (isRight == true)
+                    style.HorizontalAlignment = TextAlignmentType.Right;
 
-            style.IndentLevel = indentLevel;
+                style.IndentLevel = indentLevel;
 
-            cell.SetStyle(style);
+                cell.SetStyle(style);
+            }
         }
 
         private int NbRow(HeaderBase root, WebSession session)
