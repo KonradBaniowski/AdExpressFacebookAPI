@@ -191,7 +191,6 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
 
             Export();
 
@@ -202,7 +201,6 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
 
             Export(true);
 
@@ -213,7 +211,6 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
 
             ExportBrut();
 
