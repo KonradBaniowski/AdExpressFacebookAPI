@@ -34,6 +34,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string NEW_CREATIVES = "NewCreatives";
         private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string CAMPAIGN_ANALYSIS = "CampaignAnalysis";
+        private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
         const int ExportFormattedResult = 1;
         const int ExportResultWithValue = 2;
         const int ExportGrossResult = 3;
@@ -86,6 +87,10 @@ namespace Km.AdExpressClientWeb.Helpers
                     break;
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     resultController = CAMPAIGN_ANALYSIS;
+                    controller = SELECTION;
+                    break;
+                case Module.Name.ANALYSE_DES_PROGRAMMES:
+                    resultController = PROGRAM_ANALYSIS;
                     controller = SELECTION;
                     break;
             }
@@ -319,27 +324,15 @@ namespace Km.AdExpressClientWeb.Helpers
 
         bool IsMediaSelectionDisabled(long module)
         {
-            bool isDisabled = false;
             switch (module)
             {
-                case Module.Name.ANALYSE_CONCURENTIELLE:
-                case Module.Name.ANALYSE_PORTEFEUILLE:
-                case Module.Name.ANALYSE_DYNAMIQUE:
-                case Module.Name.ANALYSE_PLAN_MEDIA:
-                case Module.Name.TABLEAU_DYNAMIQUE:
-                case Module.Name.INDICATEUR:
-                    isDisabled = false;
-                    break;
+               
                 case Module.Name.FACEBOOK:
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:
-                    isDisabled = true;
-                    break;
+                    return true;
                 default:
-                    isDisabled = false;
-                    break;
-            }
-
-            return isDisabled;
+                    return  false;                    
+            }          
         }
 
         bool IsMarketSelectionDisabled(long module)
@@ -447,6 +440,9 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportSpotsResult);
+                    break;
+                case Module.Name.ANALYSE_DES_PROGRAMMES:
+                    ids.Add(ExportFormattedResult);
                     break;
                 default:
                     break;

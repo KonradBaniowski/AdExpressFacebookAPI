@@ -102,6 +102,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ExportPdfResult = 2017;
         public const long NotValidEmail = 2041;
         public const long AnalyseDispositifsLabel = 2048;
+        public const long AnalyseProgrammesLabel = 2049;
         public const long RefineCode = 2053;
         public const long NewsLabel = 2080;
         public const long WarningBackNavigatorCode = 2099;

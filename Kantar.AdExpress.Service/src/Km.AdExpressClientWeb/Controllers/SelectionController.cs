@@ -278,7 +278,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 periodModel.SiteLanguage = result.SiteLanguage;
                 periodModel.StartYear = string.Format("{0}-01-01", result.StartYear);
                 periodModel.EndYear = string.Format("{0}-12-31", result.EndYear);
-                if (result.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (result.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || result.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES)
                 {
                     DateTime now = DateTime.Now;
                     periodModel.StartYear = string.Format("{0}-{1}-01", result.StartYear, now.AddMonths(-_periodLength).Month);

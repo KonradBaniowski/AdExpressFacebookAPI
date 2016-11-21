@@ -342,6 +342,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
 
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
@@ -1239,6 +1240,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 case WebConstantes.Module.Name.NEW_CREATIVES:
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                     schema = WebApplicationParameters.DataBaseDescription.
                     GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
                     break;
@@ -1281,6 +1283,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
 
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
@@ -1449,6 +1452,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     currentModuleCode = WebConstantes.LanguageConstantes.AnalyseDispositifsLabel;
+                    currentController = "Selection";
+                    currentModuleIcon = "icon-puzzle";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    currentModuleCode = WebConstantes.LanguageConstantes.AnalyseProgrammesLabel;
                     currentController = "Selection";
                     currentModuleIcon = "icon-puzzle";
                     break;
