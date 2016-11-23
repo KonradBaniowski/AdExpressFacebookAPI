@@ -2887,6 +2887,12 @@ ul.ui-selectable {
     padding-top: 2px;
 }
 
+.panel-sponsorship-media-header {
+    height: 30px;
+    padding: 0px 15px;
+    margin-bottom: 10px;
+}
+
 
 /*.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar{
     width: 1em; 

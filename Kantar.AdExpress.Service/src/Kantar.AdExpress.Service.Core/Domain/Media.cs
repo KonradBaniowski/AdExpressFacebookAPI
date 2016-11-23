@@ -13,6 +13,26 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public bool Disabled { get; set; }
     }
 
+    public class SponsorshipMediaList
+    {
+        public SponsorshipMediaList(int siteLanguage, long currentModule)
+        {
+            Media = new List<Core.Domain.Media>();
+            MediaCommon = new List<int>();
+            MultipleSelection = (currentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA || currentModule == CstWeb.Module.Name.ANALYSE_MANDATAIRES) ? true : false;
+        }
+        public SponsorshipMediaList()
+        {
+            Media = new List<Core.Domain.Media>();
+            MediaCommon = new List<int>();
+        }
+
+        public string Category { get; set; }
+        public List<Media> Media { get; set; }
+        public List<int> MediaCommon { get; set; }
+        public bool MultipleSelection { get; set; }
+    }
+
     public class MediaResponse
     {
         public MediaResponse(int siteLanguage, long currentModule )
@@ -38,6 +58,16 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public bool Success { get; set; }
         public string ErrorMessage { get; set; }
         public bool CanRefineMediaSupport { get; set;}
+    }
+
+    public class SponsorshipMediaResponse
+    {
+        public List<SponsorshipMediaList> SponsorshipMedias { get; set; }
+        public int SiteLanguage { get; set; }
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public bool CanRefineMediaSupport { get; set; }
+        public ControllerDetails ControllerDetails { get; set; }
     }
 
     public class ControllerDetails

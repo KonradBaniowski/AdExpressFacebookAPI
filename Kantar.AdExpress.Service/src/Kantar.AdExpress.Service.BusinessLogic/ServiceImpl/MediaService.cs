@@ -21,6 +21,8 @@ using NLog;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using System.Collections;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -65,6 +67,34 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 result.ErrorMessage = message;
+
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                throw;
+            }
+            return result;
+        }
+
+        public SponsorshipMediaResponse GetSponsorshipMedia(string idWebSession, HttpContextBase httpContext)
+        {
+            var webSession = (WebSession)WebSession.Load(idWebSession);
+            var result = new SponsorshipMediaResponse();
+
+            try
+            {
+                webSession.SelectionUniversMedia.Nodes.Clear();
+                webSession.PrincipalMediaUniverses.Clear();
+                webSession.Save();
+
+                result = GetSponsorshipMedias(webSession, result);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                result.ErrorMessage = message;
+                result.Success = false;
 
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
@@ -196,6 +226,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentController = SELECTION;
                     currentModuleIcon = "icon-puzzle";
                     break;
+                case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalyseProgrammesLabel;
+                    currentController = SELECTION;
+                    currentModuleIcon = "icon-puzzle";
+                    break;
                 default:
                     break;
             }
@@ -238,6 +273,82 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 mediaResponse.Media.Add(media);
             }
             return mediaResponse;
+        }
+
+        private SponsorshipMediaResponse GetSponsorshipMedias(WebSession webSession, SponsorshipMediaResponse sponsorshipMediaResponse)
+        {
+            IClassificationDAL classficationDAL = null;
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+
+            ArrayList levels = new ArrayList();
+            levels.Add(2);
+            levels.Add(3);
+            webSession.GenericMediaSelectionDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+
+            webSession.SelectionUniversMedia.Nodes.Clear();
+            System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("TELEVISION");
+            tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv), "TELEVISION");
+            webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+
+            webSession.Save();
+
+            object[] param = null;
+            param = new object[3];
+            param[0] = webSession;
+            param[1] = webSession.GenericMediaSelectionDetailLevel;
+            param[2] = "";
+            classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            DataSet ds = classficationDAL.GetDetailMedia();
+            DataTable dtMedia = new DataTable();
+
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                dtMedia = ds.Tables[0];
+            else
+                return sponsorshipMediaResponse;
+
+            sponsorshipMediaResponse.SponsorshipMedias = new List<SponsorshipMediaList>();
+
+            Int64 oldCategoryId = -1;
+            Int64 categoryId = 0;
+            string oldCategory = string.Empty;
+            SponsorshipMediaList sponsorshipMedia = new SponsorshipMediaList(webSession.SiteLanguage, webSession.CurrentModule);
+            sponsorshipMedia.Media = new List<Core.Domain.Media>();
+            sponsorshipMedia.MediaCommon = new List<int>();
+            sponsorshipMedia.MultipleSelection = true;
+
+            foreach (DataRow row in dtMedia.Rows)
+            {
+                categoryId = Convert.ToInt64(row["ID_CATEGORY"].ToString());
+
+                if (oldCategoryId != -1 && categoryId != oldCategoryId)
+                {
+                    sponsorshipMedia.Category = oldCategory;
+                    sponsorshipMediaResponse.SponsorshipMedias.Add(sponsorshipMedia);
+                    sponsorshipMedia = new SponsorshipMediaList(webSession.SiteLanguage, webSession.CurrentModule);
+                    sponsorshipMedia.MultipleSelection = true;
+                    sponsorshipMedia.Media = new List<Core.Domain.Media>();
+                    sponsorshipMedia.MediaCommon = new List<int>();
+                }
+
+                Core.Domain.Media media = new Core.Domain.Media();
+                media.Id = Convert.ToInt64(row["ID_MEDIA"].ToString());
+                media.Label = row["MEDIA"].ToString();
+                media.icon = media.Id + ".png";
+                sponsorshipMedia.Media.Add(media);
+                sponsorshipMedia.MediaCommon.Add(Convert.ToInt32(row["ID_MEDIA"].ToString()));
+
+                oldCategoryId = categoryId;
+                oldCategory = row["CATEGORY"].ToString();
+            }
+
+            sponsorshipMedia.Category = oldCategory;
+            sponsorshipMediaResponse.SponsorshipMedias.Add(sponsorshipMedia);
+            sponsorshipMediaResponse.CanRefineMediaSupport = false;
+            sponsorshipMediaResponse.SiteLanguage = webSession.SiteLanguage;
+            sponsorshipMediaResponse.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
+
+            return sponsorshipMediaResponse;
         }
 
         private MediaResponse GetAnalysisVehicleList(WebSession webSession, MediaResponse response)

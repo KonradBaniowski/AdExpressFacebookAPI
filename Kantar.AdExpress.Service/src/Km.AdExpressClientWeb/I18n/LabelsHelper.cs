@@ -116,6 +116,7 @@ namespace Km.AdExpressClientWeb.I18n
                 UnityError = GestionWeb.GetWebWord(LanguageConstantes.UnityError, siteLanguage),
                 SelectMedia = GestionWeb.GetWebWord(LanguageConstantes.SelectMedia, siteLanguage),
                 PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelection, siteLanguage),
+                PreSelectionWithoutEvaliant = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage),
                 CreateAlert = GestionWeb.GetWebWord(LanguageConstantes.CreateAlert, siteLanguage),
                 ExportFormattedResult = GestionWeb.GetWebWord(LanguageConstantes.ExportFormattedResult, siteLanguage),
                 ExportResultWithValue = GestionWeb.GetWebWord(LanguageConstantes.ExportResultWithValue, siteLanguage),

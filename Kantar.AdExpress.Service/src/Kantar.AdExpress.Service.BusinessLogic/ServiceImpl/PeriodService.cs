@@ -35,6 +35,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string NEW_CREATIVES = "NewCreatives";
         private const string ANALYSE_DES_DISPOSITIFS = "CampaignAnalysis";
+        private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
         public const string MEDIATYPESELECTIONERROR = "Selection of media type is not correct";
         public const string YYYYMM = "yyyyMM";
         public const string YYYY01 = "yyyy01";
@@ -239,6 +240,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     currentModuleCode = LanguageConstantes.AnalyseDispositifsLabel;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSE_DES_DISPOSITIFS : SELECTION;
+                    currentModuleIcon = "icon-puzzle";
+                    break;
+                case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    currentModuleCode = LanguageConstantes.AnalyseProgrammesLabel;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? PROGRAM_ANALYSIS : SELECTION;
                     currentModuleIcon = "icon-puzzle";
                     break;
                 default:

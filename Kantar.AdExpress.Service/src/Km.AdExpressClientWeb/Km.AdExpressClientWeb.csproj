@@ -265,6 +265,7 @@
     <Compile Include="Models\Shared\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserResultViewModel.cs" />
     <Compile Include="Models\Shared\SaveUserUniversViewModel.cs" />
+    <Compile Include="Models\Shared\SponsorshipMediaSelectionViewModel.cs" />
     <Compile Include="Models\SocialMedia\DataFacebook.cs" />
     <Compile Include="Models\SocialMedia\KPIClassificationContract.cs" />
     <Compile Include="Models\SocialMedia\KPIPageFacebookContract.cs" />
@@ -632,6 +633,26 @@
     <Content Include="Content\img\o.gif" />
     <Content Include="Content\img\r.gif" />
     <Content Include="Content\img\spin1.gif" />
+    <Content Include="Content\img\sponsorship\14792.png" />
+    <Content Include="Content\img\sponsorship\20809.png" />
+    <Content Include="Content\img\sponsorship\25007.png" />
+    <Content Include="Content\img\sponsorship\3281.png" />
+    <Content Include="Content\img\sponsorship\3282.png" />
+    <Content Include="Content\img\sponsorship\3283.png" />
+    <Content Include="Content\img\sponsorship\3284.png" />
+    <Content Include="Content\img\sponsorship\3285.png" />
+    <Content Include="Content\img\sponsorship\3286.png" />
+    <Content Include="Content\img\sponsorship\3287.png" />
+    <Content Include="Content\img\sponsorship\3298.png" />
+    <Content Include="Content\img\sponsorship\3299.png" />
+    <Content Include="Content\img\sponsorship\3309.png" />
+    <Content Include="Content\img\sponsorship\3311.png" />
+    <Content Include="Content\img\sponsorship\3312.png" />
+    <Content Include="Content\img\sponsorship\3313.png" />
+    <Content Include="Content\img\sponsorship\3314.png" />
+    <Content Include="Content\img\sponsorship\3315.png" />
+    <Content Include="Content\img\sponsorship\3316.png" />
+    <Content Include="Content\img\sponsorship\3317.png" />
     <Content Include="Content\options-control.css" />
     <Content Include="Content\site-Fi_en.css" />
     <Content Include="Content\site-Fi.css" />
@@ -1577,6 +1598,7 @@
     <Content Include="Scripts\media\media-media.js" />
     <Content Include="Scripts\media\media-portfolio.js" />
     <Content Include="Scripts\media\media-present-absent.js" />
+    <Content Include="Scripts\media\media-sponsorship.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\module-selection\module-selection.js" />
     <Content Include="Scripts\moment-with-locales.js" />
@@ -1712,6 +1734,7 @@
     <Content Include="Views\Home\_ModulesIr.cshtml" />
     <Content Include="Views\CampaignAnalysis\Results.cshtml" />
     <Content Include="Views\CampaignAnalysis\_ResultOptions.cshtml" />
+    <Content Include="Views\Selection\SponsorshipMediaSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

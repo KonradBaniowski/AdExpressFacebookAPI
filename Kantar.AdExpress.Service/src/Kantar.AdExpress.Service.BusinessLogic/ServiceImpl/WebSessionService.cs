@@ -53,6 +53,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string NEW_CREATIVES = "NewCreatives";
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSE_DES_DISPOSITIFS = "CampaignAnalysis";
+        private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         //TODO : A checker pour 100 ou 1000
@@ -244,6 +245,146 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
+        public WebSessionResponse SaveSponsorshipMediaSelection(SaveMediaSelectionRequest request, HttpContextBase httpContext)
+        {
+            var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
+            WebSessionResponse response = new WebSessionResponse
+            {
+                StudyStep = StudyStep.Media,
+                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep)
+            };
+            bool success = false;
+            #region Try Catch block
+            try
+            {
+                bool maxSizeErr = true;
+                if (request.MediaSupportRequired && !request.Trees.Any())
+                {
+                    maxSizeErr = false;
+                    response.ErrorMessage = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MediaRequiredCode, _webSession.SiteLanguage);
+                }
+                else
+                {
+                    #region Fix max items per level
+                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE)
+                    {
+                        if (request.Trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null && x.UniversItems.Count > PresentAbsentMaxItemsPerLevel).Any()).Any())
+                        {
+                            maxSizeErr = false;
+                            response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                        }
+                    }
+                    else
+                    {
+                        if (request.Trees.Where(p => p.UniversLevels != null && p.UniversLevels.Where(x => x.UniversItems != null && x.UniversItems.Count > MaxItemsPerLevel).Any()).Any())
+                        {
+                            maxSizeErr = false;
+                            response.ErrorMessage = GestionWeb.GetWebWord(2286, _webSession.SiteLanguage);
+                        }
+                    }
+                    #endregion
+                }
+
+                if (maxSizeErr)
+                {
+                    #region Save Media Selection in WebSession
+                    WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+                    
+                    List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
+                    System.Windows.Forms.TreeNode tmpNode;
+                    foreach (var item in request.MediaIds)
+                    {
+                        tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
+                        tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.mediaAccess, item, item.ToString());
+                        tmpNode.Checked = true;
+                        levelsSelected.Add(tmpNode);
+                    }
+                    if (levelsSelected.Count == 0)
+                    {
+                        response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
+                    }
+                    else
+                    {
+
+                        // Sauvegarde de la sélection dans la session
+                        //Si la sélection comporte des éléments, on la vide
+                        _webSession.CurrentUniversMedia.Nodes.Clear();
+
+                        foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                        {
+                            _webSession.CurrentUniversMedia.Nodes.Add(node);
+                            // Tracking
+                            //_webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
+                        }
+
+                        //verification que l unite deja sélectionnée convient pour tous les medias
+                        //var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
+
+                        //List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
+                        //unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
+                        //if (unitList.Count == 0)
+                        //{
+                        //    response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
+
+                        //}
+                        //else
+                        //{
+                        //    success = true;
+                        //}
+                        success = true;
+                    }
+
+                    #endregion
+                }
+
+                #region Save Media support if any
+                if (request.Trees.Any())
+                {
+                    switch (_webSession.CurrentModule)
+                    {
+                        case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                        case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                        case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
+                        case CstWeb.Module.Name.INDICATEUR:
+                        case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                            success = SetDefaultUnivers(request, _webSession, response);
+                            break;
+                        case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                            Dictionary<int, AdExpressUniverse> universes = GetConcurrentUniverses(request.Trees, _webSession, request.Dimension, request.Security);
+                            _webSession.PrincipalMediaUniverses = universes;
+                            success = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                #endregion
+
+                #region Save WebSession
+                if (success)
+                {
+                    _webSession.Save();
+                    _webSession.Source.Close();
+                    response.Success = success;
+                }
+                #endregion
+
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    response.ErrorMessage = ex.Message;
+                }
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                throw;
+            }
+            #endregion
+            return response;
+        }
+
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
         {
             WebSessionResponse response = new WebSessionResponse
@@ -284,6 +425,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                                 case CstWeb.Module.Name.NEW_CREATIVES:
                                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                                case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                                     AdExpressUnivers univers = GetUnivers(request.Trees, _webSession, request.Dimension, request.Security);
                                     SetDefaultMarketUniverse(response, univers, request, _webSession, httpContext);
                                     break;
@@ -1064,6 +1206,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     currentModuleCode = CstWeb.LanguageConstantes.AnalyseDispositifsLabel;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? ANALYSE_DES_DISPOSITIFS : SELECTION;
+                    currentModuleIcon = "icon-puzzle";
+                    break;
+                case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    currentModuleCode = CstWeb.LanguageConstantes.AnalyseProgrammesLabel;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? PROGRAM_ANALYSIS : SELECTION;
                     currentModuleIcon = "icon-puzzle";
                     break;
                 default:

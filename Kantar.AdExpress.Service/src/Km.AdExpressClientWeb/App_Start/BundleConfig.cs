@@ -199,6 +199,14 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/socialMedia-creative").Include(
             "~/Scripts/creative/socialMediaCreative.js",
             "~/Scripts/creative/socialMediaZoom.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sponsorship-media").Include(
+                        "~/Scripts/universe/listbox.js",
+                        "~/Scripts/universe/universe-loading.js",
+                        "~/Scripts/market/market-optional.js",
+                        "~/Scripts/component-selectable/common-actions.js",
+                        "~/Scripts/universe/universe-media.js",
+                        "~/Scripts/media/media-sponsorship.js"));
         }
     }
 }

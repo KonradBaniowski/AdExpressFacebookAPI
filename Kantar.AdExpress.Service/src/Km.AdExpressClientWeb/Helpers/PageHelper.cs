@@ -23,6 +23,7 @@ namespace Km.AdExpressClientWeb.Helpers
         public const string DATES = "Dates";
         public const string RESULTS = "Results";
         public const string MEDIASELECTION = "MediaSelection";
+        public const string SPONSORSHIPMEDIASELECTION = "SponsorshipMediaSelection";
         public const string PERIODSELECTION = "PeriodSelection";
         private const string SELECTION = "Selection";
         private const string PRESENTABSENT = "PresentAbsent";
@@ -53,6 +54,7 @@ namespace Km.AdExpressClientWeb.Helpers
             model.Labels.NavigationNodeRequired = GestionWeb.GetWebWord(LanguageConstantes.NavigationNodeRequired, siteLanguage);
             var webSession = (WebSession)WebSession.Load(idWebSession);
             string resultController = string.Empty;
+            string mediaSelection = MEDIASELECTION;
             switch (webSession.CurrentModule)
             {
                 case Module.Name.ANALYSE_CONCURENTIELLE:
@@ -92,6 +94,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_DES_PROGRAMMES:
                     resultController = PROGRAM_ANALYSIS;
                     controller = SELECTION;
+                    mediaSelection = SPONSORSHIPMEDIASELECTION;
                     break;
             }
             //var ctr = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? controller : SELECTION;
@@ -124,7 +127,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 IsActive = webSession.isMediaSelected(),
                 Description = MEDIA,
                 Title = GestionWeb.GetWebWord(LanguageConstantes.Media, siteLanguage),
-                Action = MEDIASELECTION,
+                Action = mediaSelection,
                 Controller = controller,
                 IconCssClass = "fa fa-eye",
                 Position = CurrentPosition,

@@ -1,11 +1,13 @@
 ﻿var idList = null;
-
 var idMedias = [];
+var mediasNb = $('#mediaListNb').val();
+
 $(document).ready(function () {
     var outdoor = '8';
     var searchId = '18';
     var dooh = '22';
     var plurimedia = '50';
+
     //var socialId=TBD
     if ($('#Multiple').val() == "True") {
 
@@ -13,20 +15,26 @@ $(document).ready(function () {
         idList = [];
         //CHECKBOX
         var idCommon = [];
-        $('[name="HiddenIntList"]').each(function (index) {
-            idCommon.push($(this).attr("value"));
-        });
+        for (var i = 0; i < mediasNb; i++) {
+            idCommon[i] = [];
+            $('[name="HiddenIntList_'+ i +'"]').each(function (index) {
+                idCommon[i].push($(this).attr("value"));
+            });
+        }
+
         $('.tuile-medias[data-attr-id]').each(function (i, e) {
             var elem = $(e);
             var indexElem = elem.attr('data-attr-id');
-            var index = $.inArray(indexElem, idCommon);
-            if (index == -1)
-                elem.attr("data-grp", "A");
-            else
-                elem.attr("data-grp", "B");
+            for (var i = 0; i < mediasNb; i++) {
+                var index = $.inArray(indexElem, idCommon[i]);
+                if (index != -1)
+                    elem.attr("data-grp", i);
+            }
         });
 
-        $(':checkbox').on('change', preselection);
+        for (var i = 0; i < mediasNb; i++) {
+            $(':checkbox[name=preselection_'+i+']').on('change', preselection);
+        }
 
         //FOCUS
         $('[data-grp]').on('mouseenter', highlight);
@@ -67,56 +75,34 @@ $(document).ready(function () {
     function selectMultiple(e) {
         $(this).toggleClass("tuile-medias tuile-medias-active")
         var id = $(this).attr("data-attr-id");
-        if (id == searchId) {
-            $.each(idList, function (index, value) {
-                if (value != searchId) {
-                    $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active");
-                    $(this).removeAttr("checked");
-                }
-            });
-            idList = [];
-            idList.push(id);
+        var index = $.inArray(id, idList);
+        if (index > -1) {
+            idList.splice(index, 1);
         }
         else {
-
-            var index = $.inArray(id, idList);
-            if (index > -1) {
-                idList.splice(index, 1);
-            }
-            else {
-                //Manage exclusif selection of outdoor and dooh
-                manageDoohSelection(id);
-                idList.push(id);
-            }
+            idList.push(id);
         }
     }
 
     function preselection() {
-        $('.tuile-medias-active').toggleClass("tuile-medias tuile-medias-active")
+       // $('.tuile-medias-active').toggleClass("tuile-medias tuile-medias-active")
         var attr = $(this).attr('checked');
+        var grp = $(this).attr("data-box-grp");
         if (typeof attr !== typeof undefined && attr !== false) {
-            $.each(idCommon, function (index, value) {
+            $.each(idCommon[grp], function (index, value) {
                 $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
             });
             $(this).removeAttr("checked");
         }
         else {
-            $.each(idCommon, function (index, value) {
+            $.each(idCommon[grp], function (index, value) {
                 $('.tuile-medias[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active")
             });
             $(this).attr("checked", "");
         }
+        console.log(idList);
     }
-    function manageDoohSelection(id) {
-        var outdoorIndex = $.inArray(outdoor, idList);
-        var doohIndex = $.inArray(dooh, idList);
-        if (outdoorIndex > -1 && id == dooh) {
-            handleExclusifSelection(outdoorIndex,outdoor);
-        }
-        if (doohIndex > -1 && id == outdoor) {
-            handleExclusifSelection(doohIndex,dooh);
-        }
-    }
+
     function handleExclusifSelection(excludedIndex, excludedValue) {
         idList.splice(excludedIndex, 1);
         $('.tuile-medias-active[data-attr-id="' + excludedValue + '"]').toggleClass("tuile-medias tuile-medias-active");
@@ -343,8 +329,7 @@ $('#move-item').on('click', function () {
     }
 });
 
-$('div#headingTwo').on('click', function (event)
-{
+$('div#headingTwo').on('click', function (event) {
     event.preventDefault();
     var moduleId = $('#CurrentModule').val();
     var dimension = $('#Dimension').val();

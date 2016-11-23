@@ -8,5 +8,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IMediaService
     {
         MediaResponse GetMedia(string idWebSession, HttpContextBase httpContext);
+
+        SponsorshipMediaResponse GetSponsorshipMedia(string idWebSession, HttpContextBase httpContext);
     }
 }

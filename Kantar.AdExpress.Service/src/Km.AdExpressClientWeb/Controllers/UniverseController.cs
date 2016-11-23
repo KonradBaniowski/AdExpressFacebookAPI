@@ -30,7 +30,8 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string NEW_CREATIVES = "NewCreatives";
         private const string SOCIALMEDIA = "SocialMedia";
         private const string ANALYSE_DES_DISPOSITIFS = "CampaignAnalysis";
-        
+        private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
+
         #endregion
         public UniverseController(IUniverseService universeService, IMyAdExpressService myAdExpressService, IDetailSelectionService detailSelectionService)
         {
@@ -454,6 +455,9 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                     case Module.Name.ANALYSE_DES_DISPOSITIFS:
                         controller = ANALYSE_DES_DISPOSITIFS;
+                        break;
+                    case Module.Name.ANALYSE_DES_PROGRAMMES:
+                        controller = PROGRAM_ANALYSIS;
                         break;
                 };
                 response.Message = "Redirecting to the result page.";
