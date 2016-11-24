@@ -2351,9 +2351,10 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (_showValues)
                                                 {
                                                     if (isVersionNb)
-                                                        sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItemIds)data[i, j]).IdsNumber.Value;
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value = Units.ConvertUnitValue(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit);
                                                     else
-                                                        sheet.Cells[cellRow, currentColMediaPlan].Value = ((MediaPlanItem)data[i, j]).Unit;
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value = Units.ConvertUnitValue(((MediaPlanItem)data[i, j]).Unit, _session.Unit);
+
                                                     SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);    
                                                     SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
