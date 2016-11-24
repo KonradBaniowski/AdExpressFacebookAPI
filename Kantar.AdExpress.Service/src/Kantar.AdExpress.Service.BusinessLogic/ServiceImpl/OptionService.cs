@@ -58,6 +58,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
                         _nbDetailLevelItemList = 4;
                         break;
@@ -275,7 +276,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region resultTypeOption
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                 {
                     ResultTypeOption resultTypeOption = new ResultTypeOption();
                     resultTypeOption.ResultType = new SelectControl();
@@ -767,6 +769,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                         _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                         break;
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -788,7 +791,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
                 #region PeriodDetailFilter
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
                 #endregion
 
@@ -798,7 +802,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region PercentageFilter
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)userFilter.PercentageFilter.Percentage;
                 #endregion
 
@@ -871,7 +876,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.PreformatedTable = (ConstantesSession.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
