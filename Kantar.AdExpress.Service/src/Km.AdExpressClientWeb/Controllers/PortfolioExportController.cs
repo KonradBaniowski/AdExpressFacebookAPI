@@ -16,6 +16,7 @@ using System.Web.Routing;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -146,12 +147,16 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private bool _skipIndent = false;
 
+        private AdExpressCultureInfo cInfo;
+
         public ExportAspose()
         { }
 
 
         public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
+            this.cInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
+
             data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
@@ -576,6 +581,8 @@ namespace Km.AdExpressClientWeb.Controllers
         public void ExportFromGridResult(Workbook document, GridResultExport data, WebSession session, int columnIndex = 1)
         {
 
+            this.cInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
+
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
 
@@ -803,10 +810,12 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
                         sheet.Cells[cellRow, cellCol].Value = value;
 
-                        if (((CellUnit)cell).AsposeFormat == -1)
-                            SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
-                        else
-                            SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
+                        SetAsposeFormat(sheet.Cells[cellRow, cellCol], Int32.Parse(this.cInfo.GetAsposeFormatPatternFromStringFormat(((CellUnit)cell).StringFormat)));
+
+                        //if (((CellUnit)cell).AsposeFormat == -1)
+                        //    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
+                        //else
+                        //    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
 
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
                     }
