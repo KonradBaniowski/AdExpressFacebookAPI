@@ -34,6 +34,10 @@ namespace TNS.AdExpress.Domain.Translation
         /// Supported Excel patterns
         /// </summary>
         Dictionary<string, string> _excelPatterns = new Dictionary<string, string>();
+        /// <summary>
+        /// Supported patterns
+        /// </summary>
+        Dictionary<string, string> _asposeFormat = new Dictionary<string, string>();
         #endregion
 
         #region Properties
@@ -49,6 +53,13 @@ namespace TNS.AdExpress.Domain.Translation
             if (_patterns.ContainsKey(name))
                 throw new ArgumentException(string.Format("Duplicated key {0}", name));
             _patterns.Add(name.ToLower(), format);
+        }
+
+        public void AddAsposeFormat(string name, string format)
+        {
+            if (_asposeFormat.ContainsKey(name))
+                throw new ArgumentException(string.Format("Duplicated key {0}", name));
+            _asposeFormat.Add(name.ToLower(), format);
         }
 
         /// <summary>
@@ -74,6 +85,13 @@ namespace TNS.AdExpress.Domain.Translation
 				throw new ArgumentException(string.Format("The pattern {0} is not defined ", name));
 			return _patterns[name.ToLower()];
 		}
+
+        public string GetAsposeFormatPattern(string name)
+        {
+            if (!_asposeFormat.ContainsKey(name.ToLower()))
+                throw new ArgumentException(string.Format("The pattern {0} is not defined ", name));
+            return _asposeFormat[name.ToLower()];
+        }
 
         /// <summary>
         /// Get a specific Excel Pattern
@@ -168,7 +186,15 @@ namespace TNS.AdExpress.Domain.Translation
             if (!_excelPatterns.ContainsKey(formatKey.ToLower())) throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
             return _excelPatterns[formatKey.ToLower()];
         }
-		#endregion
 
-	}
+        public string GetAsposeFormatPatternFromStringFormat(string stringFormat)
+        {
+            if (stringFormat == null || stringFormat.Length == 0 || stringFormat.Length < 5) throw new ArgumentNullException(" StringFormat is null");
+            string formatKey = stringFormat.Substring(3, stringFormat.Length - 4);
+            if (!_asposeFormat.ContainsKey(formatKey.ToLower())) throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
+            return _asposeFormat[formatKey.ToLower()];
+        }
+        #endregion
+
+    }
 }
