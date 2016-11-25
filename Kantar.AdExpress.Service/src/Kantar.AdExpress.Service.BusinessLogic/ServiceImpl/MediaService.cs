@@ -344,7 +344,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             sponsorshipMedia.Category = oldCategory;
             sponsorshipMediaResponse.SponsorshipMedias.Add(sponsorshipMedia);
-            sponsorshipMediaResponse.CanRefineMediaSupport = false;
+            sponsorshipMediaResponse.CanRefineMediaSupport = true;
             sponsorshipMediaResponse.SiteLanguage = webSession.SiteLanguage;
             sponsorshipMediaResponse.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
 

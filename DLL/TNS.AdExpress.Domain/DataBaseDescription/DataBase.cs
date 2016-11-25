@@ -1270,7 +1270,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Promo Product
         /// </summary>
-        allFacebookProduct = 7
+        allFacebookProduct = 7,
+        /// <summary>
+        /// All Program (Genre d'emission)
+        /// </summary>
+        allProgram = 8
     }
     #endregion
 

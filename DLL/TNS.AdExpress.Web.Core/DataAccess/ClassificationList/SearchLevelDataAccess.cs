@@ -397,7 +397,19 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 						default:
 							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
 					}
-				default :
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    switch (dimension)
+                    {
+                        case Dimension.product:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+                        case Dimension.media:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProgram);
+                        case Dimension.advertisingAgency:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                        default:
+                            throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
+                    }
+                default :
 					switch (dimension) {
 						case Dimension.product:
 							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);							

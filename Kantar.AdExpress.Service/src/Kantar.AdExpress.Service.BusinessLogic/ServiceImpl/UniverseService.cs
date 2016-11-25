@@ -960,7 +960,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 object[] param = new object[3];
                 param[0] = webSession;
                 param[1] = criteria.Dimension;
-                if (criteria.Dimension == Dimension.media && criteria.MediaIds != null)
+                if (criteria.Dimension == Dimension.media && criteria.MediaIds != null && webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     param[2] = string.Join(",", criteria.MediaIds.Select(e => e));
                 IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
                     string.Format("{0}Bin\\{1}", AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName),

@@ -252,7 +252,8 @@ namespace TNS.AdExpressI.Classification.DAL
         protected virtual string GetMediaRights(string prefix, bool beginByAnd)
         {
             if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
+                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX
+                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES)
             {
                 if (beginByAnd) return string.Empty;
                 else return " 1 = 1 ";
