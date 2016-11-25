@@ -276,6 +276,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 var model = new SponsorshipMediaSelectionViewModel();
                 model.SponsorshipMedias = new List<Models.Shared.SponsorshipMediaList>();
                 model.Multiple = true;
+                model.Trees = new List<Models.Shared.Tree>();
+                model.Dimension = Dimension.media;
 
                 foreach (var sponsorshipMediaList in result.SponsorshipMedias)
                 {
@@ -319,9 +321,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
                 model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
                 model.CanRefineMediaSupport = result.CanRefineMediaSupport;
-
-                //TODO: Only for tests
-                model.CurrentModule = 1781;
 
                 if (result.CanRefineMediaSupport)
                 {

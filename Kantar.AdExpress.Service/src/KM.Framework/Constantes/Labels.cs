@@ -185,6 +185,9 @@ namespace KM.Framework.Constantes
         public string DeleteUniversMessageConfirmLabel { get; set; }//2856
         public string DeleteResultMessageConfirmLabel { get; set; }//3099
         public string TitleLabel { get; set; }//3103
-        
+        public string SelectVehicle { get; set; }//3104
+        public string RefineProgrammeSponsorshpCategory { get; set; }//3105
+        public string SelectAllVehicles { get; set; }//1066
+
     }
 }

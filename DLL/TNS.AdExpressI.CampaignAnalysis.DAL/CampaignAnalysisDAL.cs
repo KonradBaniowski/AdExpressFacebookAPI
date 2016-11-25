@@ -199,6 +199,8 @@ namespace TNS.AdExpressI.CampaignAnalysis.DAL
 
             #region Nomenclature Emission
 
+            sql.Append(GetMediaSelection(webSession, DbTables.DATA_SPONSORSHIP_PREFIXE));
+
             //Sélection des émissions
             sql.Append(SQLGenerator.GetCustomerProgramSelection(webSession, DbTables.DATA_SPONSORSHIP_PREFIXE, DbTables.DATA_SPONSORSHIP_PREFIXE, true));
 
@@ -376,6 +378,24 @@ namespace TNS.AdExpressI.CampaignAnalysis.DAL
             }
 
             #endregion
+        }
+        #endregion
+
+        #region GetMediatSelection
+        /// <summary>
+        /// Get media selection
+        /// </summary>
+        /// <remarks>
+        /// Must beginning by AND
+        /// </remarks>
+        /// <param name="dataTablePrefixe">data table prefixe</param>
+        /// <returns>media selection to add as condition into a sql query</returns>
+        protected static string GetMediaSelection(WebSession webSession, string dataTablePrefixe)
+        {
+            string sql = "";
+            if (webSession.PrincipalMediaUniverses != null && webSession.PrincipalMediaUniverses.Count > 0)
+                sql = webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+            return sql;
         }
         #endregion
 

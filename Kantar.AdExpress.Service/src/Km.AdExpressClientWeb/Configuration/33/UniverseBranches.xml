@@ -72,4 +72,11 @@
   <branch id="22" name="brand" labelId="1889">
     <level id="8" name ="brand"/>
   </branch>
+  <branch id="23" name="program" labelId="2051">
+    <level id="29" name ="program_type"/>
+    <level id="30" name ="program"/>
+  </branch>
+  <branch id="24" name="form_sponsorship" labelId="2121">
+    <level id="31" name ="form_sponsorship"/>
+  </branch>
 </universeBranches>
