@@ -188,6 +188,7 @@ namespace KM.Framework.Constantes
         public string SelectVehicle { get; set; }//3104
         public string RefineProgrammeSponsorshpCategory { get; set; }//3105
         public string SelectAllVehicles { get; set; }//1066
-
+        public string SponsorshipMedias { get; set; }//2933
+        public string SponsorshipWorkingSet { get; set; } //3106
     }
 }

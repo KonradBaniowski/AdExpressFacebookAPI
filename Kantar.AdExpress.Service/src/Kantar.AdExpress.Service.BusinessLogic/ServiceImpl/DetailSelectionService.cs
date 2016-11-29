@@ -104,6 +104,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             //TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
 
             #region Choix de l'étude :
+            domain.ModuleId = _webSession.CurrentModule;
             domain.ModuleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(_webSession.CurrentModule), _webSession.SiteLanguage);
             #endregion
 
@@ -155,6 +156,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
             domain.UniversMedia = new List<Core.Domain.Tree>();
             domain.MediasSelectedLabel = string.Join(",", domain.MediasSelected.Select(_ => _.Label));
+
+            if (currentModule.Id == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+            {
+                domain.SponsorshipMediasSelected = GetLabels(_webSession.CurrentUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
+                domain.SponsorshipMediasSelectedLabel = string.Join(",", domain.SponsorshipMediasSelected.Select(_ => _.Label));
+                domain.ShowSponsorshipMedia = true;
+            }
 
             ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
             #endregion
@@ -230,7 +238,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             {
                                 List<long> levelIdsList = result[index].GetLevelIdsList();
                                 model.AccessType = result[index].AccessType == AccessType.excludes ? AccessType.excludes : AccessType.includes;
-                                if (model.AccessType == AccessType.excludes)
+                                if(currentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+                                {
+                                    model.Label = GestionWeb.GetWebWord(2270, SiteLanguage);
+                                    model.LabelId = 2270;
+                                }
+                                else if (model.AccessType == AccessType.excludes)
                                 {
                                     model.Label = GestionWeb.GetWebWord(2269, SiteLanguage);
                                     model.LabelId = 2269;

@@ -156,7 +156,9 @@ namespace Km.AdExpressClientWeb.I18n
                 TitleLabel = GestionWeb.GetWebWord(LanguageConstantes.TitleLabel, siteLanguage),
                 SelectVehicle = GestionWeb.GetWebWord(LanguageConstantes.SelectVehicle, siteLanguage),
                 RefineProgrammeSponsorshpCategory = GestionWeb.GetWebWord(LanguageConstantes.RefineProgrammeSponsorshpCategory, siteLanguage),
-                SelectAllVehicles = GestionWeb.GetWebWord(LanguageConstantes.SelectAllVehicles, siteLanguage)
+                SelectAllVehicles = GestionWeb.GetWebWord(LanguageConstantes.SelectAllVehicles, siteLanguage),
+                SponsorshipMedias = GestionWeb.GetWebWord(LanguageConstantes.SponsorshipMedias, siteLanguage),
+                SponsorshipWorkingSet = GestionWeb.GetWebWord(LanguageConstantes.SponsorshipWorkingSet, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
