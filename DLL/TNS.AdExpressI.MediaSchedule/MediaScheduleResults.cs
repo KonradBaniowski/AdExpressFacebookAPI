@@ -224,6 +224,21 @@ namespace TNS.AdExpressI.MediaSchedule {
         protected VehicleInformation _vehicle;
         #endregion
 
+        #region ShowPickaNews
+        /// <summary>
+        /// Is acces to total?
+        /// </summary>
+        protected bool _allowPickaNews= true;
+        /// <summary>
+        /// Get / Set autorisation to access to total
+        /// </summary>
+        public bool AllowPickaNews
+        {
+            get { return _allowPickaNews; }
+            set { _allowPickaNews = value; }
+        }
+        #endregion
+
         #region ShowTotal
         /// <summary>
         /// Is acces to total?
@@ -237,6 +252,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             set { _allowTotal = value; }
         }
         #endregion
+
 
         #region ShowPDM
         /// <summary>
@@ -1785,6 +1801,16 @@ namespace TNS.AdExpressI.MediaSchedule {
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
 
+
+            if (_allowPickaNews)
+            {
+                columns.Add(new { headerText = "", key = "PICKANEWS", dataType = "string", width = "30", allowSorting = false });
+                schemaFields.Add(new { name = "PICKANEWS" });
+                columnsFixed.Add(new { columnKey = "PICKANEWS", isFixed = false, allowFixing = false });
+                columnsNotAllowedSorting.Add(new { columnKey = "PICKANEWS", allowSorting = false });
+                tableWidth += 30;
+            }
+
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
             {
                 if (_allowTotal)
@@ -2129,6 +2155,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     ++pid;
                                     idLv1 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv1;
+
                                     SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit);
 
                                     if (idLv1 == 1)
@@ -2384,7 +2411,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
             {
                 gridData[line - 1, gridColumnId++] = data[line, col];
-                
+
+                if (_allowPickaNews)
+                {
+                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId);
+                }
+
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
                 {
                     if (_allowTotal)
@@ -2414,6 +2446,11 @@ namespace TNS.AdExpressI.MediaSchedule {
             else
             {
                 gridData[line - 1, gridColumnId++] = data[line, col];
+
+                if (_allowPickaNews)
+                {
+                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId);
+                }
 
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
                 {
@@ -2561,6 +2598,26 @@ namespace TNS.AdExpressI.MediaSchedule {
             {
                 gridData[line - 1, gridColumnId++] = "";
             }
+        }
+
+        protected virtual void SetPickaNewsLink(object[,] data, ref object[,] gridData, int line, int col, ref int gridColumnId)
+        {
+
+            if (line != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
+            {
+                //TODO : A faire côté client
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='http://www.pickanews.com/find?q={0}&date={1}+-+{2}' target='_blank'><img src='/Content/img/pickanews-logo.png' als='PickaNews'></a></center>"
+                    , data[line, col]
+                    , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                    , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                    );
+            }
+            else
+            {
+                gridData[line - 1, gridColumnId++] = string.Empty;
+            }
+
+
         }
         #endregion
 
