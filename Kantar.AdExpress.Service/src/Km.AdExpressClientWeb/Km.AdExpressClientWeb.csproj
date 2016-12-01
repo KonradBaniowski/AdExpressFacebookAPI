@@ -300,7 +300,10 @@
     <Content Include="Configuration\33\Lists.xml" />
     <Content Include="Configuration\33\MediaPlanInsertionConfiguration.xml" />
     <Content Include="Configuration\33\ModuleCategory.xml" />
-    <Content Include="Configuration\33\ModulesConfiguration.xml" />
+    <Content Include="Configuration\33\ModulesConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\33\MSCreativesDetails.xml" />
     <Content Include="Configuration\33\PluginAlerteConfiguration.xml" />
     <Content Include="Configuration\33\PluginConfiguration.xml" />
@@ -310,8 +313,12 @@
     <Content Include="Configuration\33\RightOptions.xml" />
     <Content Include="Configuration\33\Trends.xml" />
     <Content Include="Configuration\33\Units.xml" />
-    <Content Include="Configuration\33\UniverseBranches.xml" />
-    <Content Include="Configuration\33\UniverseLevels.xml" />
+    <Content Include="Configuration\33\UniverseBranches.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\33\UniverseLevels.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\33\UniverseLevelsCustomStyles.xml" />
     <Content Include="Configuration\33\Vehicles.xml" />
     <Content Include="Configuration\33\WebLanguages.xml" />

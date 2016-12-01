@@ -176,7 +176,7 @@ $('#Results').on('click', function (e) {
     var items = $(this).parent().parent().find('.btn.btn-warning.btn-circle.btn-empty');
     $.each(items, function (index, value) {
         var page = $(value).attr('id');
-        if (page == "Dates" || page == "Market") {
+        if (page == "Dates") {
             strHtml += "<li>" + $('#Node_' + page).val() + "</li>";
             gotoResult = false;
             return;

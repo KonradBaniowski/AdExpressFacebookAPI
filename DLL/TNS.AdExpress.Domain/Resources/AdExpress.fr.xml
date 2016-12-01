@@ -2368,5 +2368,11 @@
 
     <item mnemonic="w3103" type="System.String">Titre</item>
 
+    <!--Module Analyse des programmes-->
+    <item mnemonic="w3104" type="System.String">Sélection des supports</item>
+    <item mnemonic="w3105" type="System.String">Affiner l'univers Emissions/Formes de Parrainage</item>
+    <item mnemonic="w3106" type="System.String">Univers Emissions/Formes de Parrainage</item>
+    <!--End-->
+    
   </items>
 </localization>

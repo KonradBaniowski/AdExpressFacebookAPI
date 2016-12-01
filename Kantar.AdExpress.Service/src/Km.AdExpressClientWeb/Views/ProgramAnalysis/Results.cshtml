@@ -6,6 +6,7 @@
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutResults.cshtml";
     var _controller = "ProgramAnalysis";
+    var programAnalysisResults = string.Format("/{0}/Results", _controller);
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
@@ -72,7 +73,7 @@
         </div>
     </div>
 </div>
-@*<input type="hidden" id="current-url" value="/@_controller/Results" />*@
+<input type="hidden" id="current-url" value="@programAnalysisResults" />
 @Html.HiddenFor(e => e.Labels.Timeout)
 @Html.HiddenFor(e => e.Labels.TimeoutBis)
 @Html.HiddenFor(e => e.Labels.MaxAllowedRows)

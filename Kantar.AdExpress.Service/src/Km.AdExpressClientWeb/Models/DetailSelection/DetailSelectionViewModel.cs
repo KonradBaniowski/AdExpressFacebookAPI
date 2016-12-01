@@ -28,6 +28,7 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public List<Tree> UniversMarket { get; set; }
         public List<Tree> UniversMedia { get; set; }
         public string MediasSelectedLabel { get; set; }
+        public string SponsorshipMediasSelectedLabel { get; set; }
         public string Dates { get; set; }
         public string StudyPeriod { get; set; }
         public string ComparativePeriod { get; set; }
@@ -46,5 +47,6 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public bool ShowPeriodDisponibilityType { get; set; }
         public bool ShowUnity { get; set; }
         public bool ShowStudyType { get; set; }
+        public bool ShowSponsorshipMedia { get; set; }
     }
 }

@@ -347,6 +347,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                         case CstWeb.Module.Name.INDICATEUR:
                         case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                        case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                             success = SetDefaultUnivers(request, _webSession, response);
                             break;
                         case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
@@ -1096,6 +1097,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.CELEBRITIES:
                 case CstWeb.Module.Name.NEW_CREATIVES:
                 case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
+                case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                     return true;
                 default: return false;
             }

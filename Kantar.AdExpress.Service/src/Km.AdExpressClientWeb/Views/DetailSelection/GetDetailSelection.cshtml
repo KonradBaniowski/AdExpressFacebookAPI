@@ -52,10 +52,25 @@
                     <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(_ => _.DetailSelectionWSModel.MediasSelectedLabel)</strong></label>
                 </div>
 
+                if (Model.DetailSelectionWSModel.ShowSponsorshipMedia)
+                {
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.SponsorshipMedias)</strong></label>
+                        <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(_ => _.DetailSelectionWSModel.SponsorshipMediasSelectedLabel)</strong></label>
+                    </div>
+                }
+
                 if (Model.DetailSelectionWSModel.ShowUniversDetails)
                 {
                     <div class="form-group">
-                        <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
+                        @if (Model.DetailSelectionWSModel.ShowSponsorshipMedia)
+                        {
+                            <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.SponsorshipWorkingSet)</strong></label>
+                        }
+                        else
+                        {
+                            <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
+                        }
                     </div>
                     var size = (12 / Model.DetailSelectionWSModel.UniversMedia.Count);
                     <div class="form-group">
