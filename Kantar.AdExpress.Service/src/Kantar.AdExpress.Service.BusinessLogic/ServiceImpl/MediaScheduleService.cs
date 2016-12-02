@@ -31,13 +31,15 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Exceptions;
 using System.Web;
 using TNS.AdExpress.Web.Utilities.Exceptions;
+using TNS.AdExpress;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MediaScheduleService : IMediaScheduleService
     {
         private WebSession CustomerSession = null;
-        private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         public object[,] GetMediaScheduleData(string idWebSession, HttpContextBase httpContext)
         {
             object[,] result = null;
@@ -76,6 +78,46 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return mediaScheduleResult.GetGridResult();
         }
 
+        public GridResultResponse GetGridResult(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
+        {
+            const string LOGIN = "CREATIVE3";
+            const string PASSWORD = "EXPLOV3";
+            GridResultResponse response = new GridResultResponse();
+
+            Right loginRight = new Right(LOGIN, PASSWORD, creativeMediaScheduleRequest.SiteLanguage);
+
+            if (loginRight.CanAccessToAdExpress())
+            {
+                List<long> mIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
+                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.POLAND))
+                {
+                    mIds = SwicthToAdExpressVehicle(mIds, creativeMediaScheduleRequest.CreativeIds);
+                }
+
+                List<long> pIds = creativeMediaScheduleRequest.ProductIds.Split(',').Select(Int64.Parse).ToList();
+
+                // Regarde à partir de quel tables charger les droits clients
+                // (template ou droits propres au login)
+                loginRight.SetModuleRights();
+                loginRight.SetFlagsRights();
+                loginRight.SetRights();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                    loginRight.SetBannersAssignement();
+
+              
+
+              
+
+
+            }
+            else response.Message = GestionWeb.GetWebWord(880, creativeMediaScheduleRequest.SiteLanguage);
+
+
+            return response;
+        }
+
+
+
         public MSCreatives GetMSCreatives(string idWebSession, string zoomDate, HttpContextBase httpContext)
         {
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
@@ -106,24 +148,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 switch (vehicle.Id)
                 {
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                        result= GetEvaliantCreatives(data, vehicle);
+                        result = GetEvaliantCreatives(data, vehicle);
                         break;
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                        result= GetEvaliantMobileCreatives(data, vehicle);
+                        result = GetEvaliantMobileCreatives(data, vehicle);
                         break;
                     default:
                         result = GetCreatives(data, vehicle);
                         break;
                 }
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
-            return result;          
+            return result;
         }
 
         private MSCreatives GetCreatives(ResultTable data, VehicleInformation vehicle)
@@ -352,8 +394,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
-                
-                
+
+
                 CustomerSession.CurrentModule = module.Id;
                 if (CustomerSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) CustomerSession.CurrentTab = 0;
                 CustomerSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
@@ -370,7 +412,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerSession.CurrentTab = oldCurrentTab;
                 CustomerSession.Unit = oldUnit;
                 CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
-                
+
             }
             catch (Exception ex)
             {
@@ -482,6 +524,37 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             webSession.Save();
         }
 
+
+        private List<long> SwicthToAdExpressVehicle(List<long> mediaTypeIds, string creativeIds)
+        {
+            var newVehicle = new List<long>();
+
+            mediaTypeIds.ForEach(p =>
+            {
+                switch (p)
+                {
+                    case 1:
+                        newVehicle.Add(3);
+                        break;
+                    case 3:
+                        newVehicle.Add(1);
+                        break;
+                    case 8:
+                        newVehicle.Add(5);
+                        break;
+                    case 9: newVehicle.Add(6); break;
+                    case 20: newVehicle.Add(9); break;
+                    case 7:
+                        newVehicle.Add(!string.IsNullOrEmpty(creativeIds) ? 8 : p);
+                        break;
+                    case 6:
+                        newVehicle.Add(8); break;
+                    default: newVehicle.Add(p); break;
+
+                }
+            });
+            return newVehicle;
+        }
 
         #endregion
 
