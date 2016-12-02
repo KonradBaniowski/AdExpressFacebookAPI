@@ -60,6 +60,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool applyEvaliantCountryAccess = false;
             bool hidePlurimediaEvol = false;
             bool usePurchaseMode = false;
+            bool showPickaNews = false;
             #endregion
 
             try {
@@ -238,6 +239,12 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     hidePlurimediaEvol = bool.Parse(reader.GetAttribute("hidePlurimediaEvol"));
                                 }
                                 break;
+                            case "showPickaNews":
+                                if (reader.GetAttribute("use") != null && reader.GetAttribute("use").Length > 0)
+                                {
+                                    showPickaNews = bool.Parse(reader.GetAttribute("use"));
+                                }
+                                break;
                         }
                     }
                 }
@@ -259,6 +266,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.ApplyEvaliantCountryAccess = applyEvaliantCountryAccess;
                 WebApplicationParameters.HidePlurimediaEvol = hidePlurimediaEvol;
                 WebApplicationParameters.UsePurchaseMode = usePurchaseMode;
+                WebApplicationParameters.ShowPickaNews = showPickaNews;
             }
 
             #region Error Management

@@ -223,8 +223,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// Use Purchase Mode
         /// </summary>
         protected static bool _usePurchaseMode = false;
+        /// <summary>
+        /// Use Purchase Mode
+        /// </summary>
+        protected static bool _showPickaNews = false;
         #endregion
-        
+
         #region Contructeur
         /// <summary>
         /// Constructor
@@ -581,6 +585,18 @@ namespace TNS.AdExpress.Domain.Web {
             }
             set {
                 _usePurchaseMode = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Use Purchase Mode
+        /// </summary>
+        public static bool ShowPickaNews
+        {
+            get{
+                return _showPickaNews;
+            }
+            set{
+                _showPickaNews = value;
             }
         }
         /// <summary>

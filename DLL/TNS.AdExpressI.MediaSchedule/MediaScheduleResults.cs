@@ -129,6 +129,10 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// name of EXCEL PATTERN PERCENTAGE
         /// </summary>
         public const string EXCEL_PATTERN_NAME_PERCENTAGE = "percentage";
+        /// <summary>
+        /// Lien vers pickanews
+        /// </summary>
+        public const string PICKANEWSLINK = "http://www.pickanews.com";
 
         #endregion
 
@@ -226,11 +230,11 @@ namespace TNS.AdExpressI.MediaSchedule {
 
         #region ShowPickaNews
         /// <summary>
-        /// Is acces to total?
+        /// Is acces to pickanews?
         /// </summary>
-        protected bool _allowPickaNews= true;
+        protected bool _allowPickaNews= false;
         /// <summary>
-        /// Get / Set autorisation to access to total
+        /// Get / Set autorisation to access to pickanews
         /// </summary>
         public bool AllowPickaNews
         {
@@ -457,6 +461,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             _isPDFReport = false;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
+            _allowPickaNews = WebApplicationParameters.ShowPickaNews;
             _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId)
                 || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
                 && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
@@ -1804,11 +1809,11 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             if (_allowPickaNews)
             {
-                columns.Add(new { headerText = "", key = "PICKANEWS", dataType = "string", width = "30", allowSorting = false });
+                columns.Add(new { headerText = "<img src='/Content/img/pickanews-logo.png' als='PickaNews'>", key = "PICKANEWS", dataType = "string", width = "40", allowSorting = false });
                 schemaFields.Add(new { name = "PICKANEWS" });
                 columnsFixed.Add(new { columnKey = "PICKANEWS", isFixed = false, allowFixing = false });
                 columnsNotAllowedSorting.Add(new { columnKey = "PICKANEWS", allowSorting = false });
-                tableWidth += 30;
+                tableWidth += 40;
             }
 
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
@@ -2606,7 +2611,8 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (line != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
             {
                 //TODO : A faire côté client
-                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='http://www.pickanews.com/find?q={0}&date={1}+-+{2}' target='_blank'><img src='/Content/img/pickanews-logo.png' als='PickaNews'></a></center>"
+                gridData[line - 1, gridColumnId++] = string.Format("<center><a href='{0}/find?q={1}&date={2}+-+{3}' target='_blank'><span class='fa fa-search-plus'></span></a></center>"
+                    , PICKANEWSLINK
                     , data[line, col]
                     , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
                     , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
@@ -3616,7 +3622,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
         #endregion
 
-        #region Creatives and insertions rights
+        #region Creatives, insertions and Pickanews rights
         /// <summary>
         /// Chack that session verifies conditions to allow access to the versions
         /// </summary>
@@ -3641,6 +3647,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && !HasOnlyLevelAgency()
                 );
         }
+
         /// <summary>
         /// Check the session verifies conditions to allow access to the insertions
         /// </summary>
