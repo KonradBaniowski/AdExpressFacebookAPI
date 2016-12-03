@@ -36,7 +36,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
-        private const string SPONSORSHIPMEDIA = "SponsorshipMediaSelection";
         private const string SELECTION = "Selection";
         private const string PERIOD = "PeriodSelection";
         private const string ERROR = "Invalid Selection";
@@ -140,7 +139,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(request, this.HttpContext);
                 if (result.Success)
                 {
-                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == SPONSORSHIPMEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
+                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                     var redirectUrl = context.Action(nextStep, controller);
                     return Json(new { ErrorMessage = errorMessage, RedirectUrl = redirectUrl });
@@ -246,124 +245,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
                 Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
                 response = _webSessionService.SaveMediaSelection(request, this.HttpContext);
-                UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
-
-                if (response.Success)
-                {
-                    //var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == PERIOD) ? SELECTION : response.ControllerDetails.Name;
-                    string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
-                    var controller = response.ControllerDetails.Name;
-                    url = context.Action(nextStep, controller);
-                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
-                }
-                else
-                {
-                    jsonModel = Json(new { response.ErrorMessage });
-                }
-            }
-            return jsonModel;
-        }
-
-        public ActionResult SponsorshipMediaSelection()
-        {
-            var claim = new ClaimsPrincipal(User.Identity);
-            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _mediaService.GetSponsorshipMedia(webSessionId, this.HttpContext);
-
-            if (result.Success && result.SponsorshipMedias.Any())
-            {
-                #region model data
-                var model = new SponsorshipMediaSelectionViewModel();
-                model.SponsorshipMedias = new List<Models.Shared.SponsorshipMediaList>();
-                model.Multiple = true;
-                model.Trees = new List<Models.Shared.Tree>();
-                model.Dimension = Dimension.media;
-
-                foreach (var sponsorshipMediaList in result.SponsorshipMedias)
-                {
-                    var list = new Models.Shared.SponsorshipMediaList()
-                    {
-                        Category = sponsorshipMediaList.Category,
-                        Medias = sponsorshipMediaList.Media,
-                        Multiple = sponsorshipMediaList.MultipleSelection,
-                        IdMediasCommon = sponsorshipMediaList.MediaCommon,
-                    };
-
-                    model.SponsorshipMedias.Add(list);
-                }
-
-                model.UniversGroups = new UserUniversGroupsModel
-                {
-                    ShowUserSavedGroups = true,
-                    UserUniversGroups = new List<UserUniversGroup>(),
-                    UserUniversCode = LanguageConstantes.UserUniversCode,
-                    SiteLanguage = result.SiteLanguage
-                };
-
-                var helper = new Helpers.PageHelper();
-                model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
-
-                ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
-                ViewBag.SiteLanguage = result.SiteLanguage;
-
-                var mediaNode = new NavigationNode { Position = 2 };
-                var navigationHelper = new Helpers.PageHelper();
-
-                model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, result.ControllerDetails.Name, result.SiteLanguage, 2);
-                model.ErrorMessage = new Models.Shared.ErrorMessage
-                {
-                    EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
-                    SearchErrorMessage = GestionWeb.GetWebWord(3011, result.SiteLanguage),
-                    SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
-                    UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
-                };
-
-                //model.Labels = helper.LoadPageLabels(result.SiteLanguage, result.ControllerDetails.Name);
-                model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
-                model.CanRefineMediaSupport = result.CanRefineMediaSupport;
-
-                if (result.CanRefineMediaSupport)
-                {
-                    var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, this.HttpContext, true);
-                    model.CurrentModule = response.ControllerDetails.ModuleId;
-                    model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
-                    foreach (var item in response.Trees)
-                    {
-                        Models.Shared.Tree tree = new Models.Shared.Tree
-                        {
-                            Id = item.Id,
-                            LabelId = item.LabelId,
-                            AccessType = item.AccessType,
-                            UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
-                        };
-                        tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
-                        model.Trees.Add(tree);
-                    }
-                }
-                #endregion
-
-                return View(model);
-            }
-            else
-            {
-                return View("Error");
-            }
-        }
-
-        public JsonResult SaveSponsorshipMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
-        {
-            string url = string.Empty;
-            var response = new Domain.WebSessionResponse();
-            var errorMsg = String.Empty;
-            JsonResult jsonModel = new JsonResult();
-            if (selectedMedia != null)
-            {
-                List<Domain.Tree> trees = (mediaSupport != null) ? mediaSupport : new List<Domain.Tree>();
-                trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
-                var claim = new ClaimsPrincipal(User.Identity);
-                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-                Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
-                response = _webSessionService.SaveSponsorshipMediaSelection(request, this.HttpContext);
                 UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
 
                 if (response.Success)
@@ -489,10 +370,6 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodResponse response = _periodService.CalendarValidation(request, this.HttpContext);
             //TODO : a faire  autrement
             this._controller = response.ControllerDetails.Name;
-
-            if (response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
-                nextStep = SPONSORSHIPMEDIA;
-
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
@@ -517,10 +394,6 @@ namespace Km.AdExpressClientWeb.Controllers
             PeriodSaveRequest request = new PeriodSaveRequest(idSession, selectedPeriod, selectedValue, nextStep, studyId);
             var response = _periodService.SlidingDateValidation(request, this.HttpContext);
             this._controller = response.ControllerDetails.Name;
-
-            if (response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
-                nextStep = SPONSORSHIPMEDIA;
-
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
             if (response.Success)
