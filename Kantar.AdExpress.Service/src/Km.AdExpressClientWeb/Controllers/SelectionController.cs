@@ -402,13 +402,15 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     DateTime now = DateTime.Now;
 
-                    if (now.Month == 12){
+                    if (now.Month == 12)
+                    {
                         result.StartYear += 1;
                     }
 
                     periodModel.StartYear = string.Format("{0}-{1}-01", result.StartYear, now.AddMonths(-_periodLength).ToString("MM"));
 
-                    if (now.Month == 12){
+                    if (now.Month == 12)
+                    {
                         now = now.AddMonths(1);
                         result.EndYear += 1;
                     }
