@@ -465,6 +465,23 @@ namespace TNS.AdExpressI.MediaSchedule {
             return ComputeGridResult(ComputeData());
         }
 
+        public virtual GridResult GetCreativeMSGridResult()
+        {
+            _isCreativeDivisionMS = false;
+            _showValues = false;
+            _isExcelReport = false;
+            _isPDFReport = false;
+            _allowInsertions = false;
+            _allowVersion = false;
+            _allowPickaNews = false;
+            _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId)
+                || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack
+                && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
+                && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+            _style = new DefaultMediaScheduleStyle();
+            return ComputeGridResult(ComputeData());
+        }
+        
         /// <summary>
         /// Get HTML code for the media schedule dedicated to Creative Division
         /// </summary>

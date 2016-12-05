@@ -1750,6 +1750,8 @@
     <Content Include="Views\Selection\SponsorshipMediaSelection.cshtml" />
     <Content Include="Views\ProgramAnalysis\Results.cshtml" />
     <Content Include="Views\ProgramAnalysis\_ResultOptions.cshtml" />
+    <Content Include="Views\CreativeMediaSchedule\Index.cshtml" />
+    <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

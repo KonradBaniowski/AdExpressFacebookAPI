@@ -1,0 +1,398 @@
+﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.CreativeMediaScheduleResultsViewModel
+@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
+
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
+    var _controller = "CreativeMediaSchedule";
+}
+
+<link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
+<link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
+
+<div class="row">
+    @*@Html.Partial("Presentation", Model.Presentation)*@
+    @*@Html.Partial("DetailSelection")*@
+    @Html.Hidden("ExportController", "TestExport")
+    @Html.HiddenFor(e => e.Labels.ResultError)
+    @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
+    @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+        <div class="row row-sm">
+            @Html.Partial("NavigationBar", Model.NavigationBar)
+        </div>
+    </div>*@
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_ExportTypeResults")
+    </div>
+</div>
+@*<div class="h20">
+    </div>*@
+@*<div class="row">
+    <div class="col-md-12">
+        @Html.Action("ResultOptions", _controller)
+    </div>
+</div>*@
+@*<div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
+<div style="margin-bottom:10px;"></div>
+<div id="msCreativesResult" class="hide">
+</div>*@
+<div class="row">
+    <div class="col-md-12">
+        <center>
+            <div id="grid" class="hide">
+            </div>
+            @if (Model.ErrorMessages.Count > 0)
+            {
+                <text>
+                <div id="gridMessage">
+                    @foreach(var msg in Model.ErrorMessages)
+                    {
+                        @msg<br />
+                    }
+                </div>
+                <div id="gridLoader" class="hide">
+                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                </div>
+                </text>
+            }
+            else
+            {
+                <text>
+                <div id="gridMessage" class="hide"></div>
+                <div id="gridLoader">
+                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                </div>
+                </text>
+            }
+</center>
+    </div>
+</div>
+<div id="resultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="exportResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+@*<input type="hidden" id="current-url" value="/@_controller/Results" />*@
+@section Scripts {
+    @switch (Model.SiteLanguage.ToString())
+    {
+        case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
+            <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.UK:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            break;
+        default:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            }
+            else
+            {
+                <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+            }
+            break;
+    }
+    @Scripts.Render("~/bundles/results")
+    <script>
+        //{columnKey: 'Address', allowHiding: false, hidden: true}
+        $(document).ready(function () {
+
+            if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+
+            // Set text for select picker
+            $.fn.selectpicker.defaults = {
+                all: '@GestionWeb.GetWebWord(201, Model.SiteLanguage)'
+            };
+
+            $("#grid").igTreeGrid({
+                //dataSource: data,
+                primaryKey: "ClassifId",
+                width: "100%",
+                defaultColumnWidth: 200,
+                avgRowHeight: 60,
+                autoGenerateColumns: true
+            });
+
+            var ds;
+            var cols;
+            var colsFixed;
+            var columnsNotAllowedSorting;
+            var needFixedColumns = false;
+            var previousSubPeriodLabel;
+            var hasMSCreatives = false;
+            var creatives = [];
+            var gridWidth;
+
+            var renderGrid = function (success, error) {
+                if (success) {
+
+                    $("#grid").igTreeGrid("destroy");
+                    $("#gridLoader").addClass("hide");
+                    $("#grid").removeClass("hide");
+                    if (needFixedColumns) {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "580px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            width: "1140px",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false,
+                                    columnSettings: columnsNotAllowedSorting
+                                },
+                                {
+                                    name: "ColumnFixing",
+                                    fixingDirection: "left",
+                                    columnSettings: colsFixed
+                                }
+                            ]
+                        })
+                    }
+                    else {
+                        $("#grid").igTreeGrid({
+                            dataSource: ds.dataView(),
+                            columns: cols,
+                            height: "530px",
+                            autoGenerateColumns: false,
+                            primaryKey: "ID_PRODUCT",
+                            foreignKey: "PID",
+                            features: [
+                                {
+                                    name: "MultiColumnHeaders"
+                                },
+                                {
+                                    name: "Paging",
+                                    mode: "allLevels",
+                                    pageSize: 100
+                                },
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false,
+                                    columnSettings: columnsNotAllowedSorting
+                                }
+                            ]
+                        })
+                    }
+
+                    gridWidth = $("#grid_table_container").width();
+
+                    $("#grid").igTreeGrid({
+                        rowCollapsed: function (evt, ui) {
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
+                        }
+                    });
+
+                } else {
+                    alert(error);
+                }
+
+            }
+
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns, unit) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.key == "PERIOD" || elem.key == "PERIOD_COMP") {
+                            if (unit == "duration")
+                                elem.formatter = DurationFormatter;
+                            else if (unit == "pages")
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        }
+                        else if (elem.key == "EVOL") {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
+            function CallMediaScheduleResult() {
+
+                $("#gridMessage").addClass("hide");
+
+                var params = {
+                    siteLanguage: @Model.SiteLanguage,
+                    mediaTypeIds: '@Model.MediaTypeIds',
+                    beginDate: @Model.BeginDate,
+                    endDate: @Model.EndDate,
+                    productIds: '@Model.ProductIds',
+                    creativeIds: '@Model.CreativeIds'
+                };
+                $.ajax({
+                    url: '@Url.Action("Results", "CreativeMediaSchedule")',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: params,
+                    timeout: 300000, //5 min
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                        if (errorText == 'timeout') {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridMessage").removeClass("hide");
+                            $("#gridMessage").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
+                        }
+                        else {
+                            message = $('#Labels_ResultError').val() + '. ' + $('#Labels_WarningBackNavigator').val();
+                            bootbox.alert(message);
+                            $("#gridLoader").addClass("hide");
+                        }
+                    },
+                    success: function (data) {
+                        if (data != null && data != "") {
+                            if(!data.success) {
+                                $("#gridLoader").addClass("hide");
+                                $("#gridMessage").removeClass("hide");
+                                $("#gridMessage").html(data.errorMessage);
+                            }
+                            else if (data.hasMoreThanMaxRowsAllowed) {
+                                $("#gridLoader").addClass("hide");
+                                $("#gridMessage").removeClass("hide");
+                                $("#gridMessage").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                            }
+                            else {
+                                dataTreeGrid = data.datagrid;
+                                cols = GetColumnsFormatter(data.columns, data.unit);
+                                colsFixed = data.columnsfixed;
+                                columnsNotAllowedSorting = data.columnsNotAllowedSorting;
+                                needFixedColumns = data.needfixedcolumns;
+                                hasMSCreatives = data.hasMSCreatives;
+
+                                var schema = new $.ig.DataSchema("array", {
+                                    fields: data.schema
+                                });
+
+                                ds = new $.ig.DataSource({
+                                    type: "json",
+                                    schema: schema,
+                                    dataSource: dataTreeGrid,
+                                    callback: renderGrid
+                                });
+
+                                ds.dataBind();
+                            }
+                        }
+                        else {
+                            $("#gridLoader").addClass("hide");
+                            $("#gridMessage").removeClass("hide");
+                            $("#gridMessage").html("@GestionWeb.GetWebWord(2106, Model.SiteLanguage)");
+                        }
+                    }
+                });
+            }
+
+            @if (Model.ErrorMessages.Count == 0) {
+                    @:CallMediaScheduleResult();
+            }
+
+            $('#export-type').removeClass("hide");
+            $('#export-type').selectpicker();
+
+            });
+
+    </script>
+    @Scripts.Render("~/bundles/detail-selection")
+}

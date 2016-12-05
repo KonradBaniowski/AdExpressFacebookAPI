@@ -1,4 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
+using Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -22,67 +23,108 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public CreativeMediaScheduleController( IWebSessionService webSessionService, IMediaScheduleService mediaSchedule)
         {
-           
             _webSessionService = webSessionService;
-         
+            _mediaSchedule = mediaSchedule;
         }
 
         // GET: CreativeMediaSchedule
-        public ActionResult Index(int siteLanguage, string mediaTypeIds, int beginDate, int endDate, string productIds, string creativeIds)
+        public ActionResult Index(string siteLanguage, string mediaTypeIds, string beginDate, string endDate, string productIds, string creativeIds)
         {
-            if (siteLanguage > 0) _siteLanguage = siteLanguage;
-            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
-            ViewBag.SiteLanguage = _siteLanguage;
             var pageHelper = new Helpers.PageHelper();
-            var model = new Models.MediaSchedule.CreativeMediaScheduleResultsViewModel
-            {
-                SiteLanguage = _siteLanguage,
-                EndDate = endDate,
-                BeginDate = beginDate,
-                productIds = productIds,
-                CreativeIds = creativeIds,
-                MediaTypeIds = mediaTypeIds,
-                Labels = pageHelper.LoadPageLabels(_siteLanguage, _controller),
-                IsAlertVisible = false,
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage)
-            };
-            if (string.IsNullOrEmpty(mediaTypeIds)) model.ErrorMessage = "Erreur : Le  paramètre mediaTypeIds est invalide";
-            if (string.IsNullOrEmpty(productIds)) model.ErrorMessage = "Erreur : Le  paramètre productIds est invalide";
-            if (beginDate.ToString().Length != 8) model.ErrorMessage = "Erreur : Le  champ beginDate est invalide";
-            if (endDate.ToString().Length != 8) model.ErrorMessage = "Erreur : Le  champ endDate est invalide";
+            var model = new Models.MediaSchedule.CreativeMediaScheduleResultsViewModel();
+            
 
+            model.Labels = pageHelper.LoadPageLabels(_siteLanguage, _controller);
+            model.ErrorMessages = new List<string>();
+
+            if (string.IsNullOrEmpty(siteLanguage))
+                model.ErrorMessages.Add("Erreur : Le paramètre siteLanguage est invalide");
+            else
+            {
+                int siteLang = Convert.ToInt32(siteLanguage);
+                if(siteLang != WebApplicationParameters.DefaultLanguage)
+                    model.ErrorMessages.Add("Erreur : Le paramètre siteLanguage est invalide");
+            }
+            
+            if (string.IsNullOrEmpty(mediaTypeIds))
+                model.ErrorMessages.Add("Erreur : Le paramètre mediaTypeIds est invalide");
+
+            if (string.IsNullOrEmpty(productIds))
+                model.ErrorMessages.Add("Erreur : Le  paramètre productIds est invalide");
+
+            if (beginDate == null || beginDate.Length != 8)
+                model.ErrorMessages.Add("Erreur : Le  champ beginDate est invalide");
+
+            if (endDate == null || endDate.ToString().Length != 8)
+                model.ErrorMessages.Add("Erreur : Le  champ endDate est invalide");
+
+            if(model.ErrorMessages.Count > 0)
+                return View(model);
+
+            model.SiteLanguage = Convert.ToInt32(siteLanguage);
+            model.EndDate = endDate;
+            model.BeginDate = beginDate;
+            model.ProductIds = productIds;
+            model.CreativeIds = creativeIds;
+            model.MediaTypeIds = mediaTypeIds;
 
             return View(model);
         }
 
         public JsonResult Results(int siteLanguage,string mediaTypeIds,int beginDate, int endDate ,string productIds,string creativeIds)
         {
+            GridResultResponse creativeMediaScheduleResponse;
             GridResult gridResult;
             JsonResult jsonModel;
             string idWebSession = string.Empty;
+            CreativeMediaScheduleRequest request = new CreativeMediaScheduleRequest { SiteLanguage = siteLanguage, MediaTypeIds = mediaTypeIds, BeginDate = beginDate, EndDate = endDate, ProductIds = productIds, CreativeIds = creativeIds };
 
-           gridResult = _mediaSchedule.GetGridResult(idWebSession, "", this.HttpContext);
-
-            if (!gridResult.HasData)
-                return null;
-
-            if (gridResult.HasMoreThanMaxRowsAllowed)
+            try
             {
-                var response = new { hasMoreThanMaxRowsAllowed = true };
+                creativeMediaScheduleResponse = _mediaSchedule.GetGridResult(request);
+            }
+            catch(Exception ex)
+            {
+                var response = new { success = false, errorMessage = ex.Message };
                 jsonModel = Json(response, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;
 
                 return jsonModel;
             }
 
-            string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+            if (creativeMediaScheduleResponse.Success)
+            {
+                gridResult = creativeMediaScheduleResponse.GridResult;
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit };
-            jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-            jsonModel.MaxJsonLength = Int32.MaxValue;
+                if (!gridResult.HasData)
+                    return null;
 
-          
-            return jsonModel;
+                if (gridResult.HasMoreThanMaxRowsAllowed)
+                {
+                    var response = new { success = true, hasMoreThanMaxRowsAllowed = true };
+                    jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                    return jsonModel;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(gridResult.Data);
+
+                var obj = new { success = true, datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit };
+                jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+
+                return jsonModel;
+            }
+            else
+            {
+                var response = new { success = false, errorMessage = creativeMediaScheduleResponse.Message };
+                jsonModel = Json(response, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
+            }
         }
     }
 }

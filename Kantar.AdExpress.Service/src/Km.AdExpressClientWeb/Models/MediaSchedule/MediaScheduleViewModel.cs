@@ -11,17 +11,12 @@ namespace Km.AdExpressClientWeb.Models.MediaSchedule
     public class CreativeMediaScheduleResultsViewModel : Models.Shared.ResultsViewModel
     {
         public int SiteLanguage { get; set; }
-        public int BeginDate { get; set; }
-
-        public int EndDate { get; set; }
-
-        public string   MediaTypeIds { get; set; }
-
-        public string productIds { get; set; }
-
+        public string BeginDate { get; set; }
+        public string EndDate { get; set; }
+        public string MediaTypeIds { get; set; }
+        public string ProductIds { get; set; }
         public string CreativeIds { get; set; }
-
-        public string ErrorMessage { get; set; }
+        public List<string> ErrorMessages { get; set; }
 
     }
 
