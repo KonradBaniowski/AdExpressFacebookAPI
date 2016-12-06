@@ -30,6 +30,8 @@ using TNS.AdExpress.Classification;
 using NLog;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using TNS.AdExpress.Vehicle.DAL;
+using TNS.AdExpress.Domain.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -266,13 +268,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 var tuple = GetAllowedIds(webSession, dimension, selectionPage);
                 result.SiteLanguage = tuple.Item4;
-                var allowedLevels = tuple.Item1;
+                var allowedLevels = (RequireForceLevel(webSession.CurrentModule) && dimension == Dimension.media) ? new List<long> { TNSClassificationLevels.MEDIA } : tuple.Item1;
                 var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
                 var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
 
                 //branch product type associated to module Facebook
                 if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK) branch = Branch.type.productSocial.GetHashCode().ToString();
-                var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels);
+
+                List<long> allowedFilters = GetAllowedFilters(webSession, dimension);
+                var data = UniversListDataAccess.GetData(tuple.Item3, branch.ToString(), listUniverseClientDescription, allowedLevels, allowedFilters);
+
                 List<UserUnivers> UserUniversList = new List<UserUnivers>();
                 if (data != null && data.Rows.Count > 0)
                 {
@@ -631,12 +636,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             UniversGroupsResponse result = new UniversGroupsResponse();
             try
             {
-                var tuple = GetAllowedIds(webSession, dimension);
-                result.SiteLanguage = tuple.Item4;
+                result.SiteLanguage = webSession.SiteLanguage;
                 List<UserUnivers> userUniversList = new List<UserUnivers>();
-                var allowedLevels = tuple.Item1;
-                var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
                 var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
+                
                 if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                 {
                     branch = Branch.type.productSocial.GetHashCode().ToString();
@@ -1266,11 +1269,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string mediaIds = null;
             if (request.MediaIds.Any())
                 mediaIds = string.Join(", ", request.MediaIds);
-            string levels = null;
+            List<long> levels = new List<long>();
             int isDefault = request.IsDefaultUniverse ? 1 : 0;
             foreach (var item in request.Trees)
             {
-                levels = string.Join(", ", item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id));
+                levels.AddRange(item.UniversLevels.Where(d => d.UniversItems.Any()).Select(x => x.Id).Except(levels).ToList());
             }
 
             #region Build univers
@@ -1344,7 +1347,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
                     {
                         universes.Add(universes.Count, adExpressUniverse);
-                        if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, levels, mediaIds))
+                        if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, string.Join(", ", levels), mediaIds))
                         {
                             if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                             {
@@ -1480,13 +1483,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private List<UserUnivers> GetUniverses(Dimension dimension, WebSession webSession, long idGroup = 0, bool getDefaultUniverse = false)
         {
             List<UserUnivers> result = new List<UserUnivers>();
+            var tuple = GetAllowedIds(webSession, dimension);
+            var allowedLevels = RequireForceLevel(webSession.CurrentModule) ? new List<long> { TNSClassificationLevels.MEDIA } : tuple.Item1;
+            var listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
             var branch = (dimension == Dimension.product) ? Branch.type.product.GetHashCode().ToString() : Branch.type.media.GetHashCode().ToString();
             if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
                 branch = Branch.type.productSocial.GetHashCode().ToString();
-            var data = UniversListDataAccess.GetData(webSession, branch, string.Empty);
-            if (data != null && data.Tables[0].AsEnumerable().Any())
+            List<long> allowedFilters = GetAllowedFilters(webSession, dimension);
+            var data = UniversListDataAccess.GetData(webSession, branch, "", allowedLevels, allowedFilters);
+            if (data != null && data.AsEnumerable().Any())
             {
-                var list = data.Tables[0].AsEnumerable().Select(p => new
+                var list = data.AsEnumerable().Select(p => new
                 {
                     GroupID = p.Field<long?>("ID_GROUP_UNIVERSE_CLIENT"),
                     GroupDescription = p.Field<string>("GROUP_UNIVERSE_CLIENT"),
@@ -1534,6 +1541,59 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 webSession.Save();
             }
 
+        }
+
+        private List<long> GetAllowedFilters(WebSession webSession, Dimension dimension)
+        {
+
+            string filter = string.Empty;
+            DomainWebNavigation.Module module = ModulesList.GetModule(webSession.CurrentModule);
+
+            switch (dimension)
+            {
+                case Dimension.media:
+                    switch (webSession.CurrentModule)
+                    {
+                        case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                            return null;
+                        case WebConstantes.Module.Name.INDICATEUR:
+                        case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                            return GetVehiclesListAnalysis(webSession);
+                        default:
+                            return module.AllowedMediaUniverse.GetVehicles();
+                    }
+                default:
+                    return null;
+            }
+        }
+
+        private bool RequireForceLevel(long moduleId)
+        {
+            switch(moduleId)
+            {
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private List<long> GetVehiclesListAnalysis(WebSession webSession)
+        {
+            VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
+            DataTable dtVehicle = vl.List;
+            List<long> ids = new List<long>{ VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).Id.GetHashCode() };
+
+            foreach(DataRow row in dtVehicle.Rows)
+            {
+                long id = Int64.Parse(row["ID_VEHICLE"].ToString());
+                if (!ids.Contains(id))
+                    ids.Add(id);
+            }
+
+            return ids;
         }
         #endregion
     }

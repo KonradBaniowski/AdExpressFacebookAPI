@@ -19,7 +19,7 @@ using TNS.AdExpress.Web.Core.Exceptions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using ClassificationConstantes = TNS.AdExpress.Constantes.Classification;
-using webConstantes = TNS.AdExpress.Constantes.Web;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
@@ -154,7 +154,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
         /// <param name="filter">Filter</param>
         /// <returns>Universes list</returns>
-        public static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription, LevelInformation filter)
+        private static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription)
         {
 
             #region Request construction
@@ -163,7 +163,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
              * Code add to improve the performance of the universe loading process
             * 
             string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".COLUMN_NAME ";*/
-            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".IS_DEFAULT, " + "\"LEVEL\", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".FILTER ";
             sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
                 + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
                 + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
@@ -181,10 +181,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
             {
                 sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")";
             }
-            if (filter != null)
-            {
-                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".filter in (" + filter.ID + ")";
-            }
+           
             sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
             #endregion
 
@@ -291,34 +288,71 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         /// <param name="allowedLevels">allowed universe levels</param>
         /// <param name="filter">Filter</param>
         /// <returns>Universes list</returns>
-        public static DataTable GetData(WebSession webSession, string branch, string ListUniverseClientDescription, List<Int64> allowedLevels, LevelInformation filter)
+        public static DataTable GetData(WebSession webSession, string branch, string ListUniverseClientDescription, List<Int64> allowedLevels, List<Int64> allowedFilters)
         {
             DataTable dt = new DataTable();
 
-            DataSet ds = GetData(webSession, branch, ListUniverseClientDescription, filter);
-            List<long> levelsIds = null;
+            DataSet ds = GetData(webSession, branch, ListUniverseClientDescription);
+            List<long> levelIds = null;
+            List<long> filterIds = null;
             /* TODO MODIFICATION
              * Code add to improve the performance of the universe loading process
             * 
             string[] levelsIds = null;*/
-            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = null;
+            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = null;
             bool isValidUniverse = true;
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
-
                 dt.Columns.Add("ID_GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_GROUP_UNIVERSE_CLIENT"].GetType());
                 dt.Columns.Add("GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["GROUP_UNIVERSE_CLIENT"].GetType());
                 dt.Columns.Add("ID_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_UNIVERSE_CLIENT"].GetType());
                 dt.Columns.Add("UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["UNIVERSE_CLIENT"].GetType());
+                dt.Columns.Add("IS_DEFAULT", ds.Tables[0].Rows[0]["IS_DEFAULT"].GetType());
+                //dt.Columns.Add("LEVEL", ds.Tables[0].Rows[0]["LEVEL"].GetType());
+                //dt.Columns.Add("FILTER", ds.Tables[0].Rows[0]["FILTER"].GetType());
 
+                #region Old code
                 /* TODO MODIFICATION
                  * Code add to improve the performance of the universe loading process
                 * 
                 dt.Columns.Add("COLUMN_NAME", ds.Tables[0].Rows[0]["COLUMN_NAME"].GetType());*/
+                #endregion
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
+                    if (dr["LEVEL"] != System.DBNull.Value && dr["LEVEL"].ToString().Length > 0)
+                    {
+                        levelIds = dr["LEVEL"].ToString().Split(',').Select(Int64.Parse).ToList();
+                        isValidUniverse = !levelIds.Except(allowedLevels).Any();
+                    }
 
+                    if (allowedFilters != null && allowedFilters.Any() && dr["FILTER"] != System.DBNull.Value && dr["FILTER"].ToString().Length > 0)
+                    {
+                        filterIds = dr["FILTER"].ToString().Split(',').Select(Int64.Parse).ToList();
+
+                        if(filterIds.Count > 1
+                            && ClassificationConstantes.Branch.type.media.GetHashCode().ToString() == branch
+                            && IsMonoMediaTypeModule(webSession.CurrentModule))
+                        {
+                            isValidUniverse = false;
+                        }
+                        else if (isValidUniverse && filterIds.Any())
+                            isValidUniverse = !filterIds.Except(allowedFilters).Any();
+                    }
+
+                    if (isValidUniverse)
+                    {
+                        DataRow row = dt.NewRow();
+                        row["ID_GROUP_UNIVERSE_CLIENT"] = dr.ItemArray[0];
+                        row["GROUP_UNIVERSE_CLIENT"] = dr.ItemArray[1];
+                        row["ID_UNIVERSE_CLIENT"] = dr.ItemArray[2];
+                        row["UNIVERSE_CLIENT"] = dr.ItemArray[3];
+                        row["IS_DEFAULT"] = dr.ItemArray[4];
+
+                        dt.Rows.Add(row);
+                    }
+
+                    #region Old code
                     /* TODO MODIFICATION
                      * Code add to improve the performance of the universe loading process
                     * 
@@ -338,30 +372,48 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
 
                     isValidUniverse = true;*/
 
-                    universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
-                    if (universes != null && universes.Count > 0)
-                    {
-                        levelsIds = WebSession.GetLevelListId(universes);
-                        for (int j = 0; j < levelsIds.Count; j++)
-                        {
-                            if (!allowedLevels.Contains(levelsIds[j]))
-                            {
-                                isValidUniverse = false;
-                            }
-                        }
+                    //universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
+                    //if (universes != null && universes.Count > 0)
+                    //{
+                    //    levelsIds = WebSession.GetLevelListId(universes);
+                    //    for (int j = 0; j < levelsIds.Count; j++)
+                    //    {
+                    //        if (!allowedLevels.Contains(levelsIds[j]))
+                    //        {
+                    //            isValidUniverse = false;
+                    //        }
+                    //    }
 
-                        //Univers valide
-                        if (isValidUniverse)
-                        {
-                            dt.Rows.Add(dr.ItemArray);
-                        }
-                    }
-                    isValidUniverse = true;
-
+                    //    //Univers valide
+                    //    if (isValidUniverse)
+                    //    {
+                    //        dt.Rows.Add(dr.ItemArray);
+                    //    }
+                    //}
+                    //isValidUniverse = true;
+                    #endregion
                 }
             }
 
             return dt;
+        }
+        #endregion
+
+        #region Is Mono media Type Module
+        private static bool IsMonoMediaTypeModule(long moduleId)
+        {
+            switch (moduleId)
+            {
+                case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    return true;
+                default:
+                    return false;
+            }
         }
         #endregion
 

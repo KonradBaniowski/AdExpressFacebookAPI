@@ -892,6 +892,8 @@ namespace TNS.AdExpressI.Classification.DAL
             {
                 case Dimension.product:
                     return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
                 default:
                     throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
             }
