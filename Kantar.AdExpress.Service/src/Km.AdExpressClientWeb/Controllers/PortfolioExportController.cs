@@ -717,7 +717,7 @@ namespace Km.AdExpressClientWeb.Controllers
             Color backColor;
             Color borderColor;
 
-            if (cell is CellPercent || cell is CellVersionNbPDM)
+            if (cell is CellPercent || cell is CellVersionNbPDM || cell is CellPDM)
             {
                 double value = ((CellUnit)cell).Value;
 
