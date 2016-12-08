@@ -72,4 +72,8 @@
   <branch id="22" name="brand" labelId="1889">
     <level id="8" name ="brand"/>
   </branch>
+  <branch id="25"  name="category" labelId="1382">
+    <level id="12" name="category"/>
+    <level id="14" name="media"/>
+  </branch>
 </universeBranches>
