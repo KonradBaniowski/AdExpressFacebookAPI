@@ -1373,6 +1373,9 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && root.Count > 0) || root is HeaderGroup)
             {
+                if (root.Capacity == 0)
+                    maxCol++;
+
                 foreach (HeaderBase item in root)
                 {
                     if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
