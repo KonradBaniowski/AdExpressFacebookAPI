@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.Shared.ResultsViewModel
 @using TNS.AdExpress.Domain.Translation;
 @using TNS.AdExpress.Domain.Web;
+@using TNS.AdExpress.Domain.Units;
 
 @{
     ViewBag.Title = "Results";
@@ -287,6 +288,11 @@
                         $("#gridLoader").removeClass("hide");
                         CallMediaScheduleResult('' + $(this).attr("date"));
                     });
+
+                    $("#grid_table_VERSION").attr("title", "@GestionWeb.GetWebWord(1994, Model.Presentation.SiteLanguage)");
+                    $("#grid_table_INSERTION").attr("title", "@GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, Model.Presentation.SiteLanguage)" );
+                    $("#grid_table_PICKANEWS").attr("title", "Pickanews");
+
                 } else {
                     alert(error);
                 }

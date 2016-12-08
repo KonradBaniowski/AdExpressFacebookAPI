@@ -1878,21 +1878,21 @@ namespace TNS.AdExpressI.MediaSchedule {
             //Version
             if (_allowVersion)
             {
-                columns.Add(new { headerText = GestionWeb.GetWebWord(1994, _session.SiteLanguage), key = "VERSION", dataType = "string", width = "82" });
+                columns.Add(new { headerText = GestionWeb.GetWebWord(1994, _session.SiteLanguage)[0], key = "VERSION", dataType = "string", width = "30" });
                 schemaFields.Add(new { name = "VERSION" });
                 columnsFixed.Add(new { columnKey = "VERSION", isFixed = false, allowFixing = false });
                 columnsNotAllowedSorting.Add(new { columnKey = "VERSION", allowSorting = false });
-                tableWidth += 82;
+                tableWidth += 30;
             }
             // Insertions
             if (_allowInsertions)
             {
                 string insertionLabel = GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage);
-                columns.Add(new { headerText = insertionLabel, key = "INSERTION", dataType = "string", width = "82" });
+                columns.Add(new { headerText = insertionLabel[0], key = "INSERTION", dataType = "string", width = "30" });
                 schemaFields.Add(new { name = "INSERTION" });
                 columnsFixed.Add(new { columnKey = "INSERTION", isFixed = false, allowFixing = false });
                 columnsNotAllowedSorting.Add(new { columnKey = "INSERTION", allowSorting = false });
-                tableWidth += 82;
+                tableWidth += 30;
             }
             // TODO : Remove commented code for countries that don't use Comparative study
             //if (!WebApplicationParameters.UseComparativeMediaSchedule)
