@@ -1809,11 +1809,11 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             if (_allowPickaNews)
             {
-                columns.Add(new { headerText = "<img src='/Content/img/pickanews-logo.png' als='PickaNews'>", key = "PICKANEWS", dataType = "string", width = "30", allowSorting = false });
+                columns.Add(new { headerText = "<img src='/Content/img/pickanews-logo.png' als='PickaNews'>", key = "PICKANEWS", dataType = "string", width = "35", allowSorting = false });
                 schemaFields.Add(new { name = "PICKANEWS" });
                 columnsFixed.Add(new { columnKey = "PICKANEWS", isFixed = false, allowFixing = false });
                 columnsNotAllowedSorting.Add(new { columnKey = "PICKANEWS", allowSorting = false });
-                tableWidth += 30;
+                tableWidth += 35;
             }
 
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
