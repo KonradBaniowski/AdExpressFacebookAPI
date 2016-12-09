@@ -14,6 +14,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IMediaScheduleService
     {
         object[,] GetMediaScheduleData(string idWebSession, HttpContextBase httpContext);
+        GridResultResponse GetMediaScheduleCreativeData(CreativeMediaScheduleRequest creativeMediaScheduleRequest);
         GridResult GetGridResult(string idWebSession, string zoomDate, HttpContextBase httpContext);
         GridResult GetGridResult(string idWebSession, string zoomDate, string isVehicle, HttpContextBase httpContext);
         GridResultResponse GetGridResult( CreativeMediaScheduleRequest creativeMediaScheduleRequest);

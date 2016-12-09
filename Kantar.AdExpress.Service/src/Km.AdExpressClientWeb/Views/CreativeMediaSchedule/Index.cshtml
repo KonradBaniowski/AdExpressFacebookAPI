@@ -6,91 +6,93 @@
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_LayoutInsertionVersion.cshtml";
     var _controller = "CreativeMediaSchedule";
+    string lang = ViewBag.SiteLanguage.ToString();
 }
 
 <link href="~/IgniteUI/css/structure/infragistics.css" rel="stylesheet" />
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
-
-<div class="row">
-    @*@Html.Partial("Presentation", Model.Presentation)*@
-    @*@Html.Partial("DetailSelection")*@
-    @Html.Hidden("ExportController", "TestExport")
-    @Html.HiddenFor(e => e.Labels.ResultError)
-    @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
-    @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-        <div class="row row-sm">
-            @Html.Partial("NavigationBar", Model.NavigationBar)
+<div class="container">
+    <div class="row">
+        @*@Html.Partial("Presentation", Model.Presentation)*@
+        @*@Html.Partial("DetailSelection")*@
+        @Html.Hidden("ExportController", "TestExport")
+        @Html.HiddenFor(e => e.Labels.ResultError)
+        @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
+        @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
+                <div class="row row-sm">
+                    @Html.Partial("NavigationBar", Model.NavigationBar)
+                </div>
+            </div>*@
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_ExportTypeResults")
         </div>
-    </div>*@
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @Html.Partial("_ExportTypeResults")
     </div>
-</div>
-@*<div class="h20">
-    </div>*@
-@*<div class="row">
-    <div class="col-md-12">
-        @Html.Action("ResultOptions", _controller)
-    </div>
-</div>*@
-@*<div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
-<div style="margin-bottom:10px;"></div>
-<div id="msCreativesResult" class="hide">
-</div>*@
-<div class="row">
-    <div class="col-md-12">
-        <center>
-            <div id="grid" class="hide">
+    @*<div class="h20">
+        </div>*@
+    @*<div class="row">
+            <div class="col-md-12">
+                @Html.Action("ResultOptions", _controller)
             </div>
-            @if (Model.ErrorMessages.Count > 0)
+        </div>*@
+    @*<div id="subPeriodSelection" class="h20" style="min-height: 70px; display:none;"></div>
+        <div style="margin-bottom:10px;"></div>
+        <div id="msCreativesResult" class="hide">
+        </div>*@
+    <div class="row">
+        <div class="col-md-12">
+            <center>
+                <div id="grid" class="hide">
+                </div>
+                @if (Model.ErrorMessages.Count > 0)
             {
-                <text>
-                <div id="gridMessage">
-                    @foreach(var msg in Model.ErrorMessages)
-                    {
-                        @msg<br />
-                    }
-                </div>
-                <div id="gridLoader" class="hide">
-                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
-                </div>
-                </text>
-            }
-            else
-            {
-                <text>
-                <div id="gridMessage" class="hide"></div>
-                <div id="gridLoader">
-                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
-                </div>
-                </text>
-            }
-</center>
-    </div>
-</div>
-<div id="resultModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                    <text>
+                        <div id="gridMessage">
+                            @foreach (var msg in Model.ErrorMessages)
+                            {
+                                @msg<br />
+                            }
+                        </div>
+                        <div id="gridLoader" class="hide">
+                            <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                        </div>
+                    </text>
+                }
+                else
+                {
+                    <text>
+                        <div id="gridMessage" class="hide"></div>
+                        <div id="gridLoader">
+                            <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                        </div>
+                    </text>
+                }
+            </center>
         </div>
     </div>
-</div>
-<div id="alertModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="resultModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
         </div>
     </div>
-</div>
-<div id="exportResultModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="alertModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    <div id="exportResultModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
         </div>
     </div>
 </div>
 @*<input type="hidden" id="current-url" value="/@_controller/Results" />*@
 @section Scripts {
-    @switch (Model.SiteLanguage.ToString())
+    @switch (lang)
     {
         case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
             <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
@@ -138,7 +140,7 @@
 
             // Set text for select picker
             $.fn.selectpicker.defaults = {
-                all: '@GestionWeb.GetWebWord(201, Model.SiteLanguage)'
+                all: '@GestionWeb.GetWebWord(201, ViewBag.SiteLanguage)'
             };
 
             $("#grid").igTreeGrid({
@@ -315,12 +317,12 @@
                 $("#gridMessage").addClass("hide");
 
                 var params = {
-                    siteLanguage: @Model.SiteLanguage,
-                    mediaTypeIds: '@Model.MediaTypeIds',
-                    beginDate: @Model.BeginDate,
-                    endDate: @Model.EndDate,
-                    productIds: '@Model.ProductIds',
-                    creativeIds: '@Model.CreativeIds'
+                    l: '@Model.SiteLanguage',
+                    m: '@Model.MediaTypeIds',
+                    b: '@Model.BeginDate',
+                    e: '@Model.EndDate',
+                    p: '@Model.ProductIds',
+                    c: '@Model.CreativeIds'
                 };
                 $.ajax({
                     url: '@Url.Action("Results", "CreativeMediaSchedule")',
@@ -378,7 +380,7 @@
                         else {
                             $("#gridLoader").addClass("hide");
                             $("#gridMessage").removeClass("hide");
-                            $("#gridMessage").html("@GestionWeb.GetWebWord(2106, Model.SiteLanguage)");
+                            $("#gridMessage").html("@GestionWeb.GetWebWord(2106, ViewBag.SiteLanguage)");
                         }
                     }
                 });
@@ -386,12 +388,22 @@
 
             @if (Model.ErrorMessages.Count == 0) {
                     @:CallMediaScheduleResult();
-            }
+                        }
 
             $('#export-type').removeClass("hide");
             $('#export-type').selectpicker();
 
+            $('#btn-export-creativems').on('click', function (e) {
+                event.preventDefault();
+                var selectedValue = $('#export-type').val();
+                var paramsExport = "?l=@Model.SiteLanguage&m=@Model.MediaTypeIds&b=@Model.BeginDate&e=@Model.EndDate&p=@Model.ProductIds&c=@Model.CreativeIds";
+
+                var controller = $('#ExportController').val();
+
+                window.open('/' + controller + '/ResultCreativeMS' + paramsExport, "_blank");
             });
+
+        });
 
     </script>
     @Scripts.Render("~/bundles/detail-selection")
