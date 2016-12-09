@@ -1168,6 +1168,8 @@ namespace TNS.AdExpressI.Portofolio
             Engines.MediaDetailEngine result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel);
             StringBuilder t = new StringBuilder(5000);
 
+            GridResult gridResult = null;
+
             switch (_vehicleInformation.Id)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
@@ -1178,7 +1180,7 @@ namespace TNS.AdExpressI.Portofolio
                     //TODO : Gérer le lien vars de détails insertion
                     //result.GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
                     //return t.ToString();
-                    GridResult gridResult = result.GetAllPeriodInsertionsGridResult(GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
+                    gridResult = result.GetAllPeriodInsertionsGridResult(GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
                     return gridResult;
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
@@ -1190,7 +1192,8 @@ namespace TNS.AdExpressI.Portofolio
                 case DBClassificationConstantes.Vehicles.names.tvSponsorship:
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.tvAnnounces:
-                    return result.GetGridResult();
+                    gridResult = result.GetAllPeriodSpotsGridResult(GestionWeb.GetWebWord(1836, _webSession.SiteLanguage));
+                    return gridResult;
                 default:
                     throw new PortofolioException("Vehicle unknown.");
             }

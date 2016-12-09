@@ -9,6 +9,13 @@ namespace TNS.AdExpress.Domain.Results
 
     public class GridResult
     {
+
+        public GridResult()
+        {
+            this.LinkAllPeriod = null;
+            this.Data = null;
+        }
+
         public object[,] Data { get; set; }
         public List<object> Columns { get; set; }
         public List<object> Schema { get; set; }
@@ -21,6 +28,6 @@ namespace TNS.AdExpress.Domain.Results
         public bool HasMSCreatives { get; set; }
         public string Unit { get; set; }
         public Filter Filter { get; set; }
-        public bool isOneColumnLine { get; set; }
+        public string LinkAllPeriod { get; set; }
 }
 }
