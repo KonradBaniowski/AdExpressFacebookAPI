@@ -1368,6 +1368,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (!IsValidUniverseLevels(univers.AdExpressUniverse, webSession, httpContext))
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(2990, webSession.SiteLanguage);
+                        response.Success = false;
                     }
                     else
                     {
@@ -1383,11 +1384,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                 {
                     response.ErrorMessage = GestionWeb.GetWebWord(2299, webSession.SiteLanguage);
+                    response.Success = false;
                 }
             }
             else if (request.Required)
             {
                 response.ErrorMessage = GestionWeb.GetWebWord(878, webSession.SiteLanguage);
+                response.Success = false;
             }
             else
             {
