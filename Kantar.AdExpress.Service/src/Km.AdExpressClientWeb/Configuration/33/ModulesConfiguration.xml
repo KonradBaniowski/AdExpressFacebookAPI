@@ -177,6 +177,7 @@
               <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="13" name="title\media"/>
               <allowedUniverseBranch id="14" name="media_Sellermedia"/>
+              <allowedUniverseBranch id="25" name="category\media"/>
             </allowedUniverseBranches>
           </selection>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">-->
@@ -500,6 +501,7 @@
               <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="13" name="title\media"/>
               <allowedUniverseBranch id="14" name="media_Sellermedia"/>
+              <allowedUniverseBranch id="25" name="category\media"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">          
