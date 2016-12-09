@@ -49,7 +49,7 @@
 </div>
 
 <div class="panel-group panel-group-results hide" id="resaccord" style="margin-bottom:20px;">
-    <div id="allPeriodInsertions" class="text-center margin-bot-30"></div>
+    <div id="allPeriodInsertionsSpots" class="text-center margin-bot-30"></div>
     <div id="GridPanel" class="panel panel-primary panel-results">
         <a data-toggle="collapse" href="#accord1">
             <div class="panel-heading head-results">
@@ -213,7 +213,7 @@
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
 
-        function GetAllPeriodInsertionsDetailSupp(idMedia) {
+        function GetAllPeriodInsertionsSpotsDetailSupp(idMedia) {
             javascript: window.open("/PortfolioDetailMedia?idMedia=" + idMedia + "&dayOfWeek=&ecran=", "_blank");
             void (0);
         }
@@ -480,7 +480,7 @@
             function CallPortfolioResult() {
                 $("#gridEmpty").hide();
                 $("#GridPanel").hide();
-                $("#allPeriodInsertions").hide();
+                $("#allPeriodInsertionsSpots").hide();
 
                 $.ajax({
                     url: '@Url.Action("PortfolioResult", _controller)',
@@ -490,7 +490,7 @@
                     timeout: 300000, //5 min
                     error: function (xmlHttpRequest, errorText, thrownError) {
                         if (errorText == 'timeout') {
-                            $("#allPeriodInsertions").hide();
+                            $("#allPeriodInsertionsSpots").hide();
                             $("#GridPanel").show();
                             $("#gridEmpty").show();
                             $("#gridEmpty").html("@Model.Labels.Timeout" + "<br\>" + "@Model.Labels.TimeoutBis");
@@ -505,21 +505,20 @@
                         if (data != null && data != "") {
 
                             if (data.hasMoreThanMaxRowsAllowed) {
-                                $("#allPeriodInsertions").hide();
+                                $("#allPeriodInsertionsSpots").hide();
                                 $("#GridPanel").show();
                                 $("#gridEmpty").show();
                                 $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
                             }
                             else {
 
-                                if (data.isonecolumnline) {
+                                if (data.linkAllPeriod != null || data.linkAllPeriod != "null") {
                                     //TODO : à faire autrement
-                                    $("#GridPanel").hide();
-                                    $("#allPeriodInsertions").html(data.datagrid.substring(3, data.datagrid.length - 3));
-                                    $("#allPeriodInsertions").show();
+                                    $("#allPeriodInsertionsSpots").html(data.linkAllPeriod);
+                                    $("#allPeriodInsertionsSpots").show();
                                 }
-                                else {
-                               
+
+                                if(data.datagrid != null && data.datagrid != "null" ){
                                     $("#GridPanel").show();
                                     dataTreeGrid = data.datagrid;
                                     cols = GetColumnsFormatter(data.columns);
@@ -542,8 +541,12 @@
                                     });
 
                                     ds.dataBind();
-                                
+                                }else{
+                                    $("#GridPanel").hide();
                                 }
+
+                                
+                                
 
                                 if (userFilter.ResultTypeFilter.ResultType == "4"){
                                     $("#ChartPanel").show();
@@ -562,7 +565,7 @@
                         else {
                             $("#GridPanel").show();
                             $("#grid").addClass("hide");
-                            $("#allPeriodInsertions").hide();
+                            $("#allPeriodInsertionsSpots").hide();
                             $("#gridEmpty").show();
                         }
 
