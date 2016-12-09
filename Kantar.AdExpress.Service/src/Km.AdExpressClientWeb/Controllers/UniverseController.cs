@@ -151,6 +151,8 @@ namespace Km.AdExpressClientWeb.Controllers
             };
             if (data.UniversGroups.Any())
             {
+                List<SelectListItem> tmpUserUniverse = new List<SelectListItem>() { new SelectListItem() { Value = "0", Text = "---" } };
+
                 var items = data.UniversGroups.Select(p => new SelectListItem()
                 {
                     Value = p.Id.ToString(),
@@ -160,12 +162,15 @@ namespace Km.AdExpressClientWeb.Controllers
                 model.UserGroups = items;
                 if (data.UniversGroups.FirstOrDefault().UserUnivers.Any())
                 {
-                    model.UserUnivers = data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
+                    tmpUserUniverse.AddRange(data.UniversGroups.FirstOrDefault().UserUnivers.Select(m => new SelectListItem()
                     {
                         Value = m.Id.ToString(),
                         Text = m.Description
-                    }).ToList();
+                    }).ToList());
+
+                    model.UserUnivers = tmpUserUniverse;
                     model.UserUnivers.FirstOrDefault().Selected = true;
+
                 }
             }
             return PartialView(model);
