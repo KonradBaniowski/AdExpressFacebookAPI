@@ -180,12 +180,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
 
-            object[,] gridData = new object[1, 1];
-
             try
             {
                 //gridData[0, 0] = "<a onclick=\"javascript:window.open('/PortfolioDetailMedia?idMedia=" + _idMedia + "&dayOfWeek=&ecran=', '_blank', 'toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700'); void(0);\">"+linkText+"</a>";
-                gridData[0, 0] = "<a onclick='GetAllPeriodInsertionsDetailSupp("+ _idMedia + ")'><i class='fa fa-folder-open-o'></i> " + linkText +"</a>";
+                gridResult.LinkAllPeriod = "<a onclick='GetAllPeriodInsertionsSpotsDetailSupp(" + _idMedia + ")'><i class='fa fa-folder-open-o'></i> " + linkText +"</a>";
             }
             catch (Exception err)
             {
@@ -193,8 +191,24 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             }
 
             gridResult.HasData = true;
-            gridResult.isOneColumnLine = true;
-            gridResult.Data = gridData;
+            gridResult.Data = null;
+
+            return gridResult;
+        }
+
+        public GridResult GetAllPeriodSpotsGridResult(string linkText)
+        {
+            GridResult gridResult = GetGridResult();
+
+            try
+            {
+                //gridData[0, 0] = "<a onclick=\"javascript:window.open('/PortfolioDetailMedia?idMedia=" + _idMedia + "&dayOfWeek=&ecran=', '_blank', 'toolbar=no,scrollbars=yes,resizable=yes,top=80,left=100,width=1200,height=700'); void(0);\">"+linkText+"</a>";
+                gridResult.LinkAllPeriod = "<a onclick='GetAllPeriodInsertionsSpotsDetailSupp(" + _idMedia + ")'><i class='fa fa-folder-open-o'></i> " + linkText + "</a>";
+            }
+            catch (Exception err)
+            {
+                throw (new Exception(err.Message));
+            }
 
             return gridResult;
         }
