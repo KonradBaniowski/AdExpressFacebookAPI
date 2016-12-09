@@ -33,6 +33,10 @@ using System.Web;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using TNS.AdExpress;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpressI.Classification.DAL.MediaBrand;
+using TNS.Classification.Universe;
+using TNS.AdExpress.Classification;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -60,6 +64,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        public GridResultResponse GetMediaScheduleCreativeData(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
+        {
+            GridResultResponse response = new GridResultResponse();
+
+            try
+            {
+                MediaScheduleResults  mediaScheduleResult = InitMediaScheduleCreativeCall(creativeMediaScheduleRequest);
+                response.Data = mediaScheduleResult.ComputeData();
+                response.Success = true;
+            }
+            catch (Exception err)
+            {
+                response.Message = err.Message;
+                response.Success = false;
+                return response;
+            }
+            return response;
+        }
+
         public GridResult GetGridResult(string idWebSession, string zoomDate, HttpContextBase httpContext)
         {
             GridResult girdResult = new GridResult();
@@ -80,38 +103,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         public GridResultResponse GetGridResult(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
         {
-            const string LOGIN = "CREATIVE3";
-            const string PASSWORD = "EXPLOV3";
             GridResultResponse response = new GridResultResponse();
 
-            Right loginRight = new Right(LOGIN, PASSWORD, creativeMediaScheduleRequest.SiteLanguage);
-
-            if (loginRight.CanAccessToAdExpress())
+            try
             {
-                List<long> mIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
-                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.POLAND))
-                {
-                    mIds = SwicthToAdExpressVehicle(mIds, creativeMediaScheduleRequest.CreativeIds);
-                }
-
-                List<long> pIds = creativeMediaScheduleRequest.ProductIds.Split(',').Select(Int64.Parse).ToList();
-
-                // Regarde à partir de quel tables charger les droits clients
-                // (template ou droits propres au login)
-                loginRight.SetModuleRights();
-                loginRight.SetFlagsRights();
-                loginRight.SetRights();
-                if (WebApplicationParameters.VehiclesFormatInformation.Use)
-                    loginRight.SetBannersAssignement();
-
-              
-
-              
-
-
+                MediaScheduleResults mediaScheduleResult = InitMediaScheduleCreativeCall(creativeMediaScheduleRequest);
+                response.GridResult = mediaScheduleResult.GetCreativeMSGridResult();
+                response.Success = true;
             }
-            else response.Message = GestionWeb.GetWebWord(880, creativeMediaScheduleRequest.SiteLanguage);
-
+            catch (System.Exception err)
+            {
+                response.Message = err.Message;
+                response.Success = false;
+                return response;
+            }
 
             return response;
         }
@@ -424,6 +429,199 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return mediaScheduleResult;
         }
 
+        private MediaScheduleResults InitMediaScheduleCreativeCall(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
+        {
+            const string LOGIN = "CREATIVE3";
+            const string PASSWORD = "EXPLOV3";
+            WebSession webSession = null;
+            System.Windows.Forms.TreeNode tmpNode;
+            NomenclatureElementsGroup nomenclatureElementsGroup = null;
+            AdExpressUniverse adExpressUniverse = null;
+            Dictionary<int, AdExpressUniverse> universeDictionary = null;
+            List<long> products = null;
+            string vehicleId = string.Empty;
+            MediaScheduleResults mediaScheduleResult = null;
+
+            List<long> mediaTypeIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.POLAND))
+            {
+                mediaTypeIds = SwicthToAdExpressVehicle(mediaTypeIds, creativeMediaScheduleRequest.MediaTypeIds, webSession);
+            }
+
+            string[] productListId = creativeMediaScheduleRequest.ProductIds.Split(',');
+
+            Right loginRight = new Right(LOGIN, PASSWORD, creativeMediaScheduleRequest.SiteLanguage);
+
+            if (loginRight.CanAccessToAdExpress())
+            {
+                List<long> mIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
+                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.POLAND))
+                {
+                    mIds = SwicthToAdExpressVehicle(mIds, creativeMediaScheduleRequest.CreativeIds);
+                }
+
+                List<long> pIds = creativeMediaScheduleRequest.ProductIds.Split(',').Select(Int64.Parse).ToList();
+
+                // Regarde à partir de quel tables charger les droits clients
+                // (template ou droits propres au login)
+                loginRight.SetModuleRights();
+                loginRight.SetFlagsRights();
+                loginRight.SetRights();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                    loginRight.SetBannersAssignement();
+
+                //Creer une session
+                webSession = new WebSession(loginRight);
+                // On Met à jour la session avec les paramètres
+                webSession.IdSession = creativeMediaScheduleRequest.IdWebSession;
+                webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
+                webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
+
+                if (mediaTypeIds.Count == 1 && VehiclesInformation.Get(mediaTypeIds[0]).Id == Vehicles.names.adnettrack)
+                {
+                    webSession.SiteLanguage = creativeMediaScheduleRequest.SiteLanguage;
+                    webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                    SetAdNetTrackProductSelection(webSession, Convert.ToInt64(creativeMediaScheduleRequest.CreativeIds));
+                    SetProductLevel(webSession.IdSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
+                }
+                else webSession.Unit = UnitsInformation.DefaultCurrency;
+
+                webSession.LastReachedResultUrl = string.Empty;
+
+                #region Media
+                try
+                {
+                    webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
+                    var vehicleLabels = new VehicleLevelListDAL(creativeMediaScheduleRequest.SiteLanguage, loginRight.Source);
+
+                    foreach (long currentVehicleId in mediaTypeIds)
+                    {
+
+                        tmpNode = new System.Windows.Forms.TreeNode(vehicleLabels[currentVehicleId])
+                        {
+                            Tag =
+                                new LevelInformation(
+                                    TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
+                                    currentVehicleId, vehicleLabels[currentVehicleId])
+                        };
+                        webSession.CurrentUniversMedia.Nodes.Add(tmpNode);
+                    }
+                    webSession.SelectionUniversMedia = (System.Windows.Forms.TreeNode)webSession.CurrentUniversMedia.Clone();
+                }
+                catch (System.Exception err)
+                {
+                    throw new Exception("Impossible de construire l'univers media : " + err.Message);
+                }
+                #endregion
+
+                #region Produit
+                try
+                {
+                    nomenclatureElementsGroup = new NomenclatureElementsGroup(0, AccessType.includes);
+
+                    products = productListId.Select(Int64.Parse).ToList();
+
+                    nomenclatureElementsGroup.AddItems(TNSClassificationLevels.PRODUCT, products);
+                    adExpressUniverse = new AdExpressUniverse(Dimension.product);
+                    adExpressUniverse.AddGroup(0, nomenclatureElementsGroup);
+                    universeDictionary = new Dictionary<int, AdExpressUniverse>();
+                    universeDictionary.Add(0, adExpressUniverse);
+                    webSession.PrincipalProductUniverses = universeDictionary;
+                }
+                catch (System.Exception err)
+                {
+                    throw new Exception("Impossible de construire l'univers produit : " + err.Message);
+                }
+                #endregion
+
+                #region Dates
+                webSession.DetailPeriod = WebConstantes.CustomerSessions.Period.DisplayLevel.dayly;
+                webSession.PeriodType = WebConstantes.CustomerSessions.Period.Type.dateToDate;
+                webSession.PeriodBeginningDate = creativeMediaScheduleRequest.BeginDate.ToString();
+                webSession.PeriodEndDate = creativeMediaScheduleRequest.EndDate.ToString();
+                #endregion
+
+                #region Versions
+                try
+                {
+                    if (!string.IsNullOrEmpty(creativeMediaScheduleRequest.CreativeIds))
+                    {
+                        string[] versionListId = creativeMediaScheduleRequest.CreativeIds.Split(',');
+                        webSession.IdSlogans = new ArrayList();
+                        if (mediaTypeIds.Count > 1)
+                        {
+                            throw new Exception("On ne peut pas avoir un plan media pluri media si on passe un numéro de version en paramètre");
+                        }
+
+                        foreach (string idVersion in versionListId.Where(idVersion => !idVersion.Equals("0")))
+                        {
+                            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                            {
+                                vehicleId = idVersion.Substring(0, creativeMediaScheduleRequest.MediaTypeIds.Length);
+                                if (!vehicleId.Equals(creativeMediaScheduleRequest.MediaTypeIds))
+                                {
+                                    throw new Exception("La version " + idVersion + " n'appartient pas au media : " + creativeMediaScheduleRequest.MediaTypeIds);
+                                }
+                                webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(creativeMediaScheduleRequest.MediaTypeIds.Length)));
+                            }
+                            else
+                            {
+                                webSession.IdSlogans.Add(Int64.Parse(idVersion));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        webSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.weekly;
+                    }
+                }
+                catch (System.Exception err)
+                {
+                    throw new Exception("Impossible de construire la liste des versions : " + err.Message);
+                }
+                #endregion
+
+                #region Niveau de détail générique
+                var levels = new ArrayList { 1, 2, 3 };
+                webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                webSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                #endregion
+
+                webSession.SiteLanguage = creativeMediaScheduleRequest.SiteLanguage;
+                //Sauvegarder la session
+                webSession.Save();
+
+                GridResult girdResult = new GridResult();
+                object[,] tab = null;
+                MediaSchedulePeriod period = null;
+                MediaScheduleData resultTmp = null;
+                string idMediaType = string.Empty;
+
+                if (mediaTypeIds.Count == 1)
+                    idMediaType = mediaTypeIds[0].ToString();
+                period = new MediaSchedulePeriod(webSession.PeriodBeginningDate, webSession.PeriodEndDate, webSession.DetailPeriod);
+
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(webSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
+                var param = (string.IsNullOrEmpty(idMediaType)) ? new object[2] : new object[3];
+                param[0] = webSession;
+                param[1] = period;
+                if (!string.IsNullOrEmpty(idMediaType))
+                {
+                    param[2] = Convert.ToInt64(idMediaType);
+                    //creativeSelectionWebControl.IdVehicle = idMediaType;
+                }
+                mediaScheduleResult = (MediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, module.CountryRulesLayer.AssemblyName), module.CountryRulesLayer.Class, false,
+                    BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            }
+            else
+                throw new Exception(GestionWeb.GetWebWord(880, creativeMediaScheduleRequest.SiteLanguage));
+
+
+            return mediaScheduleResult;
+        }
+
         #region Identifiant des éléments de la nomenclature produit
 
         /// <summary>
@@ -556,6 +754,44 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return newVehicle;
         }
 
+        private List<long> SwicthToAdExpressVehicle(List<long> vehicles, string mediaTypeIds, WebSession webSession)
+        {
+            var newVehicle = new List<long>();
+
+            vehicles.ForEach(p =>
+            {
+                switch (p)
+                {
+                    case 1:
+                        newVehicle.Add(3);
+                        break;
+                    case 3:
+                        newVehicle.Add(1);
+                        break;
+                    case 8:
+                        newVehicle.Add(5);
+                        break;
+                    case 9: newVehicle.Add(6); break;
+                    case 20: newVehicle.Add(9); break;
+                    case 7:
+                        newVehicle.Add(!string.IsNullOrEmpty(mediaTypeIds) ? 8 : p);
+                        break;
+                    case 6:
+                        newVehicle.Add(8); break;
+                    default: newVehicle.Add(p); break;
+
+                }
+            });
+            return newVehicle;
+        }
+
+        private void SetAdNetTrackProductSelection(WebSession webSession, long id)
+        {
+
+            webSession.AdNetTrackSelection =
+                new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
+
+        }
         #endregion
 
     }

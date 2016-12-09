@@ -26,6 +26,8 @@ using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using System.Net;
 using FwkWebRsltUI = TNS.FrameWork.WebResultUI;
+using Kantar.AdExpress.Service.Core.Domain;
+using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -213,6 +215,27 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             ExportBrut();
+
+            return View();
+        }
+
+        public ActionResult ResultCreativeMS(string l, string m, string b, string e, string p, string c)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(i => i.Type == ClaimTypes.UserData).Select(s => s.Value).SingleOrDefault();
+            int siteLanguage = Int32.Parse(SecurityHelper.Decrypt(l, SecurityHelper.CryptKey));
+            string mediaTypeIds = SecurityHelper.Decrypt(m, SecurityHelper.CryptKey);
+            int beginDate = Int32.Parse(SecurityHelper.Decrypt(b, SecurityHelper.CryptKey));
+            int endDate = Int32.Parse(SecurityHelper.Decrypt(e, SecurityHelper.CryptKey));
+            string productIds = SecurityHelper.Decrypt(p, SecurityHelper.CryptKey);
+            string creativeIds = string.Empty;
+
+            if (!string.IsNullOrEmpty(c))
+                creativeIds = SecurityHelper.Decrypt(c, SecurityHelper.CryptKey);
+
+            CreativeMediaScheduleRequest request = new CreativeMediaScheduleRequest { IdWebSession = idWebSession, SiteLanguage = siteLanguage, MediaTypeIds = mediaTypeIds, BeginDate = beginDate, EndDate = endDate, ProductIds = productIds, CreativeIds = creativeIds };
+
+            Export(false, request);
 
             return View();
         }
@@ -1300,11 +1323,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-        void Export(bool _showValues = false)
+        void Export(bool _showValues = false, CreativeMediaScheduleRequest request = null)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
+            object[,] data = null;
+            GridResultResponse response;
+
+            if (request == null)
+            {
+                data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
+            }
+            else
+            {
+                response = _mediaSchedule.GetMediaScheduleCreativeData(request);
+                if (response.Success)
+                    data = response.Data;
+            }
 
             _session = (WebSession)WebSession.Load(idWebSession);
 
