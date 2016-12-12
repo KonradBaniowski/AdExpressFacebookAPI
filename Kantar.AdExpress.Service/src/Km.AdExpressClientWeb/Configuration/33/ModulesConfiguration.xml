@@ -1947,29 +1947,15 @@
           <selection id="3" name="Vehicle" showLink="false" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <selection id="6" name="media" traductioncode="2051" url="" icone="media" menuTextId="2051" helpUrl="">
             <allowedUniverseLevels>
-              <allowedUniverseLevel id="29" name="program_type"/>
-              <allowedUniverseLevel id="30" name="program"/>
+              <allowedUniverseLevel id="24" name="program_type"/>
+              <allowedUniverseLevel id="23" name="program"/>
               <allowedUniverseLevel id="31" name="form_sponsorship"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="23">
               <allowedUniverseBranch id="23" name="program_type\program"/>
               <allowedUniverseBranch id="24" name="form_sponsorship"/>
             </allowedUniverseBranches>
-          </selection>
-          <!--<selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">
-            <loadableUnivers>
-              <type id="8" name="category_media"/>
-            </loadableUnivers>
-            <subSelections>
-              <subSelection id="7" name="ProgramType" traductioncode="2050" url="/Private/Selection/ProgramTypeSelection.aspx" icone="program" menuTextId="2050" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" >
-                <loadableUnivers>
-                  <subType id="13" name="programtype_program"/>
-                </loadableUnivers>
-              </subSelection>
-              <subSelection id="8" name="Sponsorship" traductioncode="2052" url="/Private/Selection/FormSponsorshipSelection.aspx" icone="sponsorship" menuTextId="2052" helpUrl="/Private/Helps/SponsorshipProgramDetailVehicleSelectionHelp.aspx" >
-              </subSelection>
-            </subSelections>
-          </selection>-->
+          </selection>       
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/SponsorshipDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SponsorshipProgramDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
@@ -2148,5 +2134,92 @@
       </module>
     </moduleGroup>
 
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													                    Health	                                                                    **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+    <moduleGroup name="Health" type="1" privilegecode="163" traductioncode="3107" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="3108">
+      <!-- *****************************************        Kantar Health                *****************************************-->
+      <module name="Kantar Health" privilegecode="17794" traductioncode="3107" moduleCategoryId="0" urlNextPage="/Private/Results/RolexResults.aspx" descriptionWebTextId="3108" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">      
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="1" name="media\catégorie" />
+            <defaultMediaDetailLevel id="2" name="media\catégorie\support" />
+            <defaultMediaDetailLevel id="3" name="media\catégorie\support\version" />
+            <defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />
+            <defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />
+            <defaultMediaDetailLevel id="6" name="media\regie\support" />
+            <defaultMediaDetailLevel id="7" name="media\regie\support\version" />
+            <defaultMediaDetailLevel id="8" name="media\version\support" />
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="1" name="Media"/>
+            <allowedMediaLevelItem id="2" name="Categorie"/>
+            <allowedMediaLevelItem id="3" name="Support"/>
+            <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+            <allowedMediaLevelItem id="77" name="Media Group"/>
+            <allowedMediaLevelItem id="5" name="Régie"/>
+            <allowedMediaLevelItem id="6" name="Version"/>
+            <allowedMediaLevelItem id="7" name="holding_company"/>
+            <allowedMediaLevelItem id="8" name="Annonceur"/>
+            <allowedMediaLevelItem id="9" name="Marque"/>
+            <allowedMediaLevelItem id="10" name="Produit"/>
+            <allowedMediaLevelItem id="11" name="Famille"/>
+            <allowedMediaLevelItem id="12" name="Classe"/>
+            <allowedMediaLevelItem id="13" name="Groupe"/>
+            <allowedMediaLevelItem id="14" name="Variété"/>
+            <allowedMediaLevelItem id="15" name="Groupe d'agence"/>
+            <allowedMediaLevelItem id="16" name="Agence"/>
+            <allowedMediaLevelItem id="17" name="Titre"/>
+            <allowedMediaLevelItem id="26" name="Pays"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="7" name="holding_company"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="2">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
+              <allowedUniverseBranch id="3" name="brand\product"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <selection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="32" name="Canal"/>
+              <allowedUniverseLevel id="33" name="Medecin"/>           
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="33">
+              <allowedUniverseBranch id="33" name="Medecin"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <results>
+          <page id="0" resultid="67" name="Calendrier d'actions" traductioncode="2862" url="/Private/Results/RolexResults.aspx" rawExcelUrl="" printExcelUrl="" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="38" name="Selected Locations"/>
+              <detailSelection id="39" name="Selected presence types"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>      
+    </moduleGroup>
   </moduleGroups>
 </configuration>

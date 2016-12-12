@@ -351,8 +351,8 @@
       <allowedUniverseLevel id="12" name="category"/>
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
-      <allowedUniverseLevel id="29" name="program_type"/>
-      <allowedUniverseLevel id="30" name="program"/>
+      <allowedUniverseLevel id="24" name="program_type"/>
+      <allowedUniverseLevel id="23" name="program"/>
       <allowedUniverseLevel id="31" name="form_sponsorship"/>
     </allowedUniverseLevels>
     <!--Allowed column broken down-->

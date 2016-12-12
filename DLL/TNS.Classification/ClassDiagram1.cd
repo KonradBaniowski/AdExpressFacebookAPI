@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TNS.Classification.DataAccess.UniverseBranchesDataAccess">
+    <Position X="3" Y="10.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>DataAccess\UniverseBranchesDataAccess.cs</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.DataAccess.UniverseLevelsCustomStylesDataAccess">
+    <Position X="5.75" Y="11.25" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>DataAccess\UniverseLevelsCustomStylesDataAccess.cs</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.DataAccess.UniverseLevelsDataAccess">
+    <Position X="0.75" Y="13.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>DataAccess\UniverseLevelsDataAccess.cs</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Universe.CapacityException" Collapsed="true">
+    <Position X="3.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Exceptions\CapacityException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Universe.TNSClassificationLevels">
+    <Position X="0.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Universe\Constantes.cs</FileName>
+      <HashCode>AAAIAkAIAABAAAAAAEAAABABAAAACAAEAAAACQCgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Universe.NomenclatureElementsGroup">
+    <Position X="5.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Universe\NomenclatureElementsGroup.cs</FileName>
+      <HashCode>AAAAAAgAEEAAgihAABBABAQQgAAAAMAAAAAAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_accessType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.Classification.Universe.SecurityException" Collapsed="true">
+    <Position X="3.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\SecurityException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Universe.Universe">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\Universe.cs</FileName>
+      <HashCode>AAAACAIAEGAAgCAAMBBABAQBAAAgCAAEDCAAAAAQQAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_dimension" />
+      <Field Name="_security" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_elementsGroupDictionary" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TNS.Classification.Universe.UniverseBranch">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\UniverseBranch.cs</FileName>
+      <HashCode>IAAAAAAAAAAAgAEAAABAAAAAAAAAAAABAAAAAIAQAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_levels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TNS.Classification.Universe.UniverseBranches">
+    <Position X="7" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\UniverseBranches.cs</FileName>
+      <HashCode>AIAEAAAAAAAAAABACAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_branches" />
+    </ShowAsCollectionAssociation>
+    <AssociationLine Name="_branches" Type="TNS.Classification.Universe.UniverseBranch" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="9.787" />
+        <Point X="6.76" Y="9.787" />
+        <Point X="6.76" Y="8.159" />
+        <Point X="6.5" Y="8.159" />
+      </Path>
+    </AssociationLine>
+  </Class>
+  <Class Name="TNS.Classification.Universe.UniverseLevel">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\UniverseLevel.cs</FileName>
+      <HashCode>AAAACAAAAAAAgAEAAABAAAAAAIAAAAAAAAAAAYAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Universe.UniverseLevels">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\UniverseLevels.cs</FileName>
+      <HashCode>IAAEAAAAAAAAAABACAAAAAAAAAAAAAQAAAAAAAAAAAI=</HashCode>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_levels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TNS.Classification.Universe.UniverseLevelsCustomStyles">
+    <Position X="0.5" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Universe\UniverseLevelsCustomStyles.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAABACBAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Exceptions.UniverseBranchesDataAccessException">
+    <Position X="6" Y="12.5" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\UniverseBranchesDataAccessException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Classification.Exceptions.UniverseLevelsDataAccessException">
+    <Position X="3" Y="12.5" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\UniverseLevelsDataAccessException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TNS.Classification.Universe.AccessType">
+    <Position X="6" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\Constantes.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Classification.Universe.Dimension">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\Constantes.cs</FileName>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Classification.Universe.Security">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Universe\Constantes.cs</FileName>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

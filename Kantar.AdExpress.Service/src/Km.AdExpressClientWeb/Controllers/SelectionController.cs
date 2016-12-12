@@ -382,6 +382,15 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
+        public ActionResult HealthMediaSelection()
+        {
+            JsonResult jsonModel = new JsonResult();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            return jsonModel;
+        }
+
         public ActionResult PeriodSelection()
         {
             var cla = new ClaimsPrincipal(User.Identity);
