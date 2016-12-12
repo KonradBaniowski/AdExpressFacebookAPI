@@ -88,6 +88,7 @@
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\AdExpressResponse.cs" />
     <Compile Include="Domain\Alert.cs" />
+    <Compile Include="Domain\ClientInformation.cs" />
     <Compile Include="Domain\CreativeMediaScheduleRequest.cs" />
     <Compile Include="Domain\Creative\VehicleCover.cs" />
     <Compile Include="Domain\Creative\VehiclePage.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Domain\Mau\ModuleAssignment.cs" />
     <Compile Include="Domain\Mau\RightAssignment.cs" />
     <Compile Include="BusinessService\IRightService.cs" />
+    <Compile Include="Domain\MediaHealthRequest.cs" />
+    <Compile Include="Domain\MediaHealthResponse.cs" />
     <Compile Include="Domain\MSCreative.cs" />
     <Compile Include="Domain\MSCreatives.cs" />
     <Compile Include="Domain\Period.cs" />

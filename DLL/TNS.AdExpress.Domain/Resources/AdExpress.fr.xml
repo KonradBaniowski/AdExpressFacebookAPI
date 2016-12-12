@@ -2374,5 +2374,10 @@
     <item mnemonic="w3106" type="System.String">Univers Emissions/Formes de Parrainage</item>
     <!--End-->
     
+    <!--Kantar Health-->
+    <item mnemonic="w3107" type="System.String">Health</item>
+    <item mnemonic="w3108" type="System.String">Description Kantar Health</item>
+    <!--End-->
+    
   </items>
 </localization>
