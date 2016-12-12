@@ -233,6 +233,7 @@
     <Compile Include="Controllers\SocialMediaExportController.cs" />
     <Compile Include="Helpers\JsonWebApiClient.cs" />
     <Compile Include="Helpers\PageHelper.cs" />
+    <Compile Include="Helpers\SecurityHelper.cs" />
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
@@ -1750,6 +1751,8 @@
     <Content Include="Views\Selection\SponsorshipMediaSelection.cshtml" />
     <Content Include="Views\ProgramAnalysis\Results.cshtml" />
     <Content Include="Views\ProgramAnalysis\_ResultOptions.cshtml" />
+    <Content Include="Views\CreativeMediaSchedule\Index.cshtml" />
+    <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

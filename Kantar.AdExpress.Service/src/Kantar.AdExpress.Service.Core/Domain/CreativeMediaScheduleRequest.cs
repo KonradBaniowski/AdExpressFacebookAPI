@@ -8,6 +8,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
 {
   public  class CreativeMediaScheduleRequest
     {
+        public string IdWebSession { get; set; }
         public int SiteLanguage { get; set; }
 
         public string MediaTypeIds { get; set; }

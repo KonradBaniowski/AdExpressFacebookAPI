@@ -53,6 +53,11 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// <returns></returns>
         GridResult GetGridResult();
         /// <summary>
+        /// Get Data for Ignite UI Grid (Creative Media Schedule)
+        /// </summary>
+        /// <returns></returns>
+        GridResult GetCreativeMSGridResult();
+        /// <summary>
         /// Get HTML code for the media schedule dedicated to Creative Division
 		/// </summary>
 		/// <returns>HTML Code</returns>
