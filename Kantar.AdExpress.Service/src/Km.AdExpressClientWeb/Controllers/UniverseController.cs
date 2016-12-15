@@ -11,6 +11,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.Classification.Universe;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
+using WebCst = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -136,7 +137,7 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var data = _universeService.GetUserUniversGroups(webSessionId, dimension, this.HttpContext);
+            var data = _universeService.GetUnivers(webSessionId, WebCst.Universe.ALL_BRANCHES, string.Empty, this.HttpContext);
             SaveUserUniversViewModel model = new SaveUserUniversViewModel
             {
                 Title = GestionWeb.GetWebWord(LanguageConstantes.SaveUniversCode, data.SiteLanguage),
