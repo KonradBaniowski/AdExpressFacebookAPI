@@ -2764,9 +2764,12 @@ namespace TNS.AdExpress.Constantes.Web
 			/// <summary>
 			/// Chargement de l'univers
 			/// </summary>
-			loadUniverse=1		
+			loadUniverse=1	
 		}
-	}
+
+        public const string ALL_BRANCHES = "1,2,33";
+
+    }
 	#endregion
 
 	#region Univers d'étude média d'AdExpress

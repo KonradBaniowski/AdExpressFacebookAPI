@@ -645,6 +645,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     branch = Branch.type.productSocial.GetHashCode().ToString();
                     result.CanSetDefaultUniverse = true;
                 }
+
                 userUniversList = GetUniverses(dimension, webSession, idGroup);
                 if (userUniversList.Any())
                 {
@@ -838,6 +839,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 Labels = LoadPageLabels(webSession.SiteLanguage),
                 SiteLanguage = webSession.SiteLanguage
             };
+            
+            if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
+            {
+                branch = Branch.type.productSocial.GetHashCode().ToString();
+                result.CanSetDefaultUniverse = true;
+            }
+
             List<UserUnivers> userUniversList = new List<UserUnivers>();
             #endregion
             try

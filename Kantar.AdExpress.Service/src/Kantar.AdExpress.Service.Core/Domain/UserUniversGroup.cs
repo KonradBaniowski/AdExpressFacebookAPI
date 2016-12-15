@@ -72,6 +72,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public UniversType UniversType { get; set; }
         public int SiteLanguage { get; set; }
         public Labels Labels { get; set; }
+        public bool CanSetDefaultUniverse { get; set; }
     }
 
     public class SearchItemsCriteria
