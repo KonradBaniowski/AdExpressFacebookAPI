@@ -70,5 +70,31 @@ namespace KM.AdExpress.Framework.MediaSelection
             }
             return icon;
         }
+
+        public static string GetHealthIcon(long id)
+        {
+            var icon = string.Empty;
+            switch (id)
+            {
+                case 1 :
+                    icon = "icon-user";
+                    break;
+                case 2 :              
+                    icon = "iconkantar-news12";
+                    break;
+                case 3 :
+                    icon = "iconkantar-planetary2";
+                    break;                
+                case 4 :
+                    icon = "icon-people";
+                    break;
+                case 5 :                   
+                    icon = "icon-chemistry";
+                    break;
+                
+
+            }
+            return icon;
+        }
     }
 }

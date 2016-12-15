@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
-    public class MediaHealthResponse
+    public class HealthMediaResponse
     {
-        public MediaHealthResponse(int siteLanguage, long currentModule)
+        public HealthMediaResponse(int siteLanguage)
         {
-            Media = new List<Core.Domain.Media>();
+            Medias = new List<Core.Domain.Media>();
             MediaCommon = new List<int>();
             MultipleSelection = true;
+            SiteLanguage = siteLanguage;
+            CanRefineMediaSupport = true;
         }
-        public MediaHealthResponse()
+        public HealthMediaResponse()
         {
-            Media = new List<Core.Domain.Media>();
+            Medias = new List<Core.Domain.Media>();
             MediaCommon = new List<int>();
         }
-      
-        public List<Media> Media { get; set; }
+
+        public List<Media> Medias { get; set; }
         public List<int> MediaCommon { get; set; }
         public bool MultipleSelection { get; set; }
         public ControllerDetails ControllerDetails { get; set; }
         public string ErrorMessage { get; set; }
+        public int SiteLanguage { get; set; }
+        public bool Success { get; set; }
+
+        public bool CanRefineMediaSupport { get; set; }
     }
 }

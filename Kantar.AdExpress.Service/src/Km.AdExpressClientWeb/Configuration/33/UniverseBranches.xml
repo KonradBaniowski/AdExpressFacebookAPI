@@ -73,8 +73,8 @@
     <level id="8" name ="brand"/>
   </branch>
   <branch id="23" name="program" labelId="2051">
-    <level id="29" name ="program_type"/>
-    <level id="30" name ="program"/>
+    <level id="24" name ="program_type"/>
+    <level id="23" name ="program"/>
   </branch>
   <branch id="24" name="form_sponsorship" labelId="2121">
     <level id="31" name ="form_sponsorship"/>
@@ -82,5 +82,8 @@
   <branch id="25"  name="category" labelId="1382">
     <level id="12" name="category"/>
     <level id="14" name="media"/>
+  </branch>
+  <branch id="26"  name="medecin" labelId="1991">
+    <level id="30" name="medecin"/>
   </branch>
 </universeBranches>

@@ -288,6 +288,9 @@ function NextStep(nextUrl, dis) {
 
     if (moduleId == 1781)
         validationUrl = '/Selection/SaveSponsorshipMediaSelection';
+    if (moduleId == 17794)
+        validationUrl = '/Selection/SaveHealthMediaSelection';
+    
 
     $.ajax({
         url: validationUrl,

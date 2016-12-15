@@ -1260,8 +1260,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     schema = WebApplicationParameters.DataBaseDescription.
                     GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.recap01).Label;
                     break;
-                default:
-                    break;
+                case WebConstantes.Module.Name.HEALTH:
+                    schema = WebApplicationParameters.DataBaseDescription.
+                    GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.khealth01).Label;
+                    break;             
             }
             return schema;
         }

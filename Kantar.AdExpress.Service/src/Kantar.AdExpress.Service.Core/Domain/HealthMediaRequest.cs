@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.Domain
 {
-    public class MediaHealthRequest
+    public class HealthMediaRequest
     {
         public string IdSession { get; set; }
+
+        public ClientInformation ClientInformation { get; set; }
+        
     }
 }

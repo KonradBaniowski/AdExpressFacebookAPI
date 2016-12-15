@@ -326,7 +326,8 @@ namespace TNS.AdExpressI.Classification.DAL
             sql.AppendFormat(" select distinct wp.id_{0} as id_item, wp.{0} as item ", classificationLevelLabel);
 
             /*FROM clause : Obtains the targets tables of the query according to the web site data language*/
-            if (_session.CurrentModule== WebConstantes.Module.Name.FACEBOOK)
+            if (_session.CurrentModule== WebConstantes.Module.Name.FACEBOOK
+                || _session.CurrentModule == WebConstantes.Module.Name.HEALTH)
                 sql.AppendFormat(" from {0} wp", oView.Sql);
             else
             sql.AppendFormat(" from {0}{1} wp", oView.Sql, _session.DataLanguage.ToString());
@@ -690,11 +691,15 @@ namespace TNS.AdExpressI.Classification.DAL
                     return GetMediaAgencyClassificationBrand(dimension);
                 case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                     return GetClassificationProgram(dimension);
+                case WebConstantes.Module.Name.HEALTH:
+                    return GetHealthClassification(dimension);
                 default:
                     return GetDefaultClassificationBrand(dimension);
             }
 
         }
+
+     
         #endregion
 
 
@@ -733,7 +738,8 @@ namespace TNS.AdExpressI.Classification.DAL
         {
             if (useView)
 
-            { if (_session.CurrentModule != WebConstantes.Module.Name.FACEBOOK)
+            { if (_session.CurrentModule != WebConstantes.Module.Name.FACEBOOK
+                    && _session.CurrentModule != WebConstantes.Module.Name.HEALTH)
                     sql.AppendFormat(" from {0}{1} wp ", oView.Sql, _session.DataLanguage.ToString());
             else
                     sql.AppendFormat(" from {0} wp ", oView.Sql);
@@ -788,8 +794,11 @@ namespace TNS.AdExpressI.Classification.DAL
             else {
                 /*If the query is executed only on a classification table (ex. table adexpr03.Sector), only valid data (activation code equal to zero)
                  * must returned and for a specific language (ex. id_language 33 for French) */
-                sql.AppendFormat(" and wp.activation<{0}", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-                sql.AppendFormat(" and wp.id_language = {0}", _session.DataLanguage);
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.HEALTH)
+                {
+                    sql.AppendFormat(" and wp.activation<{0}", TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                    sql.AppendFormat(" and wp.id_language = {0}", _session.DataLanguage);
+                }
             }
         }
 
@@ -912,6 +921,20 @@ namespace TNS.AdExpressI.Classification.DAL
                 default:
                     throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
             }
+        }
+
+        private View GetHealthClassification(Dimension dimension)
+        {
+            switch (dimension)
+            {
+                case Dimension.product:
+                    throw new NotImplementedException();
+                case Dimension.media:
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.target);              
+                default:
+                    throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
+            }
+          
         }
         #endregion
 

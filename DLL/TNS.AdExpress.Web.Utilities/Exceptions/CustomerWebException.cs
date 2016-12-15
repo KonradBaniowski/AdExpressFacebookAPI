@@ -70,6 +70,34 @@ namespace TNS.AdExpress.Web.Utilities.Exceptions
         protected string platform;
         #endregion
 
+        public string Platform { get; set; }
+
+        public string UserHostAddress { get; set; }
+        public string Os { get; set; }
+        public string UserAgent { get; set; }
+        public double MinorVersionBrowser { get; set; }
+        public string VersionBrowser { get; set; }
+        public string Browser { get; set; }
+        public string Url { get; set; }
+        public string ServerName { get; set; }
+
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="page">Page Web qui lance l'erreur</param>
+        /// <param name="message">Message d'erreur</param>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="stackTrace">stackTrace</param>
+        public CustomerWebException( WebSession webSession, Exception innerException)
+            : base(innerException.Message)
+        {
+            this.webSession = webSession;                  
+            this.stackTrace = innerException.StackTrace;
+        }
+
+
+
+
         #region Constructeur
         /// <summary>
         /// Constructeur de base

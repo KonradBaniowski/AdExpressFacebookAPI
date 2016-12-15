@@ -6,8 +6,10 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
-namespace TNS.AdExpressI.Classification.DAL.Default {
+namespace TNS.AdExpressI.Classification.DAL.Default
+{
 
     /// <summary>
     /// This class provides all the SQL queries to search or select items of the product or vehicle
@@ -29,24 +31,27 @@ namespace TNS.AdExpressI.Classification.DAL.Default {
     /// </exception>
     /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
     /// execution or building of the query to search classification items</exception>
-	public class ClassificationDAL : TNS.AdExpressI.Classification.DAL.ClassificationDAL {
-		#region Constructors
+	public class ClassificationDAL : TNS.AdExpressI.Classification.DAL.ClassificationDAL
+    {
+        #region Constructors
         /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>	
-		public ClassificationDAL(WebSession session)
-			: base(session) {
-		}
-		/// <summary>
+        public ClassificationDAL(WebSession session)
+            : base(session)
+        {
+        }
+        /// <summary>
         /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
         /// <param name="dimension">Product or vehicle classification brand</param>
-		public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
-			: base(session,dimension) {
-		}
+        public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension)
+            : base(session, dimension)
+        {
+        }
 
         /// <summary>
         /// Default Constructor
@@ -55,7 +60,7 @@ namespace TNS.AdExpressI.Classification.DAL.Default {
         /// <param name="dimension">Product or vehicle classification brand</param>
         public ClassificationDAL(WebSession session, TNS.Classification.Universe.Dimension dimension, string vehicleList)
             : base(session, dimension, vehicleList)
-        {            
+        {
         }
         /// <summary>
         /// Default Constructor
@@ -66,10 +71,23 @@ namespace TNS.AdExpressI.Classification.DAL.Default {
         public ClassificationDAL(WebSession session, GenericDetailLevel genericDetailLevel, string vehicleList)
             : base(session, genericDetailLevel, vehicleList)
         {
-			
-		}
-		#endregion
 
-     
-	}
+        }
+
+
+        #endregion
+
+
+        public override DataSet GetHealthMediaType()
+        {
+            var mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.canal);
+            StringBuilder sql = new StringBuilder();
+
+            sql.AppendFormat(" Select distinct {0}.id_canal,{0}.canal from {1} "
+                , mediaTable.Prefix, mediaTable.SqlWithPrefix);
+
+            return _dataSource.Fill(sql.ToString());
+
+        }
+    }
 }

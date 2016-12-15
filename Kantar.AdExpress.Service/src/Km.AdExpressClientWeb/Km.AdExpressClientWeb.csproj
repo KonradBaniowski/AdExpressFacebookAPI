@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CampaignAnalysisController.cs" />
     <Compile Include="Controllers\CompaignAnalysisExportController.cs" />
     <Compile Include="Controllers\CreativeMediaScheduleController.cs" />
+    <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\NewCreativesExportController.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
+    <Compile Include="Models\Health\HealthMediaSelectionViewModel.cs" />
     <Compile Include="Models\HomeNumbersViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
     <Compile Include="Controllers\MediaScheduleController.cs" />
@@ -1753,6 +1755,7 @@
     <Content Include="Views\ProgramAnalysis\_ResultOptions.cshtml" />
     <Content Include="Views\CreativeMediaSchedule\Index.cshtml" />
     <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
+    <Content Include="Views\Selection\HealthMediaSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1762,9 +1765,9 @@
     <Folder Include="Models\PresentAbsent\" />
     <Folder Include="Views\AdvertisingAgencyExport\" />
     <Folder Include="Views\AnalyseSectoExport\" />
-    <Folder Include="Views\CreativeMediaSchedule\" />
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
+    <Folder Include="Views\Health\" />
     <Folder Include="Views\Image\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\ProgramAnalysisExport\" />

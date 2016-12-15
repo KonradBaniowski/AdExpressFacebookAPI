@@ -60,6 +60,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public Security Security { get; set; }
         public bool MediaSupportRequired { get; set; }
         public string NextStep { get; set; }
+        public ClientInformation ClientInformation { get; set; }
     }
 
     public class SaveMarketSelectionRequest
