@@ -860,10 +860,9 @@ namespace TNS.AdExpressI.Classification.DAL
 
         }
 
-
-
-
-
+        public abstract DataSet GetHealthMediaType();
+      
+        
         #endregion
     }
 }

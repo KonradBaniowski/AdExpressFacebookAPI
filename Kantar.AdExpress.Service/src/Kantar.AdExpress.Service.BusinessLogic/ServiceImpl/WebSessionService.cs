@@ -54,6 +54,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private const string FACEBOOK = "SocialMedia";
         private const string ANALYSE_DES_DISPOSITIFS = "CampaignAnalysis";
         private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
+        private const string HEALTH = "Health";
         private const int _nbMaxItemByLevel = 1000;
         private const int MediaRequiredCode = 1052;
         //TODO : A checker pour 100 ou 1000
@@ -289,7 +290,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                    
+
                     List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                     System.Windows.Forms.TreeNode tmpNode;
                     foreach (var item in request.MediaIds)
@@ -317,20 +318,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             //_webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
                         }
 
-                        //verification que l unite deja sélectionnée convient pour tous les medias
-                        //var vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess);
-
-                        //List<CstWeb.CustomerSessions.Unit> unitList = FctUtilities.Units.getUnitsFromVehicleSelection(vehicleSelection);
-                        //unitList = GetAllowedUnits(unitList, _currentModule.AllowedUnitEnumList);
-                        //if (unitList.Count == 0)
-                        //{
-                        //    response.ErrorMessage = GestionWeb.GetWebWord(2541, _webSession.SiteLanguage);
-
-                        //}
-                        //else
-                        //{
-                        //    success = true;
-                        //}
                         success = true;
                     }
 
@@ -386,6 +373,76 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
+        public WebSessionResponse SaveHealthMediaSelection(SaveMediaSelectionRequest request)
+        {
+            var _webSession = (WebSession)WebSession.Load(request.WebSessionId);
+            WebSessionResponse response = new WebSessionResponse
+            {
+                StudyStep = StudyStep.Media,
+                ControllerDetails = GetCurrentControllerDetails(_webSession.CurrentModule, request.NextStep),
+                Success = false
+            };
+
+            try
+            {
+                WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+
+                List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
+                System.Windows.Forms.TreeNode tmpNode;
+
+                request.MediaIds.ForEach(item =>
+               {
+                   tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
+                   tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
+                   tmpNode.Checked = true;
+                   levelsSelected.Add(tmpNode);
+               });
+
+                if (levelsSelected.Count == 0)
+                {
+                    response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
+                }
+                else
+                {
+                    // Sauvegarde de la sélection dans la session
+                    //Si la sélection comporte des éléments, on la vide
+                    _webSession.SelectionUniversMedia.Nodes.Clear();
+
+                    foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                    {
+                        _webSession.SelectionUniversMedia.Nodes.Add(node);
+                        // Tracking
+                       // _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
+                    }
+                    response.Success = true;
+                }
+
+                #region Save Media support if any
+                if (request.Trees.Any())
+                {
+                    response.Success =  SetDefaultUnivers(request, _webSession, response);
+                }
+                #endregion
+
+                #region Save WebSession
+                if (response.Success)
+                {
+                    _webSession.Save();
+                    _webSession.Source.Close();
+                    response.Success = true;
+                }
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                SetLog(request, _webSession, ex);
+                throw;
+            }
+
+           return response;
+        }
+
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
         {
             WebSessionResponse response = new WebSessionResponse
@@ -411,7 +468,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     #endregion
 
                     #region try catch block
-                    if(maxSizeErr)
+                    if (maxSizeErr)
                     {
                         try
                         {
@@ -733,7 +790,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
-
                 throw;
             }
         }
@@ -1215,6 +1271,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? PROGRAM_ANALYSIS : SELECTION;
                     currentModuleIcon = "icon-puzzle";
                     break;
+                case CstWeb.Module.Name.HEALTH:
+                    currentModuleCode = CstWeb.LanguageConstantes.Health;
+                    currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? HEALTH : SELECTION;
+                    currentModuleIcon = "icon-chart";
+                    break;
                 default:
                     break;
             }
@@ -1453,6 +1514,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<long> ids = levels.SelectMany(p => p.UniversItems.Select(x => x.Id))
                                         .ToList();
             return ids;
+        }
+
+        private static void SetLog(SaveMediaSelectionRequest request, WebSession webSession, Exception ex)
+        {
+            CustomerWebException cwe = new CustomerWebException(webSession, ex);
+            cwe.Browser = request.ClientInformation.Browser;
+            cwe.VersionBrowser = request.ClientInformation.BrowserVersion;
+            cwe.MinorVersionBrowser = request.ClientInformation.BrowserMinorVersion;
+            cwe.Platform = request.ClientInformation.BrowserPlatform;
+            cwe.UserAgent = request.ClientInformation.UserAgent;
+            cwe.UserHostAddress = request.ClientInformation.UserHostAddress;
+            cwe.Url = request.ClientInformation.Url.ToString();
+            cwe.ServerName = request.ClientInformation.ServerMachineName;
+            Logger.Log(LogLevel.Error, cwe.GetLog());
         }
         #endregion
     }

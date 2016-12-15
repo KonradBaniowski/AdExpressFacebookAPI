@@ -247,6 +247,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectAllVehicles = 1066;
         public const long SponsorshipMedias = 2933;
         public const long SponsorshipWorkingSet = 3106;
+        public const long Health = 3107;
         #endregion
     }
 }

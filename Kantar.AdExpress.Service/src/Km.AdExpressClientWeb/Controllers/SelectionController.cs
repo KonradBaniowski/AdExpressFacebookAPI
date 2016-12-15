@@ -232,6 +232,128 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
+        public ActionResult HealthMediaSelection()
+        {
+            JsonResult jsonModel = new JsonResult();
+            var claim = new ClaimsPrincipal(User.Identity);
+            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            var request = new Kantar.AdExpress.Service.Core.Domain.HealthMediaRequest();
+
+            request.IdSession = webSessionId;
+
+            Kantar.AdExpress.Service.Core.Domain.ClientInformation clientInformation = new Kantar.AdExpress.Service.Core.Domain.ClientInformation();
+            request.ClientInformation = clientInformation;
+            var result = _mediaService.GetHealthMedia(webSessionId, request);
+
+            if (result.Success)
+            {
+                #region model data
+                var model = new Km.AdExpressClientWeb.Models.Health.HealthMediaSelectionViewModel()
+                {
+                    Multiple = result.MultipleSelection,
+                    Medias = result.Medias,
+                    IdMediasCommon = result.MediaCommon,
+                    Branches = new List<Models.Shared.UniversBranch>(),
+                    Trees = new List<Models.Shared.Tree>(),
+                    Dimension = Dimension.media,
+                    UniversGroups = new UserUniversGroupsModel(),
+                    CanRefineMediaSupport = true
+                };
+                model.UniversGroups = new UserUniversGroupsModel
+                {
+                    ShowUserSavedGroups = true,
+                    UserUniversGroups = new List<UserUniversGroup>(),
+                    UserUniversCode = LanguageConstantes.UserUniversCode,
+                    SiteLanguage = result.SiteLanguage
+                };
+                var helper = new Helpers.PageHelper();
+                model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
+                foreach (var e in model.Medias)
+                {
+                    //e.icon = IconSelector.getIcon(e.MediaEnum);
+                    e.icon = IconSelector.GetHealthIcon(e.Id);
+                }
+                model.Medias = model.Medias.OrderBy(p => p.Disabled).ToList();
+                ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);
+                ViewBag.SiteLanguage = result.SiteLanguage;
+                var mediaNode = new NavigationNode { Position = 2 };
+                var navigationHelper = new Helpers.PageHelper();
+                model.NavigationBar = navigationHelper.LoadNavBar(webSessionId, result.ControllerDetails.Name, result.SiteLanguage, 2);
+                model.ErrorMessage = new Models.Shared.ErrorMessage
+                {
+                    EmptySelection = GestionWeb.GetWebWord(1052, result.SiteLanguage),
+                    SearchErrorMessage = GestionWeb.GetWebWord(3011, result.SiteLanguage),
+                    SocialErrorMessage = GestionWeb.GetWebWord(3030, result.SiteLanguage),
+                    UnitErrorMessage = GestionWeb.GetWebWord(2541, result.SiteLanguage)
+                };
+
+                model.Labels = LabelsHelper.LoadPageLabels(result.SiteLanguage);
+                model.CanRefineMediaSupport = result.CanRefineMediaSupport;
+                if (result.CanRefineMediaSupport)
+                {
+                    var response = _universeService.GetBranches(webSessionId, TNS.Classification.Universe.Dimension.media, this.HttpContext, true);
+                    model.CurrentModule = response.ControllerDetails.ModuleId;
+                    model.Branches = Mapper.Map<List<UniversBranch>>(response.Branches);
+                    foreach (var item in response.Trees)
+                    {
+                        Models.Shared.Tree tree = new Models.Shared.Tree
+                        {
+                            Id = item.Id,
+                            LabelId = item.LabelId,
+                            AccessType = item.AccessType,
+                            UniversLevels = Mapper.Map<List<Models.Shared.UniversLevel>>(item.UniversLevels)
+                        };
+                        tree.Label = (tree.AccessType == TNS.Classification.Universe.AccessType.includes) ? model.Labels.IncludedElements : model.Labels.ExcludedElements;
+                        model.Trees.Add(tree);
+                    }
+                }
+                #endregion
+                return View(model);
+            }
+            else
+            {
+                return View("Error");
+            }
+
+
+        }
+
+        public JsonResult SaveHealthMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
+        {
+            string url = string.Empty;
+            var response = new Domain.WebSessionResponse();
+            var errorMsg = String.Empty;
+            JsonResult jsonModel = new JsonResult();
+            if (selectedMedia != null)
+            {
+                List<Domain.Tree> trees = (mediaSupport != null) ? mediaSupport : new List<Domain.Tree>();
+                trees = trees.Where(p => p.UniversLevels.Where(x => x.UniversItems != null).Any()).ToList();
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                Domain.SaveMediaSelectionRequest request = new Domain.SaveMediaSelectionRequest(selectedMedia, idWebSession, trees, Dimension.media, Security.full, false, nextStep);
+               
+                request.ClientInformation = PageHelper.GetClientInformation(this.HttpContext);
+                response = _webSessionService.SaveHealthMediaSelection(request);
+                UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
+
+                if (response.Success)
+                {
+                    string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
+                    var controller = response.ControllerDetails.Name;
+                    url = context.Action(nextStep, controller);
+                    jsonModel = Json(new { RedirectUrl = url, ErrorMessage = errorMsg });
+                }
+                else
+                {
+                    jsonModel = Json(new { response.ErrorMessage });
+                }
+            }
+           
+            return jsonModel;
+        }
+
+
+
         public JsonResult SaveMediaSelection(List<long> selectedMedia, List<Domain.Tree> mediaSupport, string nextStep)
         {
             string url = string.Empty;
@@ -382,14 +504,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public ActionResult HealthMediaSelection()
-        {
-            JsonResult jsonModel = new JsonResult();
-            var claim = new ClaimsPrincipal(User.Identity);
-            string webSessionId = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-            return jsonModel;
-        }
 
         public ActionResult PeriodSelection()
         {
@@ -423,7 +538,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         now = now.AddMonths(1);
                         result.EndYear += 1;
                     }
-                        
+
                     periodModel.EndYear = string.Format("{0}-{1}-{2}", result.EndYear, now.ToString("MM"), DateTime.DaysInMonth(now.Year, now.Month));
                 }
                 switch (result.ControllerDetails.ModuleId)
@@ -440,6 +555,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     case Module.Name.INDICATEUR:
                     case Module.Name.TABLEAU_DYNAMIQUE:
                     case Module.Name.FACEBOOK:
+                    case Module.Name.HEALTH:
                         periodModel.CalendarFormat = CalendarFormatMonths;
                         result.ControllerDetails.Name = SELECTION;
                         break;
@@ -527,7 +643,7 @@ namespace Km.AdExpressClientWeb.Controllers
             var response = _periodService.SlidingDateValidation(request, this.HttpContext);
             this._controller = response.ControllerDetails.Name;
 
-            if(response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
+            if (response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
                 nextStep = SPONSORSHIPMEDIA;
 
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
@@ -544,6 +660,6 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-
+      
     }
 }

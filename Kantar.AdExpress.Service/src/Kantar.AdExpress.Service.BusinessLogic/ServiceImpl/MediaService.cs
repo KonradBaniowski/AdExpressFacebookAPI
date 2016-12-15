@@ -76,6 +76,81 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        public HealthMediaResponse GetHealthMedia(string idWebSession, HealthMediaRequest healthMediaRequest)
+        {
+
+            var webSession = (WebSession)WebSession.Load(idWebSession);
+            var result = new HealthMediaResponse(webSession.SiteLanguage);
+           
+            try
+            {
+
+                result.ControllerDetails = GetCurrentControllerDetails(webSession.CurrentModule);
+                webSession.SelectionUniversMedia.Nodes.Clear();
+                webSession.PrincipalMediaUniverses.Clear();
+                webSession.Save();
+                webSession.SelectionUniversMedia.Nodes.Clear();
+                webSession.PrincipalMediaUniverses.Clear();
+
+                result.Medias = LoadHealthMedias(webSession);
+
+                result.MediaCommon = new List<int> { 1, 2, 3, 4, 5 }; //Set an enumerator
+               result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}"
+                    , idWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace
+                    , GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
+                result.ErrorMessage = message;
+
+                SetLog(healthMediaRequest, webSession, ex);
+                throw;
+            }
+            return result;
+        }
+
+        private static void SetLog(HealthMediaRequest healthMediaRequest, WebSession webSession, Exception ex)
+        {
+            CustomerWebException cwe = new CustomerWebException(webSession, ex);
+            cwe.Browser = healthMediaRequest.ClientInformation.Browser;
+            cwe.VersionBrowser = healthMediaRequest.ClientInformation.BrowserVersion;
+            cwe.MinorVersionBrowser = healthMediaRequest.ClientInformation.BrowserMinorVersion;
+            cwe.Platform = healthMediaRequest.ClientInformation.BrowserPlatform;
+            cwe.UserAgent = healthMediaRequest.ClientInformation.UserAgent;
+            cwe.UserHostAddress = healthMediaRequest.ClientInformation.UserHostAddress;
+            cwe.Url = healthMediaRequest.ClientInformation.Url;
+            cwe.ServerName = healthMediaRequest.ClientInformation.ServerMachineName;
+
+            Logger.Log(LogLevel.Error, cwe.GetLog());
+        }
+
+        private List<Core.Domain.Media> LoadHealthMedias(WebSession _webSession)
+        {
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[1];
+            param[0] = _webSession;
+            IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance
+                | BindingFlags.Public, null, param, null, null);
+            DataTable data = classficationDAL.GetHealthMediaType().Tables[0];
+
+            List<Core.Domain.Media> result = new List<Core.Domain.Media>();
+            foreach (var item in data.AsEnumerable())
+            {
+                int id = int.Parse(item.ItemArray[0].ToString());
+               
+                    Core.Domain.Media media = new Core.Domain.Media();
+                    media.Id = id;
+                    media.Label = item.ItemArray[1].ToString();
+                    //media.MediaEnum = VehiclesInformation.DatabaseIdToEnum(id);
+                    result.Add(media);                
+            }
+            return result;
+        }
+
         public SponsorshipMediaResponse GetSponsorshipMedia(string idWebSession, HttpContextBase httpContext)
         {
             var webSession = (WebSession)WebSession.Load(idWebSession);
@@ -231,6 +306,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     currentController = SELECTION;
                     currentModuleIcon = "icon-puzzle";
                     break;
+                case CstWeb.Module.Name.HEALTH:
+                    currentModuleCode = CstWeb.LanguageConstantes.Health;
+                    currentController = SELECTION;
+                    currentModuleIcon = "icon-chart";
+                    break;
                 default:
                     break;
             }
@@ -275,6 +355,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return mediaResponse;
         }
 
+      
         private SponsorshipMediaResponse GetSponsorshipMedias(WebSession webSession, SponsorshipMediaResponse sponsorshipMediaResponse)
         {
             IClassificationDAL classficationDAL = null;
@@ -395,5 +476,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             response.Media = vehiclesList;
             return response;
         }
+
+       
+
+
     }
 }

@@ -136,7 +136,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Rolex 
         /// </summary>
-        rolex03 = 12
+        rolex03 = 12,
+        /// <summary>
+        /// Kantar health 
+        /// </summary>
+        khealth01 = 13
     } 
     #endregion
 
@@ -1217,7 +1221,12 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Recap Social Segment
         /// </summary>
         recapSocialSegment = 268,
-      
+
+        /// <summary>
+        /// Recap Social Segment
+        /// </summary>
+        canal= 269,
+
 
         /// <summary>
         /// Alert description
@@ -1274,7 +1283,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Program (Genre d'emission)
         /// </summary>
-        allProgram = 8
+        allProgram = 8,
+        /// <summary>
+        /// Doctors
+        /// </summary>
+        target = 9
     }
     #endregion
 

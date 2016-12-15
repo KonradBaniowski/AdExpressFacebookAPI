@@ -32,6 +32,7 @@
     <schema enumId="10" description="Alert" label="mau01"/>
     <schema enumId="11" description="Promotion monitoring tables" label="promo03"/>
     <schema enumId="12" description="Rolex tables" label="rolex03"/>
+    <schema enumId="13" description="Kantar Health tables" label="khealth01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -303,6 +304,8 @@
     <table enumId="267" description="Recap Data: Social" schemaEnumId="4" label="recap_social" prefix="rcp"/>
     <table enumId="268" description="Recap Data: Social Segment" schemaEnumId="4" label="recap_social_segment" prefix="rcp"/>
 
+    <table enumId="269" description="Health : Canal" schemaEnumId="13" label="canal" prefix="cl"/>
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
@@ -318,6 +321,7 @@
     <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
     <view enumId="7" description="Classif: all product facebook" schemaEnumId="0" label="ALL_PRODUCT_FACEBOOK" prefix="allpfcb"/>
     <view enumId="8" description="Classif: all program" schemaEnumId="0" label="all_program_" prefix="allprg"/>
+    <view enumId="9" description="Classif: medecin" schemaEnumId="13" label="medecin" prefix="md"/>
   </views>
 </database>
 

@@ -60,6 +60,23 @@ namespace TNS.AdExpressI.Classification.DAL
         DataSet GetMediaType();
 
         /// <summary>
+        /// This method provides SQL queries to get the media classification level's items.
+        /// The data are filtered by customer's media rights and selected working set.		
+        /// </summary>
+        /// <returns>Data set 
+        /// with media's identifiers ("idMediaType" column) and media's labels ("mediaType" column).
+        /// </returns>
+        /// <example>
+        /// idMediaType     |       mediaType
+        /// 2               |       RADIO
+        /// 3               |       TV
+        /// </example>
+        /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
+        /// Impossible to execute query
+        /// </exception>
+        DataSet GetHealthMediaType();
+
+        /// <summary>
         /// Get the list of vehicles organised by Media genre or Sub media or Media Owner or Title...
         /// According to the vehicle classification levels choosen by the customer.
         /// See Vehicles.xml configuration file (MediaSelectionDetailLevel tag)

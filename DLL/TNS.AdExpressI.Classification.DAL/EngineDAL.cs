@@ -253,7 +253,8 @@ namespace TNS.AdExpressI.Classification.DAL
         {
             if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP
                 || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX
-                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES)
+                || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES
+                 || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.HEALTH) //TODO : remove when rights will be defined
             {
                 if (beginByAnd) return string.Empty;
                 else return " 1 = 1 ";

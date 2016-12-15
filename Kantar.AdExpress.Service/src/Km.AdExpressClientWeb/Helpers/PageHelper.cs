@@ -24,6 +24,7 @@ namespace Km.AdExpressClientWeb.Helpers
         public const string RESULTS = "Results";
         public const string MEDIASELECTION = "MediaSelection";
         public const string SPONSORSHIPMEDIASELECTION = "SponsorshipMediaSelection";
+        public const string HEALTH_MEDIA_SELECTION = "HealthMediaSelection";
         public const string PERIODSELECTION = "PeriodSelection";
         private const string SELECTION = "Selection";
         private const string PRESENTABSENT = "PresentAbsent";
@@ -36,6 +37,7 @@ namespace Km.AdExpressClientWeb.Helpers
         private const string ADVERTISING_AGENCY = "AdvertisingAgency";
         private const string CAMPAIGN_ANALYSIS = "CampaignAnalysis";
         private const string PROGRAM_ANALYSIS = "ProgramAnalysis";
+        private const string HEALTH = "Health";
         const int ExportFormattedResult = 1;
         const int ExportResultWithValue = 2;
         const int ExportGrossResult = 3;
@@ -95,6 +97,11 @@ namespace Km.AdExpressClientWeb.Helpers
                     resultController = PROGRAM_ANALYSIS;
                     controller = SELECTION;
                     mediaSelection = SPONSORSHIPMEDIASELECTION;
+                    break;
+                case Module.Name.HEALTH:
+                    resultController = HEALTH;
+                    controller = SELECTION;
+                    mediaSelection = HEALTH_MEDIA_SELECTION;
                     break;
             }
             //var ctr = (webSession.CurrentModule == Module.Name.ANALYSE_CONCURENTIELLE || webSession.CurrentModule == Module.Name.ALERTE_PORTEFEUILLE || webSession.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) ? controller : SELECTION;
@@ -457,6 +464,19 @@ namespace Km.AdExpressClientWeb.Helpers
             });
         }
 
+        public static Kantar.AdExpress.Service.Core.Domain.ClientInformation GetClientInformation( HttpContextBase httpContext)
+        {
+            var clientInformation = new Kantar.AdExpress.Service.Core.Domain.ClientInformation();
+            clientInformation.Browser = httpContext.Request.Browser.Browser;
+            clientInformation.BrowserVersion = httpContext.Request.Browser.Version;
+            clientInformation.BrowserMinorVersion = httpContext.Request.Browser.MinorVersion;
+            clientInformation.BrowserPlatform = httpContext.Request.Browser.Platform;
+            clientInformation.UserAgent = httpContext.Request.UserAgent;
+            clientInformation.UserHostAddress = httpContext.Request.UserHostAddress;
+            clientInformation.Url = httpContext.Request.Url.ToString();
+            clientInformation.ServerMachineName = httpContext.Server.MachineName;
+            return clientInformation;
+        }
     }
 
 }

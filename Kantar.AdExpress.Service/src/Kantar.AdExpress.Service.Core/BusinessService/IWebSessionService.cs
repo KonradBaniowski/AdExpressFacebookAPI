@@ -12,6 +12,8 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 
         WebSessionResponse SaveSponsorshipMediaSelection(SaveMediaSelectionRequest request, HttpContextBase httpContext);
 
+        WebSessionResponse SaveHealthMediaSelection(SaveMediaSelectionRequest request);
+
         WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext);
 
         void SaveCurrentModule(string webSessionId, int moduleId, HttpContextBase httpContext);
