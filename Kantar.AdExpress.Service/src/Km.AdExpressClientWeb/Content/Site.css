@@ -2912,3 +2912,71 @@ ul.ui-selectable {
     padding-right:15px !important;
 }*/
 
+
+
+
+/**PivotGrid Health**/
+#pivotGrid_table td[role="gridcell"]{
+    background-color:rgba(255,255,255,0.1);
+    border:1px solid rgba(0,0,0,0.1);
+    color:white;
+}
+.ui-igpivotdataselector{
+    background-color:rgba(255,255,255,0.1) !important;
+    border-right:1px solid black;
+}
+.ui-igpivot-filterdropdown.ui-widget.ui-widget-content{
+    background-color:#00c1ff !important;
+    border:none !important;
+}
+.ui-igpivot-metadatadropdown.ui-widget.ui-widget-content{
+    background-color:#00c1ff !important;
+    border:none !important;
+}
+.ui-igpivot-metadatadropdown ul li{
+    color:black;
+}
+.ui-igpivot-metadatadropdown ul li.ui-state-hover{
+    background-color:rgba(0,0,0,0.2);
+}
+.ui-igpivot-filtermembers{
+    color:white;
+}
+.ui-igpivot-droparea.ui-widget-content.ui-droppable{
+    border-color:white;
+}
+.ui-igpivotdataselector-metadata.ui-widget-content.ui-widget ui-igtree{
+    border-color:white;
+}
+/*.ui-igpivotdataselector .ui-igpivot-droparea .ui-igpivot-metadataitem{
+    background-color:#00c1ff;
+    color:black;
+    font-weight:bold;
+}*/
+.ui-igpivot-metadataitem.ui-widget.ui-corner-all.ui-state-default.ui-draggable.ui-draggable-handle{
+    background-color:#00c1ff;
+    color:black;
+    font-weight:bold;
+}
+.ui-igpivot-filterdropdown .ui-igtree-node a{
+    color:black;
+}
+.ui-igpivot-filterdropdown .ui-igtree-node a.ui-state-hover{
+    background-color:rgba(0,0,0,0.5);
+    border-color:white;
+    color:white;
+}
+.ui-igtree a{
+    color:white !important;
+}
+.ui-igtree a.ui-state-hover{
+    background-color:rgba(0,0,0,0.2) !important;
+    border-color:white !important;
+    color:white;
+}
+/***************************/
+
+
+
+
+

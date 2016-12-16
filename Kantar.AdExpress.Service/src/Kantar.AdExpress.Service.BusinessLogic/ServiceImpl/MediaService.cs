@@ -28,7 +28,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public class MediaService : IMediaService
     {
-        private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         private const string SELECTION = "Selection";
         private const string PORTFOLIO = "Portfolio";
         private const string LOSTWON = "LostWon";
@@ -81,7 +81,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             var webSession = (WebSession)WebSession.Load(idWebSession);
             var result = new HealthMediaResponse(webSession.SiteLanguage);
-           
+
             try
             {
 
@@ -95,7 +95,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.Medias = LoadHealthMedias(webSession);
 
                 result.MediaCommon = new List<int> { 1, 2, 3, 4, 5 }; //Set an enumerator
-               result.Success = true;
+                result.Success = true;
             }
             catch (Exception ex)
             {
@@ -141,12 +141,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             foreach (var item in data.AsEnumerable())
             {
                 int id = int.Parse(item.ItemArray[0].ToString());
-               
-                    Core.Domain.Media media = new Core.Domain.Media();
-                    media.Id = id;
-                    media.Label = item.ItemArray[1].ToString();
-                    //media.MediaEnum = VehiclesInformation.DatabaseIdToEnum(id);
-                    result.Add(media);                
+
+                Core.Domain.Media media = new Core.Domain.Media();
+                media.Id = id;
+                media.Label = item.ItemArray[1].ToString();
+                //media.MediaEnum = VehiclesInformation.DatabaseIdToEnum(id);
+                result.Add(media);
             }
             return result;
         }
@@ -188,7 +188,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var vehiclesInfos = VehiclesInformation.GetAll();
                 result = GetMyMedia(_webSession);
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
@@ -293,7 +293,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 case CstWeb.Module.Name.NEW_CREATIVES:
                     currentModuleCode = CstWeb.LanguageConstantes.NewCreatives;
-                    currentController =  SELECTION;
+                    currentController = SELECTION;
                     currentModuleIcon = "icon-camrecorder";
                     break;
                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
@@ -309,7 +309,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.HEALTH:
                     currentModuleCode = CstWeb.LanguageConstantes.Health;
                     currentController = SELECTION;
-                    currentModuleIcon = "icon-chart";
+                    currentModuleIcon = "icon-heart";
                     break;
                 default:
                     break;
@@ -355,7 +355,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return mediaResponse;
         }
 
-      
+
         private SponsorshipMediaResponse GetSponsorshipMedias(WebSession webSession, SponsorshipMediaResponse sponsorshipMediaResponse)
         {
             IClassificationDAL classficationDAL = null;
@@ -477,7 +477,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return response;
         }
 
-       
+
 
 
     }

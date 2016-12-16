@@ -391,12 +391,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 System.Windows.Forms.TreeNode tmpNode;
 
                 request.MediaIds.ForEach(item =>
-               {
-                   tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
-                   tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
-                   tmpNode.Checked = true;
-                   levelsSelected.Add(tmpNode);
-               });
+                {
+                    tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
+                    tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
+                    tmpNode.Checked = true;
+                    levelsSelected.Add(tmpNode);
+                });
 
                 if (levelsSelected.Count == 0)
                 {
@@ -412,7 +412,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         _webSession.SelectionUniversMedia.Nodes.Add(node);
                         // Tracking
-                       // _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
+                        // _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);
                     }
                     response.Success = true;
                 }
@@ -420,7 +420,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region Save Media support if any
                 if (request.Trees.Any())
                 {
-                    response.Success =  SetDefaultUnivers(request, _webSession, response);
+                    response.Success = SetDefaultUnivers(request, _webSession, response);
                 }
                 #endregion
 
@@ -440,7 +440,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 throw;
             }
 
-           return response;
+            return response;
         }
 
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
@@ -1274,7 +1274,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case CstWeb.Module.Name.HEALTH:
                     currentModuleCode = CstWeb.LanguageConstantes.Health;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? HEALTH : SELECTION;
-                    currentModuleIcon = "icon-chart";
+                    currentModuleIcon = "icon-heart";
                     break;
                 default:
                     break;

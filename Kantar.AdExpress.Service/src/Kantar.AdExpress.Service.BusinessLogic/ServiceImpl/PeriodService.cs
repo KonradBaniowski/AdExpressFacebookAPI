@@ -256,7 +256,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.HEALTH:
                     currentModuleCode = LanguageConstantes.Health;
                     currentController = (!string.IsNullOrEmpty(nextStep) && nextStep == RESULTS) ? HEALTH : SELECTION;
-                    currentModuleIcon = "icon-chart";
+                    currentModuleIcon = "icon-heart";
                     break;
                 default:
                     break;

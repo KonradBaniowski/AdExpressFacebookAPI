@@ -239,6 +239,7 @@
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
+    <Compile Include="Models\Health\DataCosts.cs" />
     <Compile Include="Models\Health\HealthMediaSelectionViewModel.cs" />
     <Compile Include="Models\HomeNumbersViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
@@ -1756,6 +1757,7 @@
     <Content Include="Views\CreativeMediaSchedule\Index.cshtml" />
     <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
     <Content Include="Views\Selection\HealthMediaSelection.cshtml" />
+    <Content Include="Views\Health\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1767,7 +1769,6 @@
     <Folder Include="Views\AnalyseSectoExport\" />
     <Folder Include="Views\ExportResult\" />
     <Folder Include="Views\Gad\" />
-    <Folder Include="Views\Health\" />
     <Folder Include="Views\Image\" />
     <Folder Include="Views\Pdf\" />
     <Folder Include="Views\ProgramAnalysisExport\" />

@@ -336,18 +336,19 @@ namespace Km.AdExpressClientWeb.Helpers
         {
             switch (module)
             {
-               
+
                 case Module.Name.FACEBOOK:
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:
                     return true;
                 default:
-                    return  false;                    
-            }          
+                    return false;
+            }
         }
 
         bool IsMarketSelectionDisabled(long module)
         {
             bool isDisabled = false; // (module == Module.Name.NEW_CREATIVES);
+            isDisabled = (module == Module.Name.HEALTH);
             return isDisabled;
         }
 
@@ -464,7 +465,7 @@ namespace Km.AdExpressClientWeb.Helpers
             });
         }
 
-        public static Kantar.AdExpress.Service.Core.Domain.ClientInformation GetClientInformation( HttpContextBase httpContext)
+        public static Kantar.AdExpress.Service.Core.Domain.ClientInformation GetClientInformation(HttpContextBase httpContext)
         {
             var clientInformation = new Kantar.AdExpress.Service.Core.Domain.ClientInformation();
             clientInformation.Browser = httpContext.Request.Browser.Browser;
