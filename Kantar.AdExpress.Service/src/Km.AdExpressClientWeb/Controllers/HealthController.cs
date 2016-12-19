@@ -158,10 +158,11 @@ namespace Km.AdExpressClientWeb.Controllers
 	                  and d.ID_CONDITIONNEMENT    =  cd.ID_CONDITIONNEMENT ");
 
             query.AppendFormat("and d.ID_CANAL in ({0}) and DATE_CANAL >= to_date({1},'YYYYMMDD') and DATE_CANAL <= to_date({2},'YYYYMMDD')  ", medias, beginDate + "01", endDate + "01");
-
-            string doctors = webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
-            query.Append(doctors);
-
+            if (webSession.PrincipalMediaUniverses != null && webSession.PrincipalMediaUniverses.Count > 0)
+            {
+                string doctors = webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+                query.Append(doctors);
+            }
             query.Append(@"group by  ca.ID_CANAL,CANAL, d.ID_CATEGORY , CATEGORY, me.ID_MEDECIN
 					            ,MEDECIN, gp.ID_GRP_PHARMA ,GRP_PHARMA,
                                   la.ID_LABORATOIRE,LABORATOIRE, po.ID_PRODUCT, PRODUCT ,DATE_CANAL,

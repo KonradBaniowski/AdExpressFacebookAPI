@@ -1585,6 +1585,7 @@
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <Content Include="Content\pdf\AdExpress_Version-Optimisee_FIN02.pdf" />
+    <None Include="Properties\PublishProfiles\AdExpress - Test.pubxml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\DEMO_FINLAND.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
