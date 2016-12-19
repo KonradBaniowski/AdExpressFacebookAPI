@@ -821,7 +821,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     endDateFormat = YYYYMM;
                     webSession.PeriodType = CstPeriodType.nLastMonth;
                     webSession.DetailPeriod = CstPeriodDetail.dayly;
-                    ManageAbsoluEndDate(webSession, result);
+                    //ManageAbsoluEndDate(webSession, result);
                     break;
                 case 8:// Current year
                     startDateFormat = YYYY01;
@@ -829,7 +829,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.PeriodType = CstPeriodType.currentYear;
                     webSession.PeriodLength = 1;
                     webSession.DetailPeriod = CstPeriodDetail.monthly;
-                    ManageAbsoluEndDate(webSession, result);
+                    //ManageAbsoluEndDate(webSession, result);
                     break;
                 case 4:// Previous year
                     startDateFormat = YYYY01;
