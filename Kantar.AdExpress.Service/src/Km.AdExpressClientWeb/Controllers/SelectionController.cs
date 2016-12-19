@@ -48,6 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string INDEX = "Index";
         private const int CALENDARSTUDYID = 8;
         private const int SLIDINGSTUDYID = 5;
+        private const string HEALTH_START_DATE = "2013-07-01";
 
         public SelectionController(IMediaService mediaService, IWebSessionService webSessionService, IUniverseService universeService, IPeriodService periodService)
         {
@@ -541,6 +542,11 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     periodModel.EndYear = string.Format("{0}-{1}-{2}", result.EndYear, now.ToString("MM"), DateTime.DaysInMonth(now.Year, now.Month));
                 }
+                else if(result.ControllerDetails.ModuleId == Module.Name.HEALTH)
+                {
+                    periodModel.StartYear = HEALTH_START_DATE;
+                }
+
                 switch (result.ControllerDetails.ModuleId)
                 {
                     case Module.Name.ANALYSE_PLAN_MEDIA:
