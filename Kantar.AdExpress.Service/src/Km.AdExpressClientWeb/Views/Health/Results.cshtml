@@ -195,40 +195,40 @@
                                                  ]
                                              },
                                             {
-                                                caption: "Media", name: "Canal", hierarchies: [{
-                                                    caption: "Media", name: "Canal", levels: [
-                                                        //{
-                                                        //    name: "TotalCanal", levelCaption: "Tous Medias", caption: "Tous Medias",
-                                                        //    memberProvider: function (item) { return "Tous Media"; }
-                                                        //},
+                                                caption: "Média", name: "Canal", hierarchies: [{
+                                                    caption: "Média", name: "Canal", levels: [
                                                         {
-                                                            name: "Canal", levelCaption: "Media", caption: "Media",
+                                                            name: "TotalCanal", levelCaption: "Tous Les Médias", caption: "Tous Les Médias",
+                                                            memberProvider: function (item) { return "Tous Les Médias"; }
+                                                        },
+                                                        {
+                                                            name: "Canal", levelCaption: "Média", caption: "Média",
                                                             memberProvider: function (item) { return item.Canal; }
                                                         }]
                                                 }]
                                             },
                                              {
-                                                 caption: "Categorie", name: "Category", hierarchies: [{
-                                                     caption: "Categorie", name: "Category", levels: [
-                                                         //{
-                                                         //    name: "TotalCategory", caption: "Toutes Categories",
-                                                         //    memberProvider: function (item) { return "Tous Canaux"; }
-                                                         //},
+                                                 caption: "Classe ATC", name: "Category", hierarchies: [{
+                                                     caption: "Classe ATC", name: "Category", levels: [
                                                          {
-                                                             name: "Categorie", caption: "Category",
+                                                             name: "TotalCategory", caption: "Toutes Les Classes ATC",
+                                                             memberProvider: function (item) { return "Toutes Les Classes ATC"; }
+                                                         },
+                                                         {
+                                                             name: "Categorie", caption: "Classe ATC",
                                                              memberProvider: function (item) { return item.Category; }
                                                          }]
                                                  }]
                                              },
                                              {
-                                                 caption: "Medecin", name: "Specialist", hierarchies: [{
-                                                     caption: "Categorie", name: "Specialist", levels: [
-                                                         //{
-                                                         //    name: "TotalSpecialist", caption: "Toutes Medecins",
-                                                         //    memberProvider: function (item) { return "Tous Medecins"; }
-                                                         //},
+                                                 caption: "Médecin", name: "Specialist", hierarchies: [{
+                                                     caption: "Médecin", name: "Specialist", levels: [
                                                          {
-                                                             name: "Specialist", caption: "Medecin",
+                                                             name: "TotalSpecialist", caption: "Tous Les Médecins",
+                                                             memberProvider: function (item) { return "Tous Les Médecins"; }
+                                                         },
+                                                         {
+                                                             name: "Specialist", caption: "Médecin",
                                                              memberProvider: function (item) { return item.Specialist; }
                                                          }]
                                                  }]
@@ -236,10 +236,10 @@
                                              {
                                                  caption: "Groupe", name: "GrpPharma", hierarchies: [{
                                                      caption: "Groupe", name: "GrpPharma", levels: [
-                                                         //{
-                                                         //    name: "TotalGrpPharma", caption: "Tous Groupes",
-                                                         //    memberProvider: function (item) { return "Tous Groupes"; }
-                                                         //},
+                                                         {
+                                                             name: "TotalGrpPharma", caption: "Tous Les Groupes",
+                                                             memberProvider: function (item) { return "Tous Les Groupes"; }
+                                                         },
                                                          {
                                                              name: "GrpPharma", caption: "Groupe",
                                                              memberProvider: function (item) { return item.GrpPharma; }
@@ -249,10 +249,10 @@
                                              {
                                                  caption: "Laboratoire", name: "Laboratory", hierarchies: [{
                                                      caption: "Laboratoire", name: "Laboratory", levels: [
-                                                         //{
-                                                         //    name: "TotalLaboratory", caption: "Tous Laboratoires",
-                                                         //    memberProvider: function (item) { return "Tous Laboratoires"; }
-                                                         //},
+                                                         {
+                                                             name: "TotalLaboratory", caption: "Tous Les Laboratoires",
+                                                             memberProvider: function (item) { return "Tous Les Laboratoires"; }
+                                                         },
                                                          {
                                                              name: "Laboratory", caption: "Laboratoire",
                                                              memberProvider: function (item) { return item.Laboratory; }
@@ -262,10 +262,10 @@
                                                {
                                                    caption: "Produit", name: "Product", hierarchies: [{
                                                        caption: "Produit", name: "Product", levels: [
-                                                           //{
-                                                           //    name: "TotalProduct", caption: "Tous Produits",
-                                                           //    memberProvider: function (item) { return "Tous Produits"; }
-                                                           //},
+                                                           {
+                                                               name: "TotalProduct", caption: "Tous Les Produits",
+                                                               memberProvider: function (item) { return "Tous Les Produits"; }
+                                                           },
                                                            {
                                                                name: "Product", caption: "Produit",
                                                                memberProvider: function (item) { return item.Product; }
@@ -274,14 +274,14 @@
                                                }
                                                ,
                                                {
-                                                   caption: "Format", name: "Format", hierarchies: [{
-                                                       caption: "Format", name: "Format", levels: [
-                                                           //{
-                                                           //    name: "TotalFormat", caption: "Tous Formats",
-                                                           //    memberProvider: function (item) { return "Tous Formats"; }
-                                                           //},
+                                                   caption: "Présentation", name: "Format", hierarchies: [{
+                                                       caption: "Présentation", name: "Format", levels: [
                                                            {
-                                                               name: "Format", caption: "Format",
+                                                               name: "TotalFormat", caption: "Toutes Les Présentations",
+                                                               memberProvider: function (item) { return "Toutes Les Présentations"; }
+                                                           },
+                                                           {
+                                                               name: "Format", caption: "Présentation",
                                                                memberProvider: function (item) { return item.Format; }
                                                            }]
                                                    }]
