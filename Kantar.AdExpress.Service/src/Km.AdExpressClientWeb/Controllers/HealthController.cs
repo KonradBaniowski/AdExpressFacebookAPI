@@ -17,6 +17,7 @@ using Km.AdExpressClientWeb.Models.Health;
 using Newtonsoft.Json;
 using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 
+
 namespace Km.AdExpressClientWeb.Controllers
 {
     public class HealthController : Controller
@@ -72,7 +73,7 @@ namespace Km.AdExpressClientWeb.Controllers
             string listVehicles = result.WebSession.GetSelection(result.WebSession.SelectionUniversMedia, CstRight.type.vehicleAccess);
 
             #region Query Building
-            sql.Append(GetMasterQuery(result.WebSession.PeriodBeginningDate, result.WebSession.PeriodEndDate, listVehicles));
+            sql.Append(GetMasterQuery(result.WebSession.PeriodBeginningDate, result.WebSession.PeriodEndDate, listVehicles, result.WebSession));
             sql.AppendFormat("{0}", " ");
 
             #endregion
@@ -128,10 +129,11 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        private string GetMasterQuery(string beginDate, string endDate, string medias)
+        private string GetMasterQuery(string beginDate, string endDate, string medias, TNS.AdExpress.Web.Core.Sessions.WebSession webSession)
         {
 
             StringBuilder query = new StringBuilder();
+            string dataTablePrefixe = "d";
 
             query.Append(@"select ca.ID_CANAL,CANAL, d.ID_CATEGORY
 			, CATEGORY,me.ID_MEDECIN ,MEDECIN, gp.ID_GRP_PHARMA ,GRP_PHARMA,
@@ -156,6 +158,9 @@ namespace Km.AdExpressClientWeb.Controllers
 	                  and d.ID_CONDITIONNEMENT    =  cd.ID_CONDITIONNEMENT ");
 
             query.AppendFormat("and d.ID_CANAL in ({0}) and DATE_CANAL >= to_date({1},'YYYYMMDD') and DATE_CANAL <= to_date({2},'YYYYMMDD')  ", medias, beginDate + "01", endDate + "01");
+
+            string doctors = webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+            query.Append(doctors);
 
             query.Append(@"group by  ca.ID_CANAL,CANAL, d.ID_CATEGORY , CATEGORY, me.ID_MEDECIN
 					            ,MEDECIN, gp.ID_GRP_PHARMA ,GRP_PHARMA,
