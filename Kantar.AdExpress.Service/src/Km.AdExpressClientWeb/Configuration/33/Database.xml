@@ -322,6 +322,7 @@
     <view enumId="7" description="Classif: all product facebook" schemaEnumId="0" label="ALL_PRODUCT_FACEBOOK" prefix="allpfcb"/>
     <view enumId="8" description="Classif: all program" schemaEnumId="0" label="all_program_" prefix="allprg"/>
     <view enumId="9" description="Classif: medecin" schemaEnumId="13" label="medecin" prefix="md"/>
+    <view enumId="10" description="Health: all product" schemaEnumId="13" label="all_product" prefix="allp"/>
   </views>
 </database>
 

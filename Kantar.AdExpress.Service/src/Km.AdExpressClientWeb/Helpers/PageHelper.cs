@@ -348,7 +348,6 @@ namespace Km.AdExpressClientWeb.Helpers
         bool IsMarketSelectionDisabled(long module)
         {
             bool isDisabled = false; // (module == Module.Name.NEW_CREATIVES);
-            isDisabled = (module == Module.Name.HEALTH);
             return isDisabled;
         }
 

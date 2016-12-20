@@ -409,6 +409,18 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
                         default:
                             throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
                     }
+                case TNS.AdExpress.Constantes.Web.Module.Name.HEALTH:
+                    switch (dimension)
+                    {
+                        case Dimension.product:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allHealthProduct);
+                        case Dimension.media:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.target);
+                        case Dimension.advertisingAgency:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                        default:
+                            throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
+                    }
                 default :
 					switch (dimension) {
 						case Dimension.product:

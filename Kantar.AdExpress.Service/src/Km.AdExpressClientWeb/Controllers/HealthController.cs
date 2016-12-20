@@ -163,6 +163,11 @@ namespace Km.AdExpressClientWeb.Controllers
                 string doctors = webSession.PrincipalMediaUniverses[0].GetSqlConditions(dataTablePrefixe, true);
                 query.Append(doctors);
             }
+            if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
+            {
+                string products = webSession.PrincipalProductUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+                query.Append(products);
+            }
             query.Append(@"group by  ca.ID_CANAL,CANAL, d.ID_CATEGORY , CATEGORY, me.ID_MEDECIN
 					            ,MEDECIN, gp.ID_GRP_PHARMA ,GRP_PHARMA,
                                   la.ID_LABORATOIRE,LABORATOIRE, po.ID_PRODUCT, PRODUCT ,DATE_CANAL,

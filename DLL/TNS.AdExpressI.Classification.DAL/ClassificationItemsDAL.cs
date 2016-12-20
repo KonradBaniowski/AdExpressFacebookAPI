@@ -928,7 +928,7 @@ namespace TNS.AdExpressI.Classification.DAL
             switch (dimension)
             {
                 case Dimension.product:
-                    throw new NotImplementedException();
+                    return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allHealthProduct);
                 case Dimension.media:
                     return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.target);              
                 default:

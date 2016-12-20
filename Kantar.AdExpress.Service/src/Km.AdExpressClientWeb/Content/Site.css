@@ -2936,12 +2936,14 @@ ul.ui-selectable {
 }
 
 .ui-igpivot-filterdropdown.ui-widget.ui-widget-content {
-    background-color: #00c1ff !important;
+    /*background-color: #00c1ff !important;*/
+    background-color: #C0C0C0 !important;
     border: none !important;
 }
 
 .ui-igpivot-metadatadropdown.ui-widget.ui-widget-content {
-    background-color: #00c1ff !important;
+    /*background-color: #00c1ff !important;*/
+    background-color: #C0C0C0 !important;
     border: none !important;
 }
 
@@ -2970,7 +2972,8 @@ ul.ui-selectable {
     font-weight:bold;
 }*/
 .ui-igpivot-metadataitem.ui-widget.ui-corner-all.ui-state-default.ui-draggable.ui-draggable-handle {
-    background-color: #00c1ff;
+    /*background-color: #00c1ff;*/
+    background-color: #C0C0C0;
     color: black;
     font-weight: bold;
 }

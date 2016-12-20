@@ -2377,6 +2377,7 @@
     <!--Kantar Health-->
     <item mnemonic="w3107" type="System.String">Health</item>
     <item mnemonic="w3108" type="System.String">Description Kantar Health</item>
+    <item mnemonic="w3109" type="System.String">Groupes Pharmaceutiques</item>
     <!--End-->
     
   </items>

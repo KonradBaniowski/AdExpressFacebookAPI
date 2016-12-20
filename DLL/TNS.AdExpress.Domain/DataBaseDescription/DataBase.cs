@@ -1287,7 +1287,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Doctors
         /// </summary>
-        target = 9
+        target = 9,
+        /// <summary>
+        /// All Health Product
+        /// </summary>
+        allHealthProduct = 10
     }
     #endregion
 

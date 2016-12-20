@@ -349,6 +349,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    case WebConstantes.Module.Name.HEALTH:
 
                         var adExpressUniverse = Universes[index];
                         #region Iterate by Access Type
@@ -1298,6 +1299,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                case WebConstantes.Module.Name.HEALTH:
 
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)

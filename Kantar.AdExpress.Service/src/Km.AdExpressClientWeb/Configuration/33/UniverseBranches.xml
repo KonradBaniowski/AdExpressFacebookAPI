@@ -86,4 +86,13 @@
   <branch id="26"  name="medecin" labelId="1991">
     <level id="30" name="medecin"/>
   </branch>
+  <branch id="27"  name="category" labelId="1382">
+    <level id="12" name="category"/>
+  </branch>
+  <branch id="28"  name="product" labelId="468">
+    <level id="5" name="product"/>
+  </branch>
+  <branch id="29"  name="grp_pharma" labelId="3109">
+    <level id="32" name="grp_pharma"/>
+  </branch>
 </universeBranches>

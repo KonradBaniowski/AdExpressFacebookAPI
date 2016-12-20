@@ -207,7 +207,10 @@ namespace TNS.Classification.Universe {
         /// Form sponsorship level
         /// </summary>
         public const Int64 FORM_SPONSORSHIP = 31;
-
+        /// <summary>
+        /// Grp Pharma level
+        /// </summary>
+        public const Int64 GRP_PHARMA = 32;
     }
     #endregion
 }

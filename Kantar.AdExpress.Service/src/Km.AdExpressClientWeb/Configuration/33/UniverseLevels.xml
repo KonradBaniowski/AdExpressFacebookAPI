@@ -23,5 +23,6 @@
   <level id="28" name="media_Seller" labelId="1383" dbId="id_media_seller" dbTable="media_seller"/>
   <level id="29" name="Canal" labelId="1292" dbId="id_canal" dbLabel="canal" dbTable="canal" dbTablePrefixe="cl"/>
   <level id="30" name="Medecin" labelId="1991" dbId="id_medecin" dbLabel="medecin" dbTable="medecin" dbTablePrefixe="im"/>
-  <level id="31" name="Formes de Parrainage" labelId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>  
+  <level id="31" name="Formes de Parrainage" labelId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
+  <level id="32" name="grp_pharma" labelId="3109" dbId="id_grp_pharma" dbLabel="grp_pharma" dbTable="grp_pharma" dbTablePrefixe="gp"/>
 </universeLevels>
