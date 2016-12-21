@@ -472,7 +472,7 @@ input.ui-button,input.ui-igbutton{border-radius:0!important}
 .ui-iggrid.ui-igpivotgrid>table tr:first-child td{border-bottom:1px solid #dadada!important}
 .ui-iggrid.ui-igpivotgrid>table>tbody tr:first-child th{border-top:none!important}
 .ui-iggrid-layout-helper>tbody>tr:first-child>td,.ui-iggrid-layout-helper>tbody>tr:first-child>td th,.ui-iggrid>table>thead+tbody>tr:first-child td,.ui-iggrid>table>thead+tbody>tr:first-child th,.ui-iggrid>table>thead+tfoot+tbody>tr:first-child td,.ui-iggrid>table>thead+tfoot+tbody>tr:first-child th{border-top:0 none!important}
-.ui-iggrid th,.ui-iggrid th.ui-state-default{border-bottom: 1px solid #777;/*border-right:1px solid #777*/}
+.ui-iggrid th,.ui-iggrid th.ui-state-default{border-bottom: 1px solid #333;/*border-right:1px solid #777*/}
 .ui-iggrid>table>tbody tr:first-child th.ui-igpivotgrid-header{border-top-color:#777!important}
 .ui-iggrid th a,.ui-iggrid th.ui-state-default a,.ui-iggrid th.ui-state-hover a,.ui-iggrid th.ui-state-active a{color:#fff}
 .ui-iggrid th.ui-state-hover{background:#444}
@@ -846,7 +846,8 @@ tr[aria-level="3"] td .orange {
 
 .ui-iggrid-header.ui-widget-header{
     background-color: rgba(0,0,0,0.8);
-    border-right: 1px solid rgba(255,255,255,0.1);
+    /*border-right: 1px solid rgba(255,255,255,0.1);*/
+    border-right: 1px solid #333;
     border-left:none;
     border-top:none;
     text-align:center;

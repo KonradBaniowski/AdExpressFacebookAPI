@@ -906,6 +906,7 @@
     <Content Include="IgniteUI\css\themes\kantar\images\igVideoPlayer\igVPBookmarkSprite.png" />
     <Content Include="IgniteUI\css\themes\kantar\images\ui-anim_basic_16x16.gif" />
     <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_222222_256x240.png" />
+    <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_228ef1_256x240.png" />
     <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_888888_256x240.png" />
     <Content Include="IgniteUI\css\themes\kantar\images\ui-icons_ffffff_256x240.png" />
     <Content Include="IgniteUI\css\themes\kantar\infragistics.theme.css" />
