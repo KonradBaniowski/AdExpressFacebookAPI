@@ -329,7 +329,11 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Media Group
             /// </summary>
-            mediaGroup = 77
+            mediaGroup = 77,
+            /// <summary>
+            /// Health Canal
+            /// </summary>
+            canal = 78
 
         }
 		#endregion

@@ -235,7 +235,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             monthEnd = MonthString.GetCharacters(int.Parse(webSession.PeriodEndDate.ToString().Substring(4, 2)), cultureInfo, 10);
                             yearEnd = webSession.PeriodEndDate.ToString().Substring(0, 4);
                         }
-                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(846, webSession.SiteLanguage) + " " + monthBegin + " " + yearBegin + " " + GestionWeb.GetWebWord(847, webSession.SiteLanguage) + " " + monthEnd + " " + yearEnd);
+                        //return Convertion.ToHtmlString(GestionWeb.GetWebWord(846, webSession.SiteLanguage) + " " + monthBegin + " " + yearBegin + " " + GestionWeb.GetWebWord(847, webSession.SiteLanguage) + " " + monthEnd + " " + yearEnd);
+                        return GestionWeb.GetWebWord(846, webSession.SiteLanguage) + " " + monthBegin + " " + yearBegin + " " + GestionWeb.GetWebWord(847, webSession.SiteLanguage) + " " + monthEnd + " " + yearEnd;
                     case CustomerSessions.Period.Type.dateToDateWeek:
                         AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(webSession.PeriodBeginningDate.ToString().Substring(4, 2)));
                         str = FctUtilities.Dates.DateToString(tmp.FirstDay.Date, webSession.SiteLanguage);

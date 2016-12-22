@@ -37,6 +37,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string MARKET = "Market";
         private const string MEDIA = "MediaSelection";
         private const string SPONSORSHIPMEDIA = "SponsorshipMediaSelection";
+        private const string HEALTHMEDIA = "HealthMediaSelection";
         private const string SELECTION = "Selection";
         private const string PERIOD = "PeriodSelection";
         private const string ERROR = "Invalid Selection";
@@ -141,7 +142,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 var result = _webSessionService.SaveMarketSelection(request, this.HttpContext);
                 if (result.Success)
                 {
-                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == SPONSORSHIPMEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
+                    var controller = (nextStep == MARKET || nextStep == MEDIA || nextStep == SPONSORSHIPMEDIA || nextStep == HEALTHMEDIA || nextStep == PERIOD) ? SELECTION : result.ControllerDetails.Name;
                     UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
                     var redirectUrl = context.Action(nextStep, controller);
                     return Json(new { ErrorMessage = errorMessage, RedirectUrl = redirectUrl });
@@ -623,6 +624,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
                 nextStep = SPONSORSHIPMEDIA;
+            else if (response.ControllerDetails.ModuleId == Module.Name.HEALTH && nextStep == MEDIA)
+                nextStep = HEALTHMEDIA;
 
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);
@@ -651,6 +654,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (response.ControllerDetails.ModuleId == Module.Name.ANALYSE_DES_PROGRAMMES && nextStep == MEDIA)
                 nextStep = SPONSORSHIPMEDIA;
+            else if (response.ControllerDetails.ModuleId == Module.Name.HEALTH && nextStep == MEDIA)
+                nextStep = HEALTHMEDIA;
 
             string action = (this._controller == SELECTION && nextStep == INDEX) ? MARKET : nextStep;
             UrlHelper context = new UrlHelper(this.ControllerContext.RequestContext);

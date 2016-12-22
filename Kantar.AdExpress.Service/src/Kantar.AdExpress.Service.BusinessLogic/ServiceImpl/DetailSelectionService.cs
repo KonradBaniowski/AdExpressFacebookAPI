@@ -24,6 +24,7 @@ using TNSDomain = TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using NLog;
+using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -111,30 +112,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Niveau détaillés par :
             ArrayList detailSelections = null;
             TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-            try
+            if (currentModule.Id != WebConstantes.Module.Name.HEALTH)
             {
-                detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
-            }
-            catch (System.Exception)
-            {
-                if (currentModule.Id == WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)
-                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
-            }
-            foreach (int currentType in detailSelections)
-            {
-                switch ((WebConstantes.DetailSelection.Type)currentType)
+                try
                 {
-                    case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
-                        domain.NiveauDetailLabel = _webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
-                        break;
-                    case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
-                        domain.NiveauDetailLabel = _webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage);
-                        break;
-                    case WebConstantes.DetailSelection.Type.genericColumnLevelDetail:
-                        domain.GenericLevelDetailColumn = _webSession.GenericColumnDetailLevel.GetLabel(_webSession.SiteLanguage);
-                        break;
-                    default:
-                        break;
+                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+                }
+                catch (System.Exception)
+                {
+                    if (currentModule.Id == WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)
+                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
+                }
+                foreach (int currentType in detailSelections)
+                {
+                    switch ((WebConstantes.DetailSelection.Type)currentType)
+                    {
+                        case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
+                            domain.NiveauDetailLabel = _webSession.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
+                            break;
+                        case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
+                            domain.NiveauDetailLabel = _webSession.GenericProductDetailLevel.GetLabel(_webSession.SiteLanguage);
+                            break;
+                        case WebConstantes.DetailSelection.Type.genericColumnLevelDetail:
+                            domain.GenericLevelDetailColumn = _webSession.GenericColumnDetailLevel.GetLabel(_webSession.SiteLanguage);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             #endregion
@@ -153,7 +157,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Media : 
-            domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
+            if (currentModule.Id == WebConstantes.Module.Name.HEALTH)
+                domain.MediasSelected = GetHealthLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
+            else
+                domain.MediasSelected = GetLabels(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
             domain.UniversMedia = new List<Core.Domain.Tree>();
             domain.MediasSelectedLabel = string.Join(",", domain.MediasSelected.Select(_ => _.Label));
 
@@ -170,6 +177,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Période sélectionnée :
             switch (_webSession.CurrentModule)
             {
+                case WebConstantes.Module.Name.HEALTH:
+                    if(!string.IsNullOrEmpty(_webSession.PeriodBeginningDate))
+                        domain.DateBegin = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, true);
+                    if (!string.IsNullOrEmpty(_webSession.PeriodEndDate))
+                        domain.DateEnd = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, false);
+                    break;
                 case WebConstantes.Module.Name.INDICATEUR:
                 case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
                     domain.DateBegin = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, true);
@@ -223,6 +236,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, long currentModule, bool defaultFcbUniverse=false)
         {
             List<long> itemIdList = null;
+            string schema = GetSchema(currentModule);
             for (int k = 0; k < Principal.Count; k++)
             {
                 if (Principal.ContainsKey(k))
@@ -265,7 +279,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         universLevel.Label = GestionWeb.GetWebWord(UniverseLevels.Get(levelIdsList[j]).LabelId, SiteLanguage);
                                         universLevel.Id = levelIdsList[j];
                                         TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems =
-                                            factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[index].GetAsString(levelIdsList[j]));
+                                            factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), result[index].GetAsString(levelIdsList[j]), schema);
                                         if (universeItems != null)
                                         {
                                             itemIdList = universeItems.IdListOrderByClassificationItem;
@@ -310,6 +324,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
             var dal = factoryLevels.CreateClassificationLevelListDAL(key, string.Join(",", searchTodo[key]));
+
+            return searchTodo[key].Select(_ => new TextData { Id = _, Label = dal[_] }).ToList();
+        }
+
+        private List<TextData> GetHealthLabels(System.Windows.Forms.TreeNode elem, int idLanguage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
+        {
+            var levelInformations = elem.Nodes.Cast<System.Windows.Forms.TreeNode>().Select(_ => _.Tag).Cast<LevelInformation>().ToList();
+            if (levelInformations.Count == 0)
+                return new List<TextData>();
+
+            var searchTodo = levelInformations.GroupBy(_ => _.Type, _ => _.ID).ToDictionary(e => e.Key, e => e.Distinct().ToList());
+            var key = searchTodo.Keys.SingleOrDefault();
+
+            var cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+            object[] param = new object[2];
+            param[0] = source;
+            param[1] = dataLanguage;
+            var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+
+            var dal = factoryLevels.CreateClassificationLevelListDAL(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.canal), string.Join(",", searchTodo[key]), WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label);
 
             return searchTodo[key].Select(_ => new TextData { Id = _, Label = dal[_] }).ToList();
         }
@@ -428,6 +462,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, UniversMarket, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
 
             return UniversMarket;
+        }
+
+        private static string GetSchema(long moduleId)
+        {
+            switch(moduleId)
+            {
+                case WebConstantes.Module.Name.HEALTH:
+                    return WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label;
+                default:
+                    return WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+            }
         }
     }
 }

@@ -81,6 +81,7 @@
 
     <level id="76" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc"/>
     <level id="77" name="MediaGroup"    webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg"/>
+    <level id="78" name="Canal"         webTextId="363" dbId="id_canal" dbLabel="canal" dbTable="canal" dbTablePrefixe="can"/>
   </detaillevelItems>
 
   <detailLevels>

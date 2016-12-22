@@ -72,15 +72,20 @@ namespace TNS.AdExpressI.Classification.DAL {
 			_language = language;
             _toLowerCase = true;
 		}
-		#endregion
+        #endregion
 
-		#region IClassificationLevelListDALFactory Implementation
+        #region IClassificationLevelListDALFactory Implementation
 
-		/// Get partial items list of a classification's level
-		/// </summary>
-		/// <param name="detailLevelItemInformation">Detail level informations</param>
-		/// <param name="idList">classification items' identifier list</param>
-		public virtual ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList) {
+        public virtual ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList)
+        {
+            return CreateClassificationLevelListDAL(detailLevelItemInformation, idList, string.Empty);
+        }
+
+        /// Get partial items list of a classification's level
+        /// </summary>
+        /// <param name="detailLevelItemInformation">Detail level informations</param>
+        /// <param name="idList">classification items' identifier list</param>
+        public virtual ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList, string dbSchema) {
 		 
 			switch (detailLevelItemInformation.Id) {
 				
@@ -160,7 +165,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 //Create a list of sponsorshipForm level 's  items		
                 case DetailLevelItemInformation.Levels.sponsorshipForm:
                     return new ProgramBranch.SponsorshipFormLevelListDAL(idList, _language, _source);
-				default :
+                //Create a list of canal level 's  items		
+                case DetailLevelItemInformation.Levels.canal:
+                    return new MediaBrand.CanalLevelListDAL(idList, _language, _source, dbSchema);
+                default :
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
 		}
@@ -357,7 +365,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 //Create a list of site level 's  items		
                 case DetailLevelItemInformation.Levels.site:
                     return new MediaBrand.SiteLevelListDAL(_language, _source);
-				default:
+                //Create a list of canal level 's  items		
+                case DetailLevelItemInformation.Levels.canal:
+                    return new MediaBrand.CanalLevelListDAL(_language, _source, WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label);
+                default:
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
 		}
@@ -368,8 +379,19 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="idList">classification items' identifier list</param>
 		public virtual ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList) {
             string table = level.TableName; 
-            return new ClassificationLevelListDAL(table, idList, _language, _source);
+            return new ClassificationLevelListDAL(table, idList, _language, _source, string.Empty);
 		}
+
+        /// <summary>
+		/// Get partial items list of a classification's level
+		/// </summary>
+        /// <param name="level">Cuurent universe classification level ex. product or group or media type</param>
+		/// <param name="idList">classification items' identifier list</param>
+		public virtual ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList, string dbSchema)
+        {
+            string table = level.TableName;
+            return new ClassificationLevelListDAL(table, idList, _language, _source, dbSchema);
+        }
 
         /// <summary>
         ///  Get if data items shiould be in lower case

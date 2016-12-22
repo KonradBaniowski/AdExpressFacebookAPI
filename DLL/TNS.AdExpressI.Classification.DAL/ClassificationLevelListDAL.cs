@@ -262,11 +262,13 @@ namespace TNS.AdExpressI.Classification.DAL
         /// <param name="idList">classification items' identifier list</param>
         /// <param name="language">Data language identifier</param>
         /// <param name="source">Data source</param>
-        public ClassificationLevelListDAL(string table, string idList, int language, IDataSource source)
+        public ClassificationLevelListDAL(string table, string idList, int language, IDataSource source, string dbSchema)
         {
             this._language = language;
             _list = new Dictionary<long, string>();
             DataTable dt;
+
+            _dbSchema = dbSchema;
 
             SetSchema();
 
@@ -368,8 +370,12 @@ namespace TNS.AdExpressI.Classification.DAL
             #region Building query
             string sql = " select " + dataBaseIdField + ", " + dataBaseField;
             sql += " from " + ((_dbSchema != null && _dbSchema.Length > 0) ? _dbSchema + "." : "") + dataBaseTableName;
-            sql += " where id_language = " + language + " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-            sql += " and " + dataBaseIdField + " in (" + idList + ")";
+            sql += " where " + dataBaseIdField + " in (" + idList + ")";
+            if (_dbSchema != WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label)
+            {
+                sql += " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                sql += " and id_language = " + language;
+            }
             sql += " order by " + dataBaseField;
             #endregion
 

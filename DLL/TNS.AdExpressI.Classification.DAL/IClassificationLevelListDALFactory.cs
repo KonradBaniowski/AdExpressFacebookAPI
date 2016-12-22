@@ -29,6 +29,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="idList">classification items' identifier list</param>
 		ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList);
 
+        ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList, string dbSchema);
+
         /// Get partial items list of a classification's level
         /// </summary>
         /// <param name="levelType">Classification level type</param>
@@ -44,7 +46,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         bool ToLowerCase { get; }	
         ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList);
 
-      
-		
-	}
+        ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList, string dbSchema);
+
+    }
 }

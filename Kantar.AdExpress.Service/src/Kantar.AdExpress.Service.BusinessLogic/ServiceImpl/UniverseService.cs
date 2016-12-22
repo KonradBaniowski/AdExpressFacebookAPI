@@ -1573,6 +1573,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     switch (webSession.CurrentModule)
                     {
                         case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        case WebConstantes.Module.Name.HEALTH:
                             return null;
                         case WebConstantes.Module.Name.INDICATEUR:
                         case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
