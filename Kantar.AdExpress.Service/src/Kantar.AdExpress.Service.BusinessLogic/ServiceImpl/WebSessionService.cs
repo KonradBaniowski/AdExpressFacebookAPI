@@ -208,6 +208,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                         case CstWeb.Module.Name.INDICATEUR:
                         case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                        case CstWeb.Module.Name.ANALYSE_MANDATAIRES:
                             success = SetDefaultUnivers(request, _webSession, response);
                             break;
                         case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
