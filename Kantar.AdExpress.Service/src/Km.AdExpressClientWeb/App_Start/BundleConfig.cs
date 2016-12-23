@@ -43,19 +43,19 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new ScriptBundle("~/bundles/period-selector").Include(
                       "~/Scripts/period-selector.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/font-awesome.css",
-                      "~/Content/site.css",
-                      "~/Content/icon-kantar.css",
-                      "~/Content/bootstrap-datetimepicker.css",
-                      "~/Content/themes/base/base.css",
-                      "~/Content/themes/base/theme.css",
-                      "~/Content/bootstrap-select.css",
-                      "~/Content/treegrid.css",
-                      "~/Content/treeview.css",
-                      "~/Content/options-control.css",
-                      "~/Content/spinner.css"));
+            bundles.Add(new StyleBundle("~/Content/css")
+                .Include("~/Content/bootstrap.css", new CssRewriteUrlTransform())
+                .Include("~/Content/font-awesome.css", new CssRewriteUrlTransform())
+                .Include("~/Content/site.css", new CssRewriteUrlTransform())
+                .Include("~/Content/icon-kantar.css", new CssRewriteUrlTransform())
+                .Include("~/Content/bootstrap-datetimepicker.css", new CssRewriteUrlTransform())
+                .Include("~/Content/themes/base/base.css", new CssRewriteUrlTransform())
+                .Include("~/Content/themes/base/theme.css", new CssRewriteUrlTransform())
+                .Include("~/Content/bootstrap-select.css", new CssRewriteUrlTransform())
+                .Include("~/Content/treegrid.css", new CssRewriteUrlTransform())
+                .Include("~/Content/treeview.css", new CssRewriteUrlTransform())
+                .Include("~/Content/options-control.css", new CssRewriteUrlTransform())
+                .Include("~/Content/spinner.css", new CssRewriteUrlTransform()));
 
 
             #region CSS spécifique par langues
