@@ -35,7 +35,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
     public partial class OptionService : IOptionService
     {
-        private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         private WebSession _customerWebSession = null;
         private WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
         private WebNavigation.Module _currentModule;
@@ -58,6 +58,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                         _componentProfile = WebConstantes.GenericDetailLevel.ComponentProfile.media;
                         _nbDetailLevelItemList = 4;
                         break;
@@ -275,7 +276,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region resultTypeOption
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                 {
                     ResultTypeOption resultTypeOption = new ResultTypeOption();
                     resultTypeOption.ResultType = new SelectControl();
@@ -369,7 +371,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
                 }
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && 
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
                     (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
                 {
                     _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
@@ -650,8 +652,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     options.GenericColumnDetailLevelOption = GetGenericMediaColumnLevelDetailOptions(httpContext);
                     options.GenericColumnDetailLevelOption.L1Detail.Visible = true;
-                    options.GenericColumnDetailLevelOption.L1Detail.SelectedId = ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString();
-                    _customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode();
+                    options.GenericColumnDetailLevelOption.L1Detail.SelectedId = _customerWebSession.PreformatedMediaDetail.GetHashCode().ToString();
+                    //_customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)ConstantesSession.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode();
                 }
 
                 if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
@@ -710,7 +712,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
-                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                    )
                 {
                     SetGenericColumnLevelDetailOptions(userFilter);
                     _customerWebSession.Percentage = userFilter.PDM;
@@ -767,6 +770,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                         _customerWebSession.GenericMediaDetailLevel = _customerGenericDetailLevel;
                         break;
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
@@ -788,17 +792,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
                 #region PeriodDetailFilter
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
                 #endregion
 
                 #region UnitFilter
-                if(_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
                     _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
                 #endregion
 
                 #region PercentageFilter
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)userFilter.PercentageFilter.Percentage;
                 #endregion
 
@@ -828,14 +834,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region InsertionFilter
-                if (insertOption 
+                if (insertOption
                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES
                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
                     _customerWebSession.Insert = (ConstantesSession.Insert)userFilter.InsertionFilter.Insertion;
                 #endregion
 
                 #region AutoPromoFilter
-                if (autopromoEvaliantOption 
+                if (autopromoEvaliantOption
                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
                     _customerWebSession.AutoPromo = (ConstantesSession.AutoPromo)userFilter.AutoPromoFilter.AutoPromo;
@@ -871,7 +877,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS)
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.PreformatedTable = (ConstantesSession.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
@@ -881,7 +888,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _customerWebSession.PDV = userFilter.PDV;
                 }
 
-                    if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     _customerWebSession.ComparativeStudy = userFilter.ComparativeStudy;
                     _customerWebSession.ComparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userFilter.ComparativePeriodType;
@@ -1075,39 +1082,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private List<Int64> GetVehicles()
         {
-#if Debug
-            ////TODO : Resultat pour calendrier d'actiion : a enlever apres tests
-            //// _customerSession.CurrentTab = 6;
 
-            //_customerWebSession.SelectionUniversMedia.Nodes.Clear();
-            //System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode("RADIO");
-            //tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, 2, "RADIO");
-            //_customerWebSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-            //_customerWebSession.CurrentUniversMedia = _customerWebSession.SelectionUniversMedia;
-
-            ////TODO :  selection support :  : a enlever apres tests
-            //TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
-            //Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
-            //int groupIndex = 0;
-            //Dictionary<int, NomenclatureElementsGroup> elementGroupDictionary = new Dictionary<int, NomenclatureElementsGroup>();
-            //NomenclatureElementsGroup treeNomenclatureEG = new NomenclatureElementsGroup(groupIndex, AccessType.includes);
-            //Dictionary<long, List<long>> elementGroup = new Dictionary<long, List<long>>();// UniversLevel=ElementGroup                    
-            //List<long> idUniversItems = new List<long>();
-            //idUniversItems.Add(2003);//EUROPE 1
-            //treeNomenclatureEG.AddItems(TNSClassificationLevels.MEDIA, idUniversItems);
-            //adExpressUniverse.AddGroup(groupIndex, treeNomenclatureEG);
-            //universes.Add(universes.Count, adExpressUniverse);
-            //_customerWebSession.PrincipalMediaUniverses = universes;
-
-            ////ArrayList levelIds = new ArrayList();
-            ////levelIds.Add(11);
-            ////levelIds.Add(12);
-            ////levelIds.Add(10);            
-            ////_customerSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelIds, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-
-            //_customerWebSession.Save();
-#endif
             List<Int64> vehicleList = new List<Int64>();
             string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
             if (!string.IsNullOrEmpty(listStr))
@@ -1382,7 +1357,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                         options.ResultTypeOption = resultTypeOption;
                     }
-                    else {
+                    else
+                    {
                         customerWebSession.CurrentTab = FrameWorkResults.DynamicAnalysis.PORTEFEUILLE;
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     }
@@ -1405,7 +1381,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                         options.ResultTypeOption = resultTypeOption;
                     }
-                    else {
+                    else
+                    {
                         customerWebSession.CurrentTab = FrameWorkResults.ProductClassAnalysis.SUMMARY;
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     }
@@ -1479,6 +1456,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private void SetGenericMediaColumnLevelDetailOptions(UserFilter userFilter)
         {
             _customerWebSession.PreformatedMediaDetail = (ConstantesSession.PreformatedDetails.PreformatedMediaDetails)userFilter.GenericColumnDetailLevelFilter.L1DetailValue;
+            ////TODO : a checker :
+            //ArrayList levels = new ArrayList();
+            //levels.Add(userFilter.GenericColumnDetailLevelFilter.L1DetailValue);
+            //if (levels.Count > 0)
+            //{
+            //    _genericColumnDetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.customLevels);
+            //}
+            //_customerWebSession.GenericColumnDetailLevel = _genericColumnDetailLevel;
         }
 
         private bool HasMediaClassifLevel(DetailLevelItemInformation.Levels level)
