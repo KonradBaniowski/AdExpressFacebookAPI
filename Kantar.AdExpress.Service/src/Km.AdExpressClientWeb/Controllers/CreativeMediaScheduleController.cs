@@ -71,8 +71,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         {
                             siteLanguage = SecurityHelper.Decrypt(l, SecurityHelper.CryptKey);
                             int siteLang = Convert.ToInt32(siteLanguage);
-                            if (siteLang != WebApplicationParameters.DefaultLanguage)
-                                model.ErrorMessages.Add("Erreur : Le paramètre l est invalide");
+                            ViewBag.SiteLanguage = siteLang;
                         }
                         catch(Exception ex)
                         {

@@ -13,7 +13,7 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize(Roles = Role.ADEXPRESS)]
+    [Authorize(Roles = Role.ADEXPRESS + "," + Role.ADSCOPE)]
     public class DetailSelectionController : Controller
     {
         private IDetailSelectionService _detailSelectionService;
