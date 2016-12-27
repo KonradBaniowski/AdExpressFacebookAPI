@@ -343,6 +343,39 @@ namespace TNS.AdExpress.Constantes.Web
         /// </summary>
         public const int MAX_ALLOWED_INSERTION_VERSION_ROWS_NB = 30000;
     }
+
+    /// <summary>
+    /// User Role
+    /// </summary>
+    public class Role
+    {
+        /// <summary>
+        /// Adexpress role
+        /// </summary>
+        public const string ADEXPRESS = "Adexpress";
+
+        /// <summary>
+        /// Adscope role
+        /// </summary>
+        public const string ADSCOPE = "Adscope";
+    }
+
+    /// <summary>
+    /// Adscope media schedule Account information
+    /// </summary>
+    public class CreativeMSAccount
+    {
+        /// <summary>
+        /// Adscope MS login
+        /// </summary>
+        public const string LOGIN = "CREATIVE3";
+
+        /// <summary>
+        /// Adscope MS password
+        /// </summary>
+        public const string PASSWORD = "EXPLOV3";
+    }
+
 	/// <summary>
 	/// Constantes spécifiques aux sessions
 	/// </summary>

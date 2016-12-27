@@ -24,7 +24,7 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class HomeController : Controller
     {
         private const string _cryptKey = "8!b?#B$3";

@@ -16,7 +16,7 @@ using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class CreativeController : Controller
     {
         private ICreativeService _creativeService;

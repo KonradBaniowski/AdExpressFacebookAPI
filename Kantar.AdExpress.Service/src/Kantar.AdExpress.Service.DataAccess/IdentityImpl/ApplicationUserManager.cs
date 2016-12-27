@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
 {
@@ -683,6 +684,13 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
                 claimsIdentity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.UserName, "http://www.w3.org/2001/XMLSchema#string"));
                 //var userIdentity = await CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie).ConfigureAwait(false);
+
+                if(user.UserName == CreativeMSAccount.LOGIN)
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Role.ADSCOPE));
+                else
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Role.ADEXPRESS));
+
+
                 if (rememberBrowser)
                 {
                     var rememberBrowserIdentity = CreateTwoFactorRememberBrowserIdentity(user.Id);

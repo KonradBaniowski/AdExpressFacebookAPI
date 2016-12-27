@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -23,7 +24,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         // GET: PortfolioDetailMediaExport 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult Index()
         {
             return View();

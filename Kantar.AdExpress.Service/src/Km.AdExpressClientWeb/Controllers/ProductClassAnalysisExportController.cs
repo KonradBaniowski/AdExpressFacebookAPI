@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 
@@ -14,7 +15,7 @@ namespace Km.AdExpressClientWeb.Controllers
     /// <summary>
     /// Analyse Sectorielle Controller pour les exports 
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class ProductClassAnalysisExportController : Controller
     {
         private readonly IAnalysisService _analysisService;

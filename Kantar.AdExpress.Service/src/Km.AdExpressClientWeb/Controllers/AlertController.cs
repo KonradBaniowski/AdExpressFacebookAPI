@@ -24,7 +24,6 @@ using TNS.Ares.Constantes;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    //[Authorize]
     public class AlertController : Controller
     {
         private IAlertService _alertService;
@@ -75,7 +74,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View("Home");
         }
 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult redirect()
         {
             var cla = new ClaimsPrincipal(User.Identity);
@@ -87,7 +86,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return RedirectToAction("Results", redirectUrl);
         }
 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult CreateAlert()
         {
             var cp = new ClaimsPrincipal(User.Identity);
@@ -149,7 +148,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return week;
         }
 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public JsonResult SaveAlert(string title, string email, string type, string date)
         {
             JsonResult result = new JsonResult();

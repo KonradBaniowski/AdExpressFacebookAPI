@@ -26,7 +26,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = WebConstantes.Role.ADEXPRESS)]
     public class PortfolioExportController : Controller
     {
         private IPortfolioService _portofolioService;

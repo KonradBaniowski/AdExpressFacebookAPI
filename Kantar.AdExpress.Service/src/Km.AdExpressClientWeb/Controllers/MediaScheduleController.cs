@@ -43,7 +43,7 @@ using Kantar.AdExpress.Service.Core.Domain.BusinessService;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class MediaScheduleController : Controller
     {
         private IMediaService _mediaService;

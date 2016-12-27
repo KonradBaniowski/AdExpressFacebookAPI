@@ -14,10 +14,11 @@ using TNS.AdExpress.Domain.Translation;
 using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Helpers;
 using NLog;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class AccountController : Controller
     {
         private IApplicationUserManager _userManager;
@@ -115,7 +116,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult WebSession(int siteLanguage = -1)
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;

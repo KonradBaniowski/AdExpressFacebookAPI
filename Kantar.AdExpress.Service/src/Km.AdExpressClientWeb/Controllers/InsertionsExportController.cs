@@ -6,12 +6,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class InsertionsExportController : Controller
     {
         private IInsertionsService _insertionsService;
@@ -24,7 +25,7 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
         // GET: InsertionsExport 
-        [Authorize]
+        [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult Index()
         {
             return View();

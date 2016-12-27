@@ -15,7 +15,7 @@ using Km.AdExpressClientWeb.I18n;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class ExportResultController : Controller
     {
         private IWebSessionService _webSessionService;

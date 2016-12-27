@@ -17,7 +17,7 @@ using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class InsertionsController : Controller
     {
         private IInsertionsService _insertionsService;

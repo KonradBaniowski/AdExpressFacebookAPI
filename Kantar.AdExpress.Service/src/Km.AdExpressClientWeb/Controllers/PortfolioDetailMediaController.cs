@@ -25,7 +25,7 @@ using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class PortfolioDetailMediaController : Controller
     {
         private IWebSessionService _webSessionService;

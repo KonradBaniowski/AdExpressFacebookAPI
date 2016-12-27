@@ -431,8 +431,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private MediaScheduleResults InitMediaScheduleCreativeCall(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
         {
-            const string LOGIN = "CREATIVE3";
-            const string PASSWORD = "EXPLOV3";
+            const string LOGIN = WebConstantes.CreativeMSAccount.LOGIN;
+            const string PASSWORD = WebConstantes.CreativeMSAccount.PASSWORD;
             WebSession webSession = null;
             System.Windows.Forms.TreeNode tmpNode;
             NomenclatureElementsGroup nomenclatureElementsGroup = null;

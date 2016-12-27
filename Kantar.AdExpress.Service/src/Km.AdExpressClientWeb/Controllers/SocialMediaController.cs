@@ -27,7 +27,7 @@ using TNS.AdExpress.Domain.Translation;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = WebConstantes.Role.ADEXPRESS)]
     public class SocialMediaController : Controller
     {
         private IWebSessionService _webSessionService;

@@ -24,7 +24,7 @@ using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class AnalysisController : Controller
     {
         private IMediaService _mediaService;

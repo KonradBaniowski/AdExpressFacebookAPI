@@ -31,7 +31,7 @@ using Km.AdExpressClientWeb.Helpers;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = CstWeb.Role.ADEXPRESS + "," + CstWeb.Role.ADSCOPE)]
     public class TestExportController : Controller
     {
         private IMediaService _mediaService;

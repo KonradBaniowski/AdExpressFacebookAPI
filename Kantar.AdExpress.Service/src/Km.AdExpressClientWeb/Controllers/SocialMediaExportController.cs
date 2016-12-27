@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.Classification.Universe;
@@ -17,7 +18,7 @@ using Domain = Kantar.AdExpress.Service.Core.Domain;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class SocialMediaExportController : Controller
     {
         private IWebSessionService _webSessionService;

@@ -35,8 +35,8 @@ namespace Km.AdExpressClientWeb.Controllers
         public async Task<ActionResult> Index(string k,string l, string m, string b, string e, string p, string c)
         {
             string siteLanguage = string.Empty, mediaTypeIds = string.Empty, beginDate = string.Empty, endDate = string.Empty, productIds = string.Empty, creativeIds = string.Empty;
-            const string LOGIN = "CREATIVE3";
-            const string PASSWORD = "EXPLOV3";
+            const string LOGIN = WebConstantes.CreativeMSAccount.LOGIN;
+            const string PASSWORD = WebConstantes.CreativeMSAccount.PASSWORD;
 
             ViewBag.SiteLanguage = Convert.ToInt32(WebConstantes.CountryCode.FRANCE);
 
@@ -170,6 +170,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
+        [Authorize(Roles = WebConstantes.Role.ADSCOPE)]
         public JsonResult Results(string l,string m,string b, string e ,string p,string c)
         {
             GridResultResponse creativeMediaScheduleResponse;

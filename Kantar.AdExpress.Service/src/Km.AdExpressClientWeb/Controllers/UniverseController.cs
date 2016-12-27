@@ -15,7 +15,7 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.ADEXPRESS)]
     public class UniverseController : Controller
     {
         private IUniverseService _universeService;
