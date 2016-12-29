@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.HealthWebApi", "KM.AdExpress.HealthWebApi\KM.AdExpress.HealthWebApi.csproj", "{C39C7768-4B26-4BE1-AD6B-D354B63E38C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.HealthWebApi.Tests", "KM.AdExpress.HealthWebApi.Tests\KM.AdExpress.HealthWebApi.Tests.csproj", "{2B9959A3-1736-4F55-8CFE-10F0EF1A9F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.Health.Core", "..\KM.AdExpress.Health.Core\KM.AdExpress.Health.Core.csproj", "{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8C735E5B-77D3-4ABD-BB23-9FEC198C5018}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastucture", "Infrastucture", "{DF1D6391-7164-432D-93E7-8415A0F654D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.Health.Infrastructure", "..\KM.AdExpress.Health.Infrastructure\KM.AdExpress.Health.Infrastructure.csproj", "{BDFEA3CE-8182-4B79-8070-413667E91ABC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpress.Health.Infrastructure.Contract", "..\KM.AdExpress.Health.Infrastructure.Contract\KM.AdExpress.Health.Infrastructure.Contract.csproj", "{BF85EE77-278D-429E-A40A-82747261CB8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C39C7768-4B26-4BE1-AD6B-D354B63E38C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39C7768-4B26-4BE1-AD6B-D354B63E38C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39C7768-4B26-4BE1-AD6B-D354B63E38C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39C7768-4B26-4BE1-AD6B-D354B63E38C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B9959A3-1736-4F55-8CFE-10F0EF1A9F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9959A3-1736-4F55-8CFE-10F0EF1A9F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9959A3-1736-4F55-8CFE-10F0EF1A9F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9959A3-1736-4F55-8CFE-10F0EF1A9F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDFEA3CE-8182-4B79-8070-413667E91ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDFEA3CE-8182-4B79-8070-413667E91ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDFEA3CE-8182-4B79-8070-413667E91ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDFEA3CE-8182-4B79-8070-413667E91ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF85EE77-278D-429E-A40A-82747261CB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF85EE77-278D-429E-A40A-82747261CB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF85EE77-278D-429E-A40A-82747261CB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF85EE77-278D-429E-A40A-82747261CB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32B39EAE-BC90-4DD1-A58F-A377C18CFF8A} = {8C735E5B-77D3-4ABD-BB23-9FEC198C5018}
+		{BDFEA3CE-8182-4B79-8070-413667E91ABC} = {DF1D6391-7164-432D-93E7-8415A0F654D5}
+		{BF85EE77-278D-429E-A40A-82747261CB8B} = {DF1D6391-7164-432D-93E7-8415A0F654D5}
+	EndGlobalSection
+EndGlobal
