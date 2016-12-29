@@ -21,6 +21,7 @@ namespace Kantar.AdExpress.Service.DataAccess.Repository.Mau
             {
                 var res = (from a in mycontext.Login
                            where a.LoginName == name.ToUpper()
+                           && a.DateExpiration >= DateTime.Today
                            select a).FirstOrDefault();
                 return res;
             });

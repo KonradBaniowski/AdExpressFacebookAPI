@@ -471,7 +471,7 @@ namespace Kantar.AdExpress.Service.DataAccess.IdentityImpl
         {
             var user = await FindByNameAsync(userName).ConfigureAwait(false);
             user.OraPass = password;
-            if (user == null)
+            if (user == null || user.Id == 0)
             {
                 return SignInStatus.Failure;
             }
