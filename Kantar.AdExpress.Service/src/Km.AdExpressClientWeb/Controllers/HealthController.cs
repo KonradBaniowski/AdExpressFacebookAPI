@@ -16,7 +16,9 @@ using System.Text;
 using Km.AdExpressClientWeb.Models.Health;
 using Newtonsoft.Json;
 using CstRight = TNS.AdExpress.Constantes.Customer.Right;
-
+using Kantar.AdExpress.Service.Core.Domain;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -53,80 +55,109 @@ namespace Km.AdExpressClientWeb.Controllers
                 NavigationBar = navigationHelper.LoadNavBar(idSession, _controller, _siteLanguage, 4),
                 Presentation = navigationHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = LabelsHelper.LoadPageLabels(result.WebSession.SiteLanguage),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, Module.Name.HEALTH, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, TNS.AdExpress.Constantes.Web.Module.Name.HEALTH, _siteLanguage)
             };
 
             return View(model);
         }
 
-        public JsonResult HealthResult()
+
+        public async Task<ActionResult> HealthResult()
         {
-            var claim = new ClaimsPrincipal(User.Identity);
-            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-            var result = _webSessionService.GetWebSession(idWebSession);
-
-            DataSet ds = new DataSet();
-            JsonResult jsonModel;
-            StringBuilder sql = new StringBuilder();
-            List<DataCost> DataList = new List<DataCost>();
-
-            string listVehicles = result.WebSession.GetSelection(result.WebSession.SelectionUniversMedia, CstRight.type.vehicleAccess);
-
-            #region Query Building
-            sql.Append(GetMasterQuery(result.WebSession.PeriodBeginningDate, result.WebSession.PeriodEndDate, listVehicles, result.WebSession));
-            sql.AppendFormat("{0}", " ");
-
-            #endregion
-
-            #region Execution de la requête
-            try
+            using (var client = new HttpClient())
             {
-                ds = result.WebSession.Source.Fill(sql.ToString());
-            }
-            catch (System.Exception err)
-            {
-                throw (new Exception("Unable to load Media Schedule Data : " + sql, err));
-            }
-            #endregion
+                var claim = new ClaimsPrincipal(User.Identity);
+                string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                var result = _webSessionService.GetWebSession(idWebSession);
 
+                DataSet ds = new DataSet();
+                JsonResult jsonModel;
+                List<DataCostContract> DataList = new List<DataCostContract>();
 
-            foreach (DataRow theRow in ds.Tables[0].Rows)
-            {
+                UserCriteria userCriteria = _webSessionService.GetUserCriteria(idWebSession);
 
-                string date = string.Format("{0}/{1}/{2}", theRow["DATE_CANAL"].ToString().Substring(3, 2),
-                 theRow["DATE_CANAL"].ToString().Substring(0, 2)
-                , theRow["DATE_CANAL"].ToString().Substring(6, 4));
-                DataList.Add(new DataCost
-                {
-                    IdCanal = Int64.Parse(theRow["ID_CANAL"].ToString()),
-                    Canal = theRow["CANAL"].ToString(),
-                    IdCategory = Int64.Parse(theRow["ID_CATEGORY"].ToString()),
-                    Category = theRow["CATEGORY"].ToString(),
-                    IdSpecialist = Int64.Parse(theRow["ID_MEDECIN"].ToString()),
-                    Specialist = theRow["MEDECIN"].ToString(),
-                    IdGrpPharma = Int64.Parse(theRow["ID_GRP_PHARMA"].ToString()),
-                    GrpPharma = theRow["GRP_PHARMA"].ToString(),
-                    IdLabratory = Int64.Parse(theRow["ID_LABORATOIRE"].ToString()),
-                    Laboratory = theRow["LABORATOIRE"].ToString(),
-                    IdProduct = Int64.Parse(theRow["ID_PRODUCT"].ToString()),
-                    Product = theRow["PRODUCT"].ToString(),
-                    IdFormat = Int64.Parse(theRow["ID_CONDITIONNEMENT"].ToString()),
-                    Format = theRow["CONDITIONNEMENT"].ToString(),
-                    Date = date,
-                    Euro = Convert.ToDouble(theRow["euro"]),
+                HttpResponseMessage response = client.PostAsJsonAsync(new Uri(System.Configuration.ConfigurationManager.AppSettings["HealthInvestUri"]), userCriteria).Result;
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
 
-                });
+                //var datas = JsonConvert.DeserializeObject<DataCostContract>(content);
+
+                var obj = new { datapivotgrid = content };
+                jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+                jsonModel.MaxJsonLength = Int32.MaxValue;
+
+                return jsonModel;
 
             }
-
-            var data = JsonConvert.SerializeObject(DataList);
-
-            var obj = new { datapivotgrid = data };
-            jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
-            jsonModel.MaxJsonLength = Int32.MaxValue;
-
-            return jsonModel;
         }
+
+
+        //public JsonResult HealthResult()
+        //{
+        //    var claim = new ClaimsPrincipal(User.Identity);
+        //    string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+        //    var result = _webSessionService.GetWebSession(idWebSession);
+
+        //    DataSet ds = new DataSet();
+        //    JsonResult jsonModel;
+        //    List<DataCost> DataList = new List<DataCost>();
+
+        //    #region Query Building
+        //    sql.Append(GetMasterQuery(result.WebSession.PeriodBeginningDate, result.WebSession.PeriodEndDate, listVehicles, result.WebSession));
+        //    sql.AppendFormat("{0}", " ");
+
+        //    #endregion
+
+        //    #region Execution de la requête
+        //    try
+        //    {
+        //        ds = result.WebSession.Source.Fill(sql.ToString());
+        //    }
+        //    catch (System.Exception err)
+        //    {
+        //        throw (new Exception("Unable to load Media Schedule Data : " + sql, err));
+        //    }
+        //    #endregion
+
+
+        //    foreach (DataRow theRow in ds.Tables[0].Rows)
+        //    {
+
+        //        string date = string.Format("{0}/{1}/{2}", theRow["DATE_CANAL"].ToString().Substring(3, 2),
+        //         theRow["DATE_CANAL"].ToString().Substring(0, 2)
+        //        , theRow["DATE_CANAL"].ToString().Substring(6, 4));
+        //        DataList.Add(new DataCost
+        //        {
+        //            IdCanal = Int64.Parse(theRow["ID_CANAL"].ToString()),
+        //            Canal = theRow["CANAL"].ToString(),
+        //            IdCategory = Int64.Parse(theRow["ID_CATEGORY"].ToString()),
+        //            Category = theRow["CATEGORY"].ToString(),
+        //            IdSpecialist = Int64.Parse(theRow["ID_MEDECIN"].ToString()),
+        //            Specialist = theRow["MEDECIN"].ToString(),
+        //            IdGrpPharma = Int64.Parse(theRow["ID_GRP_PHARMA"].ToString()),
+        //            GrpPharma = theRow["GRP_PHARMA"].ToString(),
+        //            IdLabratory = Int64.Parse(theRow["ID_LABORATOIRE"].ToString()),
+        //            Laboratory = theRow["LABORATOIRE"].ToString(),
+        //            IdProduct = Int64.Parse(theRow["ID_PRODUCT"].ToString()),
+        //            Product = theRow["PRODUCT"].ToString(),
+        //            IdFormat = Int64.Parse(theRow["ID_CONDITIONNEMENT"].ToString()),
+        //            Format = theRow["CONDITIONNEMENT"].ToString(),
+        //            Date = date,
+        //            Euro = Convert.ToDouble(theRow["euro"]),
+
+        //        });
+
+        //    }
+
+        //    var data = JsonConvert.SerializeObject(DataList);
+
+        //    var obj = new { datapivotgrid = data };
+        //    jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
+        //    jsonModel.MaxJsonLength = Int32.MaxValue;
+
+        //    return jsonModel;
+        //}
 
 
         private string GetMasterQuery(string beginDate, string endDate, string medias, TNS.AdExpress.Web.Core.Sessions.WebSession webSession)
