@@ -239,7 +239,7 @@
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
-    <Compile Include="Models\Health\DataCosts.cs" />
+    <Compile Include="Models\Health\DataCostContract.cs" />
     <Compile Include="Models\Health\HealthMediaSelectionViewModel.cs" />
     <Compile Include="Models\HomeNumbersViewModel.cs" />
     <Compile Include="Models\Home\MyAdExpressViewModel.cs" />
@@ -1874,11 +1874,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55658</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55658/</IISUrl>
+          <IISUrl>http://localhost:55659/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

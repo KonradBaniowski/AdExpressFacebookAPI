@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Km.AdExpressClientWeb.Models.Health
+namespace KM.AdExpress.Health.Infrastructure.Contract
 {
-    public class DataCost
+    public class DataCostContract
     {
         public double IdCanal { get; set; }
         public string Canal { get; set; }
@@ -21,7 +22,9 @@ namespace Km.AdExpressClientWeb.Models.Health
         public string Product { get; set; }
         public double IdFormat { get; set; }
         public string Format { get; set; }
-        public string Date { get; set; }
+
+        public DateTime Date { get; set; }
+
         public double Euro { get; set; }
     }
 }

@@ -34,6 +34,7 @@ using TNS.AdExpress.Constantes.Classification;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using NLog;
 using TNS.AdExpress.Web.Utilities.Exceptions;
+using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 using System.Web;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -898,6 +899,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             pM.IdLanguage = _webSession.DataLanguage;
 
             return pM;
+        }
+
+        public UserCriteria GetUserCriteria(string webSessionId, string period)
+        {
+            _webSession = (WebSession)WebSession.Load(webSessionId);
+            UserCriteria uC = new UserCriteria();
+            if (string.IsNullOrEmpty(period))
+            {
+                int endDayPeriodEndDate = DateTime.DaysInMonth(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)));
+                uC.StartDate= new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), 01);
+                uC.EndDate = new DateTime(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)), endDayPeriodEndDate);
+            }
+            else
+            {
+                int year = int.Parse(period.Substring(0, 4));
+                int month = int.Parse(period.Substring(4, 2));
+                int endDay = DateTime.DaysInMonth(year, month);
+                DateTime startDate = new DateTime(year, month, 01);
+                DateTime endDate = new DateTime(year, month, endDay);
+                uC.StartDate = startDate;
+                uC.EndDate = endDate;
+            }
+
+            uC.CanalIds = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(',').Select(double.Parse).ToList();
+
+            return uC;
         }
 
         #region Dates sélectionnées
