@@ -140,12 +140,11 @@ $(document).on('click', '#btnRenameUnivers', function () {
         },
         success: function (response) {
             $('#renameUnivers').modal('hide');
-            if (response == "Success") {
+            if (response.Success) {
                 //Reload the page
                 $.ajax({
                     url: '/Home/ReloadUnivers',
                     type: 'POST',
-                    data: params,
                     error: function (data) {
                         bootbox.alert(data);
                     },
@@ -154,7 +153,7 @@ $(document).on('click', '#btnRenameUnivers', function () {
                     }
                 });
             }
-            bootbox.alert(response);
+            bootbox.alert(response.Message);
 
         }
     });

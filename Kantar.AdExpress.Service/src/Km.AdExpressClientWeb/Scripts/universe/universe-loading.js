@@ -28,7 +28,7 @@ $(document).on('click', '#myUnivers', function (event) {
 
 $('#save-universe').on('click', function (event) {
     event.preventDefault();
-    $('#save-universe').off('click');
+    //$('#save-universe').off('click');
     var dimension = $('#Dimension').val();
     var params = {
         dimension: dimension
@@ -38,7 +38,7 @@ $('#save-universe').on('click', function (event) {
         type: 'GET',
         data: params,
         success: function (response) {
-            $('#saveunivers').append(response);
+            $('#saveunivers').html(response);
             $('#saveunivers').modal('show');
         }
     });
