@@ -55,7 +55,8 @@ namespace Km.AdExpressClientWeb
                 .Include("~/Content/treegrid.css", new CssRewriteUrlTransform())
                 .Include("~/Content/treeview.css", new CssRewriteUrlTransform())
                 .Include("~/Content/options-control.css", new CssRewriteUrlTransform())
-                .Include("~/Content/spinner.css", new CssRewriteUrlTransform()));
+                .Include("~/Content/spinner.css", new CssRewriteUrlTransform())
+                .Include("~/Content/simple-line-icons.css", new CssRewriteUrlTransform()));
 
 
             #region CSS spécifique par langues
