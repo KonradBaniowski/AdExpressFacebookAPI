@@ -37,7 +37,7 @@ namespace KM.AdExpress.Health.Infrastructure.Repository
                          select d);
 
 
-            //Include
+            //Include Market
             if (userContract.CategoryIncludeIds != null && userContract.CategoryIncludeIds.Any())
                 query = query.Include(t => t.Category).Where(e => userContract.CategoryIncludeIds.Contains(e.IdCategory));
 
@@ -48,7 +48,7 @@ namespace KM.AdExpress.Health.Infrastructure.Repository
                 query = query.Include(t => t.GrpPharma).Where(e => userContract.GrpPharmaIncludeIds.Contains(e.IdGrpPharma));
 
 
-            //Exclude
+            //Exclude Market
             if (userContract.CategoryExcludeIds != null && userContract.CategoryExcludeIds.Any())
                 query = query.Include(t => t.Category).Where(e => !userContract.CategoryIncludeIds.Contains(e.IdCategory));
 
@@ -57,6 +57,16 @@ namespace KM.AdExpress.Health.Infrastructure.Repository
 
             if (userContract.GrpPharmaExcludeIds != null && userContract.GrpPharmaExcludeIds.Any())
                 query = query.Include(t => t.GrpPharma).Where(e => !userContract.GrpPharmaIncludeIds.Contains(e.IdGrpPharma));
+
+
+            //Include Media Filter
+            if (userContract.MediaFilterIncludeIds != null && userContract.MediaFilterIncludeIds.Any())
+                query = query.Include(t => t.Specialist).Where(e => userContract.MediaFilterIncludeIds.Contains(e.IdSpecialist));
+
+            //Exclude Media Filter
+            if (userContract.MediaFilterExcludeIds != null && userContract.MediaFilterExcludeIds.Any())
+                query = query.Include(t => t.Specialist).Where(e => !userContract.MediaFilterExcludeIds.Contains(e.IdSpecialist));
+
 
             var res = (from p in query
                        select new DataCostContract

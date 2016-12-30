@@ -20,6 +20,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<double> GrpPharmaIncludeIds { get; set; }
         public List<double> GrpPharmaExcludeIds { get; set; }
 
+        public List<double> MediaFilterIncludeIds { get; set; }
+        public List<double> MediaFilterExcludeIds { get; set; }
 
         public UserCriteria()
         {
@@ -30,6 +32,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
             ProductExcludeIds = new List<double>();
             GrpPharmaIncludeIds = new List<double>();
             GrpPharmaExcludeIds = new List<double>();
+            MediaFilterIncludeIds = new List<double>();
+            MediaFilterExcludeIds = new List<double>();
         }
 
     }

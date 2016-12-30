@@ -906,24 +906,74 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             _webSession = (WebSession)WebSession.Load(webSessionId);
             UserCriteria uC = new UserCriteria();
+            List<NomenclatureElementsGroup> nElmtGr = new List<NomenclatureElementsGroup>();
+            string tempListAsString = string.Empty;
+
+            #region Period 
             if (string.IsNullOrEmpty(period))
             {
                 int endDayPeriodEndDate = DateTime.DaysInMonth(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)));
                 uC.StartDate= new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), 01);
                 uC.EndDate = new DateTime(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)), endDayPeriodEndDate);
             }
-            else
+            #endregion
+
+            #region Media
+            uC.CanalIds = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(',').Select(double.Parse).ToList();
+
+            #region Media Filter
+            if (_webSession.PrincipalMediaUniverses.Count > 0)
             {
-                int year = int.Parse(period.Substring(0, 4));
-                int month = int.Parse(period.Substring(4, 2));
-                int endDay = DateTime.DaysInMonth(year, month);
-                DateTime startDate = new DateTime(year, month, 01);
-                DateTime endDate = new DateTime(year, month, endDay);
-                uC.StartDate = startDate;
-                uC.EndDate = endDate;
+                //Includes
+                nElmtGr = _webSession.PrincipalMediaUniverses[0].GetIncludes();
+                if (nElmtGr != null && nElmtGr.Count > 0)
+                {
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.MEDECIN);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.MediaFilterIncludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                }
+
+                //Excludes
+                nElmtGr = _webSession.PrincipalMediaUniverses[0].GetExludes();
+                if (nElmtGr != null && nElmtGr.Count > 0)
+                {
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.MEDECIN);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.MediaFilterExcludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                }
+            }
+            #endregion
+
+            #endregion
+
+            #region Market
+
+            if (_webSession.PrincipalProductUniverses.Count > 0)
+            {
+                //Includes
+                nElmtGr = _webSession.PrincipalProductUniverses[0].GetIncludes();
+                if (nElmtGr != null && nElmtGr.Count > 0)
+                {
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.CATEGORY);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.CategoryIncludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.PRODUCT);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.ProductIncludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.GRP_PHARMA);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.GrpPharmaIncludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                }
+
+                //Excludes
+                nElmtGr = _webSession.PrincipalProductUniverses[0].GetExludes();
+                if (nElmtGr != null && nElmtGr.Count > 0)
+                {
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.CATEGORY);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.CategoryExcludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.PRODUCT);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.ProductExcludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                    tempListAsString = nElmtGr[0].GetAsString(TNSClassificationLevels.GRP_PHARMA);
+                    if (tempListAsString != null && tempListAsString.Length > 0) uC.GrpPharmaExcludeIds = tempListAsString.Split(',').Select(double.Parse).ToList();
+                }
             }
 
-            uC.CanalIds = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(',').Select(double.Parse).ToList();
+            #endregion
 
             return uC;
         }

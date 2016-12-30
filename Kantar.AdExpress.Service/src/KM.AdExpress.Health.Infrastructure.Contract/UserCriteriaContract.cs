@@ -21,5 +21,8 @@ namespace KM.AdExpress.Health.Infrastructure.Contract
         public List<double> GrpPharmaIncludeIds { get; set; }
         public List<double> GrpPharmaExcludeIds { get; set; }
 
+        public List<double> MediaFilterIncludeIds { get; set; }
+        public List<double> MediaFilterExcludeIds { get; set; }
+
     }
 }
