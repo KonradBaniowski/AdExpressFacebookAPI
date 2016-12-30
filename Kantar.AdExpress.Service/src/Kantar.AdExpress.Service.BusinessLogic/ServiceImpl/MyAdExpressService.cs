@@ -158,28 +158,32 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         else {
                             //Error : L'univers already exists
                             result.Message = GestionWeb.GetWebWord(1101, webSession.SiteLanguage);
+                            result.Success = false;
                         }
                     }
                     else if (name.Length == 0)
                     {
                         // Error : Empty name field
                         result.Message = GestionWeb.GetWebWord(837, webSession.SiteLanguage);
+                        result.Success = false;
                     }
                     else {
                         // Error : max field length exceeded
                         result.Message = GestionWeb.GetWebWord(823, webSession.SiteLanguage);
+                        result.Success = false;
                     }
 
                 }
                 else {
                     // Error : Select at least an element
                     result.Message = GestionWeb.GetWebWord(926, webSession.SiteLanguage);
+                    result.Success = false;
                 }
             }
             catch (System.Exception ex)
             {
                 result.Message = ex.Message;
-
+                result.Success = false;
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
 
