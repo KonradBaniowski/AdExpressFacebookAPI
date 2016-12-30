@@ -3,8 +3,8 @@
         var nbElemToLock = $('.tab-content .items-famille > li').length;
         if (nbElemToLock >= 1) {
             var nbIncludes = $('.panel-heading-choix.nav-tabs-alt').find('li').length;
-            //limit concurrent a 5 
-            if (nbIncludes < 5) {
+            //limit concurrent a 6 
+            if (nbIncludes < 7) {
                 $('[data-tab=' + nbIncludes + ']').append('<i class="fa fa-lock"></i>');
                 $('.panel-heading-choix.nav-tabs-alt').find('li[class="active"]').attr('class', '');
                 var nextId = nbIncludes;

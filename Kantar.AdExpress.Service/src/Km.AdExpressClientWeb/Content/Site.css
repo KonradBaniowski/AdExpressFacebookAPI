@@ -1107,8 +1107,8 @@ input {
                 color: #ff8c00;
                 background: transparent;
                 border-color: transparent;
-                padding: 2px 0;
-                border-bottom: 0 solid #ff8c00;
+                padding: 3px 0;
+                border-bottom: 1px solid #ff8c00;
             }
 
 .panel-body.resultats-marche {
