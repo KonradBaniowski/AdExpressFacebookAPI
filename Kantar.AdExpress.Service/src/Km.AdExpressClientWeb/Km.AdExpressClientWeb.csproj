@@ -633,6 +633,7 @@
     <Content Include="Content\img\r.gif" />
     <Content Include="Content\img\spin1.gif" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site-Fi_en.css" />
     <Content Include="Content\site-Fi.css" />
     <Content Include="Content\spinner.css" />
@@ -674,6 +675,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\icomoon.svg" />
+    <Content Include="fonts\Simple-Line-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="IgniteUI\css\structure\images\icon_sprite.png" />
@@ -1549,6 +1551,10 @@
     <Content Include="Content\pdf\Plaquette_Social Media.pdf" />
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <Content Include="Content\pdf\AdExpress_Optimized-Version_FIN02.pdf" />
+    <Content Include="fonts\Simple-Line-Icons.eot" />
+    <Content Include="fonts\Simple-Line-Icons.ttf" />
+    <Content Include="fonts\Simple-Line-Icons.woff" />
+    <Content Include="fonts\Simple-Line-Icons.woff2" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\DEMO_FINLAND.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
