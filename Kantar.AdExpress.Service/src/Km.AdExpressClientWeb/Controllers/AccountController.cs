@@ -21,7 +21,7 @@ namespace Km.AdExpressClientWeb.Controllers
     public class AccountController : Controller
     {
         private IApplicationUserManager _userManager;
-        private static Logger Logger= LogManager.GetCurrentClassLogger();
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         public AccountController(IApplicationUserManager userManager)
         {
             _userManager = userManager;
@@ -29,7 +29,7 @@ namespace Km.AdExpressClientWeb.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, int siteLanguage = -1)
+        public ActionResult Login(string returnUrl, int siteLanguage = -1, string err = "")
         {
             if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
@@ -42,6 +42,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(siteLanguage)),
                 SiteLanguage = Convert.ToInt32(siteLanguage)
             };
+
+            if (!String.IsNullOrEmpty(err))
+            {
+                _userManager.SignOut();
+                ModelState.AddModelError("", GestionWeb.GetWebWord(3104, Convert.ToInt32(siteLanguage)));
+                model.ErrorMessage = GestionWeb.GetWebWord(3104, Convert.ToInt32(siteLanguage));
+            }
+
             return View(model);
         }
         //
@@ -155,6 +163,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 _webSession.OnNewConnection(this.Request.UserHostAddress);
             }
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+
+
+            //TODO
+            try
+            {
+                var navigationSession = (WebSession)TNS.AdExpress.Web.Core.Sessions.WebSession.Load(idWS);
+            }
+            catch (Exception ex)
+            {
+                _userManager.SignOut();
+                return RedirectToAction("Login", new { returnUrl = "", siteLanguage = _siteLanguage, err = "nm" });
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
