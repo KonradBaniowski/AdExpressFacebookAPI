@@ -288,7 +288,7 @@ function NextStep(nextUrl, dis) {
 
     if (moduleId == 1781)
         validationUrl = '/Selection/SaveSponsorshipMediaSelection';
-    if (moduleId == 17794)
+    if (moduleId == 17954)
         validationUrl = '/Selection/SaveHealthMediaSelection';
     
 

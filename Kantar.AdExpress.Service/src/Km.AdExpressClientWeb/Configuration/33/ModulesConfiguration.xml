@@ -2144,7 +2144,7 @@
 
     <moduleGroup name="Health" type="1" privilegecode="163" traductioncode="3107" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="3108">
       <!-- *****************************************        Kantar Health                *****************************************-->
-      <module name="Kantar Health" privilegecode="17794" traductioncode="3107" moduleCategoryId="0" urlNextPage="/Private/Results/RolexResults.aspx" descriptionWebTextId="3108" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">      
+      <module name="Kantar Health" privilegecode="17954" traductioncode="3107" moduleCategoryId="0" urlNextPage="/Private/Results/RolexResults.aspx" descriptionWebTextId="3108" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">      
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
