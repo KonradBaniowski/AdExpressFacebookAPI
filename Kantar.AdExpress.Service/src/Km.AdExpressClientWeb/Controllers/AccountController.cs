@@ -46,8 +46,8 @@ namespace Km.AdExpressClientWeb.Controllers
             if (!String.IsNullOrEmpty(err))
             {
                 _userManager.SignOut();
-                ModelState.AddModelError("", GestionWeb.GetWebWord(3104, Convert.ToInt32(siteLanguage)));
-                model.ErrorMessage = GestionWeb.GetWebWord(3104, Convert.ToInt32(siteLanguage));
+                ModelState.AddModelError("", GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage)));
+                model.ErrorMessage = GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage));
             }
 
             return View(model);
@@ -172,7 +172,6 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             catch (Exception ex)
             {
-                _userManager.SignOut();
                 return RedirectToAction("Login", new { returnUrl = "", siteLanguage = _siteLanguage, err = "nm" });
             }
 
