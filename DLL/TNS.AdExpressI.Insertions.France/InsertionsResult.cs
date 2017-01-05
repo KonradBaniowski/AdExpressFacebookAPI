@@ -171,7 +171,10 @@ namespace TNS.AdExpressI.Insertions.France
                             break;
                     }
                     if (tab[cLine, index2] == null)
-                        tab[cLine, index2] = ((CellUnit)cells[index1]).Clone(num1);
+                        if (num1 == 0.0 && columns[index1].Id == GenericColumnItemInformation.Columns.topDiffusion)
+                            tab[cLine, index2] = new CellAiredTime(null);
+                        else
+                            tab[cLine, index2] = ((CellUnit)cells[index1]).Clone(num1);
                     else
                         ((CellUnit)tab[cLine, index2]).Add(num1);
                 }
