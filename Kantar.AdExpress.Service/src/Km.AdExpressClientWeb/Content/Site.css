@@ -862,8 +862,9 @@ input {
 
 
 .open .dropdown-menu.bg-blue {
-    background-color: rgba(0,193,255,1);
+    background-color: rgb(0, 175, 230);
     min-width: 150px;
+    width: 100%;
 }
 
     .open .dropdown-menu.bg-blue > li > a {
@@ -874,7 +875,7 @@ input {
         .open .dropdown-menu.bg-blue > li > a:focus,
         .open .dropdown-menu.bg-blue > li > a:hover {
             color: #fff;
-            background-color: rgba(100,220,245,1);
+            background-color: transparent;
             background-image: none;
             filter: none;
         }
@@ -2887,6 +2888,9 @@ ul.ui-selectable {
     padding-top: 2px;
 }
 
+.modal-body .modal-footer{
+    color:black;
+}
 
 /*.ui-iggrid-scrolldiv.ui-widget-content::-webkit-scrollbar{
     width: 1em; 

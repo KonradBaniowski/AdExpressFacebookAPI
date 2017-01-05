@@ -57,7 +57,7 @@ $(document).on('click', '#btnRenameResult', function () {
 
 //saving the session under the new diretory
 $(document).on('click', '#btnMoveResult', function () {
-    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idResult').attr("data-result");
+    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idResult').attr("data-result");
     var params = {
         idOldDirectory: idOldDirectory,
         idNewDirectory: idNewDirectory,
@@ -94,7 +94,7 @@ $(document).on('click', '#btnMoveResult', function () {
 
 
 // Managing sessions' and unverses' ddl
-$(document).on('click', '.dropdown-menu.bg-blue.form-control li > a', function (e) {
+$(document).on('click', '.dropdown-menu.bg-blue li > a', function (e) {
     e.preventDefault();
     var selText = $(this).text();
     var selValue = $(this).attr("data-id");
@@ -102,8 +102,8 @@ $(document).on('click', '.dropdown-menu.bg-blue.form-control li > a', function (
     $("#default").removeAttr("id");
     $(this).attr("id", "default");
     $("#default").hide();
-    $(this).parents('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only').html(selText + '<span class="caret"></span>');
-    $(this).parents('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only').attr("data-result", selValue);
+    $(this).parents('.input-group-btn').find('.btn.btn-default.form-control').html(selText + '<span class="caret" style="float:right;margin-top:8px;"></span>');
+    $(this).parents('.input-group-btn').find('.btn.btn-default.form-control').attr("data-result", selValue);
 
 });
 
@@ -161,7 +161,7 @@ $(document).on('click', '#btnRenameUnivers', function () {
 
 //saving the univers under the new diretory
 $(document).on('click', '#btnMoveUnivers', function () {
-    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idUnivers').attr("data-result");
+    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.bg-black-only.idUnivers').attr("data-result");
     var params = {
         idOldDirectory: idOldDirectory,
         idNewDirectory: idNewDirectory,
@@ -402,7 +402,7 @@ $(document).on('click', '#btnDropResultDirectory', function () {
     $('#dropResultDirectory').modal('show');
 });
 $(document).on('click', '#btnValidDropResultDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropResultDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idDropResultDirectory').attr("data-result");
     var params = {
         idDirectory: idDirectory,
         type: "Session"
@@ -439,7 +439,7 @@ $(document).on('click', '#btnDropUniversDirectory', function () {
     $('#dropUniversDirectory').modal('show');
 });
 $(document).on('click', '#btnValidDropUniversDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropUniversDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idDropUniversDirectory').attr("data-result");
     var params = {
         idDirectory: idDirectory,
         type: "Univers"
@@ -476,7 +476,7 @@ $(document).on('click', '#btnDropAlertsDirectory', function () {
     $('#dropAlertsDirectory').modal('show');
 });
 $(document).on('click', '#btnValidDropAlertsDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idDropAlertsDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idDropAlertsDirectory').attr("data-result");
     var params = {
         idDirectory: idDirectory,
         type: "Alerts"
@@ -514,7 +514,7 @@ $(document).on('click', '#btnRenameResultDirectory', function () {
     $('#renameResultDirectory').modal('show');
 });
 $(document).on('click', '#btnValidRenameResultDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameResultDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idRenameResultDirectory').attr("data-result");
     var name = $('#newResultDirectoryName').val();
     var params = {
         directoryName: name,
@@ -553,7 +553,7 @@ $(document).on('click', '#btnRenameUniversDirectory', function () {
     $('#renameUniversDirectory').modal('show');
 });
 $(document).on('click', '#btnValidRenameUniversDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameUniversDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idRenameUniversDirectory').attr("data-result");
     var name = $('#newUniversDirectoryName').val();
     var params = {
         directoryName: name,
@@ -592,7 +592,7 @@ $(document).on('click', '#btnRenameAlertsDirectory', function () {
     $('#renameAlertsDirectory').modal('show');
 });
 $(document).on('click', '#btnValidRenameAlertsDirectory', function () {
-    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.bg-black-only.idRenameAlertsDirectory').attr("data-result");
+    var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idRenameAlertsDirectory').attr("data-result");
     var name = $('#newAlertsDirectoryName').val();
     var params = {
         directoryName: name,
