@@ -2373,22 +2373,14 @@
     <item mnemonic="w3105" type="System.String">Affiner l'univers Emissions/Formes de Parrainage</item>
     <item mnemonic="w3106" type="System.String">Univers Emissions/Formes de Parrainage</item>
     <!--End-->
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> hotfix/error-message-on-no-modules-activated
     <!--Kantar Health-->
     <item mnemonic="w3107" type="System.String">Health</item>
     <item mnemonic="w3108" type="System.String">Description Kantar Health</item>
     <item mnemonic="w3109" type="System.String">Groupes Pharmaceutiques</item>
     <!--End-->
-<<<<<<< HEAD
-    
-=======
 
     <item mnemonic="w3110" type="System.String">Vous n'avez accès à aucun module, veuillez contacter le service client AdExpress</item>
 
->>>>>>> hotfix/error-message-on-no-modules-activated
   </items>
 </localization>
