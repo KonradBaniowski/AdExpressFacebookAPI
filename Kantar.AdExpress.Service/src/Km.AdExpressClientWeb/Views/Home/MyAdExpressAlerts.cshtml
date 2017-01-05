@@ -112,12 +112,13 @@
             </div>
             <div class="modal-body">
                 <div class="input-group-btn dropdown" dropdown="">
-                    <button id="result" type="button" class="btn btn-default form-control bg-black-only idDropAlertsDirectory"
+                    <button id="result" type="button" class="btn btn-default form-control idDropAlertsDirectory"
                             data-result="@Model.Alerts.FirstOrDefault().Id"
                             data-toggle="dropdown">
                         @Model.Alerts.FirstOrDefault().Title
+                        <span class="caret" style="float:right;margin-top:8px;"></span>
                     </button>
-                    <ul class="dropdown-menu bg-blue form-control">
+                    <ul class="dropdown-menu bg-blue">
                         @foreach (var item in Model.Alerts)
                         {
                             if (item == Model.Alerts.FirstOrDefault())

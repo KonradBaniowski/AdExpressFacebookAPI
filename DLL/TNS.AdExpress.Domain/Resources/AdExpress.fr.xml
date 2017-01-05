@@ -2344,7 +2344,7 @@
     <item mnemonic="w3085" type="System.String">Niveau d'ENGAGEMENT</item>
     <item mnemonic="w3086" type="System.String">Cumul des LIKES, SHARES et COMMENTS</item>
     <item mnemonic="w3087" type="System.String">PDV annonceurs ou marques ventilées par media</item>
-    
+
     <item mnemonic="w3088" type="System.String">Mois par mois</item>
     <item mnemonic="w3089" type="System.String">INVESTISSEMENTS PLURIMEDIA et BEX / mois par mois</item>
     <item mnemonic="w3090" type="System.String">Annonceur ou marque / mois par mois</item>
@@ -2356,7 +2356,7 @@
     <item mnemonic="w3095" type="System.String">Top 3 des posts</item>
 
     <item mnemonic="w3096" type="System.String">Sélectionner un univers marché</item>
-    
+
     <item mnemonic="w3097" type="System.String">Le délai d'attente s'est écoulé avant la fin de l'opération. Vous pouvez :</item>
     <item mnemonic="w3098" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
 
@@ -2373,12 +2373,22 @@
     <item mnemonic="w3105" type="System.String">Affiner l'univers Emissions/Formes de Parrainage</item>
     <item mnemonic="w3106" type="System.String">Univers Emissions/Formes de Parrainage</item>
     <!--End-->
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> hotfix/error-message-on-no-modules-activated
     <!--Kantar Health-->
     <item mnemonic="w3107" type="System.String">Health</item>
     <item mnemonic="w3108" type="System.String">Description Kantar Health</item>
     <item mnemonic="w3109" type="System.String">Groupes Pharmaceutiques</item>
     <!--End-->
+<<<<<<< HEAD
     
+=======
+
+    <item mnemonic="w3110" type="System.String">Vous n'avez accès à aucun module, veuillez contacter le service client AdExpress</item>
+
+>>>>>>> hotfix/error-message-on-no-modules-activated
   </items>
 </localization>
