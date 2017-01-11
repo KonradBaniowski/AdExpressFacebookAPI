@@ -110,12 +110,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && request.MediaIds.Contains(OUTDOOR) && request.MediaIds.Contains(DOOH))
+                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA 
+                        && request.MediaIds.Contains(OUTDOOR) && request.MediaIds.Contains(DOOH))
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(3080, _webSession.SiteLanguage);
                         return response;
                     }
-                    _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
+                     SetInsertOption(_webSession ,request.MediaIds);                 
                     List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                     System.Windows.Forms.TreeNode tmpNode;
                     bool containsSearch = false;
@@ -244,6 +245,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
             return response;
         }
+
+      
 
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
         {
@@ -1305,6 +1308,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<long> ids = levels.SelectMany(p => p.UniversItems.Select(x => x.Id))
                                         .ToList();
             return ids;
+        }
+
+        private void SetInsertOption(WebSession webSession ,List<long> mediaIds)
+        {
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.press)
+                         && !mediaIds.Contains(VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.press).DatabaseId))
+            {
+                webSession.Insert = CstWeb.CustomerSessions.Insert.total;
+            }
+           
         }
         #endregion
     }
