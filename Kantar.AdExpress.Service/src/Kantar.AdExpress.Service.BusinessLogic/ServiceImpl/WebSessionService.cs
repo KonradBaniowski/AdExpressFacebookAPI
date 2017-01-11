@@ -113,12 +113,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     #region Save Media Selection in WebSession
                     WebNavigation.Module _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && request.MediaIds.Contains(OUTDOOR) && request.MediaIds.Contains(DOOH))
+                    if (_webSession.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA
+                        && request.MediaIds.Contains(OUTDOOR) && request.MediaIds.Contains(DOOH))
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(3080, _webSession.SiteLanguage);
                         return response;
                     }
-                    _webSession.Insert = CstWeb.CustomerSessions.Insert.total;
+                    SetInsertOption(_webSession, request.MediaIds);
                     List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
                     System.Windows.Forms.TreeNode tmpNode;
                     bool containsSearch = false;
@@ -247,6 +248,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
             return response;
         }
+
 
         public WebSessionResponse SaveSponsorshipMediaSelection(SaveMediaSelectionRequest request, HttpContextBase httpContext)
         {
@@ -444,6 +446,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             return response;
         }
+
+      
+
 
         public WebSessionResponse SaveMarketSelection(SaveMarketSelectionRequest request, HttpContextBase httpContext)
         {
@@ -913,7 +918,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (string.IsNullOrEmpty(period))
             {
                 int endDayPeriodEndDate = DateTime.DaysInMonth(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)));
-                uC.StartDate= new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), 01);
+                uC.StartDate = new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), 01);
                 uC.EndDate = new DateTime(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)), endDayPeriodEndDate);
             }
             #endregion
@@ -1595,6 +1600,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return ids;
         }
 
+
         private static void SetLog(SaveMediaSelectionRequest request, WebSession webSession, Exception ex)
         {
             CustomerWebException cwe = new CustomerWebException(webSession, ex);
@@ -1607,6 +1613,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             cwe.Url = request.ClientInformation.Url.ToString();
             cwe.ServerName = request.ClientInformation.ServerMachineName;
             Logger.Log(LogLevel.Error, cwe.GetLog());
+        }
+
+        private void SetInsertOption(WebSession webSession, List<long> mediaIds)
+        {
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.press)
+                         && !mediaIds.Contains(VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.press).DatabaseId))
+            {
+                webSession.Insert = CstWeb.CustomerSessions.Insert.total;
+            }
+
         }
         #endregion
     }
