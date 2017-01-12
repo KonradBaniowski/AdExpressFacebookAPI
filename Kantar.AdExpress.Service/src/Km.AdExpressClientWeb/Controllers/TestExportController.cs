@@ -225,7 +225,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             _session = (WebSession)WebSession.Load(idWebSession);
 
-            MediaSchedulePeriod _period = new MediaSchedulePeriod(_session.PeriodBeginningDate, _session.PeriodEndDate, _session.DetailPeriod);
+            MediaSchedulePeriod _period = new MediaSchedulePeriod(DateString.YYYYMMDDToDateTime(_session.PeriodBeginningDate), DateString.YYYYMMDDToDateTime(_session.PeriodEndDate), _session.DetailPeriod, _session.ComparativePeriodType);
 
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
@@ -1308,7 +1308,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             _session = (WebSession)WebSession.Load(idWebSession);
 
-            MediaSchedulePeriod _period = new MediaSchedulePeriod(_session.PeriodBeginningDate, _session.PeriodEndDate, _session.DetailPeriod);
+            MediaSchedulePeriod _period = new MediaSchedulePeriod(DateString.YYYYMMDDToDateTime(_session.PeriodBeginningDate), DateString.YYYYMMDDToDateTime(_session.PeriodEndDate), _session.DetailPeriod, _session.ComparativePeriodType);
 
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");

@@ -659,7 +659,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (WebApplicationParameters.UseComparativeMediaSchedule || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     options.ComparativeStudy = _customerWebSession.ComparativeStudy;
-                    _customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
+                    _customerWebSession.ComparativePeriodType = _customerWebSession.ComparativePeriodType; //TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
                     options.ComparativePeriodType = _customerWebSession.ComparativePeriodType;
                 }
                 else
