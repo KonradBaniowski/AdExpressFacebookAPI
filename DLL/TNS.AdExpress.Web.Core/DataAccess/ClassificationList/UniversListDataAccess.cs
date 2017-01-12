@@ -234,25 +234,6 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
 
-                    /* TODO MODIFICATION
-                     * Code add to improve the performance of the universe loading process
-                    * 
-                    if (dr["COLUMN_NAME"] != null && dr["COLUMN_NAME"].ToString().Length > 0)
-                        levelsIds = dr["COLUMN_NAME"].ToString().Split('-');
-
-                    foreach (string levelId in levelsIds) {
-                        if (!allowedLevels.Contains(Int64.Parse(levelId))) {
-                            isValidUniverse = false;
-                        }
-                    }
-
-                    //Univers valide
-                    if (isValidUniverse) {
-                        dt.Rows.Add(dr.ItemArray);
-                    }
-
-                    isValidUniverse = true;*/
-
                     universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
                     if (universes != null && universes.Count > 0)
                     {
