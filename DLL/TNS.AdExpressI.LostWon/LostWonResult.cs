@@ -134,6 +134,10 @@ namespace TNS.AdExpressI.LostWon
         /// Specify if media schedule columns must be shown
         /// </summary>
         protected bool _showMediaSchedule = false;
+        /// <summary>
+        /// Is acces to pickanews?
+        /// </summary>
+        protected bool _allowPickaNews = false;
         #endregion
 
         #region Accessors
@@ -164,6 +168,14 @@ namespace TNS.AdExpressI.LostWon
         public Navigation.Module CurrentModule
         {
             get { return _module; }
+        }
+        /// <summary>
+        /// Get / Set autorisation to access to pickanews
+        /// </summary>
+        public bool AllowPickaNews
+        {
+            get { return _allowPickaNews; }
+            set { _allowPickaNews = value; }
         }
         #endregion
 
@@ -2028,8 +2040,10 @@ namespace TNS.AdExpressI.LostWon
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
             string mediaSchedulePath = "/MediaSchedulePopUp";
+            string pickanewsLink = "http://www.pickanews.com";
             LineStart cLineStart = null;
             int nbLines = 0;
+            _allowPickaNews = WebApplicationParameters.ShowPickaNews;
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
@@ -2057,6 +2071,10 @@ namespace TNS.AdExpressI.LostWon
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            if (_allowPickaNews)
+            {
+                gridData = new object[nbLines, resultTable.ColumnsNumber + 1 + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column // + 1 for pickanews
+            }
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -2127,6 +2145,14 @@ namespace TNS.AdExpressI.LostWon
                         {
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+
+                            if (_allowPickaNews)
+                            {
+                                columns.Add(new { headerText = "<img src='/Content/img/pickanews-logo.png' als='PickaNews'>", key = "PICKANEWS", dataType = "string", width = "35", allowSorting = false });
+                                schemaFields.Add(new { name = "PICKANEWS" });
+                                columnsFixed.Add(new { columnKey = "PICKANEWS", isFixed = false, allowFixing = false });
+                                columnsNotAllowedSorting.Add(new { columnKey = "PICKANEWS", allowSorting = false });
+                            }
                         }
                         else
                         {
@@ -2154,6 +2180,10 @@ namespace TNS.AdExpressI.LostWon
                 if (cLineStart is LineHide)
                     continue;
 
+                int pk = 0;
+                if (_allowPickaNews)
+                    pk++;
+
                 gridData[currentLine, 0] = i; // Pour column ID
                 gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
 
@@ -2175,7 +2205,7 @@ namespace TNS.AdExpressI.LostWon
                                , link);
                             }
                         }
-                        gridData[currentLine, k + 2] = link;
+                        gridData[currentLine, k + 2 + pk] = link;
 
                     }
 
@@ -2186,18 +2216,18 @@ namespace TNS.AdExpressI.LostWon
                             double value = ((CellUnit)cell).Value;
 
                             if (double.IsInfinity(value))
-                                gridData[currentLine, k + 2] = (value < 0) ? "-Infinity" : "+Infinity";
+                                gridData[currentLine, k + 2 + pk] = (value < 0) ? "-Infinity" : "+Infinity";
                             else if (double.IsNaN(value))
-                                gridData[currentLine, k + 2] = null;
+                                gridData[currentLine, k + 2 + pk] = null;
                             else
-                                gridData[currentLine, k + 2] = value / 100;
+                                gridData[currentLine, k + 2 + pk] = value / 100;
                         }
                         else if (cell is CellUnit)
                         {
                             if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
-                                gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                gridData[currentLine, k + 2 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             else
-                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 2 + pk] = ((CellUnit)cell).Value;
                         }
                         else if(cell is AdExpressCellLevel)
                         {
@@ -2209,11 +2239,22 @@ namespace TNS.AdExpressI.LostWon
                             else
                                 gridData[currentLine, 2] = "";
 
-                            gridData[currentLine, k + 2] = label;
+                            gridData[currentLine, k + 2 + pk] = label;
+
+                            if (_allowPickaNews)
+                            {
+                                string url = string.Format("/find?q={0}#mon-dashboard", Uri.EscapeDataString(label));
+
+                                gridData[currentLine, 3] = string.Format("<center><a href='{0}{1}' target='_blank' alt='pickanews link'><span class='fa fa-search-plus'></span></a></center>"
+                                    , pickanewsLink
+                                    , url
+                                    );
+                            }
+
                         }
                         else
                         {
-                            gridData[currentLine, k + 2] = cell.RenderString();
+                            gridData[currentLine, k + 2 + pk] = cell.RenderString();
                         }
                     }
                 }

@@ -2628,10 +2628,10 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (line != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
             {
                 //TODO : A faire côté client
-                string url = string.Format("/find?q={0}&date={1}+-+{2}#mon-dashboard"
+                string url = string.Format("/find?q={0}#mon-dashboard"
                             , Uri.EscapeDataString(data[line, col].ToString())
-                            , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
-                            , TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                            //, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                            //, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
                         );
 
                 gridData[line - 1, gridColumnId++] = string.Format("<center><a href='{0}{1}' target='_blank' alt='pickanews link'><span class='fa fa-search-plus'></span></a></center>"

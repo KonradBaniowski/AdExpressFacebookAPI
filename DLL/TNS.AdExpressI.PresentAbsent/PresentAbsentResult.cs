@@ -178,6 +178,10 @@ namespace TNS.AdExpressI.PresentAbsent
         /// Show Total Column
         /// </summary>
         protected bool _showTotal = false;
+        /// <summary>
+        /// Is acces to pickanews?
+        /// </summary>
+        protected bool _allowPickaNews = false;
         #endregion
 
         #region Accessors
@@ -208,6 +212,14 @@ namespace TNS.AdExpressI.PresentAbsent
         public Navigation.Module CurrentModule
         {
             get { return _module; }
+        }
+        /// <summary>
+        /// Get / Set autorisation to access to pickanews
+        /// </summary>
+        public bool AllowPickaNews
+        {
+            get { return _allowPickaNews; }
+            set { _allowPickaNews = value; }
         }
         #endregion
 
@@ -2018,14 +2030,17 @@ namespace TNS.AdExpressI.PresentAbsent
             string mediaSchedulePath = "/MediaSchedulePopUp";
             string insertionPath = "/Insertions";
             string versionPath = "/Creative";
+            string pickanewsLink = "http://www.pickanews.com";
             LineStart cLineStart = null;
             int nbLines = 0;
+            _allowPickaNews = WebApplicationParameters.ShowPickaNews;
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
                 gridResult.HasData = false;
                 return gridResult;
             }
+
 
             resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
@@ -2051,12 +2066,22 @@ namespace TNS.AdExpressI.PresentAbsent
                 }
 
                 gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+                if (_allowPickaNews)
+                {
+                    gridData = new object[nbLines, resultTable.ColumnsNumber + 1 + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column // + 1 for pickanews
+                }
+
             }
             else
             {
                 nbLines = resultTable.LinesNumber;
-                gridData = new object[nbLines, resultTable.ColumnsNumber];
-            }//+2 car ID et PID en plus  -  //_data.LinesNumber 
+                gridData = new object[nbLines, resultTable.ColumnsNumber + 1];
+                if (_allowPickaNews)
+                {
+                    gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; // + 1 for pickanews
+                }
+
+            }//+2 car ID et PID en plus  -  //_data.LinesNumber
 
             List<string> listStringNotAllowedSorting = new List<string> {
                 GestionWeb.GetWebWord(150, _session.SiteLanguage), //Planmedia
@@ -2207,6 +2232,14 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
                             else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
+
+                            if (_allowPickaNews)
+                            {
+                                columns.Add(new { headerText = "<img src='/Content/img/pickanews-logo.png' als='PickaNews'>", key = "PICKANEWS", dataType = "string", width = "35", allowSorting = false });
+                                schemaFields.Add(new { name = "PICKANEWS" });
+                                columnsFixed.Add(new { columnKey = "PICKANEWS", isFixed = false, allowFixing = false });
+                                columnsNotAllowedSorting.Add(new { columnKey = "PICKANEWS", allowSorting = false });
+                            }
                         }
                         else
                         {
@@ -2216,13 +2249,13 @@ namespace TNS.AdExpressI.PresentAbsent
                                 {
                                     format = "percent";
                                     colKey += "-pdm";
-                                }                                  
+                                }
                                 else
                                 {
                                     format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
                                     colKey += "-unit";
                                 }
-                                   
+
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             }
                             else
@@ -2250,7 +2283,11 @@ namespace TNS.AdExpressI.PresentAbsent
                 cLineStart = resultTable.GetLineStart(i);
                 if (cLineStart is LineHide)
                     continue;
-            
+
+                int pk = 0;
+                if (_allowPickaNews)
+                    pk++;
+
                 gridData[currentLine, 0] = i; // Pour column ID
                 gridData[currentLine, 1] = resultTable.GetSortedParentIndex(i); // Pour column PID
 
@@ -2272,7 +2309,7 @@ namespace TNS.AdExpressI.PresentAbsent
                            , link);
                             }
                         }
-                        gridData[currentLine, k + 2] = link;
+                        gridData[currentLine, k + 2 + pk] = link;
 
                     }
                     else if (cell is CellOneLevelInsertionsLink)
@@ -2290,7 +2327,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
 
                         }
-                        gridData[currentLine, k + 2] = link;
+                        gridData[currentLine, k + 2 + pk] = link;
                     }
                     else if (cell is CellOneLevelCreativesLink)
                     {
@@ -2307,7 +2344,7 @@ namespace TNS.AdExpressI.PresentAbsent
                             }
 
                         }
-                        gridData[currentLine, k + 2] = link;
+                        gridData[currentLine, k + 2 + pk] = link;
                     }
                     else
                     {
@@ -2316,11 +2353,11 @@ namespace TNS.AdExpressI.PresentAbsent
                             double value = ((CellUnit)cell).Value;
 
                             if (double.IsInfinity(value))
-                                gridData[currentLine, k + 2] = "Infinity";
+                                gridData[currentLine, k + 2 + pk] = "Infinity";
                             else if (double.IsNaN(value))
-                                gridData[currentLine, k + 2] = null;
+                                gridData[currentLine, k + 2 + pk] = null;
                             else
-                                gridData[currentLine, k + 2] = value / 100;
+                                gridData[currentLine, k + 2 + pk] = value / 100;
                         }
                         else if (cell is CellUnit)
                         {
@@ -2328,12 +2365,12 @@ namespace TNS.AdExpressI.PresentAbsent
                             {
                                 if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                                 {
-                                    gridData[currentLine, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                    gridData[currentLine, k + 1 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                                 }
-                                else gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                else gridData[currentLine, k + 2 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             }
                             else
-                                gridData[currentLine, k + 2] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 2 + pk] = ((CellUnit)cell).Value;
                         }
                         else if (cell is AdExpressCellLevel)
                         {
@@ -2345,15 +2382,25 @@ namespace TNS.AdExpressI.PresentAbsent
                             else
                                 gridData[currentLine, 2] = "";
 
-                            gridData[currentLine, k + 2] = label;
+                            gridData[currentLine, k + 2 + pk] = label;
+
+                            if (_allowPickaNews)
+                            {
+                                string url = string.Format("/find?q={0}#mon-dashboard", Uri.EscapeDataString(label));
+
+                                gridData[currentLine, 3] = string.Format("<center><a href='{0}{1}' target='_blank' alt='pickanews link'><span class='fa fa-search-plus'></span></a></center>"
+                                    , pickanewsLink
+                                    , url
+                                    );
+                            }
                         }
                         else
                         {
                             if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                             {
-                                gridData[currentLine, k + 1] = cell.RenderString();
+                                gridData[currentLine, k + 1 + pk] = cell.RenderString();
                             }
-                            else gridData[currentLine, k + 2] = cell.RenderString();
+                            else gridData[currentLine, k + 2 + pk] = cell.RenderString();
                         }
                     }
                 }
