@@ -10,20 +10,20 @@ $(document).on('click', '#myUnivers', function (event) {
     var params = {
         dimension: dimension
     };
-        $.ajax({
-            url: '/Universe/LoadUserUniversGroups',
-            type: 'GET',
-            data: params,
-            error: function (xmlHttpRequest, errorText, thrownError) {
-                bootbox.alert("An error occurred while processing your request.");
-            },
-            success: function (response) {
-                $('.modal-content').html('');
-                $('#monunivers .modal-content').append(response);
-                $('#monunivers').modal('show');
-            }
+    $.ajax({
+        url: '/Universe/LoadUserUniversGroups',
+        type: 'GET',
+        data: params,
+        error: function (xmlHttpRequest, errorText, thrownError) {
+            bootbox.alert("An error occurred while processing your request.");
+        },
+        success: function (response) {
+            $('.modal-content').html('');
+            $('#monunivers .modal-content').append(response);
+            $('#monunivers').modal('show');
+        }
 
-        });
+    });
 });
 
 $('#save-universe').on('click', function (event) {
@@ -123,9 +123,9 @@ $(document).on('click', '#btnSaveUnivers', function (event) {
         data: params,
         success: function (response) {
             $('#saveunivers').modal('hide');
-            bootbox.alert(response);                      
+            bootbox.alert(response);
         }
-    });    
+    });
 });
 
 $(document).on('click', '#LoadUnivers', function (event) {
@@ -149,11 +149,14 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     bootbox.alert(response.Message);
                 }
                 else {
+                    clearAllPanels();
                     var trees = response.Trees;
                     var medias = response.UniversMediaIds;
                     var nav = $('.nav.nav-tabs');
+                    var id = -1;
+                    var oldAccesType = "";
                     $.each(trees, function (index, tree) {
-                        var id = tree.Id;
+                        id = tree.Id;
                         if (id > 0 && response.ModuleId == 278)//Create the tab
                         {
                             var ulSource = $('.nav.nav-tabs');
@@ -198,7 +201,20 @@ $(document).on('click', '#LoadUnivers', function (event) {
                             panelHtml.find('[id^=collapse-14]').collapse('hide');
                             $('.tab-content').append(tabHtml);
                         }
-                        var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
+
+                        if (tree.AccessType.toString() != oldAccesType) {
+                            oldAccesType = tree.AccessType;
+                            var panels = $('.panel-group.panel-group-results[data-access-type="' + tree.AccessType + '"]');
+                            var panelIds = new Array();
+                            $.each($(panels), function (index) {
+                                panelIds.push(panels.attr("id").split("tree-")[1]);
+                            });
+                            id = Math.min.apply(Math, panelIds);
+                        } else if (response.ModuleId != 278) {
+                            id++;
+                        }
+
+                        //var tab = $('.panel-group.panel-group-results[id=tree-' + id + ']');
                         $.each($(tree.UniversLevels), function (index, uniLvl) {
                             var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                             panel.html('');
@@ -222,8 +238,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
             }
         });
     }
-    else
-    {
+    else {
         $('.modal-content').html('');
         bootbox.alert("Select an univers to load!");
     }
@@ -246,6 +261,16 @@ function SetUniversItems(data, panel) {
         }
     }
 }
+
+function clearAllPanels() {
+    panels = $('.panel-group.panel-group-results[id] .panel-body[data-level] li');
+    $.each($(panels), function () {
+        $(this).html('');
+    });
+    $(".panel-title.orange").removeClass("orange");
+}
+
+
 $(document).on('click', '.accordion-toggle', function (e) {
     event.preventDefault();
     $('#accordion').find('.accordion-body.collapse.in').collapse('hide');
