@@ -1,4 +1,5 @@
 ﻿var dimension = $('#Dimension').val();
+var PRESENTABSENTID = 278;
 var params = {
     dimension: dimension
 };
@@ -156,9 +157,12 @@ $(document).on('click', '#LoadUnivers', function (event) {
                     var id = -1;
                     var oldAccesType = "";
                     $.each(trees, function (index, tree) {
-                        id = tree.Id;
-                        if (id > 0 && response.ModuleId == 278)//Create the tab
+                        if (response.ModuleId == PRESENTABSENTID)
+                            id = tree.Id;
+
+                        if (id > 0 && response.ModuleId == PRESENTABSENTID && !$("#tree-" + id).length)//Create the tab
                         {
+                            id = tree.Id;
                             var ulSource = $('.nav.nav-tabs');
                             var liHtml = $('<li/>');
                             var aHtml = $('<a/>');
@@ -198,19 +202,21 @@ $(document).on('click', '#LoadUnivers', function (event) {
                                 var dataTree = $(value).attr('data-tree');
                                 $(value).attr('data-tree', id);
                             });
+                            $.each(panelHtml.find('.panel-heading.head-results'), function (index, value) {
+                                $(value).attr('id', $(value).parent().attr('href').replace('#collapse', 'heading').slice(0, -1) + id);
+                            });
                             panelHtml.find('[id^=collapse-14]').collapse('hide');
                             $('.tab-content').append(tabHtml);
                         }
 
                         if (tree.AccessType.toString() != oldAccesType) {
                             oldAccesType = tree.AccessType;
-                            var panels = $('.panel-group.panel-group-results[data-access-type="' + tree.AccessType + '"]');
-                            var panelIds = new Array();
-                            $.each($(panels), function (index) {
-                                panelIds.push(panels.attr("id").split("tree-")[1]);
-                            });
+                            var panelIds = $('.panel-group.panel-group-results[data-access-type="' + tree.AccessType + '"]').map(function () {
+                                return parseInt(this.id.split("tree-")[1], 10);
+                            }).get();
                             id = Math.min.apply(Math, panelIds);
-                        } else if (response.ModuleId != 278) {
+                        }
+                        else if (response.ModuleId != PRESENTABSENTID) {
                             id++;
                         }
 
@@ -240,7 +246,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
     }
     else {
         $('.modal-content').html('');
-        bootbox.alert("Select an univers to load!");
+        bootbox.alert("Please select an univers to load");
     }
 });
 
@@ -263,10 +269,11 @@ function SetUniversItems(data, panel) {
 }
 
 function clearAllPanels() {
-    panels = $('.panel-group.panel-group-results[id] .panel-body[data-level] li');
-    $.each($(panels), function () {
+    panelsGrp = $('.panel-group.panel-group-results[id^="tree-"] .panel-body[data-level] > ul.items-famille');
+    $.each($(panelsGrp), function () {
         $(this).html('');
     });
+    $('.panel-group.panel-group-results[id^="tree-"] > .panel-collapse.collapse.in').collapse('hide');
     $(".panel-title.orange").removeClass("orange");
 }
 
