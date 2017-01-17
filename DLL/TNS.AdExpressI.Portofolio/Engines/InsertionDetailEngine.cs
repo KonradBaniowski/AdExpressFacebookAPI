@@ -598,11 +598,15 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
                                     if (_showTopDiffusion)
                                     {
+                                        type = assembly.GetType(Column.CellType);
+                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         if (row[Column.DataBaseField].ToString().Length > 0)
-                                            tab[iCurLine, iCurColumn++] = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+                                            curCell = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
                                         else
-                                            tab[iCurLine, iCurColumn++] = new CellAiredTime(0);
+                                            curCell = new CellAiredTime(0);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                        tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
                                 case GenericColumnItemInformation.Columns.product:
