@@ -2044,6 +2044,10 @@ namespace TNS.AdExpressI.LostWon
             LineStart cLineStart = null;
             int nbLines = 0;
             _allowPickaNews = WebApplicationParameters.ShowPickaNews;
+            if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
+            {
+                _allowPickaNews = false;
+            }
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
