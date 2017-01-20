@@ -268,6 +268,8 @@
                 $('#year-sliding').selectpicker('val', '--');
                 $('#week-sliding').selectpicker('val', '--');
                 $('#day-sliding').selectpicker('val', '--');
+                passSelectionComparative = true;
+                comparativePeriodCalendarType = 1; //datetodate
                 DisableSingleDates();
             });
 
@@ -293,17 +295,23 @@
                 selectedPeriod = $('#current-year').attr("selectedperiod");
                 DisableSlidingDates();
                 EnableComparativeStudy();
+                passSelectionComparative = true;
+                comparativePeriodCalendarType = 1; //datetodate
             });
 
             $('#previous-year').on('click', function (e) {
                 selectedPeriod = $('#previous-year').attr("selectedperiod");
                 DisableSlidingDates();
                 EnableComparativeStudy();
+                passSelectionComparative = true;
+                comparativePeriodCalendarType = 1; //datetodate
             });
 
             $('#previous-month').on('click', function (e) {
                 selectedPeriod = $('#previous-month').attr("selectedperiod");
                 DisableSlidingDates();
+                passSelectionComparative = true;
+                comparativePeriodCalendarType = 1; //datetodate
             });
 
             $('#next-week').on('click', function (e) {
