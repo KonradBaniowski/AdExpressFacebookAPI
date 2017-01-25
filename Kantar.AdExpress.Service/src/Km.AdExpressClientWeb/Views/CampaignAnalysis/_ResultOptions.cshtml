@@ -157,32 +157,60 @@
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
+                                            {                                               
+                                                if (item.Value == Model.GenericDetailLevel.L1Detail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             }
                                         </select>
                                     </div>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L2Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L2Detail.Items)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
+                                            {                                               
+                                                if (item.Value == Model.GenericDetailLevel.L3Detail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             }
                                         </select>
                                     </div>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L3Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L3Detail.Items)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
+                                            {                                               
+                                                if (item.Value == Model.GenericDetailLevel.L3Detail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             }
                                         </select>
                                     </div>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L4Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L4Detail.Items)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
+                                            {                                               
+                                                if (item.Value == Model.GenericDetailLevel.L4Detail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             }
                                         </select>
                                     </div>

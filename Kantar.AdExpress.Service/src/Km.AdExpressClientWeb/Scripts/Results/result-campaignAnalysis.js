@@ -36,7 +36,7 @@
 
     function GenericDetailLevelFilter() {
         this.DefaultDetailValue = $('#defaultDetail').val();
-        this.CustomDetailValue = -1;
+        this.CustomDetailValue = $('#customDetail').val();
         this.L1DetailValue = $('#l1Detail').val();
         this.L2DetailValue = $('#l2Detail').val();
         this.L3DetailValue = $('#l3Detail').val();
