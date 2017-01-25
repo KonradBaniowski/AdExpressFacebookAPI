@@ -205,9 +205,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         selectedL1Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[0]);
                     }
                     genericDetailLevelOption.L1Detail = DetailLevelItemInit(1, selectedL1Id);
-
-                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
-                        genericDetailLevelOption.L1Detail.SelectedId = DetailLevelItemInformation.Levels.groupMediaAgency.GetHashCode().ToString();
+                    
                 }
                 #endregion
 
@@ -219,9 +217,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         selectedL2Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[1]);
                     }
-                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2, selectedL2Id);
-                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
-                        genericDetailLevelOption.L2Detail.SelectedId = DetailLevelItemInformation.Levels.agency.GetHashCode().ToString();
+                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2, selectedL2Id);                   
                 }
                 #endregion
 
@@ -233,9 +229,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         selectedL3Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[2]);
                     }
-                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3, selectedL3Id);
-                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
-                        genericDetailLevelOption.L3Detail.SelectedId = DetailLevelItemInformation.Levels.advertiser.GetHashCode().ToString();
+                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3, selectedL3Id);                   
                 }
                 #endregion
 
@@ -250,16 +244,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     genericDetailLevelOption.L4Detail = DetailLevelItemInit(4, selectedL4Id);
                 }
                 #endregion
-
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
-                {
-                    // Niveau de détail par défaut
-                    ArrayList levelsIds = new ArrayList();
-                    levelsIds.Add((int)DetailLevelItemInformation.Levels.groupMediaAgency);
-                    levelsIds.Add((int)DetailLevelItemInformation.Levels.agency);
-                    levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
-                    _customerWebSession.GenericProductDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
-                }
                 #endregion
 
                 options.GenericDetailLevel = genericDetailLevelOption;

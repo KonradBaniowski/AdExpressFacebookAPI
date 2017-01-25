@@ -248,8 +248,15 @@
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
+                                            {                                                
+                                                if (item.Value == Model.GenericDetailLevel.CustomDetail.SelectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             }
                                         </select>
                                     </div>
