@@ -2033,7 +2033,7 @@ namespace TNS.AdExpressI.PresentAbsent
             string pickanewsLink = "http://www.pickanews.com";
             LineStart cLineStart = null;
             int nbLines = 0;
-            _allowPickaNews = WebApplicationParameters.ShowPickaNews;
+            _allowPickaNews = _session.CurrentTab != DynamicAnalysis.SYNTHESIS && WebApplicationParameters.ShowPickaNews;
 
             if (resultTable == null || resultTable.DataColumnsNumber == 0)
             {
@@ -2365,7 +2365,9 @@ namespace TNS.AdExpressI.PresentAbsent
                             {
                                 if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                                 {
-                                    gridData[currentLine, k + 1 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                    gridData[currentLine, k + 1 + pk] = 
+                                       (cell is CellNumber) ? ((CellUnit)cell).Value :
+                                       FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                                 }
                                 else gridData[currentLine, k + 2 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             }
