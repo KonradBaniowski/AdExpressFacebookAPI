@@ -2328,7 +2328,9 @@ namespace TNS.AdExpressI.PresentAbsent
                             {
                                 if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                                 {
-                                    gridData[currentLine, k + 1] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
+                                    gridData[currentLine, k + 1] = 
+                                       (cell is CellNumber) ? ((CellUnit)cell).Value :
+                                       FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                                 }
                                 else gridData[currentLine, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             }
