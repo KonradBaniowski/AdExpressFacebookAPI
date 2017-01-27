@@ -142,6 +142,10 @@
                                                     {
                                                         <option value="@item.Value" selected>@item.Text</option>
                                                     }
+                                                    else if (!item.Enabled)
+                                                    {
+                                                        <option value="@item.Value" disabled>@item.Text</option>
+                                                    }
                                                     else
                                                     {
                                                         <option value="@item.Value">@item.Text</option>
