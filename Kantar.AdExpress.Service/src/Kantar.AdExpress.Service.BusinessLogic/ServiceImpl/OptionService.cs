@@ -500,7 +500,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     foreach (FilterItem item in activeBannersFormatList)
                     {
-                        formatOption.Format.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString() });
+                        formatOption.Format.Items.Add(new SelectItem { Text = item.Label, Value = item.Id.ToString(),Enabled = item.IsEnable });
                     }
 
                     if (string.IsNullOrEmpty(_customerWebSession.SelectedBannersFormatList))
