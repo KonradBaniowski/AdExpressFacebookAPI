@@ -1302,14 +1302,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #region Sauvegarde de l'univers
             if (universes.Any())
             {
-                bool goFurther = false;
-
                 Branch.type branchType = GetBrancheType(request.Dimension, idModule);
                 string universeName = request.Name;
                 if (String.IsNullOrEmpty(request.Name) && idSelectedUniverse != 0) //if (universeName.Length == 0 && !idSelectedUniverse.Equals("0"))
                 {
-                    //Add AdExpress universe to collection
-                    universes.Add(universes.Count, adExpressUniverse);
 
                     if (UniversListDataAccess.UpdateUniverse(idSelectedUniverse, webSession, request.IdUniverseClientDescription, branchType.GetHashCode(), universes, isDefault))
                     {
@@ -1331,7 +1327,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     if (!UniversListDataAccess.IsUniverseExist(webSession, universeName))
                     {
-                        universes.Add(universes.Count, adExpressUniverse);
                         if (idSelectedDirectory > 0 && UniversListDataAccess.SaveUniverse(idSelectedDirectory, universeName, universes, branchType, request.IdUniverseClientDescription, webSession, isDefault, string.Join(", ", levels), mediaIds))
                         {
                             if (webSession.CurrentModule == WebConstantes.Module.Name.FACEBOOK)
