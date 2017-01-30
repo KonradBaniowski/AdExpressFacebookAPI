@@ -68,9 +68,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
             }
 
+        
             return result;
         }
 
+       
 
         public DetailSelectionResponse LoadAlertDetails(string id, string idWebSession)
         {
@@ -181,7 +183,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             switch (_webSession.CurrentModule)
             {
                 case WebConstantes.Module.Name.HEALTH:
-                    if(!string.IsNullOrEmpty(_webSession.PeriodBeginningDate))
+                    if (!string.IsNullOrEmpty(_webSession.PeriodBeginningDate))
                         domain.DateBegin = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, true);
                     if (!string.IsNullOrEmpty(_webSession.PeriodEndDate))
                         domain.DateEnd = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, false);
@@ -239,13 +241,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, long currentModule, bool defaultFcbUniverse = false)
         {
             List<long> itemIdList = null;
+            int nbUniverse = 0;
 
             foreach (KeyValuePair<int, AdExpressUniverse> kvp in Principal)
             {
-                //if (Principal.Any())
-                //{
-                //AdExpressUniverse adExpressUniverse = Principal[0];
-
+                
                 foreach (KeyValuePair<long, NomenclatureElementsGroup> kvpElements in kvp.Value.ElementsGroupDictionary)
                 {
 
@@ -260,8 +260,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     else
                     {
-                        model.Label = (kvpElements.Key == 0) ? GestionWeb.GetWebWord(3039, SiteLanguage) : GestionWeb.GetWebWord(2869, SiteLanguage); //3039 = Référents; 2869 = Concurrents
-                        model.LabelId = (kvpElements.Key == 0) ? 3039 : 2869;
+                        model.Label = GestionWeb.GetWebWord(2270, SiteLanguage); 
+                        model.LabelId = 2270;
+                        if (Principal.Count() > 1)
+                        {
+                            model.Label = (nbUniverse == 0) ? GestionWeb.GetWebWord(3039, SiteLanguage) : GestionWeb.GetWebWord(2869, SiteLanguage); //3039 = Référents; 2869 = Concurrents
+                            model.LabelId = (nbUniverse == 0) ? 3039 : 2869;
+                        }                      
                     }
                     #region populate Universlevels
                     model.UniversLevels = new List<Core.Domain.UniversLevel>();
@@ -299,7 +304,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     treeDefined.Add(model);
                 }
                 //}
-
+                nbUniverse++;
             }
 
         }
@@ -462,7 +467,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private static string GetSchema(long moduleId)
         {
-            switch(moduleId)
+            switch (moduleId)
             {
                 case WebConstantes.Module.Name.HEALTH:
                     return WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label;
