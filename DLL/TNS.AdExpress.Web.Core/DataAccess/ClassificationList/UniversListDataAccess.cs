@@ -1752,6 +1752,120 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
         }
 
         /// <summary>
+        ///  Update Universe
+        /// </summary>
+        /// <remarks>Testée</remarks>
+        /// <param name="idUniverse">id Universe </param>
+        /// <param name="webSession">Session client</param>
+        /// <param name="idTypeUniverseClient">id Type universe client</param>
+        /// <param name="idUniverseClientDescription">Id universe client description</param>
+        /// <param name="universesToSave">Universes to save</param>
+        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universesToSave)
+        {
+
+            #region Ouverture de la base de données
+            OracleConnection connection = (OracleConnection)webSession.Source.GetSource();
+            bool DBToClosed = false;
+            bool success = false;
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new UniversListException("Impossible d'ouvrir la base de données :" + e.Message));
+                }
+            }
+            #endregion
+
+            #region Sérialisation et Mise à jour de la session
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            List<long> levelsIds = null;
+            string levelsIdsField = string.Empty;*/
+
+            try
+            {
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
+                //"Serialization"
+                ms = new MemoryStream();
+                bf = new BinaryFormatter();
+                bf.Serialize(ms, universesToSave);
+                binaryData = new byte[ms.GetBuffer().Length];
+                binaryData = ms.GetBuffer();
+
+              
+
+                //mise à jour de la session
+                string sql = " UPDATE  " + universeTable.Sql + " ";
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", COMMENTARY =" + levelsIdsField;*/
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE ";              
+                sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
+
+                //Exécution de la requête
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = connection;
+                sqlCommand.CommandType = CommandType.Text;
+                //parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Input;
+                param.Value = binaryData;
+                //Execution PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e)
+            {
+                // Fermeture des structures
+                try
+                {
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) connection.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new UniversListException(" Impossible de libérer les ressources après échec de la méthode : " + et.Message));
+                }
+                throw (new UniversListException(" Echec de la sauvegarde de l'objet dans la base de donnée : " + e.Message));
+            }
+            //pas d'erreur
+            try
+            {
+                // Fermeture des structures
+                ms.Close();
+                bf = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) connection.Close();
+                success = true;
+            }
+            catch (System.Exception et)
+            {
+                throw (new UniversListException(" Impossible de fermer la base de données : " + et.Message));
+            }
+            #endregion
+
+            return (success);
+
+        }
+
+        /// <summary>
         ///  Renommer un univers
         /// </summary>
         /// <remarks>Testée</remarks>
