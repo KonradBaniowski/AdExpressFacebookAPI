@@ -64,6 +64,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return result;
         }
 
+        public object[,] GetMediaScheduleData(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext)
+        {
+            object[,] result = null;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle, httpContext);
+                result = mediaScheduleResult.ComputeData();
+            }
+            catch (Exception ex)
+            {
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                throw;
+            }
+            return result;
+        }
+
         public GridResultResponse GetMediaScheduleCreativeData(CreativeMediaScheduleRequest creativeMediaScheduleRequest)
         {
             GridResultResponse response = new GridResultResponse();

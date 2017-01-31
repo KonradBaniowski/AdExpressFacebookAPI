@@ -28,6 +28,8 @@ using System.Net;
 using FwkWebRsltUI = TNS.FrameWork.WebResultUI;
 using Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Helpers;
+using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -215,6 +217,16 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             ExportBrut();
+
+            return View();
+        }
+
+        public ActionResult ResultBrutAdnetTrack(string id, string level, string zoomDate, string idVehicle)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            ExportAdnetTrack(id, level, zoomDate, idVehicle);
 
             return View();
         }
@@ -1342,9 +1354,82 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             _session = (WebSession)WebSession.Load(idWebSession);
-
             MediaSchedulePeriod _period = new MediaSchedulePeriod(DateString.YYYYMMDDToDateTime(_session.PeriodBeginningDate), DateString.YYYYMMDDToDateTime(_session.PeriodEndDate), _session.DetailPeriod, _session.ComparativePeriodType);
 
+            ExportResponse(_showValues, idWebSession, _session, data, _period);
+        }
+
+        void ExportAdnetTrack(string id, string level, string zoomDate, string idVehicle)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            _session = (WebSession)WebSession.Load(idWebSession);
+
+            if (!string.IsNullOrEmpty(idVehicle))
+            {
+                _session.AdNetTrackSelection = new AdNetTrackProductSelection((FrameWorkResults.AdNetTrackMediaSchedule.Type)int.Parse(level), int.Parse(id));
+                _session.Save();
+            }
+            else
+            {
+                _mediaSchedule.SetProductLevel(idWebSession, Int64.Parse(id), int.Parse(level));
+            }
+
+            object[,] data = _mediaSchedule.GetMediaScheduleData(idWebSession, zoomDate, idVehicle, this.HttpContext);
+
+            #region Period Detail
+            MediaSchedulePeriod period;
+            DateTime begin;
+            DateTime end;
+            if (!string.IsNullOrEmpty(zoomDate))
+            {
+                if (_session.DetailPeriod == ConstantePeriod.DisplayLevel.weekly)
+                {
+                    begin = FctUtilities.Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                    end = FctUtilities.Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateWeek);
+                }
+                else
+                {
+                    begin = FctUtilities.Dates.GetPeriodBeginningDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                    end = FctUtilities.Dates.GetPeriodEndDate(zoomDate, ConstantePeriod.Type.dateToDateMonth);
+                }
+                begin = FctUtilities.Dates.Max(begin,
+                    FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType));
+                end = FctUtilities.Dates.Min(end,
+                    FctUtilities.Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType));
+
+                _session.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
+                if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule
+                    == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, _session.ComparativePeriodType);
+                else
+                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
+
+            }
+            else
+            {
+                begin = FctUtilities.Dates.GetPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+                end = FctUtilities.Dates.GetPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+                if (_session.DetailPeriod == ConstantePeriod.DisplayLevel.dayly && begin < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                {
+                    _session.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
+                }
+
+                if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule
+                    == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    period = new MediaSchedulePeriod(begin, end, _session.DetailPeriod, _session.ComparativePeriodType);
+                else
+                    period = new MediaSchedulePeriod(begin, end, _session.DetailPeriod);
+
+            }
+            #endregion
+
+            ExportResponse(false, idWebSession, _session, data, period);
+        }
+
+        private void ExportResponse(bool _showValues, string idWebSession, WebSession _session, object[,] data, MediaSchedulePeriod _period)
+        {
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
 
@@ -1356,8 +1441,6 @@ namespace Km.AdExpressClientWeb.Controllers
             export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
             Worksheet sheet = document.Worksheets.Add("WorkSheet1");
-
-
 
             #region Aspose
             if (data.GetLength(0) != 0)
@@ -2390,7 +2473,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     else
                                                         sheet.Cells[cellRow, currentColMediaPlan].Value = Units.ConvertUnitValue(((MediaPlanItem)data[i, j]).Unit, _session.Unit);
 
-                                                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);    
+                                                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
                                                     SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
                                                     if (i == TOTAL_LINE_INDEX)
@@ -2532,8 +2615,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
             Response.End();
-
-
         }
 
         private void AutoFit(Worksheet Sheet, int Column, int StartRow, int NbRows)
