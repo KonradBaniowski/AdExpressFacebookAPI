@@ -1950,6 +1950,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             else
                                 columns.Add(new { headerText = prevPeriod, key = prevPeriod, group = periodColumnsL1 });
                             columnsFixed.Add(new { columnKey = prevPeriod, isFixed = false, allowFixing = false });
+                            columnsNotAllowedSorting.Add(new { columnKey = prevPeriod, allowSorting = false });
                             nbPeriod = 0;
                             prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
                             periodColumnsL1 = new List<object>();
@@ -1976,6 +1977,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 periodColumnsL1.Add(new { headerText = monthLabelHtml, key = monthKey, dataType = "string", width = "20", template = "<span {{if ${" + monthKey + "} == 1 }} class='orangeTg' {{elseif ${" + monthKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + monthKey + "} == 3 }} class='blackTg' {{else}} class='${" + monthKey + "}' {{/if}} ></span>" });
                                 schemaFields.Add(new { name = monthKey });
                                 columnsFixed.Add(new { columnKey = monthKey, isFixed = false, allowFixing = false });
+                                columnsNotAllowedSorting.Add(new { columnKey = monthKey, allowSorting = false });
                                 tableWidth += 20;
                                 break;
                             case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -2002,6 +2004,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     schemaFields.Add(new { name = weekLabel });
                                 }
                                 columnsFixed.Add(new { columnKey = weekLabel, isFixed = false, allowFixing = false });
+                                columnsNotAllowedSorting.Add(new { columnKey = weekLabel, allowSorting = false });
                                 tableWidth += 20;
                                 break;
 
@@ -2015,6 +2018,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         columns.Add(new { headerText = prevPeriod, key = prevPeriod, group = periodColumnsL1 });
 
                     columnsFixed.Add(new { columnKey = prevPeriod, key = prevPeriod, isFixed = false, allowFixing = false });
+                    columnsNotAllowedSorting.Add(new { columnKey = prevPeriod, allowSorting = false });
                     break;
                 case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
                     StringBuilder days = new StringBuilder();
@@ -2038,6 +2042,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             else
                                 columns.Add(new { headerText = "", key = globalHeaderKey.ToString(), group = periodColumnsL1 });
                             columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), key = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
+                            columnsNotAllowedSorting.Add(new { columnKey = globalHeaderKey.ToString(), allowSorting = false });
                             globalHeaderKey++;
                             nbPeriod = 0;
                             prevPeriod = currentDay.Month;
@@ -2056,12 +2061,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                             periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "22", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                             columnsFixed.Add(new { columnKey = dayKey, isFixed = false, allowFixing = false });
+                            columnsNotAllowedSorting.Add(new { columnKey = dayKey, allowSorting = false });
                         }
                         else
                         {
                             periodColumnsL2.Add(new { headerText = dayLabel, key = dayKey, dataType = "string", width = "22", template = "<span {{if ${" + dayKey + "} == 1 }} class='orangeTg' {{elseif ${" + dayKey + "} == 2 }} class='orangeExtendedTg' {{elseif ${" + dayKey + "} == 3 }} class='blackTg' {{else}} class='${" + dayKey + "}' {{/if}} ></span>" });
                             schemaFields.Add(new { name = dayKey });
                             columnsFixed.Add(new { columnKey = dayKey, isFixed = false, allowFixing = false });
+                            columnsNotAllowedSorting.Add(new { columnKey = dayKey, allowSorting = false });
                         }
                         tableWidth += 22;
                     }
@@ -2076,6 +2083,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                     }
 
                     columnsFixed.Add(new { columnKey = globalHeaderKey.ToString(), key = globalHeaderKey.ToString(), isFixed = false, allowFixing = false });
+                    columnsNotAllowedSorting.Add(new { columnKey = globalHeaderKey.ToString(), allowSorting = false });
                     globalHeaderKey++;
                         
 
