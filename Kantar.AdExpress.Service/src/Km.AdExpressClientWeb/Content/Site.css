@@ -3006,9 +3006,9 @@ ul.ui-selectable {
         color: white;
     }
 
-tbody.ui-ig-record > tr > td {
+/*tbody.ui-ig-record > tr > td {
     text-align: right !important;
-}
+}*/
 
 .ui-igpivot-draghelper.ui-draggable-dragging{
     padding:3px;
