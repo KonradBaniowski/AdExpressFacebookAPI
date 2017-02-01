@@ -422,18 +422,13 @@
                             $(".btn-default-sub-period").attr('class', 'btn btn-default sub-period-btn');
                             $(this).attr('class', 'btn btn-default-sub-period sub-period-btn');
                             $(this).prop('disabled', true);
+                            previousSubPeriodLabel = $(this).attr("periodlabel");
+                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
                             $("#grid").hide();
                             $("#gridLoader").show();
                             userFilter.paramsUrl.zoomDate = $(this).attr("period");
                             userFilter.isVehicleChange = false;
                             CallInsertionsResult();
-                        });
-                        $(".sub-period-btn").on('mouseenter', function (e) {
-                            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
-                            $("#subPeriodLabel").text($(this).attr("periodlabel"));
-                        });
-                        $(".sub-period-btn").on('mouseleave', function (e) {
-                            $("#subPeriodLabel").text(previousSubPeriodLabel);
                         });
                     }
                 }
@@ -674,6 +669,14 @@
         });
         $(document).on('hidden.bs.collapse', '#lvlperso', function (e) {
             $("#grid").igTreeGrid("option", "height", window.innerHeight - $("#grid").offset().top - 10);
+        });
+
+        $(document).on("mouseenter", ".sub-period-btn", function (e) {
+            previousSubPeriodLabel = $(".btn-default-sub-period").attr("periodlabel");
+            $("#subPeriodLabel").text($(this).attr("periodlabel"));
+        });
+        $(document).on("mouseleave", ".sub-period-btn", function (e) {
+            $("#subPeriodLabel").text(previousSubPeriodLabel);
         });
 
 
