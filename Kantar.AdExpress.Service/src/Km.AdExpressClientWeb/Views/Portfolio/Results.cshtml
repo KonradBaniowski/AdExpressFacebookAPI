@@ -51,7 +51,7 @@
 <div class="panel-group panel-group-results hide" id="resaccord" style="margin-bottom:20px;">
     <div id="allPeriodInsertionsSpots" class="text-center margin-bot-30"></div>
     <div id="GridPanel" class="panel panel-primary panel-results">
-        <a data-toggle="collapse" href="#accord1">
+        <a data-toggle="collapse">
             <div class="panel-heading head-results">
                 <h3 class="panel-title pull-left">
                     <i class="fa fa-table"></i> @GestionWeb.GetWebWord(1192, Model.Presentation.SiteLanguage)
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div id="ChartPanel" class="panel panel-primary panel-results" style="display:none;">
-        <a data-toggle="collapse" href="#accord2">
+        <a data-toggle="collapse">
             <div class="panel-heading head-results">
                 <h3 class="panel-title">
                     <i class="fa fa-line-chart"></i> @GestionWeb.GetWebWord(1191, Model.Presentation.SiteLanguage)
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div id="carou-vehicleView" class="panel panel-primary panel-results" style="display:none; overflow:visible;">
-        <a data-toggle="collapse" href="#accord3">
+        <a data-toggle="collapse">
             <div class="panel-heading head-results">
                 <h3 class="panel-title">
                     <i class="fa fa-newspaper-o"></i> @GestionWeb.GetWebWord(1397, Model.Presentation.SiteLanguage)
@@ -855,9 +855,9 @@
 
             $('#validate-options').on('click', function (e) {
 
-                $("#accord1").collapse('show');
-                $("#accord2").collapse('show');
-                $("#accord3").collapse('show');
+                //$("#accord1").collapse('show');
+                //$("#accord2").collapse('show');
+                //$("#accord3").collapse('show');
 
                 $("#grid").addClass("hide");
                 $("#collapseContainerOne").collapse('hide');
