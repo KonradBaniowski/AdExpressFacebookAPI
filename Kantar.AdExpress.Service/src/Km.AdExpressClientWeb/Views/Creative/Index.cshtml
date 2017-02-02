@@ -58,7 +58,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header header-kantar-popup">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="font-normal" style="color:white;"><i class="fa fa-2x "></i></h4>
                 </div>
                 <div class="modal-body">
@@ -116,7 +116,7 @@
 </div>
 
 @section Scripts {
-    
+
     @switch (Model.SiteLanguage.ToString())
     {
         case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
@@ -599,7 +599,10 @@
                     }
                     //Lien mp4,mp3,flv,... du visuel (onclick)
                     if (paramsLink[0] != "")
-                        $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="'+ format +'" >' + $(this).html() + '</a></div>');
+                        if (format != "")
+                            $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="' + format + '" >' + $(this).html() + '</a></div>');
+                        else
+                            $(this).html('<a href="' + paramsLink[0] + '" target="_blank" >' + $(this).html() + '</a>');
                 }
                 //Infos
                 for (j = infos.length - 1; j >= 0; j--) {
