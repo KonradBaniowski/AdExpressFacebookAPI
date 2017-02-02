@@ -72,10 +72,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Flash text
         /// </summary>
         private const string FLASH_TEXT = "FLASH";
-		///// <summary>
-		///// Chemin de la page des plans médias AdNetTrack / Evaliant mobile
-		///// </summary>
-		//private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
+        ///// <summary>
+        ///// Chemin de la page des plans médias AdNetTrack / Evaliant mobile
+        ///// </summary>
+        //private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
         #endregion
 
         #region Properties
@@ -122,7 +122,8 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         /// <param name="label">Texte</param>
         public CellCreativesEvaliantMobileInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, Module module, string zoomDate, Int64 universId, Int64 idColumnsSet)
-            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet) {
+            : base(session, vehicle, columns, columnNames, cells, module, idColumnsSet)
+        {
             this._universId = universId;
             this._zoomDate = zoomDate;
         }
@@ -303,9 +304,9 @@ namespace TNS.AdExpressI.Insertions.Cells
                 str.Append("<tr>");
                 str.Append(cols[l]);
                 str.Append("<td>&nbsp;</td>");
-                if (l+nbLine < cols.Count)
+                if (l + nbLine < cols.Count)
                 {
-                    str.Append(cols[l+nbLine]);
+                    str.Append(cols[l + nbLine]);
                 }
                 else
                 {
@@ -388,6 +389,154 @@ namespace TNS.AdExpressI.Insertions.Cells
 
         }
         #endregion
+
+        #region Render String Banner
+        private string RenderStringBanner()
+        {
+            StringBuilder outputImg = new StringBuilder();
+            StringBuilder outputLink = new StringBuilder();
+
+            if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG))
+            {
+
+                if (_format.ToUpper() == FLASH_ID)
+                {
+                    // Flash banner
+                    outputLink.AppendFormat("{0}", _visuals[0]);
+                }
+                else
+                {
+                    // Other type of media
+                    outputImg.AppendFormat("{0}", _visuals[0]);
+                    outputLink.AppendFormat("{0}", _url);
+                }
+            }
+            else
+            {
+                outputImg.AppendFormat("{0}", GestionWeb.GetWebWord(2250, _session.SiteLanguage));
+            }
+
+            return "[" + outputImg + "]," + "[" + outputLink + "],";
+
+        }
+        #endregion
+
+        #region RenderString
+        public override string RenderString()
+        {
+            StringBuilder str = new StringBuilder();
+
+            if (_newGroup)
+                str.Append("-");
+
+            string value;
+            string[] values;
+            int i = -1;
+
+            #region Visual
+            if (_visuals.Count < 1)
+            {
+                str.Clear();
+                str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],[],");
+
+                //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de creative)
+                //str.Append("[/Content/img/no_visu.jpg],[],"); 
+            }
+            else
+            {
+                str.Append(RenderStringBanner());
+            }
+
+            #endregion
+
+
+            #region Informations
+            str.Append("[");
+            List<string> cols = new List<string>();
+
+            bool hasData = false;
+            foreach (GenericColumnItemInformation g in _columns)
+            {
+                i++;
+                _values[i].Parent = this.Parent;
+                value = _values[i].ToString();
+                if (_visibility[i] && canBeDisplayed(g) && g.Id != GenericColumnItemInformation.Columns.visual && g.Id != GenericColumnItemInformation.Columns.associatedFile && g.Id != GenericColumnItemInformation.Columns.poster && g.Id != GenericColumnItemInformation.Columns.dateCoverNum && g.Id != GenericColumnItemInformation.Columns.associatedFileMax)
+                {
+
+                    StringBuilder tmpStr = new StringBuilder();
+                    tmpStr.AppendFormat("{0}", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    tmpStr.Append(":");
+                    hasData = false;
+
+                    if (_values[i] != null)
+                    {
+                        if (!(_values[i] is CellUnit))
+                        {
+                            values = value.Split(',');
+                            foreach (string s in values)
+                            {
+                                if (hasData)
+                                {
+                                    tmpStr.Append(";");
+                                }
+                                hasData = true;
+                                if (g.Id == GenericColumnItemInformation.Columns.advertiser)
+                                {
+
+                                    #region GAD
+                                    string openBaliseA = string.Empty;
+                                    string closeBaliseA = string.Empty;
+
+                                    if (_adressId != -1)
+                                    {
+                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        closeBaliseA = "</a>";
+                                    }
+                                    #endregion
+
+                                    //tmpStr.AppendFormat("{0}{1}{2}", openBaliseA, s, closeBaliseA);
+                                    tmpStr.AppendFormat("{1}", openBaliseA, s, closeBaliseA);
+                                }
+                                else
+                                {
+                                    tmpStr.AppendFormat("{0}", s);
+                                }
+                                tmpStr.Append(";");
+                            }
+                        }
+                        else
+                        {
+                            tmpStr.AppendFormat("{0};", value);
+                        }
+                    }
+                    cols.Add(tmpStr.ToString());
+                }
+            }
+
+            #region Info
+            int nbLine = cols.Count;
+            for (int l = 0; l < nbLine; l++)
+            {
+                str.Append(cols[l]);
+                if (l + nbLine < cols.Count)
+                {
+                    str.Append(cols[l + nbLine]);
+                }
+                str.Append(";");
+            }
+            #endregion
+
+            str.Append("],");
+            #endregion
+
+            #region type
+            str.Append("[]");
+            #endregion
+
+            return str.ToString();
+        }
+        #endregion
+
     }
 
 }
