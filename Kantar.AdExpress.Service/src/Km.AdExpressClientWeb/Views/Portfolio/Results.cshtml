@@ -508,7 +508,7 @@
                                 $("#allPeriodInsertionsSpots").hide();
                                 $("#GridPanel").show();
                                 $("#gridEmpty").show();
-                                $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                                $("#gridEmpty").html("<div style='text-align:left'>@Model.Labels.MaxAllowedRows" + "<br\><ul><li>" + "@Model.Labels.MaxAllowedRowsBis" + "</li><li>" + "@Model.Labels.MaxAllowedRowsRefine" + "</li></ul></div>");
                             }
                             else {
 
@@ -545,8 +545,8 @@
                                     $("#GridPanel").hide();
                                 }
 
-                                
-                                
+
+
 
                                 if (userFilter.ResultTypeFilter.ResultType == "4"){
                                     $("#ChartPanel").show();
@@ -641,7 +641,7 @@
                 $("#resaccord").addClass("hide");
                 $("#ChartPanel").hide();
                 $("#carou-vehicleView").hide();
-                if (userFilter.ResultTypeFilter.ResultType == "4") { 
+                if (userFilter.ResultTypeFilter.ResultType == "4") {
                     $("#ChartPanel").show();
                 }
                 $.ajax({
