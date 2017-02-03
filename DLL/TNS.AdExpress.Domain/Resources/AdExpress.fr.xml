@@ -1753,9 +1753,9 @@
     <item mnemonic="w2565" type="System.String">Univers neutre</item>
     <item mnemonic="w2566" type="System.String">Autres</item>
     <item mnemonic="w2567" type="System.String">Attention</item>
-    <item mnemonic="w2568" type="System.String">Le tableau demandé comporte trop de lignes pour être affiché par votre navigateur. Vous pouvez :</item>
-    <item mnemonic="w2569" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
-    <item mnemonic="w2570" type="System.String">Essayer d'exporter le résultat au format Excel.</item>
+    <item mnemonic="w2568" type="System.String">Le tableau demandé contient trop de lignes pour être affiché par votre navigateur, cependant vous pouvez :</item>
+    <item mnemonic="w2569" type="System.String"><![CDATA[<span style="color:red">Toujours exporter le résultat au format Excel</span> en utilisant les commandes appropriées ou bien,]]></item>
+    <item mnemonic="w2570" type="System.String">Affiner la sélection et/ou modifier les options d’affichage du tableau.</item>
     <item mnemonic="w2571" type="System.String">Sélectionner / désélectionner tous les médias (sauf Evaliant)</item>
     <item mnemonic="w2572" type="System.String">Etes vous sûr de vouloir supprimer cette requête ?</item>
     <item mnemonic="w2573" type="System.String">Il est nécessaire de sélectionner deux années identiques pour valider.</item>

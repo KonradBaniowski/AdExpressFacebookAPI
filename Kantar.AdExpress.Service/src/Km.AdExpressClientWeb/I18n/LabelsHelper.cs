@@ -151,6 +151,7 @@ namespace Km.AdExpressClientWeb.I18n
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage),
                 DeleteUniversMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteUniversMessageConfirmLabel, siteLanguage),
                 DeleteResultMessageConfirmLabel = GestionWeb.GetWebWord(LanguageConstantes.DeleteResultMessageConfirmLabel, siteLanguage),
                 TitleLabel = GestionWeb.GetWebWord(LanguageConstantes.TitleLabel, siteLanguage),
