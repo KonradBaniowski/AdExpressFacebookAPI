@@ -304,21 +304,21 @@
                     }
                     @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
                     {
-                        @*<a href="@Url.Action("SponsorshipMediaSelection", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>*@
-                        <a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
+                        <a href="@Url.Action("SponsorshipMediaSelection", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
+                        @*<a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>*@
                     }
                     else
                     {
                         <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                     }
-                    @*@if (Model.ModuleRight.ContainsKey(Module.Name.HEALTH))
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.HEALTH))
                     {
                         <a href="@Url.Action("HealthMediaSelection", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.HEALTH">@Model.Modules[(Module.Name.HEALTH)].Title</a>
                     }
                     else
                     {
                         <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.HEALTH)].Title</div>
-                    }*@
+                    }
                     @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
                     {
                         <a href="#" class="list-group-item text-left" id="@Module.Name.BILAN_CAMPAGNE">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</a>
