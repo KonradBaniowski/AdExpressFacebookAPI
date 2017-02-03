@@ -151,7 +151,7 @@
                 return items;
             }
 
-            function GenericDetailLevelFilter() {               
+            function GenericDetailLevelFilter() {
                 this.DefaultDetailValue = $('#defaultDetail').val();
                 this.CustomDetailValue = $('#customDetail').val();
                 this.L1DetailValue = $('#l1Detail').val();
@@ -413,7 +413,7 @@
                             if (data.hasMoreThanMaxRowsAllowed) {
                                 $("#gridLoader").addClass("hide");
                                 $("#gridEmpty").show();
-                                $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                                $("#gridEmpty").html("<div style='text-align:left'>@Model.Labels.MaxAllowedRows" + "<br\><ul><li>" + "@Model.Labels.MaxAllowedRowsBis" + "</li><li>" + "@Model.Labels.MaxAllowedRowsRefine" + "</li></ul></div>");
                             }
                             else {
                                 dataTreeGrid = data.datagrid;

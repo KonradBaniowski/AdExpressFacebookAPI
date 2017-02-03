@@ -240,6 +240,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long TimeoutBis = 3098;
         public const long MaxAllowedRows = 2568;
         public const long MaxAllowedRowsBis = 2569;
+        public const long MaxAllowedRowsRefine = 2570;
         public const long DeleteResultMessageConfirmLabel = 3099;
         public const long TitleLabel = 3103;
         public const long SelectVehicle = 3104;

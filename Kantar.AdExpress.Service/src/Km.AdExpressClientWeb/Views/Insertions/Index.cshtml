@@ -304,7 +304,7 @@
                         if (data.hasMoreThanMaxRowsAllowed) {
                             $("#gridLoader").hide();
                             $("#gridEmpty").show();
-                            $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                            $("#gridEmpty").html("<div style='text-align:left'>@Model.Labels.MaxAllowedRows" + "<br\><ul><li>" + "@Model.Labels.MaxAllowedRowsBis" + "</li><li>" + "@Model.Labels.MaxAllowedRowsRefine" + "</li></ul></div>");
                         }
                         else {
 

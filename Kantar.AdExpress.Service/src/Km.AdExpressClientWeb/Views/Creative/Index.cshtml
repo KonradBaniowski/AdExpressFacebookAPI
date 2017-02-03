@@ -312,7 +312,7 @@
                         if (data.hasMoreThanMaxRowsAllowed) {
                             $("#gridLoader").hide();
                             $("#gridEmpty").show();
-                            $("#gridEmpty").html("@Model.Labels.MaxAllowedRows" + "<br\>" + "@Model.Labels.MaxAllowedRowsBis");
+                            $("#gridEmpty").html("<div style='text-align:left'>@Model.Labels.MaxAllowedRows" + "<br\><ul><li>" + "@Model.Labels.MaxAllowedRowsBis" + "</li><li>" + "@Model.Labels.MaxAllowedRowsRefine" + "</li></ul></div>");
                         }
                         else {
 
@@ -598,11 +598,12 @@
                             $(this).html('<center><img id="pop" class="imgCreaInser" src="' + visus[0] + '" onError="this.onerror=null;this.src=\'/Content/img/no_visu.jpg\';" /></center>');
                     }
                     //Lien mp4,mp3,flv,... du visuel (onclick)
-                    if (paramsLink[0] != "")
-                        if (format != "")
+                    if (paramsLink[0] != "") {
+                        //if (format != "")
                             $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="' + format + '" >' + $(this).html() + '</a></div>');
-                        else
-                            $(this).html('<a href="' + paramsLink[0] + '" target="_blank" >' + $(this).html() + '</a>');
+                        //else
+                        //    $(this).html('<a href="' + paramsLink[0] + '" target="_blank" >' + $(this).html() + '</a>');
+                    }
                 }
                 //Infos
                 for (j = infos.length - 1; j >= 0; j--) {

@@ -250,7 +250,8 @@ namespace Km.AdExpressClientWeb.Helpers
                 Timeout = GestionWeb.GetWebWord(LanguageConstantes.Timeout, siteLanguage),
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
-                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage)
+                MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
