@@ -530,7 +530,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             #endregion
 
             #region type
-            str.Append("[]");
+            str.Append("[" + _format.ToUpper() + "]");
             #endregion
 
             return str.ToString();
