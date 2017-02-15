@@ -461,6 +461,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 str.AppendFormat("{0};", s);
                             }
                         }
+                        else if (_values[i] is CellPage)
+                        {
+                            str.AppendFormat("{0};", double.Parse(_values[i].RenderString().Replace(" ", "")));
+                        }
                         else
                         {
                             str.AppendFormat("{0};", value);
