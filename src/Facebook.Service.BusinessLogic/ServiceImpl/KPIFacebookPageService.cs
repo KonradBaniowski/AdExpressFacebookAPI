@@ -370,7 +370,7 @@ namespace Facebook.Service.BusinessLogic.ServiceImpl
                     else if (elem.Expenditure_Euro_N_10 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 9, DateTime.DaysInMonth(today.Year, 9)).ToString("yyyyMMdd")));
                     else if (elem.Expenditure_Euro_N_11 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 10, DateTime.DaysInMonth(today.Year, 10)).ToString("yyyyMMdd")));
                     else if (elem.Expenditure_Euro_N_12 == minValueRecap) minsLoaded.Add(long.Parse(new DateTime(today.Year, 11, DateTime.DaysInMonth(today.Year, 11)).ToString("yyyyMMdd")));
-                    else minsLoaded.Add(long.Parse(new DateTime(today.Year, 12, DateTime.DaysInMonth(today.Year, 12)).ToString()));
+                    else minsLoaded.Add(long.Parse(new DateTime(today.Year, 12, DateTime.DaysInMonth(today.Year, 12)).ToString("yyyyMMdd")));
                 }
             );
 
