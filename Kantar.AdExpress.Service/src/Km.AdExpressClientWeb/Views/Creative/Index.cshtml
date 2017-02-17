@@ -543,6 +543,10 @@
                             $("#objectFLV").replaceWith(function () {
                                 return "<object id=" + this.getAttribute("id") + " classid=" + this.getAttribute("classid") + " codebase=" + this.getAttribute("codebase") + " >" + this.innerHTML + "</object>";
                             });
+                            if (datas[1] == "True") {
+                                $("#creativeModal .modal-footer").removeClass("hide");
+                                $("#creativeModal .modal-footer > a").attr("href", datas[0]);
+                            }
                             $("#objectFLV").show();
                             break;
                         case "HTML5":
