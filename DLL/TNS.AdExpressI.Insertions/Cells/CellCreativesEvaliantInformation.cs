@@ -31,6 +31,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpressI.Insertions.MultiPart;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.Insertions.Cells
 {
@@ -106,10 +107,12 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Chemin de la page des plans médias AdNetTrack
         /// </summary>
         private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
-        #endregion
 
-        #region Properties
-        Int64 _idAdvertiser = -1;
+        private  bool _hasCreationDownloadRights = false;
+    #endregion
+
+    #region Properties
+    Int64 _idAdvertiser = -1;
         Int64 _idProduct = -1;
         Int64 _idVersion = -1;
         string _dimension = string.Empty;
@@ -147,6 +150,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             this._universId = universId;
             this._zoomDate = zoomDate;
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+            {
+                //L'utilisateur a accès aux créations en téléchargement
+                _hasCreationDownloadRights = true;
+            }
         }
         /// <summary>
         /// Constructeur
@@ -157,6 +165,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             this._universId = universId;
             this._zoomDate = zoomDate;
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+            {
+                //L'utilisateur a accès aux créations en téléchargement
+                _hasCreationDownloadRights = true;
+            }
         }
         #endregion
 
@@ -752,7 +765,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
         private void AppendVideoLink(StringBuilder output, string embededType, string fileName)
         {
-            output.AppendFormat("{0}", fileName);
+            output.AppendFormat("{0},{1}", fileName, _hasCreationDownloadRights);
         }
 
         private string GetHtmlFlashImgs(TNS.AdExpressI.Insertions.MultiPart.Panel panel)
