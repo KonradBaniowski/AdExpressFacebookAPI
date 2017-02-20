@@ -73,14 +73,14 @@
                             <PARAM name="movie" value="">
                             <PARAM name="play" value="true">
                             <PARAM name="quality" value="high">
-                            <EMBED src="" play="true" swliveconnect="true" quality="high" />
+                            <EMBED src="" play="true" wmode="transparent" swliveconnect="true" quality="high" />
                         </OBJECT>
                         <object id="objectFLV" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0">
                             <param name="flashvars" value="" />
                             <param name="movie" value="/Player/playerflv.swf" />
                             <param name="allowfullscreen" value="true" />
                             <param name="allowscriptaccess" value="always" />
-                            <embed type="application/x-shockwave-flash" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
+                            <embed type="application/x-shockwave-flash" wmode="transparent" src="/Player/playerflv.swf" allowscriptaccess="always" allowfullscreen="false" flashvars="" />
                         </object>
                         <iframe id="objectHTML5" frameborder="0" src="" scrolling="no" onload="Html5Loaded()" style="display:none;" align="center" marginheight="0" marginwidth="0"></iframe>
                     </div>
@@ -180,7 +180,7 @@
         {{/if}}
     </script>
     <script>
-    if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
+        if (typeof jQuery === "undefined") { throw new Error("No jQuery") }
 
         $("#grid").igTreeGrid({
             //dataSource: data,
@@ -233,7 +233,7 @@
                         primaryKey: "ID",
                         foreignKey: "PID",
                         width: "100%",
-                        fixedHeaders : false,
+                        fixedHeaders: false,
                         features: [
                             {
                                 name: "MultiColumnHeaders"
@@ -521,7 +521,7 @@
                 if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
                     alert("Les fichiers média ne sont pas disponibles.");
                 }
-                else if(format != ""){ //url direct, sauf pour AVI
+                else if (format != "") { //url direct, sauf pour AVI
                     switch (format) {
                         case "AVI":
                             ajaxGetLinkPath();
@@ -530,14 +530,24 @@
                         case "SWF":
                             $("#objectSWF param").first().attr("value", datas[0]);
                             $("#objectSWF embed").attr("src", datas[0]);
+                            $("#mediaLoader").hide();
+                            $("#objectSWF").replaceWith(function () {
+                                return "<object id=" + this.getAttribute("id") + " classid=" + this.getAttribute("classid") + " codebase=" + this.getAttribute("codebase") + " >" + this.innerHTML + "</object>";
+                            });
                             $("#objectSWF").show();
-                            $("#mediaLoader").hide()
                             break;
                         case "FLV":
                             $("#objectFLV param").first().attr("value", "file=" + datas[0]);
                             $("#objectFLV embed").attr("flashvars", "file=" + datas[0]);
-                            $("#objectFLV").show();
                             $("#mediaLoader").hide()
+                            $("#objectFLV").replaceWith(function () {
+                                return "<object id=" + this.getAttribute("id") + " classid=" + this.getAttribute("classid") + " codebase=" + this.getAttribute("codebase") + " >" + this.innerHTML + "</object>";
+                            });
+                            if (datas[1] == "True") {
+                                $("#creativeModal .modal-footer").removeClass("hide");
+                                $("#creativeModal .modal-footer > a").attr("href", datas[0]);
+                            }
+                            $("#objectFLV").show();
                             break;
                         case "HTML5":
                             url = datas[0];
@@ -550,17 +560,17 @@
                             $("#mediaLoader").hide()
                     }
                 }
-                else{
+                else {
                     ajaxGetLinkPath();
                 }
 
             });
 
-            $("#creativeModal").on('hide.bs.modal', function () {
+            $("#creativeModal").on('hidden.bs.modal', function () {
                 $("#creativeStream").attr('src', '');
                 $("#creativeStream").hide();
                 $("#objectSWF").hide();
-                $("#objectFLV").hide();
+                $("#objectFLV").hide(); 
                 $("#objectHTML5").hide();
                 $("#mediaLoader").show();
                 $("#creativeModal .modal-footer").addClass("hide");
@@ -578,7 +588,7 @@
                 visus = datas[0].replace(/\[|\]/g, '').split(",");
                 paramsLink = datas[1].replace(/\[|\]/g, '').split(",");
                 infos = datas[2].replace(/\[|\]/g, '').split(";");
-                try { format = datas[3].replace(/\[|\]/g, ''); } catch(e){ format = "";}
+                try { format = datas[3].replace(/\[|\]/g, ''); } catch (e) { format = ""; }
 
                 //Visuels
                 if (visus.length > 1) {
@@ -607,7 +617,7 @@
                 }
                 //Infos
                 for (j = infos.length - 1; j >= 0; j--) {
-                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0) ){
+                    if (infos[j] != "" && (infos[j].indexOf(":") >= 0)) {
                         tmp = infos[j].split(":");
                         $(this).next().prepend('<div><span class="infoCreaInser" >' + tmp.shift() + '</span> : ' + tmp.join(':') + '</div>')
                     }
@@ -709,7 +719,7 @@
             $("input[name='EvaliantFilter']:checked").each(
                 function () {
                     var id = this.id;
-                    arrValues[id] = $("input[name='EvaliantFilter'][id='"+id+"']:checked").map(function () { return this.value; }).get()
+                    arrValues[id] = $("input[name='EvaliantFilter'][id='" + id + "']:checked").map(function () { return this.value; }).get()
                 }
             );
             for (var key in arrValues) {

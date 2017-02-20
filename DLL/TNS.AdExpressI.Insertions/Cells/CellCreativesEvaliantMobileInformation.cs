@@ -530,7 +530,11 @@ namespace TNS.AdExpressI.Insertions.Cells
             #endregion
 
             #region type
-            str.Append("[" + _format.ToUpper() + "]");
+            //TODO : a modifier (cote js egalement)
+            if (_format == JPEG_ID)
+                str.Append("[" + _format.ToUpper() + "]");
+            else
+                str.Append("[]");
             #endregion
 
             return str.ToString();
