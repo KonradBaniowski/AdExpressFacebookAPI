@@ -276,7 +276,7 @@ namespace TNS.AdExpressI.ProductClassReports
         #endregion
 
         #region Get Grid Result
-        public GridResult GetGridResult(ResultTable.SortOrder sortOrder, int columnIndex)
+        public GridResult GetGridResult()
         {
             ResultTable resultTable = GetGenericProductClassReport();
             GridResult gridResult = new GridResult();
@@ -290,13 +290,12 @@ namespace TNS.AdExpressI.ProductClassReports
                     return (gridResult);
                 }
 
-                //resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
-                resultTable.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
                 object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber]; //+2 car ID et PID en plus  -  //_data.LinesNumber
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
+                List<int> indexInResultTableAllowSortingList = new List<int>();
 
                 //Hierachical ids for Treegrid
                 columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
@@ -330,6 +329,7 @@ namespace TNS.AdExpressI.ProductClassReports
                                 else
                                     groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = "*", columnCssClass = "colStyle" });
 
+                                indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j][g].IndexInResultTable);
                                 schemaFields.Add(new { name = colKey });
                             }
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "_gr" + colKey, group = groups });
@@ -342,6 +342,8 @@ namespace TNS.AdExpressI.ProductClassReports
                             {
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
                                 columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
+
+                                indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j].IndexInResultTable);
                                 columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                             }
                             else
@@ -351,11 +353,30 @@ namespace TNS.AdExpressI.ProductClassReports
                                     columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "90", columnCssClass = "colStyle" });
                                 else
                                     columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "*", columnCssClass = "colStyle" });
+
+                                indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j].IndexInResultTable);
                                 columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                             }
                             schemaFields.Add(new { name = colKey });
                         }
                     }
+                }
+
+                if (string.IsNullOrEmpty(_session.SortKey) ||
+                (!string.IsNullOrEmpty(_session.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_session.SortKey))))
+                {
+                    resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                    gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                    gridResult.SortKey = 1;
+                    _session.Sorting = ResultTable.SortOrder.NONE;
+                    _session.SortKey = "1";
+                    _session.Save();
+                }
+                else
+                {
+                    resultTable.Sort(_session.Sorting, Convert.ToInt32(_session.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                    gridResult.SortOrder = _session.Sorting.GetHashCode();
+                    gridResult.SortKey = Convert.ToInt32(_session.SortKey);
                 }
 
                 //table body rows

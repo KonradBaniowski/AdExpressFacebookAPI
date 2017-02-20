@@ -42,4 +42,10 @@
 <input type="hidden" id="current-url" value="/@_controller/MyAdExpress" />
 @section scripts {
     @Scripts.Render("~/bundles/myAdExpress")
+    @Scripts.Render("~/bundles/cookies")
+
+    <script>
+        createCookie("sortKey", "", 1);
+        createCookie("sortOrder", "", 1);
+    </script>
 }

@@ -517,7 +517,8 @@ namespace TNS.AdExpressI.NewCreatives
                 return gridResult;
             }
 
-            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            
+
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             object[,] gridData = null;
 
@@ -555,6 +556,7 @@ namespace TNS.AdExpressI.NewCreatives
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             string format = string.Empty;
+            List<int> indexInResultTableAllowSortingList = new List<int>();
 
             //Headers
             if (resultTable.NewHeaders != null)
@@ -562,11 +564,12 @@ namespace TNS.AdExpressI.NewCreatives
                 for (int j = 0; j < resultTable.NewHeaders.Root.Count; j++)
                 {
                     string colKey = string.Empty;
-
-                    colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
+                    int indexInResultTable = resultTable.NewHeaders.Root[j].IndexInResultTable;
+                    colKey = string.Format("g{0}", indexInResultTable);
                     if (j == 0)
                     {
                         columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "${" + colKey + "}" });
+                        indexInResultTableAllowSortingList.Add(indexInResultTable);
                         columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                     }
                     else
@@ -583,6 +586,7 @@ namespace TNS.AdExpressI.NewCreatives
                             colKey += "-versionNbPdm";
 
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            indexInResultTableAllowSortingList.Add(indexInResultTable);
                         }
                         else
                         {
@@ -590,6 +594,7 @@ namespace TNS.AdExpressI.NewCreatives
                             colKey += "-unit";
 
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            indexInResultTableAllowSortingList.Add(indexInResultTable);
                         }
 
                         columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
@@ -599,7 +604,22 @@ namespace TNS.AdExpressI.NewCreatives
                 }
             }
 
-
+            if (string.IsNullOrEmpty(_webSession.SortKey) || 
+                (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
+            {
+                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                gridResult.SortKey = 1;
+                _webSession.Sorting = ResultTable.SortOrder.NONE;
+                _webSession.SortKey = "1";
+                _webSession.Save();
+            }
+            else
+            {
+                resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
+            }
 
             //table body rows
             int currentLine = 0;

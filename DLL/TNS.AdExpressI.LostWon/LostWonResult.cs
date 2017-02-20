@@ -2072,7 +2072,6 @@ namespace TNS.AdExpressI.LostWon
                 return (gridResult);
             }
 
-            resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
             if (_allowPickaNews)
@@ -2094,6 +2093,7 @@ namespace TNS.AdExpressI.LostWon
             List<object> groups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = string.Empty;
+            List<int> indexInResultTableAllowSortingList = new List<int>();
 
             //Headers
             if (resultTable.NewHeaders != null)
@@ -2136,6 +2136,7 @@ namespace TNS.AdExpressI.LostWon
                             }
 
                             groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j][g].IndexInResultTable);
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
@@ -2148,6 +2149,7 @@ namespace TNS.AdExpressI.LostWon
                         if (j == 0)
                         {
                             columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j].IndexInResultTable);
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
 
                             if (_allowPickaNews)
@@ -2174,6 +2176,23 @@ namespace TNS.AdExpressI.LostWon
                     }
 
                 }
+            }
+
+            if (string.IsNullOrEmpty(_session.SortKey) ||
+                (!string.IsNullOrEmpty(_session.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_session.SortKey))))
+            {
+                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                gridResult.SortKey = 1;
+                _session.Sorting = ResultTable.SortOrder.NONE;
+                _session.SortKey = "1";
+                _session.Save();
+            }
+            else
+            {
+                resultTable.Sort(_session.Sorting, Convert.ToInt32(_session.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = _session.Sorting.GetHashCode();
+                gridResult.SortKey = Convert.ToInt32(_session.SortKey);
             }
 
             //table body rows

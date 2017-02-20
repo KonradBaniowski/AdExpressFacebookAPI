@@ -103,25 +103,6 @@ $(document).on('click', '#btnSaveAlert', function (event) {
 //}
 ///***********************************************************/
 
-$(document).on('click', '*[id*=grid_table_g]', function (event) {
-    var element = $(this);
-    sortFunc(element);
-});
-
-var sortFunc = function (field) {
-    var index = field[0].id.split("-")[0].split("_g")[1];
-    testIndex = parseInt(index);
-    if (!isNaN(testIndex)) {
-        columnIndex = testIndex;
-        if (sortOrder == "NONE")
-            sortOrder = "ASC";
-        else if (sortOrder == "ASC")
-            sortOrder = "DESC";
-        else if (sortOrder == "DESC")
-            sortOrder = "ASC";
-    }
-}
-
 $(document).on('click', '#btn-export', function (event) {
     event.preventDefault();
     var selectedValue = $('#export-type').val();
@@ -141,7 +122,7 @@ $(document).on('click', '#btn-export', function (event) {
             window.open('/' + controller + '/ResultValue', "_blank");
             break;
         case "3":
-            window.open('/' + controller + '/ResultBrut', "_blank");
+            window.open('/' + controller + '/ResultBrut' + paramsExport, "_blank");
             break;
         case "4":
         case "5":

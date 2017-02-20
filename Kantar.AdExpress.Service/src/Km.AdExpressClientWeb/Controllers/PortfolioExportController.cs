@@ -74,7 +74,7 @@ namespace Km.AdExpressClientWeb.Controllers
             return View();
         }
 
-        public ActionResult ResultBrut()
+        public ActionResult ResultBrut(ResultTable.SortOrder sortOrder, int columnIndex)
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
@@ -88,7 +88,7 @@ namespace Km.AdExpressClientWeb.Controllers
             document.Worksheets.Clear();
 
             export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
-            export.Export(document, data, session, true);
+            export.Export(document, data, session, true, sortOrder, columnIndex);
 
             document.Worksheets.ActiveSheetIndex = 1;
 

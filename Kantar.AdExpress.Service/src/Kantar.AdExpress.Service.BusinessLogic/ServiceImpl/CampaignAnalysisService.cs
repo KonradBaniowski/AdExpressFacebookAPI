@@ -29,6 +29,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
+                string sortKey = httpContext.Request.Cookies["sortKey"].Value;
+                string sortOrder = httpContext.Request.Cookies["sortOrder"].Value;
+
+                if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    _customerSession.SortKey = sortKey;
+                    _customerSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                    _customerSession.Save();
+                }
+
                 string periodBeginning = Dates.GetPeriodBeginningDate(_customerSession.PeriodBeginningDate, _customerSession.PeriodType).ToString("yyyyMMdd");
                 string periodEnd = Dates.GetPeriodEndDate(_customerSession.PeriodEndDate, _customerSession.PeriodType).ToString("yyyyMMdd");
 

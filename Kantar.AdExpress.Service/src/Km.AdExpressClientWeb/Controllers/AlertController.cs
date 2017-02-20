@@ -1,5 +1,5 @@
 ﻿using Kantar.AdExpress.Service.Core.BusinessService;
-using Domain=Kantar.AdExpress.Service.Core.Domain;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Models.Alert;
 using KM.Framework.Constantes;
 using System;
@@ -21,6 +21,7 @@ using TNS.Ares.Alerts.DAL;
 using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.Constantes;
+using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -82,6 +83,16 @@ namespace Km.AdExpressClientWeb.Controllers
             WebSession session = (WebSession)this.Session["session"];
             AlertOccurence occ = (AlertOccurence)this.Session["occ"];
 
+            HttpCookie sortKeyCookie = System.Web.HttpContext.Current.Request.Cookies["sortKey"] ?? new HttpCookie("sortKey");
+            sortKeyCookie.Value = session.SortKey;
+            sortKeyCookie.Expires = DateTime.Now.AddDays(1);
+            System.Web.HttpContext.Current.Response.Cookies.Add(sortKeyCookie);
+
+            HttpCookie sortOrderCookie = System.Web.HttpContext.Current.Request.Cookies["sortOrder"] ?? new HttpCookie("sortOrder");
+            sortOrderCookie.Value = session.Sorting.GetHashCode().ToString();
+            sortOrderCookie.Expires = DateTime.Now.AddDays(1);
+            System.Web.HttpContext.Current.Response.Cookies.Add(sortOrderCookie);
+
             var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ, this.HttpContext);
             return RedirectToAction("Results", redirectUrl);
         }
@@ -92,6 +103,17 @@ namespace Km.AdExpressClientWeb.Controllers
             var cp = new ClaimsPrincipal(User.Identity);
             var idWebSession = cp.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             var webSession = (WebSession)WebSession.Load(idWebSession);
+
+            string sortKey = System.Web.HttpContext.Current.Request.Cookies["sortKey"].Value;
+            string sortOrder = System.Web.HttpContext.Current.Request.Cookies["sortOrder"].Value;
+
+            if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+            {
+                webSession.SortKey = sortKey;
+                webSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                webSession.Save();
+            }
+
             CreateAlertModel model = new CreateAlertModel
             {
                 Labels = LoadPageLabels(webSession.SiteLanguage),

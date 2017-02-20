@@ -213,6 +213,9 @@ namespace Km.AdExpressClientWeb
                         "~/Scripts/component-selectable/common-actions.js",
                         "~/Scripts/universe/universe-media.js",
                         "~/Scripts/media/media-sponsorship.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/cookies").Include(
+            "~/Scripts/common/cookies.js"));
         }
     }
 }

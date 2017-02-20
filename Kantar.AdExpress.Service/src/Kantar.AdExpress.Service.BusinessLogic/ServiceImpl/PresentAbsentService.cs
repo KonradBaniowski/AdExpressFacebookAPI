@@ -31,6 +31,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE);
                 _customerSession = (WebSession)WebSession.Load(idWebSession);
+
+                string sortKey = httpContext.Request.Cookies["sortKey"].Value;
+                string sortOrder = httpContext.Request.Cookies["sortOrder"].Value;
+
+                if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    _customerSession.SortKey = sortKey;
+                    _customerSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                    _customerSession.Save();
+                }
+
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the present/absent result"));
                 var parameters = new object[1];
                 parameters[0] = _customerSession;
