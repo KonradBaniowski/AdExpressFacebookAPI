@@ -63,3 +63,12 @@
     </div>
 </div>
 <input type="hidden" id="current-url" value="/Contact/Index" />
+
+@section scripts {
+    @Scripts.Render("~/bundles/cookies")
+
+    <script>
+        createCookie("sortKey", "", 1);
+        createCookie("sortOrder", "", 1);
+    </script>
+}

@@ -1601,6 +1601,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\common\cookies.js" />
     <Content Include="Scripts\component-selectable\common-actions.js" />
     <Content Include="Scripts\countUp.js" />
     <Content Include="Scripts\countUp.min.js" />

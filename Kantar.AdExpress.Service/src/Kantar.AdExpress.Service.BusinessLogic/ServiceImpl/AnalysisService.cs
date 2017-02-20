@@ -20,19 +20,29 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
     {
         private WebSession _customerSession = null;
         private static Logger Logger= LogManager.GetCurrentClassLogger();
-        public GridResult GetGridResult(string idWebSession, ResultTable.SortOrder sortOrder, int columnIndex, HttpContextBase httpContext)
+        public GridResult GetGridResult(string idWebSession, HttpContextBase httpContext)
         {
             GridResult gridResult = new GridResult();
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
+                string sortKey = httpContext.Request.Cookies["sortKey"].Value;
+                string sortOrder = httpContext.Request.Cookies["sortOrder"].Value;
+
+                if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    _customerSession.SortKey = sortKey;
+                    _customerSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                    _customerSession.Save();
+                }
+
                 var module = ModulesList.GetModule(WebConstantes.Module.Name.TABLEAU_DYNAMIQUE);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class indicator"));
                 var param = new object[1];
                 param[0] = _customerSession;
 
                 var productClassLayer = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-                gridResult = productClassLayer.GetGridResult(sortOrder, columnIndex);
+                gridResult = productClassLayer.GetGridResult();
             }
             catch(Exception ex)
             {

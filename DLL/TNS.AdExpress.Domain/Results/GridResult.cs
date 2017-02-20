@@ -29,5 +29,7 @@ namespace TNS.AdExpress.Domain.Results
         public string Unit { get; set; }
         public Filter Filter { get; set; }
         public string LinkAllPeriod { get; set; }
-}
+        public int SortOrder { get; set; }
+        public int SortKey { get; set; }
+    }
 }
