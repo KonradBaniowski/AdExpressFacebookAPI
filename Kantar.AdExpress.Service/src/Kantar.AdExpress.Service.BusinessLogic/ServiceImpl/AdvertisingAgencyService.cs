@@ -29,6 +29,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
+                string sortKey = httpContext.Request.Cookies["sortKey"].Value;
+                string sortOrder = httpContext.Request.Cookies["sortOrder"].Value;
+
+                if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    _customerSession.SortKey = sortKey;
+                    _customerSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                    _customerSession.Save();
+                }
+
                 var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_MANDATAIRES);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class indicator"));
                 var param = new object[1];

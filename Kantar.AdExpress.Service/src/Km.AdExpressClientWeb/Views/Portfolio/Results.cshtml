@@ -210,6 +210,7 @@
     }
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/portfolio-vehicle-view")
+    @Scripts.Render("~/bundles/cookies")
     <script>
         //{columnKey: 'Address', allowHiding: false, hidden: true}
 
@@ -251,6 +252,15 @@
             var needFixedColumns = false;
             var zoomDate = '';
             var previousSubPeriodLabel;
+
+            columnIndex = readCookie("sortKey");
+            var order = readCookie("sortOrder");
+            switch (order) {
+                case 0: sortOrder = "DESC"; break;
+                case 1: sortOrder = "ASC"; break;
+                case 2: sortOrder = "NONE"; break;
+                default: sortOrder = "NONE";
+            }
 
             function GetItems(idItems) {
                 var items = '';
@@ -347,7 +357,20 @@
                                     name: "Sorting",
                                     type: "local",
                                     applySortedColumnCss: false,
-                                    columnSettings: columnsNotAllowedSorting
+                                    columnSettings: columnsNotAllowedSorting,
+                                    firstSortDirection : 'descending',
+                                    columnSorted: function (evt, ui) {
+                                        columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                                        createCookie("sortKey", columnIndex, 1);
+                                        if (ui.direction == 'ascending') {
+                                            sortOrder = "ASC";
+                                            createCookie("sortOrder", 1, 1);
+                                        }
+                                        else if (ui.direction == 'descending') {
+                                            sortOrder = "DESC";
+                                            createCookie("sortOrder", 0, 1);
+                                        }
+                                    }
                                 }
 
                             ]
@@ -375,7 +398,20 @@
                                      name: "Sorting",
                                      type: "local",
                                      applySortedColumnCss: false,
-                                     columnSettings: columnsNotAllowedSorting
+                                     columnSettings: columnsNotAllowedSorting,
+                                     firstSortDirection : 'descending',
+                                     columnSorted: function (evt, ui) {
+                                         columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                                         createCookie("sortKey", columnIndex, 1);
+                                         if (ui.direction == 'ascending') {
+                                             sortOrder = "ASC";
+                                             createCookie("sortOrder", 1, 1);
+                                         }
+                                         else if (ui.direction == 'descending') {
+                                             sortOrder = "DESC";
+                                             createCookie("sortOrder", 0, 1);
+                                         }
+                                     }
                                  }
 
                             ]
@@ -525,6 +561,28 @@
                                     colsFixed = data.columnsfixed;
                                     columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                                     needFixedColumns = data.needfixedcolumns;
+
+                                    columnIndex = data.sortKey;
+                                    createCookie("sortKey", columnIndex, 1);
+                                    var gridOrder = data.sortOrder;
+                                    switch (gridOrder) {
+                                        case 0:
+                                            sortOrder = "DESC";
+                                            createCookie("sortOrder", 0, 1);
+                                            break;
+                                        case 1:
+                                            sortOrder = "ASC";
+                                            createCookie("sortOrder", 1, 1);
+                                            break;
+                                        case 2:
+                                            sortOrder = "NONE";
+                                            createCookie("sortOrder", 2, 1);
+                                            break;
+                                        default:
+                                            sortOrder = "NONE";
+                                            createCookie("sortOrder", 2, 1);
+                                            break;
+                                    }
 
                                     if(columnsNotAllowedSorting == null)
                                         columnsNotAllowedSorting = [];

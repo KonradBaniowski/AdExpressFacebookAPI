@@ -9,9 +9,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/module-selection")
-
+    @Scripts.Render("~/bundles/cookies")
 
     <script>
+
+        createCookie("sortKey", "", 1);
+        createCookie("sortOrder", "", 1);
+
         function OpenOldWebSite(url) {
             window.open(url, "_blank");
         }

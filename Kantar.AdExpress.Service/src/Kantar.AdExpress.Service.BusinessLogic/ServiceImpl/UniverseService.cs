@@ -32,6 +32,7 @@ using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
 using TNS.AdExpress.Vehicle.DAL;
 using TNS.AdExpress.Domain.Classification;
+using TNS.FrameWork.WebResultUI;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -675,6 +676,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             string result = string.Empty;
             try
             {
+                string sortKey = httpContext.Request.Cookies["sortKey"].Value;
+                string sortOrder = httpContext.Request.Cookies["sortOrder"].Value;
+
+                if (!string.IsNullOrEmpty(sortKey) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    webSession.SortKey = sortKey;
+                    webSession.Sorting = (ResultTable.SortOrder)Enum.Parse(typeof(ResultTable.SortOrder), sortOrder);
+                    webSession.Save();
+                }
+
                 if (saveResult.Length == 0 && !saveAsResultId.Equals("0"))
                 {
                     string savedSessionName = CheckedText.CheckedAccentText(MyResultsDAL.GetSession(Int64.Parse(saveAsResultId), webSession));

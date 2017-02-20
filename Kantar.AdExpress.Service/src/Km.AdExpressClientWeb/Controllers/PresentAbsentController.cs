@@ -353,7 +353,9 @@ namespace Km.AdExpressClientWeb.Controllers
                     columnsfixed = gridResult.ColumnsFixed,
                     columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting,
                     needfixedcolumns = gridResult.NeedFixedColumns, unit = gridResult.Unit,
-                    success = gridResultResponse.Success
+                    success = gridResultResponse.Success,
+                    sortOrder = gridResult.SortOrder,
+                    sortKey = gridResult.SortKey
                 };
                 jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
                 jsonModel.MaxJsonLength = Int32.MaxValue;

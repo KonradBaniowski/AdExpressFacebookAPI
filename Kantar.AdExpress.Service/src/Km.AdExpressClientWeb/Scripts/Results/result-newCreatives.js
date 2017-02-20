@@ -14,8 +14,15 @@
     var columnsNotAllowedSorting;
     var needFixedColumns = false;
     var gridWidth;
-    var sortOrder = "NONE";
-    var columnIndex = 1;
+
+    columnIndex = readCookie("sortKey");
+    var order = readCookie("sortOrder");
+    switch (order) {
+        case 0 : sortOrder = "DESC"; break;
+        case 1 : sortOrder = "ASC"; break;
+        case 2: sortOrder = "NONE"; break;
+        default: sortOrder = "NONE";
+    }
 
     function GetItems(idItems) {
         var items = '';
@@ -64,8 +71,6 @@
             error: function (xmlHttpRequest, errorText, thrownError) {
             },
             success: function (data) {
-                sortOrder = "NONE";
-                columnIndex = 1;
                 CallNewCreativesResult();
             }
         });
@@ -303,6 +308,28 @@
                         columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                         needFixedColumns = data.needfixedcolumns;
 
+                        columnIndex = data.sortKey;
+                        createCookie("sortKey", columnIndex, 1);
+                        var gridOrder = data.sortOrder;
+                        switch (gridOrder) {
+                            case 0:
+                                sortOrder = "DESC";
+                                createCookie("sortOrder", 0, 1);
+                                break;
+                            case 1:
+                                sortOrder = "ASC";
+                                createCookie("sortOrder", 1, 1);
+                                break;
+                            case 2:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                            default:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                        }
+
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
                         });
@@ -359,7 +386,20 @@
                         name: "Sorting",
                         type: "local",
                         applySortedColumnCss: false,
-                        columnSettings: columnsNotAllowedSorting
+                        columnSettings: columnsNotAllowedSorting,
+                        firstSortDirection: 'descending',
+                        columnSorted: function (evt, ui) {
+                            columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                            createCookie("sortKey", columnIndex, 1);
+                            if (ui.direction == 'ascending') {
+                                sortOrder = "ASC";
+                                createCookie("sortOrder", 1, 1);
+                            }
+                            else if (ui.direction == 'descending') {
+                                sortOrder = "DESC";
+                                createCookie("sortOrder", 0, 1);
+                            }
+                        }
                     }
                     ]
             })
@@ -379,46 +419,30 @@
             });
 
             //$('.ui-iggrid-header.ui-widget-header').each(function (index) {
-            $('*[id*=grid_table_g]').each(function (index) {
-                var element = $(this);
-                element.attr("title", "Cliquez pour trier la colonne");
-                element.css("cursor", "pointer");
-                var child = element.find('.ui-iggrid-headertext');
-                child.css("cursor", "pointer");
-                if (index == (columnIndex - 1)) {
-                    if (sortOrder != "NONE") {
-                        var elementWidth = element.width();
-                        var childWidth = child.width();
+            //$('*[id*=grid_table_g]').each(function (index) {
+            //    var element = $(this);
+            //    element.attr("title", "Cliquez pour trier la colonne");
+            //    element.css("cursor", "pointer");
+            //    var child = element.find('.ui-iggrid-headertext');
+            //    child.css("cursor", "pointer");
+            //    if (index == (columnIndex - 1)) {
+            //        if (sortOrder != "NONE") {
+            //            var elementWidth = element.width();
+            //            var childWidth = child.width();
 
-                        element.addClass("ui-iggrid-colheaderasc-ktr");
-                        if (sortOrder == "ASC")
-                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
-                        else
-                            element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-desc ui-icon ui-icon-arrowthick-1-s"></span></div>');
-                    }
-                }
+            //            element.addClass("ui-iggrid-colheaderasc-ktr");
+            //            if (sortOrder == "ASC")
+            //                element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-asc ui-icon ui-icon-arrowthick-1-n"></span></div>');
+            //            else
+            //                element.append('<div class="ui-iggrid-indicatorcontainer"><span class="ui-iggrid-colindicator ui-iggrid-colindicator-desc ui-icon ui-icon-arrowthick-1-s"></span></div>');
+            //        }
+            //    }
 
-            });
+            //});
         
         } else {
             bootbox.alert(error);
         }
-    }
-
-    $(document).on('click', '*[id*=grid_table_g]', function (event) {
-        var element = $(this);
-        sortFunc(element);
-    });
-
-    var sortFunc = function (field) {
-        var index = field[0].id.split("-")[0].split("_g")[1];
-        if (sortOrder == "NONE")
-            sortOrder = "ASC";
-        else if (sortOrder == "ASC")
-            sortOrder = "DESC";
-        else if (sortOrder == "DESC")
-            sortOrder = "ASC";
-        columnIndex = parseInt(index);
     }
 
     $("#btn-save-result").click(function () {

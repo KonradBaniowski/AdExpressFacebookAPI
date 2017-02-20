@@ -272,13 +272,13 @@ namespace TNS.AdExpressI.Portofolio
                     GestionWeb.GetWebWord(2245, _webSession.SiteLanguage), //Insertions
                 };
 
-                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
                 object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for gad column
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
                 List<object> columnsNotAllowedSorting = new List<object>();
+                List<int> indexInResultTableAllowSortingList = new List<int>();
 
                 gridResult.HasData = true;
 
@@ -340,7 +340,7 @@ namespace TNS.AdExpressI.Portofolio
                                     colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
 
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
-                                    groups.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j][g].Label, ref colKey, colWidth));
+                                    groups.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j][g].Label, ref colKey, colWidth, ref indexInResultTableAllowSortingList, resultTable.NewHeaders.Root[j][g].IndexInResultTable));
                                     
                                     //groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = colWidth });
                                     schemaFields.Add(new { name = colKey });
@@ -356,7 +356,7 @@ namespace TNS.AdExpressI.Portofolio
                                 if (j == 0)
                                 {
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
-                                    columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, "350"));
+                                    columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, "350", ref indexInResultTableAllowSortingList, resultTable.NewHeaders.Root[j].IndexInResultTable));
                                     //columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350" });
                                     columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                                 }
@@ -369,7 +369,7 @@ namespace TNS.AdExpressI.Portofolio
                                     }
 
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j].IndexInResultTable];
-                                    columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, colWidth));
+                                    columns.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j].Label, ref colKey, colWidth, ref indexInResultTableAllowSortingList, resultTable.NewHeaders.Root[j].IndexInResultTable));
                                     //columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = colWidth });
                                     columnsFixed.Add(new { columnKey = colKey, isFixed = false, allowFixing = false });
                                 }
@@ -378,6 +378,23 @@ namespace TNS.AdExpressI.Portofolio
                             }
                         }
                     }
+                }
+
+                if (string.IsNullOrEmpty(_webSession.SortKey) ||
+                (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
+                {
+                    resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                    gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                    gridResult.SortKey = 1;
+                    _webSession.Sorting = ResultTable.SortOrder.NONE;
+                    _webSession.SortKey = "1";
+                    _webSession.Save();
+                }
+                else
+                {
+                    resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                    gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                    gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
                 }
 
                 //table body rows
@@ -496,59 +513,73 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
-        private object GetColumnDef(ICell cell, string headerText, ref string key, string width) {
+        private object GetColumnDef(ICell cell, string headerText, ref string key, string width, ref List<int> indexInResultTableAllowSortingList, int indexInResultTable) {
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
             if (cell is CellPercent)
+            {
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            }
             else if (cell is CellEvol)
+            {
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key + "-evol", dataType = "number", format = "percent", columnCssClass = "colStyle", width = width, allowSorting = true };
+            }
             else if (cell is CellDuration)
             {
                 key += "-unit-duration";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = "duration", columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellInsertion)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.insertion).StringFormat);
                 key += "-unit-insertion";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellMMC)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.mmPerCol).StringFormat);
                 key += "-unit-mmPerCol";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellPage)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.pages).StringFormat);
                 key += "-unit-pages";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellEuro)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat);
                 key += "-unit-euro";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellKEuro)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.kEuro).StringFormat);
                 key += "-unit-euro";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellGRP)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.grp).StringFormat);
                 key += "-unit-euro";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is CellVolume)
             {
                 string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(WebCst.CustomerSessions.Unit.volume).StringFormat);
                 key += "-unit-euro";
+                indexInResultTableAllowSortingList.Add(indexInResultTable);
                 return new { headerText = headerText, key = key, dataType = "number", format = format, columnCssClass = "colStyle", width = width, allowSorting = true };
             }
             else if (cell is AdExpressCellLevel)

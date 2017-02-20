@@ -22,6 +22,15 @@
     var creatives = [];
     var gridWidth;
 
+    columnIndex = readCookie("sortKey");
+    var order = readCookie("sortOrder");
+    switch (order) {
+        case 0: sortOrder = "DESC"; break;
+        case 1: sortOrder = "ASC"; break;
+        case 2: sortOrder = "NONE"; break;
+        default: sortOrder = "NONE";
+    }
+
     function GetItems(idItems) {
         var items = '';
 
@@ -98,7 +107,20 @@
                             name: "Sorting",
                             type: "local",
                             applySortedColumnCss: false,
-                            columnSettings: columnsNotAllowedSorting
+                            columnSettings: columnsNotAllowedSorting,
+                            firstSortDirection: 'descending',
+                            columnSorted: function (evt, ui) {
+                                columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                                createCookie("sortKey", columnIndex, 1);
+                                if (ui.direction == 'ascending') {
+                                    sortOrder = "ASC";
+                                    createCookie("sortOrder", 1, 1);
+                                }
+                                else if (ui.direction == 'descending') {
+                                    sortOrder = "DESC";
+                                    createCookie("sortOrder", 0, 1);
+                                }
+                            }
                         }
                     ]
                 })
@@ -126,7 +148,20 @@
                             name: "Sorting",
                             type: "local",
                             applySortedColumnCss: false,
-                            columnSettings: columnsNotAllowedSorting
+                            columnSettings: columnsNotAllowedSorting,
+                            firstSortDirection: 'descending',
+                            columnSorted: function (evt, ui) {
+                                columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                                createCookie("sortKey", columnIndex, 1);
+                                if (ui.direction == 'ascending') {
+                                    sortOrder = "ASC";
+                                    createCookie("sortOrder", 1, 1);
+                                }
+                                else if (ui.direction == 'descending') {
+                                    sortOrder = "DESC";
+                                    createCookie("sortOrder", 0, 1);
+                                }
+                            }
                         }
                     ]
                 })
@@ -332,6 +367,28 @@
                         columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                         needFixedColumns = data.needfixedcolumns;
 
+                        columnIndex = data.sortKey;
+                        createCookie("sortKey", columnIndex, 1);
+                        var gridOrder = data.sortOrder;
+                        switch (gridOrder) {
+                            case 0:
+                                sortOrder = "DESC";
+                                createCookie("sortOrder", 0, 1);
+                                break;
+                            case 1:
+                                sortOrder = "ASC";
+                                createCookie("sortOrder", 1, 1);
+                                break;
+                            case 2:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                            default:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                        }
+
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
                         });
@@ -440,22 +497,6 @@
 
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
-
-    var sortOrder = "NONE";
-    var columnIndex = 1;
-
-    //$('#btn-export').on('click', function (e) {
-    //    var selectedValue = $('#export-type').val();
-    //    var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
-    //    switch (selectedValue) {
-    //        case "1":
-    //            window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
-    //            break;
-    //        default:
-    //            window.open('/AdvertisingAgencyExport/Index' + params, "_blank");
-    //            break;
-    //    }
-    //});
 
     $('#save-custom-detail-levels').on('click', function (e) {
         var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val() + ',' + $('#l4Detail').val();

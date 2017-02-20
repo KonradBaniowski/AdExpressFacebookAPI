@@ -13,8 +13,15 @@
     var colsFixed;
     var needFixedColumns = false;
     var gridWidth;
-    var sortOrder = "NONE";
-    var columnIndex = 1;
+    
+    columnIndex = readCookie("sortKey");
+    var order = readCookie("sortOrder");
+    switch (order) {
+        case 0: sortOrder = "DESC"; break;
+        case 1: sortOrder = "ASC"; break;
+        case 2: sortOrder = "NONE"; break;
+        default: sortOrder = "NONE";
+    }
 
     function MediaDetailLevel() {
         this.LevelDetailValue = $('#mediaDetail').val();
@@ -67,8 +74,6 @@
             error: function (xmlHttpRequest, errorText, thrownError) {
             },
             success: function (data) {
-                sortOrder = "NONE";
-                columnIndex = 1;
                 CallAnalysisResult();
             }
         });
@@ -206,23 +211,42 @@
 
     //$(document).on('click', '.ui-iggrid-header.ui-widget-header', function (event) {
     $(document).on('click', '*[id*=grid_table_g]', function (event) {
-        var element = $(this);
-        sortFunc(element);
+        var field = $(this);
+
+        var index = field[0].id.split("-")[0].split("_g")[1];
+
+        if (columnIndex != parseInt(index))
+            sortOrder = "NONE";
+
+        columnIndex = parseInt(index);
+        createCookie("sortKey", columnIndex, 1);
+
+        if (sortOrder == "NONE") {
+            sortOrder = "DESC";
+            createCookie("sortOrder", 0, 1);
+        }
+        else if (sortOrder == "ASC") {
+            sortOrder = "DESC";
+            createCookie("sortOrder", 0, 1);
+        }
+        else if (sortOrder == "DESC") {
+            sortOrder = "ASC";
+            createCookie("sortOrder", 1, 1);
+        }
+
+        $("#grid").addClass("hide");
+        $("#gridLoader").removeClass("hide");
+        CallAnalysisResult();
     });
    
     function CallAnalysisResult() {
         $("#gridEmpty").hide();
-        var params = {
-            sortOrder: sortOrder,
-            columnIndex: columnIndex
-        };
 
         $.ajax({
             url: '/Analysis/AnalysisResult',
             contentType: "application/x-www-form-urlencoded",
             type: "POST",
             datatype: "json",
-            data: params,
             timeout: 300000, //5 min
             error: function (xmlHttpRequest, errorText, thrownError) {
                 var message;
@@ -251,6 +275,28 @@
                         cols = data.columns;
                         colsFixed = data.columnsfixed;
                         needFixedColumns = data.needfixedcolumns;
+
+                        columnIndex = data.sortKey;
+                        createCookie("sortKey", columnIndex, 1);
+                        var gridOrder = data.sortOrder;
+                        switch (gridOrder) {
+                            case 0:
+                                sortOrder = "DESC";
+                                createCookie("sortOrder", 0, 1);
+                                break;
+                            case 1:
+                                sortOrder = "ASC";
+                                createCookie("sortOrder", 1, 1);
+                                break;
+                            case 2:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                            default:
+                                sortOrder = "NONE";
+                                createCookie("sortOrder", 2, 1);
+                                break;
+                        }
 
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
@@ -365,21 +411,6 @@
         } else {
             bootbox.alert(error);
         }
-    }
-
-    var sortFunc = function (field) {
-        var index = field[0].id.split("-")[0].split("_g")[1];
-        if (sortOrder == "NONE")
-            sortOrder = "ASC";
-        else if (sortOrder == "ASC")
-            sortOrder = "DESC";
-        else if (sortOrder == "DESC")
-            sortOrder = "ASC";
-        columnIndex = parseInt(index);
-
-        $("#grid").addClass("hide");
-        $("#gridLoader").removeClass("hide");
-        CallAnalysisResult();
     }
 
     //Export

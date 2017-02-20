@@ -91,13 +91,13 @@ namespace Km.AdExpressClientWeb.Controllers
             return View(model);
         }
 
-        public JsonResult AnalysisResult(ResultTable.SortOrder sortOrder, int columnIndex)
+        public JsonResult AnalysisResult()
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel;
 
-            var gridResult = _analysisService.GetGridResult(idWebSession, sortOrder, columnIndex, this.HttpContext);
+            var gridResult = _analysisService.GetGridResult(idWebSession, this.HttpContext);
             if (!gridResult.HasData)
                 return null;
 
@@ -111,7 +111,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns };
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, needfixedcolumns = gridResult.NeedFixedColumns, sortOrder = gridResult.SortOrder, sortKey = gridResult.SortKey };
             jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
