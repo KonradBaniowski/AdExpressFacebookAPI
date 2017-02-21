@@ -285,7 +285,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
                     + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
                     + "<br><br>"
-                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), "http://km-adexpress.kantarmedia.fr"),
+                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 try
                 {
@@ -1480,10 +1480,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 string fileName = DateTime.Now.ToString("yyyyMMdd_")
                    + Ares.Functions.GetRandomString(30, 40);
 
-                htmlFile = Path.GetTempPath() + fileName + ".html";
+                htmlFile = AppDomain.CurrentDomain.BaseDirectory + fileName + ".html";
                 fs = File.OpenWrite(htmlFile);
                 writer = new StreamWriter(fs, Encoding.UTF8);
-                writer.Write(GetHtmlHeader(charset, themeName, serverName) + html + GetHtmlFooter());
+                writer.Write(GetHtmlHeader(charset, themeName) + html + GetHtmlFooter());
                 writer.Close();
                 writer = null;
                 fs.Close();
@@ -1518,7 +1518,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// Get Html Header
         /// </summary>
         /// <returns>Html Header</returns>
-        protected virtual string GetHtmlHeader(string charset, string themeName, string serverName)
+        protected virtual string GetHtmlHeader(string charset, string themeName)
         {
             StringBuilder html = new StringBuilder();
             html.Append("<!DOCTYPE HTML >");
@@ -1529,10 +1529,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
             html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
             html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/Rolex.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/Rolex.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
             html.Append("<meta http-equiv=\"expires\" content=\"0\">");
             html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");

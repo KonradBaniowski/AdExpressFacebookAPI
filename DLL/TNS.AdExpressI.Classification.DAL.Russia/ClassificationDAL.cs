@@ -883,5 +883,9 @@ namespace TNS.AdExpressI.Classification.DAL.Russia
         }
         #endregion
 
+        public override DataSet GetHealthMediaType()
+        {
+            throw new NotImplementedException("Not Implemented Method");
+        }
     }
 }

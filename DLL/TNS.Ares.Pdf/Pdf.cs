@@ -457,7 +457,7 @@ namespace TNS.Ares.Pdf
             {
 
                 #region Get Temp File
-                string workFile = Path.GetTempFileName();
+                string workFile = AppDomain.CurrentDomain.BaseDirectory + "htmlTmp.tmp";
                 #endregion
 
                 #region HTML
@@ -468,7 +468,7 @@ namespace TNS.Ares.Pdf
                     sw = File.CreateText(workFile);
 
                     #region Html Header
-                    sw.WriteLine(this.GetHtmlHeader(charset, themeName, serverName));
+                    sw.WriteLine(this.GetHtmlHeader(charset, themeName));
                     #endregion
 
                     #region Html Content
@@ -580,10 +580,10 @@ namespace TNS.Ares.Pdf
                 string fileName = DateTime.Now.ToString("yyyyMMdd_")
                    + TNS.Ares.Functions.GetRandomString(30, 40);
 
-                htmlFile = System.IO.Path.GetTempPath() + fileName + ".html";
+                htmlFile = AppDomain.CurrentDomain.BaseDirectory + fileName + ".html";
                 fs = File.OpenWrite(htmlFile);
                 writer = new StreamWriter(fs, Encoding.UTF8);
-                writer.Write(GetHtmlHeader(charset, themeName, serverName) + html.ToString() + GetHtmlFooter());
+                writer.Write(GetHtmlHeader(charset, themeName) + html.ToString() + GetHtmlFooter());
                 writer.Close();
                 writer = null;
                 fs.Close();               
@@ -624,7 +624,7 @@ namespace TNS.Ares.Pdf
         /// Get Html Header
         /// </summary>
         /// <returns>Html Header</returns>
-        protected virtual string GetHtmlHeader(string charset, string themeName, string serverName)
+        protected virtual string GetHtmlHeader(string charset, string themeName)
         {
             StringBuilder html = new StringBuilder();
             html.Append("<!DOCTYPE HTML >");
@@ -635,10 +635,10 @@ namespace TNS.Ares.Pdf
             html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
             html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
             html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/Rolex.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"App_Themes" + "/" + themeName + "/Css/Rolex.css\" type=\"text/css\" rel=\"stylesheet\">");
             html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
             html.Append("<meta http-equiv=\"expires\" content=\"0\">");
             html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");

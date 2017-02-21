@@ -1,0 +1,677 @@
+﻿.rolexScheduleResults
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Black;
+}
+
+
+
+.rolexScheduleContainerWebControl
+{
+    padding: 10px 0px 10px 0px;
+}
+
+
+/* Selection Class */
+
+div.dateSelectionWebControlSelection, div.filtreSelectionWebControlSelection, div.excelSelectionWebControlSelection, div.pdfSelectionWebControlSelection
+{
+    margin-right: 30px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+
+.dateSelectionWebControlSelection, .filtreSelectionWebControlSelection, .excelSelectionWebControlSelection, .pdfSelectionWebControlSelection, .dateSelectionWebControlSelection select
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: Black;
+}
+
+.filtreSelectionWebControlSelection img, .excelSelectionWebControlSelection img, .pdfSelectionWebControlSelection img, .filtreSelectionWebControlSelection label, .excelSelectionWebControlSelection label, .pdfSelectionWebControlSelection label
+{
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+
+
+/* Filter Class */
+.rolexScheduleResultFilterWebControlBackgroud
+{
+    filter: alpha(opacity=40);
+    background-color: rgb(92,92,92);
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+}
+
+.rolexScheduleResultFilterWebControl
+{
+    padding: 10px 10px 20px 10px;
+    width: 750px;
+    height: 550px;
+    border: solid 1px #DFDFDF;
+    position: absolute;
+    z-index: 10000;
+    overflow: none;
+    background-color: White;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #525252;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+td.rolexScheduleResultFilterWebControlOption
+{
+    width: 80px;
+    height: 100%;
+    vertical-align: top;
+}
+
+table.rolexScheduleResultFilterWebControlOption
+{
+    background-color: #eeeeee;
+    border: solid 1px #DBDBDB;
+    text-align: left;
+}
+
+.rolexScheduleResultFilterWebControlOptionHeader
+{
+    vertical-align: top;
+    color: #A6A6A6;
+    text-align: center;
+    padding: 10px 0px 0px 0px;
+    font-weight: bold;
+}
+
+.rolexScheduleResultFilterWebControlMenu
+{
+    vertical-align: top;
+    font-size: 12px;
+}
+
+.rolexScheduleResultFilterWebControlMenu ul
+{
+    margin: 0 0 5px 0;
+    padding: 0 0 2px 0;
+    list-style-type: none;
+    width: 185px;
+}
+
+.rolexScheduleResultFilterWebControlMenu ul li a
+{
+    color: #333;
+    display: block;
+    height: 16px;
+    padding: 4px 0 4px 35px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.rolexScheduleResultFilterWebControlMenuSelected, .rolexScheduleResultFilterWebControlMenu ul li a:hover
+{
+    background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_menu_vp.gif);
+    background-repeat: repeat-x;
+}
+
+td.rolexScheduleResultFilterWebControlResult
+{
+    /*width: 100%; 	height: 100%;*/
+        vertical-align: top;
+}
+
+div.rolexScheduleResultFilterWebControlResult
+{
+    /*iki*/
+    padding: 0px 0px 0px 0px;
+   /* width: 650px;*/
+    height: 530px;
+    z-index: 10000;
+    overflow-y: auto;
+    overflow-x: auto;
+    vertical-align: top;
+}
+
+.rolexScheduleResultFilterWebControlResultContent
+{
+    width: 100%;
+    z-index: 10000;
+    border: solid 1px #DBDBDB;
+    margin: 0px 0px 10px 5px;
+    padding: 0px 0px;
+    background-color: #eeeeee;
+}
+
+.rolexScheduleResultFileContent
+{
+    width: 100%;
+    z-index: 10000;
+    border: solid 1px #DBDBDB;
+    margin: 0px 0px 0px 0px; /*padding: 0px 5px;*/
+    background-color: #eeeeee;
+}
+.hrSpacer
+{
+    background-color: #DBDBDB;
+    border: solid 1px #DBDBDB;
+}
+td.rolexScheduleResultFilterWebControlButtons
+{
+    /*background-color: #eeeeee;*/
+       /*vertical-align: top;*/
+}
+
+table.rolexScheduleResultFilterWebControlButtons
+{
+    /*background-color: #eeeeee;*/
+    width: 60px;
+    height: 20px;
+    vertical-align: top;
+
+}
+
+.rolexScheduleResultFilterWebControlButtonCancel
+{
+    cursor: pointer;
+}
+
+.rolexScheduleResultFilterWebControlButtonValidation
+{
+    cursor: pointer;
+}
+/* Filter Node Class */
+.rolexScheduleResultFilterNodeWebControlResult
+{
+    text-align: left;
+}
+
+table.rolexScheduleResultFilterNodeWebControlResultLvl1, table.rolexScheduleResultFilterNodeWebControlResultLvl2, table.rolexScheduleResultFilterNodeWebControlResultLvl3, table.rolexScheduleResultFilterNodeWebControlResultLvl4
+{
+    height: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: black;
+}
+
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl1 label, table.rolexScheduleResultFilterNodeProductWebControlResultLvl2 label, table.rolexScheduleResultFilterNodeProductWebControlResultLvl3 label, table.rolexScheduleResultFilterNodeWebControlResultLvl1 label, table.rolexScheduleResultFilterNodeWebControlResultLvl2 label, table.rolexScheduleResultFilterNodeWebControlResultLvl3 label, table.rolexScheduleResultFilterNodeWebControlResultLvl4 label, table.rolexScheduleResultFilterNodeProductWebControlResultLvl1 input, table.rolexScheduleResultFilterNodeProductWebControlResultLvl2 input, table.rolexScheduleResultFilterNodeProductWebControlResultLvl3 input, table.rolexScheduleResultFilterNodeWebControlResultLvl1 input, table.rolexScheduleResultFilterNodeWebControlResultLvl2 input, table.rolexScheduleResultFilterNodeWebControlResultLvl3 input, table.rolexScheduleResultFilterNodeWebControlResultLvl4 input
+{
+    cursor: pointer;
+}
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl1 label, table.rolexScheduleResultFilterNodeProductWebControlResultLvl2 label, table.rolexScheduleResultFilterNodeProductWebControlResultLvl3 label, table.rolexScheduleResultFilterNodeWebControlResultLvl1 label, table.rolexScheduleResultFilterNodeWebControlResultLvl2 label, table.rolexScheduleResultFilterNodeWebControlResultLvl3 label, table.rolexScheduleResultFilterNodeWebControlResultLvl4 label
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: black;
+}
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl1, table.rolexScheduleResultFilterNodeWebControlResultLvl1
+{
+    padding-left: 0px;
+    background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_header_vp.gif);
+    background-repeat: repeat-x;
+    height: 20px;
+}
+tr.rolexScheduleResultFilterNodeProductWebControlResultLvl1, tr.rolexScheduleResultFilterNodeWebControlResultLvl1
+{
+    padding-left: 0px;
+    background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_header_vp.gif);
+    background-repeat: repeat-x;
+    height: 11px;
+}
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl1 label, table.rolexScheduleResultFilterNodeWebControlResultLvl1 label
+{
+    font-weight: bold;
+}
+
+
+table.rolexScheduleResultFilterNodeWebControlResultLvl2
+{
+    padding-left: 10px;
+}
+
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl2, table.rolexScheduleResultFilterNodeWebControlResultLvl2 label
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+table.rolexScheduleResultFilterNodeProductContainerWebControlResultLvl1
+{
+    width: 100%;
+    padding: 10px 20px;
+}
+
+div.rolexScheduleResultFilterNodeProductWebControlResultLvl2
+{
+    border: solid 1px #DBDBDB;
+    margin: 0px 0px 10px 0px;
+    padding: 0px 5px;
+    background-color: #eeeeee;
+}
+
+table.rolexScheduleResultFilterNodeWebControlResultLvl3
+{
+    padding-left: 20px;
+}
+
+table.rolexScheduleResultFilterNodeProductContainerWebControlResultLvl3
+{
+    padding: 5px 0px;
+}
+
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl3
+{
+    padding-left: 30px;
+}
+
+table.rolexScheduleResultFilterNodeProductWebControlResultLvl3 label, table.rolexScheduleResultFilterNodeWebControlResultLvl3 label
+{
+    font-weight: normal;
+}
+
+.rolexScheduleResultFilterNodeWebControlResultDisplay
+{
+    cursor: pointer;
+}
+
+/* RolexScheduleSelectionDetailLevelWebControl */
+table.rolexScheduleSelectionDetailLevelWebControlPersonnalisation, table.rolexScheduleSelectionDetailLevelWebControlDetailTab
+{
+    /*border: solid 1px #DBDBDB;*/
+    height: 230px;
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlPersonnalisation
+{
+    padding: 10px 5px 0px 5px;
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlDetailTab
+{
+    padding: 10px 5px 10px 5px;
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlDetailTab, table.rolexScheduleSelectionDetailLevelWebControlDetailTab td, table.rolexScheduleSelectionDetailLevelWebControlPersonnalisation, table.rolexScheduleSelectionDetailLevelWebControlPersonnalisation td
+{
+    vertical-align: top;
+}
+
+.rolexScheduleSelectionDetailLevelWebControlDetailTab select
+{
+    margin: 3px 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: Black;
+}
+
+.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeader, .rolexScheduleSelectionDetailLevelWebControlDetailTabHeader
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Black;
+    text-align: left;
+}
+
+.rolexScheduleSelectionDetailLevelWebControlSeparator
+{
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-align: left;
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table td
+{
+    width: 150px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+table.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis input
+{
+    cursor: pointer;
+}
+
+.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: Black;
+}
+
+td.rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+    padding-bottom: 10px;
+}
+/* Rolexfile Class */
+div.rolex2fContent
+{
+    overflow-y: auto;
+    overflow-x: none;
+    z-index: 10000;
+    height: 590px;
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+}
+div.rolexfContent
+{
+    /*overflow-y: auto; 	overflow-x: none; 	z-index: 10000; 	height: 590px; 	width: 100%;*/
+    overflow-y: auto;
+    z-index: 10000;
+    height: 590px;
+    padding: 0px 0px 0px 0px;
+}
+td.rolexfContent
+{
+    width: 650px;
+    height: 590px;
+}
+td.rolexfDescr
+{
+    width: 150px;
+    vertical-align: top;
+}
+td.rolexfDescrPdf
+{
+    vertical-align: top;
+}
+td.rolexfDescrCond
+{
+    width: 150px;
+    vertical-align: top;
+}
+
+div.pr_ctr
+{
+    text-align: center;
+}
+div.pr_div
+{
+    text-align: center;
+}
+td.ro_visu1
+{
+    text-align: center; /*width: 386px; 	height: 210px; */
+    width: 350px;
+}
+img.ro_visu
+{
+    /*width: 386px; 	height: 210px; */
+    width: 350px;
+    vertical-align: top;
+}
+ul.rof
+{
+    list-style-type: square;
+    color: #FD6200;
+    text-align: left;
+}
+ul.rof li span
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    text-align: left;
+}
+ul.rofbd
+{
+    list-style-type: disc;
+    color: #646262;
+}
+ul.rofbd li span
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+}
+/*span.prfSp
+{
+	font-weight: normal;
+    color: #646262;
+}*/
+
+span.rofSp
+{
+    font-weight: normal;
+    color: #646262;
+}
+hr.hrSp
+{
+    height: 1px;
+    color: #D2D2D2;
+}
+.RolexFilePopUpHeader
+{
+    background-image: url(/App_Themes/KMAE-Fr/images/Common/PopUp_Header.gif);
+    background-repeat: repeat-x;
+    height: 21px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    font-weight: bold;
+    vertical-align: top; /*padding-top: 5px;*/
+    text-align: left;
+}
+table.rolexSchedulFileResult
+{
+    width: 650px;
+    height: 590px;
+    padding: 0px 0px 0px 0px;
+    margin: 0;
+    border: 0px;
+    text-align: center;
+    border-spacing: 0px;
+    background-color: #FFFFFF;
+}
+td.rolexSchedulFileResult
+{
+    /*width: 100%; 	height: 100%;*/
+}
+div.rolexSchedulFileResult
+{
+    /*iki*/
+    padding: 0px 0px 0px 0px;
+      border-spacing: 0px;
+    width: 670px;
+    height: 570px;
+    z-index: 10000;
+    overflow-y: auto;
+    overflow-x: auto;
+    vertical-align: top;
+}
+td.rofDescr
+{
+    width: 150px;
+    vertical-align: top;
+    background-color: #DBDBDB;
+    color: #646262;
+}
+div.rolexPrf
+{
+    width: 650px;
+    height: 590px;
+    border: solid 1px #DFDFDF;
+    position: absolute;
+    z-index: 10000;
+    overflow: none;
+    background-color: White;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #525252;
+    text-align: center;
+    font-weight: bold;
+    vertical-align: top;
+    padding: 0px 0px 0px 0px;
+}
+.rolexScheduleResultWebControlButtonCancel
+{
+	cursor: pointer;
+	text-align: right;
+	padding-right: 20px;
+	height: 20px;
+}
+/* Complete period */
+td.ppr
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-top-width: 1px;
+    border-top-color: #FFFFFF; /*#646262;*/
+    border-top-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #FFFFFF; /*#646262;*/
+    border-bottom-style: solid;
+    border-right-color: #FFFFFF;
+    border-right-width: 1px;
+    border-right-style: solid;
+    background-color: #A0A1A7;
+    width: 17px;
+}
+a.ppr, a.ppr:active, a.ppr:visited
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+a.ppr:hover
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #FF7100;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+/* Period */
+td.par
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #646262;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-right-color: #FFFFFF;
+    border-right-style: solid;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-bottom-style: solid;
+    border-right-width: 1px;
+}
+
+/**Dates selection**/
+table.rolexScheduleSelectionDateWebControlPersonnalisationHeaderBis table
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    width: 150px; /*padding-left:20px;*/
+    text-align: left;
+}
+
+table.rolexScheduleSelectionDateWebControlPersonnalisationHeaderBis table td
+{
+    /*width:150px;*/ /* padding-left:20px;*/
+    padding-right: 5px;
+    font-size: 11px;
+}
+tr.rolexScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+    width: 150px;
+    padding-right: 5px;
+    font-size: 11px;
+}
+
+
+.rolexScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: Black;
+}
+
+td.rolexScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+    padding-bottom: 10px;
+}
+.rolexScheduleResultWebControlButtonCancel
+{
+    cursor: pointer;
+    text-align: right;
+    padding-right: 20px;
+    height: 20px;
+}
+
+td.rolexScheduleResultWebControlButtons
+{
+}
+table.rolexScheduleSelectionDateWebControlPersonnalisationTab
+{
+    /*border: solid 1px #DBDBDB;*/
+    height: 180px;
+}
+.rolexScheduleSelectionDateWebControlPersonnalisationHeader
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Black;
+    text-align: left;
+}
+.rolexScheduleSelectionDateText
+{
+    text-align: left;
+}
+.rolexResNoData
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    font-weight: bold;
+    height: 530px;
+}
+
+
+a.roSite:link, a.roSite:visited, a.roSite:active
+{
+    font-size: 11px;
+    color: #646262;
+    font-family: Arial, Helvetica, sans-serif; /*text-decoration: none;*/
+    font-weight: bold; /*position: relative;*/
+}
+
+a.roSite:hover
+{
+    border: 0;
+    position: relative;
+    z-index: 1000; /*text-decoration: none;*/
+    font-weight: bold;
+}
