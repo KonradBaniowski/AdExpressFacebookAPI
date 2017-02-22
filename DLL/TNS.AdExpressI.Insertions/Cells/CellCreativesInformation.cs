@@ -576,10 +576,9 @@ namespace TNS.AdExpressI.Insertions.Cells
             if (!hasVisual)
             {
                 str.Clear();
-                str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],");
+                //str.Append("[" + GestionWeb.GetWebWord(843, _session.SiteLanguage) + "],");
 
-                //TODO a utiliser lorsque lorsque le chemin ne sera plus en dure depuis l'ancien site (dans index de creative)
-                //str.Append("[/Content/img/no_visu.jpg],"); 
+                str.Append("[/Content/img/no_visu.jpg],"); 
             }
             #endregion
             str.Append("[],");
