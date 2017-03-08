@@ -47,6 +47,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 idMySession = Int64.Parse(idSession);
                 var webSession = (WebSession)WebSession.Load(idWebSession);
                 var webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
+                webSessionSave.CustomerLogin = webSession.CustomerLogin;
+                webSessionSave.Source= webSession.Source;
                 result = LoadDetailsSelection(webSessionSave);
             }
             return result;
@@ -85,6 +87,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
                 TNSDomain.Alert alert = alertDAL.GetAlert(idAlert);
                 var webSessionSave = (WebSession)alert.Session;
+                var webSession = (WebSession)WebSession.Load(idWebSession);
+                webSessionSave.CustomerLogin = webSession.CustomerLogin;
+                webSessionSave.Source = webSession.Source;
                 result = LoadDetailsSelection(webSessionSave);
             }
             return result;
@@ -193,9 +198,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     domain.DateBegin = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, true);
                     domain.DateEnd = Dates.GetAnalysisDate(_webSession.PeriodBeginningDate, false);
                     break;
-                default:
-                    domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate) : null;
-                    domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? Dates.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodEndDate) : null;
+                default:                  
+                    DateTime? dateBegin = Dates.GetPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                    DateTime? dateEnd = Dates.GetPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
+                    domain.DateBegin = !string.IsNullOrEmpty(_webSession.PeriodBeginningDate) ? dateBegin : null;
+                    domain.DateEnd = !string.IsNullOrEmpty(_webSession.PeriodEndDate) ? dateEnd : null;
                     break;
 
             }
