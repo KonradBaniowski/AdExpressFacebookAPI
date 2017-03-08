@@ -7,12 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Aspose.Cells.Drawing;
+using Aspose.Cells.Rendering;
+using Infragistics.Imaging;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
@@ -22,6 +26,7 @@ using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.FrameWork.WebResultUI;
+using LineType = TNS.FrameWork.WebResultUI.LineType;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
@@ -33,6 +38,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private IMediaService _mediaService;
         private IWebSessionService _webSessionService;
         private IDetailSelectionService _detailSelectionService;
+
         public PortfolioExportController(IPortfolioService portofolioService, IMediaService mediaService, IWebSessionService webSessionService, IDetailSelectionService detailSelectionService)
         {
             _portofolioService = portofolioService;
@@ -60,8 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.ActiveSheetIndex = 1;
 
-            string documentFileNameRoot;
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            string documentFileNameRoot = $"Document.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -92,8 +97,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.ActiveSheetIndex = 1;
 
-            string documentFileNameRoot;
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            string documentFileNameRoot = $"Document.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -146,12 +150,10 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         private bool _skipIndent = false;
-
         private AdExpressCultureInfo cInfo;
 
         public ExportAspose()
         { }
-
 
         public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
@@ -986,16 +988,25 @@ namespace Km.AdExpressClientWeb.Controllers
             //document.Worksheets.Clear();
 
             Worksheet sheet = document.Worksheets.Add("Selection");
+            sheet.IsGridlinesVisible = false;
 
             Labels labels = LabelsHelper.LoadPageLabels(session.SiteLanguage);
 
             int cellRow = 2;
-            int cellCol = 2;
+            int cellCol = 1;
 
+            //Adding logo top
+            string pathLogo = $"/Content/img/{WebApplicationParameters.CountryCode}/export_logo_km.png";
+            pathLogo = System.Web.HttpContext.Current.Server.MapPath(pathLogo);
+            int picId = sheet.Pictures.Add(0, 0, pathLogo);
+
+            Picture pic = sheet.Pictures[picId];
+            pic.Placement = PlacementType.FreeFloating;
+            pic.WidthScale = 100;
+            pic.HeightScale = 100;
 
             if (detailSelectionResponse.ShowStudyType)
             {
-
                 sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.StudySelectionLabel);
                 sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.ModuleLabel);
 
@@ -1176,6 +1187,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 cellRow++;
             }
 
+            
+
+            sheet.Cells[cellRow + 1, cellCol].Value = $"{GestionWeb.GetWebWord(2266, session.SiteLanguage)} {DateTime.Now.Year.ToString()}";
+
+
+
             sheet.AutoFitColumns();
             sheet.AutoFitRows();
 
@@ -1349,7 +1366,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             foreach (HeaderBase item in root)
             {
-                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count> 0) || item is HeaderGroup)
+                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
                 {
                     int tmp = NbRow(item, session);
 
@@ -1432,11 +1449,11 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && header.Count > 0)
                 {
-                        DrawHeaders(header, sheet, session, rowStart + rowSpan, colStart);
+                    DrawHeaders(header, sheet, session, rowStart + rowSpan, colStart);
                 }
                 else if (header is HeaderGroup)
                 {
-                        DrawHeaders(header, sheet, session, rowStart + 1, colStart);
+                    DrawHeaders(header, sheet, session, rowStart + 1, colStart);
                 }
 
                 colStart += colSpan;
