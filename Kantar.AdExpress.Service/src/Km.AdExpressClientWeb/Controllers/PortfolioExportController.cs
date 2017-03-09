@@ -982,28 +982,23 @@ namespace Km.AdExpressClientWeb.Controllers
 
         public void ExportSelection(Workbook document, WebSession session, DetailSelectionResponse detailSelectionResponse)
         {
+            Labels labels = LabelsHelper.LoadPageLabels(session.SiteLanguage);
+            int cellRow = 4;
+            int cellCol = 1;
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
-
-            //document.Worksheets.Clear();
-
             Worksheet sheet = document.Worksheets.Add("Selection");
             sheet.IsGridlinesVisible = false;
-
-            Labels labels = LabelsHelper.LoadPageLabels(session.SiteLanguage);
-
-            int cellRow = 2;
-            int cellCol = 1;
 
             //Adding logo top
             string pathLogo = $"/Content/img/{WebApplicationParameters.CountryCode}/export_logo_km.png";
             pathLogo = System.Web.HttpContext.Current.Server.MapPath(pathLogo);
+            Image img = Image.FromFile(pathLogo);
             int picId = sheet.Pictures.Add(0, 0, pathLogo);
-
             Picture pic = sheet.Pictures[picId];
             pic.Placement = PlacementType.FreeFloating;
-            pic.WidthScale = 100;
-            pic.HeightScale = 100;
+            pic.Width = img.Width;
+            pic.Height = img.Height;
 
             if (detailSelectionResponse.ShowStudyType)
             {
@@ -1187,7 +1182,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 cellRow++;
             }
 
-            
+
 
             sheet.Cells[cellRow + 1, cellCol].Value = $"{GestionWeb.GetWebWord(2266, session.SiteLanguage)} {DateTime.Now.Year.ToString()}";
 
