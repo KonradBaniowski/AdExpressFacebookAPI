@@ -206,3 +206,4 @@ TNSAdExpressWebCore.xml
 
 DLL/TNS.AdExpress.Constantes/TNSAdExpressConstantes.xml
 DLL/TNS.AdExpress.Web.Core/TNSAdExpressWebCore.xml
+Services/TrackingDataImporter/output/*
