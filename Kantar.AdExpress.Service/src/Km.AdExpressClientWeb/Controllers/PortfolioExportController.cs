@@ -202,7 +202,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             //document.Worksheets.Clear();
 
-            Worksheet sheet = document.Worksheets.Add("Resultat");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, session.SiteLanguage));
             sheet.IsGridlinesVisible = false;
 
             GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
@@ -259,7 +259,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         for (int l = 1; l <= nbLevel; l++)
                         {
                             Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
-
+                            
                             headerBase.Add(headerTmp);
                         }
 
@@ -487,7 +487,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             //document.Worksheets.Clear();
 
-            Worksheet sheet = document.Worksheets.Add("Resultat");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, session.SiteLanguage));
 
             document.ChangePalette(HeaderTabBackground, 3);
             document.ChangePalette(HeaderTabText, 2);
@@ -885,7 +885,7 @@ namespace Km.AdExpressClientWeb.Controllers
             int cellCol = 1;
             License licence = new License();
             licence.SetLicense("Aspose.Cells.lic");
-            Worksheet sheet = document.Worksheets.Add("Selection");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1989, session.SiteLanguage));
             sheet.IsGridlinesVisible = false;
 
             //Adding logo top

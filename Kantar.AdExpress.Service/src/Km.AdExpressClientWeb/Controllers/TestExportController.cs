@@ -264,7 +264,10 @@ namespace Km.AdExpressClientWeb.Controllers
             ExportAspose export = new ExportAspose();
             export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
-            Worksheet sheet = document.Worksheets.Add("WorkSheet1");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, _session.SiteLanguage));
+            sheet.IsGridlinesVisible = false;
+
+            int nbLevel = 1;
 
             #region Aspose
             if (data.GetLength(0) != 0)
@@ -701,6 +704,60 @@ namespace Km.AdExpressClientWeb.Controllers
                     first = true;
                     nbColTabCell = colFirstMediaPlan;
                     int currentColMediaPlan = 0;
+
+                    #region Get Max Level
+                    for (i = 1; i < nbline; i++)
+                    {
+                        for (int j = 0; j < nbColTab; j++)
+                        {
+                            switch (j)
+                            {
+                                #region Level 1
+                                case L1_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 2
+                                case L2_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L2_COLUMN_INDEX + 1) nbLevel = L2_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 3
+                                case L3_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L3_COLUMN_INDEX + 1) nbLevel = L3_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 4
+                                case L4_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L4_COLUMN_INDEX + 1) nbLevel = L4_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
+                                    }
+                                    break;
+                                    #endregion
+                            }
+                        }
+                    }
+                    #endregion
+
+                    SetSetsOfColorByMaxLevel(nbLevel);
+
+
                     for (i = 1; i < nbline; i++)
                     {
 
@@ -1451,7 +1508,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ExportAspose export = new ExportAspose();
             export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
-            Worksheet sheet = document.Worksheets.Add("WorkSheet1");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, _session.SiteLanguage));
             sheet.IsGridlinesVisible = false;
 
             int nbLevel = 1;
@@ -1589,7 +1646,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 }*/
                 #endregion
 
-                #region basic columns (product, total, PDM, years totals)
                 int rowSpanNb = 3;
                 if (_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 {
@@ -1914,8 +1970,6 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
 
                 }
-                #endregion
-
                 #endregion
 
                 #region init Row Media Shedule
@@ -2657,10 +2711,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 sheet.AutoFitColumns();
 
                 #endregion
-
-
-
-
+                
             }
 
             #endregion
