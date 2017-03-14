@@ -394,7 +394,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells[cellRow - 1, colSupport + l - 1].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(detailLevel[l].WebTextId, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colSupport + l - 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                     nbColTabFirst++;
                 }
@@ -439,7 +439,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(end, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
 
                         TextStyle(sheet.Cells[cellRow - 1, colTotalComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                     }
                     //PDM
@@ -460,7 +460,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells[cellRow - 1, colPdmComp].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
 
                         TextStyle(sheet.Cells[cellRow - 1, colPdmComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                     }
                 }
 
@@ -489,7 +489,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                     int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
@@ -522,7 +522,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells[cellRow - 1, colPdm].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(806, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                 }
                 else
                 {
@@ -547,7 +547,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells[cellRow - 1, colTotalYears + l].Value = data[0, k];
 
                         TextStyle(sheet.Cells[cellRow - 1, colTotalYears + l], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                         nbColTabFirst++;
                     }
@@ -583,7 +583,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
@@ -598,7 +598,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
 
                                     TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                                     break;
                                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -606,7 +606,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
 
                                     TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                                     break;
 
@@ -624,7 +624,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                         break;
                     case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
@@ -645,7 +645,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                                BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
@@ -657,7 +657,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex, currentColMediaPlan].Value = currentDay.ToString("dd");
 
                             TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                             //Period day
                             if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
@@ -666,7 +666,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
 
                             TextStyle(sheet.Cells[startIndex + 1, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
                         }
 
                         sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
@@ -677,7 +677,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                         break;
 
@@ -806,12 +806,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colLevel], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colLevel], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -832,12 +832,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colTotalComp], LTotalText, LTotalBackground);
-                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colTotalComp], L1Text, L1Background);
-                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                                 }
                                             }
                                             //PDM
@@ -852,12 +852,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colPdmComp], LTotalText, LTotalBackground);
-                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colPdmComp], L1Text, L1Background);
-                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                                 }
                                             }
                                         }
@@ -873,12 +873,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotal], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotal], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -893,12 +893,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colPdm], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colPdm], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                             }
                                         }
 
@@ -917,12 +917,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotalYears + k], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotalYears + k], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -953,7 +953,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -971,7 +971,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colTotalComp], L2Text, L2Background);
-                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                             }
                                             //PDM
                                             if (_allowPdm)
@@ -983,7 +983,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colPdmComp], L2Text, L2Background);
-                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -996,7 +996,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotal], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1008,7 +1008,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdm], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1022,7 +1022,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalYears + k], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1053,7 +1053,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             }
 
                                             TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                         }
 
                                         #region Comparative
@@ -1070,7 +1070,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colTotalComp], L3Text, L3Background);
-                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                             }
                                             //PDM
                                             if (_allowPdm)
@@ -1082,7 +1082,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colPdmComp], L3Text, L3Background);
-                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -1095,7 +1095,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotal], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1107,7 +1107,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdm], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1121,7 +1121,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalYears + k], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -1159,7 +1159,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         }
 
                                         TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                     }
 
                                     #region Comparative
@@ -1177,7 +1177,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalComp], L4Text, L4Background);
-                                            BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                         }
                                         //PDM
                                         if (_allowPdm)
@@ -1189,7 +1189,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdmComp], L4Text, L4Background);
-                                            BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                         }
                                     }
                                     #endregion
@@ -1202,7 +1202,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colTotal], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -1214,7 +1214,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colPdm], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -1228,7 +1228,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colTotalYears + k], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -1251,7 +1251,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         sheet.Cells[cellRow, currentColMediaPlan].Value = "";
 
                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
-                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
 
                                         currentColMediaPlan++;
                                         break;
@@ -1271,12 +1271,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                     else
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                 }
                                                 else
@@ -1286,12 +1286,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                     else
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                 }
                                                 break;
@@ -1301,12 +1301,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
 
                                                 break;
@@ -1316,12 +1316,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
 
                                                 break;
@@ -1657,7 +1657,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Range range = sheet.Cells.CreateRange(cellRow - 1, colSupport, rowSpanNb, labColSpan);
                 sheet.Cells[cellRow - 1, colSupport].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(804, _session.SiteLanguage));
                 TextStyle(sheet.Cells[cellRow - 1, colSupport], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                 nbColTabFirst++;
                 #endregion
@@ -1691,7 +1691,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(end, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
 
                         TextStyle(sheet.Cells[cellRow - 1, colTotalComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                         ////int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                         //int nbtot;
@@ -1731,7 +1731,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells[cellRow - 1, colPdmComp].Value = GestionWeb.GetWebWord(806, _session.SiteLanguage);
 
                         TextStyle(sheet.Cells[cellRow - 1, colPdmComp], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                     }
                 }
 
@@ -1760,7 +1760,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
                     TextStyle(sheet.Cells[cellRow - 1, colTotal], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                     int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
@@ -1793,7 +1793,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells[cellRow - 1, colPdm].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(806, _session.SiteLanguage));
 
                     TextStyle(sheet.Cells[cellRow - 1, colPdm], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                 }
                 else
                 {
@@ -1815,7 +1815,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells[cellRow - 1, colEvo].Value = GestionWeb.GetWebWord(1212, _session.SiteLanguage);
 
                     TextStyle(sheet.Cells[cellRow - 1, colEvo], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                 }
                 #endregion
 
@@ -1835,7 +1835,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells[cellRow - 1, colTotalYears + l].Value = data[0, k];
 
                         TextStyle(sheet.Cells[cellRow - 1, colTotalYears + l], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                         nbColTabFirst++;
                     }
@@ -1871,7 +1871,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
@@ -1886,7 +1886,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
 
                                     TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                                     break;
                                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -1894,7 +1894,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
 
                                     TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                                     break;
 
@@ -1912,7 +1912,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                         break;
                     case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
@@ -1933,7 +1933,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                                BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                                BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
 
                                 nbColTabFirst += nbPeriod;
                                 nbPeriod = 0;
@@ -1945,7 +1945,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex, currentColMediaPlan].Value = currentDay.ToString("dd");
 
                             TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
 
                             //Period day
                             if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
@@ -1954,7 +1954,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
 
                             TextStyle(sheet.Cells[startIndex + 1, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Thin, HeaderBorderTab);
+                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
                         }
 
                         sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
@@ -1965,7 +1965,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Thin, HeaderBorderTab);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
 
                         break;
 
@@ -2083,12 +2083,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (i == TOTAL_LINE_INDEX)
                                         {
                                             TextStyle(sheet.Cells[cellRow, colSupport], LTotalText, LTotalBackground);
-                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Hair, BorderTab);
                                         }
                                         else
                                         {
                                             TextStyle(sheet.Cells[cellRow, colSupport], L1Text, L1Background);
-                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colSupport, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2108,12 +2108,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colTotalComp], LTotalText, LTotalBackground);
-                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colTotalComp], L1Text, L1Background);
-                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                                 }
                                             }
                                             //PDM
@@ -2128,12 +2128,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colPdmComp], LTotalText, LTotalBackground);
-                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, colPdmComp], L1Text, L1Background);
-                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                                 }
                                             }
                                         }
@@ -2153,12 +2153,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotal], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotal], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -2175,12 +2175,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colPdm], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colPdm], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                             }
                                         }
 
@@ -2196,12 +2196,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colEvo], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colEvo], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colEvo, CellBorderType.Hair, BorderTab);
                                             }
                                         }
 
@@ -2224,12 +2224,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                             if (i == TOTAL_LINE_INDEX)
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotalYears + k], LTotalText, LTotalBackground);
-                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                             }
                                             else
                                             {
                                                 TextStyle(sheet.Cells[cellRow, colTotalYears + k], L1Text, L1Background);
-                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -2247,7 +2247,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         TextStyle(sheet.Cells[cellRow, colSupport], L2Text, L2Background);
-                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Hair, BorderTab);
                                         SetIndentLevel(sheet.Cells[cellRow, colSupport], 1);
                                         #endregion
 
@@ -2265,7 +2265,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colTotalComp], L2Text, L2Background);
-                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                             }
                                             //PDM
                                             if (_allowPdm)
@@ -2277,7 +2277,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colPdmComp], L2Text, L2Background);
-                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -2294,7 +2294,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotal], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2308,7 +2308,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdm], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2323,7 +2323,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colEvo], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2342,7 +2342,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalYears + k], L2Text, L2Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2360,7 +2360,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                         TextStyle(sheet.Cells[cellRow, colSupport], L3Text, L3Background);
-                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colSupport, CellBorderType.Hair, BorderTab);
                                         SetIndentLevel(sheet.Cells[cellRow, colSupport], 2);
 
                                         #region Comparative
@@ -2377,7 +2377,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colTotalComp], L3Text, L3Background);
-                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                             }
                                             //PDM
                                             if (_allowPdm)
@@ -2389,7 +2389,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                                 TextStyle(sheet.Cells[cellRow, colPdmComp], L3Text, L3Background);
-                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                                BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                             }
                                         }
                                         #endregion
@@ -2406,7 +2406,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotal], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2420,7 +2420,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdm], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2435,7 +2435,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colEvo], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colEvo, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2452,7 +2452,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalYears + k], L3Text, L3Background);
-                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                         }
                                         #endregion
 
@@ -2467,7 +2467,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                     sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
 
                                     TextStyle(sheet.Cells[cellRow, colSupport], L4Text, L4Background);
-                                    BorderStyle(sheet, cellRow, colSupport, CellBorderType.Thin, BorderTab);
+                                    BorderStyle(sheet, cellRow, colSupport, CellBorderType.Hair, BorderTab);
                                     SetIndentLevel(sheet.Cells[cellRow, colSupport], 3);
 
                                     #region Comparative
@@ -2485,7 +2485,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colTotalComp], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colTotalComp], L4Text, L4Background);
-                                            BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colTotalComp, CellBorderType.Hair, BorderTab);
                                         }
                                         //PDM
                                         if (_allowPdm)
@@ -2497,7 +2497,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                             SetIndentLevel(sheet.Cells[cellRow, colPdmComp], 1, true);
 
                                             TextStyle(sheet.Cells[cellRow, colPdmComp], L4Text, L4Background);
-                                            BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Thin, BorderTab);
+                                            BorderStyle(sheet, cellRow, colPdmComp, CellBorderType.Hair, BorderTab);
                                         }
                                     }
                                     #endregion
@@ -2514,7 +2514,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colTotal], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colTotal, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -2528,7 +2528,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colPdm], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colPdm], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colPdm, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -2543,7 +2543,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colEvo], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colEvo], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colEvo, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colEvo, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion
 
@@ -2561,7 +2561,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         SetIndentLevel(sheet.Cells[cellRow, colTotalYears + k], 1, true);
 
                                         TextStyle(sheet.Cells[cellRow, colTotalYears + k], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, colTotalYears + k, CellBorderType.Hair, BorderTab);
                                     }
                                     #endregion                               
 
@@ -2577,7 +2577,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                         sheet.Cells[cellRow, currentColMediaPlan].Value = "";
 
                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
-                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
 
                                         currentColMediaPlan++;
                                         break;
@@ -2600,12 +2600,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                     else
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                 }
                                                 else
@@ -2615,12 +2615,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                     if (i == TOTAL_LINE_INDEX)
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                     else
                                                     {
                                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                     }
                                                 }
                                                 break;
@@ -2630,12 +2630,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
 
                                                 break;
@@ -2645,12 +2645,12 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
                                                 else
                                                 {
                                                     TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Thin, BorderTab);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
                                                 }
 
                                                 break;

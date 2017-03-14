@@ -389,7 +389,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         }
 
                         TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
-                        BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+                        BorderStyle(sheet, cellRow, cellCol, CellBorderType.Hair, borderColor);
                     }
                 }
 
@@ -823,7 +823,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
-            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Hair, borderColor);
         }
 
         private void MEFData(WebSession session, InfragisticData cell, Aspose.Cells.Worksheet sheet, ref int cellRow, int cellCol, HashSet<int> lstColEvol, int idxCol)
@@ -875,7 +875,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
 
             TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
-            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
+            BorderStyle(sheet, cellRow, cellCol, CellBorderType.Hair, borderColor);
         }
 
         public void ExportSelection(Workbook document, WebSession session, DetailSelectionResponse detailSelectionResponse)
@@ -1327,14 +1327,14 @@ namespace Km.AdExpressClientWeb.Controllers
                     sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(header.Label);
 
                     TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, range, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
                 }
                 else
                 {
                     sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(header.Label);
 
                     TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                    BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);
+                    BorderStyle(sheet, rowStart, colStart, CellBorderType.Hair, HeaderBorderTab);
                 }
 
                 if (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && header.Count > 0)
@@ -1363,7 +1363,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 sheet.Cells[rowStart, colStart].Value = WebUtility.HtmlDecode(item.HeaderText);
 
                 TextStyle(sheet.Cells[rowStart, colStart], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
-                BorderStyle(sheet, rowStart, colStart, CellBorderType.Thin, HeaderBorderTab);
+                BorderStyle(sheet, rowStart, colStart, CellBorderType.Hair, HeaderBorderTab);
 
                 colStart += colSpan;
             }
