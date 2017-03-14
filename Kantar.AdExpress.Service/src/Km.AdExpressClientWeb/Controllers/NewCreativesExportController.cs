@@ -46,7 +46,7 @@ namespace Km.AdExpressClientWeb.Controllers
             export.Export(document, data, session, false, sortOrder, columnIndex);
 
             string documentFileNameRoot;
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -78,7 +78,7 @@ namespace Km.AdExpressClientWeb.Controllers
             document.Worksheets.ActiveSheetIndex = 1;
 
             string documentFileNameRoot;
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);

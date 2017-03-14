@@ -66,7 +66,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.ActiveSheetIndex = 1;
 
-            string documentFileNameRoot = $"Document.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+            string documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -97,7 +97,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             document.Worksheets.ActiveSheetIndex = 1;
 
-            string documentFileNameRoot = $"Document.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+            string documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -111,39 +111,40 @@ namespace Km.AdExpressClientWeb.Controllers
         }
     }
 
+
+
     public class ExportAspose : Controller
     {
 
         #region Couleurs
+        Color HeaderTabBackground = Color.FromArgb(128, 128, 128);
+        Color HeaderTabText = Color.Black;
+        Color HeaderBorderTab = Color.Black;
 
-        Color HeaderTabBackground = Color.FromArgb(105, 112, 129);
-        Color HeaderTabText = Color.White;
-        Color HeaderBorderTab = Color.White;
+        Color L1Background = Color.FromArgb(166, 166, 166);
+        Color L1Text = Color.Black;
 
-        Color L1Background = Color.FromArgb(64, 68, 79);
-        Color L1Text = Color.FromArgb(0, 193, 255);
+        Color L2Background = Color.FromArgb(191, 191, 191);
+        Color L2Text = Color.Black;
 
-        Color L2Background = Color.FromArgb(120, 120, 120);
-        Color L2Text = Color.White;
+        Color L3Background = Color.FromArgb(217, 217, 217);
+        Color L3Text = Color.Black;
 
-        Color L3Background = Color.FromArgb(105, 112, 129);
-        Color L3Text = Color.White;
-
-        Color L4Background = Color.FromArgb(231, 231, 231);
+        Color L4Background = Color.White;
         Color L4Text = Color.Black;
 
-        Color LTotalBackground = Color.FromArgb(0, 193, 255);
-        Color LTotalText = Color.White;
+        Color LTotalBackground = Color.FromArgb(128, 128, 128);
+        Color LTotalText = Color.Black;
 
-        Color TabBackground = Color.FromArgb(64, 68, 79);
-        Color TabText = Color.White;
+        Color TabBackground = Color.Black;
+        Color TabText = Color.Black;
         Color BorderTab = Color.Black;
 
         Color PresentText = Color.Black;
         Color PresentBackground = Color.FromArgb(255, 150, 23);
 
-        Color NotPresentText = Color.FromArgb(64, 68, 79);
-        Color NotPresentBackground = Color.FromArgb(64, 68, 79);
+        Color NotPresentText = Color.Black;
+        Color NotPresentBackground = Color.White;
 
         Color ExtendedText = Color.Black;
         Color ExtendedBackground = Color.FromArgb(243, 209, 97);
@@ -155,12 +156,44 @@ namespace Km.AdExpressClientWeb.Controllers
         public ExportAspose()
         { }
 
+
+        private void SetSetsOfColorByMaxLevel(int maxLevel)
+        {
+            switch (maxLevel)
+            {
+                case (1):
+                    this.L1Background = this.L4Background;
+                    break;
+                case (2):
+                    this.L1Background = this.L3Background;
+                    this.L2Background = this.L4Background;
+                    break;
+                case (3):
+                    this.L1Background = this.L2Background;
+                    this.L2Background = this.L3Background;
+                    this.L3Background = this.L4Background;
+                    break;
+            }
+        }
+
+
         public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
             this.cInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
-
+            
             data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
+
+            int rowStart = 1;
+            int columnStart = 1;
+            bool columnHide = false;
+
+            Color textColor;
+            Color backColor;
+            Color borderColor;
+
+            int nbRowTotal = 0;
+            int nbLevel = 0;
 
             _skipIndent = isInsertionExport;
 
@@ -170,6 +203,11 @@ namespace Km.AdExpressClientWeb.Controllers
             //document.Worksheets.Clear();
 
             Worksheet sheet = document.Worksheets.Add("Resultat");
+            sheet.IsGridlinesVisible = false;
+
+            GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
+            nbLevel = detailLevel.GetNbLevels;
+            SetSetsOfColorByMaxLevel(nbLevel);
 
             document.ChangePalette(HeaderTabBackground, 3);
             document.ChangePalette(HeaderTabText, 2);
@@ -203,20 +241,6 @@ namespace Km.AdExpressClientWeb.Controllers
             document.ChangePalette(ExtendedText, 5);
             document.ChangePalette(ExtendedBackground, 4);
 
-
-            int rowStart = 1;
-            int columnStart = 1;
-            bool columnHide = false;
-
-            Color textColor;
-            Color backColor;
-            Color borderColor;
-
-
-            int coltmp = columnStart;
-            int nbRowTotal = 0;
-            int nbLevel = 0;
-
             if (data.NewHeaders != null)
             {
                 nbRowTotal = NbRow(data.NewHeaders.Root, session) - 1;
@@ -225,8 +249,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (isExportBrut)
                 {
-                    GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-                    nbLevel = detailLevel.GetNbLevels;
 
                     if (nbLevel == 1)
                         headerBase = data.NewHeaders.Root;
@@ -399,131 +421,6 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     MEFCell(session, cell, sheet, ref cellRow, cellCol, ((LineStart)data[idxRow, 0]).LineType, lstColEvol);
 
-                    #region Old
-                    //if (cell is CellPercent)
-                    //{
-                    //    double value = ((CellUnit)cell).Value;
-
-                    //    if (double.IsInfinity(value) || double.IsNaN(value))
-                    //        sheet.Cells[cellRow, cellCol].Value = "";
-                    //    else
-                    //        sheet.Cells[cellRow, cellCol].Value = value / 100;
-
-                    //    SetPercentFormat(sheet.Cells[cellRow, cellCol]);
-                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    //}
-                    //else if (cell is CellEvol)
-                    //{
-                    //    double value = ((CellUnit)cell).Value;
-
-                    //    if (double.IsInfinity(value) || double.IsNaN(value))
-                    //        sheet.Cells[cellRow, cellCol].Value = "";
-                    //    else
-                    //        sheet.Cells[cellRow, cellCol].Value = value / 100;
-
-                    //    SetPercentFormat(sheet.Cells[cellRow, cellCol]);
-                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-
-                    //    lstColEvol.Add(cellCol);
-                    //}
-                    //else if (cell is CellDuration)
-                    //{
-                    //    double value = ((CellUnit)cell).GetValue();
-
-                    //    double hours = Math.Floor(value / 3600);
-                    //    double minutes = Math.Floor((value - (hours * 3600)) / 60);
-                    //    double secondes = value - hours * 3600 - minutes * 60;
-
-                    //    sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
-
-                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    //}
-                    //else if (cell is CellDate)
-                    //{
-
-                    //    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
-
-                    //    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
-                    //}
-                    //else if (cell is CellUnit)
-                    //{
-                    //    double value = ((CellUnit)cell).GetValue();
-                    //    if (value != 0.0)
-                    //    {
-                    //        sheet.Cells[cellRow, cellCol].Value = value;
-
-                    //        if (((CellUnit)cell).AsposeFormat == -1)
-                    //            SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
-                    //        else
-                    //            SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
-
-                    //        SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
-                    //    }
-                    //}
-                    //else if (cell is CellLabel)
-                    //    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)cell).Label);
-                    //else if (cell is CellInsertionInformation)
-                    //{
-                    //    CellInsertionInformation cellI = cell as CellInsertionInformation;
-
-                    //    foreach (Cell item in cellI.GetValues)
-                    //    {
-
-                    //    }
-
-                    //}
-                    //else if (cell is CellEmpty)
-                    //    sheet.Cells[cellRow, cellCol].Value = "";
-                    //else
-                    //{
-                    //    sheet.Cells[cellRow, cellCol].Value = "";
-                    //}
-
-
-                    //switch (((LineStart)data[idxRow, 0]).LineType)
-                    //{
-                    //    case LineType.total:
-                    //        textColor = LTotalText;
-                    //        backColor = LTotalBackground;
-                    //        borderColor = BorderTab;
-                    //        break;
-                    //    case LineType.level1:
-                    //        textColor = L1Text;
-                    //        backColor = L1Background;
-                    //        borderColor = BorderTab;
-                    //        break;
-                    //    case LineType.level2:
-                    //        textColor = L2Text;
-                    //        backColor = L2Background;
-                    //        borderColor = BorderTab;
-                    //        if (cell is CellLabel)
-                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 1);
-                    //        break;
-                    //    case LineType.level3:
-                    //        textColor = L3Text;
-                    //        backColor = L3Background;
-                    //        borderColor = BorderTab;
-                    //        if (cell is CellLabel)
-                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 2);
-                    //        break;
-                    //    case LineType.level4:
-                    //        textColor = L4Text;
-                    //        backColor = L4Background;
-                    //        borderColor = BorderTab;
-                    //        if (cell is CellLabel)
-                    //            SetIndentLevel(sheet.Cells[cellRow, cellCol], 3);
-                    //        break;
-                    //    default:
-                    //        textColor = Color.Black;
-                    //        backColor = Color.White;
-                    //        borderColor = Color.Black;
-                    //        break;
-                    //}
-
-                    //TextStyle(sheet.Cells[cellRow, cellCol], textColor, backColor);
-                    //BorderStyle(sheet, cellRow, cellCol, CellBorderType.Thin, borderColor);
-                    #endregion
-
                     if (rowEndValue < cellRow)
                         rowEndValue = cellRow;
                 }
@@ -569,7 +466,7 @@ namespace Km.AdExpressClientWeb.Controllers
             #endregion
 
             //string documentFileNameRoot;
-            //documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            //documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             //Response.Clear();
             //Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -887,6 +784,7 @@ namespace Km.AdExpressClientWeb.Controllers
             switch (lineType)
             {
                 case LineType.total:
+                case LineType.nbParution:
                     textColor = LTotalText;
                     backColor = LTotalBackground;
                     borderColor = BorderTab;
@@ -1182,11 +1080,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 cellRow++;
             }
 
-
-
+            //Set copyright label
             sheet.Cells[cellRow + 1, cellCol].Value = $"{GestionWeb.GetWebWord(2266, session.SiteLanguage)} {DateTime.Now.Year.ToString()}";
-
-
 
             sheet.AutoFitColumns();
             sheet.AutoFitRows();
