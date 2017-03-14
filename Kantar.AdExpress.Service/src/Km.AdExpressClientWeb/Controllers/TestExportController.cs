@@ -122,42 +122,34 @@ namespace Km.AdExpressClientWeb.Controllers
         #endregion
 
         #region Couleurs
-        //Color Orange = Color.FromArgb(255, 140, 0);
-        //Color DarkGray = Color.FromArgb(64, 68, 79);
-        //Color MiddleGray = Color.FromArgb(67, 73, 95);
-        //Color LightGray = Color.FromArgb(110, 117, 136);
-        //Color Cyan = Color.FromArgb(38, 202, 255);
-        //Color White = Color.White;
-        //Color Black = Color.Black;
+        Color HeaderTabBackground = Color.FromArgb(128, 128, 128);
+        Color HeaderTabText = Color.Black;
+        Color HeaderBorderTab = Color.Black;
 
-        Color HeaderTabBackground = Color.FromArgb(105, 112, 129);
-        Color HeaderTabText = Color.White;
-        Color HeaderBorderTab = Color.White;
+        Color L1Background = Color.FromArgb(166, 166, 166);
+        Color L1Text = Color.Black;
 
-        Color L1Background = Color.FromArgb(64, 68, 79);
-        Color L1Text = Color.FromArgb(0, 193, 255);
+        Color L2Background = Color.FromArgb(191, 191, 191);
+        Color L2Text = Color.Black;
 
-        Color L2Background = Color.FromArgb(120, 120, 120);
-        Color L2Text = Color.White;
+        Color L3Background = Color.FromArgb(217, 217, 217);
+        Color L3Text = Color.Black;
 
-        Color L3Background = Color.FromArgb(105, 112, 129);
-        Color L3Text = Color.White;
-
-        Color L4Background = Color.FromArgb(231, 231, 231);
+        Color L4Background = Color.White;
         Color L4Text = Color.Black;
 
-        Color LTotalBackground = Color.FromArgb(0, 193, 255);
-        Color LTotalText = Color.White;
+        Color LTotalBackground = Color.FromArgb(128, 128, 128);
+        Color LTotalText = Color.Black;
 
-        Color TabBackground = Color.FromArgb(64, 68, 79);
-        Color TabText = Color.White;
+        Color TabBackground = Color.Black;
+        Color TabText = Color.Black;
         Color BorderTab = Color.Black;
 
         Color PresentText = Color.Black;
         Color PresentBackground = Color.FromArgb(255, 150, 23);
 
-        Color NotPresentText = Color.FromArgb(64, 68, 79);
-        Color NotPresentBackground = Color.FromArgb(64, 68, 79);
+        Color NotPresentText = Color.Black;
+        Color NotPresentBackground = Color.White;
 
         Color ExtendedText = Color.Black;
         Color ExtendedBackground = Color.FromArgb(243, 209, 97);
@@ -272,7 +264,10 @@ namespace Km.AdExpressClientWeb.Controllers
             ExportAspose export = new ExportAspose();
             export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
-            Worksheet sheet = document.Worksheets.Add("WorkSheet1");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, _session.SiteLanguage));
+            sheet.IsGridlinesVisible = false;
+
+            int nbLevel = 1;
 
             #region Aspose
             if (data.GetLength(0) != 0)
@@ -709,6 +704,60 @@ namespace Km.AdExpressClientWeb.Controllers
                     first = true;
                     nbColTabCell = colFirstMediaPlan;
                     int currentColMediaPlan = 0;
+
+                    #region Get Max Level
+                    for (i = 1; i < nbline; i++)
+                    {
+                        for (int j = 0; j < nbColTab; j++)
+                        {
+                            switch (j)
+                            {
+                                #region Level 1
+                                case L1_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 2
+                                case L2_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L2_COLUMN_INDEX + 1) nbLevel = L2_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 3
+                                case L3_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L3_COLUMN_INDEX + 1) nbLevel = L3_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 4
+                                case L4_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L4_COLUMN_INDEX + 1) nbLevel = L4_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
+                                    }
+                                    break;
+                                    #endregion
+                            }
+                        }
+                    }
+                    #endregion
+
+                    SetSetsOfColorByMaxLevel(nbLevel);
+
+
                     for (i = 1; i < nbline; i++)
                     {
 
@@ -1309,14 +1358,14 @@ namespace Km.AdExpressClientWeb.Controllers
 
 
 
-             
+
             }
 
             #endregion
 
             string documentFileNameRoot;
-            //documentFileNameRoot = string.Format("Document.{0}", excelFormat == WorkbookFormat.Excel97To2003 ? "xls" : "xlsx");
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            //documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+            documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
@@ -1333,6 +1382,25 @@ namespace Km.AdExpressClientWeb.Controllers
             Response.End();
 
 
+        }
+
+        private void SetSetsOfColorByMaxLevel(int maxLevel)
+        {
+            switch (maxLevel)
+            {
+                case (1):
+                    this.L1Background = this.L4Background;
+                    break;
+                case (2):
+                    this.L1Background = this.L3Background;
+                    this.L2Background = this.L4Background;
+                    break;
+                case (3):
+                    this.L1Background = this.L2Background;
+                    this.L2Background = this.L3Background;
+                    this.L3Background = this.L4Background;
+                    break;
+            }
         }
 
         void Export(bool _showValues = false, CreativeMediaScheduleRequest request = null)
@@ -1440,7 +1508,10 @@ namespace Km.AdExpressClientWeb.Controllers
             ExportAspose export = new ExportAspose();
             export.ExportSelection(document, _session, _detailSelectionService.GetDetailSelection(idWebSession));
 
-            Worksheet sheet = document.Worksheets.Add("WorkSheet1");
+            Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, _session.SiteLanguage));
+            sheet.IsGridlinesVisible = false;
+
+            int nbLevel = 1;
 
             #region Aspose
             if (data.GetLength(0) != 0)
@@ -1575,7 +1646,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 }*/
                 #endregion
 
-                #region basic columns (product, total, PDM, years totals)
                 int rowSpanNb = 3;
                 if (_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 {
@@ -1902,8 +1972,6 @@ namespace Km.AdExpressClientWeb.Controllers
                 }
                 #endregion
 
-                #endregion
-
                 #region init Row Media Shedule
                 cellRow++;
 
@@ -1921,6 +1989,59 @@ namespace Km.AdExpressClientWeb.Controllers
                     first = true;
                     nbColTabCell = colFirstMediaPlan;
                     int currentColMediaPlan = 0;
+
+                    #region Get Max Level
+                    for (i = 1; i < nbline; i++)
+                    {
+                        for (int j = 0; j < nbColTab; j++)
+                        {
+                            switch (j)
+                            {
+                                #region Level 1
+                                case L1_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 2
+                                case L2_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L2_COLUMN_INDEX + 1) nbLevel = L2_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 3
+                                case L3_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L3_COLUMN_INDEX + 1) nbLevel = L3_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+
+                                #region Level 4
+                                case L4_COLUMN_INDEX:
+                                    if (data[i, j] != null)
+                                    {
+                                        if (nbLevel < L4_COLUMN_INDEX + 1) nbLevel = L4_COLUMN_INDEX + 1;
+                                        j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
+                                    }
+                                    break;
+                                #endregion
+                            }
+                        }
+                    }
+                    #endregion
+
+                    SetSetsOfColorByMaxLevel(nbLevel);
+
                     for (i = 1; i < nbline; i++)
                     {
 
@@ -2590,17 +2711,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 sheet.AutoFitColumns();
 
                 #endregion
-
-
-
-
+                
             }
 
             #endregion
 
             string documentFileNameRoot;
-            //documentFileNameRoot = string.Format("Document.{0}", excelFormat == WorkbookFormat.Excel97To2003 ? "xls" : "xlsx");
-            documentFileNameRoot = string.Format("Document.{0}", document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx");
+            //documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+            documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
 
             Response.Clear();
             Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
