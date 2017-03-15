@@ -265,7 +265,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
                 }
 
-                if (_customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
+                if ((_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES)
+                    && _customerWebSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
                 {
                     if (WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
                         < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
