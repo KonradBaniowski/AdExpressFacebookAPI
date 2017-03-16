@@ -277,7 +277,7 @@ namespace OracleDataToJson
                     cmd.Connection = con;
 
                     cmd.CommandText = @"
-   
+
 SELECT
                                   ID_NAV_SESSION,
                                   c.ID_CONTACT,
@@ -289,6 +289,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'CONNEXION AU SITE' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -304,6 +306,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
 WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
@@ -322,6 +326,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'MODULE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -337,6 +343,8 @@ SELECT
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.MODULE mo ON
@@ -356,6 +364,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'MEDIA' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -371,6 +381,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN ADEXPR03.VEHICLE vh ON
@@ -394,6 +406,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'GAD' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -409,6 +423,8 @@ SELECT
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV01.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                 WHERE  ta.DATE_CREATION >= TO_DATE('11/01/2017', 'DD/MM/YYYY')
@@ -426,6 +442,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'CHOIX ANGENCE MEDIA' AS EVENT,
                                   VALUE AS ID_VALUE,
@@ -441,6 +459,8 @@ SELECT
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                 WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
@@ -458,6 +478,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'TYPE PERIODE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -473,6 +495,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.PERIODE vh ON
@@ -492,6 +516,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'TYPE UNITE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -507,6 +533,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.UNIT vh ON
@@ -527,6 +555,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'TYPE RESULTAT' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -542,6 +572,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.RESULT vh ON
@@ -564,6 +596,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'DEMANDE EXPORT' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -579,6 +613,8 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
@@ -599,6 +635,8 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
+                                   c.ID_GROUP_CONTACT,
+                                  gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'UTILISATION MON ADEXPRESS' as EVENT,
                                   VALUE AS ID_VALUE,
@@ -614,12 +652,15 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
+                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                    c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
 WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 10
+
 
 
 
@@ -648,12 +689,14 @@ WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
                                 valueLabel = dr["VALUE_STRING"].ToString(),
                                 day = Convert.ToInt64(Convert.ToDateTime(dr["DAYD"]).ToString("yyyyMMdd")),
                                 hour = Convert.ToInt64(Convert.ToDateTime(dr["HOURH"]).ToString("yyyyMMddHH")),
+                                idTypology = Convert.ToInt64(dr["ID_GROUP_CONTACT"].ToString()),
+                                typology = dr["GROUP_CONTACT"].ToString()
                             }
                             );
 
                         }
                     }
-                    jsonObj = JsonConvert.SerializeObject(objs);
+                   jsonObj = JsonConvert.SerializeObject(objs);
 
                     File.WriteAllText(Path.Combine(projectDirectory, Path.Combine("output", "userSessions.json")), jsonObj);
                 }

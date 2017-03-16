@@ -36,10 +36,12 @@ namespace OracleDataToJson
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.FileName = ConfigurationManager.AppSettings.Get("mongoDbImport_Path");
-                startInfo.Arguments = @" --db " + ConfigurationManager.AppSettings.Get("mongoDbName") + " --collection " + collectionName + " --type json --drop --file " + jsonFile + " --jsonArray";
+                startInfo.Arguments = @" --db " + ConfigurationManager.AppSettings.Get("mongoDbName") + " --collection " + collectionName + " --type json --drop --file \"" + jsonFile + "\" --jsonArray";
                 Process proc = new Process();
                 proc.StartInfo = startInfo;
+                startInfo.UseShellExecute = false;
                 proc.Start();
+                proc.WaitForExit();
             }
             catch (Exception e)
             {
