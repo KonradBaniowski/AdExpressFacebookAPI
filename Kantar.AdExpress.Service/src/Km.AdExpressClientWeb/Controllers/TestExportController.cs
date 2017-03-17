@@ -1435,7 +1435,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         }
 
-<<<<<<< HEAD
+
         private void SetSetsOfColorByMaxLevel(int maxLevel)
         {
             switch (maxLevel)
@@ -1455,10 +1455,8 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
 
-        void Export(bool _showValues = false, CreativeMediaScheduleRequest request = null)
-=======
+
         void Export(bool _showValues = false, CreativeMediaScheduleRequest request = null, string zoomDate = "")
->>>>>>> hotfix/export-zoomdate-mediaschedule
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
