@@ -109,6 +109,8 @@ $(document).on('click', '#btn-export', function (event) {
     var paramsExport = "?sortOrder=NONE&columnIndex=1";
     if (sortOrder != null && columnIndex != null)
         paramsExport = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+    if ($("#zoomDateParam").val() != null)
+        paramsExport += "&zoomDate=" + $("#zoomDateParam").val();
 
     var params = {
         exportType: selectedValue
@@ -119,7 +121,7 @@ $(document).on('click', '#btn-export', function (event) {
             window.open('/' + controller + '/Index' + paramsExport, "_blank");
             break;
         case "2":
-            window.open('/' + controller + '/ResultValue', "_blank");
+            window.open('/' + controller + '/ResultValue' + paramsExport, "_blank");
             break;
         case "3":
             window.open('/' + controller + '/ResultBrut' + paramsExport, "_blank");
