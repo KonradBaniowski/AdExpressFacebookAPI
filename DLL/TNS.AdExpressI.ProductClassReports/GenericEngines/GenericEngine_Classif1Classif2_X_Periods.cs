@@ -343,6 +343,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                             cLine = tab.AddNewLine(c1LineTypes[i], mainLevelIds, C1_LEVELS[i]);
                             //year N
                             tab[cLine, 2] = cellFactory.Get(0.0);
+                            ((CellUnit)tab[cLine, 2]).AsposeFormat = 3;
                             //PDV
                             if (RES_PDV_YEAR_N_INDEX > -1)
                             {
@@ -375,6 +376,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                             if (yearN1 > -1)
                             {
                                 tab[cLine, RES_YEAR_N1_INDEX] = cellFactory.Get(0.0);
+                                ((CellUnit)tab[cLine, RES_YEAR_N1_INDEX]).AsposeFormat = 3;
                                 //PDV
                                 if (RES_PDV_YEAR_N1_INDEX > -1)
                                 {
@@ -417,6 +419,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                                 for (int j = 0; j < nbMonthes; j++)
                                 {
                                     tab[cLine, RES_FIRSTMONTH_INDEX + j] = cellFactory.Get(0.0);
+                                    ((CellUnit)tab[cLine, RES_FIRSTMONTH_INDEX + j]).AsposeFormat = 3;
+
                                 }
                             }
 
@@ -462,6 +466,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                                     cLine = tab.InsertNewLine((j == 0) ? c2SubTotalLineTypes[i] : c2LineTypes[i], parentKeys, scdLevelIds, c);
                                     //year N
                                     tab[cLine, 2] = cellFactory.Get(0.0);
+                                    ((CellUnit)tab[cLine, 2]).AsposeFormat = 3;
                                     //PDV
                                     if (RES_PDV_YEAR_N_INDEX > -1)
                                     {
@@ -510,6 +515,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                                     if (yearN1 > -1)
                                     {
                                         tab[cLine, RES_YEAR_N1_INDEX] = cellFactory.Get(0.0);
+                                        ((CellUnit)tab[cLine, RES_YEAR_N1_INDEX]).AsposeFormat = 3;
                                         //PDV
                                         if (RES_PDV_YEAR_N1_INDEX > -1)
                                         {
@@ -567,6 +573,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                                         for (int m = 0; m < nbMonthes; m++)
                                         {
                                             tab[cLine, RES_FIRSTMONTH_INDEX + m] = cellFactory.Get(0.0);
+                                            ((CellUnit)tab[cLine, RES_FIRSTMONTH_INDEX + m]).AsposeFormat = 3;
                                         }
                                     }
 

@@ -320,12 +320,15 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 //Total
                 tab[cLine, i] = cellHiddenFactory.Get(0.0);
+                ((CellUnit)tab[cLine, i]).AsposeFormat = 3;
                 //YearN
                 tab[cLine + RES_YEAR_N_OFFSET, i] = cellFactory.Get(0.0);
+                ((CellUnit)tab[cLine + RES_YEAR_N_OFFSET, i]).AsposeFormat = 3;
                 //YearN1
                 if (RES_YEAR_N1_OFFSET > 0)
                 {
                     tab[cLine + RES_YEAR_N1_OFFSET, i] = cellFactory.Get(0.0);
+                    ((CellUnit)tab[cLine + RES_YEAR_N1_OFFSET, i]).AsposeFormat = 3;
                 }
                 //Evol
                 if (RES_EVOL_OFFSET > 0)
@@ -466,12 +469,15 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                         {
                             //Total
                             tab[cLine, k] = cellHiddenFactory.Get(0.0);
+                            ((CellUnit)tab[cLine, k]).AsposeFormat = 3;
                             //YearN
                             tab[cLine + RES_YEAR_N_OFFSET, k] = cellFactory.Get(0.0);
+                            ((CellUnit)tab[cLine + RES_YEAR_N_OFFSET, k]).AsposeFormat = 3;
                             //YearN1
                             if (RES_YEAR_N1_OFFSET > 0)
                             {
                                 tab[cLine + RES_YEAR_N1_OFFSET, k] = cellFactory.Get(0.0);
+                                ((CellUnit)tab[cLine + RES_YEAR_N1_OFFSET, k]).AsposeFormat = 3;
                             }
                             //Evol
                             if (RES_EVOL_OFFSET > 0)
