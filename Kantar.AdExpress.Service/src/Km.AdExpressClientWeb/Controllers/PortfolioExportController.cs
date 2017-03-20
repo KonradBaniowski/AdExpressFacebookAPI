@@ -911,7 +911,28 @@ namespace Km.AdExpressClientWeb.Controllers
             if (detailSelectionResponse.ShowDate)
             {
                 sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.PeriodSelectionLabel);
-                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.Dates);
+
+                string startDate = string.Empty;
+                string endDate = string.Empty;
+
+                if (detailSelectionResponse.DateBegin != null)
+                {
+                    startDate = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(detailSelectionResponse.DateBegin.Value, detailSelectionResponse.SiteLanguage);
+                }
+                if (detailSelectionResponse.DateEnd != null)
+                {
+                    endDate = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(detailSelectionResponse.DateEnd.Value, detailSelectionResponse.SiteLanguage);
+                }
+
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.Dates).Trim();
+
+                if (!string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
+                {
+                    if (!startDate.Equals(endDate))
+                        sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.Dates).Trim() + " (" + startDate + " - " + endDate + ")";
+                    else
+                        sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.Dates).Trim() + " (" + startDate + ")";
+                }
 
                 TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
                 TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
