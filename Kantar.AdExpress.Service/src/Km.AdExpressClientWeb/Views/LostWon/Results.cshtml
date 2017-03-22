@@ -350,14 +350,14 @@
 
             function UnitFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number");
+                    return $.ig.formatter(parseFloat(val), "number");
 
                 return "";
             }
 
             function PageFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number", "#,##0.###");
+                    return $.ig.formatter(parseFloat(val), "number", "#,##0.###");
 
                 return "";
             }
@@ -372,10 +372,10 @@
                     return '-<img src="../Content/img/r.gif" />';
 
                 if (val > 0)
-                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+                    return $.ig.formatter(parseFloat(val), "number", "percent") + '<img src="../Content/img/g.gif" />';
 
                 if (val < 0)
-                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+                    return $.ig.formatter(parseFloat(val), "number", "percent") + '<img src="../Content/img/r.gif" />';
 
                 if (val == 0)
                     return '<img src="../Content/img/o.gif" />';
@@ -393,6 +393,29 @@
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
                 return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function PercentFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(parseFloat(val), "number", "percent");
+
+                return "";
+            }
+
+            function NbParutionFormatterPercent(val) {
+
+                if (val.toString().startsWith("nbparution"))
+                    return UnitFormatter(val.toString().replace("nbparution_", ""));
+                else
+                    return PercentFormatter(val.toString());
+            }
+
+            function NbParutionFormatterUnit(val) {
+
+                if (val.toString().startsWith("nbparution"))
+                    return UnitFormatter(val.toString().replace("nbparution_", ""));
+                else
+                    return UnitFormatter(val.toString());
             }
 
             function GetColumnsFormatter(columns, unit) {
@@ -415,6 +438,13 @@
                                 }
                                 if (elem.group[i].key.indexOf("pdm") > -1) {
                                     elem.group[i].formatter = PercentFormatter;
+                                }
+                                if (elem.group[i].key.indexOf("nbParution") > -1) {
+                                    if (elem.group[i].key.indexOf("cellpercent") > -1)
+                                        elem.group[i].formatter = NbParutionFormatterPercent;
+                                    if(elem.group[i].key.indexOf("cellunit") > -1)
+                                        elem.group[i].formatter = NbParutionFormatterUnit;
+
                                 }
                             }
                         } else if (elem.key.indexOf("unit") > -1) {
