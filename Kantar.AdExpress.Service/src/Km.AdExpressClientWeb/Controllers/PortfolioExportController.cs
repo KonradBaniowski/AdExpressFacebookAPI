@@ -187,6 +187,7 @@ namespace Km.AdExpressClientWeb.Controllers
             int rowStart = 1;
             int columnStart = 1;
             bool columnHide = false;
+            GenericDetailLevel detailLevel = null;
 
             Color textColor;
             Color backColor;
@@ -205,9 +206,12 @@ namespace Km.AdExpressClientWeb.Controllers
             Worksheet sheet = document.Worksheets.Add(GestionWeb.GetWebWord(1983, session.SiteLanguage));
             sheet.IsGridlinesVisible = false;
 
-            GenericDetailLevel detailLevel = session.GenericProductDetailLevel;
-            nbLevel = detailLevel.GetNbLevels;
-            SetSetsOfColorByMaxLevel(nbLevel);
+            if (session.CurrentModule != WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
+            {
+                detailLevel = session.GenericProductDetailLevel;
+                nbLevel = detailLevel.GetNbLevels;
+                SetSetsOfColorByMaxLevel(nbLevel);
+            }
 
             document.ChangePalette(HeaderTabBackground, 3);
             document.ChangePalette(HeaderTabText, 2);
@@ -258,9 +262,12 @@ namespace Km.AdExpressClientWeb.Controllers
 
                         for (int l = 1; l <= nbLevel; l++)
                         {
-                            Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
+                            if (detailLevel != null)
+                            {
+                                Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
                             
-                            headerBase.Add(headerTmp);
+                                headerBase.Add(headerTmp);
+                            }
                         }
 
                         bool first = true;
