@@ -479,7 +479,7 @@ $(document).on('click', '#btnValidDropAlertsDirectory', function () {
     var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idDropAlertsDirectory').attr("data-result");
     var params = {
         idDirectory: idDirectory,
-        type: "Alerts"
+        type: "Alert"
     };
     $.ajax({
         url: '/Universe/DropDirectory',
