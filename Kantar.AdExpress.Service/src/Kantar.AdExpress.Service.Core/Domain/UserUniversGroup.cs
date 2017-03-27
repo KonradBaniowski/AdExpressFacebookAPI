@@ -105,7 +105,8 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         Result,
         Univers,
-        Alert
+        Alert,
+        Session
     }
 
 }
