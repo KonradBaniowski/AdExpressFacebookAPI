@@ -343,7 +343,7 @@ namespace TNS.AdExpressI.LostWon
         {
 
             #region variables
-            Int32 nbLine =0;
+            Int32 nbLine = 0;
             List<string> advertisers = null;
             List<string> products = null;
             List<string> brands = null;
@@ -540,7 +540,7 @@ namespace TNS.AdExpressI.LostWon
             if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.advertiser))
             {
                 advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
-                resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));                
+                resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));
             }
 
 
@@ -670,7 +670,7 @@ namespace TNS.AdExpressI.LostWon
 
                 //Activité publicitaire produits
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.product) &&
-                    _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)  &&
+                    _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) &&
                     currentRow["id_product"] != DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
                 {
                     filterN = string.Format("id_product={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
@@ -1180,6 +1180,7 @@ namespace TNS.AdExpressI.LostWon
             Dictionary<string, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
+            //!_session.Percentage && 
             if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media &&
                 (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id
                 || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
@@ -1999,7 +2000,7 @@ namespace TNS.AdExpressI.LostWon
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
                 var parameters = new object[1];
                 parameters[0] = _session;
-                var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
                     + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class
                     , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                 ds = lostwonDAL.GetNbParutionData();
@@ -2043,6 +2044,7 @@ namespace TNS.AdExpressI.LostWon
             string pickanewsLink = "http://www.pickanews.com";
             LineStart cLineStart = null;
             int nbLines = 0;
+            bool haveNbParution = false;
             _allowPickaNews = WebApplicationParameters.ShowPickaNews;
             if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
             {
@@ -2059,6 +2061,8 @@ namespace TNS.AdExpressI.LostWon
                 cLineStart = resultTable.GetLineStart(i);
                 if (!(cLineStart is LineHide))
                     nbLines++;
+                if (cLineStart.LineType == LineType.nbParution && !haveNbParution)
+                    haveNbParution = true;
             }
             if (nbLines == 0)
             {
@@ -2102,6 +2106,7 @@ namespace TNS.AdExpressI.LostWon
                 {
                     groups = null;
                     string colKey = string.Empty;
+                    string dType = string.Empty;
                     if (resultTable.NewHeaders.Root[j].Count > 0)
                     {
                         groups = new List<object>();
@@ -2111,15 +2116,27 @@ namespace TNS.AdExpressI.LostWon
                         {
                             colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j][g].IndexInResultTable);
 
-                            if(resultTable != null && resultTable.LinesNumber > 0)
+                            if (resultTable != null && resultTable.LinesNumber > 0)
                             {
+                                dType = "number";
                                 var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
 
                                 if (cell is CellPercent || cell is CellPDM)
                                 {
-                                    format = "percent";
+                                    if (haveNbParution)
+                                    {
+                                        format = "";
+                                        colKey += "-nbParution-cellpercent";
+                                        dType = "string";
+                                    }
+                                    else
+                                    {
+                                        format = "percent";
+                                        colKey += "-pdm";
+                                    }
                                 }
-                                else if(cell is CellEvol) {
+                                else if (cell is CellEvol)
+                                {
                                     format = "percent";
                                     colKey += "-evol";
                                 }
@@ -2130,17 +2147,28 @@ namespace TNS.AdExpressI.LostWon
                                 }
                                 else if (cell is CellUnit)
                                 {
-                                    format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
-                                    colKey += "-unit";
+                                    if (haveNbParution)
+                                    {
+                                        format = "";
+                                        colKey += "-nbParution-cellunit";
+                                        dType = "string";
+                                    }
+                                    else
+                                    {
+                                        format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
+                                        colKey += "-unit";
+                                    }
                                 }
                             }
-
-                            groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "number", format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            if (haveNbParution)
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = dType, format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
+                            else
+                                groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = dType, format = format, columnCssClass = "colStyle", width = "*", allowSorting = true });
                             indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j][g].IndexInResultTable);
                             schemaFields.Add(new { name = colKey });
                         }
                         //colKey = string.Format("gr{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
-                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey,  group = groups });
+                        columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = "gr" + colKey, group = groups });
                         columnsFixed.Add(new { columnKey = "gr" + colKey, isFixed = false, allowFixing = false });
                     }
                     else
@@ -2250,9 +2278,9 @@ namespace TNS.AdExpressI.LostWon
                             if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
                                 gridData[currentLine, k + 2 + pk] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, _session.Unit);
                             else
-                                gridData[currentLine, k + 2 + pk] = ((CellUnit)cell).Value;
+                                gridData[currentLine, k + 2 + pk] = $"nbparution_{((CellUnit)cell).Value}";
                         }
-                        else if(cell is AdExpressCellLevel)
+                        else if (cell is AdExpressCellLevel)
                         {
                             string label = ((AdExpressCellLevel)cell).RawString();
                             string gadParams = ((AdExpressCellLevel)cell).GetGadParams();

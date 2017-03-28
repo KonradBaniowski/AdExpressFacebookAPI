@@ -161,7 +161,7 @@ $(document).on('click', '#btnRenameUnivers', function () {
 
 //saving the univers under the new diretory
 $(document).on('click', '#btnMoveUnivers', function () {
-    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.bg-black-only.idUnivers').attr("data-result");
+    var idNewDirectory = $('.input-group-btn').find('.btn.btn-default.idUnivers').attr("data-result");
     var params = {
         idOldDirectory: idOldDirectory,
         idNewDirectory: idNewDirectory,
@@ -479,7 +479,7 @@ $(document).on('click', '#btnValidDropAlertsDirectory', function () {
     var idDirectory = $('.input-group-btn').find('.btn.btn-default.form-control.idDropAlertsDirectory').attr("data-result");
     var params = {
         idDirectory: idDirectory,
-        type: "Alerts"
+        type: "Alert"
     };
     $.ajax({
         url: '/Universe/DropDirectory',
