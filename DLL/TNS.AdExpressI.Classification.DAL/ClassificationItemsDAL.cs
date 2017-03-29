@@ -614,6 +614,12 @@ namespace TNS.AdExpressI.Classification.DAL
         protected virtual string GetRights(Dimension dimension)
         {
             string classificationRight = "";
+
+            if (_session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+            {
+                return String.Empty;
+            }
+
             switch (dimension)
             {
                 //Obtains rights of the product classification
