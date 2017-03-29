@@ -310,7 +310,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 1
 
  UNION ALL
@@ -349,7 +349,7 @@ SELECT
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.MODULE mo ON
                                     ta.VALUE = mo.ID_MODULE
-                                WhERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+                                WhERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                   AND e.ID_EVENT  = 2
  UNION ALL
 
@@ -387,7 +387,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN ADEXPR03.VEHICLE vh ON
                                     ta.VALUE = vh.ID_VEHICLE
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 3
                                 AND vh.ID_LANGUAGE = 33
 
@@ -427,7 +427,7 @@ SELECT
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV01.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-                                WHERE  ta.DATE_CREATION >= TO_DATE('11/01/2017', 'DD/MM/YYYY')
+                                WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 4
   UNION ALL
 
@@ -463,7 +463,7 @@ SELECT
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-                                WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+                                WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 5
  UNION ALL
 
@@ -501,7 +501,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.PERIODE vh ON
                                     ta.VALUE = vh.ID_PERIODE
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 6
 UNION ALL
 
@@ -539,7 +539,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.UNIT vh ON
                                     ta.VALUE = vh.ID_UNIT
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 7
 
  UNION ALL
@@ -578,7 +578,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.RESULT vh ON
                                     ta.VALUE = vh.ID_RESULT
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 8
 
 
@@ -619,7 +619,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 9
 
  UNION ALL
@@ -658,7 +658,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
-WHERE  ta.DATE_CREATION >= TO_DATE('01/10/2016', 'DD/MM/YYYY')
+WHERE  ta.DATE_CREATION >= TO_DATE('01/01/2015', 'DD/MM/YYYY')
                                 AND e.ID_EVENT  = 10
 
 
