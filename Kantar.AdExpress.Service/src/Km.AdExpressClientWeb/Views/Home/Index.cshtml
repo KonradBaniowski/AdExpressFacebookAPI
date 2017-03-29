@@ -109,6 +109,17 @@
                                             <a href="@e.Url" class="list-group-item text-left" target="_blank">@e.Label</a>
                                     }
                                 }
+                                if (Model.CountryCode.Equals(CountryCode.FRANCE) && item.Label == "Documents")
+                                {
+                                    if (Model.SiteLanguage == 33)
+                                    {
+                                        <a href="~/Content/xls/Liste supports en alerte.xls" class="list-group-item text-left" target="_blank">Liste supports en alerte</a>
+                                    }
+                                    else if (Model.SiteLanguage == 44)
+                                    {
+                                        <a href="~/Content/xls/List of vehicles on alert.xls" class="list-group-item text-left" target="_blank">List of vehicles on alert</a>
+                                    }
+                                }
                             }
                         </div>
                     </div>
