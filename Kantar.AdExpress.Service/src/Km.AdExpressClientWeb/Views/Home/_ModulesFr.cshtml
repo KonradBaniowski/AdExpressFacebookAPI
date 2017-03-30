@@ -132,7 +132,7 @@
         </div>
     </div>
     @*Three Mostly Importants*@
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
         <div class="tile-second">
             @*@if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
                 {
@@ -175,7 +175,7 @@
             }
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
         <div class="tile-second">
             @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
             {
@@ -319,19 +319,19 @@
                     {
                         <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.HEALTH)].Title</div>
                     }
-                    @if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
+                    @*@if (Model.ModuleRight.ContainsKey(Module.Name.BILAN_CAMPAGNE))
                     {
                         <a href="#" class="list-group-item text-left" id="@Module.Name.BILAN_CAMPAGNE">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</a>
                     }
                     else
                     {
                         <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.BILAN_CAMPAGNE)].Title</div>
-                    }
+                    }*@
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
+    @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
         <div class="tile-third" data-toggle="dropdown">
             <div class="tile-body text-center">
                 <div class="flip-container">
@@ -388,7 +388,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 
 
