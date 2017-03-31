@@ -155,7 +155,7 @@ namespace TNS.AdExpress.Anubis.Pachet.BusinessFacade
         /// Sned email to customer
         /// </summary>
         /// <param name="res">result</param>
-        internal void Send( bool res)
+        internal void Send( bool res, string fileName)
         {
 
 
@@ -167,13 +167,13 @@ namespace TNS.AdExpress.Anubis.Pachet.BusinessFacade
                     to.Add(s);
                 }
                 string body = (res) ? GestionWeb.GetWebWord(2945, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
-                              + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer) : GestionWeb.GetWebWord(2106, _webSession.SiteLanguage);
+                              + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".txt") : GestionWeb.GetWebWord(2106, _webSession.SiteLanguage);
 
                 var mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GestionWeb.GetWebWord(2944, _webSession.SiteLanguage),
                     body
                     + "<br><br>"
-                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage),
+                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 try
                 {

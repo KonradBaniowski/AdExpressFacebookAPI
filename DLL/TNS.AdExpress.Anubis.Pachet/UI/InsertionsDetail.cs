@@ -52,14 +52,14 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                 param[1] = webSession.CurrentModule;
 
                 // Sélection du vehicle
-                string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+                string vehicleSelection = webSession.GetSelection(webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
                 if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw new InsertionsDetailException("The media selection is not valid");
                 VehicleInformation vehicleInformation = VehiclesInformation.Get(long.Parse(vehicleSelection));
                 if (vehicleInformation == null) throw (new InsertionsDetailException("La sélection de médias est incorrecte"));
 
                 //Periods
-                string fromDate = Utils.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
-                string toDate = Utils.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
+                string fromDate = Utils.Dates.GetPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
+                string toDate = Utils.Dates.GetPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 
                
 

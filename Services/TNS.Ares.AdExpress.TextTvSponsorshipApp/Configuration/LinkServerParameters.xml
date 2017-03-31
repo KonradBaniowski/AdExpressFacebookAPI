@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<servers selectedServerId="3">
+  <!--<smtp host="frmitpu-msprod" from="tnsadexpress@tnsmi.fr" errorEmailList="youssef.rkaina@kantarmedia.com;alexandre.rousseau@kantarmedia.com;benjamin.masson@kantarmedia.com;guillaume.facon@kantarmedia.com;dede.mussuma@kantarmedia.com" mailPort="25"/>-->
+  <!-- Slovaquie -->
+  <!--<smtp host="localhost.hobbit.tns-global.sk" from="tnsadexpress@tns-global.sk" errorEmailList="youssef.rkaina@tnsmi.fr;alexandre.rousseau@tnsmi.fr;benjamin.masson@tnsmi.fr;guillaume.facon@tnsmi.fr" mailPort="25"/>-->
+  <smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>  
+  <server server_id="1" host="frmitch-vmls03" port="30000" />
+  <server server_id="2" host="frmitch-ditd058" port="30000" />
+  <server server_id="3" host="kmchmvls004" port="30000" />
+  <!-- Slovaquie -->
+  <server server_id="4" host="adexpressweb" port="30000" />
+  <!-- Finland -->
+  <server server_id="5" host="fitnses-apad01" port="30000" />
+  <!--Russia-->
+  <server server_id="7" host="adexpr-ww.Gallup.tns" port="30000" />
+</servers>
