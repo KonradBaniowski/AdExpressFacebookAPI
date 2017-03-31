@@ -249,7 +249,7 @@ namespace TNS.AdExpress.Anubis.Pachet
                 string fileName = fileSyst.Init();
                 bool res = fileSyst.Fill();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
-                fileSyst.Send(res);
+                fileSyst.Send(res, fileName);
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Pachet);
