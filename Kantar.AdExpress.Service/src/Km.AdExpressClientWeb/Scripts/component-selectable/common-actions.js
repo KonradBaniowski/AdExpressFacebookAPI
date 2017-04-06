@@ -172,7 +172,7 @@ $(document).on('click', 'button.tout-suppr', function () {
     var idTree = $(this).parent('.pull-right').siblings('.panel-group.panel-group-results').attr('id');
     console.log(idTree);
     test.find('li').remove();
-    test.find('.panel-title.famille.orange').removeClass('orange');
+    test.find('.panel-title.famille.violet').removeClass('violet');
     $("#" + idTree + " [id^='collapse'].in").collapse('hide');
 });
 

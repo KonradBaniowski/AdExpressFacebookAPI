@@ -638,6 +638,7 @@
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\kantarmedia-bg-contact.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-result.jpg" />
     <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\KM_BP.png" />

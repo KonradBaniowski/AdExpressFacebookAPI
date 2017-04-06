@@ -15,7 +15,7 @@
             }
             console.log(levelDst);
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
-            $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('orange');
+            $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('violet');
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;

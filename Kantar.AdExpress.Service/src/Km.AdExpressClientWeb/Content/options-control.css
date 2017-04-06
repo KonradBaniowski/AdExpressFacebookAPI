@@ -138,8 +138,8 @@
 box-shadow:none  !important;
 }
 .options-control .panel-options-results .actives a{ 
-  color:#ff8c00 !important;
-box-shadow:none  !important;
+    color:#ff8c00 !important;
+    box-shadow:none  !important;
 } 
 .options-control .panel-options-results .i-checks input:checked + i {
   border-color: #ff8c00;
@@ -326,12 +326,13 @@ box-shadow:none  !important;
 }
 
 .custom-button .btn-save {
-  color: #ff8c00;
-  background-color: rgba(0,0,0,0.4);
+  color: white;
+  background-color: #A74C97;
   border:0;
   font-weight:bolder;
   padding: 10px 15px;
   cursor: pointer;
+    border: 1px solid #512364;
 }
 
 .custom-button .btn-save:hover,
@@ -339,8 +340,8 @@ box-shadow:none  !important;
 .custom-button .btn-save:active,
 .custom-button .btn-save.active,
 .custom-button .open .dropdown-toggle.btn-save {
-  color: #ff8c00 !important;
-  background-color: rgba(0,0,0,0.3);
+  /*color: #A74C97 !important;*/
+  background-color: #512364;
 }
 
 .custom-button .btn-save:active,
@@ -485,8 +486,8 @@ box-shadow:none  !important;
 
 .selectexporttype .bootstrap-select .btn.selectpicker {
     background-color: transparent !important;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
+    border: 1px solid #512364;
+    color: #494949;
 }
 
 .selectexporttype .bootstrap-radio > .btn.btn-link {
@@ -499,22 +500,21 @@ box-shadow:none  !important;
 }
 
 .selectexporttype .dropdown-menu > li > a {
-    color: #fff;
-    background-color: #FF6600;
+    color: white;
+    background-color: #A74C97;
     font-size:12px !important;
 }
 
 .selectexporttype .bootstrap-select.btn-group .dropdown-menu {
-    background-color: #CC5200 !important;
-    border: 1px solid #CC5200; /* @beegray*/
+    background-color: black !important;
+    /*border: 1px solid #A74C97;*/ /* @beegray*/
     padding: 0;
 }
 
 .selectexporttype .dropdown-menu > li > a:hover,
 .selectexporttype .dropdown-menu > li > a:focus {
     text-decoration: none;
-    color: #fff;
-    background-color: transparent !important;
+    background-color: #512364;
     outline: none !important;
 }
 

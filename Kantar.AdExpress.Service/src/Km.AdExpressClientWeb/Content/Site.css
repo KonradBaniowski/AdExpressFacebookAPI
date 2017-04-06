@@ -80,12 +80,12 @@ html {
 }
 
 .tl-active {
-    border-color: #ff8c00;
+    border-color: #A74C97;
 }
 
 .tl-btn-active {
-    border: 2px solid #ff8c00;
-    background: #ff8c00;
+    border: 2px solid #A74C97;
+    background: #A74C97;
 }
 
 .tl-btn {
@@ -217,10 +217,15 @@ html {
 
 .container-kantar-results {
     /*background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;*/
-    background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
-    color: #ffffff;
+    background: url('../Content/img/kantarmedia-bg-result.jpg') no-repeat;
+    /*background-color: #F0F0F0;*/
+    /*color: #ffffff;*/
     background-size: cover;
     background-attachment: fixed;
+    color:#494949;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    /*background:#F0F0F0;*/
 }
 
 .container-kantar-myadexpress {
@@ -369,20 +374,20 @@ html {
 }
 
 .btn-warning {
-    background-color: #ff8c00;
-    border-color: #ff8c00;
+    background-color: #A74C97;
+    border-color: #A74C97;
 }
 
     .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open .dropdown-toggle.btn-warning {
-        color: #ff8c00;
+        color: #A74C97;
         background-color: transparent;
-        border-color: #ff8c00;
+        border-color: #A74C97;
     }
 
 .hovered {
-    color: #ff8c00;
+    color: #A74C97;
     background-color: transparent;
-    border-color: #ff8c00 !important;
+    border-color: #A74C97 !important;
 }
 
 .btn-orange, .btn-orange:hover {
@@ -426,6 +431,14 @@ input {
 
 .blue {
     color: #00c1ff;
+}
+
+.violet {
+    color: #A154A1;
+}
+
+.bgViolet {
+    background-color: #A74C97 !important;
 }
 
 .black {
@@ -1067,8 +1080,14 @@ input {
 
 
 .btn-green2 {
-    color: #13c18b;
-    border-color: #13c18b;
+    color: #d2b855;
+    border-color: #d2b855;
+    border-width: 5px;
+}
+
+.btn-green2:hover {
+    color: white;
+    border-color: white;
     border-width: 5px;
 }
 
@@ -1105,11 +1124,11 @@ input {
             }
 
             .panel-heading-choix > ul > li.active > a, .panel-heading-choix > ul > li.active > a:hover, .panel-heading-choix > ul > li.active > a:active {
-                color: #ff8c00;
+                color: #A154A1;
                 background: transparent;
                 border-color: transparent;
                 padding: 3px 0;
-                border-bottom: 1px solid #ff8c00;
+                border-bottom: 1px solid #A154A1;
             }
 
 .panel-body.resultats-marche {
@@ -1139,7 +1158,8 @@ input {
     margin: 0;
     box-shadow: none;
     border: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: #282828;
+    color: white;
 }
 
 .panel-group .panel.panel-results + .panel.panel-results {
@@ -1149,7 +1169,6 @@ input {
 .panel-heading.head-results {
     background: none;
     padding: 10px 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
     border-radius: 0;
 }
 
@@ -1336,7 +1355,7 @@ a {
 .btn-valider.active,
 .btn-valider {
     color: #fff;
-    background-color: #ff8c00;
+    background-color: #A74C97;
     border: 0;
     font-weight: bolder;
     padding: 10px 15px;
@@ -1659,7 +1678,7 @@ input[type=checkbox].with-font {
 
 /**************PANEL MARCHE***********************/
 .ui-selectable li.ui-selected, .ui-selectable li.ui-selecting {
-    color: #ff8c00;
+    color: #A154A1;
     font-weight: bolder;
 }
 
@@ -1710,7 +1729,7 @@ ul.ui-selectable {
 }
 
 .btn-save-univers {
-    color: #ff8c00;
+    color: #A154A1;
     background-color: rgba(0,0,0,0.6);
     border: 0;
     font-weight: bolder;
@@ -1893,6 +1912,7 @@ ul.ui-selectable {
     background-color: transparent !important;
     border: none !important;
     margin-bottom: 0px;
+    box-shadow: none;
 }
 
     .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading {
@@ -1900,6 +1920,7 @@ ul.ui-selectable {
         border: none;
         border-radius: unset;
         padding: 2px 15px;
+        color: #494949;
     }
 
         .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group {
@@ -1910,7 +1931,7 @@ ul.ui-selectable {
         }
 
             .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn {
-                background-color: rgba(0,0,0,0.4);
+                background-color: #282828;
                 color: white;
                 border: 1px solid transparent;
             }
@@ -1918,7 +1939,7 @@ ul.ui-selectable {
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
-                    background-color: #00c1ff;
+                    background-color: #A74C97;
                 }
 
         .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading > h5 {
@@ -1931,7 +1952,7 @@ ul.ui-selectable {
 }
 
 .btn-default-sub-period {
-    background: #00C1FF !important;
+    background: #A74C97 !important;
     border: none !important;
 }
 
@@ -2805,14 +2826,14 @@ ul.ui-selectable {
     .media-schedule-option input[type=radio].with-font:checked ~ label:before {
         content: "\f192";
         font-size: 1.2em;
-        color: #FF8C1C !important;
+        color: #3C6BBF !important;
         letter-spacing: 10px;
     }
 
     .media-schedule-option input[type=checkbox].with-font:checked ~ label:before {
         content: "\f14a";
         font-size: 1.2em;
-        color: #FF8C1C !important;
+        color: #3C6BBF !important;
         letter-spacing: 10px;
     }
 

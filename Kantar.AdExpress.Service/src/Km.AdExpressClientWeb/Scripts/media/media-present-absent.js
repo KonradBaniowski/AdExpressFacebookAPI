@@ -338,7 +338,7 @@ $('#move-item').on('click', function () {
                         });
                         if (!find) {
                             $('#collapse-' + universSrc + '-' + indexTab).collapse('show');
-                            $('#heading-' + universSrc + '-' + indexTab).find('.panel-title').addClass('orange');
+                            $('#heading-' + universSrc + '-' + indexTab).find('.panel-title').addClass('violet');
                             var buttonSupp = $('<button/>');
                             buttonSupp.addClass('pull-right');
                             var icon = $('<i/>');

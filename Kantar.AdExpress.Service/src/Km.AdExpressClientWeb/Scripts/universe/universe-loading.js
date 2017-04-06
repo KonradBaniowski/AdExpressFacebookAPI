@@ -225,7 +225,7 @@ $(document).on('click', '#LoadUnivers', function (event) {
                             var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                             panel.html('');
                             $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
-                            $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('orange');
+                            $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('violet');
                             SetUniversItems(uniLvl, panel);
                         });
 
@@ -274,7 +274,7 @@ function clearAllPanels() {
         $(this).html('');
     });
     $('.panel-group.panel-group-results[id^="tree-"] > .panel-collapse.collapse.in').collapse('hide');
-    $(".panel-title.orange").removeClass("orange");
+    $(".panel-title.orange").removeClass("violet");
 }
 
 
