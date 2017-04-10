@@ -309,7 +309,7 @@ $('#move-item').on('click', function () {
                 return
             }
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
-            $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('violet');
+            $('#heading-' + universSrc + '-' + tabSelected).addClass("bg-highTransparency").find(".panel-title").addClass("blue");
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;

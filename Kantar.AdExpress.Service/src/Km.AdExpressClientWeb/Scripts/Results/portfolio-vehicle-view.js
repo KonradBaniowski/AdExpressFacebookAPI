@@ -46,7 +46,7 @@ function ShowVehicleCarousel(vhCarouselData, labelNbInsertion, labelTotalInvest,
 
         htmlArr.push(" <div class='col-sm-3'>");
 
-        htmlArr.push("<div class='text-center text-white'><div class='bg-black-only padder-v-mi'>");
+        htmlArr.push("<div class='text-center text-white'><div class='bg-white-only padder-v-mi'>");
         htmlArr.push(val.ParutionDate);
         htmlArr.push("</div></div>");
 

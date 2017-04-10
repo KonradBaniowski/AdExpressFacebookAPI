@@ -424,27 +424,27 @@ box-shadow:none  !important;
 }
 
 .selectoptioncontainer .dropdown-menu > li > a {
-    color: #fff;
-    background-color: #FF6600;
-    font-size:12px !important;
+    color: #343434;
+    background-color: white; /*#3C6BBF;*/
+    font-size:12px !important
 }
 
 .selectoptioncontainer .bootstrap-select.btn-group .dropdown-menu {
     background-color: #CC5200 !important;
-    border: 1px solid #CC5200; /* @beegray*/
+    border: 1px solid white; /* @beegray*/
     padding: 0;
 }
 
 .selectoptioncontainer .dropdown-menu > li > a:hover,
 .selectoptioncontainer .dropdown-menu > li > a:focus {
     text-decoration: none;
-    color: #fff;
-    background-color: transparent !important;
+    color: #343434;
+    background-color: #eee !important;
     outline: none !important;
 }
 
 .selectoptioncontainer .dropdown-menu > li.selected > a {
-    color: #fff;
+    color: #343434;
     outline: none !important;
 }
 
