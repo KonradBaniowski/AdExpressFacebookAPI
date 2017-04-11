@@ -9,18 +9,18 @@
 <link href="~/IgniteUI/css/themes/kantar/infragistics.theme.css" rel="stylesheet" />
 
 <div class="row">
-    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;color:white;">
         <div class="panel-heading">
-            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @Model.Labels.InsertionsLabel</span></h5>
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus violet"></i>&nbsp; @Model.Labels.InsertionsLabel</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
-            <center><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></center>
+            <div style="text-align: center;" ><i style="color:#26caff;" class="fa fa-spinner fa-pulse fa-fw"></i></div>
         </div>
 
         <div id="HeaderElmt" style="display:none">
-            <div id="subPeriodSelection" style="background-color:grey"></div>
-            <div id="detailLevelItem" class="col-md-12 bg-orange" style="color:white;"></div>
+            <div id="subPeriodSelection" style="background-color:white"></div>
+            <div id="detailLevelItem" style="color:white;"></div>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
             <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
             <div id="grid" style="display:none"></div>
             <div id="gridLoader" style="display:none">
-                <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                <div class='uil-ring-css' style=''><div></div></div>
             </div>
         </center>
     </div>
@@ -450,10 +450,14 @@
                 success: function (data) {
                     if (data != null) {
                         $('#detailLevelItem').html(data);
+
+                        $('#l1Detail').selectpicker();
+                        $('#l2Detail').selectpicker();
+                        $('#l3Detail').selectpicker();
                     }
                 },
                 error: function (xmlHttpRequest, errorText, thrownError) {
-                    alert("detailLevel error")
+                    alert("detailLevel error");
                 }
             });
         }

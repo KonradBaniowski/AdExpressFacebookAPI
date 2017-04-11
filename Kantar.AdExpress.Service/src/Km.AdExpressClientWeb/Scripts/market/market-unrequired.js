@@ -6,7 +6,7 @@
             var universSrc = $('.ui-selectee.ui-selected').closest('.panel-default').attr('data-universe');
             var tabSelected = $('ul > li[class="active"] > a').attr('data-tab');
             var universDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul');
-            var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li')
+            var levelDst = $('.panel-body[data-tree=' + tabSelected + '][data-level=' + universSrc + '] > ul > li');
             var nbItemSrc = levelSrc.length;
             var nbItemDst = levelDst.length;
             if (nbItemDst + nbItemSrc > 100) {
@@ -15,7 +15,7 @@
             }
             console.log(levelDst);
             $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
-            $('#heading-' + universSrc + '-' + tabSelected).find('.panel-title').addClass('orange');
+            $('#heading-' + universSrc + '-' + tabSelected).addClass("bg-highTransparency").find(".panel-title").addClass("blue");
             $.each(levelSrc, function (index, value) {
                 var item = $(value).clone();
                 var find = false;

@@ -146,13 +146,13 @@ namespace Km.AdExpressClientWeb.Controllers
         Color BorderTab = Color.Black;
 
         Color PresentText = Color.Black;
-        Color PresentBackground = Color.FromArgb(255, 150, 23);
+        Color PresentBackground = Color.FromArgb(60, 107, 191);
 
         Color NotPresentText = Color.Black;
         Color NotPresentBackground = Color.White;
 
         Color ExtendedText = Color.Black;
-        Color ExtendedBackground = Color.FromArgb(243, 209, 97);
+        Color ExtendedBackground = Color.FromArgb(0, 200, 255);
         #endregion
 
         private string icon;

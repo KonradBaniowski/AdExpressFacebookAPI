@@ -1,20 +1,21 @@
 ﻿@model Km.AdExpressClientWeb.Models.Insertions.DetailLevelViewModel
 
-<div>
-    <a data-toggle="collapse" class="collapsed" href="#lvlperso">
-        <div id="lvlPersoHeader" class="panel-heading" role="tab" id="headingOne">
-            <h5 class="panel-title">
-                @Model.Labels.NiveauxPersonalises
-                <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
-            </h5>
-        </div>
-    </a>
-    <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
-            <div class="form-group">
+<div class="panel-group panel-group-results panel-group-options" role="tablist">
+    <div class="panel panel-primary panel-options">
+        <a data-toggle="collapse" class="collapsed" href="#lvlperso">
+            <div id="lvlPersoHeader" class="panel-heading bg-violet" role="tab" id="headingOne">
+                <h5 class="panel-title">
+                    @Model.Labels.NiveauxPersonalises
+                    <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                </h5>
+            </div>
+        </a>
+        <div id="lvlperso" data-toggle="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="border-radius:0;">
+            <div class="panel-body">
+                <div class="selectoptioncontainer">
                     @for (int i = 0; i < 3; i++)
                     {
-                        <select id="l@(Model.Items[i].level)Detail" class="form-control">
+                        <select id="l@(Model.Items[i].level)Detail" class="selectdatepicker" style="margin-bottom: 10px">
                             <option value="-1">--------</option>
                             @foreach (var item in Model.Items[i].Items)
                             {
@@ -29,8 +30,12 @@
                             }
                         </select>
                     }
+                </div>
+                <div class="btn-options pull-right">
+                    <button id="submitLvl" class="btn btn-valider">@Model.Labels.Submit</button>
+                </div>
             </div>
-            <button id="submitLvl" class="pull-right btn btn-action">@Model.Labels.Submit</button>
         </div>
+
     </div>
 </div>

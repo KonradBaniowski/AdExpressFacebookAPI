@@ -66,7 +66,7 @@ html {
     display: table;
     padding: 0;
     margin: 0;
-    border-color: white;
+    border-color: #BDBDBD;
     border-style: solid;
     border-width: 0 0 2px 0;
     width: 200px;
@@ -80,12 +80,12 @@ html {
 }
 
 .tl-active {
-    border-color: #ff8c00;
+    border-color: #A74C97;
 }
 
 .tl-btn-active {
-    border: 2px solid #ff8c00;
-    background: #ff8c00;
+    border: 2px solid #A74C97;
+    background: #A74C97;
 }
 
 .tl-btn {
@@ -112,7 +112,7 @@ html {
 
 .btn-action {
     color: #fff;
-    background-color: #00c1ff;
+    background-color: #00C8FF;
     border: 0;
     font-weight: bolder;
     padding: 10px 15px;
@@ -126,6 +126,10 @@ html {
     font-weight: bolder;
     display: block;
     margin-top: 10px;
+}
+
+li.tl-header a.btn-empty:not(.hovered) {
+    color: #BDBDBD;
 }
 
 .navbar-color {
@@ -144,7 +148,7 @@ html {
 
     .open .dropdown-menu > li > a.active {
         background-color: black;
-        color: #e87f02;
+        color: #A154A1;
     }
 
 .open .dropdown-menu {
@@ -217,10 +221,15 @@ html {
 
 .container-kantar-results {
     /*background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;*/
-    background: url('../Content/img/kantarmedia-bg-contact.jpg') no-repeat;
-    color: #ffffff;
+    background: url('../Content/img/kantarmedia-bg-result.jpg') no-repeat;
+    /*background-color: #F0F0F0;*/
+    /*color: #ffffff;*/
     background-size: cover;
     background-attachment: fixed;
+    color:#494949;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    /*background:#F0F0F0;*/
 }
 
 .container-kantar-myadexpress {
@@ -241,9 +250,12 @@ html {
 .header-kantar-popup {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    background-color: rgba(0,0,0,0.7);
+    /*border-top-right-radius: 3px;
+    border-top-left-radius: 3px;*/
+    /*background-color: rgba(0,0,0,0.7);*/
+    background-color: #282828;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .navbar-brand {
@@ -369,20 +381,20 @@ html {
 }
 
 .btn-warning {
-    background-color: #ff8c00;
-    border-color: #ff8c00;
+    background-color: #A74C97;
+    border-color: #A74C97;
 }
 
     .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open .dropdown-toggle.btn-warning {
-        color: #ff8c00;
+        color: #A74C97 !important;
         background-color: transparent;
-        border-color: #ff8c00;
+        border-color: #A74C97;
     }
 
 .hovered {
-    color: #ff8c00;
+    color: #A74C97;
     background-color: transparent;
-    border-color: #ff8c00 !important;
+    border-color: #A74C97 !important;
 }
 
 .btn-orange, .btn-orange:hover {
@@ -392,8 +404,20 @@ html {
     padding: 10px 15px;
 }
 
+.btn-white {
+    background-color: white;
+    color: #343434;
+    font-weight: bolder;
+    padding: 10px 15px;
+}
+
+.btn-white:hover, .btn-white:focus {
+    background-color: #eee;
+    box-shadow: 0.1rem 0.17rem 0.1rem rgba(255,255,255,0.5);
+}
+
 .btn-blue, .btn-blue:hover {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
     color: white;
     font-weight: bolder;
     padding: 10px 15px;
@@ -425,7 +449,15 @@ input {
 }
 
 .blue {
-    color: #00c1ff;
+    color: #00C8FF;
+}
+
+.violet {
+    color: #A154A1;
+}
+
+.bg-violet {
+    background-color: #A74C97 !important;
 }
 
 .black {
@@ -433,11 +465,16 @@ input {
 }
 
 .bg-blue {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
 }
 
 .bg-orange {
     background: #ff8c00;
+}
+
+.bg-highTransparency {
+    background-color: rgba(0, 0, 0, 0.18) !important;
+    color: black;
 }
 
 .green {
@@ -778,7 +815,7 @@ input {
 
 .btn-empty {
     background-color: inherit;
-    border-color: white;
+    border-color: #BDBDBD;
 }
 
     .btn-empty.active {
@@ -824,6 +861,10 @@ input {
 
 .bg-black-only {
     background-color: rgba(0,0,0,0.6);
+}
+
+.bg-white-only {
+    background-color: rgba(255,255,255,0.6);
 }
 
 .heading > h4, .heading > h5 {
@@ -1067,8 +1108,14 @@ input {
 
 
 .btn-green2 {
-    color: #13c18b;
-    border-color: #13c18b;
+    color: white;
+    border-color: white;
+    border-width: 5px;
+}
+
+.btn-green2:hover {
+    color: #d2b855;
+    border-color: #d2b855;
     border-width: 5px;
 }
 
@@ -1105,11 +1152,11 @@ input {
             }
 
             .panel-heading-choix > ul > li.active > a, .panel-heading-choix > ul > li.active > a:hover, .panel-heading-choix > ul > li.active > a:active {
-                color: #ff8c00;
+                color: #A154A1;
                 background: transparent;
                 border-color: transparent;
                 padding: 3px 0;
-                border-bottom: 1px solid #ff8c00;
+                border-bottom: 1px solid #A154A1;
             }
 
 .panel-body.resultats-marche {
@@ -1133,13 +1180,23 @@ input {
     background-color: rgba(255,255,255,0.2);
 }
 
+.panel-group.panel-black-results {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: black
+}
+
+.panel-group.panel-black-results .ui-chart-container {
+    background-color: transparent !important;
+}
+
 .panel.panel-options {
     border-radius: 0;
     padding: 0;
     margin: 0;
     box-shadow: none;
     border: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: #282828;
+    color: white;
 }
 
 .panel-group .panel.panel-results + .panel.panel-results {
@@ -1149,8 +1206,8 @@ input {
 .panel-heading.head-results {
     background: none;
     padding: 10px 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
     border-radius: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.18);
 }
 
     .panel-heading.head-results:hover {
@@ -1213,7 +1270,7 @@ input {
 
         .i-switch input:checked + i:after {
             margin-left: 16px;
-            background-color: #00c1ff;
+            background-color: #00C8FF;
         }
 
     .i-switch i:before {
@@ -1248,7 +1305,7 @@ input {
 }
 
 .tuile-medias i {
-    color: #00c1ff;
+    color: #00C8FF;
 }
 
 .w-full {
@@ -1305,7 +1362,7 @@ a {
 }
 
 .tuile-medias-active {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
     color: #fff;
     -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -1330,17 +1387,21 @@ a {
     margin-bottom: 20px;
 }
 
-.btn-valider:hover,
-.btn-valider:focus,
-.btn-valider:active,
-.btn-valider.active,
 .btn-valider {
     color: #fff;
-    background-color: #ff8c00;
-    border: 0;
+    background-color: #A74C97;
     font-weight: bolder;
     padding: 10px 15px;
     cursor: pointer;
+    border: 1px solid #512364;
+}
+
+.btn-valider:hover,
+.btn-valider:focus,
+.btn-valider:active,
+.btn-valider.active {
+    background-color: #512364;
+    color: white;
 }
 
 
@@ -1405,13 +1466,13 @@ a {
             height: 1em;
             border: 0.0625em solid rgb(115,153,77);
             border-radius: 0.25em;
-            background: #00c1ff;
+            background: #00C8FF;
             opacity: 0.6;
-            background-image: -moz-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -ms-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -o-linear-gradient(#00c1ff,#00c1ff);
-            background-image: -webkit-linear-gradient(#00c1ff,#00c1ff);
-            background-image: linear-gradient(#00c1ff,#00c1ff);
+            background-image: -moz-linear-gradient(#00C8FF,#00C8FF);
+            background-image: -ms-linear-gradient(#00C8FF,#00C8FF);
+            background-image: -o-linear-gradient(#00C8FF,#00C8FF);
+            background-image: -webkit-linear-gradient(#00C8FF,#00C8FF);
+            background-image: linear-gradient(#00C8FF,#00C8FF);
         }
 
 .input-datepicker {
@@ -1443,7 +1504,7 @@ a {
 }
 
 .site-select-option {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
 }
 
 .select-date:hover {
@@ -1494,21 +1555,21 @@ input[type=checkbox].with-font {
         content: "\f0c8";
         letter-spacing: 10px;
         font-size: 1.2em;
-        color: #FF8C1C;
+        color: #d2b855;
         width: 1.4em;
     }
 
     input[type=radio].with-font:checked ~ label:before {
         content: "\f192";
         font-size: 1.2em;
-        color: #00c1ff;
+        color: #00C8FF;
         letter-spacing: 10px;
     }
 
     input[type=checkbox].with-font:checked ~ label:before {
         content: "\f14a";
         font-size: 1.2em;
-        color: #FF8C1C;
+        color: #d2b855;
         letter-spacing: 10px;
     }
 
@@ -1518,17 +1579,17 @@ input[type=checkbox].with-font {
 
     input[type=checkbox].with-font:checked ~ label:before {
         content: "\f14a";
-        color: #FF8C1C;
+        color: #d2b855;
     }
 
     input[type=radio].with-font:focus ~ label:before,
     input[type=radio].with-font:focus ~ label {
-        color: #00c1ff;
+        color: #00C8FF;
     }
 
     input[type=checkbox].with-font:focus ~ label:before,
     input[type=checkbox].with-font:focus ~ label {
-        color: #FF8C1C;
+        color: #d2b855;
     }
 
 .selectdatecontainer {
@@ -1574,7 +1635,7 @@ input[type=checkbox].with-font {
 .selectdatecontainer .dropdown-menu > li > a,
 .optionsChartContainer .dropdown-menu > li > a {
     color: #fff;
-    background-color: #00c1ff;
+    background-color: #00C8FF;
 }
 
 .selectdatecontainer .bootstrap-select.btn-group .dropdown-menu,
@@ -1659,7 +1720,7 @@ input[type=checkbox].with-font {
 
 /**************PANEL MARCHE***********************/
 .ui-selectable li.ui-selected, .ui-selectable li.ui-selecting {
-    color: #ff8c00;
+    color: #d2b855;
     font-weight: bolder;
 }
 
@@ -1710,7 +1771,7 @@ ul.ui-selectable {
 }
 
 .btn-save-univers {
-    color: #ff8c00;
+    color: #A154A1;
     background-color: rgba(0,0,0,0.6);
     border: 0;
     font-weight: bolder;
@@ -1832,7 +1893,7 @@ ul.ui-selectable {
 .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
 .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
 .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
 }
 
 
@@ -1874,7 +1935,7 @@ ul.ui-selectable {
 .nav.panel-tabs > li.active > a,
 .nav.panel-tabs > li.active > a:hover,
 .nav.panel-tabs > li.active > a:focus {
-    color: #00c1ff;
+    color: #A154A1;
     cursor: default;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -1893,6 +1954,7 @@ ul.ui-selectable {
     background-color: transparent !important;
     border: none !important;
     margin-bottom: 0px;
+    box-shadow: none;
 }
 
     .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading {
@@ -1900,6 +1962,7 @@ ul.ui-selectable {
         border: none;
         border-radius: unset;
         padding: 2px 15px;
+        color: #494949;
     }
 
         .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group {
@@ -1910,7 +1973,7 @@ ul.ui-selectable {
         }
 
             .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn {
-                background-color: rgba(0,0,0,0.4);
+                background-color: #282828;
                 color: white;
                 border: 1px solid transparent;
             }
@@ -1918,7 +1981,7 @@ ul.ui-selectable {
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:active,
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn:hover,
                 .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading.second > .btn-group > .btn.active {
-                    background-color: #00c1ff;
+                    background-color: #3C6BBF;
                 }
 
         .panel-sub-period .panel.panel-default.panel-cotes > .panel-heading > h5 {
@@ -1931,7 +1994,7 @@ ul.ui-selectable {
 }
 
 .btn-default-sub-period {
-    background: #00C1FF !important;
+    background: #3C6BBF !important;
     border: none !important;
 }
 
@@ -1976,13 +2039,13 @@ ul.ui-selectable {
 .msCreative .panel {
     border-radius: 2px;
     border: 0 !important;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(0,0,0,0.2);
     line-height: 1.2;
 }
 
 .msCreative .btn-filtrer {
     color: #fff;
-    background-color: #00c1ff;
+    background-color: #00C8FF;
     border: 0;
     font-weight: bolder;
     padding: 2px 10px;
@@ -2162,10 +2225,30 @@ ul.ui-selectable {
     line-height: 21px;
 }
 
-    .items-famille li {
+    ul.items-famille {
+        margin-left: 10px;
+        margin-top: -5px;
+        /*border-bottom: 1px solid rgba(0,0,0,0.18);*/
+    }
+
+    ul.items-famille li {
         color: #fff;
         cursor: pointer !important;
+        padding: 0;
+        position: relative;
     }
+
+    /*ul.items-famille li:before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 0;
+        border-top: 1px solid;
+        margin-top: -1px;
+        position: absolute;
+        top: 0.7em;
+        left: 0;
+    }*/
 
         .items-famille li.select {
             color: #ff8c00;
@@ -2307,7 +2390,7 @@ ul.ui-selectable {
 
     #tab-myadexpress.nav-tabs > li.active > a {
         transition: all 0.2s ease-in-out 0s;
-        color: #ff8c00;
+        color: #A154A1;
         background: transparent;
         text-transform: uppercase;
         border: none;
@@ -2360,7 +2443,7 @@ ul.ui-selectable {
         }
 
         #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title {
-            color: #00c1ff;
+            color: #00C8FF;
         }
 
             #tab-content-myadexpress .panel-group .panel-primary > .panel-heading > .panel-title > .collapsed {
@@ -2504,7 +2587,7 @@ ul.ui-selectable {
 }
 
 #carou-vehicleView .panel-group .panel-primary > .panel-heading > .panel-title {
-    color: #00c1ff;
+    color: #00C8FF;
 }
 
 #carou-vehicleView .panel-group .panel-primary > .panel-heading {
@@ -2576,9 +2659,12 @@ ul.ui-selectable {
 #modal-vehicleView > .modal-dialog > .modal-content > .header-popup-vehicleView {
     /*padding: 10px 15px;*/
     border-bottom: 1px solid transparent;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    background-color: rgba(0,0,0,0.7);
+    /*border-top-right-radius: 3px;
+    border-top-left-radius: 3px;*/
+    /*background-color: rgba(0,0,0,0.7);*/
+    background-color: #282828;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 #modal-vehicleView .modal:nth-of-type(even) {
@@ -2625,7 +2711,7 @@ ul.ui-selectable {
 }
 
 .gadIcon {
-    color: #00c1ff;
+    color: #00C8FF;
 }
 
 .gadLeftContainer {
@@ -2640,7 +2726,7 @@ ul.ui-selectable {
 }
 
 .gadBtn {
-    background-color: #00c1ff;
+    background-color: #00C8FF;
 }
 
 .gadLink {
@@ -2662,7 +2748,7 @@ ul.ui-selectable {
 
 .gadExternalLink {
     font-size: 12px;
-    color: #00c1ff;
+    color: #00C8FF;
 }
 
     .gadExternalLink:hover {
@@ -2805,14 +2891,14 @@ ul.ui-selectable {
     .media-schedule-option input[type=radio].with-font:checked ~ label:before {
         content: "\f192";
         font-size: 1.2em;
-        color: #FF8C1C !important;
+        color: #d2b855 !important;
         letter-spacing: 10px;
     }
 
     .media-schedule-option input[type=checkbox].with-font:checked ~ label:before {
         content: "\f14a";
         font-size: 1.2em;
-        color: #FF8C1C !important;
+        color: #d2b855 !important;
         letter-spacing: 10px;
     }
 
@@ -2944,13 +3030,13 @@ ul.ui-selectable {
 }
 
 .ui-igpivot-filterdropdown.ui-widget.ui-widget-content {
-    /*background-color: #00c1ff !important;*/
+    /*background-color: #00C8FF !important;*/
     background-color: #C0C0C0 !important;
     border: none !important;
 }
 
 .ui-igpivot-metadatadropdown.ui-widget.ui-widget-content {
-    /*background-color: #00c1ff !important;*/
+    /*background-color: #00C8FF !important;*/
     background-color: #C0C0C0 !important;
     border: none !important;
 }
@@ -2975,12 +3061,12 @@ ul.ui-selectable {
     border-color: white;
 }
 /*.ui-igpivotdataselector .ui-igpivot-droparea .ui-igpivot-metadataitem{
-    background-color:#00c1ff;
+    background-color:#00C8FF;
     color:black;
     font-weight:bold;
 }*/
 .ui-igpivot-metadataitem.ui-widget.ui-corner-all.ui-state-default.ui-draggable.ui-draggable-handle {
-    /*background-color: #00c1ff;*/
+    /*background-color: #00C8FF;*/
     background-color: #C0C0C0;
     color: black;
     font-weight: bold;
@@ -3040,4 +3126,15 @@ video::-webkit-media-controls-panel {
 /**</Hide download button>**/
 
 
+.modal-body.panel-group ul{
+    color: transparent;
+}
 
+
+#detailLevelItem * div.selectdatepicker {
+    margin-bottom: 10px;
+}
+
+.msCreative {
+    color: white;
+}

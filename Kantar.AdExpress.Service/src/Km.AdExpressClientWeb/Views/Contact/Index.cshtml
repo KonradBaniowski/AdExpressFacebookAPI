@@ -1,6 +1,7 @@
 ﻿@model Km.AdExpressClientWeb.Models.Contact.ContactViewModel
 @{
-    Layout = "~/Views/Shared/_LayoutContact.cshtml";
+    ViewBag.Title = Model.PresentationModel.ModuleTitle;
+    Layout = "~/Views/Shared/_LayoutPublicContact.cshtml";
 }
 
 <div class="row">
