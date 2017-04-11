@@ -1775,6 +1775,7 @@
     <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
     <Content Include="Views\Selection\HealthMediaSelection.cshtml" />
     <Content Include="Views\Health\Results.cshtml" />
+    <Content Include="Views\Shared\_LayoutPublicContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

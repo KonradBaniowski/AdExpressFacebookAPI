@@ -14,7 +14,6 @@ using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize(Roles = Role.ADEXPRESS)]
     public class ContactController : Controller
     {
         public ActionResult Index(string returnUrl = "/", int siteLanguage = -1)
