@@ -39,6 +39,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
+using TNS.AdExpress.Classification;
 
 
 namespace TNS.AdExpressI.ProductClassReports.DAL
@@ -1181,10 +1182,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
             #region Affiner Media
 
-            // Affiner Media
-            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
-                sql.Append("  " + _session.PrincipalMediaUniverses[0].GetSqlConditions(_dataTable.Prefix, true));
+            bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia
+                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.PlurimediaWithoutMms;
 
+            // Affiner Media
+            if (!isPluri && _session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+                sql.Append("  " + _session.PrincipalMediaUniverses[0].GetSqlConditions(_dataTable.Prefix, true));
             #endregion
 
             #region Sélection produits

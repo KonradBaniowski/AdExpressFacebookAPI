@@ -181,7 +181,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 domain.ShowSponsorshipMedia = true;
             }
 
-            ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
+            if (domain.MediasSelected[0].Id != 50) //Plurimedia
+            {
+                ExtractTreeFromAdExpressUniverse(_webSession.PrincipalMediaUniverses, domain.UniversMedia, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
+            }
             #endregion
 
             #region Période sélectionnée :
