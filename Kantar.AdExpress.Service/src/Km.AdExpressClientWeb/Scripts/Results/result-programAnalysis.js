@@ -320,6 +320,14 @@
         }
     });
 
+    $("#leFacModal").on('hide.bs.modal', function (event) {
+        $('#leFacModal').find(".modal-content").html("");
+    });
+
+    $("#gadModal").on('hide.bs.modal', function (event) {
+        $('#gadModal').find(".modal-content").html("");
+    });
+
     function CallLeFacInfos(params) {
         $.ajax({
             url: '/LeFac/LeFacInfos',
