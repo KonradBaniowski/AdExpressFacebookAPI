@@ -302,6 +302,39 @@
         }
     });
 
+    $("#leFacModal").on('shown.bs.modal', function (event) {
+        var link = $(event.relatedTarget);// Button that triggered the modal
+        var datas = link.data('lefac').toString(); // Extract info from data-* attributes
+        datas = datas.replace(/\[|\]/g, '');
+        datas = datas.split(",");
+
+        if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+            alert("Les infos leFac ne sont pas disponibles.");
+        }
+        else {
+            var params = {
+                idAddress: datas[2],
+                advertiser: datas[1]
+            };
+            CallLeFacInfos(params);
+        }
+    });
+
+    function CallLeFacInfos(params) {
+        $.ajax({
+            url: '/LeFac/LeFacInfos',
+            contentType: "application/x-www-form-urlencoded",
+            type: "GET",
+            datatype: "json",
+            data: params,
+            error: function (xmlHttpRequest, errorText, thrownError) {
+            },
+            success: function (data) {
+                $('#leFacModal').html(data);
+            }
+        });
+    }
+
     function CallGadInfos(params) {
         $.ajax({
             url: '/Gad/GadInfos',

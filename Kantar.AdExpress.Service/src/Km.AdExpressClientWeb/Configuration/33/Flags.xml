@@ -46,4 +46,5 @@
   <flag id="364" description="Accès Agences Media DOOH"/>
   <flag id="365" description="Accès détail DOOH"/>
   <flag id="368" description="Accès AUX Codes SIRET"/>
+  <flag id="373" description="Accès AUX LeFac"/>
 </flags>

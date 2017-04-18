@@ -1208,10 +1208,19 @@ input {
     padding: 10px 15px;
     border-radius: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease-in-out 0s;
 }
 
-    .panel-heading.head-results:hover {
-        background-color: rgba(255,255,255,0.1);
+    /*.panel-heading.head-results:hover {
+        background-color: #512364 !important;
+    }*/
+    
+    .panel-heading.head-results.bg-violet {
+        border: 1px solid #512364;
+    }
+
+    .panel-heading.head-results.bg-violet:hover {
+        background-color: #512364 !important;
     }
 
 .panel-group .panel-heading + .panel-collapse .panel-body {
@@ -2508,7 +2517,7 @@ ul.ui-selectable {
 
     .bg-contact .btn, .bg-contact .btn:hover {
         border: none;
-        background-color: #ff8c00;
+        /*background-color: #ff8c00;*/
     }
 
 .green-contact {
@@ -2694,7 +2703,7 @@ ul.ui-selectable {
     margin-left: 10px;
 }
 
-.infoGad {
+.infoGad, .infoLeFac {
     display: inline-block;
     min-width: 150px;
     font-size: 12px;
@@ -2702,58 +2711,70 @@ ul.ui-selectable {
     padding-left: 6px;
 }
 
-.infoGadAddressStreet {
+.infoGadAddressStreet, .infoLeFacAddressStreet {
     padding-left: 4px;
 }
 
-.infoGadAddress {
+.infoGadAddress, .infoLeFacAddress {
     padding-left: 16px;
 }
 
-.gadIcon {
+.gadIcon, .leFacIcon {
     color: #00C8FF;
 }
 
-.gadLeftContainer {
+.gadLeftContainer, .leFacLeftContainer {
     float: left;
     width: 220px;
     padding-right: 6px;
+}
+
+.leFacLeftContainer img{
+    margin-top: 10px;
+    margin-bottom: 40px;
+    max-width: 220px;
 }
 
 .gadBtnContainer {
     padding-top: 26px;
     text-align: right;
 }
-
-.gadBtn {
-    background-color: #00C8FF;
+.leFacBtnContainer {
+    padding-top: 0;
+    float: right;
+    margin-right: 10px;
 }
 
-.gadLink {
+.gadBtn, .leFacBtn {
+    background-color: #00C8FF;
+    color: white;
+}
+
+.gadLink, .leFacLink {
     color: inherit;
     cursor: pointer;
     outline-style: none;
 }
 
-    .gadLink:before {
+    .gadLink:before, .leFacLink:before {
         content: "> ";
     }
 
-.gadCreativeLink {
+.gadCreativeLink, .leFacCreativeLink {
     color: inherit;
     cursor: pointer;
     outline-style: none;
     text-decoration: underline;
 }
 
-.gadExternalLink {
+.gadExternalLink, .leFacExternalLink {
     font-size: 12px;
     color: #00C8FF;
 }
 
-    .gadExternalLink:hover {
+    .gadExternalLink:hover, .leFacExternalLink:hover {
         font-size: 12px;
-        color: #ff8c00;
+        color: #d2b855;
     }
 
 .modal-header .close {

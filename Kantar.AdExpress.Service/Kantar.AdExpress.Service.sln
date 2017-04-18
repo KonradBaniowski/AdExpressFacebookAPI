@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{81DC8D53-B9D7-44FA-9FBD-0D77BFCC963C}"
 EndProject
@@ -196,6 +196,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.CampaignAnalysis", "..\DLL\TNS.AdExpressI.CampaignAnalysis\TNS.AdExpressI.CampaignAnalysis.csproj", "{E383EDDB-0E48-4C8F-81BB-F26B9B98A02F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Web.Utilities", "..\DLL\TNS.AdExpress.Web.Utilities\TNS.AdExpress.Web.Utilities.csproj", "{37A35645-337E-484F-9C81-B9009D6950A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpressI.LeFac.DAL", "KM.AdExpressI.LeFac.DAL\KM.AdExpressI.LeFac.DAL.csproj", "{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.AdExpressI.LeFac.DAL.Default", "KM.AdExpressI.LeFac.DAL.Default\KM.AdExpressI.LeFac.DAL.Default.csproj", "{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -733,6 +737,18 @@ Global
 		{37A35645-337E-484F-9C81-B9009D6950A2}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{37A35645-337E-484F-9C81-B9009D6950A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37A35645-337E-484F-9C81-B9009D6950A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -834,5 +850,7 @@ Global
 		{8062910C-F79A-4F16-95B1-7AC26ECE896F} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{E383EDDB-0E48-4C8F-81BB-F26B9B98A02F} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{37A35645-337E-484F-9C81-B9009D6950A2} = {14CA47FE-6409-45A8-936C-88A32160B0CC}
+		{2C0B5ABB-DF6C-4BFE-89E1-FEF31D1A2E3F} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 	EndGlobalSection
 EndGlobal

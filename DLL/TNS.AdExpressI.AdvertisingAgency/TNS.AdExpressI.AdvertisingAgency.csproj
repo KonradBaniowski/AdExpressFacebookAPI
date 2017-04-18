@@ -94,6 +94,10 @@
       <Project>{499DA15C-BCE1-45A2-86C1-C20C5370BEB7}</Project>
       <Name>TNS.AdExpressI.AdvertisingAgency.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
