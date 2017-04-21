@@ -1181,8 +1181,8 @@ input {
 }
 
 .panel-group.panel-black-results {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: black
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
 }
 
 .panel-group.panel-black-results .ui-chart-container {
@@ -2833,7 +2833,7 @@ ul.ui-selectable {
 }
 
 .stackChart {
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.6);
     margin-bottom: 10px;
 }
 
