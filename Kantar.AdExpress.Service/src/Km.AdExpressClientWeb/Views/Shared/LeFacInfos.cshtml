@@ -1,0 +1,55 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.LeFac
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header header-kantar-popup">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="font-normal">@Model.Advertiser</h4>
+        </div>
+        <div class="modal-body panel-group">
+            <div class="leFacLeftContainer">
+                <img src="~/Content/img/logo_lefac_fr.png" />
+                <div>
+                    <a href="mailto:info@lefac.com" targetg="_blank" class="leFacExternalLink"><span id="emailLeFacLabel">info@lefac.com</span></a>
+                </div>
+            </div>
+            <div style="margin-left:250px;" class="infos">
+                <div>
+                    <i class="fa fa-bookmark leFacIcon"></i><span class="infoLeFac">@Model.Company</span>
+                </div>
+                @if(!string.IsNullOrEmpty(Model.Siren)){
+                    <div>
+                        <i class="fa fa-building  leFacIcon"></i><span class="infoLeFac">@Model.Siren</span>
+                    </div>
+                }
+                <div>
+                    <i class="fa fa-map-marker leFacIcon"></i>
+                    <span class="infoLeFac infoLeFacAddressStreet">@Model.Street&nbsp;@Model.Street2</span><br />
+                    <span class="infoLeFac infoLeFacAddress">@Model.CodePostal&nbsp;@Model.Town</span>
+                </div>
+                <div>
+                    <i class="fa fa-phone leFacIcon"></i><span class="infoLeFac">@Model.Phone</span>
+                </div>
+                <div>
+                    <i class="fa fa-fax leFacIcon"></i><span class="infoLeFac">@Model.Fax</span>
+                </div>
+                <div>
+                    <i class="fa fa-envelope leFacIcon"></i><span class="infoLeFac">@Model.Email</span>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 margin-top-10">
+                    <div class="col-md-9 blue small" style="margin-left: -20px;">
+                        Le Fichier des Acteurs de la Communication - Base de données hyper qualifiée dédiée aux métiers et aux acteurs de la communication et du marketing
+                    </div>
+                    <div class="col-md-3 leFacBtnContainer">
+                        <button class="btn leFacBtn" id="btn-leFac-detail" data-leFac="#@*@Model.DocMarketingTarget*@">Fiche détailée&nbsp;<i class="fa fa-arrow-right"></i></button>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

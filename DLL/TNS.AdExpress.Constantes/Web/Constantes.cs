@@ -4116,8 +4116,16 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// Gad layer
             /// </summary>
-            gad = 16
-		}
+            gad = 16,
+            /// <summary>
+            /// Gad DAL layer
+            /// </summary>
+            leFacDAL = 17,
+            /// <summary>
+            /// Gad layer
+            /// </summary>
+            leFac = 18
+        }
 	}
 
 	#endregion

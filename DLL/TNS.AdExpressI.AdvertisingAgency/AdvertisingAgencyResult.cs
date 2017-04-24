@@ -1175,7 +1175,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             };
 
             resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+            object[,] gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for GAD_LEFAC column
             List<object> columns = new List<object>();
             List<object> schemaFields = new List<object>();
             List<object> columnsFixed = new List<object>();
@@ -1187,8 +1187,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
             schemaFields.Add(new { name = "ID" });
             columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
             schemaFields.Add(new { name = "PID" });
-            columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
-            schemaFields.Add(new { name = "GAD" });
+            columns.Add(new { headerText = "GAD_LEFAC", key = "GAD_LEFAC", dataType = "string", width = "*", hidden = true });
+            schemaFields.Add(new { name = "GAD_LEFAC" });
             List<object> groups = null;
             List<object> subGroups = null;
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
@@ -1253,7 +1253,12 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         colKey = string.Format("g{0}", resultTable.NewHeaders.Root[j].IndexInResultTable);
                         if (j == 0)
                         {
-                            columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+
+                            if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"leFacLink\" href=\"#leFacModal\" data-toggle=\"modal\" data-lefac=\"[${GAD_LEFAC}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            else
+                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD_LEFAC}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            
                             indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j].IndexInResultTable);
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
                         }
@@ -1346,10 +1351,10 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         else if (cell is AdExpressCellLevel)
                         {
                             string label = ((AdExpressCellLevel)cell).RawString();
-                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+                            string gadLeFacParams = ((AdExpressCellLevel)cell).GetGadLeFacParams();
 
-                            if (gadParams.Length > 0)
-                                gridData[currentLine, 2] = gadParams;
+                            if (gadLeFacParams.Length > 0)
+                                gridData[currentLine, 2] = gadLeFacParams;
                             else
                                 gridData[currentLine, 2] = "";
 

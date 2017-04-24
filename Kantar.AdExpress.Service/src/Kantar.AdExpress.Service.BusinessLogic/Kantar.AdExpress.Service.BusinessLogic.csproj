@@ -78,6 +78,7 @@
     <Compile Include="ServiceImpl\AdvertisingAgencyService.cs" />
     <Compile Include="ServiceImpl\AlertService.cs" />
     <Compile Include="ServiceImpl\CampaignAnalysisService.cs" />
+    <Compile Include="ServiceImpl\LeFacService.cs" />
     <Compile Include="ServiceImpl\NewCreativesService.cs" />
     <Compile Include="ServiceImpl\AnalysisService.cs" />
     <Compile Include="ServiceImpl\CreativeService.cs" />
@@ -200,6 +201,14 @@
     <ProjectReference Include="..\..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
       <Project>{255834e2-dca3-4290-9325-ffa4291839a6}</Project>
       <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KM.AdExpressI.LeFac.DAL.Default\KM.AdExpressI.LeFac.DAL.Default.csproj">
+      <Project>{eae54eed-b912-4d1a-95c0-b96b7636d8b5}</Project>
+      <Name>KM.AdExpressI.LeFac.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KM.AdExpressI.LeFac.DAL\KM.AdExpressI.LeFac.DAL.csproj">
+      <Project>{2c0b5abb-df6c-4bfe-89e1-fef31d1a2e3f}</Project>
+      <Name>KM.AdExpressI.LeFac.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TNS.AdExpress.Vehicle.DAL\TNS.AdExpress.Vehicle.DAL.csproj">
       <Project>{eb452f8b-bb77-4f6b-9169-31781fdbc1c9}</Project>

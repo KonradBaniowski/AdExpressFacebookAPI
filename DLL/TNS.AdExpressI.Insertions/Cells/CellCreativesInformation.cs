@@ -271,13 +271,17 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 if (g.Id == GenericColumnItemInformation.Columns.advertiser)
                                 {
 
-                                    #region GAD
+                                    #region GAD / leFac
                                     string openBaliseA = string.Empty;
                                     string closeBaliseA = string.Empty;
 
                                     if (_adressId != -1)
                                     {
-                                        openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                                            openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openLeFac('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+                                        else
+                                            openBaliseA = string.Format("<a class=\"txtViolet11Underline\" href=\"javascript:openGad('{0}','{1}','{2}');\">", _session.IdSession, value, _adressId);
+
                                         closeBaliseA = "</a>";
                                     }
                                     #endregion
@@ -615,13 +619,17 @@ namespace TNS.AdExpressI.Insertions.Cells
                                 if (g.Id == GenericColumnItemInformation.Columns.advertiser)
                                 {
 
-                                    #region GAD
+                                    #region GAD / leFac
                                     string openBaliseA = string.Empty;
                                     string closeBaliseA = string.Empty;
 
                                     if (_adressId != -1)
                                     {
-                                        openBaliseA = string.Format("<span class=\"gadCreativeLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
+                                        if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                                            openBaliseA = string.Format("<span class=\"leFacCreativeLink\" href=\"leFacModal\" data-toggle=\"modal\" data-lefac=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
+                                        else
+                                            openBaliseA = string.Format("<span class=\"gadCreativeLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
+
                                         closeBaliseA = "</span>";
                                     }
                                     #endregion

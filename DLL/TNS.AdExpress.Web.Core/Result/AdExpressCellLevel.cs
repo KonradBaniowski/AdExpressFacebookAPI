@@ -210,9 +210,14 @@ namespace TNS.AdExpress.Web.Core.Result{
 			if( (_webSession != null && _addressId>0 
 				&& _genericDetailLevel.GetDetailLevelItemInformation(this.Level).Equals(DetailLevelItemInformation.Levels.advertiser)
 				)
-				|| (_webSession == null && _addressId>0 )){
+				|| (_webSession == null && _addressId>0 ))
+			{
 
-				html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
+			    if (_webSession != null && _webSession.CustomerLogin.CustormerFlagAccess((long) CstDB.Flag.id.leFac.GetHashCode()))
+			        _link = "javascript:OpenLeFac('{0}','{1}','{2}');";
+
+
+                    html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
 				html.Append("align=\"left\">");
 				html.AppendFormat("<a class=\"gad\" href=\""+_link+"\">", _webSession.IdSession, _label, _addressId);
                 StringBuilder separator = new StringBuilder(100);
@@ -263,7 +268,12 @@ namespace TNS.AdExpress.Web.Core.Result{
                 )
                 || (_webSession == null && _addressId > 0))
             {
-                html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\">", _webSession.IdSession, _label, _addressId);
+
+                if (_webSession != null && _webSession.CustomerLogin.CustormerFlagAccess((long)CstDB.Flag.id.leFac.GetHashCode()))
+                    html.AppendFormat("<span class=\"leFacLink\" href=\"#leFacModal\" data-toggle=\"modal\" data-lefac=\"[{0}, {1}, {2}]\">", _webSession.IdSession, _label, _addressId);
+                else
+                    html.AppendFormat("<span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\">", _webSession.IdSession, _label, _addressId);
+
                 html.AppendFormat("{0}</span>", this._label);
             }
             else
@@ -286,7 +296,7 @@ namespace TNS.AdExpress.Web.Core.Result{
         /// Get Gad Params
         /// </summary>
         /// <returns></returns>
-        public string GetGadParams()
+        public string GetGadLeFacParams()
         {
 
             if (_genericDetailLevel == null) _genericDetailLevel = _webSession.GenericProductDetailLevel;
