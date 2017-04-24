@@ -2,13 +2,53 @@
 using System.Diagnostics;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace OracleDataToJson
 {
     class NonRelationalFactory
     {
+        public void ImportJsonFileToMongoDb(string jsonFile, string collectionName, bool dropCollectionBeforeImport = true)
+        {
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = ConfigurationManager.AppSettings.Get("mongoDbImport_Path");
+                startInfo.Arguments = $" --db {ConfigurationManager.AppSettings.Get("mongoDbName")} --collection {collectionName} --type json {(dropCollectionBeforeImport ? "--drop" : "")} --file \"{jsonFile}\" --jsonArray";
+                Process proc = new Process();
+                proc.StartInfo = startInfo;
+                startInfo.UseShellExecute = false;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
 
-        public void startMongoDbServer()
+
+        public void DeleteDataMongoDb(string collectionName, string whereField, Int64 whereValue)
+        {
+            try
+            {
+                IMongoClient client = new MongoClient(ConfigurationManager.AppSettings.Get("mongoDbConnString"));
+                IMongoDatabase  database = client.GetDatabase(ConfigurationManager.AppSettings.Get("mongoDbName"));
+                IMongoCollection<BsonDocument> collection =  database.GetCollection<BsonDocument>(collectionName);
+
+                //Delete
+                collection.DeleteMany(Builders<BsonDocument>.Filter.Eq(whereField, whereValue));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+
+        private void startMongoDbServer()
         {
             try
             {
@@ -30,24 +70,5 @@ namespace OracleDataToJson
         }
 
 
-        public void ImportJsonFileToMongoDb(string jsonFile, string collectionName)
-        {
-            try
-            {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = ConfigurationManager.AppSettings.Get("mongoDbImport_Path");
-                startInfo.Arguments = @" --db " + ConfigurationManager.AppSettings.Get("mongoDbName") + " --collection " + collectionName + " --type json --drop --file \"" + jsonFile + "\" --jsonArray";
-                Process proc = new Process();
-                proc.StartInfo = startInfo;
-                startInfo.UseShellExecute = false;
-                proc.Start();
-                proc.WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-        }
     }
 }
