@@ -221,7 +221,7 @@ li.tl-header a.btn-empty:not(.hovered) {
 
 .container-kantar-results {
     /*background: url('../Content/img/kantarmedia-bg-3.jpg') no-repeat;*/
-    background: url('../Content/img/kantarmedia-bg-result.jpg') no-repeat;
+    /*background: url('../Content/img/kantarmedia-bg-result.jpg') no-repeat;*/
     /*background-color: #F0F0F0;*/
     /*color: #ffffff;*/
     background-size: cover;
@@ -229,7 +229,7 @@ li.tl-header a.btn-empty:not(.hovered) {
     color:#494949;
     font-family:Arial, Helvetica, sans-serif;
     font-size:14px;
-    /*background:#F0F0F0;*/
+    background:#eee;
 }
 
 .container-kantar-myadexpress {

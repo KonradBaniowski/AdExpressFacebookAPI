@@ -49,6 +49,13 @@ namespace OracleDataToJson
                     nonRelationalFactory.ImportJsonFileToMongoDb(filePath, "usersessions");
                 }
 
+                if (validParams.ContainsKey("--load-logins") && validParams["--load-logins"] == "true")
+                {
+                    //logins
+                    filePath = relationalFactory.ExportLoginsDataToJsonFile();
+                    nonRelationalFactory.ImportJsonFileToMongoDb(filePath, "logins");
+                }
+
                 //UserSession current day
                 filePath = relationalFactory.ExportUserSessionDayDataToJsonFile();
                 nonRelationalFactory.DeleteDataMongoDb("usersessions", "day", Convert.ToInt64(DateTime.Now.ToString("yyyyMMdd")));

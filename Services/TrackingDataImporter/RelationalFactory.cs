@@ -1117,6 +1117,49 @@ WHERE  e.ID_EVENT  = 10
 
         }
 
+        public string ExportLoginsDataToJsonFile()
+        {
+            ArrayList objs = new ArrayList();
+            string jsonObj = string.Empty;
+            string dayString = DateTime.Now.ToString("yyyyMMdd");
+
+            using (OracleConnection con = new OracleConnection(connectionString))
+            {
+                using (OracleCommand cmd = new OracleCommand())
+                {
+                    con.Open();
+                    cmd.Connection = con;
+
+                    cmd.CommandText = $"SELECT ID_LOGIN, LOGIN, PASSWORD, DATE_EXPIRED FROM MAU01.LOGIN WHERE DATE_EXPIRED >= TO_DATE('{DateTime.Now:yyyy/MM/dd}','YYYY/MM/DD')";
+
+                    dr = cmd.ExecuteReader();
+
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            objs.Add(new
+                            {
+                                idLogin = Convert.ToInt64(dr["ID_LOGIN"].ToString()),
+                                login = dr["LOGIN"].ToString(),
+                                password = dr["PASSWORD"].ToString(),
+                                dateExpired = Convert.ToInt64(Convert.ToDateTime(dr["DATE_EXPIRED"]).ToString("yyyyMMdd"))
+                            }
+                            );
+
+                        }
+                    }
+                    jsonObj = JsonConvert.SerializeObject(objs);
+
+                    File.WriteAllText(Path.Combine(projectDirectory, Path.Combine("output", "logins.json")), jsonObj);
+                }
+
+            }
+
+            return Path.Combine(projectDirectory, Path.Combine("output", "logins.json"));
+
+        }
+
         private OracleDataReader getData(string query)
         {
             OracleDataReader dr;
