@@ -273,7 +273,7 @@ namespace TNS.AdExpressI.Portofolio
                 };
 
                 resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
-                object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for gad column
+                object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for GAD_LEFAC column
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
@@ -287,8 +287,8 @@ namespace TNS.AdExpressI.Portofolio
                 schemaFields.Add(new { name = "ID" });
                 columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
                 schemaFields.Add(new { name = "PID" });
-                columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
-                schemaFields.Add(new { name = "GAD" });
+                columns.Add(new { headerText = "GAD_LEFAC", key = "GAD_LEFAC", dataType = "string", width = "*", hidden = true });
+                schemaFields.Add(new { name = "GAD_LEFAC" });
                 List<object> groups = null;
                 string colKey = string.Empty;
 
@@ -480,10 +480,10 @@ namespace TNS.AdExpressI.Portofolio
                             else if (cell is AdExpressCellLevel)
                             {
                                 string label = ((AdExpressCellLevel)cell).RawString();
-                                string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+                                string gadLeFacParams = ((AdExpressCellLevel)cell).GetGadLeFacParams();
 
-                                if (gadParams.Length > 0)
-                                    gridData[i, 2] = gadParams;
+                                if (gadLeFacParams.Length > 0)
+                                    gridData[i, 2] = gadLeFacParams;
                                 else
                                     gridData[i, 2] = "";
 
@@ -584,7 +584,10 @@ namespace TNS.AdExpressI.Portofolio
             }
             else if (cell is AdExpressCellLevel)
             {
-                return new { headerText = headerText, key = key, dataType = "string", width = width, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + key + "}</span> {{else}} ${" + key + "} {{/if}}" };
+                if (_webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                    return new { headerText = headerText, key = key, dataType = "string", width = width, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"leFacLink\" href=\"#leFacModal\" data-toggle=\"modal\" data-lefac=\"[${GAD_LEFAC}]\">${" + key + "}</span> {{else}} ${" + key + "} {{/if}}" };
+                else
+                    return new { headerText = headerText, key = key, dataType = "string", width = width, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD_LEFAC}]\">${" + key + "}</span> {{else}} ${" + key + "} {{/if}}" };
             }
             else
                 return new { headerText = headerText, key = key, dataType = "string", width = width };

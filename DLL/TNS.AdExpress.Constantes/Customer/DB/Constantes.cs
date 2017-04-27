@@ -136,10 +136,14 @@ namespace TNS.AdExpress.Constantes.Customer.DB {
 		/// Identifiant des flags
 		/// </summary>
 		public enum id{
-			/// <summary>
-			/// Flag du gad
-			/// </summary>
-			gad=141,
+            /// <summary>
+            /// Flag du gad
+            /// </summary>
+            leFac = 373,
+            /// <summary>
+            /// Flag du gad
+            /// </summary>
+            gad =141,
 			/// <summary>
 			/// Visualiser les créations
 			/// </summary>

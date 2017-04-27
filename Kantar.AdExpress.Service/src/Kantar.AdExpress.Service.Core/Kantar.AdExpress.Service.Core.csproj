@@ -54,6 +54,7 @@
     <Compile Include="BusinessService\ICampaignAnalysisService.cs" />
     <Compile Include="BusinessService\IAdvertisingAgencyService.cs" />
     <Compile Include="BusinessService\IAlertService.cs" />
+    <Compile Include="BusinessService\ILeFacService.cs" />
     <Compile Include="BusinessService\INewCreativesService.cs" />
     <Compile Include="BusinessService\IAnalysisService.cs" />
     <Compile Include="BusinessService\IApplicationRoleManager.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Domain\DetailSelectionDomain\DetailSelectionResponse.cs" />
     <Compile Include="Domain\Documents.cs" />
     <Compile Include="Domain\ExportRequest.cs" />
+    <Compile Include="Domain\LeFac.cs" />
     <Compile Include="Domain\Gad.cs" />
     <Compile Include="Domain\GridResultResponse.cs" />
     <Compile Include="Domain\Identity\ApplicationAuthenticationDescription.cs" />

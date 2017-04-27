@@ -2063,10 +2063,10 @@ namespace TNS.AdExpressI.PresentAbsent
                     return (gridResult);
                 }
 
-                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column
+                gridData = new object[nbLines, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for GAD_LEFAC column
                 if (_allowPickaNews)
                 {
-                    gridData = new object[nbLines, resultTable.ColumnsNumber + 1 + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for gad column // + 1 for pickanews
+                    gridData = new object[nbLines, resultTable.ColumnsNumber + 1 + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber // + 1 for GAD_LEFAC column // + 1 for pickanews
                 }
 
             }
@@ -2100,8 +2100,8 @@ namespace TNS.AdExpressI.PresentAbsent
             schemaFields.Add(new { name = "PID" });
             if (_session.CurrentTab != DynamicAnalysis.SYNTHESIS)
             {
-                columns.Add(new { headerText = "GAD", key = "GAD", dataType = "string", width = "*", hidden = true });
-                schemaFields.Add(new { name = "GAD" });
+                columns.Add(new { headerText = "GAD_LEFAC", key = "GAD_LEFAC", dataType = "string", width = "*", hidden = true });
+                schemaFields.Add(new { name = "GAD_LEFAC" });
 
             }
 
@@ -2229,9 +2229,24 @@ namespace TNS.AdExpressI.PresentAbsent
                         {
                             if (_session.CurrentTab == DynamicAnalysis.SYNTHESIS)
                             {
-                                columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true });
+                                columns.Add(
+                                    new
+                                    {
+                                        headerText = resultTable.NewHeaders.Root[j].Label,
+                                        key = colKey,
+                                        dataType = "string",
+                                        width = "350",
+                                        allowSorting = true
+                                    });
                             }
-                            else columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            else
+                            {
+                                if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                                    columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"leFacLink\" href=\"#leFacModal\" data-toggle=\"modal\" data-lefac=\"[${GAD_LEFAC}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                                else
+                                    columns.Add(new { headerText = resultTable.NewHeaders.Root[j].Label, key = colKey, dataType = "string", width = "350", allowSorting = true, template = "{{if ${GAD_LEFAC}.length > 0}} <span class=\"gadLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[${GAD_LEFAC}]\">${" + colKey + "}</span> {{else}} ${" + colKey + "} {{/if}}" });
+                            }
+
                             indexInResultTableAllowSortingList.Add(resultTable.NewHeaders.Root[j].IndexInResultTable);
                             columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });
 
@@ -2397,10 +2412,10 @@ namespace TNS.AdExpressI.PresentAbsent
                         else if (cell is AdExpressCellLevel)
                         {
                             string label = ((AdExpressCellLevel)cell).RawString();
-                            string gadParams = ((AdExpressCellLevel)cell).GetGadParams();
+                            string gadLeFacParams = ((AdExpressCellLevel)cell).GetGadLeFacParams();
 
-                            if (gadParams.Length > 0)
-                                gridData[currentLine, 2] = gadParams;
+                            if (gadLeFacParams.Length > 0)
+                                gridData[currentLine, 2] = gadLeFacParams;
                             else
                                 gridData[currentLine, 2] = "";
 

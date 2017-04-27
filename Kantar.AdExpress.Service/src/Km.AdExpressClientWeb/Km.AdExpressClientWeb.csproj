@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CampaignAnalysisController.cs" />
     <Compile Include="Controllers\CompaignAnalysisExportController.cs" />
     <Compile Include="Controllers\CreativeMediaScheduleController.cs" />
+    <Compile Include="Controllers\LeFacController.cs" />
     <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\NewCreativesController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -370,7 +371,9 @@
     <Content Include="Configuration\35\AdNetTrackDetailLevel.xml" />
     <Content Include="Configuration\35\BaalList.xml" />
     <Content Include="Configuration\35\CampaignTypes.xml" />
-    <Content Include="Configuration\35\CoreLayersConfiguration.xml" />
+    <Content Include="Configuration\35\CoreLayersConfiguration.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\35\CreativesAccess.xml" />
     <Content Include="Configuration\35\CreativesConfiguration.xml" />
     <Content Include="Configuration\35\CssConfiguration.xml" />
@@ -638,10 +641,12 @@
     <Content Include="Content\img\kantarmedia-bg-3.jpg" />
     <Content Include="Content\img\kantarmedia-bg-4.jpg" />
     <Content Include="Content\img\kantarmedia-bg-contact.jpg" />
+    <Content Include="Content\img\kantarmedia-bg-result.jpg" />
     <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\KM_BP.png" />
     <Content Include="Content\img\logo_kantarmedia.png" />
+    <Content Include="Content\img\logo_lefac_fr.png" />
     <Content Include="Content\img\no_visu.jpg" />
     <Content Include="Content\img\kantarmedia-bg-2.jpg" />
     <Content Include="Content\img\KM_BP3_Storm_Grey.png" />
@@ -1774,6 +1779,8 @@
     <Content Include="Views\CreativeMediaSchedule\_ExportTypeResults.cshtml" />
     <Content Include="Views\Selection\HealthMediaSelection.cshtml" />
     <Content Include="Views\Health\Results.cshtml" />
+    <Content Include="Views\Shared\_LayoutPublicContact.cshtml" />
+    <Content Include="Views\Shared\LeFacInfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1864,6 +1871,14 @@
     <ProjectReference Include="..\..\KM.AdExpress.Framework\KM.AdExpress.Framework.csproj">
       <Project>{162c80d7-64e5-4963-a991-95da1bd5f1b0}</Project>
       <Name>KM.AdExpress.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KM.AdExpressI.LeFac.DAL.Default\KM.AdExpressI.LeFac.DAL.Default.csproj">
+      <Project>{eae54eed-b912-4d1a-95c0-b96b7636d8b5}</Project>
+      <Name>KM.AdExpressI.LeFac.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KM.AdExpressI.LeFac.DAL\KM.AdExpressI.LeFac.DAL.csproj">
+      <Project>{2c0b5abb-df6c-4bfe-89e1-fef31d1a2e3f}</Project>
+      <Name>KM.AdExpressI.LeFac.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kantar.AdExpress.Service.Core\Kantar.AdExpress.Service.Core.csproj">
       <Project>{1d6fbd14-eee6-45db-88b9-d99386d23e53}</Project>

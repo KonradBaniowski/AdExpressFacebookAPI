@@ -10,9 +10,9 @@
 
 <div class="row">
 
-    <div class="col-md-12" style="background-color:black;padding-bottom:15px;">
+    <div class="col-md-12" style="background-color:black;padding-bottom:15px;color:white;">
         <div class="panel-heading" style="background-color:black; color:white; max-height:70px;">
-            <h5><span style="font-size:24px"><i class="fa fa-search-plus blue"></i>&nbsp; @Model.Labels.CreativeLabel</span></h5>
+            <h5><span style="font-size:24px"><i class="fa fa-search-plus violet"></i>&nbsp; @Model.Labels.CreativeLabel</span></h5>
             <ul id="PresentVehicles" class="pull-right nav panel-tabs" role="tablist"></ul>
         </div>
         <div id="HeaderLoader">
@@ -20,7 +20,7 @@
         </div>
 
         <div id="HeaderElmt" style="display:none">
-            <div id="subPeriodSelection" style="background-color:grey"></div>
+            <div id="subPeriodSelection" style="background-color:white"></div>
 
             <div id="filterEvaliantPanel" class="bg-orange" style="display:none;">
                 <a data-toggle="collapse" class="collapsed" href="#filterEvaliant">
@@ -47,7 +47,7 @@
                 <p id="gridEmpty" style="display:none">@Model.Labels.EmptyGrid</p>
                 <div id="grid" style="display:none"></div>
                 <div id="gridLoader" style="display:none">
-                    <div class='uil-ring-css' style='transform:scale(0.54);'><div></div></div>
+                    <div class='uil-ring-css' style=''><div></div></div>
                 </div>
             </center>
         </div>
@@ -109,6 +109,12 @@
 
 </div>
 <div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="leFacModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
@@ -669,6 +675,47 @@
                             window.open(datas, "_blank");
                         }
                     });
+                }
+            });
+        }
+
+        $("#leFacModal").on('shown.bs.modal', function (event) {
+            var link = $(event.relatedTarget);// Button that triggered the modal
+            var datas = link.data('lefac').toString(); // Extract info from data-* attributes
+            datas = datas.replace(/\[|\]/g, '');
+            datas = datas.split(",");
+
+            if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                alert("Les infos leFac ne sont pas disponibles.");
+            }
+            else {
+                var params = {
+                    idAddress: datas[2],
+                    advertiser: datas[1]
+                };
+                CallLeFacInfos(params);
+            }
+        });
+
+        $("#leFacModal").on('hide.bs.modal', function () {
+            $('#leFacModal').find(".modal-content").html("");
+        });
+
+        $("#gadModal").on('hide.bs.modal', function () {
+            $('#gadModal').find(".modal-content").html("");
+        });
+
+        function CallLeFacInfos(params) {
+            $.ajax({
+                url: '/LeFac/LeFacInfos',
+                contentType: "application/x-www-form-urlencoded",
+                type: "GET",
+                datatype: "json",
+                data: params,
+                error: function (xmlHttpRequest, errorText, thrownError) {
+                },
+                success: function (data) {
+                    $('#leFacModal').html(data);
                 }
             });
         }

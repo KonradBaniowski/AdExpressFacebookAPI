@@ -14,7 +14,6 @@ using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
-    [Authorize(Roles = Role.ADEXPRESS)]
     public class ContactController : Controller
     {
         public ActionResult Index(string returnUrl = "/", int siteLanguage = -1)
@@ -71,13 +70,15 @@ namespace Km.AdExpressClientWeb.Controllers
             return jsonModel;
         }
 
-        public ActionResult ContactUs(ContactViewModel form)
+        public ActionResult ContactUs(ContactViewModel form, int siteLang = -1)
         {
+            if (siteLang == -1) siteLang = WebApplicationParameters.DefaultLanguage;
+
             if (ModelState.IsValid)
             {
                 var body = "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
                 var message = new MailMessage();
-              
+
                 switch (WebApplicationParameters.CountryCode)
                 {
                     case CountryCode.FINLAND:
@@ -100,10 +101,12 @@ namespace Km.AdExpressClientWeb.Controllers
                 using (var smtp = new SmtpClient())
                 {
                     smtp.Send(message);
-
                 }
+
+                TempData["success"] = GestionWeb.GetWebWord(1486, siteLang);
             }
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("Index", new { siteLanguage = siteLang });
         }
 
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)

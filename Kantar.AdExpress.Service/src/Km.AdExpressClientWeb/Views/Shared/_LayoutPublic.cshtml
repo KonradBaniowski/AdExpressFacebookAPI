@@ -27,6 +27,13 @@
                 </button>
             </div>*@
             <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li title="@GestionWeb.GetWebWord(3055, ViewBag.SiteLanguageCode)">
+                        <a href="@Url.Action("Index", "Contact", new { siteLanguage = ViewBag.SiteLanguageCode })">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>

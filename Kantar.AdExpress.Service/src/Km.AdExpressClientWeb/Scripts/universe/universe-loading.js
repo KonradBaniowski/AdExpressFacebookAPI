@@ -224,8 +224,9 @@ $(document).on('click', '#LoadUnivers', function (event) {
                         $.each($(tree.UniversLevels), function (index, uniLvl) {
                             var panel = $('.panel-group.panel-group-results[id=tree-' + id + '] .panel-body[data-level=' + uniLvl.Id + '] > ul');
                             panel.html('');
-                            $('#collapse-' + uniLvl.Id + '-' + id).collapse('show');
-                            $('#heading-' + uniLvl.Id + '-' + id).find('.panel-title').addClass('orange');
+                            $('#collapse-' + uniLvl.Id + '-' + id).collapse("show");
+                            $('#heading-' + uniLvl.Id + '-' + id).addClass("bg-highTransparency");
+                            $('#heading-' + uniLvl.Id + '-' + id).find(".panel-title").addClass("blue");
                             SetUniversItems(uniLvl, panel);
                         });
 
@@ -274,11 +275,12 @@ function clearAllPanels() {
         $(this).html('');
     });
     $('.panel-group.panel-group-results[id^="tree-"] > .panel-collapse.collapse.in').collapse('hide');
-    $(".panel-title.orange").removeClass("orange");
+    $(".panel-heading.head-results.bg-highTransparency").removeClass("bg-highTransparency");
+    $(".panel-title.blue").removeClass("blue");
 }
 
 
 $(document).on('click', '.accordion-toggle', function (e) {
     event.preventDefault();
-    $('#accordion').find('.accordion-body.collapse.in').collapse('hide');
+    $('#accordion').find('.accordion-body.collapse.in').collapse("hide");
 });

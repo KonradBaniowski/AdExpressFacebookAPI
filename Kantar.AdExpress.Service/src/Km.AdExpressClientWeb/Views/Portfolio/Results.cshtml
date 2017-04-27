@@ -45,10 +45,10 @@
 </div>
 
 <div id="globalLoader">
-    <div class='uil-ring-css' style='transform:scale(0.54); top:40%'><div></div></div>
+    <div class='uil-ring-css' style=' top:40%'><div></div></div>
 </div>
 
-<div class="panel-group panel-group-results hide" id="resaccord" style="margin-bottom:20px;">
+<div class="panel-group panel-group-results panel-black-results hide" id="resaccord" style="margin-bottom:20px;">
     <div id="allPeriodInsertionsSpots" class="text-center margin-bot-30"></div>
     <div id="GridPanel" class="panel panel-primary panel-results">
         <a data-toggle="collapse">
@@ -135,7 +135,7 @@
         <div class="modal-content">
             <div class="modal-header panel-heading header-popup-vehicleView">
                 <button class="close" aria-hidden="true" type="button" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                <h4 class="font-normal m-t-none m-b-md text-primary-lt"><i class="fa fa-file-text blue"></i></h4>
+                <h4 class="font-normal m-t-none m-b-md text-primary-lt"><i class="fa fa-file-text violet"></i></h4>
             </div>
             <div class="modal-body">
                 <img class="img-full" src="">
@@ -151,6 +151,12 @@
     </div>
 </div>
 <div id="gadModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div id="leFacModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
@@ -758,6 +764,47 @@
                                 window.open(datas, "_blank");
                             }
                         });
+                    }
+                });
+            }
+
+            $("#leFacModal").on('shown.bs.modal', function (event) {
+                var link = $(event.relatedTarget);// Button that triggered the modal
+                var datas = link.data('lefac').toString(); // Extract info from data-* attributes
+                datas = datas.replace(/\[|\]/g, '');
+                datas = datas.split(",");
+
+                if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                    alert("Les infos leFac ne sont pas disponibles.");
+                }
+                else {
+                    var params = {
+                        idAddress: datas[2],
+                        advertiser: datas[1]
+                    };
+                    CallLeFacInfos(params);
+                }
+            });
+
+            $("#leFacModal").on('hide.bs.modal', function () {
+                $('#leFacModal').find(".modal-content").html("");
+            });
+
+            $("#gadModal").on('hide.bs.modal', function () {
+                $('#gadModal').find(".modal-content").html("");
+            });
+
+            function CallLeFacInfos(params) {
+                $.ajax({
+                    url: '/LeFac/LeFacInfos',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "GET",
+                    datatype: "json",
+                    data: params,
+                    error: function (xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function (data) {
+                        $('#leFacModal').html(data);
                     }
                 });
             }

@@ -37,6 +37,7 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
+            ViewBag.SiteLanguageCode = siteLanguage;
             LoginViewModel model = new LoginViewModel
             {
                 ErrorMessage = GestionWeb.GetWebWord(880, Convert.ToInt32(siteLanguage)),
@@ -85,6 +86,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //TO DO
             ViewBag.LoginProviders = _userManager.GetExternalAuthenticationTypes();
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(model.SiteLanguage);
+            ViewBag.SiteLanguageCode = model.SiteLanguage;
 
             //model.ReturnUrl = returnUrl;
             if (!ModelState.IsValid || String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
