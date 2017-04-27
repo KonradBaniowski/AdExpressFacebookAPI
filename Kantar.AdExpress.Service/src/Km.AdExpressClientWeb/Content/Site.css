@@ -2844,8 +2844,8 @@ ul.ui-selectable {
 }
 
 .legendStackChart.ui-corner-all.ui-widget-content.ui-chart-legend {
-    color: white;
-    background-color: rgba(0,0,0,0.3) !important;
+    color: black;
+    background-color: rgba(0,0,0,0.1) !important;
 }
 
 

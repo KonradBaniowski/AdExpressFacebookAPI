@@ -414,6 +414,12 @@ box-shadow:none  !important;
     color: #fff;
 }
 
+.selectoptioncontainer.selectoptioncontainer-bg-white .bootstrap-select .btn.selectpicker {
+    border-color: #512364;
+    color: #494949;
+}
+
+
 .selectoptioncontainer .bootstrap-radio > .btn.btn-link {
     color: #fff;
 }
