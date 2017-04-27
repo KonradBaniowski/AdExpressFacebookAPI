@@ -626,7 +626,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                                     if (_adressId != -1)
                                     {
                                         if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
-                                            openBaliseA = string.Format("<span class=\"leFacCreativeLink\" href=\"leFacModal\" data-toggle=\"modal\" data-lefac=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
+                                            openBaliseA = string.Format("<span class=\"leFacCreativeLink\" href=\"#leFacModal\" data-toggle=\"modal\" data-lefac=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
                                         else
                                             openBaliseA = string.Format("<span class=\"gadCreativeLink\" href=\"#gadModal\" data-toggle=\"modal\" data-gad=\"[{0}, {1}, {2}]\"> ", _session.IdSession, value, _adressId);
 
