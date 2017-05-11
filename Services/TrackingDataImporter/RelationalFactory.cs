@@ -280,6 +280,8 @@ namespace OracleDataToJson
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -289,12 +291,13 @@ SELECT
                                   m.MODULE,
                                   r.ID_RESULT,
                                   r.RESULT,
-                                   c.ID_GROUP_CONTACT,
+                                  c.ID_GROUP_CONTACT,
                                   gc.GROUP_CONTACT,
                                   e.ID_EVENT,
                                   'CONNEXION AU SITE' as EVENT,
                                   VALUE AS ID_VALUE,
-                                 VALUE_STRING,
+                                  VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -306,16 +309,24 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
-                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                  INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                  INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
 WHERE e.ID_EVENT  = 1
+
+
 
  UNION ALL
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -331,6 +342,7 @@ SELECT
                                   'MODULE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
                                   mo.MODULE as VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                                 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -342,8 +354,12 @@ SELECT
                                     ta.ID_LOGIN = l.ID_LOGIN
                                   INNER JOIN MAU01.CONTACT c ON
                                     l.ID_CONTACT = c.ID_CONTACT
-                                     INNER JOIN MAU01.GROUP_CONTACT gc ON
+                                  INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                    INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.MODULE mo ON
@@ -353,6 +369,8 @@ SELECT
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -368,6 +386,7 @@ SELECT
                                   'MEDIA' as EVENT,
                                   VALUE AS ID_VALUE,
                                   vh.VEHICLE as VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -381,6 +400,10 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN ADEXPR03.VEHICLE vh ON
@@ -394,6 +417,8 @@ UNION ALL
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -409,6 +434,7 @@ SELECT
                                   'GAD' as EVENT,
                                   VALUE AS ID_VALUE,
                                   VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                                 FROM WEBNAV01.TRACKING_ARCHIVE ta
@@ -422,6 +448,10 @@ SELECT
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV01.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                 WHERE   e.ID_EVENT  = 4
@@ -429,6 +459,8 @@ SELECT
 
 	SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -444,6 +476,7 @@ SELECT
                                   'CHOIX ANGENCE MEDIA' AS EVENT,
                                   VALUE AS ID_VALUE,
                                   VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                                 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -457,6 +490,10 @@ SELECT
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                 WHERE   e.ID_EVENT  = 5
@@ -464,6 +501,8 @@ SELECT
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -479,6 +518,7 @@ SELECT
                                   'TYPE PERIODE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
                                   vh.PERIODE as VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -492,6 +532,10 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.PERIODE vh ON
@@ -501,6 +545,8 @@ UNION ALL
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -516,6 +562,7 @@ SELECT
                                   'TYPE UNITE SELECTIONNE' as EVENT,
                                   VALUE AS ID_VALUE,
                                   vh.UNIT as VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -529,6 +576,10 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.UNIT vh ON
@@ -539,6 +590,8 @@ WHERE   e.ID_EVENT  = 7
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -554,6 +607,7 @@ SELECT
                                   'TYPE RESULTAT' as EVENT,
                                   VALUE AS ID_VALUE,
                                    vh.RESULT as VALUE_STRING,
+                                  TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -567,6 +621,10 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.RESULT vh ON
@@ -579,6 +637,8 @@ WHERE   e.ID_EVENT  = 8
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -594,6 +654,7 @@ SELECT
                                   'DEMANDE EXPORT' as EVENT,
                                   VALUE AS ID_VALUE,
                                    VALUE_STRING,
+                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -607,6 +668,10 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
@@ -617,6 +682,8 @@ WHERE   e.ID_EVENT  = 9
 
 SELECT
                                   ID_NAV_SESSION,
+                                  co.ID_COMPANY,
+                                  co.COMPANY,
                                   c.ID_CONTACT,
                                   c.FIRST_NAME,
                                   c.NAME,
@@ -632,6 +699,7 @@ SELECT
                                   'UTILISATION MON ADEXPRESS' as EVENT,
                                   VALUE AS ID_VALUE,
                                  VALUE_STRING,
+                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
 FROM WEBNAV02.TRACKING_ARCHIVE ta
@@ -645,11 +713,16 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     l.ID_CONTACT = c.ID_CONTACT
                                      INNER JOIN MAU01.GROUP_CONTACT gc ON
                                     c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                                     INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
 WHERE  e.ID_EVENT  = 10
+
 
 
 
@@ -665,6 +738,8 @@ WHERE  e.ID_EVENT  = 10
                             objs.Add(new
                             {
                                 idNavSession = Convert.ToInt64(dr["ID_NAV_SESSION"].ToString()),
+                                idCompany = Convert.ToInt64(dr["ID_COMPANY"].ToString()),
+                                company = dr["COMPANY"].ToString() ,
                                 idContact = Convert.ToInt64(dr["ID_CONTACT"].ToString()),
                                 contact = dr["NAME"].ToString() +  " " + dr["FIRST_NAME"].ToString(),
                                 idLogin = Convert.ToInt64(dr["ID_LOGIN"].ToString()),
@@ -677,6 +752,7 @@ WHERE  e.ID_EVENT  = 10
                                 _event = dr["EVENT"].ToString(),
                                 idValue = String.IsNullOrEmpty(dr["ID_VALUE"].ToString()) ? 0 : Convert.ToInt64(dr["ID_VALUE"].ToString()),
                                 valueLabel = dr["VALUE_STRING"].ToString(),
+                                month = Convert.ToInt64(Convert.ToDateTime(dr["YEARMONTH"]).ToString("yyyyMMdd")),
                                 day = Convert.ToInt64(Convert.ToDateTime(dr["DAYD"]).ToString("yyyyMMdd")),
                                 hour = Convert.ToInt64(Convert.ToDateTime(dr["HOURH"]).ToString("yyyyMMddHH")),
                                 idTypology = Convert.ToInt64(dr["ID_GROUP_CONTACT"].ToString()),
@@ -710,8 +786,11 @@ WHERE  e.ID_EVENT  = 10
                     con.Open();
                     cmd.Connection = con;
 
-                    cmd.CommandText = @"SELECT
+                    cmd.CommandText = @"
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -727,7 +806,8 @@ WHERE  e.ID_EVENT  = 10
                           'CONNEXION AU SITE' as EVENT,
                           VALUE AS ID_VALUE,
                           VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -740,13 +820,19 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                          INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                          INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                         WHERE
                           e.ID_EVENT = 1
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -762,7 +848,8 @@ WHERE  e.ID_EVENT  = 10
                           'MODULE SELECTIONNE' as EVENT,
                           VALUE AS ID_VALUE,
                           mo.MODULE as VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -775,6 +862,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                           INNER JOIN MAU01.MODULE mo ON
@@ -782,8 +873,10 @@ WHERE  e.ID_EVENT  = 10
                         WhERE
                           e.ID_EVENT = 2
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -799,7 +892,8 @@ WHERE  e.ID_EVENT  = 10
                           'MEDIA' as EVENT,
                           VALUE AS ID_VALUE,
                           vh.VEHICLE as VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -812,6 +906,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                           LEFT OUTER JOIN ADEXPR03.VEHICLE vh ON
@@ -820,8 +918,10 @@ WHERE  e.ID_EVENT  = 10
                           e.ID_EVENT = 3
                           AND vh.ID_LANGUAGE = 33
                         UNION ALL
-                        SELECT
+                  SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -837,7 +937,8 @@ WHERE  e.ID_EVENT  = 10
                           'GAD' as EVENT,
                           VALUE AS ID_VALUE,
                           VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV01.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -850,13 +951,20 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                             INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV01.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                         WHERE
                           e.ID_EVENT = 4
+
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -872,7 +980,8 @@ WHERE  e.ID_EVENT  = 10
                           'CHOIX ANGENCE MEDIA' AS EVENT,
                           VALUE AS ID_VALUE,
                           VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                            TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -885,13 +994,19 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                         WHERE
                           e.ID_EVENT = 5
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -907,7 +1022,8 @@ WHERE  e.ID_EVENT  = 10
                           'TYPE PERIODE SELECTIONNE' as EVENT,
                           VALUE AS ID_VALUE,
                           vh.PERIODE as VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -920,6 +1036,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                           INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                           INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                           LEFT OUTER JOIN WEBNAV02.PERIODE vh ON
@@ -927,8 +1047,10 @@ WHERE  e.ID_EVENT  = 10
                         WHERE
                           e.ID_EVENT = 6
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -944,7 +1066,8 @@ WHERE  e.ID_EVENT  = 10
                           'TYPE UNITE SELECTIONNE' as EVENT,
                           VALUE AS ID_VALUE,
                           vh.UNIT as VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -957,6 +1080,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                            INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                           LEFT OUTER JOIN WEBNAV02.UNIT vh ON
@@ -964,8 +1091,10 @@ WHERE  e.ID_EVENT  = 10
                         WHERE
                           e.ID_EVENT = 7
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -981,7 +1110,8 @@ WHERE  e.ID_EVENT  = 10
                           'TYPE RESULTAT' as EVENT,
                           VALUE AS ID_VALUE,
                           vh.RESULT as VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                          TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -994,6 +1124,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                           INNER JOIN MAU01.RESULT vh ON
@@ -1001,8 +1135,10 @@ WHERE  e.ID_EVENT  = 10
                         WHERE
                           e.ID_EVENT = 8
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -1018,7 +1154,8 @@ WHERE  e.ID_EVENT  = 10
                           'DEMANDE EXPORT' as EVENT,
                           VALUE AS ID_VALUE,
                           VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                            TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -1031,6 +1168,10 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                         -- INNER JOIN MAU01.RESULT vh ON
@@ -1038,8 +1179,10 @@ WHERE  e.ID_EVENT  = 10
                         WHERE
                           e.ID_EVENT = 9
                         UNION ALL
-                        SELECT
+SELECT
                           ID_NAV_SESSION,
+                           co.ID_COMPANY,
+                           co.COMPANY,
                           c.ID_CONTACT,
                           c.FIRST_NAME,
                           c.NAME,
@@ -1055,7 +1198,8 @@ WHERE  e.ID_EVENT  = 10
                           'UTILISATION MON ADEXPRESS' as EVENT,
                           VALUE AS ID_VALUE,
                           VALUE_STRING,
-                          --TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
+                            TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
+                          TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                           TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
                         FROM WEBNAV02.TRACKING ta
                           LEFT OUTER JOIN MAU01.MODULE m ON
@@ -1068,12 +1212,17 @@ WHERE  e.ID_EVENT  = 10
                             l.ID_CONTACT = c.ID_CONTACT
                           INNER JOIN MAU01.GROUP_CONTACT gc ON
                             c.ID_GROUP_CONTACT = gc.ID_GROUP_CONTACT
+                             INNER JOIN MAU01.ADDRESS a ON
+                                    a.ID_ADDRESS = c.ID_ADDRESS
+                                  INNER JOIN MAU01.COMPANY co ON
+                                    co.ID_COMPANY = a.ID_COMPANY
                           INNER JOIN WEBNAV02.EVENT e ON
                             ta.ID_EVENT = e.ID_EVENT
                         -- INNER JOIN MAU01.RESULT vh ON
                         --  ta.VALUE = vh.ID_RESULT
                         WHERE
                           e.ID_EVENT = 10
+
                         ";
 
                     dr = cmd.ExecuteReader();
@@ -1085,6 +1234,8 @@ WHERE  e.ID_EVENT  = 10
                             objs.Add(new
                             {
                                 idNavSession = Convert.ToInt64(dr["ID_NAV_SESSION"].ToString()),
+                                idCompany = Convert.ToInt64(dr["ID_COMPANY"].ToString()),
+                                company = dr["COMPANY"].ToString(),
                                 idContact = Convert.ToInt64(dr["ID_CONTACT"].ToString()),
                                 contact = dr["NAME"].ToString() + " " + dr["FIRST_NAME"].ToString(),
                                 idLogin = Convert.ToInt64(dr["ID_LOGIN"].ToString()),
@@ -1097,6 +1248,7 @@ WHERE  e.ID_EVENT  = 10
                                 _event = dr["EVENT"].ToString(),
                                 idValue = String.IsNullOrEmpty(dr["ID_VALUE"].ToString()) ? 0 : Convert.ToInt64(dr["ID_VALUE"].ToString()),
                                 valueLabel = dr["VALUE_STRING"].ToString(),
+                                month = Convert.ToInt64(Convert.ToDateTime(dr["YEARMONTH"]).ToString("yyyyMMdd")),
                                 day = Convert.ToInt64(Convert.ToInt64(dayString)),
                                 hour = Convert.ToInt64(Convert.ToDateTime(dr["HOURH"]).ToString("yyyyMMddHH")),
                                 idTypology = Convert.ToInt64(dr["ID_GROUP_CONTACT"].ToString()),

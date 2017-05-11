@@ -48,26 +48,26 @@ namespace OracleDataToJson
         }
 
 
-        private void startMongoDbServer()
-        {
-            try
-            {
-                //starting the mongod server
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = @"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe";
-                start.WindowStyle = ProcessWindowStyle.Hidden;
-                start.Arguments = @"--dbpath F:\mongodb\data\db";
-                Process mongod = Process.Start(start);
+        //private void startMongoDbServer()
+        //{
+        //    try
+        //    {
+        //        //starting the mongod server
+        //        ProcessStartInfo start = new ProcessStartInfo();
+        //        start.FileName = @"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe";
+        //        start.WindowStyle = ProcessWindowStyle.Hidden;
+        //        start.Arguments = @"--dbpath F:\mongodb\data\db";
+        //        Process mongod = Process.Start(start);
 
-                //stopping the mongod server
-                mongod.Kill();
+        //        //stopping the mongod server
+        //        mongod.Kill();
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.ToString());
+        //    }
+        //}
 
 
     }
