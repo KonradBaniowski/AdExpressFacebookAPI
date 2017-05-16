@@ -628,7 +628,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                                 if (nbPeriod < 3)
-                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
@@ -670,7 +670,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                         if (nbPeriod < 3)
-                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
@@ -693,7 +693,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 if (nbPeriod >= 8)
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
                                 else
-                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
@@ -725,7 +725,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         if (nbPeriod >= 8)
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
                         else
-                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
@@ -1299,7 +1299,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 default:
                                     if (data[i, j] == null)
                                     {
-                                        sheet.Cells[cellRow, currentColMediaPlan].Value = "";
+                                        sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
                                         BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
@@ -1347,7 +1347,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 }
                                                 break;
                                             case DetailledMediaPlan.graphicItemType.extended:
-                                                sheet.Cells[cellRow, currentColMediaPlan].Value = "";
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
@@ -1970,7 +1970,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                                 if (nbPeriod < 3)
-                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                                 else
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
@@ -2012,7 +2012,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
 
                         if (nbPeriod < 3)
-                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
                         else
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
 
@@ -2035,7 +2035,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 if (nbPeriod >= 8)
                                     sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
                                 else
-                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                                 TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                                 BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
@@ -2067,7 +2067,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         if (nbPeriod >= 8)
                             sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
                         else
-                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = "";
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
 
                         TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
                         BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
@@ -2679,7 +2679,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 default:
                                     if (data[i, j] == null)
                                     {
-                                        sheet.Cells[cellRow, currentColMediaPlan].Value = "";
+                                        sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                         TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
                                         BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
@@ -2730,7 +2730,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                                 }
                                                 break;
                                             case DetailledMediaPlan.graphicItemType.extended:
-                                                sheet.Cells[cellRow, currentColMediaPlan].Value = "";
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
@@ -2745,7 +2745,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                                 break;
                                             default:
-                                                sheet.Cells[cellRow, currentColMediaPlan].Value = "";
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
