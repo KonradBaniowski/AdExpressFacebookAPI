@@ -13,6 +13,9 @@ namespace OracleDataToJson
             NonRelationalFactory nonRelationalFactory = new NonRelationalFactory();
 
             Dictionary<string, string> validParams = new Dictionary<string, string>();
+            //Arguments to load archive
+            //--load-archive=true
+
             foreach (string arg in args)
             {
                 if(arg.Contains("="))
