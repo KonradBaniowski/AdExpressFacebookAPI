@@ -628,7 +628,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 double value = ((CellUnit)cell).Value;
 
                 if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
-                    sheet.Cells[cellRow, cellCol].Value = "";
+                    sheet.Cells[cellRow, cellCol].Value = null;
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 100;
 
@@ -640,7 +640,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 double value = ((CellUnit)cell).Value;
 
                 if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
-                    sheet.Cells[cellRow, cellCol].Value = "";
+                    sheet.Cells[cellRow, cellCol].Value = null;
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 100;
 
@@ -654,7 +654,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 double value = ((CellPage)cell).Value;
 
                 if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
-                    sheet.Cells[cellRow, cellCol].Value = "";
+                    sheet.Cells[cellRow, cellCol].Value = null;
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
 
@@ -670,7 +670,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 double value = ((CellKEuro)cell).Value;
 
                 if (double.IsInfinity(value) || double.IsNaN(value) || double.Equals(value, 0.0))
-                    sheet.Cells[cellRow, cellCol].Value = "";
+                    sheet.Cells[cellRow, cellCol].Value = null;
                 else
                     sheet.Cells[cellRow, cellCol].Value = value / 1000.0;
 
@@ -716,7 +716,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
                         sheet.Cells[cellRow, cellCol].Value = value;
 
-                        SetAsposeFormat(sheet.Cells[cellRow, cellCol], Int32.Parse(this.cInfo.GetAsposeFormatPatternFromStringFormat(((CellUnit)cell).StringFormat)));
+                        SetAsposeFormat(sheet.Cells[cellRow, cellCol],
+                            Int32.Parse(this.cInfo.GetAsposeFormatPatternFromStringFormat(((CellUnit) cell).StringFormat)));
 
                         //if (((CellUnit)cell).AsposeFormat == -1)
                         //    SetDecimalFormat(sheet.Cells[cellRow, cellCol]);
@@ -724,6 +725,10 @@ namespace Km.AdExpressClientWeb.Controllers
                         //    SetAsposeFormat(sheet.Cells[cellRow, cellCol], ((CellUnit)cell).AsposeFormat);
 
                         SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, true);
+                    }
+                    else
+                    {
+                        sheet.Cells[cellRow, cellCol].Value = null;
                     }
                 }
             }
@@ -781,10 +786,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             }
             else if (cell is CellEmpty)
-                sheet.Cells[cellRow, cellCol].Value = "";
+                sheet.Cells[cellRow, cellCol].Value = null;
             else
             {
-                sheet.Cells[cellRow, cellCol].Value = "";
+                sheet.Cells[cellRow, cellCol].Value = null;
             }
 
 
