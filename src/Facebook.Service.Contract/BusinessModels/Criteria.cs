@@ -38,7 +38,8 @@ namespace Facebook.Service.Contract.BusinessModels
         Groupe = 63,
         Variete = 64,
         Annonceur = 65,
-        Marque = 66
+        Marque = 66,
+        Produit = 81
     }
 
 }
