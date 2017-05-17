@@ -78,8 +78,12 @@ namespace TNS.AdExpress.Constantes.Customer.DB {
         /// Identifiant Veille Promo Vehicle
         /// </summary>
         public const Int64 ID_VP_VEHICLE_TYPE = 14;
-		#endregion
-	}
+        /// <summary>
+        /// Identifiant Brand
+        /// </summary>
+        public const Int64 ID_PRODUCT_TYPE = 81;
+        #endregion
+    }
 
 	/// <summary>
 	/// Fréquence

@@ -370,6 +370,11 @@ namespace TNS.AdExpress.Web.Utilities.Functions
                     {
                         code = 817;
                     }
+                    // cas Produit
+                    if (((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productException || ((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productAccess)
+                    {
+                        code = 817;
+                    }
                     // cas holding company
                     else if (((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException || ((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess)
                     {
@@ -876,6 +881,11 @@ namespace TNS.AdExpress.Web.Utilities.Functions
                     }
                     // cas Marque
                     if (((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.brandException || ((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.brandAccess)
+                    {
+                        code = 817;
+                    }
+                    // cas Produit
+                    if (((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productException || ((LevelInformation)currentNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productAccess)
                     {
                         code = 817;
                     }

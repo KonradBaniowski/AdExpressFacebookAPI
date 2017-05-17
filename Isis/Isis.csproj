@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{39917AD8-EB28-4FD1-8392-1ED9246A6A0D}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName />
+    <AssemblyName>Isis</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Isis</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>http://localhost/Isis/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>docIsis.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>docIsis.xml</DocumentationFile>
+    <FileAlignment>4096</FileAlignment>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Isis.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <Optimize>true</Optimize>
+    <FileAlignment>4096</FileAlignment>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Isis.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DLL\TNS.Isis.AdExpress.Classification\TNS.Isis.AdExpress.Classification.csproj">
+      <Name>TNS.Isis.AdExpress.Classification</Name>
+      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.AdExpress.Constantes\TNS.Isis.AdExpress.Constantes.csproj">
+      <Name>TNS.Isis.AdExpress.Constantes</Name>
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.AdExpress\TNS.Isis.AdExpress.csproj">
+      <Name>TNS.Isis.AdExpress</Name>
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Customer.DB\TNS.Customer.DB.csproj">
+      <Name>TNS.Customer.DB</Name>
+      <Project>{56A6B24B-0681-4675-9B83-05A0D36AAC00}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.Bipp\TNS.Isis.Bipp.csproj">
+      <Name>TNS.Isis.Bipp</Name>
+      <Project>{043A3DDB-82BB-44F0-8717-68519DCC0D6F}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.Constantes\TNS.Isis.Constantes.csproj">
+      <Project>{de7bfdd7-b3b6-499f-b065-752ba8ff84e8}</Project>
+      <Name>TNS.Isis.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.Controls\TNS.Isis.Controls.csproj">
+      <Name>TNS.Isis.Controls</Name>
+      <Project>{3281D78C-8342-48C8-A940-B641BDD51071}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis.EasyMusic\TNS.Isis.EasyMusic.csproj">
+      <Name>TNS.Isis.EasyMusic</Name>
+      <Project>{BCA26EF6-25CC-4548-B6CE-C067AA8A65AD}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\TNS.Isis\TNS.Isis.csproj">
+      <Name>TNS.Isis</Name>
+      <Project>{ADC28A58-B6D2-43CB-877B-BD520B868D8C}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <Reference Include="FarPoint.CalcEngine">
+      <HintPath>..\Libs\FarPoint.CalcEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="FarPoint.Excel">
+      <HintPath>..\Libs\FarPoint.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="FarPoint.PluginCalendar.WinForms">
+      <HintPath>..\Libs\FarPoint.PluginCalendar.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="FarPoint.Win">
+      <HintPath>..\Libs\FarPoint.Win.dll</HintPath>
+    </Reference>
+    <Reference Include="FarPoint.Win.Spread">
+      <HintPath>..\Libs\FarPoint.Win.Spread.dll</HintPath>
+    </Reference>
+    <Reference Include="Isis.Localization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Isis.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=3.0.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\Isis\Bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\Isis\Bin\11.2g\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.ServiceProcess">
+      <Name>System.ServiceProcess</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="TNS.Customer.DB.Localization">
+      <HintPath>..\DLL\TNS.Customer.DB\Resources\TNS.Customer.DB.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Error">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.Error.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Tools">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Controls.Localization">
+      <HintPath>..\DLL\TNS.Isis.Controls\Resources\TNS.Isis.Controls.Localization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AdExpressRightException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AuthentificationDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AuthentificationException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\BaseDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ContactListForStudyGestionException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ContactSolutionDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FilterToOngletException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\GroupContactListForStudyGestionException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoginByModuleException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModuleSolutionDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\SolutionToModuleException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TaskHistoException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TemplateException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TnsNameDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\UserLoginException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="Pdf\AdExpress\CustomerFiche.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\AdExpress\PdfListenerTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\AdExpress\TaskFiche.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\Bipp\BippFiche.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\EasyMusic\EasyMusicFiche.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\Common\pdfListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pdf\Template\TemplateFiche.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AdExpressRightForm\AlertPushMail.cs" />
+    <Compile Include="Windows\CommonForm\AssignModule.cs" />
+    <Compile Include="Windows\CommonForm\AssignModuleGroup.cs" />
+    <Compile Include="Windows\AdExpressRightForm\CreateAlertPushMail.cs" />
+    <Compile Include="Windows\AdExpressRightForm\ModifyAlertPushMail.cs" />
+    <Compile Include="Windows\CommonForm\ModifyModuleGroup.cs" />
+    <Compile Include="Windows\AdExpressRightForm\RightLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\AdExpressRightForm\SelectAlertPushMail.cs" />
+    <Compile Include="Windows\EasyMusicRightForm\CreateTemplate.cs" />
+    <Compile Include="Windows\ProjectForm\CreateTemplateBase.cs" />
+    <Compile Include="Windows\ProjectForm\SelectTemplate.cs" />
+    <Compile Include="Windows\AlertForm\Manager.cs" />
+    <Compile Include="Windows\BippRightForm\RightLogin.cs" />
+    <Compile Include="Windows\EasyMusicRightForm\AlertPushMail.cs" />
+    <Compile Include="Windows\EasyMusicRightForm\RightLogin.cs" />
+    <Compile Include="Windows\EvaliantRightForm\RightLogin.cs" />
+    <Compile Include="Windows\LoginForm\CreateAddress.cs" />
+    <Compile Include="Windows\LoginForm\CreateCompany.cs" />
+    <Compile Include="Windows\LoginForm\CreateContact.cs" />
+    <Compile Include="Windows\LoginForm\CreateGroupContact.cs" />
+    <Compile Include="Windows\LoginForm\CreateLogin.cs" />
+    <Compile Include="Windows\LoginForm\RenameCompany.cs" />
+    <Compile Include="Windows\LoginForm\SearchLoginByExpiredDate.cs" />
+    <Compile Include="Windows\LoginForm\SearchLoginByModule.cs" />
+    <Compile Include="Windows\LoginForm\SelectCompany.cs" />
+    <Compile Include="Windows\LoginForm\SelectContact.cs" />
+    <Compile Include="Windows\LoginForm\SelectLogin.cs" />
+    <Compile Include="Windows\LoginForm\TypeUtilisateur.cs" />
+    <Compile Include="Windows\P3RightForm\RightLogin.cs" />
+    <Compile Include="Windows\PasswordForm\ConfirmSave.cs" />
+    <Compile Include="Windows\PasswordForm\Manager.cs" />
+    <Compile Include="Windows\PasswordForm\Scheduler.cs" />
+    <Compile Include="Windows\PasswordForm\TaskManager.cs" />
+    <Compile Include="Windows\ProjectForm\CreateFlag.cs" />
+    <Compile Include="Windows\ProjectForm\CreateModule.cs" />
+    <Compile Include="Windows\ProjectForm\CreateModuleGroup.cs" />
+    <Compile Include="Windows\ProjectForm\CreateProject.cs" />
+    <Compile Include="Windows\ProjectForm\CreateResult.cs" />
+    <Compile Include="Windows\ProjectForm\CreateTemplate.cs" />
+    <Compile Include="Windows\ProjectForm\RenameModule.cs" />
+    <Compile Include="Windows\ProjectForm\RenameModuleGroup.cs" />
+    <Compile Include="Windows\ProjectForm\RenameProject.cs" />
+    <Compile Include="Windows\ProjectForm\SelectProject.cs" />
+    <Compile Include="Windows\ProjectForm\SelectProjectBase.cs" />
+    <Compile Include="Windows\ProjectForm\SelectProjectForTemplate.cs" />
+    <Content Include="App.ico" />
+    <Content Include="Config\Mail.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\TnsName.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Images\ball_glass_greenS.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ball_glass_greyS.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ball_glass_redS.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ball_glass_yellowS.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_acces.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_appliquer.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_appliquer2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_exclure.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_rechercher.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_sauvegarder.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bt_supprimer.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\check.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\check_uncheck.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\clear.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\database_save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\0.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\1.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\10.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\11.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\12.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\13.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\14.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\15.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\16.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\17.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\18.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\19.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\2.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\20.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\21.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\3.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\4.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\5.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\6.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\7.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\8.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ImageList\9.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logo_pdf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\module.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\moduleCategory.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\moduleGroup.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\search.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\spreadsheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TNS.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Libraries\itextsharp.dll" />
+    <Content Include="Resources\Isis.en.xml" />
+    <Content Include="Resources\Isis.Exceptions.en.xml" />
+    <Content Include="Resources\Isis.Exceptions.fr.xml" />
+    <Content Include="Resources\Isis.fr.xml" />
+    <Content Include="Resources\Isis.Project.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Isis.UI.en.xml" />
+    <Content Include="Resources\Isis.UI.fr.xml" />
+    <EmbeddedResource Include="Images\BarreVerti.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bt_moins.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bt_plus.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\uncheck.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AdExpressRightForm\AlertPushMail.resx">
+      <DependentUpon>AlertPushMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\CommonForm\AssignModule.resx">
+      <DependentUpon>AssignModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\CommonForm\AssignModuleGroup.resx">
+      <DependentUpon>AssignModuleGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AdExpressRightForm\CreateAlertPushMail.resx">
+      <DependentUpon>CreateAlertPushMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AdExpressRightForm\ModifyAlertPushMail.resx">
+      <DependentUpon>ModifyAlertPushMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\CommonForm\ModifyModuleGroup.resx">
+      <DependentUpon>ModifyModuleGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AdExpressRightForm\RightLogin.resx">
+      <DependentUpon>RightLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AdExpressRightForm\SelectAlertPushMail.resx">
+      <DependentUpon>SelectAlertPushMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\EasyMusicRightForm\CreateTemplate.resx">
+      <DependentUpon>CreateTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\SelectTemplate.resx">
+      <DependentUpon>SelectTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\AlertForm\Manager.resx">
+      <DependentUpon>Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\BippRightForm\RightLogin.resx">
+      <DependentUpon>RightLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\EasyMusicRightForm\AlertPushMail.resx">
+      <DependentUpon>AlertPushMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\EasyMusicRightForm\RightLogin.resx">
+      <DependentUpon>RightLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\EvaliantRightForm\RightLogin.resx">
+      <DependentUpon>RightLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\CreateAddress.resx">
+      <DependentUpon>CreateAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\CreateCompany.resx">
+      <DependentUpon>CreateCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\CreateContact.resx">
+      <DependentUpon>CreateContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\CreateGroupContact.resx">
+      <DependentUpon>CreateGroupContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\CreateLogin.resx">
+      <DependentUpon>CreateLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\RenameCompany.resx">
+      <DependentUpon>RenameCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\SearchLoginByExpiredDate.resx">
+      <DependentUpon>SearchLoginByExpiredDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\SearchLoginByModule.resx">
+      <DependentUpon>SearchLoginByModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\SelectCompany.resx">
+      <DependentUpon>SelectCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\SelectContact.resx">
+      <DependentUpon>SelectContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\SelectLogin.resx">
+      <DependentUpon>SelectLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoginForm\TypeUtilisateur.resx">
+      <DependentUpon>TypeUtilisateur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\P3RightForm\RightLogin.resx">
+      <DependentUpon>RightLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PasswordForm\ConfirmSave.resx">
+      <DependentUpon>ConfirmSave.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PasswordForm\Manager.resx">
+      <DependentUpon>Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PasswordForm\Scheduler.resx">
+      <DependentUpon>Scheduler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PasswordForm\TaskManager.resx">
+      <DependentUpon>TaskManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateFlag.resx">
+      <DependentUpon>CreateFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateModule.resx">
+      <DependentUpon>CreateModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateModuleGroup.resx">
+      <DependentUpon>CreateModuleGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateProject.resx">
+      <DependentUpon>CreateProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateResult.resx">
+      <DependentUpon>CreateResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\CreateTemplate.resx">
+      <DependentUpon>CreateTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\RenameModule.resx">
+      <DependentUpon>RenameModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\renameModuleGroup.resx">
+      <DependentUpon>RenameModuleGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\RenameProject.resx">
+      <DependentUpon>RenameProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\SelectProject.resx">
+      <DependentUpon>SelectProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectForm\SelectProjectBase.resx">
+      <DependentUpon>SelectProjectBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"C:\Program Files\TNS\Erasmus\Tools\Erasmus.exe" "$(ProjectDir)\Resources\Isis.Project.xml"</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
