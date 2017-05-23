@@ -804,7 +804,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region UnitFilter
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES)
+                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
+
+                    && userFilter.UnitFilter.Unit != WebConstantes.CustomerSessions.Unit.none.GetHashCode()
+                    )
                     _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
                 #endregion
 
