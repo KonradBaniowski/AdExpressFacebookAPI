@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessService\IPortfolioAlertService.cs" />
     <Compile Include="BusinessService\ICampaignAnalysisService.cs" />
     <Compile Include="BusinessService\IAdvertisingAgencyService.cs" />
     <Compile Include="BusinessService\IAlertService.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Domain\MSCreative.cs" />
     <Compile Include="Domain\MSCreatives.cs" />
     <Compile Include="Domain\Period.cs" />
+    <Compile Include="Domain\PortfolioAlertResultResponse.cs" />
     <Compile Include="Domain\UserCriteria.cs" />
     <Compile Include="Domain\PostModel.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />

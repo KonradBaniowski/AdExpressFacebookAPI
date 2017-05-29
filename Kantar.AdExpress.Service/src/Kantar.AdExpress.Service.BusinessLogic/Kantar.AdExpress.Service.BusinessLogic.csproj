@@ -76,6 +76,7 @@
     <Compile Include="Identity\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl\AdvertisingAgencyService.cs" />
+    <Compile Include="ServiceImpl\PortfolioAlertService.cs" />
     <Compile Include="ServiceImpl\AlertService.cs" />
     <Compile Include="ServiceImpl\CampaignAnalysisService.cs" />
     <Compile Include="ServiceImpl\LeFacService.cs" />

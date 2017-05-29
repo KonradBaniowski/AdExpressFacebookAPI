@@ -98,5 +98,7 @@ namespace TNS.AdExpressI.Portofolio {
 
         ResultTable GetDetailMediaPopUpResult();
 
+        PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum);
+
     }
 }
