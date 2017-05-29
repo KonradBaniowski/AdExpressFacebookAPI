@@ -82,9 +82,9 @@ namespace KM.Framework.Constantes
         public string SelectFolder { get; set; } // 702
         public string RenameSelectedFolder { get; set; }//703
         public string ErrorMsgNoFolderCreated { get; set; } // 711
-        public string ProductLabel { get; set; }
+        public string ProductLabel { get; set; } //858
         public string MediaLabel { get; set; }//W190
-        public string AdvertiserLabel { get; set; }
+        public string AdvertiserLabel { get; set; } //857
         public string IndeRadioMessage { get; set; } //3018
         public string EmptyGrid { get; set; } //2106
         public string CreativeLabel { get; set; } //1888
@@ -191,5 +191,28 @@ namespace KM.Framework.Constantes
         public string SponsorshipMedias { get; set; }//2933
         public string SponsorshipWorkingSet { get; set; } //3106
         public string MaxAllowedRowsRefine { get; set; }//2570
+        public string VisualsLabel { get; set; } //1928
+        public string SectorLabel { get; set; } //1103
+        public string GroupLabel { get; set; } //859
+        public string MediaPagingLabel { get; set; } //894
+        public string AreaPageLabel { get; set; } //1767
+        public string AreaMmcLabel { get; set; } //1768
+        public string ExpenditureEuroLabel { get; set; } //868
+        public string LocationLabel { get; set; } //1769
+        public string FormatLabel { get; set; } //1420
+        public string ColorLabel { get; set; } //1438
+        public string RankSectorLabel { get; set; } // 1426;
+        public string RankGroupLabel { get; set; } // 1427;
+        public string RankMediaLabel { get; set; } // 1428;
+        public string TableParameters { get; set; } //512
+        public string VehicleBreakdown { get; set; } //1378
+        public string VehicleLabel { get; set; } //971
+        public string DateLabel { get; set; } //895
+        public string WithInsetLabel { get; set; } // 1927
+        public string WithoutInsetLabel { get; set; } //525
+        public string WithAutopromoLabel { get; set; } //1926
+        public string WithoutAutopromoLabel { get; set; } //527
+        public string SubCategoryLabel { get; set; } // 552
+        public string SubGroupLabel { get; set; } // 592
     }
 }

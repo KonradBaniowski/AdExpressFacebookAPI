@@ -74,7 +74,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.France {
             : base(webSession, vehicleInformation, idMedia, beginingDate, endDate, ventilationTypeList) {
 
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PortofolioDAL()
+        {
+        }
         #endregion
+
+
         #region IPortofolioDAL Membres
 
         /// <summary>

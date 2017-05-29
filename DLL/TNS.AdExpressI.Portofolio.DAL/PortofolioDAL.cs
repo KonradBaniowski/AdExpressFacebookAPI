@@ -25,7 +25,10 @@ using TNS.AdExpress.Domain.Classification;
 //using TNS.AdExpress.Web.Exceptions;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Units;
+using TNS.FrameWork.DB.Common;
+using AdExClassification=TNS.AdExpress.DataAccess.Classification;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
     /// <summary>
@@ -148,15 +151,22 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		this(webSession, vehicleInformation, idMedia, beginingDate, endDate) {
 			_ventilationTypeList = ventilationTypeList;
 		}
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        protected PortofolioDAL()
+        {
+        }
         #endregion
 
         #region IPortofolioDAL Membres
 
-		/// <summary>
-		/// Get synthesis data
-		/// </summary>
-		/// <returns></returns>
-		public virtual DataSet GetData() {
+        /// <summary>
+        /// Get synthesis data
+        /// </summary>
+        /// <returns></returns>
+        public virtual DataSet GetData() {
 			Engines.Engine res = null;
 
 			switch (_webSession.CurrentTab) {
@@ -235,6 +245,322 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             throw new NotImplementedException("This methods is not implemented");
         }
         #endregion
+
+
+        private DataSet GetPortfolioAlertParamsUniverse(long alertId, IDataSource source)
+        {
+
+            #region Construction de la requête
+            StringBuilder sql = new StringBuilder(800);
+
+            sql.Append("select " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert, " + DBConstantes.Tables.ALERT_PREFIXE + ".alert, " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert_type, " + DBConstantes.Tables.ALERT_PREFIXE + ".email_list, " + DBConstantes.Tables.ALERT_PREFIXE + ".date_beginning, " + DBConstantes.Tables.ALERT_PREFIXE + ".date_end, ");
+            sql.Append(" " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ".rank, ");
+            sql.Append(" " + DBConstantes.Tables.ALERT_UNIVERSE_PREFIXE + ".reference_universe, ");
+            sql.Append(" " + DBConstantes.Tables.ALERT_UNIVERSE_DETAIL_PREFIXE + ".id_alert_universe_type, " + DBConstantes.Schema.LOGIN_SCHEMA + ".listnum_to_char(universe_list) as universe_list ");
+            sql.Append(" from " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT + " " + DBConstantes.Tables.ALERT_PREFIXE + ",");
+            sql.Append(" " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT + " " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ",");
+            sql.Append(" " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT_UNIVERSE + " " + DBConstantes.Tables.ALERT_UNIVERSE_PREFIXE + ",");
+            sql.Append(" " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT_UNIVERSE_DETAIL + " " + DBConstantes.Tables.ALERT_UNIVERSE_DETAIL_PREFIXE);
+            sql.Append(" where " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert = " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ".id_alert ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ".id_alert_universe = " + DBConstantes.Tables.ALERT_UNIVERSE_PREFIXE + ".id_alert_universe ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_UNIVERSE_PREFIXE + ".id_alert_universe = " + DBConstantes.Tables.ALERT_UNIVERSE_DETAIL_PREFIXE + ".id_alert_universe ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert = " + alertId);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".date_beginning <= sysdate ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".date_end >= sysdate ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_UNIVERSE_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_UNIVERSE_DETAIL_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            sql.Append(" order by " + DBConstantes.Tables.ALERT_UNIVERSE_ASSIGNMENT_PREFIXE + ".rank");
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                return (source.Fill(sql.ToString()));
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exception("Impossible de charger la configuration des univers de l'alerte (" + alertId.ToString() + ") : " + sql.ToString() + " - " + err.Message, err));
+            }
+            #endregion
+
+        }
+
+        private DataSet GetPortfolioAlertParamsFlag(long alertId, IDataSource source)
+        {
+
+            #region Construction de la requête
+            StringBuilder sql = new StringBuilder(350);
+
+            sql.Append("select " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert, " + DBConstantes.Tables.ALERT_PREFIXE + ".alert, ");
+            sql.Append(" " + DBConstantes.Tables.ALERT_FLAG_ASSIGNMENT_PREFIXE + ".id_alert_flag ");
+            sql.Append(" from " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT + " " + DBConstantes.Tables.ALERT_PREFIXE + ",");
+            sql.Append(" " + DBConstantes.Schema.LOGIN_SCHEMA + "." + DBConstantes.Tables.ALERT_FLAG_ASSIGNMENT + " " + DBConstantes.Tables.ALERT_FLAG_ASSIGNMENT_PREFIXE + " ");
+            sql.Append(" where " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert = " + DBConstantes.Tables.ALERT_FLAG_ASSIGNMENT_PREFIXE + ".id_alert ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".id_alert = " + alertId);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".date_beginning <= sysdate ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".date_end >= sysdate ");
+            sql.Append(" and " + DBConstantes.Tables.ALERT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + DBConstantes.Tables.ALERT_FLAG_ASSIGNMENT_PREFIXE + ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                return (source.Fill(sql.ToString()));
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exception("Impossible de charger la configuration des flags de l'alerte (" + alertId.ToString() + ") : " + sql.ToString() + " - " + err.Message, err));
+            }
+            #endregion
+
+        }
+
+        public virtual PortfolioAlertParams GetPortfolioAlertParams(long alertId)
+        {
+
+            PortfolioAlertParams alertParams = new PortfolioAlertParams
+            {
+                TypeAlertId = 0,
+                MediaId = 0,
+                AlertName = string.Empty,
+                SectorListId = string.Empty,
+                SubSectorListId = string.Empty,
+                GroupListId = string.Empty,
+                SegmentListId = string.Empty,
+                MediaName = string.Empty,
+                LanguageId = 33,
+                Inset = true,
+                Autopromo = true,
+                EmailList = new List<string>()
+            };
+
+            TNS.FrameWork.DB.Common.IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+
+            // Get Alert Parameters
+            DataSet dsUniverse = GetPortfolioAlertParamsUniverse(alertId, source);
+            DataSet dsFlag = GetPortfolioAlertParamsFlag(alertId, source);
+
+            if (dsUniverse != null && dsUniverse.Tables.Count > 0 && dsUniverse.Tables[0] != null && dsUniverse.Tables[0].Rows.Count > 0)
+            {
+                alertParams.TypeAlertId = int.Parse(dsUniverse.Tables[0].Rows[0]["id_alert_type"].ToString());
+                alertParams.AlertName = dsUniverse.Tables[0].Rows[0]["alert"].ToString();
+                var emails = dsUniverse.Tables[0].Rows[0]["email_list"].ToString().Split(',');
+                foreach (string currentEmail in emails)
+                {
+                    alertParams.EmailList.Add(currentEmail);
+                }
+                foreach (DataRow currentRow in dsUniverse.Tables[0].Rows)
+                {
+                    switch (Int64.Parse(currentRow["id_alert_universe_type"].ToString()))
+                    {
+                        case DBConstantes.AlertUniverseType.FAMILLE_VALUE: // 1
+                            alertParams.SectorListId = currentRow["universe_list"].ToString();
+                            break;
+                        case DBConstantes.AlertUniverseType.CLASSE_VALUE: // 2
+                            alertParams.SubSectorListId = currentRow["universe_list"].ToString();
+                            break;
+                        case DBConstantes.AlertUniverseType.GROUPE_VALUE: // 3
+                            alertParams.GroupListId = currentRow["universe_list"].ToString();
+                            break;
+                        case DBConstantes.AlertUniverseType.VARIETE_VALUE: // 4
+                            alertParams.SegmentListId = currentRow["universe_list"].ToString();
+                            break;
+                        case DBConstantes.AlertUniverseType.SUPPORT_VALUE: // 7
+                            alertParams.MediaId = int.Parse(currentRow["universe_list"].ToString());
+                            break;
+                    }
+                }
+                AdExClassification.MediaBranch.PartialMediaListDataAccess mediaNameA = new AdExClassification.MediaBranch.PartialMediaListDataAccess(alertParams.MediaId.ToString(), alertParams.LanguageId, source);
+                alertParams.MediaName = mediaNameA[alertParams.MediaId].ToString();
+            }
+            if (dsFlag != null && dsFlag.Tables.Count > 0 && dsFlag.Tables[0] != null && dsFlag.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow currentFlagRow in dsFlag.Tables[0].Rows)
+                {
+                    // Si précisé dans la table alert_flag_assignment, on veut du hors encart et/ou hors autopromo
+                    switch (Int64.Parse(currentFlagRow["id_alert_flag"].ToString()))
+                    {
+                        case 1:
+                            alertParams.Inset = false; // False pour hors encart
+                            break;
+                        case 2:
+                            alertParams.Autopromo = false; // False pour hors autopromo
+                            break;
+                    }
+                }
+            }
+
+            return alertParams;
+        }
+
+
+        public virtual DataSet GetPortfolioAlertData(long alertId, long alertTypeId, string dateMediaNum)
+        {
+            #region Constantes
+            const string AUTOPROMO_GROUP_ID = "549";
+            const string AUTOPROMO_SEGMENT_ID = "56202";
+            #endregion
+
+            TNS.FrameWork.DB.Common.IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+
+            PortfolioAlertParams alertParams = GetPortfolioAlertParams(alertId);
+
+
+            #region Construction de la requête
+            StringBuilder sql = new StringBuilder(5000);
+
+            // Select
+            sql.Append("select advertiser, ");
+            sql.Append("product, ");
+            sql.Append("sector, ");
+            sql.Append("group_, ");
+            sql.Append("area_page, ");
+            sql.Append("area_mmc,format, ");
+            sql.Append("wp.expenditure_euro, ");
+            sql.Append("wp.date_media_num, ");
+            sql.Append("wp.media_paging, ");
+            sql.Append("rank_sector, ");
+            sql.Append("rank_group_, ");
+            sql.Append("rank_media, ");
+            sql.Append("color, ");
+            sql.Append("location, ");
+            sql.Append("wp.date_media_num, ");
+            sql.Append("media, ");
+            sql.Append("LPAD(RTRIM(wp.Media_paging,' '),10,'0') as ChampPage, ");
+            sql.Append("wp.id_advertisement, ");
+            sql.Append("visual, ");
+            sql.Append("wp.date_cover_num ");
+
+            // From
+            sql.Append(" from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " wp ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".advertiser ad");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".product pr");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".sector se");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".group_ gr");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media me ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".color co ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".format fo ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".location lo ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".data_location dl ");
+
+            // Conditions
+            sql.Append(" where wp.id_media=" + alertParams.MediaId);
+            sql.Append(" and wp.insertion=1 ");
+            sql.Append(" and wp.date_media_num = " + dateMediaNum);
+            sql.Append(" and co.id_color(+)=wp.id_color ");
+            sql.Append(" and fo.id_format(+)=wp.id_format ");
+            sql.Append(" and lo.id_location(+)=dl.id_location ");
+            sql.Append(" and dl.id_media(+)=wp.id_media ");
+            sql.Append(" and dl.date_media_num(+) =wp.date_media_num ");
+            sql.Append(" and dl.id_advertisement (+)=wp.id_advertisement ");
+
+            sql.Append(" and co.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and fo.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and lo.id_language (+)=" + DBConstantes.Language.FRENCH);
+
+            sql.Append(" and co.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and fo.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and lo.activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and dl.activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+
+            sql.Append(" and ad.id_advertiser=wp.id_advertiser ");
+            sql.Append(" and pr.id_product=wp.id_product ");
+            sql.Append(" and se.id_sector=wp.id_sector ");
+            sql.Append(" and gr.id_group_=wp.id_group_ ");
+            sql.Append(" and  me.id_media=wp.id_media ");
+
+            sql.Append(" and ad.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and pr.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and se.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and gr.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and me.id_language=" + DBConstantes.Language.FRENCH);
+
+            sql.Append(" and ad.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and pr.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and se.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and gr.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and me.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+
+            #region Univers produit de l'alerte
+            bool first = true;
+            string tmp = "";
+            if (alertParams.SectorListId.Length > 0)
+            {
+                if (first)
+                {
+                    tmp += " and (";
+                    first = false;
+                }
+                else tmp += " or ";
+                tmp += " wp.id_sector in(" + alertParams.SectorListId + ") ";
+            }
+            if (alertParams.SubSectorListId.Length > 0)
+            {
+                if (first)
+                {
+                    tmp += " and (";
+                    first = false;
+                }
+                else tmp += " or ";
+                tmp += " wp.id_subsector in(" + alertParams.SubSectorListId + ") ";
+            }
+            if (alertParams.GroupListId.Length > 0)
+            {
+                if (first)
+                {
+                    tmp += " and (";
+                    first = false;
+                }
+                else tmp += " or ";
+                tmp += " wp.id_group_ in(" + alertParams.GroupListId + ") ";
+            }
+            if (alertParams.SegmentListId.Length > 0)
+            {
+                if (first)
+                {
+                    tmp += " and (";
+                    first = false;
+                }
+                else tmp += " or ";
+                tmp += " wp.id_segment in(" + alertParams.SegmentListId + ") ";
+            }
+            if (tmp.Length > 0)
+            {
+                tmp += ") ";
+                sql.Append(tmp);
+            }
+            #endregion
+
+            if (!alertParams.Autopromo)
+            {
+                // HORS AUTOPROMO
+                //sql.Append(" and wp.id.group_ not in(549) and wp.id_segment not in(56202)");
+                sql.Append(" and wp.id_group_ not in(" + AUTOPROMO_GROUP_ID + ") and wp.id_segment not in(" + AUTOPROMO_SEGMENT_ID + ")");
+            }
+            if (!alertParams.Inset)
+            {
+                // HORS ENCART
+                sql.Append(" and wp.id_inset is null"); // ??? C avec encart : is not null ???
+            }
+
+            // Order by
+            sql.Append(" order by wp.Id_type_page, ChampPage, wp.id_product, wp.id_advertisement");
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                return source.Fill(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exception("Impossible de charger les données du détail du support : " + sql, err));
+            }
+            #endregion
+        }
 
         #endregion
 
