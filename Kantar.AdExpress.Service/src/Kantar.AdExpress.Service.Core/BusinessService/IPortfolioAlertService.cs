@@ -12,6 +12,6 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
 {
     public interface IPortfolioAlertService
     {
-        PortfolioAlertResultResponse GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum);
+        PortfolioAlertResultResponse GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage);
     }
 }

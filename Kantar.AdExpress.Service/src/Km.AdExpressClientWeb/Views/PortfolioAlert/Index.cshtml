@@ -1,59 +1,8 @@
 ﻿@model  Km.AdExpressClientWeb.Models.PortfolioAlert.PortfolioAlertViewModel
-@using Kantar.AdExpress.Service.Core.Domain;
 @{
     ViewBag.Title = "Alerte Portefeuille";
     Layout = "~/Views/Shared/_LayoutPortfolioAlert.cshtml";
 }
-<style type="text/css">
-    table.main-portfolio-alert {
-    }
-
-        table.main-portfolio-alert tr {
-        }
-
-        table.main-portfolio-alert thead tr {
-            background-color: #dadada;
-        }
-
-    .clickable {
-        cursor: pointer;
-    }
-
-    table.datas-portfolio-alert {
-        width: 100%;
-        background-color: #ffffff;
-        background-color: rgba(238, 238, 238, 0.6);
-        border-radius: 4px;
-    }
-
-        table.datas-portfolio-alert tr {
-            border-bottom: 1px solid #eee;
-        }
-
-        table.datas-portfolio-alert > tbody > tr > td:first-child {
-            font-weight: bold;
-        }
-
-    #gallery-scroller {
-        margin: 0 auto;
-        width: auto;
-        height: auto;
-        overflow: auto;
-    }
-
-    .gallery-scrollbox {
-        float: left;
-        margin-right: -30000px;
-    }
-
-        .gallery-scrollbox div {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            float: left;
-            /*border: 1px solid #eee;*/
-            max-width: 200px;
-        }
-</style>
 
 <div class="row">
 
@@ -208,112 +157,113 @@
         </div>
     </div>
 
+    <div class="row" style="margin-bottom:20px">
+        <div class="col-md-12">
+            <a id="hide-all-btn" class="btn btn-default pull-right">
+                Tout regrouper
+                @*<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>*@
+            </a>
+            <a id="show-all-btn" class="btn btn-default pull-right" style="margin-right:20px">
+                Tout déregrouper
+                @*<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>*@
+            </a>
+        </div>
+    </div>
+
 
     <table class="table main-portfolio-alert">
 
         @if (Model.AlertDatas != null && Model.AlertDatas.Datas.Any())
         {
-            int index = 0;
             foreach (var item in Model.AlertDatas.Datas)
             {
+                <tr class="header-row clickable">
+                    <th class="col-md-4 col-sm-5 col-xs-8">@Model.Labels.MediaPagingLabel : @item.MediaPaging</th>
+                    <th>@*<a class="gadLink" target="_blank" href="#">*@@item.Advertiser@*</a>*@<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i></th>
+                </tr>
 
-                <thead>
-                    <tr class="">
-                        @*<th class="col-md-4 col-sm-6 col-xs-8" data-toggle="collapse" data-target="#data-@(index)">@Model.Labels.VisualsLabel</th>*@
-                        <th class="col-md-4 col-sm-6 col-xs-8" @*data-toggle="collapse" data-target="#data-@(index)"*@>@Model.Labels.MediaPagingLabel : @item.MediaPaging</th>
-                        <th>@item.Advertiser</th>
-                    </tr>
+                <tr class="content-row">
+                    <td>
 
-                </thead>
-
-                <tbody>
-
-                    <tr id="data-@(index)">
-                        <td>
-
-                            <div id="gallery-scroller">
-                                <div class="thumbnail gallery-scrollbox">
-                                    @if (!string.IsNullOrEmpty(item.Visuals))
+                        <div id="gallery-scroller">
+                            <div class="thumbnail gallery-scrollbox">
+                                @if (!string.IsNullOrEmpty(item.Visuals))
+                                {
+                                    foreach (string visual in item.Visuals.Split(','))
                                     {
-                                        foreach (string visual in item.Visuals.Split(','))
+                                        if (!string.IsNullOrEmpty(visual))
                                         {
-                                            if (!string.IsNullOrEmpty(visual))
-                                            {
-                                                <div>
-                                                    <a href="@visual" target="_blank">
-                                                        <img src="@visual" alt="visual">
-                                                    </a>
-                                                </div>
-                                            }
+                                            <div>
+                                                <a href="@visual" target="_blank">
+                                                    <img src="@visual" alt="visual">
+                                                </a>
+                                            </div>
                                         }
                                     }
-                                </div>
+                                }
                             </div>
-                        </td>
+                        </div>
+                    </td>
 
-                        <td colspan="2">
-                            <table class="datas-portfolio-alert">
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ProductLabel</td>
-                                    <td class="col-md-5">@item.Product</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.SectorLabel</td>
-                                    <td class="col-md-5">@item.Sector</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.GroupLabel</td>
-                                    <td class="col-md-5">@item.Group</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.MediaPagingLabel</td>
-                                    <td class="col-md-5">@item.MediaPaging</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.AreaPageLabel</td>
-                                    <td class="col-md-5">@item.AreaPage</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.AreaMmcLabel</td>
-                                    <td class="col-md-5">@item.AreaMmc</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ExpenditureEuroLabel</td>
-                                    <td class="col-md-5">@item.ExpenditureEuro</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.LocationLabel</td>
-                                    <td class="col-md-5">@item.Location</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.FormatLabel</td>
-                                    <td class="col-md-5">@item.Format</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ColorLabel</td>
-                                    <td class="col-md-5">@item.Color</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankSectorLabel</td>
-                                    <td class="col-md-5">@item.RankSector</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankGroupLabel</td>
-                                    <td class="col-md-5">@item.RankGroup</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankMediaLabel</td>
-                                    <td class="col-md-5">@item.RankMedia</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                </tbody>
-                index++;
+                    <td colspan="2">
+                        <table class="datas-portfolio-alert">
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ProductLabel</td>
+                                <td class="col-md-6">@item.Product</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.SectorLabel</td>
+                                <td class="col-md-6">@item.Sector</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.GroupLabel</td>
+                                <td class="col-md-6">@item.Group</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.MediaPagingLabel</td>
+                                <td class="col-md-6">@item.MediaPaging</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.AreaPageLabel</td>
+                                <td class="col-md-6">@item.AreaPage</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.AreaMmcLabel</td>
+                                <td class="col-md-6">@item.AreaMmc</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ExpenditureEuroLabel</td>
+                                <td class="col-md-6">@item.ExpenditureEuro</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.LocationLabel</td>
+                                <td class="col-md-6">@item.Location</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.FormatLabel</td>
+                                <td class="col-md-6">@item.Format</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ColorLabel</td>
+                                <td class="col-md-6">@item.Color</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankSectorLabel</td>
+                                <td class="col-md-6">@item.RankSector</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankGroupLabel</td>
+                                <td class="col-md-6">@item.RankGroup</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankMediaLabel</td>
+                                <td class="col-md-6">@item.RankMedia</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             }
         }
-
 
 
     </table>
@@ -326,12 +276,34 @@
 
 
 @section scripts {
-    @Scripts.Render("~/bundles/cookies")
 
     <script>
-        createCookie("sortKey", "", 1);
-        createCookie("sortOrder", "", 1);
+        $(".header-row").click(function () {
+            $(this).nextUntil("tr.header-row").slideToggle(10);
+
+            //Change icon on collapse
+            $(this).find(".glyphicon").toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
+        });
+
+        $("#show-all-btn").click(function () {
+
+            $('tr.content-row[style*="display: none"]').each(function () {
+                $(this).show();
+                $(this).prev().find(".glyphicon").toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
+            });
+
+        });
+
+        $("#hide-all-btn").click(function () {
+
+            $('tr.content-row:visible').each(function () {
+                $(this).hide();
+                $(this).prev().find(".glyphicon").toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
+            });
+
+        });
     </script>
+
 }
 
 

@@ -27,7 +27,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
         }
 
-        public PortfolioAlertResultResponse GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum)
+        public PortfolioAlertResultResponse GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage)
         {
             IPortofolioResults portofolioResult = null;
 
@@ -42,7 +42,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
 
-                PortfolioAlert portfolioAlert = portofolioResult.GetPortfolioAlertResult(alertId, alertTypeId, dateMediaNum);
+                PortfolioAlert portfolioAlert = portofolioResult.GetPortfolioAlertResult(alertId, alertTypeId, dateMediaNum, idLanguage);
 
                 response.Datas = portfolioAlert.Datas;
                 response.Reminder = portfolioAlert.Reminder;

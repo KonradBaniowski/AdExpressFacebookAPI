@@ -523,7 +523,7 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
-        public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum)
+        public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum,int idLanguage)
         {
             PortfolioAlert response = new PortfolioAlert();
             response.Datas = new List<PortfolioAlertData>();
@@ -547,6 +547,7 @@ namespace TNS.AdExpressI.Portofolio
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     PortfolioAlertParams alertParams = portofolioDAL.GetPortfolioAlertParams(alertId);
+                    alertParams.LanguageId = idLanguage;
 
                     #region Variables
                     int s = 1;

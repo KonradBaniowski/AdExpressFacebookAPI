@@ -41,7 +41,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             PortfolioAlertViewModel model = new PortfolioAlertViewModel();
 
-            Domain.PortfolioAlertResultResponse portfolioAlert = _portfolioAlertService.GetPortfolioAlertResult(alertId, alertTypeId, dateMediaNum);
+            Domain.PortfolioAlertResultResponse portfolioAlert = _portfolioAlertService.GetPortfolioAlertResult(alertId, alertTypeId, dateMediaNum, idLanguage);
 
             model.IdLanguage = idLanguage;
             model.AlertDatas = portfolioAlert;

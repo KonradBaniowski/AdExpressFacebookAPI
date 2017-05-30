@@ -1,0 +1,61 @@
+﻿table.main-portfolio-alert {
+}
+
+    table.main-portfolio-alert tr {
+    }
+
+    table.main-portfolio-alert .header-row {
+        background-color: #dadada;
+    }
+    table.main-portfolio-alert .header-row:hover {
+        background-color: #d3d3d3;
+    }
+.clickable {
+    cursor: pointer;
+}
+
+table.datas-portfolio-alert {
+    width: 100%;
+    background-color: #ffffff;
+    background-color: rgba(238, 238, 238, 0.6);
+    border-radius: 4px;
+}
+
+@media (max-width:767px) {
+
+    table.main-portfolio-alert .header-row{
+        font-size: 12px;
+    }
+
+    table.datas-portfolio-alert {
+        font-size: 12px;
+    }
+}
+
+table.datas-portfolio-alert tr {
+    border-bottom: 1px solid #eee;
+}
+
+table.datas-portfolio-alert > tbody > tr > td:first-child {
+    font-weight: bold;
+}
+
+#gallery-scroller {
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    overflow: auto;
+}
+
+.gallery-scrollbox {
+    float: left;
+    margin-right: -30000px;
+}
+
+    .gallery-scrollbox div {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        float: left;
+        /*border: 1px solid #eee;*/
+        max-width: 200px;
+    }
