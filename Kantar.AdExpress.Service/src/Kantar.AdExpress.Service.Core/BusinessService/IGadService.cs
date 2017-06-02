@@ -11,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IGadService
     {
         Gad GetGadInfos(string idWebSession, string idAddress, string advertiser, HttpContextBase httpContext);
+
+        Gad GetGadInfos(string idAddress, string advertiser, HttpContextBase httpContext);
     }
 }

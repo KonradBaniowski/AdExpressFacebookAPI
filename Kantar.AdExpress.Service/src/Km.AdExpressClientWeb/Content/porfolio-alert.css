@@ -7,9 +7,11 @@
     table.main-portfolio-alert .header-row {
         background-color: #dadada;
     }
-    table.main-portfolio-alert .header-row:hover {
-        background-color: #d3d3d3;
-    }
+
+        table.main-portfolio-alert .header-row:hover {
+            background-color: #d3d3d3;
+        }
+
 .clickable {
     cursor: pointer;
 }
@@ -19,17 +21,6 @@ table.datas-portfolio-alert {
     background-color: #ffffff;
     background-color: rgba(238, 238, 238, 0.6);
     border-radius: 4px;
-}
-
-@media (max-width:767px) {
-
-    table.main-portfolio-alert .header-row{
-        font-size: 12px;
-    }
-
-    table.datas-portfolio-alert {
-        font-size: 12px;
-    }
 }
 
 table.datas-portfolio-alert tr {
@@ -53,9 +44,60 @@ table.datas-portfolio-alert > tbody > tr > td:first-child {
 }
 
     .gallery-scrollbox div {
-        margin-top: 10px;
-        margin-bottom: 10px;
+        /*margin-top: 5px;
+        margin-bottom: 5px;*/
         float: left;
         /*border: 1px solid #eee;*/
         max-width: 200px;
     }
+
+
+.thumbnail.gallery-scrollbox {
+    margin-bottom: 0;
+}
+
+.link {
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+    .link:hover {
+        color:#d2b855;
+        text-decoration: underline;
+    }
+
+    .indicator-open-close {
+        border-right: 1px solid grey; 
+        float: left; 
+        padding-right:5px;  
+        margin-right:5px;  
+    }
+
+.glyphicon {
+    transition: all .3s linear;
+}
+
+.glyphicon.up {
+    transform: rotateX(0deg);
+}
+
+.glyphicon.down {
+    transform: rotateX(-180deg);
+}
+
+
+@media (max-width:767px) {
+
+    table.main-portfolio-alert .header-row {
+        font-size: 12px;
+    }
+
+    table.datas-portfolio-alert {
+        font-size: 12px;
+    }
+
+    .panel-title, .panel-body {
+        font-size: 12px;
+    }
+}

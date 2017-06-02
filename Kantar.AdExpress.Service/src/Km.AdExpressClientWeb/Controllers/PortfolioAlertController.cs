@@ -1,39 +1,23 @@
-﻿using Kantar.AdExpress.Service.Core.BusinessService;
-using Domain = Kantar.AdExpress.Service.Core.Domain;
-using Km.AdExpressClientWeb.Models.Alert;
-using KM.Framework.Constantes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
+using Kantar.AdExpress.Service.Core.BusinessService;
+using Domain = Kantar.AdExpress.Service.Core.Domain;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models.PortfolioAlert;
-using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.Alert.Domain;
-using TNS.Ares.Alerts.DAL;
-using TNS.Ares.Domain.Layers;
-using TNS.Ares.Domain.LS;
-using TNS.Ares.Constantes;
-using TNS.FrameWork.WebResultUI;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
     public class PortfolioAlertController : Controller
     {
         private IPortfolioAlertService _portfolioAlertService;
+        private IGadService _gadService;
 
-        public PortfolioAlertController(IPortfolioAlertService portfolioAlertService)
+        public PortfolioAlertController(IPortfolioAlertService portfolioAlertService, IGadService gadService)
         {
             _portfolioAlertService = portfolioAlertService;
+            _gadService = gadService;
         }
 
         public async Task<ActionResult> Index(long alertId, long alertTypeId, string dateMediaNum, int idLanguage = 33)
@@ -48,6 +32,15 @@ namespace Km.AdExpressClientWeb.Controllers
             model.Labels  = LabelsHelper.LoadPageLabels(idLanguage);
 
             return View(model);
+        }
+
+        public ActionResult DocInfos(string ida,string aa)
+        {
+            //ida = idAdress
+            //aa = advertiser
+            Domain.Gad gadInfos = _gadService.GetGadInfos(ida, aa, this.HttpContext);
+
+            return View(gadInfos);
         }
 
     }

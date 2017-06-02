@@ -567,7 +567,7 @@ namespace TNS.AdExpressI.Portofolio
                     //if (mediaAntidated)
                     //    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_media_num"].ToString() + @"\imagette\coe001.jpg";
                     //else
-                    //couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    //    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
 
                     //if (File.Exists(couvPath) && !mediaIds.Contains(alertParams.MediaId))
                     //{
@@ -586,6 +586,7 @@ namespace TNS.AdExpressI.Portofolio
                     string url = "";
                     string location = "";
                     string imgPath = "";
+                    string lienCheminDeFer = "";
                     long idOldLine = -1;
                     long idLine;
 
@@ -606,6 +607,11 @@ namespace TNS.AdExpressI.Portofolio
                                 // Couverture
                                 couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dr["date_media_num"].ToString() + @"/coe001.jpg";
                                 //url += couvPath + ",";
+                                if (mediaAntidated)
+                                    lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                                else
+                                    lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+
                             }
 
 
@@ -641,7 +647,7 @@ namespace TNS.AdExpressI.Portofolio
                                 }
                             }
 
-                            tmp.DateMediaNum = dr["date_media_num"].ToString();
+                            tmp.DateMediaNum = Dates.YYYYMMDDToDD_MM_YYYY2(dr["date_media_num"].ToString(), WebApplicationParameters.DefaultLanguage);
                             tmp.DateCoverNum = dr["date_cover_num"].ToString();
                             tmp.Advertiser = dr["advertiser"].ToString();
                             tmp.Product = dr["product"].ToString();
@@ -649,7 +655,7 @@ namespace TNS.AdExpressI.Portofolio
                             tmp.Group = dr["group_"].ToString();
                             tmp.MediaPaging = dr["media_paging"].ToString();
 
-                            //tmp.AreaPage = Functions.Units.ConvertUnitValueToString(dr["area_page"].ToString();
+                            //tmp.AreaPage = Units.ConvertUnitValueToString(dr["area_page"].ToString(), TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages, WebApplicationParameters.AllowedLanguages[WebApplicationParameters.DefaultLanguage].CultureInfo);
                             tmp.AreaPage = dr["area_page"].ToString();
 
                             tmp.AreaMmc = dr["area_mmc"].ToString();
@@ -662,7 +668,10 @@ namespace TNS.AdExpressI.Portofolio
                             tmp.RankGroup = dr["rank_group_"].ToString();
                             tmp.RankMedia = dr["rank_media"].ToString();
                             tmp.Media = dr["media"].ToString();
-                            tmp.CouvPath = couvPath;
+
+                            tmp.GroupAdvertisingAgency = dr["GROUP_ADVERTISING_AGENCY"].ToString();
+                            tmp.AdvertisingAgency = dr["ADVERTISING_AGENCY"].ToString();
+                            tmp.IdAddress = dr["id_address"].ToString();
 
                             response.Datas.Add(tmp);
 
@@ -680,6 +689,9 @@ namespace TNS.AdExpressI.Portofolio
 
                     }
                     #endregion
+
+                    response.CouvPath = couvPath;
+                    response.LienCheminDeFer = lienCheminDeFer;
 
                 }
 

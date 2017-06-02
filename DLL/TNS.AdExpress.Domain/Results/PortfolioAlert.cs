@@ -8,6 +8,7 @@ namespace TNS.AdExpress.Domain.Results
         public List<PortfolioAlertData> Datas{ get; set; }
         public PortfolioAlertReminder Reminder{ get; set; }
         public PortfolioAlertParams Parameters{ get; set; }
-
+        public string CouvPath { get; set; }
+        public string LienCheminDeFer { get; set; }
     }
 }

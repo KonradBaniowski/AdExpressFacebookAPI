@@ -8,6 +8,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
     {
         public List<PortfolioAlertData> Datas { get; set; }
         public PortfolioAlertReminder Reminder { get; set; }
-
+        public string CouvPath { get; set; }
+        public string LienCheminDeFer { get; set; }
     }
 }

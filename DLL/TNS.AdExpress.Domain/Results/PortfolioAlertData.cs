@@ -22,6 +22,8 @@ namespace TNS.AdExpress.Domain.Results
         public string RankGroup { get; set; }
         public string RankMedia { get; set; }
         public string Media { get; set; }
-        public string CouvPath { get; set; }
+        public string GroupAdvertisingAgency { get; set; }
+        public string AdvertisingAgency { get; set; }
+        public string IdAddress { get; set; }
     }
 }

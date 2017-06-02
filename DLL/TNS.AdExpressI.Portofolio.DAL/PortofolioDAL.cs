@@ -432,7 +432,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append("LPAD(RTRIM(wp.Media_paging,' '),10,'0') as ChampPage, ");
             sql.Append("wp.id_advertisement, ");
             sql.Append("visual, ");
-            sql.Append("wp.date_cover_num ");
+            sql.Append("wp.date_cover_num, ");
+
+            sql.Append("GROUP_ADVERTISING_AGENCY, ");
+            sql.Append("ADVERTISING_AGENCY, ");
+            sql.Append("gad.id_address ");
 
             // From
             sql.Append(" from " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " wp ");
@@ -446,6 +450,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".location lo ");
             sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".data_location dl ");
 
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".GROUP_ADVERTISING_AGENCY gaa ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".ADVERTISING_AGENCY aa ");
+            sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".GAD gad ");
+
             // Conditions
             sql.Append(" where wp.id_media=" + alertParams.MediaId);
             sql.Append(" and wp.insertion=1 ");
@@ -457,14 +465,27 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append(" and dl.date_media_num(+) =wp.date_media_num ");
             sql.Append(" and dl.id_advertisement (+)=wp.id_advertisement ");
 
+            sql.Append(" and gaa.ID_GROUP_ADVERTISING_AGENCY =wp.ID_GROUP_ADVERTISING_AGENCY ");
+            sql.Append(" and aa.ID_ADVERTISING_AGENCY=wp.ID_ADVERTISING_AGENCY ");
+            sql.Append(" and gad.ID_ADVERTISER = ad.ID_ADVERTISER ");
+
+
             sql.Append(" and co.id_language=" + DBConstantes.Language.FRENCH);
             sql.Append(" and fo.id_language=" + DBConstantes.Language.FRENCH);
             sql.Append(" and lo.id_language (+)=" + DBConstantes.Language.FRENCH);
+
+            sql.Append(" and gaa.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and aa.id_language=" + DBConstantes.Language.FRENCH);
+            sql.Append(" and gad.id_language_i=" + DBConstantes.Language.FRENCH);
 
             sql.Append(" and co.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
             sql.Append(" and fo.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
             sql.Append(" and lo.activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
             sql.Append(" and dl.activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+
+            sql.Append(" and aa.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and gaa.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and gad.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
             sql.Append(" and ad.id_advertiser=wp.id_advertiser ");
             sql.Append(" and pr.id_product=wp.id_product ");

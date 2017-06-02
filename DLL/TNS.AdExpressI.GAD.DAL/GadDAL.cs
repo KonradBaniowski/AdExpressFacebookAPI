@@ -5,6 +5,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.GAD.DAL.Exceptions;
+using TNS.FrameWork.DB.Common;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.GAD.DAL
@@ -31,6 +32,18 @@ namespace TNS.AdExpressI.GAD.DAL
             _session = session;
             _idAddress = idAddress;
         }
+
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="session">source</param>
+        /// <param name="idAddress">id adresss</param>
+        public GadDAL(IDataSource source, string idAddress)
+        {
+            _session = new WebSession {Source = source};
+            _idAddress = idAddress;
+        }
+
         /// <summary>
         /// Get GAD data
         /// </summary>

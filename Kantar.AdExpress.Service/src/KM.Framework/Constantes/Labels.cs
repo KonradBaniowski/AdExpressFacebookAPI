@@ -214,5 +214,14 @@ namespace KM.Framework.Constantes
         public string WithoutAutopromoLabel { get; set; } //527
         public string SubCategoryLabel { get; set; } // 552
         public string SubGroupLabel { get; set; } // 592
+        public string LienCheminDeFerLabel { get; set; }
+        public string GroupAdvertisingAgencyLabel { get; set; } // 1850
+        public string AdvertisingAgencyLabel { get; set; }
+        public string DetailSupportLabel { get; set; } //1378
+
+        // 1851
+
+        // 1397
+
     }
 }

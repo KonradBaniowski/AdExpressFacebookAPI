@@ -1786,6 +1786,7 @@
     <Content Include="Views\Shared\LeFacInfos.cshtml" />
     <Content Include="Views\PortfolioAlert\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPortfolioAlert.cshtml" />
+    <Content Include="Views\PortfolioAlert\DocInfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
