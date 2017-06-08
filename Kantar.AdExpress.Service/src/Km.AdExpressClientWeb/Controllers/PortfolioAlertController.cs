@@ -27,6 +27,11 @@ namespace Km.AdExpressClientWeb.Controllers
 
             Domain.PortfolioAlertResultResponse portfolioAlert = _portfolioAlertService.GetPortfolioAlertResult(alertId, alertTypeId, dateMediaNum, idLanguage);
 
+            //TODO
+            if (portfolioAlert == null || !portfolioAlert.Datas.Any())
+                return View("Error");
+
+
             model.IdLanguage = idLanguage;
             model.AlertDatas = portfolioAlert;
             model.Labels  = LabelsHelper.LoadPageLabels(idLanguage);

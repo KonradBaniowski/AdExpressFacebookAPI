@@ -23,13 +23,13 @@ table.datas-portfolio-alert {
     border-radius: 4px;
 }
 
-table.datas-portfolio-alert tr {
-    border-bottom: 1px solid #eee;
-}
+    table.datas-portfolio-alert tr {
+        border-bottom: 1px solid #eee;
+    }
 
-table.datas-portfolio-alert > tbody > tr > td:first-child {
-    font-weight: bold;
-}
+    table.datas-portfolio-alert > tbody > tr > td:first-child {
+        font-weight: bold;
+    }
 
 #gallery-scroller {
     margin: 0 auto;
@@ -63,28 +63,28 @@ table.datas-portfolio-alert > tbody > tr > td:first-child {
 }
 
     .link:hover {
-        color:#d2b855;
+        color: #d2b855;
         text-decoration: underline;
     }
 
-    .indicator-open-close {
-        border-right: 1px solid grey; 
-        float: left; 
-        padding-right:5px;  
-        margin-right:5px;  
-    }
+.indicator-open-close {
+    border-right: 1px solid grey;
+    float: left;
+    padding-right: 5px;
+    margin-right: 5px;
+}
 
 .glyphicon {
     transition: all .3s linear;
 }
 
-.glyphicon.up {
-    transform: rotateX(0deg);
-}
+    .glyphicon.up {
+        transform: rotateX(0deg);
+    }
 
-.glyphicon.down {
-    transform: rotateX(-180deg);
-}
+    .glyphicon.down {
+        transform: rotateX(-180deg);
+    }
 
 
 @media (max-width:767px) {
@@ -99,5 +99,17 @@ table.datas-portfolio-alert > tbody > tr > td:first-child {
 
     .panel-title, .panel-body {
         font-size: 12px;
+    }
+
+    .reminder-content {
+        font-size: 12px;
+    }
+
+    .navbar-default.navbar-color .navbar-nav > li > a:hover {
+        transform: none;
+    }
+
+    .navbar-nav {
+        float: left;
     }
 }

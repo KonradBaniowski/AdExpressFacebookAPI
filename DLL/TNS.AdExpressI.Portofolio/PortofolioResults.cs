@@ -564,20 +564,19 @@ namespace TNS.AdExpressI.Portofolio
                     #endregion
 
                     #region Couverture du support et Chemin de fer
-                    //if (mediaAntidated)
-                    //    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_media_num"].ToString() + @"\imagette\coe001.jpg";
-                    //else
-                    //    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    string lienCheminDeFer = "";
+                    var visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    if (File.Exists(visuPath) && !mediaIds.Contains(alertParams.MediaId))
+                    {
+                        // Couverture
+                        couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
+                        //url += couvPath + ",";
+                        if (mediaAntidated)
+                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                        else
+                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
 
-                    //if (File.Exists(couvPath) && !mediaIds.Contains(alertParams.MediaId))
-                    //{
-                    //    // Couverture
-                    //    couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/" + @"imagette/coe001.jpg";
-                    //}
-                    //else
-                    //{
-                    //    couvPath = string.Empty;
-                    //}
+                    }
                     #endregion
 
 
@@ -586,7 +585,6 @@ namespace TNS.AdExpressI.Portofolio
                     string url = "";
                     string location = "";
                     string imgPath = "";
-                    string lienCheminDeFer = "";
                     long idOldLine = -1;
                     long idLine;
 
@@ -600,20 +598,6 @@ namespace TNS.AdExpressI.Portofolio
                         {
 
                             tmp.IdAdvertisement = int.Parse(dr["id_advertisement"].ToString());
-
-                            couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
-                            if (File.Exists(couvPath) && !mediaIds.Contains(alertParams.MediaId))
-                            {
-                                // Couverture
-                                couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dr["date_media_num"].ToString() + @"/coe001.jpg";
-                                //url += couvPath + ",";
-                                if (mediaAntidated)
-                                    lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
-                                else
-                                    lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
-
-                            }
-
 
                             if (dr["visual"] != null && dr["visual"] != System.DBNull.Value &&
                                 !mediaIds.Contains(alertParams.MediaId))
