@@ -4,6 +4,7 @@ using Kantar.AdExpress.Service.Core.BusinessService;
 using Domain = Kantar.AdExpress.Service.Core.Domain;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Km.AdExpressClientWeb.Helpers;
 using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Models.PortfolioAlert;
 
@@ -20,8 +21,16 @@ namespace Km.AdExpressClientWeb.Controllers
             _gadService = gadService;
         }
 
-        public async Task<ActionResult> Index(long alertId, long alertTypeId, string dateMediaNum, int idLanguage = 33)
+        public async Task<ActionResult> Index(string aid, string atid, string dmn, string lid = "33")
         {
+            //aid = alert ID
+            //atid = alertTypeId
+            //dmn = dateMediaNum
+            //lid= idLanguage
+            long alertId = long.Parse(SecurityHelper.Decrypt(aid, SecurityHelper.CryptKey));
+            long alertTypeId = long.Parse(SecurityHelper.Decrypt(atid, SecurityHelper.CryptKey));
+            string dateMediaNum = SecurityHelper.Decrypt(dmn, SecurityHelper.CryptKey);
+            int idLanguage = int.Parse(SecurityHelper.Decrypt(lid, SecurityHelper.CryptKey));
 
             PortfolioAlertViewModel model = new PortfolioAlertViewModel();
 

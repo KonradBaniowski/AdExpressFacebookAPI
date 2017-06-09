@@ -48,6 +48,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 response.Reminder = portfolioAlert.Reminder;
                 response.CouvPath = portfolioAlert.CouvPath;
                 response.LienCheminDeFer = portfolioAlert.LienCheminDeFer;
+                response.AdvertisingAgencyRight = portfolioAlert.AdvertisingAgencyRight;
 
                 return response;
 

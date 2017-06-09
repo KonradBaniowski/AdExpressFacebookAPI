@@ -10,5 +10,6 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public PortfolioAlertReminder Reminder { get; set; }
         public string CouvPath { get; set; }
         public string LienCheminDeFer { get; set; }
+        public bool AdvertisingAgencyRight { get; set; }
     }
 }

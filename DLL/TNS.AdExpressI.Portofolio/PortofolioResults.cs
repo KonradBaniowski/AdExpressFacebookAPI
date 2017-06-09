@@ -676,6 +676,7 @@ namespace TNS.AdExpressI.Portofolio
 
                     response.CouvPath = couvPath;
                     response.LienCheminDeFer = lienCheminDeFer;
+                    response.AdvertisingAgencyRight = alertParams.AdvertisingAgencyRight;
 
                 }
 

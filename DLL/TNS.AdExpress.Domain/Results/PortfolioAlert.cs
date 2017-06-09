@@ -10,5 +10,6 @@ namespace TNS.AdExpress.Domain.Results
         public PortfolioAlertParams Parameters{ get; set; }
         public string CouvPath { get; set; }
         public string LienCheminDeFer { get; set; }
+        public bool AdvertisingAgencyRight { get; set; }
     }
 }
