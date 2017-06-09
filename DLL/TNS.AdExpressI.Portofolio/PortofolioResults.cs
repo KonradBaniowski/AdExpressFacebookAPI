@@ -523,14 +523,14 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
-        public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum,int idLanguage)
+        public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage)
         {
             PortfolioAlert response = new PortfolioAlert();
             response.Datas = new List<PortfolioAlertData>();
 
             //Media Ids to exclude because of copyright issue
-            List<long> mediaIds = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
-
+            //List<long> mediaIds = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
+            
 
             try
             {
@@ -558,6 +558,23 @@ namespace TNS.AdExpressI.Portofolio
                     bool mediaAntidated = false;
                     #endregion
 
+
+                    /**/
+                    //TODO
+                    int tmpBaalListId = 365;
+                    var list = Baal.ExtractList.BusinessFacade.ListesSystem.GetFromId(tmpBaalListId);
+
+                    ArrayList levels = (ArrayList)list.Levels;
+
+                    // Listes des supports
+                    var mediaItemsList = list.GetLevelIds(Baal.ExtractList.Constantes.Levels.media);
+                    
+
+                    if (Array.IndexOf(mediaItemsList.Split(','), alertParams.MediaId.ToString()) > -1)
+                        mediaAntidated = true;
+                    /**/
+
+
                     #region Rappel de sélection
                     // Ecriture du rappel avec une méthode qui retour la valeur de la 'cellRow'
                     response.Reminder = GetPortfolioAlertReminder(alertParams);
@@ -566,7 +583,7 @@ namespace TNS.AdExpressI.Portofolio
                     #region Couverture du support et Chemin de fer
                     string lienCheminDeFer = "";
                     var visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
-                    if (File.Exists(visuPath) && !mediaIds.Contains(alertParams.MediaId))
+                    if (File.Exists(visuPath))
                     {
                         // Couverture
                         couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
@@ -574,7 +591,7 @@ namespace TNS.AdExpressI.Portofolio
                         if (mediaAntidated)
                             lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
                         else
-                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
 
                     }
                     #endregion
@@ -599,8 +616,7 @@ namespace TNS.AdExpressI.Portofolio
 
                             tmp.IdAdvertisement = int.Parse(dr["id_advertisement"].ToString());
 
-                            if (dr["visual"] != null && dr["visual"] != System.DBNull.Value &&
-                                !mediaIds.Contains(alertParams.MediaId))
+                            if (dr["visual"] != null && dr["visual"] != System.DBNull.Value)
                             {
                                 // Construction du lien
                                 visuals = dr["visual"].ToString().Split(',');
@@ -669,7 +685,7 @@ namespace TNS.AdExpressI.Portofolio
                             lastAddeddPortfolioAlert.Location = location;
                             response.Datas[response.Datas.Count - 1] = lastAddeddPortfolioAlert;
                         }
-                        
+
 
                     }
                     #endregion
@@ -699,14 +715,14 @@ namespace TNS.AdExpressI.Portofolio
 
 
             #region Univers Famille
-            portfolioAlertReminder.Sectors= new List<string>();
+            portfolioAlertReminder.Sectors = new List<string>();
             if (alertParams.SectorListId.Length > 0)
             {
                 TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSectorLevelListDataAccess sectors = new TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSectorLevelListDataAccess(alertParams.SectorListId, alertParams.LanguageId, source);
                 string[] sectorsList = alertParams.SectorListId.Split(',');
                 foreach (string current in sectorsList)
                 {
-                    portfolioAlertReminder.Sectors.Add(sectors[long.Parse(current)]); 
+                    portfolioAlertReminder.Sectors.Add(sectors[long.Parse(current)]);
                 }
             }
             #endregion

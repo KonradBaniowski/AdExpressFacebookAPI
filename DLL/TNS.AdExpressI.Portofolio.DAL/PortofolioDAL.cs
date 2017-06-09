@@ -519,7 +519,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
 
             sql.Append(" and gaa.ID_GROUP_ADVERTISING_AGENCY =wp.ID_GROUP_ADVERTISING_AGENCY ");
             sql.Append(" and aa.ID_ADVERTISING_AGENCY=wp.ID_ADVERTISING_AGENCY ");
-            sql.Append(" and gad.ID_ADVERTISER = ad.ID_ADVERTISER ");
+            sql.Append(" and gad.ID_ADVERTISER (+)= wp.ID_ADVERTISER ");
 
 
             sql.Append(" and co.id_language=" + DBConstantes.Language.FRENCH);
@@ -528,7 +528,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
 
             sql.Append(" and gaa.id_language=" + DBConstantes.Language.FRENCH);
             sql.Append(" and aa.id_language=" + DBConstantes.Language.FRENCH);
-            sql.Append(" and gad.id_language_i=" + DBConstantes.Language.FRENCH);
+            //sql.Append(" and gad.id_language_i=" + DBConstantes.Language.FRENCH);
 
             sql.Append(" and co.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
             sql.Append(" and fo.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
@@ -537,7 +537,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
 
             sql.Append(" and aa.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
             sql.Append(" and gaa.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-            sql.Append(" and gad.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            //sql.Append(" and gad.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
             sql.Append(" and ad.id_advertiser=wp.id_advertiser ");
             sql.Append(" and pr.id_product=wp.id_product ");
