@@ -681,6 +681,7 @@
     <Content Include="Content\img\sponsorship\3316.png" />
     <Content Include="Content\img\sponsorship\3317.png" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\porfolio-alert.css" />
     <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site-Fi_en.css" />
     <Content Include="Content\site-Fi.css" />
@@ -1785,6 +1786,7 @@
     <Content Include="Views\Shared\LeFacInfos.cshtml" />
     <Content Include="Views\PortfolioAlert\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPortfolioAlert.cshtml" />
+    <Content Include="Views\PortfolioAlert\DocInfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

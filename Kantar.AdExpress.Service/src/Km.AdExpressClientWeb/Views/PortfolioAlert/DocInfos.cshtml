@@ -1,0 +1,48 @@
+﻿@model Kantar.AdExpress.Service.Core.Domain.Gad
+@{
+    ViewBag.Title = "Alerte Portefeuille";
+    Layout = "~/Views/Shared/_LayoutPortfolioAlert.cshtml";
+}
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading head-results bg-violet">
+            <h3 class="panel-title white">
+                @Model.Advertiser
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12 margin-b-20">
+                    <img class="img-responsive" src="~/Content/img/Gad.jpg" alt="DOC MARKETING" />
+                    <div>
+                        <a href="http://www.legroupedapres.com/" target="_blank" class="gadExternalLink"><span id="linkGadLabel">http://www.legroupedapres.com/</span></a><br>
+                        <a href="mailto:contact@legroupedapres.com" target="_blank" class="gadExternalLink"><span id="emailGadLabel">contact@legroupedapres.com</span></a>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-6 col-xs-12">
+                    <div>
+                        <i class="fa fa-bookmark gadIcon"></i><span class="infoGad">@Model.Company</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-map-marker gadIcon"></i>
+                        <span class="infoGad infoGadAddressStreet">@Model.Street&nbsp;@Model.Street2</span><br />
+                        <span class="infoGad infoGadAddress">@Model.CodePostal&nbsp;@Model.Town</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-phone gadIcon"></i><span class="infoGad">@Model.Phone</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-fax gadIcon"></i><span class="infoGad">@Model.Fax</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-envelope gadIcon"></i><span class="infoGad">@Model.Email</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

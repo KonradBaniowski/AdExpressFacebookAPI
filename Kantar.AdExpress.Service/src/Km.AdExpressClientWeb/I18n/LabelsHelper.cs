@@ -185,6 +185,10 @@ namespace Km.AdExpressClientWeb.I18n
                 WithoutAutopromoLabel = GestionWeb.GetWebWord(LanguageConstantes.WithoutAutopromoLabel, siteLanguage),
                 SubCategoryLabel = GestionWeb.GetWebWord(LanguageConstantes.SubCategoryLabel, siteLanguage),
                 SubGroupLabel = GestionWeb.GetWebWord(LanguageConstantes.SubGroupLabel, siteLanguage),
+                NbPage = GestionWeb.GetWebWord(LanguageConstantes.NbPage, siteLanguage),
+                LienCheminDeFerLabel = GestionWeb.GetWebWord(LanguageConstantes.LienCheminDeFerLabel, siteLanguage),
+                GroupAdvertisingAgencyLabel = GestionWeb.GetWebWord(LanguageConstantes.GroupAdvertisingAgencyLabel, siteLanguage),
+                AdvertisingAgencyLabel = GestionWeb.GetWebWord(LanguageConstantes.AdvertisingAgencyLabel, siteLanguage),
 
             };
 

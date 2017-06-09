@@ -13,22 +13,18 @@
 <body class="container-kantar-portfolio-alert">
     <nav class="navbar navbar-default navbar-static-top navbar-color">
         <div class="container">
-            <div class="bb-alert alert alert-info" style="display:none;">
-                <span></span>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <a class="navbar-brand" href="/">
-                    <img src="../Content/img/33/Kantar_Media_BMPro_SW_RGB.png" onError="this.onerror = null; this.src = '../Content/img/Kantar_Media_BMPro_SW_RGB.png';" alt="Ad Express - Kantar Media">
-                </a>
-            </div>
+            <a class="navbar-brand" href="/">
+                <img style="max-width: 250px" src="../Content/img/33/Kantar_Media_BMPro_SW_RGB.png" onError="this.onerror = null;this.src = '../Content/img/Kantar_Media_BMPro_SW_RGB.png';" alt="Ad Express - Kantar Media">
+            </a>
+            
+            <ul class="nav navbar-nav">
+                <li title="Contact">
+                    <a href="@Url.Action("Index", "Contact")">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                </li>
+            </ul>
+
         </div>
     </nav>
     <div class="container">

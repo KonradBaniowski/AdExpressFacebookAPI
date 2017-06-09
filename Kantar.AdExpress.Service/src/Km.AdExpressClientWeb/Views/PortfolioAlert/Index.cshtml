@@ -1,320 +1,291 @@
 ﻿@model  Km.AdExpressClientWeb.Models.PortfolioAlert.PortfolioAlertViewModel
-@using Kantar.AdExpress.Service.Core.Domain;
 @{
     ViewBag.Title = "Alerte Portefeuille";
     Layout = "~/Views/Shared/_LayoutPortfolioAlert.cshtml";
 }
-<style type="text/css">
-    table.main-portfolio-alert {
-    }
-
-        table.main-portfolio-alert tr {
-        }
-
-        table.main-portfolio-alert thead tr {
-            background-color: #dadada;
-        }
-
-    .clickable {
-        cursor: pointer;
-    }
-
-    table.datas-portfolio-alert {
-        width: 100%;
-        background-color: #ffffff;
-        background-color: rgba(238, 238, 238, 0.6);
-        border-radius: 4px;
-    }
-
-        table.datas-portfolio-alert tr {
-            border-bottom: 1px solid #eee;
-        }
-
-        table.datas-portfolio-alert > tbody > tr > td:first-child {
-            font-weight: bold;
-        }
-
-    #gallery-scroller {
-        margin: 0 auto;
-        width: auto;
-        height: auto;
-        overflow: auto;
-    }
-
-    .gallery-scrollbox {
-        float: left;
-        margin-right: -30000px;
-    }
-
-        .gallery-scrollbox div {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            float: left;
-            /*border: 1px solid #eee;*/
-            max-width: 200px;
-        }
-</style>
 
 <div class="row">
 
-
-    <div class="panel panel-default">
-        <div class="panel-heading head-results bg-violet clickable" data-toggle="collapse" data-target="#reminder-panel">
-            <h3 class="panel-title white">
-                @Model.Labels.TableParameters
-            </h3>
-        </div>
-        <div class="panel-body collapse in" id="reminder-panel">
-            <table style="width: 100%;">
-
-                <tr>
-                    <td class="thumbnail col-md-3 col-sm-4 col-xs-3">
-                        <div>
-                            @if (!string.IsNullOrEmpty(Model.AlertDatas.Datas[0].CouvPath))
-                            {
-                                <div>
-                                    <a href="@Model.AlertDatas.Datas[0].CouvPath" target="_blank">
-                                        <img src="@Model.AlertDatas.Datas[0].CouvPath" alt="couverture">
-                                    </a>
-                                </div>
-                            }
-                        </div>
-                    </td>
-
-                    <td class="col-md-9 col-sm-8 col-xs-9">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label text-left" style="margin-left: -10px;"><strong><u>@Model.Labels.VehicleBreakdown.ToUpper()</u></strong></label>
-                        </div>
-                        <div class="form-group text-left">
-                            <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.VehicleLabel : @Model.AlertDatas.Datas[0].Media</strong></label>
-                        </div>
-                        <div class="form-group text-left">
-                            <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.DateLabel : @Model.AlertDatas.Datas[0].DateMediaNum</strong></label>
-                        </div>
-                        @if (Model.AlertDatas.Reminder.Inset)
-                        {
-                            <div class="form-group text-left">
-                                <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithInsetLabel</strong></label>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="form-group text-left">
-                                <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithoutInsetLabel</strong></label>
-                            </div>
-                        }
-
-                        @if (Model.AlertDatas.Reminder.Autopromo)
-                        {
-                            <div class="form-group text-left">
-                                <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithAutopromoLabel</strong></label>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="form-group text-left">
-                                <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithoutAutopromoLabel</strong></label>
-                            </div>
-                        }
-
-                        @if (Model.AlertDatas.Reminder.Sectors.Any())
-                        {
-                            <div class="form-group">
-                                <div class="col-sm-12 control-label text-left">
-                                    <ul class="treeview">
-                                        <li>
-                                            <a href="#">@Model.Labels.SectorLabel</a>
-                                            <ul>
-                                                @foreach (string t in Model.AlertDatas.Reminder.Sectors)
-                                                {
-                                                    <li>
-                                                        <a href="#">@t</a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-
-                        @if (Model.AlertDatas.Reminder.SubSectors.Any())
-                        {
-                            <div class="form-group">
-                                <div class="col-sm-12 control-label text-left">
-                                    <ul class="treeview">
-                                        <li>
-                                            <a href="#">@Model.Labels.SubCategoryLabel</a>
-                                            <ul>
-                                                @foreach (string t in Model.AlertDatas.Reminder.SubSectors)
-                                                {
-                                                    <li>
-                                                        <a href="#">@t</a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-
-                        @if (Model.AlertDatas.Reminder.Groups.Any())
-                        {
-                            <div class="form-group">
-                                <div class="col-sm-12 control-label text-left">
-                                    <ul class="treeview">
-                                        <li>
-                                            <a href="#">@Model.Labels.GroupLabel</a>
-                                            <ul>
-                                                @foreach (string t in Model.AlertDatas.Reminder.Groups)
-                                                {
-                                                    <li>
-                                                        <a href="#">@t</a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-
-                        @if (Model.AlertDatas.Reminder.Segments.Any())
-                        {
-                            <div class="form-group">
-                                <div class="col-sm-12 control-label text-left">
-                                    <ul class="treeview">
-                                        <li>
-                                            <a href="#">@Model.Labels.SubGroupLabel</a>
-                                            <ul>
-                                                @foreach (string t in Model.AlertDatas.Reminder.Segments)
-                                                {
-                                                    <li>
-                                                        <a href="#">@t</a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-
-                    </td>
-                </tr>
-
-            </table>
-        </div>
-    </div>
-
-
     <table class="table main-portfolio-alert">
+
+        <tr class="reminder-header">
+            <th colspan="3" class="col-md-4 col-sm-4 col-xs-6 bg-violet white">
+                <div title="Regrouper" id="hide-all-btn" class="indicator-open-close clickable" style="border:none">
+                    <i class="glyphicon glyphicon-minus"></i>
+                </div>
+                <div title="Dégrouper" id="show-all-btn" class="indicator-open-close clickable" style="border-color: white;">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </div>
+                <div class="indicator-open-close clickable" style="border-color: white;">
+                    <i class="indicator glyphicon glyphicon-chevron-up up"></i>
+                </div>
+
+                @*@Model.Labels.VehicleBreakdown :*@ @Model.AlertDatas.Datas[0].Media - @*@Model.Labels.DateLabel :*@ @Model.AlertDatas.Datas[0].DateMediaNum
+            </th>
+        </tr>
+
+        <tr class="content-row reminder-content">
+
+            <td class="col-md-4 col-sm-4 col-xs-6">
+                @if (!string.IsNullOrEmpty(Model.AlertDatas.CouvPath))
+                {
+                    <div class="hidden-xs"><a class="link" href="@Model.AlertDatas.LienCheminDeFer" target="_blank">@Model.Labels.LienCheminDeFerLabel</a></div>
+                    <div id="gallery-scroller">
+                        <div class="thumbnail gallery-scrollbox">
+                            <div>
+                                <a href="@Model.AlertDatas.CouvPath" target="_blank">
+                                    <img src="@Model.AlertDatas.CouvPath" alt="couverture">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </td>
+
+            <td class="col-md-8 col-sm-8 col-xs-6" colspan="2" valign="bottom">
+                <div class="">
+                    <label class="col-sm-12 control-label text-left" style="margin-left: -10px;"><strong><u>@Model.Labels.VehicleBreakdown.ToUpper()</u></strong></label>
+                </div>
+                <div class="text-left">
+                    <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.VehicleLabel : @Model.AlertDatas.Datas[0].Media</strong></label>
+                </div>
+                <div class="text-left">
+                    <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.DateLabel : @Model.AlertDatas.Datas[0].DateMediaNum</strong></label>
+                </div>
+                @if (Model.AlertDatas.Reminder.Inset)
+                {
+                    <div class="text-left">
+                        <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithInsetLabel</strong></label>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-left">
+                        <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithoutInsetLabel</strong></label>
+                    </div>
+                }
+
+                @if (Model.AlertDatas.Reminder.Autopromo)
+                {
+                    <div class="text-left">
+                        <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithAutopromoLabel</strong></label>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-left">
+                        <label class="col-sm-12 control-label text-left"><strong>@Model.Labels.WithoutAutopromoLabel</strong></label>
+                    </div>
+                }
+
+                @if (Model.AlertDatas.Reminder.Sectors.Any())
+                {
+                    <div class="">
+                        <div class="col-sm-12 control-label text-left">
+                            <ul class="treeview">
+                                <li>
+                                    <a href="#">@Model.Labels.SectorLabel</a>
+                                    <ul>
+                                        @foreach (string t in Model.AlertDatas.Reminder.Sectors)
+                                        {
+                                            <li>
+                                                <a href="#">@t</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.AlertDatas.Reminder.SubSectors.Any())
+                {
+                    <div class="">
+                        <div class="col-sm-12 control-label text-left">
+                            <ul class="treeview">
+                                <li>
+                                    <a href="#">@Model.Labels.SubCategoryLabel</a>
+                                    <ul>
+                                        @foreach (string t in Model.AlertDatas.Reminder.SubSectors)
+                                        {
+                                            <li>
+                                                <a href="#">@t</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.AlertDatas.Reminder.Groups.Any())
+                {
+                    <div class="">
+                        <div class="col-sm-12 control-label text-left">
+                            <ul class="treeview">
+                                <li>
+                                    <a href="#">@Model.Labels.GroupLabel</a>
+                                    <ul>
+                                        @foreach (string t in Model.AlertDatas.Reminder.Groups)
+                                        {
+                                            <li>
+                                                <a href="#">@t</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.AlertDatas.Reminder.Segments.Any())
+                {
+                    <div class="">
+                        <div class="col-sm-12 control-label text-left">
+                            <ul class="treeview">
+                                <li>
+                                    <a href="#">@Model.Labels.SubGroupLabel</a>
+                                    <ul>
+                                        @foreach (string t in Model.AlertDatas.Reminder.Segments)
+                                        {
+                                            <li>
+                                                <a href="#">@t</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </td>
+
+
+        </tr>
+
+
 
         @if (Model.AlertDatas != null && Model.AlertDatas.Datas.Any())
         {
-            int index = 0;
             foreach (var item in Model.AlertDatas.Datas)
             {
+                <tr class="header-row">
+                    <th class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="clickable indicator-open-close">
+                            <i class="indicator glyphicon glyphicon-chevron-up up"></i>
+                        </div>
+                        @Model.Labels.MediaPagingLabel : @item.MediaPaging
+                    </th>
+                    <th class="col-md-8 col-sm-8 col-xs-6">
+                        @if (string.IsNullOrEmpty(item.IdAddress))
+                        {
+                            @item.Advertiser
+                        }
+                        else
+                        {
+                            <a class="link" target="_blank" href="PortfolioAlert/DocInfos?ida=@(item.IdAddress)&aa=@(item.Advertiser)">@item.Advertiser</a>
+                        }
+                    </th>
+                </tr>
 
-                <thead>
-                    <tr class="">
-                        @*<th class="col-md-4 col-sm-6 col-xs-8" data-toggle="collapse" data-target="#data-@(index)">@Model.Labels.VisualsLabel</th>*@
-                        <th class="col-md-4 col-sm-6 col-xs-8" @*data-toggle="collapse" data-target="#data-@(index)"*@>@Model.Labels.MediaPagingLabel : @item.MediaPaging</th>
-                        <th>@item.Advertiser</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr id="data-@(index)">
-                        <td>
-
+                <tr class="content-row">
+                    <td class="col-md-4 col-sm-4 col-xs-6">
+                        @if (!string.IsNullOrEmpty(item.Visuals))
+                        {
                             <div id="gallery-scroller">
+
                                 <div class="thumbnail gallery-scrollbox">
-                                    @if (!string.IsNullOrEmpty(item.Visuals))
+                                    @foreach (string visual in item.Visuals.Split(','))
                                     {
-                                        foreach (string visual in item.Visuals.Split(','))
+                                        if (!string.IsNullOrEmpty(visual))
                                         {
-                                            if (!string.IsNullOrEmpty(visual))
-                                            {
-                                                <div>
-                                                    <a href="@visual" target="_blank">
-                                                        <img src="@visual" alt="visual">
-                                                    </a>
-                                                </div>
-                                            }
+                                            <div>
+                                                <a href="@visual" target="_blank">
+                                                    <img src="@visual" alt="visual">
+                                                </a>
+                                            </div>
                                         }
                                     }
                                 </div>
                             </div>
-                        </td>
+                            <small><i>@Model.Labels.NbPage : @(item.Visuals.Split(',').Length - 1)</i></small>
+                        }
+                    </td>
 
-                        <td colspan="2">
-                            <table class="datas-portfolio-alert">
+                    <td colspan="2" class="col-md-8 col-sm-8 col-xs-6">
+                        <table class="datas-portfolio-alert">
+                            @if (Model.AlertDatas.AdvertisingAgencyRight)
+                            {
                                 <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ProductLabel</td>
-                                    <td class="col-md-5">@item.Product</td>
+                                    <td class="col-md-2 hidden-xs ">@Model.Labels.GroupAdvertisingAgencyLabel</td>
+                                    <td class="col-md-6">@item.GroupAdvertisingAgency</td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.SectorLabel</td>
-                                    <td class="col-md-5">@item.Sector</td>
+                                    <td class="col-md-2 hidden-xs ">@Model.Labels.AdvertisingAgencyLabel</td>
+                                    <td class="col-md-6">@item.AdvertisingAgency</td>
                                 </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.GroupLabel</td>
-                                    <td class="col-md-5">@item.Group</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.MediaPagingLabel</td>
-                                    <td class="col-md-5">@item.MediaPaging</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.AreaPageLabel</td>
-                                    <td class="col-md-5">@item.AreaPage</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.AreaMmcLabel</td>
-                                    <td class="col-md-5">@item.AreaMmc</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ExpenditureEuroLabel</td>
-                                    <td class="col-md-5">@item.ExpenditureEuro</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.LocationLabel</td>
-                                    <td class="col-md-5">@item.Location</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.FormatLabel</td>
-                                    <td class="col-md-5">@item.Format</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.ColorLabel</td>
-                                    <td class="col-md-5">@item.Color</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankSectorLabel</td>
-                                    <td class="col-md-5">@item.RankSector</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankGroupLabel</td>
-                                    <td class="col-md-5">@item.RankGroup</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3 hidden-xs ">@Model.Labels.RankMediaLabel</td>
-                                    <td class="col-md-5">@item.RankMedia</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                </tbody>
-                index++;
+                            }
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ProductLabel</td>
+                                <td class="col-md-6">@item.Product</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.SectorLabel</td>
+                                <td class="col-md-6">@item.Sector</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.GroupLabel</td>
+                                <td class="col-md-6">@item.Group</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.MediaPagingLabel</td>
+                                <td class="col-md-6">@(string.IsNullOrEmpty(item.MediaPaging) ? "N/A" : item.MediaPaging)</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.AreaPageLabel</td>
+                                <td class="col-md-6">@item.AreaPage ‰</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.AreaMmcLabel</td>
+                                <td class="col-md-6">@item.AreaMmc mmc</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ExpenditureEuroLabel</td>
+                                <td class="col-md-6">@item.ExpenditureEuro €</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.LocationLabel</td>
+                                <td class="col-md-6">@item.Location</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.FormatLabel</td>
+                                <td class="col-md-6">@item.Format</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.ColorLabel</td>
+                                <td class="col-md-6">@item.Color</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankSectorLabel</td>
+                                <td class="col-md-6">@item.RankSector - @Model.Labels.SectorLabel</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankGroupLabel</td>
+                                <td class="col-md-6">@item.RankGroup - @Model.Labels.GroupLabel</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 hidden-xs ">@Model.Labels.RankMediaLabel</td>
+                                <td class="col-md-6">@item.RankMedia - @Model.Labels.VehicleLabel</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             }
         }
-
-
 
     </table>
 
@@ -326,13 +297,54 @@
 
 
 @section scripts {
-    @Scripts.Render("~/bundles/cookies")
 
     <script>
-        createCookie("sortKey", "", 1);
-        createCookie("sortOrder", "", 1);
+
+        $(".reminder-header .indicator-open-close").click(function () {
+
+            if ($('.reminder-content').is(":visible")) {
+                $('.reminder-content').hide();
+            } else {
+                $('.reminder-content').show();
+            }
+
+            //Change icon on collapse
+            $(this).find(".glyphicon.indicator").toggleClass("up down");
+        });
+
+        $(".header-row").click(function () {
+            $(this).nextUntil("tr.header-row").slideToggle(10);
+
+            //Change icon on collapse
+            $(this).find(".glyphicon").toggleClass("up down");
+        });
+
+        $("#show-all-btn").click(function () {
+
+            $('tr.content-row[style*="display: none"]').each(function () {
+                $(this).show();
+                $(this).prev().find(".glyphicon.indicator").toggleClass("up down");
+            });
+            $('.reminder-header .indicator-open-close').find(".glyphicon.indicator").toggleClass("up down");
+        });
+
+        $("#hide-all-btn").click(function () {
+
+            $('tr.content-row:visible').each(function () {
+                $(this).hide();
+                $(this).prev().find(".glyphicon.indicator").toggleClass("up down");
+            });
+            $('.reminder-header .indicator-open-close').find(".glyphicon.indicator").toggleClass("up down");
+
+        });
     </script>
+
 }
+
+
+
+
+
 
 
 

@@ -17,6 +17,6 @@ namespace TNS.AdExpress.Domain.Results
         public List<string> EmailList { get; set; }
         public bool Inset { get; set; }
         public bool Autopromo { get; set; }
-
+        public bool AdvertisingAgencyRight { get; set; }
     }
 }

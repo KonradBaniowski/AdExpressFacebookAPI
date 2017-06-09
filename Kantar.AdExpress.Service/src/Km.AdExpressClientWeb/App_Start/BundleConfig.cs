@@ -58,6 +58,13 @@ namespace Km.AdExpressClientWeb
                 .Include("~/Content/spinner.css", new CssRewriteUrlTransform())
                 .Include("~/Content/simple-line-icons.css", new CssRewriteUrlTransform()));
 
+            #region CSS Alerte Portefeuille
+
+            bundles.Add(new StyleBundle("~/Content/css/portfolio-alert"));
+            bundles.Add(new StyleBundle("~/Content/css/portfolio-alert").Include(
+                "~/Content/porfolio-alert.css"
+            ));
+            #endregion
 
             #region CSS spécifique par langues
             //Francais 
@@ -74,6 +81,8 @@ namespace Km.AdExpressClientWeb
                 "~/Content/site-Fi.css"
             ));
             #endregion
+
+            
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                   "~/Scripts/module-selection/module-selection.js"));

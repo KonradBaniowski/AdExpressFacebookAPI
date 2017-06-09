@@ -92,6 +92,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long Quartly = 1295;
         public const long VehicleBreakdown = 1378;
         public const long NbPage = 1385;
+        public const long LienCheminDeFerLabel = 1397;
         public const long TotalInvestLabel = 1399;
         public const long Insertion = 1400;
         public const long FormatLabel = 1420;
@@ -108,6 +109,8 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AreaMmcLabel = 1768;
         public const long LocationLabel = 1769;
         public const long IncompleteDataForQuery = 1787;
+        public const long GroupAdvertisingAgencyLabel = 1850;
+        public const long AdvertisingAgencyLabel = 1851;
         public const long EndDateAfterBeginDate = 1855;
         public const long LevelDetails = 1886;
         public const long CreativeLabel = 1888;
