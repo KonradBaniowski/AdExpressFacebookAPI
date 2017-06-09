@@ -9,6 +9,7 @@ using System.Data;
 using System.Collections;
 using System.Globalization;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Reflection;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -196,6 +197,15 @@ namespace TNS.AdExpressI.Portofolio
             _resultType = resultType;
 
         }
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PortofolioResults()
+        {
+        }
+
         #endregion
 
         #region Implementation of abstract methods
@@ -254,7 +264,7 @@ namespace TNS.AdExpressI.Portofolio
             string insertionPath = "/Insertions";
             string versionPath = "/Creative";
             int tableWidth = 0;
-           
+
             if (resultTable != null)
             {
 
@@ -294,9 +304,9 @@ namespace TNS.AdExpressI.Portofolio
 
                 //Headers
                 string colWidth = "200";
-                if(_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
+                if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
                     colWidth = "50%";
-                if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR 
+                if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR
                     || _webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO)
                     colWidth = "*";
 
@@ -341,7 +351,7 @@ namespace TNS.AdExpressI.Portofolio
 
                                     var cell = resultTable[0, resultTable.NewHeaders.Root[j][g].IndexInResultTable];
                                     groups.Add(GetColumnDef(cell, resultTable.NewHeaders.Root[j][g].Label, ref colKey, colWidth, ref indexInResultTableAllowSortingList, resultTable.NewHeaders.Root[j][g].IndexInResultTable));
-                                    
+
                                     //groups.Add(new { headerText = resultTable.NewHeaders.Root[j][g].Label, key = colKey, dataType = "string", width = colWidth });
                                     schemaFields.Add(new { name = colKey });
                                     tableWidth = tableWidth + 150;
@@ -513,7 +523,255 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
-        private object GetColumnDef(ICell cell, string headerText, ref string key, string width, ref List<int> indexInResultTableAllowSortingList, int indexInResultTable) {
+        public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage)
+        {
+            PortfolioAlert response = new PortfolioAlert();
+            response.Datas = new List<PortfolioAlertData>();
+
+            //Media Ids to exclude because of copyright issue
+            //List<long> mediaIds = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
+            
+
+            try
+            {
+
+                var module = ModulesList.GetModule(WebCst.Module.Name.ANALYSE_PORTEFEUILLE);
+                var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                    , AppDomain.CurrentDomain.BaseDirectory, module.CountryDataAccessLayer.AssemblyName),
+                    module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+
+                // GetData
+                DataTable dt = portofolioDAL.GetPortfolioAlertData(alertId, alertTypeId, dateMediaNum).Tables[0];
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    PortfolioAlertParams alertParams = portofolioDAL.GetPortfolioAlertParams(alertId);
+                    alertParams.LanguageId = idLanguage;
+
+                    #region Variables
+                    int s = 1;
+                    string couvPath = "";
+                    #endregion
+
+                    #region Renseignement des variables
+                    bool mediaAntidated = false;
+                    #endregion
+
+
+                    /**/
+                    //TODO
+                    int tmpBaalListId = 365;
+                    var list = Baal.ExtractList.BusinessFacade.ListesSystem.GetFromId(tmpBaalListId);
+
+                    ArrayList levels = (ArrayList)list.Levels;
+
+                    // Listes des supports
+                    var mediaItemsList = list.GetLevelIds(Baal.ExtractList.Constantes.Levels.media);
+                    
+
+                    if (Array.IndexOf(mediaItemsList.Split(','), alertParams.MediaId.ToString()) > -1)
+                        mediaAntidated = true;
+                    /**/
+
+
+                    #region Rappel de sélection
+                    // Ecriture du rappel avec une méthode qui retour la valeur de la 'cellRow'
+                    response.Reminder = GetPortfolioAlertReminder(alertParams);
+                    #endregion
+
+                    #region Couverture du support et Chemin de fer
+                    string lienCheminDeFer = "";
+                    var visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    if (File.Exists(visuPath))
+                    {
+                        // Couverture
+                        couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
+                        //url += couvPath + ",";
+                        if (mediaAntidated)
+                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                        else
+                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+
+                    }
+                    #endregion
+
+
+                    #region Lignes du tableau
+                    string[] visuals = null;
+                    string url = "";
+                    string location = "";
+                    string imgPath = "";
+                    long idOldLine = -1;
+                    long idLine;
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        PortfolioAlertData tmp = new PortfolioAlertData();
+                        url = "";
+                        idLine = (long)dr["id_advertisement"];
+
+                        if (idLine != idOldLine)
+                        {
+
+                            tmp.IdAdvertisement = int.Parse(dr["id_advertisement"].ToString());
+
+                            if (dr["visual"] != null && dr["visual"] != System.DBNull.Value)
+                            {
+                                // Construction du lien
+                                visuals = dr["visual"].ToString().Split(',');
+                                for (int i = 0; i < visuals.GetLength(0); i++)
+                                {
+                                    if (mediaAntidated)
+                                        imgPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" +
+                                                  alertParams.MediaId + @"\" + dr["date_media_num"].ToString() +
+                                                  @"\imagette\" + visuals[i];
+                                    else
+                                        imgPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" +
+                                                  alertParams.MediaId + @"\" + dr["date_cover_num"].ToString() +
+                                                  @"\imagette\" + visuals[i];
+
+                                    if (File.Exists(imgPath))
+                                    {
+                                        if (mediaAntidated)
+                                            url += @"/ImagesPresse/" + alertParams.MediaId + @"/" +
+                                                   dr["date_media_num"].ToString() + @"/" + visuals[i] + ",";
+                                        else
+                                            url += @"/ImagesPresse/" + alertParams.MediaId + @"/" +
+                                                   dr["date_cover_num"].ToString() + @"/" + visuals[i] + ",";
+                                    }
+                                }
+                                if (url.Length > 0 && url != "")
+                                {
+                                    tmp.Visuals = url;
+                                }
+                            }
+
+                            tmp.DateMediaNum = Dates.YYYYMMDDToDD_MM_YYYY2(dr["date_media_num"].ToString(), WebApplicationParameters.DefaultLanguage);
+                            tmp.DateCoverNum = dr["date_cover_num"].ToString();
+                            tmp.Advertiser = dr["advertiser"].ToString();
+                            tmp.Product = dr["product"].ToString();
+                            tmp.Sector = dr["sector"].ToString();
+                            tmp.Group = dr["group_"].ToString();
+                            tmp.MediaPaging = dr["media_paging"].ToString();
+
+                            //tmp.AreaPage = Units.ConvertUnitValueToString(dr["area_page"].ToString(), TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages, WebApplicationParameters.AllowedLanguages[WebApplicationParameters.DefaultLanguage].CultureInfo);
+                            tmp.AreaPage = dr["area_page"].ToString();
+
+                            tmp.AreaMmc = dr["area_mmc"].ToString();
+                            tmp.ExpenditureEuro = dr["expenditure_euro"].ToString();
+                            location = dr["location"].ToString();
+                            tmp.Location = location;
+                            tmp.Format = dr["format"].ToString();
+                            tmp.Color = dr["color"].ToString();
+                            tmp.RankSector = dr["rank_sector"].ToString();
+                            tmp.RankGroup = dr["rank_group_"].ToString();
+                            tmp.RankMedia = dr["rank_media"].ToString();
+                            tmp.Media = dr["media"].ToString();
+
+                            tmp.GroupAdvertisingAgency = dr["GROUP_ADVERTISING_AGENCY"].ToString();
+                            tmp.AdvertisingAgency = dr["ADVERTISING_AGENCY"].ToString();
+                            tmp.IdAddress = dr["id_address"].ToString();
+
+                            response.Datas.Add(tmp);
+
+                            idOldLine = idLine;
+                        }
+                        else
+                        {
+                            location += ", " + dr["location"].ToString();
+
+                            PortfolioAlertData lastAddeddPortfolioAlert = response.Datas[response.Datas.Count - 1];
+                            lastAddeddPortfolioAlert.Location = location;
+                            response.Datas[response.Datas.Count - 1] = lastAddeddPortfolioAlert;
+                        }
+
+
+                    }
+                    #endregion
+
+                    response.CouvPath = couvPath;
+                    response.LienCheminDeFer = lienCheminDeFer;
+                    response.AdvertisingAgencyRight = alertParams.AdvertisingAgencyRight;
+
+                }
+
+                return response;
+            }
+            catch (System.Exception err)
+            {
+                throw new Exception(err.Message);
+            }
+
+        }
+
+        private PortfolioAlertReminder GetPortfolioAlertReminder(PortfolioAlertParams alertParams)
+        {
+            PortfolioAlertReminder portfolioAlertReminder = new PortfolioAlertReminder();
+            TNS.FrameWork.DB.Common.IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.alert);
+
+            portfolioAlertReminder.Inset = alertParams.Inset;
+            portfolioAlertReminder.Autopromo = alertParams.Autopromo;
+
+
+            #region Univers Famille
+            portfolioAlertReminder.Sectors = new List<string>();
+            if (alertParams.SectorListId.Length > 0)
+            {
+                TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSectorLevelListDataAccess sectors = new TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSectorLevelListDataAccess(alertParams.SectorListId, alertParams.LanguageId, source);
+                string[] sectorsList = alertParams.SectorListId.Split(',');
+                foreach (string current in sectorsList)
+                {
+                    portfolioAlertReminder.Sectors.Add(sectors[long.Parse(current)]);
+                }
+            }
+            #endregion
+
+            #region Univers Classe
+            portfolioAlertReminder.SubSectors = new List<string>();
+            if (alertParams.SubSectorListId.Length > 0)
+            {
+                TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSubSectorLevelListDataAccess subSectors = new TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSubSectorLevelListDataAccess(alertParams.SubSectorListId, alertParams.LanguageId, source);
+                string[] subSectorList = alertParams.SubSectorListId.Split(',');
+                foreach (string current in subSectorList)
+                {
+                    portfolioAlertReminder.SubSectors.Add(subSectors[long.Parse(current)]);
+                }
+            }
+            #endregion
+
+            #region Univers Groupe
+            portfolioAlertReminder.Groups = new List<string>();
+            if (alertParams.GroupListId.Length > 0)
+            {
+                TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialGroupLevelListDataAccess groups = new TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialGroupLevelListDataAccess(alertParams.GroupListId, alertParams.LanguageId, source);
+                string[] groupsList = alertParams.GroupListId.Split(',');
+                foreach (string current in groupsList)
+                {
+                    portfolioAlertReminder.Groups.Add(groups[long.Parse(current)]);
+                }
+            }
+            #endregion
+
+            #region Univers Variété
+            portfolioAlertReminder.Segments = new List<string>();
+            if (alertParams.SegmentListId.Length > 0)
+            {
+                TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSegmentLevelListDataAccess segments = new TNS.AdExpress.DataAccess.Classification.ProductBranch.PartialSegmentLevelListDataAccess(alertParams.SegmentListId, alertParams.LanguageId, source);
+                string[] segmentsList = alertParams.SegmentListId.Split(',');
+                foreach (string current in segmentsList)
+                {
+                    portfolioAlertReminder.Segments.Add(segmentsList[long.Parse(current)]);
+                }
+            }
+            #endregion
+
+            return portfolioAlertReminder;
+
+        }
+
+        private object GetColumnDef(ICell cell, string headerText, ref string key, string width, ref List<int> indexInResultTableAllowSortingList, int indexInResultTable)
+        {
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
@@ -1049,9 +1307,9 @@ namespace TNS.AdExpressI.Portofolio
                 //OLD: A tester partout car le support es tmaintenant mis dans _webSession.PrincipalMediaUniverses.
                 //if (_webSession.ReferenceUniversMedia != null && _webSession.ReferenceUniversMedia.Nodes.Count > 0)
                 //    return (((LevelInformation)_webSession.ReferenceUniversMedia.FirstNode.Tag).ID);
-                                 
-                        var items = _webSession.PrincipalMediaUniverses[0].GetIncludes();
-                        return items.First().Get(TNSClassificationLevels.MEDIA).First();
+
+                var items = _webSession.PrincipalMediaUniverses[0].GetIncludes();
+                return items.First().Get(TNSClassificationLevels.MEDIA).First();
 
             }
             catch (System.Exception err)
@@ -1381,7 +1639,7 @@ namespace TNS.AdExpressI.Portofolio
                     if (!valuesListSize.ContainsKey(oldUnitId))
                         valuesListSize.Add(oldUnitId, nbItem);
                 }
-                valuesListSize[oldUnitId] = nbItem; 
+                valuesListSize[oldUnitId] = nbItem;
 
                 //Set chart values
                 oldUnitId = -1;
@@ -1393,7 +1651,7 @@ namespace TNS.AdExpressI.Portofolio
                         var gr = new GridResult();
                         gr.Title = dr["unitLabel"].ToString();
                         xValues = new string[valuesListSize[long.Parse(dr["idUnit"].ToString())]];
-                        gr.Data = new object[xValues.Length , 2];
+                        gr.Data = new object[xValues.Length, 2];
                         gridResult.Add(gr);
                         currentLine = 0;
                     }
@@ -1403,7 +1661,7 @@ namespace TNS.AdExpressI.Portofolio
 
                     oldUnitId = long.Parse(dr["idUnit"].ToString());
                     currentLine++;
-                    
+
                 }
             }
             #endregion

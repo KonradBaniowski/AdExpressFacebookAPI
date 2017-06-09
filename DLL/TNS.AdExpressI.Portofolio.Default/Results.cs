@@ -50,6 +50,13 @@ namespace TNS.AdExpressI.Portofolio.Default {
             : base(webSession, resultType)
         {
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Results()
+        {
+        }
         #endregion
 
     }

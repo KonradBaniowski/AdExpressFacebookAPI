@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.Alert.Domain;
 
 namespace Kantar.AdExpress.Service.Core.BusinessService
 {
-    public interface IGadService
+    public interface IPortfolioAlertService
     {
-        Gad GetGadInfos(string idWebSession, string idAddress, string advertiser, HttpContextBase httpContext);
-
-        Gad GetGadInfos(string idAddress, string advertiser, HttpContextBase httpContext);
+        PortfolioAlertResultResponse GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage);
     }
 }

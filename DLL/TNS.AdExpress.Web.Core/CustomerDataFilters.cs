@@ -1161,6 +1161,11 @@ namespace TNS.AdExpress.Web.Core
                 {
                     rights.Add(CstCustomer.Right.type.brandAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.brandAccess]);
                 }
+                // Product in access		
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.productAccess].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.productAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.productAccess]);
+                }
                 //Get products rights in exception	
                 // Advertiser in exception
                 if (_customerSession.CustomerLogin[CstCustomer.Right.type.advertiserException].Length > 0)
@@ -1172,6 +1177,11 @@ namespace TNS.AdExpress.Web.Core
                 if (_customerSession.CustomerLogin[CstCustomer.Right.type.brandException].Length > 0)
                 {
                     rights.Add(CstCustomer.Right.type.brandException, _customerSession.CustomerLogin[CstCustomer.Right.type.brandException]);
+                }
+                // Product in exception
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.productException].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.productException, _customerSession.CustomerLogin[CstCustomer.Right.type.productException]);
                 }
             }
             return rights;

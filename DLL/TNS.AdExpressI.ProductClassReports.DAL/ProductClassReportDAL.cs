@@ -427,10 +427,14 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                  || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.excludes)
                   || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes)
                   || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.excludes)
+                   || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes)
+                  || _session.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.excludes)
                  || _session.CustomerLogin[CstRight.type.advertiserException].Length > 0
                  || _session.CustomerLogin[CstRight.type.advertiserAccess].Length > 0
                   || _session.CustomerLogin[CstRight.type.brandAccess].Length > 0
-                 || _session.CustomerLogin[CstRight.type.brandException].Length > 0);
+                 || _session.CustomerLogin[CstRight.type.brandException].Length > 0
+                  || _session.CustomerLogin[CstRight.type.productAccess].Length > 0
+                 || _session.CustomerLogin[CstRight.type.productException].Length > 0);
         }
 
         /// <summary>

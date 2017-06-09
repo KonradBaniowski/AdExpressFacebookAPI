@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Results;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
@@ -68,5 +69,14 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns></returns>
         DataSet TableOfIssue();
+
+        DataSet GetPortfolioAlertData(long alertId, long alertTypeId, string dateMediaNum);
+
+        PortfolioAlertParams GetPortfolioAlertParams(long alertId);
+
+        //DataSet GetPortfolioAlertParamsUniverse(long alertId);
+
+        //DataSet GetPortfolioAlertParamsFlag(long alertId);
+
     }
 }
