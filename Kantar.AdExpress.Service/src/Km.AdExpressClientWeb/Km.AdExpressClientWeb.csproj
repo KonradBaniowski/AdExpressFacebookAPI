@@ -1605,6 +1605,7 @@
     <Content Include="fonts\Simple-Line-Icons.ttf" />
     <Content Include="fonts\Simple-Line-Icons.woff" />
     <Content Include="fonts\Simple-Line-Icons.woff2" />
+    <None Include="Properties\PublishProfiles\AdExpress Release.pubxml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\DEMO_FINLAND.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
