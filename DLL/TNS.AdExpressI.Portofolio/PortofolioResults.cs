@@ -582,16 +582,24 @@ namespace TNS.AdExpressI.Portofolio
 
                     #region Couverture du support et Chemin de fer
                     string lienCheminDeFer = "";
-                    var visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    string visuPath;
+                    if (mediaAntidated)
+                        visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_media_num"].ToString() + @"\imagette\coe001.jpg";
+                    else
+                        visuPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParams.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
                     if (File.Exists(visuPath))
                     {
-                        // Couverture
-                        couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
                         //url += couvPath + ",";
                         if (mediaAntidated)
+                        {
                             lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                            couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
+                        }
                         else
+                        {
                             lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                            couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_cover_num"].ToString() + @"/coe001.jpg";
+                        }
 
                     }
                     #endregion
