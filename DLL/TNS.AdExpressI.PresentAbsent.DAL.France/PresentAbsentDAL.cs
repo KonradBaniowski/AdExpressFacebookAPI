@@ -40,6 +40,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
             {
                 // Get table name and date field according to the table type parameter
                 string dateField;
+                string adexprSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
                 switch (type)
                 {
                     case CstDB.TableType.Type.dataVehicle4M:
@@ -88,11 +89,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
                 {
                     if (type == CstDB.TableType.Type.webPlan)
                     {
-                        groupByOptional = string.Format(",{0}.list_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = $",{adexprSchema}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.list_banners) ";
                     }
                     else
                     {
-                        groupByOptional = string.Format(",{0}.hashcode ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = $",{WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.hashcode ";
                     }
                 }
 

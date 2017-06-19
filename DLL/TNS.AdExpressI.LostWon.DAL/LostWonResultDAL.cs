@@ -673,7 +673,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     }
                     else
                     {
-                        groupOptional = string.Format(", {0}.{1} ", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
+                        groupOptional = $", {WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label}.LISTNUM_TO_CHAR({DATA_TABLE_PREFIXE}.{u.DatabaseMultimediaField}) ";
                     }
                 }
 
@@ -932,7 +932,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 }
                 else
                 {
-                    groupOptional = string.Format(", {0}.{1}", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
+                    groupOptional = $", {WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label}.LISTNUM_TO_CHAR({DATA_TABLE_PREFIXE}.{u.DatabaseMultimediaField}) ";
                 }
             }
             else

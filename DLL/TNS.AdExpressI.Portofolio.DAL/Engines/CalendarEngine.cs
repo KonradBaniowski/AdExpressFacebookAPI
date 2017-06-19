@@ -249,7 +249,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitInformation.Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         else
-                            sql.AppendFormat("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}) as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         return sql.ToString();
                     }
                     catch {

@@ -8,6 +8,7 @@ using System;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using Module = TNS.AdExpress.Domain.Web.Navigation.Module;
 
 namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
@@ -36,7 +37,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
         protected override string GetBannerGroupByOptional(AdExpress.Constantes.DB.TableType.Type type)
         {
             string groupByOptional = string.Format(type == AdExpress.Constantes.DB.TableType.Type.webPlan
-                                                       ? ",{0}.list_banners " : ",{0}.HASHCODE ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                                                       ? ",{0}.LISTNUM_TO_CHAR({1}.list_banners) " : ",{1}.HASHCODE ", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             return groupByOptional;
         }
 
