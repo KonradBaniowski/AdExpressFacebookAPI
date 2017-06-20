@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerte Portefeuille</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/portfolio-alert")
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
+</head>
+
+<body class="container-kantar-portfolio-alert">
+    <nav class="navbar navbar-default navbar-static-top navbar-color">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img style="max-width: 250px" src="../Content/img/33/Kantar_Media_BMPro_SW_RGB.png" onError="this.onerror = null;this.src = '../Content/img/Kantar_Media_BMPro_SW_RGB.png';" alt="Ad Express - Kantar Media">
+            </a>
+            
+            <ul class="nav navbar-nav">
+                <li title="Contact">
+                    <a href="@Url.Action("Index", "Contact")">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <div class="modal fade" id="loader" tabindex="-1">
+        <div class="modal-dialog">
+            <div id="spinner-loader">
+                <div class='uil-ring-css' style=''><div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="current-url" value="/Home/Index" />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajax")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

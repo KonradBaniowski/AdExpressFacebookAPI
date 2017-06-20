@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyExportController.cs" />
+    <Compile Include="Controllers\PortfolioAlertController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
     <Compile Include="Controllers\CampaignAnalysisController.cs" />
     <Compile Include="Controllers\CompaignAnalysisExportController.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NavigationBarViewModel.cs" />
+    <Compile Include="Models\PortfolioAlert\PortfolioAlertViewModel.cs" />
     <Compile Include="Models\Shared\ExportResultModel.cs" />
     <Compile Include="Models\Shared\ExportTypeViewModel.cs" />
     <Compile Include="Models\Shared\InsertionCreativeViewModel.cs" />
@@ -679,6 +681,7 @@
     <Content Include="Content\img\sponsorship\3316.png" />
     <Content Include="Content\img\sponsorship\3317.png" />
     <Content Include="Content\options-control.css" />
+    <Content Include="Content\porfolio-alert.css" />
     <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site-Fi_en.css" />
     <Content Include="Content\site-Fi.css" />
@@ -1782,6 +1785,9 @@
     <Content Include="Views\Health\Results.cshtml" />
     <Content Include="Views\Shared\_LayoutPublicContact.cshtml" />
     <Content Include="Views\Shared\LeFacInfos.cshtml" />
+    <Content Include="Views\PortfolioAlert\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPortfolioAlert.cshtml" />
+    <Content Include="Views\PortfolioAlert\DocInfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

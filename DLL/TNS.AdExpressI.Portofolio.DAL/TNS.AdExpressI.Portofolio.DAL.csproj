@@ -71,7 +71,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
@@ -93,6 +93,10 @@
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{a4dede88-c99e-495f-98f2-e2762520f4be}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>

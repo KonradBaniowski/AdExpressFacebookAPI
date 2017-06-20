@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ADC28A58-B6D2-43CB-877B-BD520B868D8C}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>TNS.Isis</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TNS.Isis</RootNamespace>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/TNS.Isis/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>TNSIsis.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>TNSIsis.xml</DocumentationFile>
+    <FileAlignment>4096</FileAlignment>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TNS.Isis.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <Optimize>true</Optimize>
+    <FileAlignment>4096</FileAlignment>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TNS.Isis.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.Isis.AdExpress.Classification\TNS.Isis.AdExpress.Classification.csproj">
+      <Name>TNS.Isis.AdExpress.Classification</Name>
+      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Isis.AdExpress.Constantes\TNS.Isis.AdExpress.Constantes.csproj">
+      <Name>TNS.Isis.AdExpress.Constantes</Name>
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Customer.DB\TNS.Customer.DB.csproj">
+      <Project>{56A6B24B-0681-4675-9B83-05A0D36AAC00}</Project>
+      <Name>TNS.Customer.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Isis.Constantes\TNS.Isis.Constantes.csproj">
+      <Project>{de7bfdd7-b3b6-499f-b065-752ba8ff84e8}</Project>
+      <Name>TNS.Isis.Constantes</Name>
+    </ProjectReference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\Isis\Bin\11.2g\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\Isis\Bin\11.2g\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Localization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\TNS.Isis.Localization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\AlertBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\AlertScheduleBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\AlertUniverseBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\FormatBusinessFacade.cs" />
+    <Compile Include="BusinessFacade\AdExpress\P3BusinessFacade.cs" />
+    <Compile Include="BusinessFacade\AdExpress\LoginBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\MediaBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\ModuleBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\OrderClientBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AdExpress\ProductBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\AllProjects\FrequencyBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\AssignedProjectBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\IsisConfigurationBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\LoginPasswordBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\NumberBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\OrderTemplateBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\TemplateBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\Core\TreeNodeBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BusinessFacade\EasyMusic\MediaBusinessFacade.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ModuleOrFlagAssignment.cs" />
+    <Compile Include="Common\Core\AssignedProject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Core\Authentification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Core\IsisConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Functions.cs" />
+    <Compile Include="Common\Hours.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\InfoListBox.cs" />
+    <Compile Include="Common\Item.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ListViewItemComparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\PasswordGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ProjectConnectionDataBase.cs" />
+    <Compile Include="DataAccess\AdExpress\AlertDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\AdExpress\AlertScheduleDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\AdExpress\AlertUniverseDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\AdExpress\CustomerDirectoryDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\FlagRightDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\FormatDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\ModuleRightDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\ModuleRightDuplicateDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\P3DataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\LoginDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\AdExpress\SessionsDirectoryDataAccess.cs" />
+    <Compile Include="DataAccess\AdExpress\UniverseDirectoryDataAccess.cs" />
+    <Compile Include="DataAccess\AllProjects\FrequencyDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\AllProjects\ModuleCategoryDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\AssignedProjectDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\AuthentificationDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\ConnectionStringByProjectDataAccess.cs" />
+    <Compile Include="DataAccess\Core\ContactGroupDataTable.cs" />
+    <Compile Include="DataAccess\Core\CurrentProfileDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\IsisConfigurationDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\TemplateDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Core\UserLoginDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\EasyMusic\MediaDataAccess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Logins\CreateUserDataAccess.cs" />
+    <Compile Include="DataAccess\Logins\ModifyUserDataAccess.cs" />
+    <Compile Include="DataAccess\Logins\ModuleLoginDataAccess.cs" />
+    <Compile Include="DataAccess\Logins\ProjectLoginsDataAccess.cs" />
+    <Compile Include="DataAccess\Logins\VerifyRoleAssignmentDataAcess.cs" />
+    <Compile Include="DataAccess\Logins\VerifyUserDataAcess.cs" />
+    <Compile Include="Exceptions\AlertBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertScheduleBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertScheduleDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertUniverseBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AlertUniverseDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AssignedProjectBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AssignedProjectDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AuthentificationDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\AuthentificationException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ConnectionStringByProjectDataAccessException.cs" />
+    <Compile Include="Exceptions\CurrentProfileDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CustomerDirectoryDataAccessException.cs" />
+    <Compile Include="Exceptions\FlagRightDataAccessException.cs" />
+    <Compile Include="Exceptions\FrequencyBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\FrequencyDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IsisConfigurationBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\IsisConfigurationDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoginBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoginDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoginPasswordBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\LoginRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\MediaRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModifyIsisLoginException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModuleBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModuleCategoryDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ModuleLoginDataAccessException.cs" />
+    <Compile Include="Exceptions\ModuleRightDataAccessException.cs" />
+    <Compile Include="Exceptions\ModuleRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\NumberBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\OrderClientBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\OrderClientRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\OrderTemplateBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\OrderTemplateRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProductBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProductRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\ProjectLoginsDataAccessException.cs" />
+    <Compile Include="Exceptions\TemplateBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TemplateDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TemplateRulesException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\TreeNodeBusinessFacadeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\UserLoginDataAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\VerifyIsisLoginException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\AdExpress\LoginRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\AdExpress\MediaRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\AdExpress\ModuleRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\AdExpress\OrderClientRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\AdExpress\ProductRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Core\LoginPasswordRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Core\NumberRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Core\OrderTemplateRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Core\TemplateRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rules\Core\TreeNodeRules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Resources\TNS.Isis.Global.en.xml" />
+    <Content Include="Resources\TNS.Isis.Global.neutral.xml" />
+    <Content Include="Resources\TNS.Isis.Project.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataAccess\Core\ContactGroupDataTable.resx">
+      <DependentUpon>ContactGroupDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"C:\Program Files\TNS\Erasmus\Tools\Erasmus" "$(ProjectDir)\Resources\TNS.Isis.Project.xml"</PreBuildEvent>
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

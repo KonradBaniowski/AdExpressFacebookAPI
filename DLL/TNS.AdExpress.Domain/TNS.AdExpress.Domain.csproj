@@ -124,6 +124,10 @@
     <Compile Include="Results\GridResultExport.cs" />
     <Compile Include="Results\InfragisticColumn.cs" />
     <Compile Include="Results\InfragisticData.cs" />
+    <Compile Include="Results\PortfolioAlertData.cs" />
+    <Compile Include="Results\PortfolioAlertReminder.cs" />
+    <Compile Include="Results\PortfolioAlertParams.cs" />
+    <Compile Include="Results\PortfolioAlert.cs" />
     <Compile Include="Results\RolexConfigurationDetail.cs" />
     <Compile Include="Results\DateConfigurations.cs" />
     <Compile Include="Results\VpConfigurationDetail.cs" />

@@ -421,6 +421,14 @@ namespace TNS.AdExpress
                             if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
                                 _rights.Add(CustomerCst.Right.type.brandException, row[0].ToString().Split(','));
 
+                            //Product in access
+                            if ((Int64)row[2] == MediaProductIdType.ID_PRODUCT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.productAccess, row[0].ToString().Split(','));
+
+                            // Product in exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_PRODUCT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                                _rights.Add(CustomerCst.Right.type.productException, row[0].ToString().Split(','));
+
                             //VP Segment in access
                             if ((Int64)row[2] == MediaProductIdType.ID_VP_SEGMENT_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
                                 _rights.Add(CustomerCst.Right.type.vpSegmentAccess, row[0].ToString().Split(','));
@@ -499,6 +507,10 @@ namespace TNS.AdExpress
                         AddRights(row, MediaProductIdType.ID_BRAND_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.brandAccess);
                         //marque en exception
                         AddRights(row, MediaProductIdType.ID_BRAND_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.brandException);
+                        //Product in access                      
+                        AddRights(row, MediaProductIdType.ID_PRODUCT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.productAccess);
+                        //product in exception
+                        AddRights(row, MediaProductIdType.ID_PRODUCT_TYPE, ExceptionValues.IS_EXCEPTION, CustomerCst.Right.type.productException);
                         //VP Segment in access
                         AddRights(row, MediaProductIdType.ID_VP_SEGMENT_TYPE, ExceptionValues.IS_NOT_EXCEPTION, CustomerCst.Right.type.vpSegmentAccess);
                         //VP Segment in exception
