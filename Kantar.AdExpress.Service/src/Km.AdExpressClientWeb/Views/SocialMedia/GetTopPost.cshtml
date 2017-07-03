@@ -14,24 +14,24 @@
         <div class="col-lg-4 text-center">
 
             <a class="triggerModal" href='#postFacebookModal' data-toggle='modal' data-creative="@(post.IdPostFacebook)">
-                <img src="@Url.Action("GetPostImage", "Image", new { itemId = post.IdPost })" class="img-responsive center" alt="@(post.PageName)">
+                <img src="@Url.Action("GetPostImage", "Image", new { idPostFacebook = post.IdPostFacebook, idPost = post.IdPost })" class="img-responsive center" alt="@(post.PageName)">
             </a>
 
             @Html.Hidden(post.NumberComments, null, new { @id = "comment-" + counter })
-            @Html.Hidden(post.NumberLikes,null, new { @id = "like-" + counter })
+            @Html.Hidden(post.NumberLikes, null, new { @id = "like-" + counter })
             @Html.Hidden(post.NumberShares, null, new { @id = "share-" + counter })
         </div>
     }
-   
+
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12  margin-top-30" id="post-id">
     <div class="col-lg-4">
         <div id="chart-1" class="stackChart div-center">
-            
-        </div> 
+
+        </div>
     </div>
     <div class="col-lg-4">
-        <div id="chart-2"  class="stackChart div-center">
+        <div id="chart-2" class="stackChart div-center">
 
         </div>
     </div>
