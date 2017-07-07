@@ -254,6 +254,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
                 //Get Table GAD
                 Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+                if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                    tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
 
                 // Get classification fields
                 if (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
@@ -708,6 +710,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
                 //Get Table GAD
                 Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+                if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                    tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
 
                 // Get the classification table
                 productTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);

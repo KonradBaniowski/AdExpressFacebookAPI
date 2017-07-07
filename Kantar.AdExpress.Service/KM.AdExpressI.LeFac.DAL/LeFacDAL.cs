@@ -42,29 +42,24 @@ namespace KM.AdExpressI.LeFac.DAL
 
             #region Construction de la requête
             var sql = new StringBuilder();
-            sql.Append("select distinct adv.siret_number,ad.company, ad.street, ad.street2, ad.code_postal, ad.town,");
-            sql.Append(" ct.telephone, ct.fax, ct.email ");
-
-            // intégration Doc Marketing 
-            sql.AppendFormat(", gd.id_gad");
-            sql.AppendFormat(", (select doc_marketing_key from {0}.DOC_MARKETING_KEY where date_media_num=to_number(to_char(sysdate, 'yyyyMMdd'))) as docKey", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label);
-            //fin modif
+            sql.Append("select distinct ad.company, ad.street, ad.street2, ad.code_postal, ad.town,");
+            sql.Append(" ct.siren_number, ct.telephone, ct.fax, ct.email ");
 
             string adexSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
             sql.AppendFormat(" from {0}.address ad, {0}.contact ct ", adexSchema);
 
-            sql.AppendFormat(",{0}.GAD gd", adexSchema);
+            sql.AppendFormat(",{0}.FAC fa", adexSchema);
 
             sql.AppendFormat(",{0}.ADVERTISER adv", adexSchema);
 
             sql.AppendFormat(" where ad.id_address={0}", _idAddress);
-            sql.Append(" and gd.id_advertiser=adv.id_advertiser ");
+            sql.Append(" and fa.id_advertiser=adv.id_advertiser ");
             sql.Append(" and ad.id_address=ct.id_address ");
             sql.AppendFormat(" and ad.activation<{0}", DBConstantes.ActivationValues.UNACTIVATED);
             sql.AppendFormat(" and ct.activation<{0}", DBConstantes.ActivationValues.UNACTIVATED);
 
-            sql.AppendFormat(" and gd.activation < {0} ", DBConstantes.ActivationValues.UNACTIVATED);
-            sql.AppendFormat(" and gd.id_address(+)=ad.id_address ");
+            sql.AppendFormat(" and fa.activation < {0} ", DBConstantes.ActivationValues.UNACTIVATED);
+            sql.AppendFormat(" and fa.id_address(+)=ad.id_address ");
             #endregion
 
             #region Execution de la requête

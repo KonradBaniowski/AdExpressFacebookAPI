@@ -691,7 +691,11 @@ namespace TNS.AdExpressI.LostWon.DAL
                 {
                     try
                     {
-                        dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                            dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForLeFac(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        else
+                            dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+
                         dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
                         dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
                     }

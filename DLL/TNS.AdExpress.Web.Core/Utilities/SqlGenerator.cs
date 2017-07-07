@@ -3144,7 +3144,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #endregion
 
-        #region Gad
+        #region Gad / LeFac
 
         /// <summary>
         /// Détermine la table contenant les adresses Gad des annonceurs
@@ -3156,6 +3156,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             return (DBConstantes.Tables.GAD);
         }
+
+        /// <summary>
+        /// Détermine la table contenant les adresses Gad des annonceurs
+        /// </summary>
+        /// <exception cref="/TNS.AdExpress.Web.Exceptions.SQLGeneratorException">Le niveau de détail produit demandé ne gère pas les données du gad</exception>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>Nom de la table</returns>
+        public static string GetTablesForLeFac(WebSession webSession)
+        {
+            return (DBConstantes.Tables.LEFAC);
+        }
+        
 
         /// <summary>
         /// Détermine le champ addresse du gad

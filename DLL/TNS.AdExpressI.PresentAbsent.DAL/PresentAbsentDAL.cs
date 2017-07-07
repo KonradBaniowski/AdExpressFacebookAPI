@@ -762,6 +762,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
 
             //Get Table GAD
             Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+            if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
 
             StringBuilder sql = new StringBuilder();
             string columnDetailLevel = string.Empty;

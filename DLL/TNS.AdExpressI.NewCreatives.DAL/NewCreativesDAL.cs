@@ -146,7 +146,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
-                        dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+
+                        if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                            dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForLeFac(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        else
+                            dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
                         dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
                         dataJointForGad = "and " + SQLGenerator.GetJointForGad(table.Prefix);
                     }

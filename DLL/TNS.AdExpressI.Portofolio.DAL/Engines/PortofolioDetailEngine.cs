@@ -219,8 +219,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					dataJointForInsert = SQLGenerator.GetJointForInsertDetail(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
 					try {
-						dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
-						dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
+                        if (_webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                            dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac).SqlWithPrefix;
+                        else
+                            dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
+                        dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
 						dataJointForGad = "and " + SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 					}
 					catch (PortofolioDALException) { ;}

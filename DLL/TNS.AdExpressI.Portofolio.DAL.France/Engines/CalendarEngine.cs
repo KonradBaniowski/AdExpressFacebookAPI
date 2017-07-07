@@ -81,7 +81,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
                 {
                     try
                     {
-                        dataTableNameForGad = dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
+                        if (_webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                            dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac).SqlWithPrefix;
+                        else
+                            dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
                         dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
                         dataJointForGad = "and " + SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     }

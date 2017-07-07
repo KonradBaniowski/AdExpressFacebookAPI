@@ -37,8 +37,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string phone = string.Empty;
                 string fax = string.Empty;
                 string email = string.Empty;
-                string docMarketingId = string.Empty;
-                string docMarketingKey = string.Empty;
                 string docMarketingTarget = string.Empty;
 
                 foreach (DataRow myRow in data.Tables[0].Rows)
@@ -52,24 +50,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     phone = myRow["telephone"].ToString();
                     fax = myRow["fax"].ToString();
                     email = myRow["email"].ToString();
-                    //if (customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.gad.GetHashCode()))
-                    //{
-                        docMarketingId = myRow["id_gad"].ToString();
-                        docMarketingKey = myRow["docKey"].ToString();
-                    //}
-                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(Flags.ID_CODE_SIRET_ACCESS_FLAG) && myRow["siret_number"] != DBNull.Value)
-                    {
-                        siren = myRow["siret_number"].ToString();
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(company) && !string.IsNullOrEmpty(docMarketingId))
-                {
-                    docMarketingTarget = string.Format("http://www3.docmarketing.fr/front/societe/{0},{1}.html", company, docMarketingId);
-                }
-                else
-                {
-                    docMarketingTarget = "";
+                    siren = myRow["siren_number"].ToString();
                 }
 
                 leFac = new LeFac

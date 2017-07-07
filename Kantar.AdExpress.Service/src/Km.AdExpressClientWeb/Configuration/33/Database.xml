@@ -62,6 +62,7 @@
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
     <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
+    <table enumId="270" description="Data: LEFAC" schemaEnumId="0" label="fac" prefix="gd"/>
 
     <table enumId="29" description="Customer Session: navigation session" schemaEnumId="5" label="nav_session" prefix="nvs"/>
     <table enumId="30" description="Customer Session: customer saved session" schemaEnumId="5" label="my_session" prefix="mys"/>

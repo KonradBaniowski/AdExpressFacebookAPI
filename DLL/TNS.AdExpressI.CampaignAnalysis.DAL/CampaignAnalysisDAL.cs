@@ -85,6 +85,9 @@ namespace TNS.AdExpressI.CampaignAnalysis.DAL
                     try
                     {
                         dataTableNameForGad = ", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.GAD + " " + DBConstantes.Tables.GAD_PREFIXE;
+                        if (webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                            dataTableNameForGad = ", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.LEFAC + " " + DBConstantes.Tables.GAD_PREFIXE;
+
                         dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
                         dataFieldsForGadWithoutTablePrefix = " , " + SQLGenerator.GetFieldsAddressForGad("");
                         dataJointForGad = " and " + SQLGenerator.GetJointForGad(DbTables.DATA_SPONSORSHIP_PREFIXE);
