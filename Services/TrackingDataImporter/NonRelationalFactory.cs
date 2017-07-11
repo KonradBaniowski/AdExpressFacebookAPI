@@ -53,7 +53,7 @@ namespace OracleDataToJson
 
         public string AggregateTrackedLoginsDataMongoDb(string collectionName)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             try
             {
                 IMongoClient client = new MongoClient(ConfigurationManager.AppSettings.Get("mongoDbConnString"));
@@ -95,7 +95,7 @@ namespace OracleDataToJson
 
         public string AggregateTrackedCompaniesDataMongoDb(string collectionName)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             try
             {
                 IMongoClient client = new MongoClient(ConfigurationManager.AppSettings.Get("mongoDbConnString"));

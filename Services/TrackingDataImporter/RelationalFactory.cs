@@ -14,7 +14,8 @@ namespace OracleDataToJson
     {
 
         private string connectionString = "Data Source=(DESCRIPTION =  (ADDRESS_LIST =  (ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.236.126)(PORT = 1521))) (CONNECT_DATA = (SID = ADEXPR03)));User Id=dmussuma;Password=sandie5;";
-        string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        
         OracleDataReader dr;
 
         public string ExportHourDataToJsonFile()
