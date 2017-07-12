@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="1"   name="presse">
+    <!--<vehicle id="1"   name="presse">
       <detailColumns>
         <detailColumn id="1">
           <allowedModules>
@@ -117,8 +117,8 @@
           <allowedMediaLevelItem id="19" name="Durée"/>
         </allowedMediaLevelItems>
       </MediaDetailLevel>
-    </vehicle>
-    <vehicle id="3"   name="télévision" >
+    </vehicle>-->
+    <vehicle id="6"   name="télévision" >
       <detailColumns>
         <detailColumn id="3">
           <allowedModules>
@@ -164,7 +164,7 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>
-    <vehicle id="5"   name="Autres" >
+    <!--<vehicle id="5"   name="Autres" >
       <detailColumns>
         <detailColumn id="3">
           <allowedModules>
@@ -308,7 +308,7 @@
           <allowedMediaLevelItem id="22" name="Format"/>
         </allowedMediaLevelItems>
       </MediaDetailLevel>
-    </vehicle>
+    </vehicle>-->
   </vehicleGroups>
 
 </configuration>
