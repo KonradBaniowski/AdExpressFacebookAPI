@@ -284,6 +284,53 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\90\AdExpressConfiguration.xml" />
+    <Content Include="Configuration\90\AdNetTrackDetailLevel.xml" />
+    <Content Include="Configuration\90\BaalList.xml" />
+    <Content Include="Configuration\90\CampaignTypes.xml" />
+    <Content Include="Configuration\90\CoreLayersConfiguration.xml" />
+    <Content Include="Configuration\90\CreativesAccess.xml" />
+    <Content Include="Configuration\90\CreativesConfiguration.xml" />
+    <Content Include="Configuration\90\CssConfiguration.xml" />
+    <Content Include="Configuration\90\CustomerErrorMail.xml" />
+    <Content Include="Configuration\90\CustomStyles.xml" />
+    <Content Include="Configuration\90\Database.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\90\DataHistory.xml" />
+    <Content Include="Configuration\90\DundasConfiguration.xml" />
+    <Content Include="Configuration\90\Flags.xml" />
+    <Content Include="Configuration\90\GenericColumn.xml" />
+    <Content Include="Configuration\90\GenericDetailLevel.xml" />
+    <Content Include="Configuration\90\HeaderConfiguration.xml" />
+    <Content Include="Configuration\90\HomeNumbers.xml" />
+    <Content Include="Configuration\90\InfoNews.xml" />
+    <Content Include="Configuration\90\Lists.xml" />
+    <Content Include="Configuration\90\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\90\ModuleCategory.xml" />
+    <Content Include="Configuration\90\ModulesConfiguration.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\90\MSCreativesDetails.xml" />
+    <Content Include="Configuration\90\PluginAlerteConfiguration.xml" />
+    <Content Include="Configuration\90\PluginConfiguration.xml" />
+    <Content Include="Configuration\90\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\90\ResultOptions.xml" />
+    <Content Include="Configuration\90\RightMenuLinks.xml" />
+    <Content Include="Configuration\90\RightOptions.xml" />
+    <Content Include="Configuration\90\Trends.xml" />
+    <Content Include="Configuration\90\Units.xml" />
+    <Content Include="Configuration\90\UniverseBranches.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\90\UniverseLevels.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\90\UniverseLevelsCustomStyles.xml" />
+    <Content Include="Configuration\90\Vehicles.xml" />
+    <Content Include="Configuration\90\WebLanguages.xml" />
+    <Content Include="Configuration\90\WebThemes.xml" />
     <Content Include="Configuration\333\CustomStyles.xml" />
     <Content Include="Configuration\33\AdExpressConfiguration.xml" />
     <Content Include="Configuration\33\AdNetTrackDetailLevel.xml" />
