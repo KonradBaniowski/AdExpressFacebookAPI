@@ -3,27 +3,18 @@
   <vehicleGroups>
     <vehicle id="1" name="presse">
       <detailColumn id="18"/>
-    </vehicle>
-    <vehicle id="11" name="presse internationale">
-      <detailColumn id="18"/>
-    </vehicle>
-    <vehicle id="2" name="radio">
+    </vehicle>   
+    <vehicle id="4" name="radio">
       <detailColumn id="19"/>
     </vehicle>
-    <vehicle id="3" name="télévision">
+    <vehicle id="6" name="télévision">
       <detailColumn id="19"/>
     </vehicle>
-    <vehicle id="8" name="Publicité extérieure">
+    <vehicle id="3" name="Publicité extérieure">
       <detailColumn id="20"/>
-    </vehicle>
-    <vehicle id="10" name="Courrier">
-      <detailColumn id="21"/>
-    </vehicle>
-    <vehicle id="6" name="adnettrack">
+    </vehicle>   
+    <vehicle id="2" name="adnettrack">
       <detailColumn id="37"/>
-    </vehicle>
-    <vehicle id="15" name="evaliantMobile">
-      <detailColumn id="38"/>
-    </vehicle>
+    </vehicle>   
   </vehicleGroups>
 </configuration>
