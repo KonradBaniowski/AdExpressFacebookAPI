@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="1"   name="presse">
+    <!--<vehicle id="1"   name="presse">
       <detailColumns>
         <detailColumn id="11">
           <allowedModules>
@@ -36,8 +36,8 @@
           </allowedModules>
         </detailColumn>
       </detailColumns>
-    </vehicle>
-    <vehicle id="3"   name="télévision" >
+    </vehicle>-->
+    <vehicle id="6"   name="télévision" >
       <detailColumns>
         <detailColumn id="13">
           <allowedModules>
@@ -51,7 +51,7 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
-    <vehicle id="5"   name="Autres" >
+    <!--<vehicle id="5"   name="Autres" >
       <detailColumns>
         <detailColumn id="13">
           <allowedModules>
@@ -157,7 +157,7 @@
           </allowedModules>
         </detailColumn>
       </detailColumns>
-    </vehicle>
+    </vehicle>-->
   </vehicleGroups>
 
 </configuration>
