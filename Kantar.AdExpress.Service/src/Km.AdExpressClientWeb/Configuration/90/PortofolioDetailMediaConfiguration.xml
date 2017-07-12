@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="1" name="presse">
+    <!--<vehicle id="1" name="presse">
       <detailColumn id="6"/>
     </vehicle>
     <vehicle id="11" name="presse internationale">
@@ -9,12 +9,12 @@
     </vehicle>
     <vehicle id="2" name="radio">
       <detailColumn id="7"/>
-    </vehicle>
-    <vehicle id="3" name="télévision">
+    </vehicle>-->
+    <vehicle id="6" name="télévision">
       <detailColumn id="8"/>
     </vehicle>
-    <vehicle id="5" name="Autres">
+    <!--<vehicle id="5" name="Autres">
       <detailColumn id="8"/>
-    </vehicle>
+    </vehicle>-->
   </vehicleGroups>
 </configuration> 
