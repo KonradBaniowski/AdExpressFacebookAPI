@@ -1,0 +1,307 @@
+﻿@model Km.AdExpressClientWeb.Models.HomePageViewModel
+@using TNS.AdExpress.Constantes.Web
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <h4 class="text-center">@(Model.Labels.ModuleLabel)</h4>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PLAN_MEDIA))
+            {
+                <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PLAN_MEDIA">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-chart sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-chart sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PLAN_MEDIA)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.TABLEAU_DYNAMIQUE))
+            {
+                <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.TABLEAU_DYNAMIQUE">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-book-open sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-book-open sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.TABLEAU_DYNAMIQUE)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DYNAMIQUE))
+            {
+                <a href="@Url.Action("MediaSelection", "LostWon" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_DYNAMIQUE">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-calculator sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-calculator sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_DYNAMIQUE)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_CONCURENTIELLE))
+            {
+                <a href="@Url.Action("MediaSelection", "PresentAbsent" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_CONCURENTIELLE">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-equalizer sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-equalizer sli-size blue"></i>
+                            <h3>@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Title</h3>
+                        </div>
+                        <div class="back">
+                            <p class="backText font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_CONCURENTIELLE)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @*Three Mostly Importants*@
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile-second">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_PORTEFEUILLE))
+            {
+
+                @* <a href="@Url.Action("Index","Chrono")" class="tile-body text-center" id="@Module.Name.BILAN_CAMPAGNE">*@
+                <a href="@Url.Action("MediaSelection", "Portfolio" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_PORTEFEUILLE">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-layers sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container">
+                        <div class="front">
+                            <i class="icon-layers sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Title</h5>
+                        </div>
+                        <div class="back">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_PORTEFEUILLE)].Description</p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-lr-10">
+        <div class="tile-second">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_MANDATAIRES))
+            {
+                <a href="@Url.Action("Market", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.ANALYSE_MANDATAIRES">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-picture sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-picture sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.ANALYSE_MANDATAIRES)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10">
+        <div class="tile-second disabled">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.FACEBOOK))
+            {
+                <a href="@Url.Action("Results", "SocialMedia")" class="tile-body text-center module-done" id="@Module.Name.FACEBOOK">
+                    @*<a class="tile-body text-center" id="@Module.Name.FACEBOOK">*@
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-social-facebook sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-social-facebook sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.FACEBOOK)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.FACEBOOK)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
+        <div class="tile-second">
+            @if (Model.ModuleRight.ContainsKey(Module.Name.NEW_CREATIVES))
+            {
+                <a  href="@Url.Action("MediaSelection", "Selection" )" class="tile-body text-center module-done" id="@Module.Name.NEW_CREATIVES">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-camrecorder sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.NEW_CREATIVES)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.NEW_CREATIVES)].Description</p>
+                        </div>
+                    </div>
+                </a>
+
+            }
+            else
+            {
+                <div class="tile-body text-center disabled-effect">
+                    <div class="flip-container-second">
+                        <div class="front-second">
+                            <i class="icon-camrecorder sli-size-small green"></i>
+                            <h5>@Model.Modules[(Module.Name.NEW_CREATIVES)].Title</h5>
+                        </div>
+                        <div class="back-second">
+                            <p class="font-size12 text-center">@Model.Modules[(Module.Name.NEW_CREATIVES)].Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 padding-lr-10 dropdown">
+        <div class="tile-third" data-toggle="dropdown">
+            <div class="tile-body text-center">
+                <div class="flip-container">
+                    <div class="front">
+                        <i class="icon-magnifier  sli-size-small green"></i>
+                        <h5>@(Model.Labels.AnalysisLabel)<span class="caret green"></span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tile-deploy dropdown-menu">
+            <div class="tile-body text-center">
+                <div class="list-group">
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_DISPOSITIFS))
+                    {
+                        <a href="@Url.Action("Market", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.ANALYSE_DES_DISPOSITIFS">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</a>
+                    }
+                    else
+                    {
+                        <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_DISPOSITIFS)].Title</div>
+                    }
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.ANALYSE_DES_PROGRAMMES))
+                    {
+                        <a href="@Url.Action("SponsorshipMediaSelection", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>
+                        @*<a href="#" class="list-group-item text-left" id="@Module.Name.ANALYSE_DES_PROGRAMMES">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</a>*@
+                    }
+                    else
+                    {
+                        <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    

@@ -62,6 +62,10 @@
     {
         Html.RenderPartial("_ModulesIr", Model);
     }
+    else if (Model.CountryCode.Equals(CountryCode.TURKEY))
+    {
+        Html.RenderPartial("_ModulesTr", Model);
+    }
     else
     {
         Html.RenderPartial("_ModulesFr", Model);
@@ -74,6 +78,9 @@
         {
             case CountryCode.FINLAND:
                 Html.RenderPartial("_HomeNewsFi");
+                break;
+            case CountryCode.TURKEY:
+                Html.RenderPartial("_HomeNewsTr");
                 break;
             default:
                 Html.RenderPartial("_HomeNewsFr");
