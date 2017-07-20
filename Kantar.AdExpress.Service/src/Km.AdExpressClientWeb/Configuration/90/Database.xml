@@ -5,7 +5,7 @@
     <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"     dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
@@ -17,7 +17,7 @@
     <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adextr.prod" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
-    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="ADEXTEST" password="ADEX"    dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"    dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="adextr.prod" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
@@ -296,7 +296,7 @@
     <table enumId="258" description="Recap Data: Search Segment" schemaEnumId="4" label="recap_search_segment" prefix="rcp"/>
 
     <table enumId="259" description="Mapping: Banners Country" schemaEnumId="0" label="banners_country" prefix="bc"/>
-    
+
     <table enumId="260" description="Classif: Purchase Mode" schemaEnumId="0" label="purchase_mode_mms" prefix="pmm"/>
 
     <table enumId="265" description="Data: Social" schemaEnumId="0" label="data_social" prefix="wp"/>
