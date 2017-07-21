@@ -431,9 +431,12 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_PLAN_MEDIA:
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
-                    ids.Add(ExportPdfResult);
                     ids.Add(ExportResultWithValue);
-                    ids.Add(ExportPptResult);
+                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
+                    {
+                        ids.Add(ExportPdfResult);
+                        ids.Add(ExportPptResult);
+                    }
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
