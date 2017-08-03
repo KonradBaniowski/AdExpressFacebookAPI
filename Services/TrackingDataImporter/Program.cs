@@ -22,6 +22,8 @@ namespace OracleDataToJson
                     validParams.Add(arg.Split('=')[0], arg.Split('=')[1]);
             }
 
+            
+
             try
             {
                 ////DayConnection
@@ -63,6 +65,14 @@ namespace OracleDataToJson
                 filePath = relationalFactory.ExportUserSessionDayDataToJsonFile();
                 nonRelationalFactory.DeleteDataMongoDb("usersessions", "day", Convert.ToInt64(DateTime.Now.ToString("yyyyMMdd")));
                 nonRelationalFactory.ImportJsonFileToMongoDb(filePath, "usersessions", false);
+
+                //Set tracked logins
+                filePath = nonRelationalFactory.AggregateTrackedLoginsDataMongoDb("usersessions");
+                nonRelationalFactory.ImportJsonFileToMongoDb(filePath, "trackedlogins");
+
+                //Set tracked companies
+                filePath = nonRelationalFactory.AggregateTrackedCompaniesDataMongoDb("usersessions");
+                nonRelationalFactory.ImportJsonFileToMongoDb(filePath, "trackedcompanies");
 
 
             }

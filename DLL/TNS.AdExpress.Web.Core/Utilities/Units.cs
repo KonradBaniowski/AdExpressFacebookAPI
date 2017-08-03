@@ -177,6 +177,23 @@ namespace TNS.AdExpress.Web.Core.Utilities
             v = (h * 10000) + (m * 100) + s;
             return v;
         }
+
+        /// <summary>
+        /// Get value (seconds : SSSSSSSSS) as string (HH:MM:SS)
+        /// </summary>
+        public static string ConvertDurationToString(object value)
+        {
+            string ret = String.Empty;
+            long v = Convert.ToInt64(value);
+
+            long h = (long)v / 3600;
+            long m = (long)(v - (h * 3600)) / 60;
+            long s = (long)(v - (h * 3600) - (m * 60));
+
+            ret = h.ToString("00") + ":" + m.ToString("00") + ":" + s.ToString("00");
+
+            return ret;
+        }
         #endregion
 
         #region Allowed units depending on medias
