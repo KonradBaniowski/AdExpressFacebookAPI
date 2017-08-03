@@ -918,6 +918,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                            if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -1043,6 +1046,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                            if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -1142,6 +1148,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                         if (_allowTotal)
                                         {
                                             sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                            if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
+
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -1249,6 +1258,9 @@ namespace Km.AdExpressClientWeb.Controllers
                                     if (_allowTotal)
                                     {
                                         sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+                                        if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
+
                                         SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                         SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
 
@@ -2249,6 +2261,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                         {
                                             if (isVersionNb && data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(((FwkWebRsltUI.CellIdsNumber)data[i, TOTAL_COLUMN_INDEX]).Value, _session.Unit);
+                                            else if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
                                             else if (data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
@@ -2392,8 +2406,11 @@ namespace Km.AdExpressClientWeb.Controllers
                                         {
                                             if (isVersionNb && data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(((FwkWebRsltUI.CellIdsNumber)data[i, TOTAL_COLUMN_INDEX]).Value, _session.Unit);
-                                            else if (data[i, TOTAL_COLUMN_INDEX] != null)
+                                            else if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
+                                            else if(data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
+
 
                                             SetDecimalFormat(sheet.Cells[cellRow, colTotal]);
                                             SetIndentLevel(sheet.Cells[cellRow, colTotal], 1, true);
@@ -2504,6 +2521,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                         {
                                             if (isVersionNb && data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(((FwkWebRsltUI.CellIdsNumber)data[i, TOTAL_COLUMN_INDEX]).Value, _session.Unit);
+                                            else if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                                sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
                                             else if (data[i, TOTAL_COLUMN_INDEX] != null)
                                                 sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
@@ -2612,6 +2631,8 @@ namespace Km.AdExpressClientWeb.Controllers
                                     {
                                         if (isVersionNb && data[i, TOTAL_COLUMN_INDEX] != null)
                                             sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(((FwkWebRsltUI.CellIdsNumber)data[i, TOTAL_COLUMN_INDEX]).Value, _session.Unit);
+                                        else if (_session.Unit == CstWeb.CustomerSessions.Unit.duration && data[i, TOTAL_COLUMN_INDEX] != null)
+                                            sheet.Cells[cellRow, colTotal].Value = Units.ConvertDurationToString(data[i, TOTAL_COLUMN_INDEX]);
                                         else if (data[i, TOTAL_COLUMN_INDEX] != null)
                                             sheet.Cells[cellRow, colTotal].Value = Units.ConvertUnitValue(data[i, TOTAL_COLUMN_INDEX], _session.Unit);
 
