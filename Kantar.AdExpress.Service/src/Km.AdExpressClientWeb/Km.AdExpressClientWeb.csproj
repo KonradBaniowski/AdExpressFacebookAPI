@@ -284,6 +284,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="_app_offline.htm" />
     <Content Include="Configuration\333\CustomStyles.xml" />
     <Content Include="Configuration\33\AdExpressConfiguration.xml" />
     <Content Include="Configuration\33\AdNetTrackDetailLevel.xml" />
