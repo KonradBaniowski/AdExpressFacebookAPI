@@ -92,7 +92,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
-                //documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
+                documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
                 documents.Add(new Documents()
                 {
                     Id = 3,
@@ -119,7 +119,7 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else
             {
-                //documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
+                documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
             }
 
             var encryptedPassword = EncryptQueryString(password);
