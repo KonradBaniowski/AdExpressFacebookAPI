@@ -482,7 +482,12 @@ namespace TNS.AdExpressI.Portofolio
                             }
                             else if (cell is CellUnit)
                             {
-                                if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
+                                if (_webSession.CurrentTab ==
+                                TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS && cell is CellDuration)
+                                {
+                                    gridData[i, k + 2] = cell.RenderString();
+                                }
+                                else if (((LineStart)resultTable[i, 0]).LineType != LineType.nbParution)
                                     gridData[i, k + 2] = FctWeb.Units.ConvertUnitValue(((CellUnit)cell).Value, GetUnit(cell));
                                 else
                                     gridData[i, k + 2] = ((CellUnit)cell).Value;
