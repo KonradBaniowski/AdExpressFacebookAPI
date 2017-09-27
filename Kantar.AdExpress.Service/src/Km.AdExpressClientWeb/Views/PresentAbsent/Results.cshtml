@@ -358,16 +358,22 @@
                 return '';
             }
 
+
             function DurationFormatter(val) {
 
                 if (val == 0)
                     return "";
 
+                var endHour = 2;
                 var s = val.toString();
                 var nbToFillWithZero = 6 - s.length;
+
+                if (s.length > 6)
+                    endHour += (s.length - 6);
+
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
-                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(4, 2) + " S";
             }
 
             function PercentFormatter(val) {
