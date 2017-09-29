@@ -394,7 +394,7 @@
             $('#export-type').selectpicker();
 
             $('#btn-export-creativems').on('click', function (e) {
-                event.preventDefault();
+                //event.preventDefault();
                 var selectedValue = $('#export-type').val();
                 var paramsExport = "?l=@Model.SiteLanguage&m=@Model.MediaTypeIds&b=@Model.BeginDate&e=@Model.EndDate&p=@Model.ProductIds&c=@Model.CreativeIds";
 
