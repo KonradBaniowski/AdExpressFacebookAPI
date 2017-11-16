@@ -1001,43 +1001,47 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 cellRow++;
 
-                //if (detailSelectionResponse.ShowUniversDetails)
-                //{
-                //    <div class="form-group">
-                //        <label class="col-sm-12 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.UniversSupportLabel)</strong></label>
-                //    </div>
-                //    var size = (12 / Model.DetailSelectionWSModel.UniversMedia.Count);
-                //    <div class="form-group">
-                //        @for(int i = 0; i<Model.DetailSelectionWSModel.UniversMedia.Count; i++)
-                //        {
-                //            <div class="col-sm-@(size) control-label text-left">
-                //                <ul class="treeview">
-                //                    <li>
-                //                        <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].Label </ a >
-                //                        < ul >
-                //                            @for(int j = 0; j<Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels.Count; j++)
-                //                            {
+               
 
-                //                                <li>
-                //                                    <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].Label </ a >
-                //                                    < ul >
-                //                                        @for(int z = 0; z<Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems.Count; z++)
-                //                                        {
-                //                                            <li>
-                //                                                <a href = "#" > @Model.DetailSelectionWSModel.UniversMedia[i].UniversLevels[j].UniversItems[z].Label </ a >
-                //                                            </ li >
-                //                                        }
-                //                                    </ul>
-                //                                </li>
-                //                            }
-                //                        </ul>
-                //                    </li>
-                //                </ul>
-                //            </div>
-                //        }
 
-                //    </div>
-                //}
+                #region New version
+
+                if (detailSelectionResponse.ShowUniversDetails)
+                {
+                    sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.UniversSupportLabel);
+
+                    for (int i = 0; i < detailSelectionResponse.UniversMedia.Count; i++)
+                    {
+                        sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMedia[i].Label);
+                        TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                        TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                        cellRow++;
+
+                        for (int j = 0; j < detailSelectionResponse.UniversMedia[i].UniversLevels.Count; j++)
+                        {
+                            sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMedia[i].UniversLevels[j].Label);
+                            SetIndentLevel(sheet.Cells[cellRow, cellCol + 1], 1);
+                            TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                            TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                            cellRow++;
+
+                            for (int z = 0; z < detailSelectionResponse.UniversMedia[i].UniversLevels[j].UniversItems.Count; z++)
+                            {
+                                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniversMedia[i].UniversLevels[j].UniversItems[z].Label);
+                                SetIndentLevel(sheet.Cells[cellRow, cellCol + 1], 2);
+                                TextStyle(sheet.Cells[cellRow, cellCol], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+                                TextStyle(sheet.Cells[cellRow, cellCol + 1], TextAlignmentType.Left, TextAlignmentType.Top, L1Text, L1Background);
+
+                                cellRow++;
+                            }
+                        }
+                    }
+                    cellRow++;
+
+                }
+                #endregion
             }
             if (detailSelectionResponse.ShowGenericlevelDetail)
             {
