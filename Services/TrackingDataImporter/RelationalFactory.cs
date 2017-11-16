@@ -15,7 +15,7 @@ namespace OracleDataToJson
 
         private string connectionString = "Data Source=(DESCRIPTION =  (ADDRESS_LIST =  (ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.236.126)(PORT = 1521))) (CONNECT_DATA = (SID = ADEXPR03)));User Id=dmussuma;Password=sandie5;";
         string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        
+
         OracleDataReader dr;
 
         public string ExportHourDataToJsonFile()
@@ -778,7 +778,6 @@ WHERE  e.ID_EVENT  = 10
         {
             ArrayList objs = new ArrayList();
             string jsonObj = string.Empty;
-            string dayString = DateTime.Now.ToString("yyyyMMdd");
 
             using (OracleConnection con = new OracleConnection(connectionString))
             {
@@ -1250,7 +1249,7 @@ SELECT
                                 idValue = String.IsNullOrEmpty(dr["ID_VALUE"].ToString()) ? 0 : Convert.ToInt64(dr["ID_VALUE"].ToString()),
                                 valueLabel = dr["VALUE_STRING"].ToString(),
                                 month = Convert.ToInt64(Convert.ToDateTime(dr["YEARMONTH"]).ToString("yyyyMMdd")),
-                                day = Convert.ToInt64(Convert.ToInt64(dayString)),
+                                day = Convert.ToInt64(Convert.ToDateTime(dr["DAYD"]).ToString("yyyyMMdd")),
                                 hour = Convert.ToInt64(Convert.ToDateTime(dr["HOURH"]).ToString("yyyyMMddHH")),
                                 idTypology = Convert.ToInt64(dr["ID_GROUP_CONTACT"].ToString()),
                                 typology = dr["GROUP_CONTACT"].ToString()
@@ -1275,7 +1274,6 @@ SELECT
         {
             ArrayList objs = new ArrayList();
             string jsonObj = string.Empty;
-            string dayString = DateTime.Now.ToString("yyyyMMdd");
 
             using (OracleConnection con = new OracleConnection(connectionString))
             {
