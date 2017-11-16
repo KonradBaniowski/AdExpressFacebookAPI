@@ -203,7 +203,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1149, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString() });
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2736, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brandProduct.GetHashCode().ToString() });
+                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2736, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brandProduct.GetHashCode().ToString() });
                 }
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(858, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString() });
