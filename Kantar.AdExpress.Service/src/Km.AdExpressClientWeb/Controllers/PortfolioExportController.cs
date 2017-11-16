@@ -685,9 +685,9 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellUnit)cell).GetValue();
 
-                double hours = Math.Floor(value / 3600);
-                double minutes = Math.Floor((value - (hours * 3600)) / 60);
-                double secondes = value - hours * 3600 - minutes * 60;
+                long hours = (long) value / 3600L;
+                long minutes = (long) (value - (hours * 3600L)) / 60L;
+                long secondes = (long) (value - (hours * 3600L) - (minutes * 60L));
 
                 sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
 
