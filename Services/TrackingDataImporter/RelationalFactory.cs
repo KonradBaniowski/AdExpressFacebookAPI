@@ -265,10 +265,18 @@ namespace OracleDataToJson
 
         }
 
-        public string ExportUserSessionDataToJsonFile()
+        public string ExportUserSessionDataToJsonFile(int? nLastDays = null)
         {
             ArrayList objs = new ArrayList();
             string jsonObj = string.Empty;
+            string dateFilter = string.Empty;
+
+            if (nLastDays.HasValue)
+            {
+                string endDate = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy");
+                string startdate = DateTime.Now.AddDays(-nLastDays.Value).ToString("dd/MM/yyyy");
+                dateFilter = " AND TRUNC(ta.DATE_CREATION, 'DD') >= TO_DATE('" + startdate + "', 'DD/MM/YYYY') and TRUNC(ta.DATE_CREATION, 'DD') <= TO_DATE('" + endDate + "', 'DD/MM/YYYY') ";
+            }
 
             using (OracleConnection con = new OracleConnection(connectionString))
             {
@@ -278,8 +286,7 @@ namespace OracleDataToJson
                     cmd.Connection = con;
 
                     cmd.CommandText = @"
-
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -301,7 +308,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -318,13 +325,11 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-WHERE e.ID_EVENT  = 1
+                    WHERE e.ID_EVENT  = 1 " + dateFilter;
 
+                    cmd.CommandText += @"UNION ALL
 
-
- UNION ALL
-
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -346,7 +351,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-                                FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -365,10 +370,11 @@ SELECT
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.MODULE mo ON
                                     ta.VALUE = mo.ID_MODULE
-                                WhERE   e.ID_EVENT  = 2
- UNION ALL
+                    WhERE   e.ID_EVENT  = 2 " + dateFilter;
 
-SELECT
+                    cmd.CommandText += @"UNION ALL
+
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -390,7 +396,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -409,14 +415,11 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN ADEXPR03.VEHICLE vh ON
                                     ta.VALUE = vh.ID_VEHICLE
-WHERE   e.ID_EVENT  = 3
-                                AND vh.ID_LANGUAGE = 33
+                    WHERE   e.ID_EVENT  = 3 AND vh.ID_LANGUAGE = 33 " + dateFilter;
 
+                    cmd.CommandText += @"UNION ALL
 
-UNION ALL
-
-
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -438,7 +441,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-                                FROM WEBNAV01.TRACKING_ARCHIVE ta
+                    FROM WEBNAV01.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -455,10 +458,11 @@ SELECT
                                     co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV01.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-                                WHERE   e.ID_EVENT  = 4
-  UNION ALL
+                                WHERE   e.ID_EVENT  = 4 " + dateFilter;
 
-	SELECT
+                    cmd.CommandText += @"UNION ALL
+
+	                SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -480,7 +484,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-                                FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -497,10 +501,11 @@ SELECT
                                     co.ID_COMPANY = a.ID_COMPANY
                                   INNER JOIN WEBNAV02.EVENT e ON
                                     ta.ID_EVENT = e.ID_EVENT
-                                WHERE   e.ID_EVENT  = 5
- UNION ALL
+                    WHERE   e.ID_EVENT  = 5 " + dateFilter;
 
-SELECT
+                    cmd.CommandText += @"UNION ALL
+
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -522,7 +527,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -541,10 +546,11 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.PERIODE vh ON
                                     ta.VALUE = vh.ID_PERIODE
-WHERE   e.ID_EVENT  = 6
-UNION ALL
+                    WHERE   e.ID_EVENT  = 6 " + dateFilter;
 
-SELECT
+                    cmd.CommandText += @"UNION ALL
+
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -566,7 +572,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -585,11 +591,11 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   LEFT OUTER JOIN WEBNAV02.UNIT vh ON
                                     ta.VALUE = vh.ID_UNIT
-WHERE   e.ID_EVENT  = 7
+                    WHERE   e.ID_EVENT  = 7 " + dateFilter;
 
- UNION ALL
+                    cmd.CommandText += @"UNION ALL
 
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -611,7 +617,7 @@ SELECT
                                   TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -630,13 +636,12 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                   INNER JOIN MAU01.RESULT vh ON
                                     ta.VALUE = vh.ID_RESULT
-WHERE   e.ID_EVENT  = 8
+                    WHERE   e.ID_EVENT  = 8 " + dateFilter;
 
 
- UNION ALL
+                    cmd.CommandText += @"UNION ALL
 
-
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -658,7 +663,7 @@ SELECT
                                    TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -677,11 +682,11 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
-WHERE   e.ID_EVENT  = 9
+                    WHERE   e.ID_EVENT  = 9 " + dateFilter;
 
- UNION ALL
+                    cmd.CommandText += @"UNION ALL
 
-SELECT
+                    SELECT
                                   ID_NAV_SESSION,
                                   co.ID_COMPANY,
                                   co.COMPANY,
@@ -703,7 +708,7 @@ SELECT
                                    TRUNC(ta.DATE_CREATION, 'MM') AS YEARMONTH,
                                   TRUNC(ta.DATE_CREATION, 'DD') AS DAYD,
                                   TRUNC(ta.DATE_CREATION, 'HH24') AS HOURH
-FROM WEBNAV02.TRACKING_ARCHIVE ta
+                    FROM WEBNAV02.TRACKING_ARCHIVE ta
                                   LEFT OUTER JOIN MAU01.MODULE m ON
                                     ta.ID_MODULE = m.ID_MODULE
                                   LEFT OUTER JOIN MAU01.RESULT r ON
@@ -722,13 +727,7 @@ FROM WEBNAV02.TRACKING_ARCHIVE ta
                                     ta.ID_EVENT = e.ID_EVENT
                                  -- INNER JOIN MAU01.RESULT vh ON
                                   --  ta.VALUE = vh.ID_RESULT
-WHERE  e.ID_EVENT  = 10
-
-
-
-
-
-                    ";
+                    WHERE  e.ID_EVENT  = 10 " + dateFilter;
 
                     dr = cmd.ExecuteReader();
 
