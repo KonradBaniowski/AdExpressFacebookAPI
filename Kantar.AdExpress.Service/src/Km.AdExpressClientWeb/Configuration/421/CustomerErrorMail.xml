@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
     <server adress="localhost.hobbit.tns-global.sk" port="25"/>
-    <message from="tnsadexpress@tns-global.sk">
-		<to>guillaume.facon@tnsmi.fr</to>
-		<to>benjamin.masson@tnsmi.fr</to>		
-		<to>youssef.rkaina@tnsmi.fr</to>
-		<to>dede.mussuma@tnsmi.fr</to>
-     <to>alexandre.rousseau@tnsmi.fr</to>
+    <message from="tnsadexpress@tns-global.sk">			
+		<to>youssef.rkaina@kanr.fr</to>
+		<to>dede.mussuma@tnsmi.fr</to>    
     </message>
 </smtp>
