@@ -192,20 +192,7 @@
             </loadableUnivers>
           </selection>
           <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
-        </selections>
-        <optionalSelections>
-          <optionalSelection id="6" name="Sector" traductioncode="1130" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" >
-            <allowedUniverseLevels>
-              <allowedUniverseLevel id="1" name="sector"/>
-              <allowedUniverseLevel id="2" name="subsector"/>
-              <allowedUniverseLevel id="3" name="group_"/>
-              <allowedUniverseLevel id="4" name="segment"/>
-            </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="1">
-              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
-            </allowedUniverseBranches>
-          </optionalSelection>
-        </optionalSelections>
+        </selections>      
         <results>
           <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
             <allowedUnits>
