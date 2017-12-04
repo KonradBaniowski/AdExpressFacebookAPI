@@ -66,6 +66,10 @@
     {
         Html.RenderPartial("_ModulesTr", Model);
     }
+    else if (Model.CountryCode.Equals(CountryCode.SLOVAKIA))
+    {
+        Html.RenderPartial("_ModulesSk", Model);
+    }
     else
     {
         Html.RenderPartial("_ModulesFr", Model);

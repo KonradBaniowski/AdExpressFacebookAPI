@@ -839,7 +839,7 @@ namespace TNS.AdExpressI.Classification.DAL
              * For example for the product classification the View will be like this : id_produt,product, id_sector,sector, di_group_,
              * group_ etc */
             bool result = false;
-            bool partial = (!String.IsNullOrEmpty(classificationRight) || _filterWithProductSelection) ? true : false;
+            bool partial = (!String.IsNullOrEmpty(classificationRight) || _filterWithProductSelection || !String.IsNullOrEmpty(VehiclesId)) ? true : false;
              switch (_session.CurrentModule)
             {
                 case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:

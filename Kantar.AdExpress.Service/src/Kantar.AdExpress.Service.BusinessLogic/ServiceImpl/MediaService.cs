@@ -341,7 +341,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             foreach (var item in vehiclesInfos.Values)
             {
                 //Added temporarily for Finland
-                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND) && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
+                if ((WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FINLAND) || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.SLOVAKIA))
+                    && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
                     continue;
 
                 Core.Domain.Media media = new Core.Domain.Media();
