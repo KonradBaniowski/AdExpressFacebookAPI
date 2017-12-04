@@ -24,6 +24,9 @@ using TNSDomain = TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using NLog;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -334,6 +337,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             param[1] = dataLanguage;
             var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
+          
+            if (key == Right.type.vehicleAccess && VehiclesInformation.Contains(Vehicles.names.plurimedia) 
+                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimedia) == searchTodo[key].FirstOrDefault())
+            {
+                string label = GestionWeb.GetWebWord(210, dataLanguage);               
+                return new List<TextData> { new TextData { Id = searchTodo[key].FirstOrDefault(), Label = label }};
+            }
             var dal = factoryLevels.CreateClassificationLevelListDAL(key, string.Join(",", searchTodo[key]));
 
             return searchTodo[key].Select(_ => new TextData { Id = _, Label = dal[_] }).ToList();

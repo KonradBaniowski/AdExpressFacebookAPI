@@ -156,7 +156,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, HttpContextBase httpContext, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1)
         {
-            var webSession = (WebSession)WebSession.Load(webSessionId);
+                var webSession = (WebSession)WebSession.Load(webSessionId);
             UniversBranchResult result = new UniversBranchResult();
             try
             {
