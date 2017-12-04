@@ -673,7 +673,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     }
                     else
                     {
-                        groupOptional = $", {WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label}.LISTNUM_TO_CHAR({DATA_TABLE_PREFIXE}.{u.DatabaseMultimediaField}) ";
+                        groupOptional = GetGroupOptional(u, DATA_TABLE_PREFIXE);
                     }
                 }
 
@@ -932,7 +932,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 UnitInformation u = _session.GetSelectedUnit();
                 if (type != CstDB.TableType.Type.webPlan)
                 {
-                    groupOptional = string.Format(", {0}.{1}", DATA_TABLE_PREFIXE, u.DatabaseField);
+                    groupOptional = GetGroupOptional(u, DATA_TABLE_PREFIXE);
                 }
                 else
                 {
@@ -1238,6 +1238,13 @@ namespace TNS.AdExpressI.LostWon.DAL
             if (ids.Count > 0) return String.Join(",", ids);
             return mediaList;
         }
+
+        #region Group BY
+        protected virtual string GetGroupOptional(UnitInformation u, string dataTablePrefixe)
+        {
+            return string.Format(", {0}.{1} ", dataTablePrefixe, u.DatabaseMultimediaField);
+        }
+        #endregion
 
     }
 

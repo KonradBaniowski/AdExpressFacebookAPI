@@ -252,7 +252,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitInformation.Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         else
-                            sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}) as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            sql.AppendFormat(GetUnit(unitInformation));
                         return sql.ToString();
                     }
                     catch {
@@ -262,6 +262,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
             }
         }
-		#endregion        
-	}
+        #endregion
+
+        #region Get Unit
+	    protected virtual string GetUnit(UnitInformation unitInformation)
+	    {
+            return string.Format("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+	    }
+        #endregion
+    }
 }

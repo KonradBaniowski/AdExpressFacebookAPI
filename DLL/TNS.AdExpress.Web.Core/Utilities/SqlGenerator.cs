@@ -2858,7 +2858,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         }
                         else
                         {
-                            sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}{2}) as {3}", adexprSchema, prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}{2}) as {3}", adexprSchema, prefixe,
+                                    unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            else
+                                sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }

@@ -14,7 +14,7 @@
       <!-- *****************************************      Analyse Plan Média                  *****************************************-->
       <module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/MediaSchedule" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
-        <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
+        <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.France.dll" class="TNS.AdExpressI.MediaSchedule.DAL.France.MediaScheduleResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
         </ModuleAllowedMediaUniverse>
@@ -434,7 +434,7 @@
       <!-- *****************************************      Lost / Won                          *****************************************-->
       <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/LostWon/MediaSelection" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
-        <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
+        <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.France.dll" class="TNS.AdExpressI.LostWon.DAL.France.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">
         </ModuleAllowedMediaUniverse>
@@ -1410,7 +1410,7 @@
       <!-- *****************************************      Analyse des mandataires             *****************************************-->
       <module name="Analyse des mandataires" privilegecode="7216" traductioncode="2809" moduleCategoryId="13" urlNextPage="/Private/Selection/UniverseAgencySelection.aspx" descriptionWebTextId="2811" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
         <RulesLayer name="Default Advertising Agency rules layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.Default.AdvertisingAgencyResult"/>
-        <DataAccessLayer name="Default Advertising Agency data access layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.DAL.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.DAL.Default.AdvertisingAgencyDAL"/>
+        <DataAccessLayer name="Default Advertising Agency data access layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.DAL.France.dll" class="TNS.AdExpressI.AdvertisingAgency.DAL.France.AdvertisingAgencyDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">    
         </ModuleAllowedMediaUniverse>

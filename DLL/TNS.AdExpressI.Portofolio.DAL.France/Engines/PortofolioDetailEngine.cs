@@ -5,11 +5,14 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Units;
 using Module = TNS.AdExpress.Domain.Web.Navigation.Module;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
 	/// <summary>
@@ -41,6 +44,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
             return groupByOptional;
         }
 
-        
-	}
+        #region Get Unit
+        protected override string GetUnit(int i, List<UnitInformation> unitsList)
+        {
+            return string.Format("{0}.LISTNUM_TO_CHAR({1}) as {2}", 
+                WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label,
+                unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+        }
+        #endregion
+    }
 }

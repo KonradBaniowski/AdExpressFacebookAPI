@@ -101,7 +101,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
             return dataTableName;
         }
 
+        #region Get Unit
+        protected override string GetUnit(UnitInformation unitInformation)
+        {
+            return string.Format("{0}.LISTNUM_TO_CHAR({1}) as {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+        }
+        #endregion
 
-	
-	}
+    }
 }

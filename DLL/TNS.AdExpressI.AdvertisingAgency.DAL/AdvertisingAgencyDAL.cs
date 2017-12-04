@@ -331,8 +331,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                         break;
                     default:
-                        unitFieldName = $" {_schAdexpr03.Label}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) as {_session.GetSelectedUnit().Id.ToString()} ";
-                        groupByOptional = $", {_schAdexpr03.Label}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) ";
+                        unitFieldName = GetUnitFieldName();
+                        groupByOptional = GetGroupByOptional();
                         break;
                 }
                 sql.AppendFormat("{0}", unitFieldName);
@@ -777,10 +777,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                     break;
                 default:
-                    unitFieldName =
-                        $" {_schAdexpr03.Label}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) as {_session.GetSelectedUnit().Id.ToString()} ";
-                    groupByOptional =
-                        $", {_schAdexpr03.Label}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) ";
+                    unitFieldName = GetUnitFieldName();
+                    groupByOptional = GetGroupByOptional();
                     break;
             }
             sql.AppendFormat("{0}", unitFieldName);
@@ -1190,5 +1188,16 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
         #endregion
 
+        #region Get Unit & Group By
+        protected virtual string GetUnitFieldName()
+        {
+            return string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
+        }
+
+        protected virtual string GetGroupByOptional()
+        {
+            return string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+        }
+        #endregion
     }
 }

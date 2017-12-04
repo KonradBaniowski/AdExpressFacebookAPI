@@ -347,17 +347,15 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 	    protected virtual string GetBannerGroupByOptional(DBConstantes.TableType.Type type)
 	    {
-            //string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan 
-            //                                           ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             string groupByOptional = string.Format(type == DBConstantes.TableType.Type.webPlan
-                                                       ? ",{1}.LISTNUM_TO_CHAR({0}.list_banners) " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
-	        return groupByOptional;
+                                                       ? ",{0}.list_banners " : ",{0}.id_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            return groupByOptional;
 	    }
 
 	    #endregion
 
 
-        public static string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
+        public string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
             List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
             var sqlUnit = new StringBuilder();
             if(!string.IsNullOrEmpty(dataTablePrefixe))
@@ -378,7 +376,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitsList[i].Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         else
-                            sqlUnit.AppendFormat("{1}.LISTNUM_TO_CHAR({2}) as {3}", dataTablePrefixe, WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                            sqlUnit.AppendFormat(GetUnit(i, unitsList));
                             //sqlUnit.AppendFormat("to_char(" + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + ".stragg2(t2.column_value)) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
                         break;
                 }
@@ -386,5 +384,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return sqlUnit.ToString();
         }
 
-	}
+        #region Get Group By
+	    protected virtual string GetUnit(int i, List<UnitInformation> unitsList)
+	    {
+	        return string.Format("{0} as {1}", unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+	    }
+        #endregion
+    }
 }

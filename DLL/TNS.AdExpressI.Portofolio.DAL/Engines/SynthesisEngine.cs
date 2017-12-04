@@ -1602,8 +1602,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             else
             {
-                sql.Append("id_banners");
-            
+                //sql.Append("id_banners");
+                sql.Append("hashcode");
             }
 
             #endregion
