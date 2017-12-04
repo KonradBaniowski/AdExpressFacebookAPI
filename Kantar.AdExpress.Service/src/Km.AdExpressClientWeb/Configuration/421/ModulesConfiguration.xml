@@ -175,12 +175,10 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
               <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
               <allowedUniverseBranch id="14" name="media_Sellermedia"/>
               <allowedUniverseBranch id="25" name="category\media"/>
             </allowedUniverseBranches>
@@ -443,12 +441,10 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
               <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
               <allowedUniverseBranch id="14" name="media_Sellermedia"/>
               <allowedUniverseBranch id="25" name="category\media"/>
             </allowedUniverseBranches>
@@ -729,13 +725,12 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
               <allowedUniverseLevel id="28" name="media_Seller"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
               <allowedUniverseBranch id="14" name="media_Sellermedia"/>
+              <allowedUniverseBranch id="25" name="category\media"/>
             </allowedUniverseBranches>
           </selection>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/PortofolioDetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/PortofolioDetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>-->
