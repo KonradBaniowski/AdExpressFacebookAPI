@@ -2382,5 +2382,9 @@
 
     <item mnemonic="w3110" type="System.String">Vous n'avez accès à aucun module, veuillez contacter le service client AdExpress</item>
 
+    <item mnemonic="w3111" type="System.String">PLURIMEDIA OFFLINE</item>
+    <item mnemonic="w3112" type="System.String">PLURIMEDIA ONLINE</item>
+    <item mnemonic="w3113" type="System.String">PLURIMEDIA + SEARCH</item>
+
   </items>
 </localization>

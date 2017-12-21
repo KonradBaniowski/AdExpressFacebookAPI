@@ -47,21 +47,23 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
             temp = FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, prefix, !first);
             sql.Append(" " + temp);
 
-            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
+            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms
+               && _vehicle != CstDBClassif.Vehicles.names.plurimediaWithSearch && _vehicle != CstDBClassif.Vehicles.names.plurimediaOnline
+                 &&   _vehicle != CstDBClassif.Vehicles.names.plurimediaOffline)
             {
                 if (!string.IsNullOrEmpty(temp)) first = false;
                 sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, !first));
                 first = false;
             }
 
-            if (_vehicle == CstDBClassif.Vehicles.names.PlurimediaWithoutMms &&
-                VehiclesInformation.Contains(CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
-            {
-                sql.AppendFormat("  and  {0}.id_vehicle not in ( {1},{2}) "
-                  , prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId,
-                  VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId);
+            //if (_vehicle == CstDBClassif.Vehicles.names.PlurimediaWithoutMms &&
+            //    VehiclesInformation.Contains(CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
+            //{
+            //    sql.AppendFormat("  and  {0}.id_vehicle not in ( {1},{2}) "
+            //      , prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId,
+            //      VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId);
 
-            }
+            //}
 
             //TV Sponsorship rights
 			if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SPONSORSHIP_TV_ACCESS_FLAG))

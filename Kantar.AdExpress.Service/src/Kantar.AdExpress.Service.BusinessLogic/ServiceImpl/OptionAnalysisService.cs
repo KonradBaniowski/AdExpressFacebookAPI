@@ -45,7 +45,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia
-                                && vehicle.Id != DBConstantesClassification.Vehicles.names.PlurimediaWithoutMms)
+                                && vehicle.Id != DBConstantesClassification.Vehicles.names.PlurimediaWithoutMms
+                                && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaOffline
+                                 && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaOnline
+                                  && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaWithSearch)
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
                 else
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle;
@@ -97,6 +100,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             case ClassificationCst.DB.Vehicles.names.emailing:
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
                             case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaOffline:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaOnline:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaWithSearch:
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
@@ -116,6 +122,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         {
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
                             case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaOffline:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaOnline:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaWithSearch:
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2652, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString() });
                                 //if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||

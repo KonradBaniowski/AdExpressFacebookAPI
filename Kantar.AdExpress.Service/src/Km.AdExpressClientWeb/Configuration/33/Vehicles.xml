@@ -366,38 +366,7 @@
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
   </vehicle>
-  <!-- MEDIA TACTIQUE -->
-  <!--<vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
-    --><!-- Units--><!--
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-    </allowedUnits>
-    <allowedRecapMediaDetailLevels>
-      <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
-        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        --><!-- Categorie --><!--
-        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>
-        --><!-- Support --><!--
-      </allowedRecapMediaLevelItems>
-    </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
-    <allowedUniverseLevels>
-      <allowedUniverseLevel id="1" name="sector"/>
-      <allowedUniverseLevel id="2" name="subsector"/>
-      <allowedUniverseLevel id="3" name="group_"/>
-      <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
-      <allowedUniverseLevel id="6" name="advertiser"/>
-      <allowedUniverseLevel id="8" name="brand"/>
-      <allowedUniverseLevel id="5" name="product"/>
-      <allowedUniverseLevel id="11" name="vehicle"/>
-      <allowedUniverseLevel id="12" name="category"/>
-      <allowedUniverseLevel id="14" name="media"/>
-      <allowedUniverseLevel id="15" name="interest_center"/>
-    </allowedUniverseLevels>
-  </vehicle>-->
+  
   <!-- OTHERS -->
   <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true" mediaAgencyFlag="304">
     <!-- Units-->
@@ -596,118 +565,7 @@
     </ColumnDetailLevel>
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
-  <!-- INTERNET -->
-  <!--<vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
-    --><!-- Units--><!--
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
-    </allowedUnits>
-    --><!-- Media detail level in results--><!--
-    <allowedMediaDetailLevels>
-      <allowedMediaLevelItems>
-        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
-        --><!-- Media --><!--
-        <allowedMediaLevelItem>category</allowedMediaLevelItem>
-        --><!-- Categorie --><!--
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>
-        --><!-- Support --><!--
-        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
-        --><!-- Centre d'interet --><!--
-        <allowedMediaLevelItem>mediaGroup</allowedMediaLevelItem>
-        --><!-- Media Group --><!--
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
-        --><!-- Régie --><!--
-        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
-        --><!-- Version --><!--
-        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
-        --><!-- Groupe de société --><!--
-        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
-        --><!-- Annonceur --><!--
-        <allowedMediaLevelItem>brand</allowedMediaLevelItem>
-        --><!-- Marque --><!--
-        <allowedMediaLevelItem>product</allowedMediaLevelItem>
-        --><!-- Produit --><!--
-        <allowedMediaLevelItem>sector</allowedMediaLevelItem>
-        --><!-- Famille --><!--
-        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>
-        --><!-- Classe --><!--
-        <allowedMediaLevelItem>group</allowedMediaLevelItem>
-        --><!-- Groupe --><!--
-        <allowedMediaLevelItem>segment</allowedMediaLevelItem>
-        --><!-- Variété --><!--
-        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
-        --><!-- Groupe d'agences --><!--
-        <allowedMediaLevelItem>agency</allowedMediaLevelItem>
-        --><!-- Agence --><!--
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>
-        --><!-- Titre --><!--
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>
-        --><!-- Pays --><!--
-      </allowedMediaLevelItems>
-    </allowedMediaDetailLevels>
-    --><!-- Selection hierarchy--><!--
-    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <MediaSelectionParent>interestCenter</MediaSelectionParent>
-      --><!-- Centre d'interet --><!--
-      <MediaSelectionParent>mediaSeller</MediaSelectionParent>
-      --><!-- Régie --><!--
-      --><!--<MediaSelectionParent>title</MediaSelectionParent>--><!--
-      --><!-- Titre --><!--
-    </MediaSelectionParents>
-    --><!--Media detail level in selection--><!--
-    <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
-        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
-        --><!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />--><!--
-      </defaultMediaSelectionDetailLevels>
-      <allowedMediaSelectionLevelItemsList>
-        <allowedMediaSelectionLevelItem id="3"/>
-        --><!-- Support --><!--
-        <allowedMediaSelectionLevelItem id="4"/>
-        --><!-- Centre d 'interet --><!--
-        <allowedMediaSelectionLevelItem id="5"/>
-        --><!-- Régie --><!--
-        --><!--<allowedMediaSelectionLevelItem id="17"/>--><!--
-        --><!-- Titre --><!--
-      </allowedMediaSelectionLevelItemsList>
-    </MediaSelectionDetailLevel>
-    --><!--Media detail level allowed in recap's modules--><!--
-    <allowedRecapMediaDetailLevels>
-      <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
-        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        --><!-- Categorie --><!--
-      </allowedRecapMediaLevelItems>
-    </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
-    <allowedUniverseLevels>
-      <allowedUniverseLevel id="1" name="sector"/>
-      <allowedUniverseLevel id="2" name="subsector"/>
-      <allowedUniverseLevel id="3" name="group_"/>
-      <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
-      <allowedUniverseLevel id="6" name="advertiser"/>
-      <allowedUniverseLevel id="8" name="brand"/>
-      <allowedUniverseLevel id="5" name="product"/>
-      <allowedUniverseLevel id="11" name="vehicle"/>
-      <allowedUniverseLevel id="12" name="category"/>
-      <allowedUniverseLevel id="14" name="media"/>
-      <allowedUniverseLevel id="15" name="interest_center"/>
-    </allowedUniverseLevels>
-    --><!--Allowed column broken down--><!--
-    <ColumnDetailLevel>
-      <allowedColumnDetailLevelItems>
-        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
-        <allowedColumnDetailLevelItem id="3" name="Support"/>
-        <allowedColumnDetailLevelItem id="5" name="Régie"/>
-        <allowedColumnDetailLevelItem id="17" name="Titre"/>
-        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
-      </allowedColumnDetailLevelItems>
-    </ColumnDetailLevel>
-  </vehicle>-->
+ 
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true" mediaAgencyFlag="301">
     <!-- Units-->
@@ -1172,17 +1030,17 @@
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
-     Units
+    <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-         Media 
+        <!-- Media -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-    Allowed universe levels
+    <!--Allowed universe levels-->
     <allowedUniverseLevels>
       <allowedUniverseLevel id="1" name="sector"/>
       <allowedUniverseLevel id="2" name="subsector"/>
@@ -1192,68 +1050,7 @@
       <allowedUniverseLevel id="8" name="brand"/>
     </allowedUniverseLevels>
   </vehicle>
-  <!-- EMAILING -->
-  <!--<vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
-    --><!-- Units--><!--
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-    </allowedUnits>
-    --><!--Media detail level allowed in recap's modules--><!--
-    <allowedRecapMediaDetailLevels>
-      <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
-        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        --><!-- Categorie --><!--
-      </allowedRecapMediaLevelItems>
-    </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
-    <allowedUniverseLevels>
-      <allowedUniverseLevel id="1" name="sector"/>
-      <allowedUniverseLevel id="2" name="subsector"/>
-      <allowedUniverseLevel id="3" name="group_"/>
-      <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
-      <allowedUniverseLevel id="6" name="advertiser"/>
-      <allowedUniverseLevel id="8" name="brand"/>
-      <allowedUniverseLevel id="5" name="product"/>
-      <allowedUniverseLevel id="11" name="vehicle"/>
-      <allowedUniverseLevel id="12" name="category"/>
-      <allowedUniverseLevel id="14" name="media"/>
-      <allowedUniverseLevel id="15" name="interest_center"/>
-    </allowedUniverseLevels>
-  </vehicle>
-  --><!--TELEPHONIE MOBILE--><!--
-  <vehicle id="mobileTelephony" databaseId="12" showInsertions="false" showCreations="false">
-    --><!-- Units--><!--
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-    </allowedUnits>
-    --><!--Media detail level allowed in recap's modules--><!--
-    <allowedRecapMediaDetailLevels>
-      <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
-        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        --><!-- Categorie --><!--
-      </allowedRecapMediaLevelItems>
-    </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
-    <allowedUniverseLevels>
-      <allowedUniverseLevel id="1" name="sector"/>
-      <allowedUniverseLevel id="2" name="subsector"/>
-      <allowedUniverseLevel id="3" name="group_"/>
-      <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
-      <allowedUniverseLevel id="6" name="advertiser"/>
-      <allowedUniverseLevel id="8" name="brand"/>
-      <allowedUniverseLevel id="5" name="product"/>
-      <allowedUniverseLevel id="11" name="vehicle"/>
-      <allowedUniverseLevel id="12" name="category"/>
-      <allowedUniverseLevel id="14" name="media"/>
-      <allowedUniverseLevel id="15" name="interest_center"/>
-    </allowedUniverseLevels>
-  </vehicle>-->
+ 
   <!-- Evaliant mobile-->
   <vehicle id="evaliantMobile" databaseId="15" showInsertions="false" showCreations="true" autopromo="false">
     <!-- Units-->
@@ -1621,28 +1418,7 @@
     </ColumnDetailLevel>
     <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
-  <!-- PLURIMEDIA Hors Inernet display-->
-  <!--<vehicle id="PlurimediaWithoutMms" databaseId="51" showInsertions="false" showCreations="false">
-    --><!-- Units--><!--
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-    </allowedUnits>
-    <allowedRecapMediaDetailLevels>
-      <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        --><!-- Media --><!--
-      </allowedRecapMediaLevelItems>
-    </allowedRecapMediaDetailLevels>
-    --><!--Allowed universe levels--><!--
-    <allowedUniverseLevels>
-      <allowedUniverseLevel id="1" name="sector"/>
-      <allowedUniverseLevel id="2" name="subsector"/>
-      <allowedUniverseLevel id="3" name="group_"/>
-      <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="6" name="advertiser"/>
-      <allowedUniverseLevel id="8" name="brand"/>
-    </allowedUniverseLevels>
-  </vehicle>-->
+ 
   <!-- SOCIAL -->
   <vehicle id="social" databaseId="21" showInsertions="false" showCreations="false">
     <!-- Units-->
@@ -1876,6 +1652,81 @@
         <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
+  </vehicle>
+
+  <!-- PLURIMEDIA offline-->
+  <vehicle id="plurimediaOffline" databaseId="52" showInsertions="false" showCreations="false">
+   
+  <!-- Units--> 
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>        
+  <!-- Media -->  
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+   
+  <!--Allowed universe levels--> 
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+    </allowedUniverseLevels>
+  </vehicle>
+
+  <!-- PLURIMEDIA with Search-->
+  <vehicle id="plurimediaWithSearch" databaseId="54" showInsertions="false" showCreations="false">
+
+    <!-- Units-->
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+    </allowedUniverseLevels>
+  </vehicle>
+
+  <!-- PLURIMEDIA Online-->
+  <vehicle id="plurimediaOnline" databaseId="53" showInsertions="false" showCreations="false">
+
+    <!-- Units-->
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+    </allowedUniverseLevels>
   </vehicle>
 
 </vehicles>

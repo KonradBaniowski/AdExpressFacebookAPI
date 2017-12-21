@@ -277,6 +277,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SponsorshipMedias = 2933;
         public const long SponsorshipWorkingSet = 3106;
         public const long Health = 3107;
+        public const long PlurimediaOffline = 3111;
+        public const long PlurimediaWithSearch = 3113;
+        public const long PlurimediaOnline = 3112;
+
         #endregion
     }
 }

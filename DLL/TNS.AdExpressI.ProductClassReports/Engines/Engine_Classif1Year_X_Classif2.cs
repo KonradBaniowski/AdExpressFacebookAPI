@@ -192,7 +192,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			//Pluri or not ? Yes ==> total pluri to do, else no
 			//Column total : plurimedia ou field "m1"
 			if (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.plurimedia
-                && VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
+                && VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.plurimediaOnline
+                && VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.plurimediaOffline
+                && VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) != CstDBClassif.Vehicles.names.plurimediaWithSearch)
             {
 				numColumn = FIRST_MEDIA_RESULT_INDEX;
 			}
@@ -334,7 +336,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 
 			
             bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia
-                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.PlurimediaWithoutMms;
+                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimediaOnline
+                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimediaOffline
+                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimediaWithSearch;
 			foreach(DataRow currentRow in dtData.Rows){
 				
 				#region Données qualitatives

@@ -6,6 +6,9 @@ $(document).ready(function () {
     var searchId = '18';
     var dooh = '22';
     var plurimedia = '50';
+    var plurimediaOffline = '52';
+    var plurimediaOnline = '53';
+    var plurimediaWithSearch = '54';
     //var socialId=TBD
     if ($('#Multiple').val() == "True") {
 
@@ -56,8 +59,8 @@ $(document).ready(function () {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;
-        if (idList == plurimedia) {
-            $('.panel.panel-primary.panel-results.optional-area').toggle();
+        if (idList == plurimedia || idList == plurimediaOffline || idList == plurimediaOnline || idList == plurimediaWithSearch) {
+            $('.panel.panel-primary.panel-results.optional-area').hide();
         }
         else {
             $('.panel.panel-primary.panel-results.optional-area').show();

@@ -233,6 +233,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMagazine, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.plurimedia:
+                case CstDBClassif.Vehicles.names.plurimediaWithSearch:
+                case CstDBClassif.Vehicles.names.plurimediaOffline:
+                case CstDBClassif.Vehicles.names.plurimediaOnline:
                 case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
