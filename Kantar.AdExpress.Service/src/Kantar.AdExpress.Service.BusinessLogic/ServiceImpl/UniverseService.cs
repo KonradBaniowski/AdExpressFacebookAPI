@@ -1588,7 +1588,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
             DataTable dtVehicle = vl.List;
-            List<long> ids = new List<long> { VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).Id.GetHashCode() };
+            List<long> ids = new List<long>
+            {
+                VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId
+                ,VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimediaWithSearch).DatabaseId
+                ,VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimediaOnline).DatabaseId
+                ,VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimediaOffline).DatabaseId
+            };
 
             foreach (DataRow row in dtVehicle.Rows)
             {

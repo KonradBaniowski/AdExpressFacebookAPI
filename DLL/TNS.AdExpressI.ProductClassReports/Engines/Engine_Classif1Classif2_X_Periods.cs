@@ -924,7 +924,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_L1_REF_CSS = "asl0r";
 					MAIN_L1_CON_CSS = "asl0c";
                     MAIN_L2_CSS = (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
-                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.PlurimediaWithoutMms)
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOnline
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOffline
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaWithSearch)
 						?"asl2":"asl5";
 					MAIN_L3_CSS = "asl5b";
 					SCD_L1_CSS = "asl3";
@@ -939,8 +941,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_LEVEL_L1 = 0;
 					MAIN_LEVEL_L2 = (MEDIA_LEVEL_NUMBER>1 ||
                         VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
-                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.PlurimediaWithoutMms
-						)?1:-1;
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOffline
+                         || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOnline
+                          || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaWithSearch
+                        ) ?1:-1;
 					MAIN_LEVEL_L3 = (MEDIA_LEVEL_NUMBER>2)?2:-1;
 					SCD_LEVEL_L1 = 0;
 					SCD_LEVEL_L2 = (PRODUCT_LEVEL_NUMBER>1)?1:-1;
@@ -955,7 +959,9 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_L1_REF_CSS = "asl0rx";
 					MAIN_L1_CON_CSS = "asl0cx";
                     MAIN_L2_CSS = (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
-                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.PlurimediaWithoutMms)
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOnline
+                         || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOffline
+                          || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaWithSearch)
 						?"asl2x":"asl5x";
 					MAIN_L3_CSS = "asl5bx";
 					SCD_L1_CSS = "asl3x";
@@ -970,8 +976,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					MAIN_LEVEL_L1 = 0;
 					MAIN_LEVEL_L2 = (MEDIA_LEVEL_NUMBER>1 ||
                         VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimedia
-                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.PlurimediaWithoutMms
-						)?1:-1;
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOnline
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaOffline
+                        || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstClassif.DB.Vehicles.names.plurimediaWithSearch
+                        ) ?1:-1;
 					MAIN_LEVEL_L3 = (MEDIA_LEVEL_NUMBER>2)?2:-1;
 					SCD_LEVEL_L1 = 0;
 					SCD_LEVEL_L2 = (PRODUCT_LEVEL_NUMBER>1)?1:-1;

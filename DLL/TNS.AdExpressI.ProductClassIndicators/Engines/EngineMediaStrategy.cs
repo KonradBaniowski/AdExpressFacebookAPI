@@ -1507,55 +1507,96 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     /*Si utilisateur a sélectionné PLURIMEDIA on calcule investissement total marché ou famille et univers, et
                      * les paramètres associés (PDM,evolution,1er annonceurs et références)
                      */
-                    if (!string.IsNullOrEmpty(VehicleAccessList) 
-                        && (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
-                            || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
-                            ))
+                    if (!string.IsNullOrEmpty(VehicleAccessList)
+                        &&
+                        (CstDbClassif.Vehicles.names.plurimedia ==
+                         VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                         ||
+                         CstDbClassif.Vehicles.names.PlurimediaWithoutMms ==
+                         VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                         ||
+                         CstDbClassif.Vehicles.names.plurimediaOnline ==
+                         VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                         ||
+                         CstDbClassif.Vehicles.names.plurimediaOffline ==
+                         VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                         ||
+                         CstDbClassif.Vehicles.names.plurimediaWithSearch ==
+                         VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                        ))
                     {
                         #region ligne total marché ou famille pour PLURIMEDIA
+
                         //Traitement ligne total marché ou famille pour Plurimedia : Investissment,Evolution,PDM,1er nnonceur et son investissment, première référence et son investissment
                         if (dtTotalMarketOrSector.Columns.Contains("total_N") && !hasTotalMarketOrSector)
                         {
-                            ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorInvest, ref TotalMarketOrSectorInvest, ref TotalMarketOrSectorInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "", _session.ComparativeStudy);
+                            ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorInvest,
+                                ref TotalMarketOrSectorInvest, ref TotalMarketOrSectorInvest_N1, ref tempPDM,
+                                ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "", _session.ComparativeStudy);
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalMarketOrSectorInvest.Trim()))
                             {
-                                string webWord = CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)) ? GestionWeb.GetWebWord(3020, _session.SiteLanguage) : GestionWeb.GetWebWord(210, _session.SiteLanguage);
-                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, webWord, true, TotalMarketOrSectorInvest, "100", tempEvol, _session.ComparaisonCriterion, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                string webWord = CstDbClassif.Vehicles.names.PlurimediaWithoutMms ==
+                                                 VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                    ? GestionWeb.GetWebWord(3020, _session.SiteLanguage)
+                                    : GestionWeb.GetWebWord(210, _session.SiteLanguage);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, webWord, true,
+                                    TotalMarketOrSectorInvest, "100", tempEvol, _session.ComparaisonCriterion,
+                                    CstResult.MediaStrategy.InvestmentType.total,
+                                    CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
-                            tab = FillTabFisrtElmt(tab, comparisonCriterion, TotalMarketOrSectorInvest, ref indexTabRow, increment);
+                            tab = FillTabFisrtElmt(tab, comparisonCriterion, TotalMarketOrSectorInvest, ref indexTabRow,
+                                increment);
                             increment = false;
                             hasTotalMarketOrSector = true;
                         }
+
                         #endregion
 
                         #region ligne univers pour PLURIMEDIA
+
                         //Traitement ligne total univers pour Plurimedia : Investissment,Evolution,PDM,1er nnonceur et son investissment, première référence et son investissment
-						if (dtTotalUniverse!=null && dtTotalUniverse.Columns.Contains("total_N") && !hasTotalUniv)
+                        if (dtTotalUniverse != null && dtTotalUniverse.Columns.Contains("total_N") && !hasTotalUniv)
                         {
-                            ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivInvest, ref TotalUnivInvest, ref TotalUnivInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "", _session.ComparativeStudy);
+                            ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivInvest, ref TotalUnivInvest,
+                                ref TotalUnivInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "",
+                                _session.ComparativeStudy);
                             // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et plurimédia 
                             if (FctUtilities.CheckedText.IsNotEmpty(TotalUnivInvest.Trim()))
                             {
-                                string webWord = CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)) ? GestionWeb.GetWebWord(3020, _session.SiteLanguage) : GestionWeb.GetWebWord(210, _session.SiteLanguage);
-                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, webWord, true, TotalUnivInvest, "100", tempEvol, CstComparaisonCriterion.universTotal, CstResult.MediaStrategy.InvestmentType.total, CstPreformatedDetail.PreformatedMediaDetails.vehicle);
+                                string webWord = CstDbClassif.Vehicles.names.PlurimediaWithoutMms ==
+                                                 VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                    ? GestionWeb.GetWebWord(3020, _session.SiteLanguage)
+                                    : GestionWeb.GetWebWord(210, _session.SiteLanguage);
+                                tab = FillTabInvestPdmEvol(tab, indexTabRow, VehicleAccessList, webWord, true,
+                                    TotalUnivInvest, "100", tempEvol, CstComparaisonCriterion.universTotal,
+                                    CstResult.MediaStrategy.InvestmentType.total,
+                                    CstPreformatedDetail.PreformatedMediaDetails.vehicle);
                                 increment = true;
                             }
-                            tab = FillTabFisrtElmt(tab, CstComparaisonCriterion.universTotal, TotalUnivInvest, ref indexTabRow, increment);
-                            increment = false;//ligne suivante
+                            tab = FillTabFisrtElmt(tab, CstComparaisonCriterion.universTotal, TotalUnivInvest,
+                                ref indexTabRow, increment);
+                            increment = false; //ligne suivante
                             hasTotalUniv = true;
                         }
+
                         #endregion
 
                         #region lignes  annonceurs de références ou concurrents	pour sélection PLURIMEDIA
+
                         //Pour les annonceurs de référence ou concurrents sélectionnés par PLURIMEDIA : Investissment,Evolution,PDM
-                        if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList) && dtAdvertiser != null && dtAdvertiser.Rows.Count > 0 && !hasAdvertiser)
+                        if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList) && dtAdvertiser != null &&
+                            dtAdvertiser.Rows.Count > 0 && !hasAdvertiser)
                         {
                             //Pour chaque ligne  TOTAL annonceur de référence ou concurrent on récupère les données							
-                            FillAdvertisers(tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)", "", inTotUnivAdvertAlreadyUsedArr, ref hPdmTotAdvert, ref hPdmTotAdvert, ref AdvertiserTotalInvest, ref AdvertiserTotalInvest_N1, ref indexTabRow, VehicleAccessList, idVehicle, Vehicle, true, ref hasAdvertiser);
+                            FillAdvertisers(tab, dtAdvertiser, dtTotalMarketOrSector, "Sum(total_N)", "Sum(total_N1)",
+                                "", inTotUnivAdvertAlreadyUsedArr, ref hPdmTotAdvert, ref hPdmTotAdvert,
+                                ref AdvertiserTotalInvest, ref AdvertiserTotalInvest_N1, ref indexTabRow,
+                                VehicleAccessList, idVehicle, Vehicle, true, ref hasAdvertiser);
                         }
-                        #endregion						
+
+                        #endregion
                     }
                     //Pour chaque ligne  media du total univers on récupère les données										
                     foreach (DataRow currentRow in dtTotalMarketOrSector.Rows)
@@ -1577,7 +1618,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 {
                                     //investissement total univers pour média (vehicle)									
                                     if (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
-                                        || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
+                                        || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                        || CstDbClassif.Vehicles.names.plurimediaOnline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                        || CstDbClassif.Vehicles.names.plurimediaOffline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                        || CstDbClassif.Vehicles.names.plurimediaWithSearch == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                                         ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorInvest, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     else ComputeInvestPdmEvol(dtTotalMarketOrSector, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest, ref TotalMarketOrSectorVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     // Remplit la ligne courante avec investissement,Evolution et PDM pour le total marché ou famille et media (vehicle) 
@@ -1604,6 +1648,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                                 {
                                     //investissement total univers pour média (vehicle)									
                                     if (CstDbClassif.Vehicles.names.plurimedia ==  VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                         || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                                          || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
                                         || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                                         ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivInvest, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
                                     else ComputeInvestPdmEvol(dtTotalUniverse, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest, ref TotalUnivVehicleInvest_N1, ref tempPDM, ref tempEvol, "Sum(total_N)", "Sum(total_N1)", "id_vehicle = " + idVehicle + "", _session.ComparativeStudy);
@@ -2148,7 +2194,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                  */
                 if (!string.IsNullOrEmpty(VehicleAccessList) 
                     && ( CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
-                    || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
+                    || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                     || CstDbClassif.Vehicles.names.plurimediaOnline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                      || CstDbClassif.Vehicles.names.plurimediaWithSearch == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                      || CstDbClassif.Vehicles.names.plurimediaOffline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList)))
                     )
                 {
                     #region ligne total marché ou famille pour PLURIMEDIA
@@ -2836,6 +2885,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                       
                         //PDM annonceur de référence ou concurrent  par média (vehicle)												
                         if (!isPluri && (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                            || CstDbClassif.Vehicles.names.plurimediaOnline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                            || CstDbClassif.Vehicles.names.plurimediaOffline == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
+                            || CstDbClassif.Vehicles.names.plurimediaWithSearch == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))
                             || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(Int64.Parse(VehicleAccessList))))
                         {
                             if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserInvestByVeh) && hPdmTotAdvert != null && hPdmTotAdvert[idAdvertiser] != null && FctUtilities.CheckedText.IsNotEmpty(hPdmTotAdvert[idAdvertiser].ToString().Trim()) && double.Parse(hPdmTotAdvert[idAdvertiser].ToString().Trim()) > (double)0.0)

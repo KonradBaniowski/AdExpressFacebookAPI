@@ -1254,9 +1254,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
 
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-            if (vehicleInfo != null && (vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia
-                || vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms)
-                && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION && WebApplicationParameters.HidePlurimediaEvol)
+            if (vehicleInfo != null &&
+                (vehicleInfo.Id == Vehicles.names.plurimedia
+                 || vehicleInfo.Id == Vehicles.names.PlurimediaWithoutMms
+                 || vehicleInfo.Id == Vehicles.names.plurimediaOnline
+                 || vehicleInfo.Id == Vehicles.names.plurimediaOffline
+                 || vehicleInfo.Id == Vehicles.names.plurimediaWithSearch
+                )
+                && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION &&
+                WebApplicationParameters.HidePlurimediaEvol)
             {
                 return false;
             }

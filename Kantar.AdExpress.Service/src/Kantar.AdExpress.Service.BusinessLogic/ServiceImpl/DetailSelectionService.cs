@@ -337,12 +337,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             param[1] = dataLanguage;
             var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
-          
-            if (key == Right.type.vehicleAccess && VehiclesInformation.Contains(Vehicles.names.plurimedia) 
-                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimedia) == searchTodo[key].FirstOrDefault())
-            {
-                string label = GestionWeb.GetWebWord(210, dataLanguage);               
-                return new List<TextData> { new TextData { Id = searchTodo[key].FirstOrDefault(), Label = label }};
+            string pluriMediaLabel = IsPlurimedia(key, searchTodo, dataLanguage);
+
+
+            if (!string.IsNullOrEmpty(pluriMediaLabel))
+            {                     
+                return new List<TextData> { new TextData { Id = searchTodo[key].FirstOrDefault(), Label = pluriMediaLabel } };
             }
             var dal = factoryLevels.CreateClassificationLevelListDAL(key, string.Join(",", searchTodo[key]));
 
@@ -494,6 +494,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default:
                     return WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
             }
+        }
+
+        private string IsPlurimedia(Right.type key,Dictionary<Right.type,List<long>> searchTodo,int dataLanguage)
+        {
+            if (key == Right.type.vehicleAccess)
+            {
+               if (VehiclesInformation.Contains(Vehicles.names.plurimedia)
+                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimedia) == searchTodo[key].FirstOrDefault()               
+                ) return GestionWeb.GetWebWord(210, dataLanguage);
+                 if(VehiclesInformation.Contains(Vehicles.names.plurimediaOffline)
+                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaOffline) == searchTodo[key].FirstOrDefault())
+                    return GestionWeb.GetWebWord(3111, dataLanguage);
+                 if (VehiclesInformation.Contains(Vehicles.names.plurimediaOnline)
+              && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaOnline) == searchTodo[key].FirstOrDefault())
+                    return GestionWeb.GetWebWord(3112, dataLanguage);
+                 if (VehiclesInformation.Contains(Vehicles.names.plurimediaWithSearch)
+              && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaWithSearch) == searchTodo[key].FirstOrDefault())
+                    return GestionWeb.GetWebWord(3113, dataLanguage);
+            }
+
+            return string.Empty;
         }
     }
 }

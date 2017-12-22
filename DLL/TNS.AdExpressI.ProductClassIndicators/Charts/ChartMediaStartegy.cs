@@ -55,9 +55,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         #region OnPreRender
         protected override void OnPreRender(EventArgs e)
         {
-            bool withPluriByCategory = (_session.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory
+            bool withPluriByCategory = _session.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory
                 && (CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID)
-                || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID)));
+                || CstDbClassif.Vehicles.names.PlurimediaWithoutMms == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID)
+                || CstDbClassif.Vehicles.names.plurimediaOnline == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID)
+                || CstDbClassif.Vehicles.names.plurimediaOffline == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID)
+                || CstDbClassif.Vehicles.names.plurimediaWithSearch == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID));
             #region Animation Params
             if (_chartType != ChartImageType.Flash)
             {

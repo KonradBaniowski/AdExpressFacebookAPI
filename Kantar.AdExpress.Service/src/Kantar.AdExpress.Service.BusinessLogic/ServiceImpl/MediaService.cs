@@ -335,6 +335,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (vehiclesInfos.ContainsKey(VhCstes.plurimedia))
                 vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
             else
+                 if (vehiclesInfos.ContainsKey(VhCstes.plurimediaOffline))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaOffline);
+            else
+                 if (vehiclesInfos.ContainsKey(VhCstes.plurimediaOnline))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaOnline);
+            else
+                 if (vehiclesInfos.ContainsKey(VhCstes.plurimediaWithSearch))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaWithSearch);
+            else
                 vehicleInfo = null;
             webSession.SelectionUniversMedia.Nodes.Clear();
             webSession.PrincipalMediaUniverses.Clear();
@@ -448,16 +457,60 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
+
+            //Plurimedia
             VehicleInformation vehicleInfo = new VehicleInformation();
             vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
             Core.Domain.Media pluremedia = new Core.Domain.Media();
             if (vehicleInfo != null)
             {
-                pluremedia.Id = (long)VhCstes.plurimedia;
-                pluremedia.MediaEnum = VehiclesInformation.DatabaseIdToEnum((long)VhCstes.plurimedia);
+                pluremedia.Id = vehicleInfo.DatabaseId;
+                pluremedia.MediaEnum = VhCstes.plurimedia;
                 pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia, webSession.SiteLanguage);
                 vehiclesList.Add(pluremedia);
             }
+            //Plurimedia Offline   
+            if (VehiclesInformation.Contains(VhCstes.plurimediaOffline))
+            {
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaOffline);
+                pluremedia = new Core.Domain.Media();
+                if (vehicleInfo != null)
+                {
+                    pluremedia.Id = vehicleInfo.DatabaseId;
+                    pluremedia.MediaEnum = VhCstes.plurimediaOffline;
+                    pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.PlurimediaOffline,
+                        webSession.SiteLanguage);
+                    vehiclesList.Add(pluremedia);
+                }
+            }
+            //Plurimedia Online   
+            if (VehiclesInformation.Contains(VhCstes.plurimediaOnline))
+            {
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaOnline);
+                pluremedia = new Core.Domain.Media();
+                if (vehicleInfo != null)
+                {
+                    pluremedia.Id = vehicleInfo.DatabaseId;
+                    pluremedia.MediaEnum = VhCstes.plurimediaOnline;
+                    pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.PlurimediaOnline,
+                        webSession.SiteLanguage);
+                    vehiclesList.Add(pluremedia);
+                }
+            }
+            //Plurimedia With Search   
+            if (VehiclesInformation.Contains(VhCstes.plurimediaWithSearch))
+            {
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaWithSearch);
+                pluremedia = new Core.Domain.Media();
+                if (vehicleInfo != null)
+                {
+                    pluremedia.Id = vehicleInfo.DatabaseId;
+                    pluremedia.MediaEnum = VhCstes.plurimediaWithSearch;
+                    pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.PlurimediaWithSearch, webSession.SiteLanguage);
+                    vehiclesList.Add(pluremedia);
+                }
+            }         
+           
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
 
