@@ -2386,5 +2386,7 @@
     <item mnemonic="w3112" type="System.String">PLURIMEDIA ONLINE</item>
     <item mnemonic="w3113" type="System.String">PLURIMEDIA + SEARCH</item>
 
+    <item mnemonic="w3114" type="System.String">Documents</item>
+    <item mnemonic="w3115" type="System.String">Informations</item>
   </items>
 </localization>

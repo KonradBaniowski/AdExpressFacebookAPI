@@ -83,6 +83,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     GestionWeb.GetWebWord(897, CustomerSession.SiteLanguage),
                     subPeriod.EndPeriodLabel);
                 /************************************/
+                subPeriod.AllLabel = GestionWeb.GetWebWord(201, CustomerSession.SiteLanguage);
 
                 subPeriod.Items = new List<SubPeriodItem>();
                 SubPeriodItem item = new SubPeriodItem();

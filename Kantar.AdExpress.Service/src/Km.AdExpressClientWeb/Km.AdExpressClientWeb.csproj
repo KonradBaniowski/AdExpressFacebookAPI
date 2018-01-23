@@ -1853,6 +1853,7 @@
     <Content Include="Views\Home\_HomeNewsTr.cshtml" />
     <Content Include="Views\Home\_ModulesTr.cshtml" />
     <Content Include="Views\Home\_ModulesSk.cshtml" />
+    <Content Include="Views\Home\_HomeNewsSk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

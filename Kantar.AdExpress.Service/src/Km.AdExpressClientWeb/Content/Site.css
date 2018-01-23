@@ -3166,3 +3166,7 @@ video::-webkit-media-controls-panel {
 .msCreative {
     color: white;
 }
+
+.sk-module-title {
+    font-size: 23px!important;
+}

@@ -86,6 +86,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Langue Finnoise
         /// </summary>
         public const int FINNOIS = 35;
+        /// <summary>
+        /// Langue Finnoise
+        /// </summary>
+        public const int SLOVAKIA = 421;
     }
 
 	#endregion

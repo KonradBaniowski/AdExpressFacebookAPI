@@ -90,6 +90,23 @@ namespace Km.AdExpressClientWeb.Controllers
                             }
                 });
             }
+            else if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA))
+            {
+                documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
+                documents.Add(new Documents()
+                {
+                    Id = 3,
+                    Label = GestionWeb.GetWebWord(3114, siteLanguage),
+                    InfosNews = new List<InfosNews>()
+                            {
+                                new InfosNews()
+                                {
+                                    Label = GestionWeb.GetWebWord(LanguageConstantes.UpdatesCalendar, siteLanguage),
+                                    Url = "AdExpressMediaUpdatesCalendar.pdf"
+                                }
+                            }
+                });
+            }
             else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
                 documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
