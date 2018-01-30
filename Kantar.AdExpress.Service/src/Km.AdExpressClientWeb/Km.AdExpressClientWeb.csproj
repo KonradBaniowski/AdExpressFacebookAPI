@@ -296,6 +296,18 @@
     <Content Include="Content\img\sponsorship\29082.png" />
     <Content Include="Content\img\sponsorship\29104.png" />
     <Content Include="Content\img\sponsorship\29105.png" />
+    <Content Include="Content\LoginFiles\images\33\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\35\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\420\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\421\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\48\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\90\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\kantar_media_favicon.png" />
+    <Content Include="Content\LoginFiles\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\LoginFiles\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\LoginFiles\images\ui-bg_highlight-soft_45_9c1e8d_1x100.png" />
+    <Content Include="Content\LoginFiles\jquery.ui.theme.css" />
+    <Content Include="Content\LoginFiles\Site.css" />
     <Content Include="_app_offline.htm" />
     <Content Include="Configuration\90\AdExpressConfiguration.xml" />
     <Content Include="Configuration\90\AdNetTrackDetailLevel.xml" />
@@ -1664,6 +1676,8 @@
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <Content Include="Content\xls\List of vehicles on alert.xls" />
     <Content Include="Content\xls\Liste supports en alerte.xls" />
+    <Content Include="Content\LoginFiles\KantarBrownWeb-Light.woff2" />
+    <Content Include="Content\LoginFiles\KantarBrownWeb-Regular.woff2" />
     <None Include="Properties\PublishProfiles\AdExpress - Test.pubxml" />
     <Content Include="Content\pdf\AdExpress_Optimized-Version_FIN02.pdf" />
     <Content Include="fonts\Simple-Line-Icons.eot" />
@@ -1853,6 +1867,7 @@
     <Content Include="Views\Home\_HomeNewsTr.cshtml" />
     <Content Include="Views\Home\_ModulesTr.cshtml" />
     <Content Include="Views\Home\_ModulesSk.cshtml" />
+    <Content Include="Views\Shared\_LayoutPublic2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

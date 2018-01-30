@@ -223,5 +223,13 @@ namespace KM.Framework.Constantes
 
         // 1397
 
+        public string AccountFindOutMoreLabel { get; set; } //3114
+
+        public string AllRightsReservedLabel { get; set; } //3115
+
+        public string FindOutMoreLabel { get; set; } //3116
+        
+
+
     }
 }
