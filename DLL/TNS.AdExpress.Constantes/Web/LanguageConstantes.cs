@@ -280,6 +280,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long PlurimediaOffline = 3111;
         public const long PlurimediaWithSearch = 3113;
         public const long PlurimediaOnline = 3112;
+        public const long AccountFindOutMoreLabel = 3114;
+        public const long AllRightsReservedLabel = 3115;
+        public const long FindOutMoreLabel = 3116;
+
 
         #endregion
     }

@@ -2385,8 +2385,14 @@
     <item mnemonic="w3111" type="System.String">PLURIMEDIA OFFLINE</item>
     <item mnemonic="w3112" type="System.String">PLURIMEDIA ONLINE</item>
     <item mnemonic="w3113" type="System.String">PLURIMEDIA + SEARCH</item>
+<<<<<<< HEAD
 
     <item mnemonic="w3114" type="System.String">Documents</item>
     <item mnemonic="w3115" type="System.String">Informations</item>
+=======
+    <item mnemonic="w3114" type="System.String">Nous Contacter :</item>
+    <item mnemonic="w3115" type="System.String">Kantar Media.  Tous droits réservés</item>
+    <item mnemonic="w3116" type="System.String">Cliquez ici</item>
+>>>>>>> feature/new-connection-page
   </items>
 </localization>
