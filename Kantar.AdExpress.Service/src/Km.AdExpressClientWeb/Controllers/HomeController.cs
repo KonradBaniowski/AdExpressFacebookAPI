@@ -96,7 +96,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 documents.Add(new Documents()
                 {
                     Id = 3,
-                    Label = GestionWeb.GetWebWord(3114, siteLanguage),
+                    Label = GestionWeb.GetWebWord(3117, siteLanguage),
                     InfosNews = new List<InfosNews>()
                             {
                                 new InfosNews()

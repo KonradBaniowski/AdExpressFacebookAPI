@@ -1867,11 +1867,9 @@
     <Content Include="Views\Home\_HomeNewsTr.cshtml" />
     <Content Include="Views\Home\_ModulesTr.cshtml" />
     <Content Include="Views\Home\_ModulesSk.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Home\_HomeNewsSk.cshtml" />
-=======
     <Content Include="Views\Shared\_LayoutPublic2.cshtml" />
->>>>>>> feature/new-connection-page
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
