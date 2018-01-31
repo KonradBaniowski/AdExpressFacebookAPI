@@ -81,7 +81,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- RADIO -->
-  <vehicle id="radio" databaseId="5" showInsertions="true" showCreations="false">
+  <vehicle id="radio" databaseId="5" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -178,7 +178,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- TV -->
-  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="false">
+  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -274,7 +274,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- NewsPaper -->
-  <vehicle id="newspaper" databaseId="1" showInsertions="true" showCreations="false">
+  <vehicle id="newspaper" databaseId="1" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -369,7 +369,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- Magazine -->
-  <vehicle id="magazine" databaseId="2" showInsertions="true" showCreations="false">
+  <vehicle id="magazine" databaseId="2" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
