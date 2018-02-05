@@ -1311,7 +1311,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         private void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
         {
-            if (vehicleIds.Any(plurimediaDbIds.Contains))
+            if (vehicleIds.Any(plurimediaDbIds.Contains) && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
             {
                 var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());               
 
