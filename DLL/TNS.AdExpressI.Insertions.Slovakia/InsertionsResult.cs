@@ -44,6 +44,15 @@ namespace TNS.AdExpressI.Insertions.Slovakia
                 visuals.AddRange(files.Select(getCreativePath));
             }
         }
+
+        private void AddEvaliantVisuals(DataRow row, List<string> visuals, Func<string, string> getCreativePath)
+        {
+            if (row["associated_file"] != DBNull.Value)
+            {
+                var files = row["associated_file"].ToString().Split(',');
+                visuals.AddRange(files.Select(getCreativePath));
+            }
+        }
         #endregion
 
         #region Is Visual Available
@@ -153,7 +162,7 @@ namespace TNS.AdExpressI.Insertions.Slovakia
                 case Vehicles.names.internet:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
                         break;
-                    AddVisuals(row, visuals, GetCreativePathAdNetTrack);
+                    AddEvaliantVisuals(row, visuals, GetCreativePathAdNetTrack);
                     break;
                 case Vehicles.names.evaliantMobile:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG))
