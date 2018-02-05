@@ -1665,6 +1665,7 @@
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <Content Include="Content\xls\List of vehicles on alert.xls" />
     <Content Include="Content\xls\Liste supports en alerte.xls" />
+    <Content Include="Content\pdf\Methodologie_Medias_Investissements_Creations_Publicitaires.pdf" />
     <None Include="Properties\PublishProfiles\AdExpress - Test.pubxml" />
     <Content Include="Content\pdf\AdExpress_Optimized-Version_FIN02.pdf" />
     <Content Include="fonts\Simple-Line-Icons.eot" />
