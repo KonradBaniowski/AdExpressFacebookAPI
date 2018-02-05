@@ -384,6 +384,7 @@
       <columnItem id="25" name="Durée écran hap"/>
       <columnItem id="26" name="Nombre spots hap"/>-->
       <columnItem id="14" name="Prix"/>
+      <columnItem id="6" name="Version" visible="false"/>
     </detailColumn>
     <!--TV-->
     <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
@@ -405,6 +406,7 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="51" name="Prix du 30 sec"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="6" name="Version" visible="false"/>
     </detailColumn>
     <!--Magazine-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
@@ -586,7 +588,7 @@
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="70" name="nb Support"/>
       <columnItem id="85" name="Budget"/>
-      <!--<columnItem id="75" name="Spot"/>-->
+      <columnItem id="75" name="Spot"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
@@ -636,6 +638,7 @@
       <!--<columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="6" name="Version" visible="false"/>
     </detailColumn>
     <!--Radio-->
     <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">

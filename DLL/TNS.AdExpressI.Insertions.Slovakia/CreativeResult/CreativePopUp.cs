@@ -35,6 +35,25 @@ namespace TNS.AdExpressI.Insertions.Slovakia.CreativeResult
             return RenderCreative(flag, flag, true).ToString();
         }
 
+        /// <summary>
+        /// Set creative paths
+        /// </summary>
+        public override void SetCreativePaths()
+        {
+            bool flag = false;
+            GetCreativePathes(ref flag, ref flag);
+        }
+
+        public override string CreativePopUpRenderWithoutOptions(int width, int height)
+        {
+            bool realFormatFound = false;
+            bool windowsFormatFound = false;
+            _width = width;
+            _height = height;
+            GetCreativePathes(ref realFormatFound, ref windowsFormatFound);
+            return RenderCreative(realFormatFound, windowsFormatFound, false).ToString();
+        }
+
         protected override StringBuilder RenderCreative(bool realFormatFound, bool windowsFormatFound, bool withOptions)
         {
             var res = new StringBuilder(2000);
@@ -200,6 +219,7 @@ namespace TNS.AdExpressI.Insertions.Slovakia.CreativeResult
                 CreationServerPathes.LOCAL_PATH_CREATIVES_RADIO, _associated_file));
 
         }
+
         protected override void GetRadioCreativePathes()
         {
             if (HasCreationReadRights && !string.IsNullOrEmpty(_associated_file))
@@ -208,6 +228,46 @@ namespace TNS.AdExpressI.Insertions.Slovakia.CreativeResult
                 return;
             if (!string.IsNullOrEmpty(_associated_file))
                 _pathDownloadingFile = string.Format("{0}/{1}", CreationServerPathes.DOWNLOAD_RADIO_SERVER, _associated_file);
+        }
+
+        protected override void IsTvFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            SetDAL();
+            _associated_file = _vehicleInformation == null ? _dal.GetVersionMinParutionDate(_idSlogan, VehiclesInformation.Get(_vehicle))
+                : _dal.GetVersionMinParutionDate(_idSlogan, _vehicleInformation);
+
+            if (!string.IsNullOrEmpty(_associated_file))
+            {
+
+                const string format = "{0}\\{1}";
+                var objArray = new object[2]
+                    {
+                        CreationServerPathes.LOCAL_PATH_VIDEO,
+                        _associated_file
+                    };
+
+                realFormatFound = false;
+                IsVideoFileFound = windowsFormatFound = File.Exists(string.Format(format, objArray));
+
+            }
+            else
+            {
+                realFormatFound = false;
+                IsVideoFileFound = windowsFormatFound = false;
+            }
+
+        }
+
+        protected override void GetTvCreativePathes()
+        {
+            if (HasCreationReadRights && !string.IsNullOrEmpty(_associated_file))
+                _pathReadingFile = string.Format("{0}/{1}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _associated_file);
+            if (!HasCreationDownloadRights)
+                return;
+            if (!string.IsNullOrEmpty(_associated_file))
+                _pathDownloadingFile = string.Format("{0}/{1}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _associated_file);
         }
     }
 }

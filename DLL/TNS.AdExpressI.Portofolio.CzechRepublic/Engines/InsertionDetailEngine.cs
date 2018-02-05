@@ -302,7 +302,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines
                                             switch (_vehicleInformation.Id)
                                             {
                                                 case DBClassificationConstantes.Vehicles.names.radio:
-                                                    tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
+                                                    tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row["id_slogan"].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio));
                                                     break;
                                                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
                                                     tab[iCurLine, iCurColumn++] = new CellRadioCreativeLink(row[Column.DataBaseField].ToString(), _webSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radioGeneral));
@@ -319,8 +319,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines
                                                 case DBClassificationConstantes.Vehicles.names.tvAnnounces:
                                                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                                                 case DBClassificationConstantes.Vehicles.names.others:
-                                                    if (row[Column.DataBaseField].ToString().Length > 0)
-                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(Convert.ToString(row[Column.DataBaseField]), _webSession, _vehicleInformation.Id.GetHashCode());
+                                                    if (row["id_slogan"].ToString().Length > 0)
+                                                        tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(Convert.ToString(row["id_slogan"]), _webSession, _vehicleInformation.Id.GetHashCode());
                                                     else
                                                         tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(string.Empty, _webSession, _vehicleInformation.Id.GetHashCode());
 

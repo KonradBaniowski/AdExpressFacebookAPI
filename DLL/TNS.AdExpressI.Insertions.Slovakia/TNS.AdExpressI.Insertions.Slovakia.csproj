@@ -38,8 +38,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26715, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="CreativeResult\CreativePopUp.cs" />
     <Compile Include="InsertionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

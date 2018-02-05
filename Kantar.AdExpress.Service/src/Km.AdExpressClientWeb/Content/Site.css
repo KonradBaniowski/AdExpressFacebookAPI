@@ -2570,6 +2570,10 @@ ul.ui-selectable {
     content: "\f01d";
 }
 
+.iconInsertionCreative5:before { /*Radio*/
+    content: "\f001";
+}
+
 /**Carousel Chemin de fer du support*/
 #carou-vehicleView {
     /* background-color: rgba(0,0,0,0.6);*/
