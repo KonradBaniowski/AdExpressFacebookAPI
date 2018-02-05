@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <vehicleGroups>
-    <vehicle id="1" name="presse">
+    <vehicle id="1" name="newspaper">
       <detailColumn id="6"/>
     </vehicle>
-    <vehicle id="11" name="presse internationale">
+    <vehicle id="2" name="magazine">
       <detailColumn id="6"/>
-    </vehicle>
-    <vehicle id="2" name="radio">
-      <detailColumn id="7"/>
     </vehicle>
     <vehicle id="3" name="télévision">
       <detailColumn id="8"/>
     </vehicle>
-    <vehicle id="5" name="Autres">
-      <detailColumn id="8"/>
+    <vehicle id="5" name="radio">
+      <detailColumn id="7"/>
     </vehicle>
   </vehicleGroups>
 </configuration> 

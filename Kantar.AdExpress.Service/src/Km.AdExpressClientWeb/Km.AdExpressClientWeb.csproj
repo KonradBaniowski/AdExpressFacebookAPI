@@ -293,6 +293,7 @@
     <Content Include="Content\img\421\logo_kantarmedia.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\banner_sk.jpg" />
     <Content Include="Content\img\sponsorship\29082.png" />
     <Content Include="Content\img\sponsorship\29104.png" />
     <Content Include="Content\img\sponsorship\29105.png" />
@@ -1676,6 +1677,7 @@
     <Content Include="Content\pdf\SamplePDFDocument.pdf" />
     <Content Include="Content\xls\List of vehicles on alert.xls" />
     <Content Include="Content\xls\Liste supports en alerte.xls" />
+    <Content Include="Content\pdf\Methodologie_Medias_Investissements_Creations_Publicitaires.pdf" />
     <Content Include="Content\LoginFiles\KantarBrownWeb-Light.woff2" />
     <Content Include="Content\LoginFiles\KantarBrownWeb-Regular.woff2" />
     <None Include="Properties\PublishProfiles\AdExpress - Test.pubxml" />

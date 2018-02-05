@@ -213,6 +213,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassReports.DAL.France", "..\DLL\TNS.AdExpressI.ProductClassReports.DAL.France\TNS.AdExpressI.ProductClassReports.DAL.France.csproj", "{F21F3484-3679-45F6-BE33-863831556366}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.Slovakia", "..\DLL\TNS.AdExpressI.Insertions.Slovakia\TNS.AdExpressI.Insertions.Slovakia.csproj", "{F4EAE03D-155C-46FA-89F0-52F32833CAB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.DAL.Slovakia", "..\DLL\TNS.AdExpressI.Insertions.DAL.Slovakia\TNS.AdExpressI.Insertions.DAL.Slovakia.csproj", "{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -797,6 +801,18 @@ Global
 		{F21F3484-3679-45F6-BE33-863831556366}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{F21F3484-3679-45F6-BE33-863831556366}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F21F3484-3679-45F6-BE33-863831556366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -906,5 +922,7 @@ Global
 		{0BB137D1-0F25-4C3D-94B9-6908F30BB952} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{19CE2D49-1ADF-4567-98FC-183EB5CEF225} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{F21F3484-3679-45F6-BE33-863831556366} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{F4EAE03D-155C-46FA-89F0-52F32833CAB2} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{1A7FC96C-57DB-4919-9F1A-779D0C73D19E} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 	EndGlobalSection
 EndGlobal

@@ -103,5 +103,17 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic {
         }
         #endregion
 
+        #region Insetion detail
+        /// <summary>
+        /// Get media insertion detail
+        /// </summary>
+        /// <returns></returns>
+        public override ResultTable GetInsertionDetailResultTable(bool excel)
+        {
+            Engines.InsertionDetailEngine result = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _adBreak, _dayOfWeek, excel);
+            return result.GetResultTable();
+        }
+        #endregion
+
     }
 }
