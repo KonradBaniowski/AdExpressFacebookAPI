@@ -231,9 +231,7 @@ namespace Km.AdExpressClientWeb
             "~/Scripts/common/cookies.js"));
 
 
-            bundles.Add(new StyleBundle("~/Content/LoginFiles")
-                .Include("~/Content/LoginFiles/Site.css", new CssRewriteUrlTransform())
-                .Include("~/Content/LoginFiles/jquery.ui.theme.css", new CssRewriteUrlTransform()));
+           
         }
     }
 }
