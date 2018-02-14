@@ -350,19 +350,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             foreach (var item in vehiclesInfos.Values)
             {
                 //Added temporarily for Finland
-                if ((WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FINLAND) || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.SLOVAKIA))
-                    && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
-                    continue;
+                if (IsSkipPlurimedia(vehicleInfo, item)) continue;
 
                 Core.Domain.Media media = new Core.Domain.Media();
                 //var label = GetVehicleLabel(item.DatabaseId.ToString(),_webSession, DetailLevelItemInformation.Levels.vehicle)
                 media.Id = item.DatabaseId;
                 media.MediaEnum = item.Id;
-                media.Disabled = myMedia.FirstOrDefault(p => p.Id == media.Id) != null ? false : true;
+                media.Disabled = myMedia.FirstOrDefault(p => p.Id == media.Id) == null;
                 media.Label = levels[item.DatabaseId];
                 mediaResponse.Media.Add(media);
             }
             return mediaResponse;
+        }
+
+        private bool IsSkipPlurimedia(VehicleInformation vehicleInfo, VehicleInformation item)
+        {
+            if ((WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FINLAND)
+                 || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.SLOVAKIA)
+                 || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.POLAND))
+                && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
+                return true;
+            return false;
         }
 
 

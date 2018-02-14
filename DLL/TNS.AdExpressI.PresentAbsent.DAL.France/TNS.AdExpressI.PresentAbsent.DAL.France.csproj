@@ -67,6 +67,10 @@
       <Project>{234dc672-6124-4101-a1bc-2f8c9d75b50f}</Project>
       <Name>TNS.AdExpressI.PresentAbsent.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

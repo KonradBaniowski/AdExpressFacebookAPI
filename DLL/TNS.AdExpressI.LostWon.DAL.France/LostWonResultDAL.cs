@@ -2,6 +2,7 @@
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
+using CstDB = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.LostWon.DAL.France
 {
@@ -21,5 +22,22 @@ namespace TNS.AdExpressI.LostWon.DAL.France
             return $", {WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label}.LISTNUM_TO_CHAR({dataTablePrefixe}.{u.DatabaseMultimediaField}) ";
         }
         #endregion
+
+        protected override void AppendGad(ref string dataTableNameForGad, Schema schAdExpr03, string DATA_TABLE_PREFIXE,
+          ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+            if (
+                _session.CustomerLogin.CustormerFlagAccess(
+                    (long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                dataTableNameForGad = ", " + schAdExpr03.Sql + AdExpress.Web.Core.Utilities.SQLGenerator.GetTablesForLeFac(_session) + " " +
+                                      CstDB.Tables.GAD_PREFIXE;
+            else
+                dataTableNameForGad = ", " + schAdExpr03.Sql + AdExpress.Web.Core.Utilities.SQLGenerator.GetTablesForGad(_session) + " " +
+                                      CstDB.Tables.GAD_PREFIXE;
+
+            dataFieldsForGad = ", " + AdExpress.Web.Core.Utilities.SQLGenerator.GetFieldsAddressForGad();
+            dataJointForGad = "and " + AdExpress.Web.Core.Utilities.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
+
+        }
     }
 }

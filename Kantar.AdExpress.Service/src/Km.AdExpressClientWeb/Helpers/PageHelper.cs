@@ -255,7 +255,8 @@ namespace Km.AdExpressClientWeb.Helpers
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
-                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA))
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;

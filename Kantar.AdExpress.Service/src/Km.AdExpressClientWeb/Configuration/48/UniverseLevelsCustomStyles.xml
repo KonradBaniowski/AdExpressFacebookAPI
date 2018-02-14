@@ -11,10 +11,7 @@
   </level>
   <level id="4" name="segment">
     <style width="330"></style>
-  </level>
-  <!--<level id="7" name="holding_company">
-    <style width="330"></style>
-  </level>-->
+  </level>  
   <level  id="6" name="advertiser">
     <style width="330"></style>
   </level>

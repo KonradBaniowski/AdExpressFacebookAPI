@@ -903,6 +903,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //Adding logo top
             string pathLogo = $"/Content/img/{WebApplicationParameters.CountryCode}/export_logo_km.png";
             pathLogo = System.Web.HttpContext.Current.Server.MapPath(pathLogo);
+
             Image img = Image.FromFile(pathLogo);
             int picId = sheet.Pictures.Add(0, 0, pathLogo);
             Picture pic = sheet.Pictures[picId];
