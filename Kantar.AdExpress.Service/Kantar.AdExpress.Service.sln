@@ -227,6 +227,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Web.Core.Pola
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Portofolio.DAL.Poland", "..\DLL\TNS.AdExpressI.Portofolio.DAL.Poland\TNS.AdExpressI.Portofolio.DAL.Poland.csproj", "{53A5812D-A5F5-4EA6-8A9B-9311315FF67C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.NewCreatives.Poland", "..\DLL\TNS.AdExpressI.NewCreatives.Poland\TNS.AdExpressI.NewCreatives.Poland.csproj", "{0E1A25D6-3749-4F69-85BE-9870C6E579F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -853,6 +855,12 @@ Global
 		{53A5812D-A5F5-4EA6-8A9B-9311315FF67C}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{53A5812D-A5F5-4EA6-8A9B-9311315FF67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A5812D-A5F5-4EA6-8A9B-9311315FF67C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -969,5 +977,6 @@ Global
 		{3BE77EC9-B9AB-434A-86E7-68C137DB57E5} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{8F2B445F-D0DB-4761-990A-F396B96AE459} = {14CA47FE-6409-45A8-936C-88A32160B0CC}
 		{53A5812D-A5F5-4EA6-8A9B-9311315FF67C} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{0E1A25D6-3749-4F69-85BE-9870C6E579F8} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 	EndGlobalSection
 EndGlobal
