@@ -33,9 +33,15 @@ namespace TNS.AdExpressI.Insertions.Poland.CreativeResult
         {
         }
 
+        public CreativePopUp(Vehicles.names vehicle, string idSlogan, string file,
+           WebSession webSession, bool hasCreationReadRights, bool hasCreationDownloadRights) : base(vehicle, idSlogan, file,
+            webSession, hasCreationReadRights, hasCreationDownloadRights)
+        {
+
+        }
         #endregion
 
-      
+
 
         /// <summary>
         /// Get Creative Pathes
