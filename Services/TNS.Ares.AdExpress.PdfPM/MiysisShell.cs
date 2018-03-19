@@ -31,6 +31,8 @@ namespace TNS.Ares.AdExpress.PdfPM
             TaskExecution task = (TaskExecution)oObj;
             long staticNavSession = -1;
             try {
+                var logger = NLog.LogManager.GetCurrentClassLogger();
+                logger.Info("DoTask Start");
                 if (task == null) throw new ShellException("TaskExecution object is null");
                 // Extracting parameter id from task
                 staticNavSession = extractParameterId(task);
@@ -44,6 +46,7 @@ namespace TNS.Ares.AdExpress.PdfPM
                 t.EvtSendReport += t_OnSendReport;
                 t.EvtMessageAlert += t_OnMessage;
                 t.Treatement(_confFile, _source, staticNavSession);
+                logger.Info("DoTask Started");
             }
             catch (Exception e) {
                 if (staticNavSession > 0) {

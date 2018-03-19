@@ -10,7 +10,7 @@
   <Streamings>
   </Streamings>
   <Networks>
-    <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="D:\multimedia\press\"/>
+   <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="D:\multimedia\press\"/>
     <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="D:\multimedia\radio\"/>
     <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="D:\multimedia\tv\"/>
     <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="D:\multimedia\outdoor\"/>

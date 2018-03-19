@@ -237,7 +237,10 @@ namespace TNS.AdExpress.Anubis.Miysis
                 pptx.Fill();
                 pptx.EndDoc();
                 _dataAccess.RegisterFile(_navSessionId,Path.GetFileNameWithoutExtension(pptx.FileName));
-                pptx.Send(fileName);
+                if (WebApplicationParameters.CountryCode == CstWeb.CountryCode.POLAND)
+                    pptx.SendOffice365(fileName);
+                else
+                    pptx.Send(fileName);
                 _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.MiysisPptx);

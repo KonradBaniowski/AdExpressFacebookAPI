@@ -422,6 +422,9 @@ namespace Km.AdExpressClientWeb.Helpers
                 case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
             }
 
             SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
