@@ -537,6 +537,7 @@
       <allowedUniverseLevel id="5" name="product"/>
       <allowedUniverseLevel id="11" name="vehicle"/>
       <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="13" name="basicmedia"/>
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
@@ -647,6 +648,7 @@
       <allowedUniverseLevel id="5" name="product"/>
       <allowedUniverseLevel id="11" name="vehicle"/>
       <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="13" name="basicmedia"/>
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>

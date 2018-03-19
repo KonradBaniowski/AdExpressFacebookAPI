@@ -153,7 +153,17 @@
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
-          
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+            </allowedUniverseBranches>
+          </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
           <selection id="6" name="media" traductioncode="799" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
             <allowedUniverseLevels>
