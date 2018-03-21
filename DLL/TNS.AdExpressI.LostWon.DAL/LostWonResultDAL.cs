@@ -581,7 +581,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// </summary>
         /// <param name="type">Type of table to use</param>
         /// <returns>Dynamic Report Data Request</returns>
-        protected string GetRequest(CstDB.TableType.Type type)
+        protected virtual string GetRequest(CstDB.TableType.Type type)
         {
 
             #region Constantes
@@ -691,13 +691,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 {
                     try
                     {
-                        if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
-                            dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForLeFac(_session) + " " + CstDB.Tables.GAD_PREFIXE;
-                        else
-                            dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
-
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
+                         AppendGad(ref dataTableNameForGad, schAdExpr03, DATA_TABLE_PREFIXE, ref dataFieldsForGad, ref dataJointForGad);
                     }
                     catch (SQLGeneratorException) { ;}
                 }
@@ -765,6 +759,19 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
 
         }
+
+        protected virtual void AppendGad(ref string dataTableNameForGad, Schema schAdExpr03, string DATA_TABLE_PREFIXE,
+            ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+           
+                dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " +
+                                      CstDB.Tables.GAD_PREFIXE;
+
+            dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
+            dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
+           
+        }
+
         protected string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod)
         {
             StringBuilder sql = new StringBuilder();

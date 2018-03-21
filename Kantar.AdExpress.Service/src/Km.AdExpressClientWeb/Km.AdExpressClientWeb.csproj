@@ -284,6 +284,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\48\export_logo_km.png" />
+    <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\48\logo_kantarmedia.png" />
     <Content Include="Content\img\421\export_logo_km.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1871,7 +1874,8 @@
     <Content Include="Views\Home\_ModulesSk.cshtml" />
     <Content Include="Views\Home\_HomeNewsSk.cshtml" />
     <Content Include="Views\Shared\_LayoutPublic2.cshtml" />
-
+    <Content Include="Views\Home\_ModulesPl.cshtml" />
+    <Content Include="Views\Home\_HomeNewsPl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

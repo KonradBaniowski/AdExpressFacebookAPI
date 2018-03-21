@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Reflection;
@@ -242,6 +244,39 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             }
 
         }
+
+        public virtual void SendOffice365(string fileName)
+        {
+            MailMessage msg = new MailMessage();
+
+            foreach (string s in _webSession.EmailRecipient)
+            {
+                msg.To.Add("youssef.rkaina@kantarmedia.com");
+            }
+
+            msg.From = new MailAddress("tswro-tech@kantarmedia.com");
+            msg.Subject = GetMailContent();
+            msg.Body = GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
+                       + "\"" +
+                       String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage),
+                           _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" +
+                           fileName + ".pdf")
+                       + "<br><br>"
+                       + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer);
+            msg.Priority = MailPriority.High;
+            msg.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = true;
+            client.Credentials = new NetworkCredential("tswro-tech@kantarmedia.com", "wil0XAz3", "smtp.office365.com");
+            client.Host = "smtp.office365.com";
+            client.Port = 587;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+
+            client.Send(msg);
+        }
+
         #endregion
 
         #region Méthode Interne

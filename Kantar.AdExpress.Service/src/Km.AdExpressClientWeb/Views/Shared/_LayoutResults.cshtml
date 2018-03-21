@@ -1,5 +1,6 @@
 ﻿@using TNS.AdExpress.Domain.Translation;
 @using TNS.AdExpress.Domain.Web;
+@using TNS.AdExpress.Constantes.Web
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css/" + WebApplicationParameters.CountryCode + "/" + ViewBag.SiteLanguageName)
+    
+  
 
     <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
+    
+    @if (WebApplicationParameters.CountryCode == CountryCode.FINLAND)
+    {
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10360228-9"></script>
+        <script>
+  window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-10360228-9');
+        </script>
+    }
+    
+    
+
 </head>
 
 <body class="container-kantar-results">
@@ -85,6 +102,8 @@
     @Scripts.Render("~/bundles/language-choice")
 
     @RenderSection("scripts", required: false)
+    
+
 
 </body>
 </html>

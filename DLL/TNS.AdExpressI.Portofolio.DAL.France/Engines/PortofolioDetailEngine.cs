@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Utilities;
 using Module = TNS.AdExpress.Domain.Web.Navigation.Module;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 
@@ -52,5 +53,20 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
                 unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
         }
         #endregion
+
+        protected override void GetGad(ref string dataTableNameForGad, ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+            if (
+                _webSession.CustomerLogin.CustormerFlagAccess(
+                    (long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac).SqlWithPrefix;
+            else
+                dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
+            dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
+            dataJointForGad = "and " +
+                              SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+        }
+
     }
 }

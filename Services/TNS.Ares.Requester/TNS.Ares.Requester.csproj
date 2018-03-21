@@ -147,6 +147,12 @@
     <Content Include="Configuration\AdExpress\35\PluginConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\AdExpress\48\Database.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\AdExpress\48\PluginConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\EasyMusic\33\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

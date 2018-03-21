@@ -369,13 +369,12 @@ namespace TNS.AdExpressI.Classification.DAL
         {
             #region Building query
             string sql = " select " + dataBaseIdField + ", " + dataBaseField;
-            sql += " from " + ((_dbSchema != null && _dbSchema.Length > 0) ? _dbSchema + "." : "") + dataBaseTableName;
+            sql += " from " + (!string.IsNullOrEmpty(_dbSchema) ? _dbSchema + "." : "") + dataBaseTableName;
             sql += " where " + dataBaseIdField + " in (" + idList + ")";
-            if (_dbSchema != WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.khealth01).Label)
-            {
-                sql += " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+          
+                sql += " and activation<" + DBConstantes.ActivationValues.UNACTIVATED;
                 sql += " and id_language = " + language;
-            }
+            
             sql += " order by " + dataBaseField;
             #endregion
 

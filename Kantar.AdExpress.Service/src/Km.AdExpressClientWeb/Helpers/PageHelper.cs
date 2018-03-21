@@ -255,7 +255,8 @@ namespace Km.AdExpressClientWeb.Helpers
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
-                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA))
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;
@@ -419,6 +420,9 @@ namespace Km.AdExpressClientWeb.Helpers
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportSpotsResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportSpotsResult, siteLanguage), Visible = true });
                     break;
                 case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
             }

@@ -31,6 +31,17 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
         }
         #endregion
 
+        protected override Table GetGadtable()
+        {
+            Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+            if (
+                _session.CustomerLogin.CustormerFlagAccess(
+                    (long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
+            return tblGad;
+        }
+
+
         protected override string InitQueryParams(CstDB.TableType.Type type, string dataTableName, Schema schAdEx, CustomerPeriod customerPeriod, Table tblGad
         , ref string productTableName, ref string productFieldName, ref string columnDetailLevel, ref string groupByFieldName, ref string productJoinCondition
         , ref string universFilter, ref string unitFieldNameSumWithAlias, ref string groupByOptional, ref string dataJointForInsert

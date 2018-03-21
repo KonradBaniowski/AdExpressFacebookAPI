@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Web;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using System.IO;
+using System.Security.Authentication;
 using TNS.Ares.AdExpress.PdfPM;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.Constantes;

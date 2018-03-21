@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
-  <server adress="localhost.hobbit.tns-global.sk" port="25"/>
+  <server adress="smtpmmuk.grpitsrv.com" port="25"/>
   <message from="tnsadexpress@tns-global.sk">
     <to>youssef.rkaina@kantarmedia.fr</to>
     <to>dede.mussuma@kantarmedia.fr</to>

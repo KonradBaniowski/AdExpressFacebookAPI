@@ -11,11 +11,13 @@
   <server server_id="2" host="frmitch-ditd058" port="30000" />
   <server server_id="3" host="kmchmvls004" port="30000" />
   <!-- Slovaquie -->
-  <server server_id="4" host="adexpressweb" port="30000" />
+  <!--<server server_id="4" host="adexpressweb" port="30000" />-->
+  <server server_id="4" host="KTBRAADEXPRESSWEB101" port="30000" />
   <!-- Finland -->
   <server server_id="5" host="fitnses-apad01" port="30000" />
   <!--Russia-->
   <server server_id="7" host="adexpr-ww.Gallup.tns" port="30000" />
   <!--Poland-->
-  <server server_id="8" host="TSWROWBE001" port="30000" />
+  <!--<server server_id="8" host="TSWROWBE001" port="30000" />-->
+  <server server_id="6" host="KMWLWDAT008" port="30000" />
 </servers>

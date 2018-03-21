@@ -620,7 +620,9 @@
                     }
                     //Lien mp4,mp3,flv,... du visuel (onclick)
                     if (paramsLink[0] != "") {
-                        if (format != "JPEG")
+                        if (format == "HTML5")
+                            $(this).html('<div class="text-center"><a href="' + paramsLink + '" target="_blank">' + $(this).html() + '</a></div>');
+                        else if (format != "JPEG")
                             $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="' + format + '" >' + $(this).html() + '</a></div>');
                         else
                             $(this).html('<a href="' + paramsLink[0] + '" target="_blank" >' + $(this).html() + '</a>');

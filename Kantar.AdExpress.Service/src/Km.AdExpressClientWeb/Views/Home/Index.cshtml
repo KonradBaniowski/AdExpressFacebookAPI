@@ -75,6 +75,10 @@
     {
         Html.RenderPartial("_ModulesSk", Model);
     }
+    else if (Model.CountryCode.Equals(CountryCode.POLAND))
+    {
+        Html.RenderPartial("_ModulesPl", Model);
+    }
     else
     {
         Html.RenderPartial("_ModulesFr", Model);
@@ -93,6 +97,9 @@
                 break;
             case CountryCode.SLOVAKIA:
                 Html.RenderPartial("_HomeNewsSk", Model.SiteLanguage);
+                break;
+            case CountryCode.POLAND:
+                Html.RenderPartial("_HomeNewsPl", Model.SiteLanguage);
                 break;
             default:
                 Html.RenderPartial("_HomeNewsFr");
