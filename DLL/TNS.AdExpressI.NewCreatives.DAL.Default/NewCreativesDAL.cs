@@ -5,7 +5,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 namespace TNS.AdExpressI.NewCreatives.DAL.Default {
 
     public class NewCreativesDAL : NewCreatives.DAL.NewCreativesDAL {
-        public string BeginingDate { get; set; }
+     
 
         #region Constructor
 
@@ -19,7 +19,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL.Default {
         public NewCreativesDAL(WebSession session, string idSectors, string beginingDate, string endDate)
             : base(session, idSectors, beginingDate, endDate)
         {
-            BeginingDate = beginingDate;
+           
         }
 
         #endregion
