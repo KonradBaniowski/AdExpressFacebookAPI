@@ -52,5 +52,36 @@ namespace Km.AdExpressClientWeb.Controllers
 
             return View();
         }
+
+        public ActionResult ResultBrut(ResultTable.SortOrder sortOrder, int columnIndex)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            ResultTable data = _advertisingAgencyService.GetResultTable(idWebSession, this.HttpContext);
+            WebSession session = (WebSession)WebSession.Load(idWebSession);
+
+            ExportAspose export = new ExportAspose();
+
+            Workbook document = new Workbook(FileFormatType.Excel2003XML);
+
+            document.Worksheets.Clear();
+
+            export.ExportSelection(document, session, _detailSelectionService.GetDetailSelection(idWebSession));
+            export.Export(document, data, session, true, sortOrder, columnIndex);
+
+            document.Worksheets.ActiveSheetIndex = 1;
+
+            string documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+
+            Response.Clear();
+            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            Response.ContentType = "application/octet-stream";
+
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+
+            Response.End();
+
+            return View();
+        }
     }
 }

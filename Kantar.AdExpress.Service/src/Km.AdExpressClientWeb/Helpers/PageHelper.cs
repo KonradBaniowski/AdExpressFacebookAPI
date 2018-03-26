@@ -450,13 +450,13 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
                 case Module.Name.NEW_CREATIVES:
+                case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     break;
                 case Module.Name.TABLEAU_DYNAMIQUE:
                 case Module.Name.INDICATEUR:
                 case Module.Name.FACEBOOK:
-                case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
                     break;
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:

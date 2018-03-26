@@ -310,7 +310,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         switch (((LineStart)data[idxRow, 0]).LineType)
                         {
                             case LineType.total:
-
+                            case LineType.nbParution:
                                 if (idxCol == 0)
                                     sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
                                 else
@@ -406,7 +406,12 @@ namespace Km.AdExpressClientWeb.Controllers
             // Fige les entêtes de lignes et de colonnes
             sheet.FreezePanes(rowStart, columnStart, rowStart, columnStart);
 
-            for (int idxCol = colLevel, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
+            int startIndex = colLevel;
+
+            if (isExportBrut)
+                startIndex = nbLevel > 1 ? 2 : 1;
+
+            for (int idxCol = startIndex, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
             {
                 columnHide = false;
 
