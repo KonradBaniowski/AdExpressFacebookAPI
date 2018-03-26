@@ -144,14 +144,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                  if(useTableDataMobile) tableDataMobile = WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, _session.IsSelectRetailerDisplay);
                  if (applyCountryRights) bannersCountry = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.bannersCountry);
 
-                if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
-                    try {
-                        dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
-                        dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
-                        dataJointForGad = "and " + SQLGenerator.GetJointForGad(table.Prefix);
-                    }
-                    catch(SQLGeneratorException) { ;}
-                }
+                dataTableNameForGad = AppendGad(dataTableNameForGad, schAdExpr03, table, ref dataFieldsForGad, ref dataJointForGad);
 
                 // select
                 sql.Append("select distinct " + detailProductFields + ","+table.Prefix +".hashcode as versionNb ");
@@ -235,6 +228,27 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             #endregion
 
         }
+
+        protected virtual string AppendGad(string dataTableNameForGad, Schema schAdExpr03, Table table, ref string dataFieldsForGad,
+            ref string dataJointForGad)
+        {
+            if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+            {
+                try
+                {
+                    dataTableNameForGad = ", " + schAdExpr03.Sql + SQLGenerator.GetTablesForGad(_session) + " " +
+                                          CstDB.Tables.GAD_PREFIXE;
+                    dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
+                    dataJointForGad = "and " + SQLGenerator.GetJointForGad(table.Prefix);
+                }
+                catch (SQLGeneratorException)
+                {
+                    ;
+                }
+            }
+            return dataTableNameForGad;
+        }
+
         #endregion
 
         #region protected Methods
@@ -249,19 +263,14 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.GetDataTable(TableIds.banners, isRetailerSelection);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return WebApplicationParameters.GetDataTable(TableIds.banners_mobile, isRetailerSelection);
-                case DBClassificationConstantes.Vehicles.names.press:
-                case DBClassificationConstantes.Vehicles.names.newspaper:
-                case DBClassificationConstantes.Vehicles.names.magazine:
-                case DBClassificationConstantes.Vehicles.names.internationalPress:
-                case DBClassificationConstantes.Vehicles.names.radio:
-                case DBClassificationConstantes.Vehicles.names.tv:
-                case DBClassificationConstantes.Vehicles.names.others:
+                    return WebApplicationParameters.GetDataTable(TableIds.banners_mobile, isRetailerSelection);              
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
         }
         #endregion
+
+        public string BeginingDate { get { return _beginingDate; } set { _beginingDate = value; } }
 
     }
 
