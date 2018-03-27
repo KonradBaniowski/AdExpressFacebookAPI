@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configurations>
   <!--<configuration directoryName="33" countryName="France" webSiteUri="http://adexpress.kantarmedia.fr/" />-->
-
-  <!--<configuration directoryName="90" countryName="Turkey" webSiteUri="" />-->
-
   <!--<configuration directoryName="333" countryName="France"/>-->
   <!--<configuration directoryName="420" countryName="Czech Republic"/>-->
   <configuration directoryName="48" countryName="Poland"/>

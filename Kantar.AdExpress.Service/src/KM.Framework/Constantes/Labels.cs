@@ -228,7 +228,12 @@ namespace KM.Framework.Constantes
         public string AllRightsReservedLabel { get; set; } //3115
 
         public string FindOutMoreLabel { get; set; } //3116
-        
+
+        public string PressCreativesdetailLabel { get; set; } //3122
+        public string NoSelectedItemLabel { get; set; } //3123
+        public string FilterLabel { get; set; } //3124
+        public string CancelLabel { get; set; } //3125
+
 
 
     }

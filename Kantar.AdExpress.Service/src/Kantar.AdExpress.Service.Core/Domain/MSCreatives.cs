@@ -12,5 +12,7 @@ namespace Kantar.AdExpress.Service.Core.Domain
         public List<MSCreative> Items { get; set; }
 
         public Vehicles.names VehicleId;
+
+        public int SiteLanguage { get; set; }
     }
 }

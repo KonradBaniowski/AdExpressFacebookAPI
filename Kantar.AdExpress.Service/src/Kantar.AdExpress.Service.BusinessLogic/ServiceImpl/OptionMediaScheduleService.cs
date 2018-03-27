@@ -57,16 +57,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         try
                         {
                             if (isAdNetTrack)
-                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericAdNetTrackDetailLevel, _customerWebSession.CurrentModule);
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericAdNetTrackDetailLevel, _currentModule.Id);
                             else
-                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _currentModule.Id);
                         }
                         catch { }
                         if (!canAddDetail)
                         {
                             // Niveau de détail par défaut
                             ArrayList levelsIds = new ArrayList();
-                            switch (_customerWebSession.CurrentModule)
+                            switch (_currentModule.Id)
                             {
                                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                                     levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
@@ -89,7 +89,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.GenericDetailLevel.ComponentProfile.product:
                         try
                         {
-                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _currentModule.Id);
                         }
                         catch { }
                         if (!canAddDetail)
@@ -113,7 +113,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
                 foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
                 {
-                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
+                    if (CanAddDetailLevel(currentLevel, _currentModule.Id))
                     {
                         containsSlogan = false;
                         foreach (DetailLevelItemInformation.Levels level in currentLevel.LevelIds)
@@ -140,7 +140,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
                 foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    if (CanAddDetailLevel(currentGenericLevel, _currentModule.Id) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                     {
                         containsSlogan = false;
                         foreach (DetailLevelItemInformation.Levels level in currentGenericLevel.LevelIds)
@@ -253,7 +253,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
                 foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    if (CanAddDetailLevel(currentGenericLevel, _currentModule.Id) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                     {
                         _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
                     }

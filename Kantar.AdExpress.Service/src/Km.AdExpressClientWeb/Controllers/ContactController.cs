@@ -37,6 +37,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     model.ClientServicePhoneNumber = "+358 9 613 500";
                     model.ClientServiceEmail = "tnsfinland@tnsglobal.com";
                     break;
+                case CountryCode.POLAND:
+                    model.ClientServicePhoneNumber = "+48 71 78 75 300";
+                    model.ClientServiceEmail = "aleksandra.misterska@kantarmedia.com";
+                    break;
                 default:
                     model.ClientServicePhoneNumber = "01 30 74 87 78";
                     model.ClientServiceEmail = "sc.adexpress@kantarmedia.com";

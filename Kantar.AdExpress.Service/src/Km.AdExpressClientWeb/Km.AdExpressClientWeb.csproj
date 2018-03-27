@@ -258,6 +258,7 @@
     <Compile Include="Models\Insertions\DetailLevelViewModel.cs" />
     <Compile Include="Models\Labels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MediaSchedule\MSCreativesViewModel.cs" />
     <Compile Include="Models\NavigationBarViewModel.cs" />
     <Compile Include="Models\PortfolioAlert\PortfolioAlertViewModel.cs" />
     <Compile Include="Models\Shared\ExportResultModel.cs" />

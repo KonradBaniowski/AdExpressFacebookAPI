@@ -283,7 +283,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long AccountFindOutMoreLabel = 3114;
         public const long AllRightsReservedLabel = 3115;
         public const long FindOutMoreLabel = 3116;
-
+        public const long PressCreativesdetailLabel = 1972;
+        public const long NoSelectedItemLabel = 3122;
+        public const long FilterLabel = 3123;
+        public const long CancelLabel = 3124;
 
         #endregion
     }
