@@ -1241,14 +1241,78 @@ namespace TNS.AdExpress.Web.Core.Utilities{
             }
         }
 
-		/// <summary>
-		/// Vérifie si le client à le droit de voir un détail produit dans les plan media
-		/// </summary>
-		/// <remarks>
-		/// AdNetTrack selection [Ok]
-		/// </remarks>
-		/// <returns>True si oui false sinon</returns>
-		public virtual bool CheckProductDetailLevelAccess(){
+        /// <summary>
+        /// Test si l'élément de niveau de détail peut être montré (Adnettrack)
+        /// </summary>
+        /// <param name="currentDetailLevelItem">>Elément de niveau de détail</param>
+        /// <returns>>True si oui false sinon</returns>
+        public bool CanAddAdnettrackDetailLevelItem(DetailLevelItemInformation currentDetailLevelItem)
+        {
+            switch (currentDetailLevelItem.Id)
+            {
+                #region Annonceur produit, famille, classe, groupe, variété 
+                case DetailLevelItemInformation.Levels.sector:
+                case DetailLevelItemInformation.Levels.subSector:
+                case DetailLevelItemInformation.Levels.advertiser:
+                    if (// Droit sur les niveaux de détail produit
+                        CheckProductDetailLevelAccess()) return (true);
+                    return (false);
+                case DetailLevelItemInformation.Levels.group:
+                    if (// Droit sur les niveaux de détail group
+                        CheckProductDetailLevelAccess() &&
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_GROUP_LEVEL_ACCESS_FLAG)
+                        ) return (true);
+                    return (false);
+                case DetailLevelItemInformation.Levels.segment:
+                    if (// Droit sur les niveaux de détail variété
+                        CheckProductDetailLevelAccess() &&
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)
+                        ) return (true);
+                    return (false);
+                #endregion
+
+                #region Products
+                case DetailLevelItemInformation.Levels.product:
+                    if (// Droit sur les niveaux de détail produit
+                        CheckProductDetailLevelAccess() &&
+                        // Products level rights
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                        ) return (true);
+                    return (false);
+                #endregion
+
+                #region Marques
+                case DetailLevelItemInformation.Levels.brand:
+                    if (// Droit sur les niveaux de détail produit
+                        CheckProductDetailLevelAccess() &&
+                        // Droit des Marques
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE)
+                        ) return (true);
+                    return (false);
+                #endregion
+
+                #region Groupe de société
+                case DetailLevelItemInformation.Levels.holdingCompany:
+                    if (// Droit sur les niveaux de détail produit
+                        CheckProductDetailLevelAccess() &&
+                        // Droit sur les groupe de société
+                        _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG)
+                        ) return (true);
+                    return (false);
+                #endregion
+                default:
+                    return (true);
+            }
+        }
+
+        /// <summary>
+        /// Vérifie si le client à le droit de voir un détail produit dans les plan media
+        /// </summary>
+        /// <remarks>
+        /// AdNetTrack selection [Ok]
+        /// </remarks>
+        /// <returns>True si oui false sinon</returns>
+        public virtual bool CheckProductDetailLevelAccess(){
 			return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
 		}
 
