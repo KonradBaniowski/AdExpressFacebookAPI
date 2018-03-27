@@ -1,4 +1,4 @@
-﻿@model Kantar.AdExpress.Service.Core.Domain.MSCreatives
+﻿@model Km.AdExpressClientWeb.Models.MediaSchedule.MSCreativesViewModel
 
 @{
     var columnWidth = 0;
@@ -23,17 +23,17 @@
     <div class="col-md-12 msCreative">
         <div class="panel panel-sans text-left">
             <div class="panel-heading text-left">
-                <div class="pull-right filtrer"><small class="font-normal text-white v-middle"><strong class="blue"><span id="creativeNb"></span></strong><span id="creativeNbLabel"> Aucun élément sélectionné &nbsp;</span></small><button id="creative-btn" class="btn btn-filtrer">Filtrer</button>&nbsp;<button id="undo-btn" class="btn btn-filtrer">Annuler</button></div>
-                <div class="font-normal text-primary-lt">Détails des versions de la presse</div>
+                <div class="pull-right filtrer"><small class="font-normal text-white v-middle"><strong class="blue"><span id="creativeNb"></span></strong><span id="creativeNbLabel"> @Model.Labels.NoSelectedItemLabel &nbsp;</span></small><button id="creative-btn" class="btn btn-filtrer">@Model.Labels.FilterLabel</button>&nbsp;<button id="undo-btn" class="btn btn-filtrer">@Model.Labels.CancelLabel</button></div>
+                <div class="font-normal text-primary-lt">@Model.Labels.PressCreativesdetailLabel</div>
             </div>
             <div class="panel-body" style="height:250px;overflow-y:scroll;width:100%;">
-                @if(Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo) {
+                @if(Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo) {
                 <div class="row no-gutter">
-                    @foreach (var creative in Model.Items)
+                    @foreach (var creative in Model.MSCreatives.Items)
                     {
                         if (creative.NbVisuals == 0)
                         {
@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor)
+                            @if (Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor)
                             {
                                 modalCreative = "modal-creative";
                             }
@@ -89,12 +89,12 @@
                     }
                 </div>
                 }
-                else if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
+                else if (Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
                 {
                     <div class="row no-gutter">
-                        @foreach (var creative in Model.Items)
+                        @foreach (var creative in Model.MSCreatives.Items)
                         {
                             <div class="col-xs-1">
                                 <div class="panel press">
@@ -107,7 +107,7 @@
                                             <div class="@creative.Class">@creative.Id</div>
                                         </div>
                                         <div class="row no-gutter">
-                                            @switch (Model.VehicleId)
+                                            @switch (Model.MSCreatives.VehicleId)
                                             {
                                                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                                                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
@@ -135,9 +135,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
-                                || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
-                                || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
+                                @if (Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv
+                                || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others
+                                || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio)
                                 {
                                     <div id="creativeModal" class="modal fade">
                                         <div class="modal-dialog">
@@ -162,11 +162,11 @@
                         }
                     </div>
                 }
-                else if (Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
-                    || Model.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
+                else if (Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack
+                    || Model.MSCreatives.VehicleId == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile)
                 {
                     <div class="row no-gutter">
-                        @foreach (var creative in Model.Items)
+                        @foreach (var creative in Model.MSCreatives.Items)
                         {
                             <div class="col-xs-1">
                                 <div class="panel press">
@@ -179,7 +179,7 @@
                                             <div class="@creative.Class">@creative.Id</div>
                                         </div>
                                         <div class="row no-gutter">
-                                            @switch (Model.VehicleId)
+                                            @switch (Model.MSCreatives.VehicleId)
                                             {
                                                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                                                     creativeIcon = "iconkantar-monitor74";

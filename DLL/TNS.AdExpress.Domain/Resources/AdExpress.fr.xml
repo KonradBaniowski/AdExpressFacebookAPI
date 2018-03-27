@@ -2393,5 +2393,12 @@
 
     <item mnemonic="w3117" type="System.String">Documents</item>
     <item mnemonic="w3118" type="System.String">Informations</item>
+
+    <item mnemonic="w3119" type="System.String">Impossible de supprimer le niveau de détail</item>
+    <item mnemonic="w3120" type="System.String">Le niveau de détail a bien été supprimé</item>
+    <item mnemonic="w3121" type="System.String">Le niveau de détail a bien été enregistré</item>    
+    <item mnemonic="w3122" type="System.String">Aucun élément sélectionné</item>
+    <item mnemonic="w3123" type="System.String">Filtrer</item>
+    <item mnemonic="w3124" type="System.String">Annuler</item>
   </items>
 </localization>

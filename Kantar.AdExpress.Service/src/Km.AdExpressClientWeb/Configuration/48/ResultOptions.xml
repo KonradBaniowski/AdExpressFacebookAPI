@@ -8,4 +8,5 @@
   <retailer use ="false"/>  
   <tendency useComparativeWeekType="false"/>
   <lostWon useComparative="false" useDiponibility="true" useType="true"/>
+  <showPickaNews use="false"/>
 </resultOptions>

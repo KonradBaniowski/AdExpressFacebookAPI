@@ -2007,7 +2007,7 @@
       <!-- *****************************************      Nouvelles créations              *****************************************-->
       <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2557" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2558" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">      
         <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>
-        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Default.dll" class="TNS.AdExpressI.NewCreatives.DAL.Default.NewCreativesDAL"/>
+        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.France.dll" class="TNS.AdExpressI.NewCreatives.DAL.France.NewCreativesDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ProductDetailLevel>
           <defaultProductDetailLevels>

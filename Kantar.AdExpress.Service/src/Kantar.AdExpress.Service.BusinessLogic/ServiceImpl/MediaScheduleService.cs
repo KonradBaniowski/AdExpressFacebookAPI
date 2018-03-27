@@ -148,6 +148,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             CustomerSession = (WebSession)WebSession.Load(idWebSession);
             VehicleInformation vehicle = new VehicleInformation();
             MSCreatives result = new MSCreatives();
+          
             ResultTable data = null;
             try
             {
@@ -190,6 +191,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 throw;
             }
+            result.SiteLanguage = CustomerSession.SiteLanguage;
             return result;
         }
 

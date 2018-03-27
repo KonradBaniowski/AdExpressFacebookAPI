@@ -364,7 +364,12 @@ namespace Km.AdExpressClientWeb.Controllers
 
             CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate, this.HttpContext);
 
-            return PartialView("_MSCreativesResult", creatives);
+            VM.MSCreativesViewModel msCreativesViewModel = new VM.MSCreativesViewModel { MSCreatives = creatives };
+
+            var pageHelper = new Helpers.PageHelper();
+            msCreativesViewModel.Labels = pageHelper.LoadPageLabels(creatives.SiteLanguage);
+
+            return PartialView("_MSCreativesResult", msCreativesViewModel);
         }
 
         public void SetMSCreatives(Int64[] slogans)

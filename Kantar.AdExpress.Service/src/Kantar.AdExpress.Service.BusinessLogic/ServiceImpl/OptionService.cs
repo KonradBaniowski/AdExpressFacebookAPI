@@ -958,7 +958,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                             response.CustomDetailLavelsId = listId;
                             response.CustomDetailLavelsLabel = genericDetailLevel.GetLabel(_customerWebSession.SiteLanguage);
-                            response.Message = "Le niveau de détail a bien été enregistré";
+                            response.Message = GestionWeb.GetWebWord(3121, _customerWebSession.SiteLanguage);
                         }
                     }
                     else
@@ -985,11 +985,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (detailLevel.Length > 0 && int.Parse(detailLevel) != -1)
             {
-                TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Remove(_customerWebSession, Int64.Parse(detailLevel));
-                return "Le niveau de détail a bien été supprimé";
+                GenericDetailLevelDataAccess.Remove(_customerWebSession, Int64.Parse(detailLevel));
+                return GestionWeb.GetWebWord(3120, _customerWebSession.SiteLanguage);
             }
 
-            return "Impossible de supprimer le niveau de détail";
+            return GestionWeb.GetWebWord(3119, _customerWebSession.SiteLanguage);
         }
 
         #region IsDetailLevelsAlreadySaved

@@ -180,7 +180,7 @@ namespace Km.AdExpressClientWeb.Helpers
             return "FR";
         }
 
-        public Labels LoadPageLabels(int siteLanguage, string controller)
+        public Labels LoadPageLabels(int siteLanguage, string controller = "")
         {
             var result = new Labels
             {
@@ -251,8 +251,14 @@ namespace Km.AdExpressClientWeb.Helpers
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
-                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage),
+                PressCreativesdetailLabel = GestionWeb.GetWebWord(LanguageConstantes.PressCreativesdetailLabel, siteLanguage),
+                NoSelectedItemLabel = GestionWeb.GetWebWord(LanguageConstantes.NoSelectedItemLabel, siteLanguage),
+                FilterLabel = GestionWeb.GetWebWord(LanguageConstantes.FilterLabel, siteLanguage),
+                CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
+
             };
+
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
                 || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Km.AdExpressClientWeb.Models.MediaSchedule;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Web;
@@ -110,6 +111,11 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
             CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate, this.HttpContext);
+
+            MSCreativesViewModel msCreativesViewModel = new MSCreativesViewModel {MSCreatives = creatives};
+
+            var pageHelper = new Helpers.PageHelper();
+            msCreativesViewModel.Labels = pageHelper.LoadPageLabels(creatives.SiteLanguage);
 
             return PartialView("_MSCreativesResult", creatives);
         }
