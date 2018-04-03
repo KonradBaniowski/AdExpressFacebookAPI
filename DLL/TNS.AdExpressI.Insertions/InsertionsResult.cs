@@ -2062,14 +2062,14 @@ namespace TNS.AdExpressI.Insertions
             return gridResult;
         }
 
-        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate, List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues)
+        public GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate, List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues,WebSession session = null)
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
             int nbLines = 0;
 
             TNS.AdExpress.Domain.Level.GenericDetailLevel saveLevels = null;
-
+            if (session != null) _session = session;
             try
             {
                 saveLevels = _session.DetailLevel;

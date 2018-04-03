@@ -171,7 +171,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 _customerWebSession.DetailLevel = new GenericDetailLevel(new ArrayList());
 
-                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues);
+                creativeResponse.GridResult = creativeResult.GetCreativesGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate, columnFilters, _availableFilterValues, _customFilterValues, _customerWebSession);
 
                 if (saveLevels != null)
                 {
