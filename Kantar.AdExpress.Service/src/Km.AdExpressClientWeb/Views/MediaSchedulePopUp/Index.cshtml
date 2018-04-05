@@ -383,7 +383,7 @@
                             if ($(this).is(":checked")) {
                                 creatives.push($(this).attr("value"));
                                 $("#creativeNb").html(creatives.length);
-                                $("#creativeNbLabel").html(" élément(s) sélectionné(s) &nbsp;");
+                                $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3126, Model.SiteLanguage) &nbsp;");
                                 $("#creative-btn").prop('disabled', false);
                             }
                             else {
@@ -391,12 +391,12 @@
 
                                 if (creatives.length == 0) {
                                     $("#creativeNb").html("");
-                                    $("#creativeNbLabel").html(" Aucun élément sélectionné &nbsp;");
+                                    $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3122, Model.SiteLanguage) &nbsp;");
                                     $("#creative-btn").prop('disabled', true);
                                 }
                                 else {
                                     $("#creativeNb").html(creatives.length);
-                                    $("#creativeNbLabel").html(" élément(s) sélectionné(s) &nbsp;");
+                                    $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3126, Model.SiteLanguage) &nbsp;");
                                 }
                             }
                         });

@@ -5,6 +5,7 @@ using Km.AdExpressClientWeb.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -80,13 +81,17 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
+                var body =
+                    "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
                 var message = new MailMessage();
 
                 switch (WebApplicationParameters.CountryCode)
                 {
                     case CountryCode.FINLAND:
                         message.To.Add(new MailAddress("tnsfinland@tnsglobal.com"));
+                        break;
+                    case CountryCode.POLAND:
+                        message.To.Add(new MailAddress("aleksandra.misterska@kantarmedia.com"));
                         break;
                     default:
                         message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
@@ -104,13 +109,25 @@ namespace Km.AdExpressClientWeb.Controllers
                 message.IsBodyHtml = true;
                 using (var smtp = new SmtpClient())
                 {
+                    if (WebApplicationParameters.CountryCode == CountryCode.POLAND)
+                    {
+                        message.From = new MailAddress("tswro-tech@kantarmedia.com");
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = new NetworkCredential("tswro-tech@kantarmedia.com", "wil0XAz3",
+                            "smtp.office365.com");
+                        smtp.Host = "smtp.office365.com";
+                        smtp.Port = 587;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.EnableSsl = true;
+                    }
                     smtp.Send(message);
                 }
 
                 TempData["success"] = GestionWeb.GetWebWord(1486, siteLang);
             }
 
-            return RedirectToAction("Index", new { siteLanguage = siteLang });
+
+            return RedirectToAction("Index", new {siteLanguage = siteLang});
         }
 
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)

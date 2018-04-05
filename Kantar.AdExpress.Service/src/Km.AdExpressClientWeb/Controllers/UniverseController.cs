@@ -354,6 +354,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 SelectFolder = GestionWeb.GetWebWord(702, data.SiteLanguage),
                 SelectResult = GestionWeb.GetWebWord(2261, data.SiteLanguage),
                 ResultLabel = GestionWeb.GetWebWord(2263, data.SiteLanguage),
+                SubmitLabel = GestionWeb.GetWebWord(3040, data.SiteLanguage),
                 UserFolders = new List<SelectListItem>(),
                 UserResults = new List<SelectListItem>()
             };

@@ -279,7 +279,7 @@
                             </div>
                             <div id="collapseNine" class="panel-collapse collapse in">
                                 <div class="panel-body mi-padder">
-                                    <small class="pader-v-mi">@GestionWeb.GetWebWord(1897, Model.SiteLanguage)</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="Supprimer"><i class="glyphicon glyphicon-trash"></i></button>
+                                    <small class="pader-v-mi">@GestionWeb.GetWebWord(1897, Model.SiteLanguage)</small><button id="remove-custom-detail-levels" class="btn btn-sans pull-right" title="@GestionWeb.GetWebWord(1951, Model.SiteLanguage)"><i class="glyphicon glyphicon-trash"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.CustomDetail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.CustomDetail.Items)
@@ -297,7 +297,7 @@
 
                                         </select>
                                     </div>
-                                    <small class="pader-v-mi">@GestionWeb.GetWebWord(1899, Model.SiteLanguage)</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="Sauvegarder"><i class="glyphicon glyphicon-floppy-save"></i></button>
+                                    <small class="pader-v-mi">@GestionWeb.GetWebWord(1899, Model.SiteLanguage)</small><button id="save-custom-detail-levels" class="btn btn-sans pull-right" title="@GestionWeb.GetWebWord(1990, Model.SiteLanguage)"><i class="glyphicon glyphicon-floppy-save"></i></button>
                                     <div class="selectoptioncontainer">
                                         <select id="@Model.GenericDetailLevel.L1Detail.Id" class="selectdatepicker">
                                             @foreach (var item in Model.GenericDetailLevel.L1Detail.Items)

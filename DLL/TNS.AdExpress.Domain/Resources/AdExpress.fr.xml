@@ -2401,5 +2401,6 @@
     <item mnemonic="w3123" type="System.String">Filtrer</item>
     <item mnemonic="w3124" type="System.String">Annuler</item>
     <item mnemonic="w3125" type="System.String">dernier(s) jour(s)</item>
+    <item mnemonic="w3126" type="System.String">élément(s) sélectionné(s)</item>
   </items>
 </localization>
