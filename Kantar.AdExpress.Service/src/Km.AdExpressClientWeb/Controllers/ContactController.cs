@@ -98,14 +98,29 @@ namespace Km.AdExpressClientWeb.Controllers
                         break;
                 }
                 message.Subject = form.QuestionTag;
-                message.Body = string.Format(body,
-                    form.Name,
-                    form.Mail,
-                    form.Country,
-                    form.Company,
-                    form.PhoneNumber,
-                    form.Comment,
-                    form.JobTitle);
+
+                if (WebApplicationParameters.CountryCode == CountryCode.POLAND)
+                {
+                    message.Body = GestionWeb.GetWebWord(68, siteLang) + ": " + form.Company + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(67, siteLang) + ": " + form.Name + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(1976, siteLang) + ": " + form.JobTitle + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(71, siteLang) + ": " + form.PhoneNumber + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(1136, siteLang) + ": " + form.Mail + "</br>";
+                    message.Body += GestionWeb.GetWebWord(70, siteLang) + ": " + form.Country + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(74, siteLang) + ": " + form.Comment + "<br/>";
+                }
+                else
+                {
+                    message.Body = string.Format(body,
+                        form.Name,
+                        form.Mail,
+                        form.Country,
+                        form.Company,
+                        form.PhoneNumber,
+                        form.Comment,
+                        form.JobTitle);
+                }
+
                 message.IsBodyHtml = true;
                 using (var smtp = new SmtpClient())
                 {
