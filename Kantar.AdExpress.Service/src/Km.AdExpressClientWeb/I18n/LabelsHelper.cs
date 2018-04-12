@@ -193,6 +193,12 @@ namespace Km.AdExpressClientWeb.I18n
                 AccountFindOutMoreLabel = GestionWeb.GetWebWord(LanguageConstantes.AccountFindOutMoreLabel, siteLanguage),
                 AllRightsReservedLabel = string.Format(GestionWeb.GetWebWord(LanguageConstantes.AllRightsReservedLabel, siteLanguage),DateTime.Now.Year),
                 FindOutMoreLabel = GestionWeb.GetWebWord(LanguageConstantes.FindOutMoreLabel, siteLanguage),
+                CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
+                ContactInformationsRegisterLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactInformationsRegisterLabel, siteLanguage),
+                LearnMoreAboutUsCancelLabel = GestionWeb.GetWebWord(LanguageConstantes.LearnMoreAboutUsCancelLabel, siteLanguage),
+                CompanyNameLabel = GestionWeb.GetWebWord(LanguageConstantes.CompanyNameLabel, siteLanguage),
+                KantarUrl = GestionWeb.GetWebWord(LanguageConstantes.KantarUrl, siteLanguage),
+                ReturToLogin = GestionWeb.GetWebWord(LanguageConstantes.ReturToLogin, siteLanguage),
 
             };
 

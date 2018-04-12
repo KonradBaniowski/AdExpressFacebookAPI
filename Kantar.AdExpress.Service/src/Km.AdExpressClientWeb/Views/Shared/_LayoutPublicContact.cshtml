@@ -6,61 +6,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/css/" + WebApplicationParameters.CountryCode + "/" + ViewBag.SiteLanguageName)
-    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
-    @if (WebApplicationParameters.CountryCode == CountryCode.FINLAND)
-    {
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10360228-9"></script>
-        <script>
-  window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-10360228-9');
-        </script>
-    }
-
+    <title>@ViewBag.Title | AdExpress</title>
+    @Styles.Render("~/Content/Login-files")
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />
 </head>
 
 
-<body class="container-kantar-contact">
-    <nav class="navbar navbar-default navbar-static-top navbar-color">
-        <div class="container">
-            <div id="navbar" class="navbar-collapse collapse">
-                <a class="navbar-brand" href="/">
-                    <img src="../Content/img/@(WebApplicationParameters.CountryCode)/Kantar_Media_BMPro_SW_RGB.png" onError="this.onerror = null;this.src = '../Content/img/Kantar_Media_BMPro_SW_RGB.png';" alt="Ad Express - Kantar Media">
-                </a>
-                <ul class="nav navbar-nav">
-                    <li title="@GestionWeb.GetWebWord(760, ViewBag.SiteLanguage)"><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" id="language-choice" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.SiteLanguageName<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
-                            {
-                                if (ViewBag.SiteLanguageName == currentLanguage.Name.Substring(0, 2).ToUpper())
-                                {
-                                    <li><a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" class="active">@currentLanguage.Name.Substring(0, 2).ToUpper()</a></li>
-                                }
-                                else
-                                {
-                                    <li><a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage">@currentLanguage.Name.Substring(0, 2).ToUpper()</a></li>
-                                }
-                            }
-                        </ul>
-                    </li>
-                </ul>
+<body id="loginpage">
+
+    <div id="headerlanguagecontainer">
+        <div id="headerlanguage">
+            @{ int counter = 0;  }
+
+            @*<span>*@
+            @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
+            {
+                var activeLink = (currentLanguage.Id == ViewBag.SiteLanguageCode) ? "active country-link" : "country-link";
+                <a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" class="@activeLink">@currentLanguage.Name.Substring(0, 2).ToUpper()</a> if (WebApplicationParameters.AllowedLanguages.Values.Count > 1 && counter < WebApplicationParameters.AllowedLanguages.Values.Count - 1)
+                {
+                    @HttpUtility.HtmlDecode("|")
+                }
+
+                counter++;
+            }
+            @*</span>*@
+
+        </div>
+    </div>
+
+    <div id="header">
+        <div id="logo">
+            <div id="position">
+                <div id="logocontent">
+                    <img id="km_logo" src="/Content/LoginFiles/images/@WebApplicationParameters.CountryCode/All_master_logos_Small_300dpi_Kantar_Media.png" alt="Kantar Media">
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="login-content-body">
-        <div class="container-fluid">
+
+    </div>
+
+    <div id="contact_wrapper">
+        <div class="left_side">
+            <h1>AdExpress</h1>
             @RenderBody()
         </div>
+        <div id="bottom">
+        </div>
+    </div>
+
+    <div id="footercontainer">
+        <div id="footer">&copy; @DateTime.Now.Year @GestionWeb.GetWebWord(3115, ViewBag.SiteLanguageCode)</div>
+
     </div>
 
 
