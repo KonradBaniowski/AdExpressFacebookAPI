@@ -28,6 +28,7 @@ namespace KM.Framework.Constantes
         public string Refine { get; set; }
         public string ErrorMessageLimitKeyword { get; set; }//1370
         public string ErrorMessageLimitUniverses { get; set; }
+        public string ErrorMessageSameLevel { get; set; }
         public string ErrorMininumInclude { get; set; }
         public string ErrorMediaSelected { get; set; }
         public string ErrorNoSupport { get; set; }

@@ -29,6 +29,40 @@ $('#move-item').on('click', function () {
             bootbox.alert($('#Labels_ErrorMessageLimitUniverses').val());
             return
         }
+
+        var activeTreeContainer = $('.nav.nav-tabs > li[class="active"]  a').attr('data-target');
+        var activeTreeAccessType = $(activeTreeContainer + ' .panel-group').attr('data-access-type');
+
+        if (activeTreeAccessType != 0) {
+            var isSameLevel = false;
+            $.each($('.nav.nav-tabs > li:not(.active) a'),
+                function(index, elem) {
+                    var itemContainer = $(elem).attr('data-target');
+                    var accessType = $(itemContainer + ' .panel-group').attr('data-access-type');
+                    if (accessType == 0)
+                        return true;
+                    $.each($(itemContainer + ' .panel-group .panel-body'),
+                        function(index, elem) {
+                            var idLevel = $(elem).attr('data-level');
+                            //console.log(this);
+                            if (idLevel == universSrc) {
+                                $.each($(this).find('ul > li'),
+                                    function(index, elem) {
+                                        var itemUniver = $(elem).attr('data-id');
+                                        if (itemUniver) {
+                                            isSameLevel = true;
+                                        }
+                                    });
+                            }
+                        });
+                });
+
+            if (isSameLevel) {
+                bootbox.alert($('#Labels_ErrorMessageSameLevel').val());
+                return;
+            }
+        }
+
         $('#collapse-' + universSrc + '-' + tabSelected).collapse('show');
         $('#heading-' + universSrc + '-' + tabSelected).addClass("bg-highTransparency").find(".panel-title").addClass("blue");
         $.each(levelSrc, function (index, value) {

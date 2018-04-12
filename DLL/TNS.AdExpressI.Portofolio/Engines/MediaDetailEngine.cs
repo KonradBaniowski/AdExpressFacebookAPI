@@ -498,7 +498,25 @@ namespace TNS.AdExpressI.Portofolio.Engines
             schemaFields.Add(new { name = "PID" });
 
             string colKey = "colKey1";
-            columns.Add(new { headerText = string.Empty, key = colKey, dataType = "string", width = "*" });
+            string colKeyLabel = string.Empty;
+
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvClipping
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship)
+            {
+                colKeyLabel = GestionWeb.GetWebWord(495, _webSession.SiteLanguage);
+            }
+
+            columns.Add(new { headerText = colKeyLabel, key = colKey, dataType = "string", width = "*" });
             schemaFields.Add(new { name = colKey });
 
             colKey = "colKey2";

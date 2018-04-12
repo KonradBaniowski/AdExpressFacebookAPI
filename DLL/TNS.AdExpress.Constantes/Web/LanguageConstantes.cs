@@ -158,6 +158,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectUnivers = 2261;
         public const long ErrorOverLimit = 2264;//==> only 200 items
         public const long LimitUniverses = 2265;
+        public const long SameLevel = 2285;
         public const long UniversLabel = 2268;
         public const long ExcludeCode = 2269;
         public const long IncludeCode = 2270;

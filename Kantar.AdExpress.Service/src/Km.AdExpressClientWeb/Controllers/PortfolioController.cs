@@ -96,6 +96,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 model.Trees.Add(tree);
             }
             #endregion
+
+            _siteLanguage = result.SiteLanguage;
+
             #region Presentation
             var pageHelper = new Helpers.PageHelper();
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
@@ -562,6 +565,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
