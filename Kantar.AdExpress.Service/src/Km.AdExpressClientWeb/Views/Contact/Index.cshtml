@@ -2,83 +2,144 @@
 @{
     ViewBag.Title = Model.PresentationModel.ModuleTitle;
     Layout = "~/Views/Shared/_LayoutPublicContact.cshtml";
+
+
+    string learnMoreAboutUsCancelLabel = string.Format(Model.Labels.LearnMoreAboutUsCancelLabel, Model.Labels.CompanyNameLabel);
+
 }
 
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h1 class=""><i class="glyphicon glyphicon-comment"></i>&nbsp;@Model.PresentationModel.ModuleTitle</h1>
-        <small class="">@Model.PresentationModel.ModuleDescription</small>
-    </div>
+<!----Start New DESGIN-->
+
+<div class="ui-widget">
+    @Html.ValidationSummary(true, "", new { @class = "ui-state-error ui-corner-all", style = "padding: 0 .7em" })
 </div>
 
-<div class="row">
-    <div class="col-lg-8">
-        <h3><i class="fa fa-pencil fa-lg"></i>&nbsp;@Model.Labels.WriteToUs </h3>
-        <div class="bg-contact">
-            
-            @if (TempData["Success"] != null)
+<div id="login_component">
+    <div id="loginwidget">
+        @if (TempData["Success"] != null)
+        {
+            using (Html.BeginForm("Login", "Account",  FormMethod.Get,new { role = "form", id = "formContact", enctype = "multipart/form-data" }))
             {
-                <div class="alert alert-success">
-                    <ul>
-                        <li>@TempData["Success"].ToString()</li>
-                    </ul>
-                </div>
-            }
+                 <div class="pg-loginDescription">
+                     <div class="forgotcontact">
+                         <span>@Model.Labels.ContactInformationsRegisterLabel – @Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</span><br><br>
 
-            @using (Html.BeginForm("ContactUs", "Contact", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                         <span>@learnMoreAboutUsCancelLabel  </span>
+                         <a href="@Model.Labels.KantarUrl" class="link">@Model.Labels.FindOutMoreLabel</a>
+
+                     </div>
+                     <br>
+                 </div>
+                <div class="loginbox_container">
+                    <input id="signin" type="submit" value="@Model.Labels.ReturToLogin"  class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
+                </div>
+                <input type="hidden" name="siteLanguage" id="siteLanguage" value="@(ViewBag.SiteLanguage)" />
+            }         
+        }
+        else
+        {
+            using (Html.BeginForm("ContactUs", "Contact", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "formLogin", enctype = "multipart/form-data" }))
             {
+                <div class="pg-loginDescription">@Model.PresentationModel.ModuleDescription</div>
 
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.Company, new {@class = "form-control", placeholder = @Model.Labels.CompanyDescription})
+                <div class="loginbox_container">
+                    <div id="usrcpn" class="borderContainer">
+                        <div>
+                            @Html.TextBoxFor(m => m.Company, new { @class = "input", placeholder = Model.Labels.CompanyDescription, id = "company", autocomplete = "off", tabindex = "1" })
+                            @Html.ValidationMessageFor(m => m.Company, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.Name, new {@class = "form-control", placeholder = @Model.Labels.NameDescription})
+                <div class="loginbox_container">
+                    <div id="usrn">
+                        <div>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "input", placeholder = Model.Labels.NameDescription, id = "username", autocomplete = "off", tabindex = "2" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.JobTitle, new {@class = "form-control", placeholder = @Model.Labels.TitleLabel})
+                <div class="loginbox_container">
+                    <div id="usrjob"  class="borderContainer">
+                        <div>
+                            @Html.TextBoxFor(m => m.JobTitle, new { @class = "input", placeholder = Model.Labels.TitleLabel, id = "userjob", autocomplete = "off", tabindex = "3" })
+                            @Html.ValidationMessageFor(m => m.JobTitle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.PhoneNumber, new {@class = "form-control", placeholder = @Model.Labels.PhoneNumberDescription})
+                <div class="loginbox_container">
+                    <div id="usrphone"  class="borderContainer">
+                        <div>
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "input", placeholder = Model.Labels.PhoneNumberDescription, id = "userphone", autocomplete = "off", tabindex = "4" })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.Mail, new {@class = "form-control", placeholder = @Model.Labels.MailDescription})
+                <div class="loginbox_container">
+                    <div id="usrmail"  class="borderContainer">
+                        <div>
+                            @Html.TextBoxFor(m => m.Mail, new { @class = "input", placeholder = Model.Labels.MailDescription, id = "usermail", autocomplete = "off", tabindex = "5" })
+                            @Html.ValidationMessageFor(m => m.Mail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(e => e.Country, new {@class = "form-control", placeholder = @Model.Labels.CountryDescription})
+                <div class="loginbox_container">
+                    <div id="usrcountry"  class="borderContainer">
+                        <div>
+                            @Html.TextBoxFor(m => m.Country, new { @class = "input", placeholder = Model.Labels.CountryDescription, id = "usercountry", autocomplete = "off", tabindex = "6" })
+                            @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.DropDownListFor(x => x.QuestionTag, Model.QuestionsTagItem, @Model.Labels.QuestionTagDefault, new {@class = "form-control"})
+                <div class="loginbox_container">
+                    <div id="usrquestion"  class="borderContainer">
+                        <div>
+                            @Html.DropDownListFor(m => m.QuestionTag, Model.QuestionsTagItem, Model.Labels.QuestionTagDefault, new { @class = "input",  id = "userquestion", autocomplete = "off", tabindex = "7" })                           
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextAreaFor(e => e.Comment, new {@class = "form-control", placeholder = @Model.Labels.CommentDescription, rows = "5"})
+                <div class="loginbox_container">
+                    <div id="usrcomment"  >
+                        <div>
+                            @Html.TextAreaFor(m => m.Comment, new { @class = "input", placeholder = Model.Labels.CommentDescription, rows = "1", cols="50", id = "usercomment", autocomplete = "off", tabindex = "8" })
+                            @Html.ValidationMessageFor(m => m.Comment, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-                <input type="hidden" name="siteLang" id="siteLang" value="@(ViewBag.SiteLanguage)"/>
-                <button type="submit" class="btn btn-default pull-right">@Model.Labels.Submit</button>
-                <div class="clearfix"></div>
+               
+              
+
+                <div class="pg-required-text" >*Champs requis</div>
+              
+
+                <div class="loginbox_container">
+                    <input id="signin" type="submit" value="@Model.Labels.Submit" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
+                </div>
+
+                <div class="loginbox_container">
+                    <a id="contact_cancel" href="@Url.Action("Login", "Account", new {siteLanguage = ViewBag.SiteLanguage})" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
+                        @Model.Labels.CancelLabel
+                    </a>                   
+                </div>
+                <div class="loginbox_container">
+                    <div style="padding-top:.2rem;padding-bottom:.2rem;" >@Model.Labels.ClientService.<br>@Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</div>
+                </div>
+                <input type="hidden" name="siteLang" id="siteLang" value="@(ViewBag.SiteLanguage)" />
+
             }
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <h3><i class="fa fa-phone fa-lg"></i>&nbsp;@Model.Labels.CallUs </h3>
-        <div class="bg-contact">
-            <div class="membres-icon">
-                <i class="fa fa-headphones fa-3x green-contact"></i>
-            </div>
-            <div class="text-center">
-                <h4>@Model.Labels.ClientService</h4>
-                <div class="member-line"></div>
-                <div><span class="green-contact">@Model.ClientServicePhoneNumber</span></div>
-                <div><span class="green-contact">@Model.ClientServiceEmail</span></div>
-                @*<div><span class="green-contact">01 30 74 87 78</span></div>
-                <div><span class="green-contact">sc.adexpress@kantarmedia.com</span></div>*@
-            </div>
-        </div>
-    </div>
+        }
+
+                </div>
 </div>
+
+<!----End New DESGIN-->
+
+
 <input type="hidden" id="current-url" value="/Contact/Index" />
 
 @section scripts {
     @Scripts.Render("~/bundles/cookies")
+    @Scripts.Render("~/bundles/account")
+
 
     <script>
         createCookie("sortKey", "", 1);

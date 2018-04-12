@@ -8,17 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title | AdExpress</title>   
     @Styles.Render("~/Content/Login-files")  
-    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />
-    @if (WebApplicationParameters.CountryCode == CountryCode.FINLAND)
-    {
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10360228-9"></script>
-        <script>
-  window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-10360228-9');
-        </script>
-    }
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />  
 </head>
 
 
@@ -31,8 +21,8 @@ gtag('config', 'UA-10360228-9');
             @*<span>*@
                 @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
                 {
-                    var activeLink= (currentLanguage.Id == ViewBag.SiteLanguageCode) ?"class=active" : "";
-                    <a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" @activeLink>@currentLanguage.Name.Substring(0, 2).ToUpper()</a> if (WebApplicationParameters.AllowedLanguages.Values.Count > 1 && counter < WebApplicationParameters.AllowedLanguages.Values.Count - 1)
+                    var activeLink= (currentLanguage.Id == ViewBag.SiteLanguageCode) ? "active country-link" : "country-link";
+                    <a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" class="@activeLink">@currentLanguage.Name.Substring(0, 2).ToUpper()</a> if (WebApplicationParameters.AllowedLanguages.Values.Count > 1 && counter < WebApplicationParameters.AllowedLanguages.Values.Count - 1)
                 {
                         @HttpUtility.HtmlDecode("|")
                     }

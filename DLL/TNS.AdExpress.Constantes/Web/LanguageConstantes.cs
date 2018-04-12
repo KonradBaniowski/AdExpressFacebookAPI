@@ -40,6 +40,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectFolder = 702;
         public const long RenameSelectedFolder = 703;
         public const long ErrorMsgNoFolderCreated = 711;
+        public const long CompanyNameLabel = 758;
         public const long ModuleLabel = 760;
         public const long MonAdExpressCode = 761;
         public const long ContactLabelCode = 763;
@@ -287,6 +288,10 @@ namespace TNS.AdExpress.Constantes.Web
         public const long NoSelectedItemLabel = 3122;
         public const long FilterLabel = 3123;
         public const long CancelLabel = 3124;
+        public const long ContactInformationsRegisterLabel = 3127;
+        public const long LearnMoreAboutUsCancelLabel = 3128;
+        public const long KantarUrl = 3129;
+        public const long ReturToLogin = 3130;
 
         #endregion
     }

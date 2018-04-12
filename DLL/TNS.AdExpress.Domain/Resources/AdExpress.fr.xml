@@ -1007,7 +1007,7 @@
     <item mnemonic="w1773" type="System.String">Calendrier d'actions</item>
     <item mnemonic="w1774" type="System.String">Types de périodicités</item>
     <item mnemonic="w1775" type="System.String">Répartition des PDV en GRP</item>
-    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur {0} ou contactez les membres du Pôle Publicité de Kantar Media.</item>
+    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur {0} ou contactez les membres du Pôle Publicité de {.</item>
     <item mnemonic="w1777" type="System.String">Familles de Presse</item>
     <item mnemonic="w1778" type="System.String">Mes téléchargements</item>
     <item mnemonic="w1779" type="System.String">PUBLICITE EXTERIEURE</item>
@@ -2402,5 +2402,9 @@
     <item mnemonic="w3124" type="System.String">Annuler</item>
     <item mnemonic="w3125" type="System.String">dernier(s) jour(s)</item>
     <item mnemonic="w3126" type="System.String">élément(s) sélectionné(s)</item>
+    <item mnemonic="w3127" type="System.String">Votre demande a bien été enregistrée. Nous vous contacterons rapidement. Notre Service Clients se tient à votre écoute</item>
+    <item mnemonic="w3128" type="System.String">Pour en apprendre d’avantage sur {0}</item>
+    <item mnemonic="w3129" type="System.String">http://www.kantarmedia.com</item>
+    <item mnemonic="w3130" type="System.String">Retour à la page de connexion</item>
   </items>
 </localization>

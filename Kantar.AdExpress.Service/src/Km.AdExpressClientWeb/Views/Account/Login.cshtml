@@ -38,13 +38,7 @@
             </div>
             <div id="forgot" class="loginbox_container">
                 <span>   </span>
-                <div class="forgotcontact">
-                    @Model.Labels.AccountFindOutMoreLabel
-                    <a href="@Url.Action("Index", "Contact", new {siteLanguage = Model.SiteLanguage})">
-                        @Model.Labels.FindOutMoreLabel
-                    </a>
-
-                </div>
+                <div class="forgotcontact">@Model.Labels.AccountFindOutMoreLabel <a href="@Url.Action("Index", "Contact", new {siteLanguage = Model.SiteLanguage})">@Model.Labels.FindOutMoreLabel</a></div>
             </div>
             <input type="hidden" id="current-site-language" name="SiteLanguage" value="@Model.SiteLanguage" />
         }

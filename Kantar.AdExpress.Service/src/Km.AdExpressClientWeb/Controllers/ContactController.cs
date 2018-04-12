@@ -23,6 +23,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;
+            ViewBag.SiteLanguageCode = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
             var labels = LabelsHelper.LoadPageLabels(siteLanguage);
@@ -94,7 +95,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         message.To.Add(new MailAddress("aleksandra.misterska@kantarmedia.com"));
                         break;
                     default:
-                        message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
+                        //message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
+                        message.To.Add(new MailAddress("dede.mussuma@kantarmedia.com"));
                         break;
                 }
                 message.Subject = form.QuestionTag;
