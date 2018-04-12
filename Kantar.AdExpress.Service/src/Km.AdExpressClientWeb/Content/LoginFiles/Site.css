@@ -6,7 +6,12 @@
 
 @media screen and (max-width : 1259px )
 {
-#login_wrapper .right_side
+#login_wrapper, .right_side
+	{
+	width: 50%;
+	}
+
+#contact_wrapper
 	{
 	width: 50%;
 	}
@@ -35,6 +40,11 @@ div#login_wrapper {
 	width:  70%; 
 	}
 
+div#contact_wrapper {	
+  
+	min-width: 320px;
+	width:  70%; 
+	}
 #logo #position #logocontent   {
 	width: 40%;
 }	
@@ -42,7 +52,25 @@ div#login_wrapper {
 }
 
 
+@media screen and (min-width : 800px ) {
+    .left_side {
+    width: 350px;
+}
+}
 
+  @media screen and (min-width: 700px) {
+    #login_wrapper {
+      width: 70%;    
+    } 
+      #contact_wrapper {
+      width: 70%;       
+    } 
+
+  }
+   /*@media screen and (min-height: 700px) {
+    #contact_wrapper {    
+      min-height: 870px !important;
+    } }*/
 @media screen and (max-height : 670px)
 {
 #loginpage #header {
@@ -268,9 +296,10 @@ h2 {
 /* Header */
 div#header {
 	font-family: KantarBrown-Light, Arial, Helvetica, sans-serif;
-	height: 132px;
+	height: 122px;/* 132px;*/
 	z-index: 1;
-	margin-bottom: 5%;
+	margin-bottom: 4%;/*5%;*/
+    
 }
 
     div#header DIV.title {
@@ -369,7 +398,7 @@ div#position {
 	min-width: 320px;
 }
 
-    #loginpage #centeredDialog {
+    #loginpage #centeredDialog  {
         background-color: #FFFFFF;
         border: 1px solid #DDDDDD;
         float: left;
@@ -386,7 +415,7 @@ div#position {
     line-height: 20px;
 }
 
-#loginpage #dialogHeader {
+#loginpage #dialogHeader  {
     height: 20px;
     color: #333;
     padding: 10px;
@@ -443,6 +472,11 @@ div#position {
 #loginpage input[type=text], #loginpage input[type=password] {
 	width: 90%;
 	display: block;
+	font-size: 1em;
+}
+#loginpage a {
+	width: 90%;
+	/*display: block;*/
 	font-size: 1em;
 }
 
@@ -534,12 +568,20 @@ div#position {
             text-decoration: none;
         }
 
-#loginpage #signin {
+#loginpage, #signin {
 	margin-top: 15px;
 	width: 100%;
 	height: 45px;
 }
-
+ #contact_cancel {  
+	display: block;
+	font-size: 1em;
+	margin-top: 15px;
+	width: 100% !important;
+	height: 45px;
+     text-align: center;
+     line-height: 45px;
+}
 #login_wrapper {
 	background: white;
 	background-image: linear-gradient(to right, #FFFFFF, #FAFAFA ); 
@@ -558,6 +600,24 @@ div#position {
 	position: relative;
 }
 
+#contact_wrapper {
+	background: white;
+	background-image: linear-gradient(to right, #FFFFFF, #FAFAFA ); 
+	border-radius: 3px;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 870px;
+	min-width: 315px;
+	overflow: hidden;
+	text-align: center;
+	width: 70%;
+	margin-bottom: auto;
+	max-width: 1000px;
+	top: auto;
+	position: relative;
+}
+
 #login2 {
 	margin-left: auto;
 	margin-right: auto;
@@ -570,13 +630,14 @@ div#position {
 
 .left_side {
 	display: inline-block;
-	padding-top: 20px;
-	padding-right: 20px;
-	padding-left: 20px;
-	padding-bottom: 20px;
+	padding-top: 10px;
+    padding-bottom: 10px;
+	/*padding-right: 10px;
+	padding-left: 10px;*/
+	
 	/* margin: 15px; */
 	margin-right: 0px;
-	width: 310px;
+	/*width: 310px;*/
 }
 
 
@@ -596,13 +657,21 @@ div#position {
 	
 }
 
-#login_wrapper #bottom {
+#login_wrapper #bottom  {
 	text-align: center;
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
 
-#logo_wrapper {
+#contact_wrapper #bottom  {
+	text-align: center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+
+
+#logo_wrapper  {
     margin: 15px auto 0;
     max-height: 80px;
     overflow: hidden;
@@ -616,12 +685,24 @@ div#position {
     margin-right: auto;
 }
 
-.loginbox_container, .loginError {
-    margin: 0 auto;
-    width: 270px;
+@media screen and (max-width : 599px ) {
+  .loginbox_container, .loginError {
+   margin: 0 auto;
+   width: 270px;
+   min-height: 43px;
+}  
 }
 
-#usrn {
+@media screen and (min-width : 600px ) {
+  .loginbox_container, .loginError {
+    margin: 0 auto;
+   /* width: 270px;*/
+       min-height: 43px;
+}  
+}
+
+
+#usrn, #usrcpn{
 	background-color: #F3F5F6;
 	border: 1px solid #CCCCCC;
 	border-radius: 3px 3px 0 0;
@@ -634,13 +715,41 @@ div#position {
 	padding-left: 12px;
 }
 
+
+#usercomment{
+	background-color: #F3F5F6;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px 3px 0 0;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2) inset;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	padding: 12px;
+    text-align: left;
+    box-sizing: border-box;
+
+}
+
+ .borderContainer{
+	background-color: #F3F5F6;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px 3px 0 0;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2) inset;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	padding-top: 12px;
+	padding-right: 0;
+	padding-bottom: 12px;
+	padding-left: 12px;
+}
+
+
 .input {
     background-color: #F3F5F6;
     border: 0 solid #F3F5F6;
     color: #586064;
     font-size: 13px;
     margin-left: 0;
-    width: 230px;
+    width: 100%; /*230px;*/
 }
 
 #pswd {
@@ -770,8 +879,8 @@ div#position {
     font-weight: bold;
 	text-align: right;
 	z-index: 1000;
-	height: 35px;
-	margin-top: 25px;
+	height: 25px; /*35px;*/
+	margin-top: 15px;/* 25px;*/
 	padding-top: auto;
 	padding-right: 15px;
 	padding-bottom: auto;
@@ -779,6 +888,14 @@ div#position {
 	margin-right: auto;
 	margin-bottom: auto;
 	margin-left: auto;
+    display: -webkit-box;
+      display: -webkit-flex;
+       -webkit-flex-direction: row;
+      display: -ms-flexbox;
+       -ms-flex-direction: row;
+      display: flex;
+      flex-direction: row;
+    
 
 }
 
@@ -797,3 +914,38 @@ div#position {
 .text-danger {
     color: #cd0a0a;
 }
+
+.pg-required-text {
+    font-size: .7rem;
+    font-style: italic;
+}
+
+.pg-loginDescription {
+  font-size: 1em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  width: 100%;
+  font-weight: 300;
+  color: #828282; }
+
+.country-link {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.forgotcontact {
+  float: left;
+  font-size: 1em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #DDDDDD;
+  margin-top: 10px;
+  width: 100%;
+  font-weight: 300; }
+
+.forgotcontact a {
+  color: #3c6bbf;
+  text-decoration: none;
+  font-weight: normal; }

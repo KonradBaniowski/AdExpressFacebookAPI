@@ -35,6 +35,7 @@ namespace KM.Framework.Constantes
         public string DeleteAll { get; set; }// 2279
         public string ErrorOnlyOneItemAllowed { get; set; }//3036
         public string ErrorOverLimit { get; set; }//w2264==> only 200items
+        public string CompanyNameLabel { get; set; }//758
         public string SaveUnivers { get; set; }//769
         public string AddConcurrent { get; set; }//3037
         public string ErrorSupportAlreadyDefine { get; set; } // 3038
@@ -233,6 +234,14 @@ namespace KM.Framework.Constantes
         public string NoSelectedItemLabel { get; set; } //3123
         public string FilterLabel { get; set; } //3124
         public string CancelLabel { get; set; } //3125
+
+        public string ContactInformationsRegisterLabel { get; set; } //3127
+
+        public string LearnMoreAboutUsCancelLabel { get; set; } //3128
+        public string KantarUrl { get; set; } //3129
+
+        public string ReturToLogin { get; set; } //3130
+
 
 
 
