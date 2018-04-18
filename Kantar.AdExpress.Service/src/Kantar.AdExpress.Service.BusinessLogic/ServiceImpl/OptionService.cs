@@ -1366,7 +1366,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1378,7 +1377,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1390,7 +1388,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1402,7 +1399,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1412,9 +1408,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 default:
                     resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                    options.ResultTypeOption = resultTypeOption;
                     break;
             }
+            options.ResultTypeOption = resultTypeOption;
         }
         #endregion
 
