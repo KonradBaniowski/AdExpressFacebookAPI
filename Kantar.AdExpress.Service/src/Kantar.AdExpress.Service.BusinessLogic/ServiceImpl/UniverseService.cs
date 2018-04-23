@@ -1290,6 +1290,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                 case WebConstantes.Module.Name.HEALTH:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
 
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)

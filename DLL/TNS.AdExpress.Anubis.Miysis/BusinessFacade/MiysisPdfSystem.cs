@@ -251,7 +251,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             foreach (string s in _webSession.EmailRecipient)
             {
-                msg.To.Add("youssef.rkaina@kantarmedia.com");
+                msg.To.Add(s);
             }
 
             msg.From = new MailAddress("tswro-tech@kantarmedia.com");
