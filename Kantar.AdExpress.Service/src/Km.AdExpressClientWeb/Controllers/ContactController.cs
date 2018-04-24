@@ -142,6 +142,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 TempData["success"] = GestionWeb.GetWebWord(1486, siteLang);
             }
+            else
+            {
+                return View(form);
+            }
 
 
             return RedirectToAction("Index", new {siteLanguage = siteLang});

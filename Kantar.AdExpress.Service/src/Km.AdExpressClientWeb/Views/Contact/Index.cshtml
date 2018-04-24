@@ -10,6 +10,7 @@
 
 <!----Start New DESGIN-->
 
+
 <div class="ui-widget">
     @Html.ValidationSummary(true, "", new { @class = "ui-state-error ui-corner-all", style = "padding: 0 .7em" })
 </div>
@@ -18,7 +19,7 @@
     <div id="loginwidget">
         @if (TempData["Success"] != null)
         {
-            using (Html.BeginForm("Login", "Account",  FormMethod.Get,new { role = "form", id = "formContact", enctype = "multipart/form-data" }))
+            using (Html.BeginForm("Index", "Home",  FormMethod.Get,new { role = "form", id = "formContact", enctype = "multipart/form-data" }))
             {
                  <div class="pg-loginDescription">
                      <div class="forgotcontact">
@@ -31,7 +32,8 @@
                      <br>
                  </div>
                 <div class="loginbox_container">
-                    <input id="signin" type="submit" value="@Model.Labels.ReturToLogin"  class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
+                   
+                    <input id="signin" type="submit" value="@Model.Labels.ReturToLogin" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
                 </div>
                 <input type="hidden" name="siteLanguage" id="siteLanguage" value="@(ViewBag.SiteLanguage)" />
             }         
@@ -46,6 +48,7 @@
                     <div id="usrcpn" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.Company, new { @class = "input", placeholder = Model.Labels.CompanyDescription, id = "company", autocomplete = "off", tabindex = "1" })
+                         
                             @Html.ValidationMessageFor(m => m.Company, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -139,7 +142,6 @@
 @section scripts {
     @Scripts.Render("~/bundles/cookies")
     @Scripts.Render("~/bundles/account")
-
 
     <script>
         createCookie("sortKey", "", 1);
