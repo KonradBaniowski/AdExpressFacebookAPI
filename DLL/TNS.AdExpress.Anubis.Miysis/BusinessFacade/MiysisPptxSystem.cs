@@ -285,7 +285,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GetMailContent(),
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
-                    + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
+                    + "\" " + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
                     + "<br><br>"
                     + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
@@ -322,8 +322,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             msg.From = new MailAddress("tswro-tech@kantarmedia.com");
             msg.Subject = GetMailContent();
-            msg.Body = GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
-                    + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
+            msg.Body = GestionWeb.GetWebWord(3131, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
+                    + "\" " + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pptx")
                     + "<br><br>"
                     + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer);
             msg.Priority = MailPriority.High;
@@ -1899,7 +1899,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// </summary>
         /// <returns>Mail content</returns>
         protected virtual string GetMailContent() {
-            return GestionWeb.GetWebWord(2006, _webSession.SiteLanguage).Replace("é", "e"); ;
+            return GestionWeb.GetWebWord(3132, _webSession.SiteLanguage).Replace("é", "e"); ;
         }
         #endregion
 

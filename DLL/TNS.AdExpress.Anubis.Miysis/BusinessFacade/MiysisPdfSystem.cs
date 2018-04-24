@@ -218,7 +218,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GetMailContent(),
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
-                    + "\"" + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pdf")
+                    + "\" " + String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage), _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" + fileName + ".pdf")
                     + "<br><br>"
                     + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     //+ String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), "http://adexpress.kantarmedia.ie"),
@@ -257,7 +257,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             msg.From = new MailAddress("tswro-tech@kantarmedia.com");
             msg.Subject = GetMailContent();
             msg.Body = GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + " \"" + _webSession.ExportedPDFFileName
-                       + "\"" +
+                       + "\" " +
                        String.Format(GestionWeb.GetWebWord(3066, _webSession.SiteLanguage),
                            _config.WebServer + "/AdExCustomerFiles/" + _webSession.CustomerLogin.IdLogin + "/" +
                            fileName + ".pdf")
