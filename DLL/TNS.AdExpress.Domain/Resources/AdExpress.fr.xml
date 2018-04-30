@@ -2405,7 +2405,7 @@
     <item mnemonic="w3127" type="System.String">Votre demande a bien été enregistrée. Nous vous contacterons rapidement. Notre Service Clients se tient à votre écoute</item>
     <item mnemonic="w3128" type="System.String">Pour en apprendre d’avantage sur {0}</item>
     <item mnemonic="w3129" type="System.String">http://www.kantarmedia.com</item>
-    <item mnemonic="w3130" type="System.String">Retour à la page de connexion</item>
+    <item mnemonic="w3130" type="System.String">Retour</item>
     <item mnemonic="w3131" type="System.String">Le document PowerPoint </item>
     <item mnemonic="w3132" type="System.String">AdExpress -- Fichier PowerPoint Alerte Plan Média</item>
   </items>
