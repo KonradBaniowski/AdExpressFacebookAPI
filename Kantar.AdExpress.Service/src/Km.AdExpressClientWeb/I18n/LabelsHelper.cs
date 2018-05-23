@@ -199,7 +199,7 @@ namespace Km.AdExpressClientWeb.I18n
                 CompanyNameLabel = GestionWeb.GetWebWord(LanguageConstantes.CompanyNameLabel, siteLanguage),
                 KantarUrl = GestionWeb.GetWebWord(LanguageConstantes.KantarUrl, siteLanguage),
                 ReturToLogin = GestionWeb.GetWebWord(LanguageConstantes.ReturToLogin, siteLanguage),
-
+                RequiredFields = GestionWeb.GetWebWord(LanguageConstantes.RequiredFields, siteLanguage),
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

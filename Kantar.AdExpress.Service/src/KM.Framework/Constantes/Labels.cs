@@ -243,6 +243,8 @@ namespace KM.Framework.Constantes
 
         public string ReturToLogin { get; set; } //3130
 
+        public string RequiredFields { get; set; } //3133
+
 
 
 

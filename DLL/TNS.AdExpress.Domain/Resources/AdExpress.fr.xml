@@ -2408,5 +2408,6 @@
     <item mnemonic="w3130" type="System.String">Retour</item>
     <item mnemonic="w3131" type="System.String">Le document PowerPoint </item>
     <item mnemonic="w3132" type="System.String">AdExpress -- Fichier PowerPoint Alerte Plan Média</item>
+    <item mnemonic="w3133" type="System.String">Champs requis</item>   
   </items>
 </localization>

@@ -293,6 +293,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long LearnMoreAboutUsCancelLabel = 3128;
         public const long KantarUrl = 3129;
         public const long ReturToLogin = 3130;
+        public const long RequiredFields = 3133;
 
         #endregion
     }
