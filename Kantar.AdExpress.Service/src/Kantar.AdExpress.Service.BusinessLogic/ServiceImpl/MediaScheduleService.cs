@@ -467,7 +467,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             List<long> mediaTypeIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
             if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.POLAND))
             {
-                mediaTypeIds = SwicthToAdExpressVehicle(mediaTypeIds, creativeMediaScheduleRequest.MediaTypeIds, webSession);
+                mediaTypeIds = SwicthToAdExpressVehicle(mediaTypeIds, creativeMediaScheduleRequest.CreativeIds);
             }
 
             string[] productListId = creativeMediaScheduleRequest.ProductIds.Split(',');
@@ -476,12 +476,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (loginRight.CanAccessToAdExpress())
             {
-                List<long> mIds = creativeMediaScheduleRequest.MediaTypeIds.Split(',').Select(Int64.Parse).ToList();
-                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.POLAND))
-                {
-                    mIds = SwicthToAdExpressVehicle(mIds, creativeMediaScheduleRequest.CreativeIds);
-                }
-
                 List<long> pIds = creativeMediaScheduleRequest.ProductIds.Split(',').Select(Int64.Parse).ToList();
 
                 // Regarde à partir de quel tables charger les droits clients
@@ -504,7 +498,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     webSession.SiteLanguage = creativeMediaScheduleRequest.SiteLanguage;
                     webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
                     SetAdNetTrackProductSelection(webSession, Convert.ToInt64(creativeMediaScheduleRequest.CreativeIds));
-                    SetProductLevel(webSession.IdSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
+                    SetSessionProductDetailLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
                 }
                 else webSession.Unit = UnitsInformation.DefaultCurrency;
 
@@ -766,37 +760,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case 20: newVehicle.Add(9); break;
                     case 7:
                         newVehicle.Add(!string.IsNullOrEmpty(creativeIds) ? 8 : p);
-                        break;
-                    case 6:
-                        newVehicle.Add(8); break;
-                    default: newVehicle.Add(p); break;
-
-                }
-            });
-            return newVehicle;
-        }
-
-        private List<long> SwicthToAdExpressVehicle(List<long> vehicles, string mediaTypeIds, WebSession webSession)
-        {
-            var newVehicle = new List<long>();
-
-            vehicles.ForEach(p =>
-            {
-                switch (p)
-                {
-                    case 1:
-                        newVehicle.Add(3);
-                        break;
-                    case 3:
-                        newVehicle.Add(1);
-                        break;
-                    case 8:
-                        newVehicle.Add(5);
-                        break;
-                    case 9: newVehicle.Add(6); break;
-                    case 20: newVehicle.Add(9); break;
-                    case 7:
-                        newVehicle.Add(!string.IsNullOrEmpty(mediaTypeIds) ? 8 : p);
                         break;
                     case 6:
                         newVehicle.Add(8); break;
