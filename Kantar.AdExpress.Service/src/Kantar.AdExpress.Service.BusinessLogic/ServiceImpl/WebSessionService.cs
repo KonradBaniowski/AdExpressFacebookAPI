@@ -1068,16 +1068,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 System.Windows.Forms.TreeNode vehicle = null;
                 int pluriWordCode = 210;
                 var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
-                bool isMissingMmms = false;
-                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
-                {
-                    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
-                    if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
-                    {
-                        pluriWordCode = 3020;
-                        vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
-                    }
-                }
+                //bool isMissingMmms = false;
+                //if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                //{
+                //    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
+                //    if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
+                //    {
+                //        pluriWordCode = 3020;
+                //        vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
+                //    }
+                //}
 
 
 
