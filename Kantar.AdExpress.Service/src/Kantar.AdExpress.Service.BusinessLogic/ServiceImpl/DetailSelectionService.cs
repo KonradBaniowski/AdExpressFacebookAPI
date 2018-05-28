@@ -164,6 +164,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.UniteLabel = GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage);
             #endregion
 
+            #region Slogan :
+            if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0)
+            {
+                foreach (Int64 currentSlogan in _webSession.IdSlogans)
+                {
+                    domain.IdSlogansLabel += currentSlogan + ", ";
+                }
+                domain.IdSlogansLabel = domain.IdSlogansLabel.Remove(domain.IdSlogansLabel.Length - 2);
+            }
+            #endregion
+
             #region Univers Market :
             domain.UniversMarket = new List<Core.Domain.Tree>();
             ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, domain.UniversMarket, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
@@ -246,6 +257,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.ShowComparativePeriod = !string.IsNullOrEmpty(domain.ComparativePeriod);
             domain.ShowComparativePeriodType = !string.IsNullOrEmpty(domain.ComparativePeriodType);
             domain.ShowPeriodDisponibilityType = !string.IsNullOrEmpty(domain.PeriodDisponibilityType);
+            domain.ShowIdSlogansLabel = !string.IsNullOrEmpty(domain.IdSlogansLabel);
             #endregion
 
             return domain;

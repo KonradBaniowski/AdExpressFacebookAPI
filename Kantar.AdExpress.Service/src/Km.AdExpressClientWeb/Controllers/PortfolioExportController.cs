@@ -1080,6 +1080,17 @@ namespace Km.AdExpressClientWeb.Controllers
                 cellRow++;
             }
 
+            if (detailSelectionResponse.ShowIdSlogansLabel)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.IdSlogansLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.IdSlogansLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+
             if (detailSelectionResponse.ShowMarket)
             {
                 sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.UniversProductLabel);

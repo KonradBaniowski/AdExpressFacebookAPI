@@ -243,8 +243,7 @@ namespace KM.Framework.Constantes
 
         public string ReturToLogin { get; set; } //3130
 
-
-
+        public string IdSlogansLabel { get; set; } //1888
 
     }
 }

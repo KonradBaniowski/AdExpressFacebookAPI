@@ -126,6 +126,14 @@
                     <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.UniteLabel)</strong></label>
                 </div>
             }
+            
+            @if (Model.DetailSelectionWSModel.ShowIdSlogansLabel)
+            {
+                <div class="form-group">
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.Labels.IdSlogansLabel)</strong></label>
+                    <label class="col-sm-6 control-label text-left"><strong>@Html.DisplayFor(model => model.DetailSelectionWSModel.IdSlogansLabel)</strong></label>
+                </div>
+            }
 
             @if (Model.DetailSelectionWSModel.ShowMarket)
             {

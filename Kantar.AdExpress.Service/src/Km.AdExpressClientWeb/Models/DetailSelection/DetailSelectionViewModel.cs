@@ -34,6 +34,7 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public string ComparativePeriod { get; set; }
         public string ComparativePeriodType { get; set; }
         public string PeriodDisponibilityType { get; set; }
+        public string IdSlogansLabel { get; set; }
 
         public bool ShowDate { get; set; }
         public bool ShowUnivers { get; set; }
@@ -48,5 +49,6 @@ namespace Km.AdExpressClientWeb.Models.DetailSelection
         public bool ShowUnity { get; set; }
         public bool ShowStudyType { get; set; }
         public bool ShowSponsorshipMedia { get; set; }
+        public bool ShowIdSlogansLabel { get; set; }
     }
 }
