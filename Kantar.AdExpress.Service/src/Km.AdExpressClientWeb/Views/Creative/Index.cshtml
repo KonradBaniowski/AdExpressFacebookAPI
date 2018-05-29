@@ -567,8 +567,12 @@
                         default:
                             url = datas[0];
                             $("#creativeStream").attr('src', url);
+                            if (datas.length > 1 && datas[1] == "True") {
+                                $("#creativeModal .modal-footer").removeClass("hide");
+                                $("#creativeModal .modal-footer > a").attr("href", datas[0]);
+                            }
                             $("#creativeStream").show();
-                            $("#mediaLoader").hide()
+                            $("#mediaLoader").hide();
                     }
                 }
                 else {
