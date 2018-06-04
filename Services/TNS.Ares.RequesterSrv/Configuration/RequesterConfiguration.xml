@@ -20,9 +20,18 @@
       <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
     </lsClientConfiguration>
   </aresConfigurations>-->
+
+  <!-- Config PL (48) 
+  <aresConfigurations>
+    <lsClientConfiguration name="AdExpress" directoryName="AdExpress\48" familyId="129" familyName="AdExpress PL Requester Treatment service" monitorPort="30258" productName="AdExpress Request treatment service">
+      <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
+      <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
+      <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
+    </lsClientConfiguration>
+  </aresConfigurations>-->
   
-  <!-- Config SK (421) -->
-  <!--<aresConfigurations>
+  <!-- Config SK (421) 
+  <aresConfigurations>
     <lsClientConfiguration name="AdExpress" directoryName="AdExpress\421" familyId="129" familyName="AdExpress SK Requester Treatment service" monitorPort="30258" productName="AdExpress Request treatment service">
       <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
       <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>

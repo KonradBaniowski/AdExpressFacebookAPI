@@ -38,14 +38,21 @@
         //RedirectToOldWebSite(@Module.Name.BILAN_CAMPAGNE);
 
         //Redirect to Tendencies
-        //RedirectToOldWebSite(@Module.Name.TENDACES);
+         @if (Model.CountryCode.Equals(CountryCode.FINLAND))
+         {
+           @:RedirectToOldWebSite(@Module.Name.TENDACES);
+            @:RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PRESSE);
+         }
+      
 
         //RedirectToOldWebSite(@Module.Name.ANALYSE_DES_PROGRAMMES);
 
         //RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PAN_EURO);
-        //RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_PRESSE);
+       
         //RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_RADIO);
         //RedirectToOldWebSite(@Module.Name.TABLEAU_DE_BORD_TELEVISION);
+
+        RedirectToOldWebSite(@Module.Name.VP);
 
 
     </script>
@@ -60,6 +67,18 @@
     {
         Html.RenderPartial("_ModulesIr", Model);
     }
+    else if (Model.CountryCode.Equals(CountryCode.TURKEY))
+    {
+        Html.RenderPartial("_ModulesTr", Model);
+    }
+    else if (Model.CountryCode.Equals(CountryCode.SLOVAKIA))
+    {
+        Html.RenderPartial("_ModulesSk", Model);
+    }
+    else if (Model.CountryCode.Equals(CountryCode.POLAND))
+    {
+        Html.RenderPartial("_ModulesPl", Model);
+    }
     else
     {
         Html.RenderPartial("_ModulesFr", Model);
@@ -72,6 +91,15 @@
         {
             case CountryCode.FINLAND:
                 Html.RenderPartial("_HomeNewsFi");
+                break;
+            case CountryCode.TURKEY:
+                Html.RenderPartial("_HomeNewsTr");
+                break;
+            case CountryCode.SLOVAKIA:
+                Html.RenderPartial("_HomeNewsSk", Model.SiteLanguage);
+                break;
+            case CountryCode.POLAND:
+                Html.RenderPartial("_HomeNewsPl", Model.SiteLanguage);
                 break;
             default:
                 Html.RenderPartial("_HomeNewsFr");
@@ -114,10 +142,12 @@
                                     if (Model.SiteLanguage == 33)
                                     {
                                         <a href="~/Content/xls/Liste supports en alerte.xls" class="list-group-item text-left" target="_blank">Liste supports en alerte</a>
+                                        <a href="~/Content/pdf/Methodologie_Medias_Investissements_Creations_Publicitaires.pdf" class="list-group-item text-left" target="_blank">Méthodologie Médias</a>
                                     }
                                     else if (Model.SiteLanguage == 44)
                                     {
                                         <a href="~/Content/xls/List of vehicles on alert.xls" class="list-group-item text-left" target="_blank">List of vehicles on alert</a>
+                                        <a href="~/Content/pdf/Methodologie_Medias_Investissements_Creations_Publicitaires.pdf" class="list-group-item text-left" target="_blank">Media Methodology</a>
                                     }
                                 }
                             }

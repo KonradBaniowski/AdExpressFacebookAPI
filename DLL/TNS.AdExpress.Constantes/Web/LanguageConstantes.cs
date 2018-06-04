@@ -40,6 +40,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectFolder = 702;
         public const long RenameSelectedFolder = 703;
         public const long ErrorMsgNoFolderCreated = 711;
+        public const long CompanyNameLabel = 758;
         public const long ModuleLabel = 760;
         public const long MonAdExpressCode = 761;
         public const long ContactLabelCode = 763;
@@ -158,6 +159,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SelectUnivers = 2261;
         public const long ErrorOverLimit = 2264;//==> only 200 items
         public const long LimitUniverses = 2265;
+        public const long SameLevel = 2285;
         public const long UniversLabel = 2268;
         public const long ExcludeCode = 2269;
         public const long IncludeCode = 2270;
@@ -277,6 +279,22 @@ namespace TNS.AdExpress.Constantes.Web
         public const long SponsorshipMedias = 2933;
         public const long SponsorshipWorkingSet = 3106;
         public const long Health = 3107;
+        public const long PlurimediaOffline = 3111;
+        public const long PlurimediaWithSearch = 3113;
+        public const long PlurimediaOnline = 3112;
+        public const long AccountFindOutMoreLabel = 3114;
+        public const long AllRightsReservedLabel = 3115;
+        public const long FindOutMoreLabel = 3116;
+        public const long PressCreativesdetailLabel = 1972;
+        public const long NoSelectedItemLabel = 3122;
+        public const long FilterLabel = 3123;
+        public const long CancelLabel = 3124;
+        public const long ContactInformationsRegisterLabel = 3127;
+        public const long LearnMoreAboutUsCancelLabel = 3128;
+        public const long KantarUrl = 3129;
+        public const long ReturToLogin = 3130;
+        public const long RequiredFields = 3133;
+        public const long IdSlogansLabel = 1888;
         #endregion
     }
 }

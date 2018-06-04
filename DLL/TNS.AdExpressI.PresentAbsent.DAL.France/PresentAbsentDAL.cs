@@ -31,6 +31,17 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
         }
         #endregion
 
+        protected override Table GetGadtable()
+        {
+            Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+            if (
+                _session.CustomerLogin.CustormerFlagAccess(
+                    (long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
+            return tblGad;
+        }
+
+
         protected override string InitQueryParams(CstDB.TableType.Type type, string dataTableName, Schema schAdEx, CustomerPeriod customerPeriod, Table tblGad
         , ref string productTableName, ref string productFieldName, ref string columnDetailLevel, ref string groupByFieldName, ref string productJoinCondition
         , ref string universFilter, ref string unitFieldNameSumWithAlias, ref string groupByOptional, ref string dataJointForInsert
@@ -40,6 +51,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
             {
                 // Get table name and date field according to the table type parameter
                 string dateField;
+                string adexprSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
                 switch (type)
                 {
                     case CstDB.TableType.Type.dataVehicle4M:
@@ -88,11 +100,11 @@ namespace TNS.AdExpressI.PresentAbsent.DAL.France
                 {
                     if (type == CstDB.TableType.Type.webPlan)
                     {
-                        groupByOptional = string.Format(",{0}.list_banners ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = $",{adexprSchema}.LISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.list_banners) ";
                     }
                     else
                     {
-                        groupByOptional = string.Format(",{0}.hashcode ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        groupByOptional = $",{WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.hashcode ";
                     }
                 }
 

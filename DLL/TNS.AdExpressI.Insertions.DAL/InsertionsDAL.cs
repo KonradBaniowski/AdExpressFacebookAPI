@@ -1126,7 +1126,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <param name="idVersion"></param>
         /// <param name="vehicleInformation">vehicle infos</param>
         /// <returns></returns>
-        public string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation)
+        public virtual string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation)
         {
             string minDate = string.Empty;
             Table sloganTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.slogan);

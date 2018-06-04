@@ -58,6 +58,10 @@ namespace Km.AdExpressClientWeb
                 .Include("~/Content/spinner.css", new CssRewriteUrlTransform())
                 .Include("~/Content/simple-line-icons.css", new CssRewriteUrlTransform()));
 
+            bundles.Add(new StyleBundle("~/Content/Login-files")
+             .Include("~/Content/LoginFiles/Site.css", new CssRewriteUrlTransform())
+             .Include("~/Content/LoginFiles/jquery.ui.theme.css", new CssRewriteUrlTransform()));
+
             #region CSS Alerte Portefeuille
 
             bundles.Add(new StyleBundle("~/Content/css/portfolio-alert"));
@@ -225,6 +229,9 @@ namespace Km.AdExpressClientWeb
 
             bundles.Add(new ScriptBundle("~/bundles/cookies").Include(
             "~/Scripts/common/cookies.js"));
+
+
+           
         }
     }
 }

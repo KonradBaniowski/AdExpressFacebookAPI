@@ -385,8 +385,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 case CstDBClassif.Vehicles.names.newspaper:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
-                case CstDBClassif.Vehicles.names.plurimedia:
-                case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
+                case CstDBClassif.Vehicles.names.plurimedia:            
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mediasTactics:
@@ -525,31 +524,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             int beginningIndex = sql.Length;
             string annonceurPerso = "", brandPerso = "";
 
-            #region Champs nomenclature media
-            if (mediaIndex > -1)
-            {
-                //nomenclature media présente dans le tableau préformaté
-                switch (_session.PreformatedMediaDetail)
-                {
-                    case CstFormat.PreformatedMediaDetails.vehicle:
-                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1", _dataTable.Prefix);
-                        break;
-                    case CstFormat.PreformatedMediaDetails.vehicleCategory:
-                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2", _dataTable.Prefix);
-                        break;
-                    case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
-                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2, {0}.id_media as id_m3, media as m3", _dataTable.Prefix);
-                        break;
-                    case CstFormat.PreformatedMediaDetails.vehicleMedia:
-                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_media as id_m2, media as m2", _dataTable.Prefix);
-                        break;
-                    default:
-                        _session.PreformatedMediaDetail = CstFormat.PreformatedMediaDetails.vehicle;
-                        sql.Append(" {0}.id_vehicle as id_m1, vehicle as m1");
-                        break;
-                }
-            }
-            #endregion
+            AppendMediaFields(sql, mediaIndex);
 
             #region Champs nomenclature produit
             if (productIndex > -1)
@@ -962,13 +937,49 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 _reportFormat == CstFormat.PreformatedTables.productMedia_X_YearMensual)
                 sql.Insert(beginningIndex, " '0' as id_p, 'TOTAL' as p, ");
             if ((_reportFormat == CstFormat.PreformatedTables.mediaProduct_X_Year || _reportFormat == CstFormat.PreformatedTables.mediaProduct_X_YearMensual)
-                && (_vehicle == CstDBClassif.Vehicles.names.plurimedia || _vehicle == CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
+                && _vehicle == CstDBClassif.Vehicles.names.plurimedia )
             {
                 sql.Insert(beginningIndex, " '0' as id_m, 'TOTAL' as m, ");
             }
             #endregion
 
         }
+
+        protected virtual void AppendMediaFields(StringBuilder sql, int mediaIndex)
+        {
+            #region Champs nomenclature media
+
+            if (mediaIndex > -1)
+            {
+                //nomenclature media présente dans le tableau préformaté
+                switch (_session.PreformatedMediaDetail)
+                {
+                    case CstFormat.PreformatedMediaDetails.vehicle:
+                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleCategory:
+                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
+                        sql.AppendFormat(
+                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2, {0}.id_media as id_m3, media as m3",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleMedia:
+                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_media as id_m2, media as m2",
+                            _dataTable.Prefix);
+                        break;
+                    default:
+                        _session.PreformatedMediaDetail = CstFormat.PreformatedMediaDetails.vehicle;
+                        sql.Append(" {0}.id_vehicle as id_m1, vehicle as m1");
+                        break;
+                }
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region appendFromClause
@@ -1121,11 +1132,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //on ne teste pas le vehicle si on est en pluri
             var plurimediaDbIds = new List<long> {VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimedia).DatabaseId};
             long? plurimediaWithoutMmsId = null;
-            if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.PlurimediaWithoutMms))
-            {
-                plurimediaWithoutMmsId = VehiclesInformation.Get(CstDBClassif.Vehicles.names.PlurimediaWithoutMms).DatabaseId;               
-                plurimediaDbIds.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.PlurimediaWithoutMms).DatabaseId);
-            }
+                       
             if (vehicleIds.Any() && vehicleIds.All(p => !plurimediaDbIds.Contains(p)) )
             {
                 first = false;
@@ -1173,21 +1180,15 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 				}		      
             }
 
-            //Exclude Internet Display when selection Plurimedia Without Mms
-            if (plurimediaWithoutMmsId.HasValue
-               && vehicleIds.Any(p => p == plurimediaWithoutMmsId.Value))
-            {
-                sql.AppendFormat("  and  {0}.id_vehicle not in ( {1},{2}) "
-                    , _dataTable.Prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.mms).DatabaseId
-                    , VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId);
+         
 
-            }
+            ExcludeMediaTypes(plurimediaDbIds, vehicleIds,sql);
+
             #endregion
 
             #region Affiner Media
 
-            bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia
-                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.PlurimediaWithoutMms;
+            bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia;
 
             // Affiner Media
             if (!isPluri && _session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
@@ -1288,6 +1289,25 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 			#endregion
 
         }
+
+        private void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
+        {
+            if (vehicleIds.Any(plurimediaDbIds.Contains) && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
+            {
+                var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());               
+
+                //Filter Plurimedia Offline
+                switch (vehicleName)
+                {
+                    case CstDBClassif.Vehicles.names.plurimedia :
+                        sql.AppendFormat("  and  {0}.id_vehicle not in ( {1}) "
+              , _dataTable.Prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.search).DatabaseId);
+                        break;                                   
+                }
+             
+            }
+        }
+
         #endregion
 
         #region appendRightClause
@@ -1434,7 +1454,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                     break;
                 case CstFormat.PreformatedTables.mediaProduct_X_Year:
                 case CstFormat.PreformatedTables.mediaProduct_X_YearMensual:
-                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms)
+                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia )
                         sql.Append(" order by m1, id_m1");
                     else
                         sql.Append(" order by m,id_m, m1, id_m1");

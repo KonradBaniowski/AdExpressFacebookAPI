@@ -156,7 +156,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             Int32 cLine = -1;
             CellUnitFactory cellFactory = _session.GetCellUnitFactory();
             CellLevel cellTotal = null;
-            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms
+            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia                
                 && _tableType != CstFormat.PreformatedTables.product_X_Year.GetHashCode())
             {
                 RES_LINE_TYPES.Add(LineType.total);

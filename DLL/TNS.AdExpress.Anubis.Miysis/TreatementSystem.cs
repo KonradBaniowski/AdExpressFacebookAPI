@@ -237,7 +237,10 @@ namespace TNS.AdExpress.Anubis.Miysis
 				pdf.Fill();
 				pdf.EndDoc();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
-				pdf.Send(fileName);
+                if(WebApplicationParameters.CountryCode == CstWeb.CountryCode.POLAND)
+                    pdf.SendOffice365(fileName);
+                else
+                    pdf.Send(fileName);
                 _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Miysis);

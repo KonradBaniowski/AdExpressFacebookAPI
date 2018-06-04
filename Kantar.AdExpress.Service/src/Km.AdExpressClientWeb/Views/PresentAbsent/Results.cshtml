@@ -99,6 +99,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -373,7 +378,7 @@
 
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
-                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(4, 2) + " S";
+                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(endHour + 2, 2) + " S";
             }
 
             function PercentFormatter(val) {

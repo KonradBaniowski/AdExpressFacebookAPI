@@ -25,4 +25,5 @@
   <flag id="271" description="Accès aux Produits (Finlande)"/>
   <flag id="293" description="Accès aux Variétés (Finlande)"/>
   <flag id="294" description="Accès aux Groupes (Finlande)"/>
+  <flag id="373" description="Accès AUX LeFac"/>
 </flags>

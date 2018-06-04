@@ -1,0 +1,69 @@
+﻿@using TNS.AdExpress.Constantes.Web
+@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | AdExpress</title>   
+    @Styles.Render("~/Content/Login-files")  
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />  
+</head>
+
+
+<body id="loginpage">
+
+    <div id="headerlanguagecontainer">
+        <div id="headerlanguage">
+            @{ int counter = 0;  }
+
+            @*<span>*@
+                @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
+                {
+                    var activeLink= (currentLanguage.Id == ViewBag.SiteLanguageCode) ? "active country-link" : "country-link";
+                    <a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" class="@activeLink">@currentLanguage.Name.Substring(0, 2).ToUpper()</a> if (WebApplicationParameters.AllowedLanguages.Values.Count > 1 && counter < WebApplicationParameters.AllowedLanguages.Values.Count - 1)
+                {
+                        @HttpUtility.HtmlDecode("|")
+                    }
+
+                    counter++;
+                }
+            @*</span>*@
+
+        </div>
+    </div>
+
+    <div id="header">
+        <div id="logo">
+            <div id="position">
+                <div id="logocontent">
+                    <img id="km_logo" src="/Content/LoginFiles/images/@WebApplicationParameters.CountryCode/All_master_logos_Small_300dpi_Kantar_Media.png" alt="Kantar Media">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="login_wrapper">
+        <div class="left_side">
+            <h1>AdExpress</h1>
+            @RenderBody()
+        </div>
+        <div id="bottom">
+        </div>
+    </div>
+
+    <div id="footercontainer">
+        <div id="footer">&copy; @DateTime.Now.Year @GestionWeb.GetWebWord(3115, ViewBag.SiteLanguageCode)</div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")  
+    @Scripts.Render("~/bundles/language-choice")
+
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -24,6 +24,9 @@ using TNSDomain = TNS.Alert.Domain;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using NLog;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
@@ -161,6 +164,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.UniteLabel = GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage);
             #endregion
 
+            #region Slogan :
+            if (_webSession.IdSlogans != null && _webSession.IdSlogans.Count > 0)
+            {
+                foreach (Int64 currentSlogan in _webSession.IdSlogans)
+                {
+                    domain.IdSlogansLabel += currentSlogan + ", ";
+                }
+                domain.IdSlogansLabel = domain.IdSlogansLabel.Remove(domain.IdSlogansLabel.Length - 2);
+            }
+            #endregion
+
             #region Univers Market :
             domain.UniversMarket = new List<Core.Domain.Tree>();
             ExtractTreeFromAdExpressUniverse(_webSession.PrincipalProductUniverses, domain.UniversMarket, factoryLevels, _webSession.SiteLanguage, _webSession.CurrentModule);
@@ -243,6 +257,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.ShowComparativePeriod = !string.IsNullOrEmpty(domain.ComparativePeriod);
             domain.ShowComparativePeriodType = !string.IsNullOrEmpty(domain.ComparativePeriodType);
             domain.ShowPeriodDisponibilityType = !string.IsNullOrEmpty(domain.PeriodDisponibilityType);
+            domain.ShowIdSlogansLabel = !string.IsNullOrEmpty(domain.IdSlogansLabel);
             #endregion
 
             return domain;
@@ -334,6 +349,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             param[1] = dataLanguage;
             var factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
+            string pluriMediaLabel = IsPlurimedia(key, searchTodo, dataLanguage);
+
+
+            if (!string.IsNullOrEmpty(pluriMediaLabel))
+            {                     
+                return new List<TextData> { new TextData { Id = searchTodo[key].FirstOrDefault(), Label = pluriMediaLabel } };
+            }
             var dal = factoryLevels.CreateClassificationLevelListDAL(key, string.Join(",", searchTodo[key]));
 
             return searchTodo[key].Select(_ => new TextData { Id = _, Label = dal[_] }).ToList();
@@ -484,6 +506,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 default:
                     return WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
             }
+        }
+
+        private string IsPlurimedia(Right.type key,Dictionary<Right.type,List<long>> searchTodo,int dataLanguage)
+        {
+            if (key == Right.type.vehicleAccess)
+            {
+               if (VehiclesInformation.Contains(Vehicles.names.plurimedia)
+                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimedia) == searchTodo[key].FirstOrDefault()               
+                ) return GestionWeb.GetWebWord(210, dataLanguage);                
+            }
+
+            return string.Empty;
         }
     }
 }

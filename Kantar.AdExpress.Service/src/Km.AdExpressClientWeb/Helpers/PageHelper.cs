@@ -180,7 +180,7 @@ namespace Km.AdExpressClientWeb.Helpers
             return "FR";
         }
 
-        public Labels LoadPageLabels(int siteLanguage, string controller)
+        public Labels LoadPageLabels(int siteLanguage, string controller = "")
         {
             var result = new Labels
             {
@@ -199,6 +199,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
@@ -251,10 +252,18 @@ namespace Km.AdExpressClientWeb.Helpers
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
-                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage),
+                PressCreativesdetailLabel = GestionWeb.GetWebWord(LanguageConstantes.PressCreativesdetailLabel, siteLanguage),
+                NoSelectedItemLabel = GestionWeb.GetWebWord(LanguageConstantes.NoSelectedItemLabel, siteLanguage),
+                FilterLabel = GestionWeb.GetWebWord(LanguageConstantes.FilterLabel, siteLanguage),
+                CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
+
             };
 
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;
@@ -417,6 +426,12 @@ namespace Km.AdExpressClientWeb.Helpers
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportSpotsResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportSpotsResult, siteLanguage), Visible = true });
                     break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
             }
 
             SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
@@ -431,21 +446,24 @@ namespace Km.AdExpressClientWeb.Helpers
                 case Module.Name.ANALYSE_PLAN_MEDIA:
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
-                    ids.Add(ExportPdfResult);
                     ids.Add(ExportResultWithValue);
-                    ids.Add(ExportPptResult);
+                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
+                    {
+                        ids.Add(ExportPdfResult);
+                        ids.Add(ExportPptResult);
+                    }
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
                 case Module.Name.ANALYSE_CONCURENTIELLE:
                 case Module.Name.NEW_CREATIVES:
+                case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     break;
                 case Module.Name.TABLEAU_DYNAMIQUE:
                 case Module.Name.INDICATEUR:
                 case Module.Name.FACEBOOK:
-                case Module.Name.ANALYSE_MANDATAIRES:
                     ids.Add(ExportFormattedResult);
                     break;
                 case Module.Name.ANALYSE_DES_DISPOSITIFS:

@@ -62,6 +62,7 @@
     <table enumId="24" description="Right: Media order template" schemaEnumId="2" label="order_template_media" prefix="otm"/>
     <table enumId="25" description="Right: Product order template" schemaEnumId="2" label="order_template_product" prefix="otp"/>
     <table enumId="26" description="Data: Gad" schemaEnumId="0" label="gad" prefix="gd"/>
+    <table enumId="270" description="Data: LEFAC" schemaEnumId="0" label="fac" prefix="gd"/>
 
     <table enumId="29" description="Customer Session: navigation session" schemaEnumId="5" label="nav_session" prefix="nvs"/>
     <table enumId="30" description="Customer Session: customer saved session" schemaEnumId="5" label="my_session" prefix="mys"/>
@@ -312,8 +313,8 @@
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
   </tables>
   <views>
-    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
-    <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
+    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="tall_media_" prefix="allm"/>
+    <view enumId="1" description="Classif: all product" schemaEnumId="0" label="tall_product_" prefix="allp"/>
     <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>

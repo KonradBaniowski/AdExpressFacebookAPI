@@ -131,6 +131,8 @@ namespace TNS.AdExpressI.Insertions.France
         {
             int index1 = -1;
             int index2 = 0;
+            long TOP_DIFFUSION_VISIBILITY_DATE = 20170904;
+            var MEDIA_IDS_TOP_DIFFUSION_VISIBILITY = new List<long>{3168,18560,18564,24982};
             foreach (GenericColumnItemInformation columnItemInformation1 in columns)
             {
                 ++index1;
@@ -149,9 +151,34 @@ namespace TNS.AdExpressI.Insertions.France
                             if (IsTvVehicle(vehicle))
                             {
                                 long num2 = Convert.ToInt64(row[WebApplicationParameters.GenericColumnItemsInformation.Get(89L).DataBaseField].ToString());
-                                if (MediasWithoutTopDif != null && MediasWithoutTopDif.Contains(Convert.ToInt64(row[WebApplicationParameters.GenericColumnItemsInformation.Get(3L).DataBaseIdField].ToString()))
+                                if (MediasWithoutTopDif != null &&
+                                    MediasWithoutTopDif.Contains(
+                                        Convert.ToInt64(
+                                            row[
+                                                WebApplicationParameters.GenericColumnItemsInformation.Get(3L)
+                                                    .DataBaseIdField].ToString()))
                                     || CategoriesWithoutTopDif != null && CategoriesWithoutTopDif.Contains(num2))
+                                {                                  
                                     num1 = 0.0;
+                                }
+                                else
+                                {
+                                    long dateMediaNum = Convert.ToInt64(row["date_media_num"]);
+                                   long idMedia = Convert.ToInt64(row["id_media"]);
+
+                                    /*A partir de la date_media 04 / 09, ces chaines 
+                                     * 3168 - FRANCE O
+                                     * 18560 - HD1
+                                     * 18564 - NUMERO 23
+                                     * 24982 – RMC DECOUVERTE S
+                                     * devront être gérées comme de la pige réelle (catégorie 31), 
+                                    donc elles ne constitueront plus un cas particulier. En revanche attention, toutes les lignes qui ont une date_media au 03 / 09 
+                                        et avant doivent rester gérées comme aujourd’hui.Le changement dans la règle de transfert ne concerne que les données à partir du 04 / 09.
+                                        */
+                                    if ( MEDIA_IDS_TOP_DIFFUSION_VISIBILITY.Contains(idMedia) && dateMediaNum < TOP_DIFFUSION_VISIBILITY_DATE  )
+                                        num1 = 0.0;
+                                }
+                                   
 
                             }
                             break;

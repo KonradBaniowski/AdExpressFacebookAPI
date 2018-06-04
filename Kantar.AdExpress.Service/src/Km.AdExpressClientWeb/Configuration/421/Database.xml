@@ -23,8 +23,9 @@
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>
     <schema enumId="4" description="Product class analysis" label="recapsk01"/>
-    <schema enumId="5" description="Web" label="webnav01"/>
+    <schema enumId="5" description="Web" label="webnav02"/>
     <schema enumId="10" description="Alert" label="mau01"/>
+    <schema enumId="13" description="Kantar Health tables" label="khealth01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -200,6 +201,7 @@
     <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
     <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
     <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+    <table enumId="182" description="Classif: slogan" schemaEnumId="0" label="slogan" prefix="slo"/>
    
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

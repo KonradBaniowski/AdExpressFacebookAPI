@@ -256,7 +256,7 @@ namespace TNS.AdExpressI.Portofolio
         ///  - SYNTHESIS (only result table)
         /// </summary>
         /// <returns>Result Table</returns>
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             ResultTable resultTable = GetResultTable();
             GridResult gridResult = new GridResult();
@@ -281,24 +281,17 @@ namespace TNS.AdExpressI.Portofolio
                     GestionWeb.GetWebWord(1994, _webSession.SiteLanguage), //Versions
                     GestionWeb.GetWebWord(2245, _webSession.SiteLanguage), //Insertions
                 };
-
-                resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
-                object[,] gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1]; //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for GAD_LEFAC column
                 List<object> columns = new List<object>();
                 List<object> schemaFields = new List<object>();
                 List<object> columnsFixed = new List<object>();
                 List<object> columnsNotAllowedSorting = new List<object>();
                 List<int> indexInResultTableAllowSortingList = new List<int>();
+                resultTable.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
-                gridResult.HasData = true;
+                object[,] gridData;
 
-                //Hierachical ids for Treegrid
-                columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
-                schemaFields.Add(new { name = "ID" });
-                columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
-                schemaFields.Add(new { name = "PID" });
-                columns.Add(new { headerText = "GAD_LEFAC", key = "GAD_LEFAC", dataType = "string", width = "*", hidden = true });
-                schemaFields.Add(new { name = "GAD_LEFAC" });
+                gridData = InitGrid(resultTable, gridResult, columns, schemaFields);
+
                 List<object> groups = null;
                 string colKey = string.Empty;
 
@@ -528,13 +521,30 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
+        protected virtual object[,] InitGrid(ResultTable resultTable, GridResult gridResult, List<object> columns, List<object> schemaFields)
+        {
+            object[,] gridData;
+            gridData = new object[resultTable.LinesNumber, resultTable.ColumnsNumber + 1];
+                //+2 car ID et PID en plus  -  //_data.LinesNumber// + 1 for GAD_LEFAC column
+
+
+            gridResult.HasData = true;
+
+            //Hierachical ids for Treegrid
+            columns.Add(new {headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true});
+            schemaFields.Add(new {name = "ID"});
+            columns.Add(new {headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true});
+            schemaFields.Add(new {name = "PID"});
+            columns.Add(new {headerText = "GAD_LEFAC", key = "GAD_LEFAC", dataType = "string", width = "*", hidden = true});
+            schemaFields.Add(new {name = "GAD_LEFAC"});
+            return gridData;
+        }
+
         public PortfolioAlert GetPortfolioAlertResult(long alertId, long alertTypeId, string dateMediaNum, int idLanguage)
         {
             PortfolioAlert response = new PortfolioAlert();
             response.Datas = new List<PortfolioAlertData>();
 
-            //Media Ids to exclude because of copyright issue
-            //List<long> mediaIds = new List<long> { 15940, 9178, 9480, 1596, 7011, 24328, 1320, 4171, 4172, 15869, 1576, 1509, 5156, 7906, 8143, 9992, 1648, 1465, 6340, 1994, 9364, 9710, 1374, 5832, 9658, 6780, 9103, 6337, 9109, 7472, 6918, 9497, 5225, 7230, 9709, 7532, 1825, 1838, 5678, 5510, 1365, 4205, 1906, 7935, 1748, 6236, 1363, 6077, 6561, 1845, 4458, 5262, 9892, 4560, 24377, 6682, 24379, 9260, 8628, 18189, 7606, 5193, 7973, 2702, 1300, 7006, 8902, 8901, 5911, 13057, 1387, 8452, 7938, 1592, 1768, 1390, 1395, 9570, 5258, 9173 };
             
 
             try
@@ -783,7 +793,7 @@ namespace TNS.AdExpressI.Portofolio
 
         }
 
-        private object GetColumnDef(ICell cell, string headerText, ref string key, string width, ref List<int> indexInResultTableAllowSortingList, int indexInResultTable)
+        protected virtual object GetColumnDef(ICell cell, string headerText, ref string key, string width, ref List<int> indexInResultTableAllowSortingList, int indexInResultTable)
         {
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
@@ -864,7 +874,7 @@ namespace TNS.AdExpressI.Portofolio
                 return new { headerText = headerText, key = key, dataType = "string", width = width };
         }
 
-        private WebCst.CustomerSessions.Unit GetUnit(ICell cell)
+        protected virtual WebCst.CustomerSessions.Unit GetUnit(ICell cell)
         {
             if (cell is CellDuration)
                 return WebCst.CustomerSessions.Unit.duration;

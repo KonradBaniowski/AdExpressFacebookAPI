@@ -6,7 +6,8 @@ $(document).ready(function () {
     var searchId = '18';
     var dooh = '22';
     var plurimedia = '50';
-    //var socialId=TBD
+   
+   
     if ($('#Multiple').val() == "True") {
 
         $('.tuile-medias[data-attr-id]').on('click', selectMultiple)
@@ -57,7 +58,7 @@ $(document).ready(function () {
         }
         idList = id;
         if (idList == plurimedia) {
-            $('.panel.panel-primary.panel-results.optional-area').toggle();
+            $('.panel.panel-primary.panel-results.optional-area').hide();
         }
         else {
             $('.panel.panel-primary.panel-results.optional-area').show();

@@ -232,7 +232,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
 
             if (type == DBConstantes.TableType.Type.webPlan)
             {
-                sql.Append("select distinct list_banners as hashcode ");
+                sql.AppendFormat("select distinct {0}.LISTNUM_TO_CHAR(list_banners) as hashcode ", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
             }
             else
             {
@@ -322,7 +322,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.France.Engines {
             }
             if (type == DBConstantes.TableType.Type.webPlan)
             {
-                sql.Append("list_banners");
+                sql.AppendFormat("{0}.LISTNUM_TO_CHAR(list_banners)", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
             }
             else
             {

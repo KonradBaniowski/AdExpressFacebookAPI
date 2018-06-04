@@ -156,7 +156,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         public UniversBranchResult GetBranches(string webSessionId, Dimension dimension, HttpContextBase httpContext, bool selectionPage = true, int MaxIncludeNbr = 2, int MaxExcludeNbr = 1)
         {
-            var webSession = (WebSession)WebSession.Load(webSessionId);
+                var webSession = (WebSession)WebSession.Load(webSessionId);
             UniversBranchResult result = new UniversBranchResult();
             try
             {
@@ -1290,6 +1290,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                 case WebConstantes.Module.Name.HEALTH:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
 
                     adExpressUniverse = GetUniverseToSave(request);
                     if (adExpressUniverse == null || adExpressUniverse.Count() == 0)
@@ -1588,7 +1589,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
             DataTable dtVehicle = vl.List;
-            List<long> ids = new List<long> { VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).Id.GetHashCode() };
+            List<long> ids = new List<long>
+            {
+                VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId                
+            };
 
             foreach (DataRow row in dtVehicle.Rows)
             {

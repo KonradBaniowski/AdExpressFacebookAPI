@@ -219,12 +219,16 @@ namespace TNS.AdExpressI.Insertions.Poland
                                 case CstDBClassif.Vehicles.names.radio:
                                     if(row[columnsName[i]]!=DBNull.Value && row[columnsName[i]].ToString().Length>0)
                                     {
-                                        string fileName =  Path.GetFileName(row[columnsName[i]].ToString());
-                                        string idSlogan = Path.GetFileNameWithoutExtension(row[columnsName[i]].ToString());
-                                        tab[cLine, j] = new CellRadioCreativeLink(string.Format("{0},{1}", fileName,idSlogan), _session,
-                                                                                  VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.radio));
-                                                                                  
-                                    }else
+                                        //string fileName =  Path.GetFileName(row[columnsName[i]].ToString());
+                                        //string idSlogan = Path.GetFileNameWithoutExtension(row[columnsName[i]].ToString());
+                                        //tab[cLine, j] = new CellRadioCreativeLink(string.Format("{0},{1}", fileName,idSlogan), _session,
+                                        //                                          VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.radio));
+                                        var sloganField = WebApplicationParameters.GenericColumnItemsInformation.Get(GenericColumnItemInformation.Columns.slogan.GetHashCode()).DataBaseIdField;
+                                        tab[cLine, j] = row[sloganField].ToString().Length <= 0 ? new CellRadioCreativeLink(string.Empty, _session, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.radio))
+                                            : new CellRadioCreativeLink(row[sloganField].ToString(), _session, VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.radio));
+
+                                    }
+                                    else
                                     {
                                          tab[cLine, j] = new CellRadioCreativeLink(string.Empty, _session,
                                                                                   VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.radio));

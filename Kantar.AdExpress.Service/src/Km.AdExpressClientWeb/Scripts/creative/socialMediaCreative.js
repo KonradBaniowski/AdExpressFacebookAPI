@@ -143,7 +143,7 @@ $("#grid").on("igtreegridrowsrendered igtreegridrowexpanding igtreegridrowcollap
 
     $(".imgPostsFacebook").each(function () {
         var datas = $(this).attr('data-post').toString();
-        var link = "/Image/GetPostImage?itemId=" + datas;
+        var link = "/Image/GetPostImage?idPostFacebook=" + datas.split(";")[0] + "&idPost=" + datas.split(";")[1];
 
         $(this).attr("src", link);
     });

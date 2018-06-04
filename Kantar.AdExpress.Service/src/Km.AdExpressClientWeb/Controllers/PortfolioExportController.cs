@@ -310,7 +310,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         switch (((LineStart)data[idxRow, 0]).LineType)
                         {
                             case LineType.total:
-
+                            case LineType.nbParution:
                                 if (idxCol == 0)
                                     sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(((CellLabel)data[idxRow, 1]).Label);
                                 else
@@ -406,7 +406,12 @@ namespace Km.AdExpressClientWeb.Controllers
             // Fige les entêtes de lignes et de colonnes
             sheet.FreezePanes(rowStart, columnStart, rowStart, columnStart);
 
-            for (int idxCol = colLevel, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
+            int startIndex = colLevel;
+
+            if (isExportBrut)
+                startIndex = nbLevel > 1 ? 2 : 1;
+
+            for (int idxCol = startIndex, cellCol = columnStart + colLevel; idxCol < data.ColumnsNumber; idxCol++)
             {
                 columnHide = false;
 
@@ -685,9 +690,9 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 double value = ((CellUnit)cell).GetValue();
 
-                double hours = Math.Floor(value / 3600);
-                double minutes = Math.Floor((value - (hours * 3600)) / 60);
-                double secondes = value - hours * 3600 - minutes * 60;
+                long hours = (long) value / 3600L;
+                long minutes = (long) (value - (hours * 3600L)) / 60L;
+                long secondes = (long) (value - (hours * 3600L) - (minutes * 60L));
 
                 sheet.Cells[cellRow, cellCol].Value = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + secondes.ToString("00");
 
@@ -903,6 +908,7 @@ namespace Km.AdExpressClientWeb.Controllers
             //Adding logo top
             string pathLogo = $"/Content/img/{WebApplicationParameters.CountryCode}/export_logo_km.png";
             pathLogo = System.Web.HttpContext.Current.Server.MapPath(pathLogo);
+
             Image img = Image.FromFile(pathLogo);
             int picId = sheet.Pictures.Add(0, 0, pathLogo);
             Picture pic = sheet.Pictures[picId];
@@ -1067,6 +1073,17 @@ namespace Km.AdExpressClientWeb.Controllers
             {
                 sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.UnitLabel);
                 sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.UniteLabel);
+
+                TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
+                TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);
+
+                cellRow++;
+            }
+
+            if (detailSelectionResponse.ShowIdSlogansLabel)
+            {
+                sheet.Cells[cellRow, cellCol].Value = WebUtility.HtmlDecode(labels.IdSlogansLabel);
+                sheet.Cells[cellRow, cellCol + 1].Value = WebUtility.HtmlDecode(detailSelectionResponse.IdSlogansLabel);
 
                 TextStyle(sheet.Cells[cellRow, cellCol], L1Text, L1Background);
                 TextStyle(sheet.Cells[cellRow, cellCol + 1], L1Text, L1Background);

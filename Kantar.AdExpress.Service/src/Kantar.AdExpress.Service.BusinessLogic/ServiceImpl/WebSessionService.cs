@@ -26,6 +26,7 @@ using System.Linq;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Domain;
 using System.Text;
+using DBClassifConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpressI.Date.DAL;
 using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
 using TNS.AdExpress.Domain.Layers;
@@ -1068,18 +1069,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 System.Windows.Forms.TreeNode vehicle = null;
                 int pluriWordCode = 210;
                 var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
-                bool isMissingMmms = false;
-                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+
+                if (WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FRANCE))
                 {
-                    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.mms));
+                    string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBClassifConstantes.Vehicles.names.mms));
                     if (Convert.ToInt64(mmsLastAvailableRecapMonth) < Convert.ToInt64(_webSession.LastAvailableRecapMonth))
-                    {
-                        pluriWordCode = 3020;
-                        vehicleNames = DBConstantes.Vehicles.names.PlurimediaWithoutMms;
-                    }
+                        _webSession.LastAvailableRecapMonth = mmsLastAvailableRecapMonth;
                 }
-
-
 
                 //Creating new plurimedia	node	             
                 vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))

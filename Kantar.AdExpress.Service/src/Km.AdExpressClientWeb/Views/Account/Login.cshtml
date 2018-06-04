@@ -1,96 +1,61 @@
 ﻿@using Km.AdExpressClientWeb.Models;
-@using TNS.AdExpress.Domain.Web;
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
-    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+    Layout = "~/Views/Shared/_LayoutPublic2.cshtml";
 }
 
-<div class="row">
-    @Html.HiddenFor(e => e.ErrorMessage)
-    <div class="col-xs-12 login-page">
-        <div class="col-md-6">
-            <div class="col-md-12">
-                <div class="col-md-12">
-                    <h1>@(Model.Labels.HomeLabel)</h1>
-                </div>
-                <div class="col-md-12 hidden-xs text-center">
-                    <h3><strong>AdExpress </strong>@(Model.Labels.SomeFigures)</h3>
-                    <p>&nbsp;</p>
-                    @Html.Action("HomeNumbers", "Public", new { SiteLanguage = Model.SiteLanguage })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">&nbsp;</div>
-        <div class="col-md-4 col-xs-12">
-            <div class="panel panel-default login">
-                <div class="panel-heading">
-                    <h3><i class="fa fa-user"></i>&nbsp;@(Model.Labels.Connection)</h3>
-                </div>
-                <div class="panel-body">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @*<div class="form-horizontal" , role="form">*@
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="input-group-vertical">
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Model.Labels.UserName, id = "login" })
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Model.Labels.Password, id = "pwd" })
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group padding-top-15">
-                            <div class="col-sm-12">
-                                <button id="btnSubmit" type="submit" class="btn btn-white btn-sm btn-block">
-                                    @(Model.Labels.SignIn)
-                                </button>
-                            </div>
-                        </div>
-                        @*<div class="form-group padding-top-15">
-                            <div class="col-sm-12">
-                                <h5>+ Pas encore client?</h5>
-                            </div>
-                            <div class="col-sm-12">
-                                @Html.ActionLink("Demander votre accès", "ForgotPassword", null, new { @class = "btn btn-blue btn-sm btn-block" })
-                            </div>
-                        </div>*@
-                        <input type="hidden" id="current-site-language" name="SiteLanguage" value="@Model.SiteLanguage" />
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    @*<div class="row fixed-brand">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <img src="../Content/img/logo_kantarmedia.png" class="img-responsive" alt="AdExpress - Kantar Media">
-        </div>
+<!--Start New version -->
 
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
-            <img src="../Content/img/KM_BP.png" class="img-responsive-promise" alt="AdExpress - Kantar Media">
-        </div>
-    </div>*@
+<div class="ui-widget">
+    @Html.ValidationSummary(true, "", new { @class = "ui-state-error ui-corner-all", style = "padding: 0 .7em" })
 </div>
 
-@*<input type="hidden" id="current-url" value="/Account/ChangeLanguage" />*@
+<div id="login_component">
+    <div id="loginwidget">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "formLogin" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="loginbox_container">
+                <div id="usrn">
+                    <div>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input", placeholder = Model.Labels.UserName, id = "username", autocomplete = "off", tabindex = "1" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="loginbox_container">
+                <div id="pswd">
+                    <div>
+                        @Html.PasswordFor(m => m.Password, new { @class = "input", placeholder = Model.Labels.Password, id = "pwd", autocomplete = "off", tabindex = "3" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="loginbox_container">
+                <input id="signin" type="submit" value="@(Model.Labels.SignIn)" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="3">
+            </div>
+            <div id="forgot" class="loginbox_container">
+                <span>   </span>
+                <div class="forgotcontact">@Model.Labels.AccountFindOutMoreLabel <a href="@Url.Action("Index", "Contact", new {siteLanguage = Model.SiteLanguage})">@Model.Labels.FindOutMoreLabel</a></div>
+            </div>
+            <input type="hidden" id="current-site-language" name="SiteLanguage" value="@Model.SiteLanguage" />
+        }
+            </div>
+
+</div>
+
+<!--End New version -->
+
+
+@Html.HiddenFor(e => e.ErrorMessage)
+
 <input type="hidden" id="current-url" value="/Account/Login" />
 
-<footer class="login-footer fixe">
-    <div class="col-md-12">
-        <img class="img-logo" src="../Content/img/@(WebApplicationParameters.CountryCode)/logo_kantarmedia.png" onError="this.onerror = null; this.src = '../Content/img/Kantar_Media_BMPro_SW_RGB.png';" alt="AdExpress - Kantar Media">
-        @*<img style="margin:50px; float:right;" src="../Content/img/KM_BP.png" alt="AdExpress - Kantar Media">*@
-    </div>
-</footer>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/account")
-    
+
 }

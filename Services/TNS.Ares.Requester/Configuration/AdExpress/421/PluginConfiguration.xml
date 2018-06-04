@@ -5,6 +5,6 @@
   </dataAccessLayers>
   <plugins description="List of plugins" defaultFamilyId="130" defaultLongevity="30" defaultFilePath="\\testarossa2\adexdatas\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
     <plugin enumId="Miysis" name="Miysis" resultType="7" longevity="10" deleteExpired="true" extension=".pdf"  />
-    <plugin enumId="Hotep" name="Hotep" resultType="6" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="MiysisPptx" name="miysisPptx" resultType="45" resultLongevity="5" deleteExpired="true" extension=".pptx"/>
   </plugins>
 </pluginConfiguration>

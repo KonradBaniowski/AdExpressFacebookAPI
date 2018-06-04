@@ -47,6 +47,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEEN = "En";
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
+        private const string CALENDARLANGUAGESK = "sk";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 2;
@@ -222,6 +223,9 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 case TNS.AdExpress.Constantes.DB.Language.FINNOIS:
                     periodModel.LanguageName = CALENDARLANGUAGEFI;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
+                    periodModel.LanguageName = CALENDARLANGUAGESK;
                     break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;
@@ -471,6 +475,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
@@ -496,7 +501,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
             };
 
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                 || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;

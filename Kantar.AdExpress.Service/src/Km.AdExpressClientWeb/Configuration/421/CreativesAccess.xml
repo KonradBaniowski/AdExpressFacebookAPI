@@ -24,11 +24,11 @@
     <Streaming id="READ_REAL_TV_SERVER" name="Serveur Real en streaming en TV" value="rtsp://streamrl.secodip.com/stream/fr/rm"/>
   </Streamings>
   <Networks>
-    <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\radio\"/>
-    <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\frmitch-fs03\quali_multimedia\Streaming\fr"/>
-    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\frmitch-fs03\quali_multimedia\Streaming\fr"/>
+    <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\172.24.64.26\kreativum\Radio\"/>
+    <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\172.24.64.26\kreativum\Radio\"/>
+    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\172.24.64.26\kreativum\TV\"/>
     <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\PanEuro"/>
-    <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+    <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\172.24.64.26\kreativum\Print\"/>
     <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>
     <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor\"/>
     <Network id="LOCAL_PATH_LOGO_PRESS" name="Répertoire contenant les logos de la presse" value="\\hera\AdexDatas\LogosPresse\"/>

@@ -153,6 +153,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
@@ -173,7 +174,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 Search = GestionWeb.GetWebWord(LanguageConstantes.Search, siteLanguage)
             };
 
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;

@@ -18,6 +18,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain
         public List<Tree> UniversMedia { get; set; }
         public List<TextData> MediasSelected { get; set; }
         public List<TextData> SponsorshipMediasSelected { get; set; }
+        public string IdSlogansLabel { get; set; }
 
         public string MediasSelectedLabel { get; set; }
         public string SponsorshipMediasSelectedLabel { get; set; }
@@ -42,6 +43,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.DetailSelectionDomain
         public bool ShowUnity { get; set; }
         public bool ShowStudyType { get; set; }
         public bool ShowSponsorshipMedia { get; set; }
+        public bool ShowIdSlogansLabel { get; set; }
     }
 
     public class TextData

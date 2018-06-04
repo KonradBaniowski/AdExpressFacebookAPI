@@ -208,11 +208,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	            if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
 	            {
 	                try
-	                {
-	                    dataTableNameForGad = dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
-	                    dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
-	                    dataJointForGad = "and " + SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-	                }
+	                {                    
+                        GetGad(ref dataTableNameForGad, ref dataFieldsForGad, ref dataJointForGad);
+                    }
 	                catch (SQLGeneratorException)
 	                {
 	                    ;
@@ -249,7 +247,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         if(unitInformation.Id != TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.versionNb)
                             sql.AppendFormat("sum({0}) as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         else
-                            sql.AppendFormat("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            sql.AppendFormat(GetUnit(unitInformation));
                         return sql.ToString();
                     }
                     catch {
@@ -259,6 +257,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
             }
         }
-		#endregion        
-	}
+        #endregion
+
+        #region Get Unit
+	    protected virtual string GetUnit(UnitInformation unitInformation)
+	    {
+            return string.Format("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+	    }
+        #endregion
+    }
 }

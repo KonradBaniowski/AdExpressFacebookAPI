@@ -111,8 +111,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList
             string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT";
             sql += "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".IS_DEFAULT";
             sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
-                + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
-                + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
+                + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix;
+
+            if (ListUniverseClientDescription.Trim().Length > 0)
+                sql += " , " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
+
             sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
             sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
             sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION is null) ";

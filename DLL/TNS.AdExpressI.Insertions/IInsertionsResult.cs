@@ -19,6 +19,7 @@ using TNS.FrameWork.WebResultUI;
 using System.Data;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpressI.Insertions
 {
@@ -61,7 +62,9 @@ namespace TNS.AdExpressI.Insertions
 
         GridResult GetCreativesGridResult(VehicleInformation vehicle, int fromDate,
           int toDate, string filters, int universId, string zoomDate,
-          List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues);
+          List<GenericColumnItemInformation> columnFilters, Dictionary<GenericColumnItemInformation.Columns, 
+              List<string>> availableFilterValues, Dictionary<GenericColumnItemInformation.Columns, List<string>> customFilterValues
+            ,WebSession session = null);
 
         ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate,
             int toDate, string filters, int universId, string zoomDate);

@@ -680,6 +680,9 @@
     <Content Include="Configuration\421\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\421\CustomStyles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\421\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -757,6 +760,7 @@
     </Content>
     <Content Include="Configuration\421\WebLanguages.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\421\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

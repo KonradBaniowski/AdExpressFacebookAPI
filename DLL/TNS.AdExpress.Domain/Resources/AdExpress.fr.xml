@@ -1007,7 +1007,7 @@
     <item mnemonic="w1773" type="System.String">Calendrier d'actions</item>
     <item mnemonic="w1774" type="System.String">Types de périodicités</item>
     <item mnemonic="w1775" type="System.String">Répartition des PDV en GRP</item>
-    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur {0} ou contactez les membres du Pôle Publicité de Kantar Media.</item>
+    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur {0} ou contactez les membres du Pôle Publicité de {.</item>
     <item mnemonic="w1777" type="System.String">Familles de Presse</item>
     <item mnemonic="w1778" type="System.String">Mes téléchargements</item>
     <item mnemonic="w1779" type="System.String">PUBLICITE EXTERIEURE</item>
@@ -2382,5 +2382,32 @@
 
     <item mnemonic="w3110" type="System.String">Vous n'avez accès à aucun module, veuillez contacter le service client AdExpress</item>
 
+    <item mnemonic="w3111" type="System.String">PLURIMEDIA OFFLINE</item>
+    <item mnemonic="w3112" type="System.String">PLURIMEDIA ONLINE</item>
+    <item mnemonic="w3113" type="System.String">PLURIMEDIA + PAID SEARCH</item>
+
+
+    <item mnemonic="w3114" type="System.String">Nous Contacter :</item>
+    <item mnemonic="w3115" type="System.String">Kantar Media.  Tous droits réservés</item>
+    <item mnemonic="w3116" type="System.String">Cliquez ici</item>
+
+    <item mnemonic="w3117" type="System.String">Documents</item>
+    <item mnemonic="w3118" type="System.String">Informations</item>
+
+    <item mnemonic="w3119" type="System.String">Impossible de supprimer le niveau de détail</item>
+    <item mnemonic="w3120" type="System.String">Le niveau de détail a bien été supprimé</item>
+    <item mnemonic="w3121" type="System.String">Le niveau de détail a bien été enregistré</item>    
+    <item mnemonic="w3122" type="System.String">Aucun élément sélectionné</item>
+    <item mnemonic="w3123" type="System.String">Filtrer</item>
+    <item mnemonic="w3124" type="System.String">Annuler</item>
+    <item mnemonic="w3125" type="System.String">dernier(s) jour(s)</item>
+    <item mnemonic="w3126" type="System.String">élément(s) sélectionné(s)</item>
+    <item mnemonic="w3127" type="System.String">Votre demande a bien été enregistrée. Nous vous contacterons rapidement. Notre Service Clients se tient à votre écoute</item>
+    <item mnemonic="w3128" type="System.String">Pour en apprendre d’avantage sur {0}</item>
+    <item mnemonic="w3129" type="System.String">http://www.kantarmedia.com</item>
+    <item mnemonic="w3130" type="System.String">Retour</item>
+    <item mnemonic="w3131" type="System.String">Le document PowerPoint </item>
+    <item mnemonic="w3132" type="System.String">AdExpress -- Fichier PowerPoint Alerte Plan Média</item>
+    <item mnemonic="w3133" type="System.String">Champs requis</item>   
   </items>
 </localization>

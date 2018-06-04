@@ -17,5 +17,6 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public string SelectFolder { get; set; }
         public string SelectResult { get; set; }
         public string ResultLabel { get; set; }
+        public string SubmitLabel { get; set; }
     }
 }

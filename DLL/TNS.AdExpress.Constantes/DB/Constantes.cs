@@ -86,6 +86,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Langue Finnoise
         /// </summary>
         public const int FINNOIS = 35;
+        /// <summary>
+        /// Langue Finnoise
+        /// </summary>
+        public const int SLOVAKIA = 421;
     }
 
 	#endregion
@@ -425,9 +429,13 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Table de liens entre les annonceurs et les adresse GAD
 		/// </summary>
 		public const string GAD ="gad";
-		/// <summary>
-		/// Table Agrégée des données du plan média par mois
-		/// </summary>
+        /// <summary>
+        /// Table de liens entre les annonceurs et les adresse LEFAC
+        /// </summary>
+        public const string LEFAC = "fac";
+        /// <summary>
+        /// Table Agrégée des données du plan média par mois
+        /// </summary>
         public const string WEB_PLAN_MEDIA_MONTH="web_plan_media_month";
 		/// <summary>
 		/// Table Agrégée des données du plan média par semaine

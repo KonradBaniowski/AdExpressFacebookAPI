@@ -80,21 +80,21 @@
 
     $('#export-type').removeClass("hide");
     $('#export-type').selectpicker();
-    $('#btn-export').on('click', function (e) {
-        var selectedValue = $('#export-type').val();
-        var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
-        switch (selectedValue) {
-            case "1":
-                window.open('/NewCreativesExport/Index' + params, "_blank");
-                break;
-            case "2":
-                window.open('/NewCreativesExport/ResultBrut', "_blank");
-                break;
-            default:
-                window.open('/NewCreativesExport/Index' + params, "_blank");
-                break;
-        }
-    });
+    //$('#btn-export').on('click', function (e) {
+    //    var selectedValue = $('#export-type').val();
+    //    var params = "?sortOrder=" + sortOrder + "&columnIndex=" + columnIndex;
+    //    switch (selectedValue) {
+    //        case "1":
+    //            window.open('/NewCreativesExport/Index' + params, "_blank");
+    //            break;
+    //        case "2":
+    //            window.open('/NewCreativesExport/ResultBrut', "_blank");
+    //            break;
+    //        default:
+    //            window.open('/NewCreativesExport/Index' + params, "_blank");
+    //            break;
+    //    }
+    //});
 
     $('#periodDetailType').selectpicker();
 

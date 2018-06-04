@@ -149,6 +149,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -619,7 +624,9 @@
                     }
                     //Lien mp4,mp3,flv,... du visuel (onclick)
                     if (paramsLink[0] != "") {
-                        if (format != "JPEG")
+                        if (format == "HTML5")
+                            $(this).html('<div class="text-center"><a href="' + paramsLink + '" target="_blank">' + $(this).html() + '</a></div>');
+                        else if (format != "JPEG")
                             $(this).html('<div class="text-center"><a href="#creativeModal" data-toggle="modal" data-creative="' + paramsLink + '" data-format="' + format + '" >' + $(this).html() + '</a></div>');
                         else
                             $(this).html('<a href="' + paramsLink[0] + '" target="_blank" >' + $(this).html() + '</a>');

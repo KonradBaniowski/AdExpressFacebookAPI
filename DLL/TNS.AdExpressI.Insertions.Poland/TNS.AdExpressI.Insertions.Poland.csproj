@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\AdExpress\bin\</OutputPath>
+    <OutputPath>..\..\Kantar.AdExpress.Service\src\Km.AdExpressClientWeb\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\AdExpress\Bin\</OutputPath>
+    <OutputPath>..\..\Kantar.AdExpress.Service\src\Km.AdExpressClientWeb\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="CreativeResult\CreativePopUp.cs" />
     <Compile Include="InsertionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

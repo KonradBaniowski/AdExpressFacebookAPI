@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-  <CustomerMail server="195.168.127.142" port="25" from="tnsadexpress-cz@kantarmedia.com" webServer="http://www.tnsadexpress.sk" subject="AdExpress"/>
- <PdfPath path="D:\ClientFiles\"/>
+  <CustomerMail server="smtpmmuk.grpitsrv.com" port="25" from="tnsadexpress-sk@kantarmedia.com" webServer="http://kantarmedia.sk" subject="AdExpress"/>
+ <PdfPath path="C:\ClientFiles\"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path="App_Themes"/>
   <Html2Pdf login="KantarMedia" pass="T83L6-ZMNJ8-33Y93-CT3Y8"/>

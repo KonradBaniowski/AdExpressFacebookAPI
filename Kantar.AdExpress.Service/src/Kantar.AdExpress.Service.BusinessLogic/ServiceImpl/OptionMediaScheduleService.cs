@@ -57,9 +57,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         try
                         {
                             if (isAdNetTrack)
-                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericAdNetTrackDetailLevel, _customerWebSession.CurrentModule);
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericAdNetTrackDetailLevel, _customerWebSession.CurrentModule, true);
                             else
-                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule);
+                                canAddDetail = CanAddDetailLevel(_customerWebSession.GenericMediaDetailLevel, _customerWebSession.CurrentModule, false);
                         }
                         catch { }
                         if (!canAddDetail)
@@ -89,7 +89,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case WebConstantes.GenericDetailLevel.ComponentProfile.product:
                         try
                         {
-                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule);
+                            canAddDetail = CanAddDetailLevel(_customerWebSession.GenericProductDetailLevel, _customerWebSession.CurrentModule, isAdNetTrack);
                         }
                         catch { }
                         if (!canAddDetail)
@@ -113,7 +113,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ArrayList DefaultDetailLevels = GetDefaultDetailLevels();
                 foreach (GenericDetailLevel currentLevel in DefaultDetailLevels)
                 {
-                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule))
+                    if (CanAddDetailLevel(currentLevel, _customerWebSession.CurrentModule, isAdNetTrack))
                     {
                         containsSlogan = false;
                         foreach (DetailLevelItemInformation.Levels level in currentLevel.LevelIds)
@@ -140,7 +140,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 genericDetailLevelOption.CustomDetail.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
                 foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule, isAdNetTrack) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                     {
                         containsSlogan = false;
                         foreach (DetailLevelItemInformation.Levels level in currentGenericLevel.LevelIds)
@@ -162,28 +162,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region L1
                 if (_nbDetailLevelItemList >= 1)
                 {
-                    genericDetailLevelOption.L1Detail = DetailLevelItemInit(1);
+                    genericDetailLevelOption.L1Detail = DetailLevelItemInit(1, isAdNetTrack);
                 }
                 #endregion
 
                 #region L2
                 if (_nbDetailLevelItemList >= 2)
                 {
-                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2);
+                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2, isAdNetTrack);
                 }
                 #endregion
 
                 #region L3
                 if (_nbDetailLevelItemList >= 3)
                 {
-                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3);
+                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3, isAdNetTrack);
                 }
                 #endregion
 
                 #region L4
                 if (_nbDetailLevelItemList >= 4)
                 {
-                    genericDetailLevelOption.L4Detail = DetailLevelItemInit(4);
+                    genericDetailLevelOption.L4Detail = DetailLevelItemInit(4, isAdNetTrack);
                 }
                 #endregion
 
@@ -253,7 +253,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 ArrayList genericDetailLevelsSaved = GetGenericDetailLevelsSaved();
                 foreach (GenericDetailLevelSaved currentGenericLevel in genericDetailLevelsSaved)
                 {
-                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
+                    if (CanAddDetailLevel(currentGenericLevel, _customerWebSession.CurrentModule, isAdNetTrack) && currentGenericLevel.GetNbLevels <= _nbDetailLevelItemList)
                     {
                         _genericDetailLevelsSaved.Add(currentGenericLevel.Id, currentGenericLevel);
                     }
@@ -320,9 +320,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
 
         #region Generic Detail Level Option Methodes
-        private bool CanAddDetailLevel(GenericDetailLevel currentDetailLevel, Int64 module)
+        private bool CanAddDetailLevel(GenericDetailLevel currentDetailLevel, Int64 module, bool isAdnettrack)
         {
-            ArrayList AllowedDetailLevelItems = GetAllowedDetailLevelItems();
+            ArrayList allowedDetailLevelItems;
+
+            if(isAdnettrack)
+                allowedDetailLevelItems = WebCore.AdNetTrackDetailLevelsDescription.AllowedAdNetTrackLevelItems;
+            else
+                allowedDetailLevelItems = GetAllowedDetailLevelItems();
 
             TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
             if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
@@ -334,8 +339,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             foreach (DetailLevelItemInformation currentDetailLevelItem in currentDetailLevel.Levels)
             {
-                if (!AllowedDetailLevelItems.Contains(currentDetailLevelItem)) return (false);
-                if (!mediaDetailLevelUtilities.CanAddDetailLevelItem(currentDetailLevelItem, module)) return (false);
+                if (!allowedDetailLevelItems.Contains(currentDetailLevelItem)) return (false);
+                if (isAdnettrack)
+                {
+                    if (!mediaDetailLevelUtilities.CanAddAdnettrackDetailLevelItem(currentDetailLevelItem))
+                        return (false);
+                }
+                else
+                {
+                    if (!mediaDetailLevelUtilities.CanAddDetailLevelItem(currentDetailLevelItem, module))
+                        return (false);
+                }
             }
             mediaDetailLevelUtilities = null;
             clMediaU = null;
@@ -455,13 +469,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return (genericDetailLevelsSaved);
         }
 
-        private SelectControl DetailLevelItemInit(int level)
+        private SelectControl DetailLevelItemInit(int level, bool isAdnettrack)
         {
             SelectControl selectControl = new SelectControl();
             selectControl.Id = "l" + level.ToString() + "Detail";
             selectControl.Items = new List<SelectItem>();
             selectControl.Items.Add(new SelectItem { Text = "-------", Value = "-1" });
-            ArrayList AllowedDetailLevelItems = GetAllowedDetailLevelItems();
+            ArrayList AllowedDetailLevelItems;
+            if (isAdnettrack)
+                AllowedDetailLevelItems = WebCore.AdNetTrackDetailLevelsDescription.AllowedAdNetTrackLevelItems;
+            else
+                AllowedDetailLevelItems = GetAllowedDetailLevelItems();
+            bool canAddLevel = false;
 
             TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
             if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
@@ -473,7 +492,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             foreach (DetailLevelItemInformation currentDetailLevelItem in AllowedDetailLevelItems)
             {
-                if (mediaDetailLevelUtilities.CanAddDetailLevelItem(currentDetailLevelItem, _customerWebSession.CurrentModule))
+                if(isAdnettrack)
+                    canAddLevel = mediaDetailLevelUtilities.CanAddAdnettrackDetailLevelItem(currentDetailLevelItem);
+                else
+                    canAddLevel = mediaDetailLevelUtilities.CanAddDetailLevelItem(currentDetailLevelItem,_customerWebSession.CurrentModule);
+
+                if (canAddLevel)
                 {
                     if (currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan)
                         selectControl.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentDetailLevelItem.WebTextId, _customerWebSession.SiteLanguage), Value = currentDetailLevelItem.Id.GetHashCode().ToString(), slogan = true });

@@ -25,6 +25,7 @@
     <schema enumId="4" description="Product class analysis" label="recapfi01"/>
     <schema enumId="5" description="Web" label="webnav02"/>
     <schema enumId="10" description="Alert" label="mau01"/>
+    <schema enumId="13" description="Kantar Health tables" label="khealth01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>

@@ -163,7 +163,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         }
                     }
                 }
-              
+
                 #endregion
 
                 #region Niveau de détaille par personnalisé
@@ -182,7 +182,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                 }
                 if (!hasSelectedId && _customerGenericDetailLevel.FromControlItem == WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels)
-                {                 						
+                {
                     foreach (GenericDetailLevelSaved currentLevel in _genericDetailLevelsSaved.Values)
                     {
                         if (currentLevel.EqualLevelItems(_customerGenericDetailLevel))
@@ -205,7 +205,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         selectedL1Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[0]);
                     }
                     genericDetailLevelOption.L1Detail = DetailLevelItemInit(1, selectedL1Id);
-                    
+
                 }
                 #endregion
 
@@ -217,7 +217,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         selectedL2Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[1]);
                     }
-                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2, selectedL2Id);                   
+                    genericDetailLevelOption.L2Detail = DetailLevelItemInit(2, selectedL2Id);
                 }
                 #endregion
 
@@ -229,7 +229,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         selectedL3Id = Convert.ToInt32(_customerGenericDetailLevel.LevelIds[2]);
                     }
-                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3, selectedL3Id);                   
+                    genericDetailLevelOption.L3Detail = DetailLevelItemInit(3, selectedL3Id);
                 }
                 #endregion
 
@@ -275,6 +275,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
                     }
                 }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+                    _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
 
                 PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
 
@@ -799,7 +803,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 #region PeriodDetailFilter
                 if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
-                     && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
                 #endregion
 
@@ -954,7 +958,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                             response.CustomDetailLavelsId = listId;
                             response.CustomDetailLavelsLabel = genericDetailLevel.GetLabel(_customerWebSession.SiteLanguage);
-                            response.Message = "Le niveau de détail a bien été enregistré";
+                            response.Message = GestionWeb.GetWebWord(3121, _customerWebSession.SiteLanguage);
                         }
                     }
                     else
@@ -981,11 +985,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (detailLevel.Length > 0 && int.Parse(detailLevel) != -1)
             {
-                TNS.AdExpress.Web.Core.DataAccess.Session.GenericDetailLevelDataAccess.Remove(_customerWebSession, Int64.Parse(detailLevel));
-                return "Le niveau de détail a bien été supprimé";
+                GenericDetailLevelDataAccess.Remove(_customerWebSession, Int64.Parse(detailLevel));
+                return GestionWeb.GetWebWord(3120, _customerWebSession.SiteLanguage);
             }
 
-            return "Impossible de supprimer le niveau de détail";
+            return GestionWeb.GetWebWord(3119, _customerWebSession.SiteLanguage);
         }
 
         #region IsDetailLevelsAlreadySaved
@@ -1250,9 +1254,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
 
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-            if (vehicleInfo != null && (vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia
-                || vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.PlurimediaWithoutMms)
-                && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION && WebApplicationParameters.HidePlurimediaEvol)
+            if (vehicleInfo != null &&
+                (vehicleInfo.Id == Vehicles.names.plurimedia                
+                )
+                && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION &&
+                WebApplicationParameters.HidePlurimediaEvol)
             {
                 return false;
             }
@@ -1356,7 +1362,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1368,7 +1373,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1380,7 +1384,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1392,7 +1395,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
                     {
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                        options.ResultTypeOption = resultTypeOption;
                     }
                     else
                     {
@@ -1402,9 +1404,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     break;
                 default:
                     resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
-                    options.ResultTypeOption = resultTypeOption;
                     break;
             }
+            options.ResultTypeOption = resultTypeOption;
         }
         #endregion
 

@@ -333,7 +333,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
             VehicleInformation vehicleInfo = new VehicleInformation();
             if (vehiclesInfos.ContainsKey(VhCstes.plurimedia))
-                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);           
             else
                 vehicleInfo = null;
             webSession.SelectionUniversMedia.Nodes.Clear();
@@ -341,18 +341,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             foreach (var item in vehiclesInfos.Values)
             {
                 //Added temporarily for Finland
-                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND) && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
-                    continue;
+                if (IsSkipPlurimedia(vehicleInfo, item)) continue;
 
                 Core.Domain.Media media = new Core.Domain.Media();
                 //var label = GetVehicleLabel(item.DatabaseId.ToString(),_webSession, DetailLevelItemInformation.Levels.vehicle)
                 media.Id = item.DatabaseId;
                 media.MediaEnum = item.Id;
-                media.Disabled = myMedia.FirstOrDefault(p => p.Id == media.Id) != null ? false : true;
+                media.Disabled = myMedia.FirstOrDefault(p => p.Id == media.Id) == null;
                 media.Label = levels[item.DatabaseId];
                 mediaResponse.Media.Add(media);
             }
             return mediaResponse;
+        }
+
+        private bool IsSkipPlurimedia(VehicleInformation vehicleInfo, VehicleInformation item)
+        {
+            if ((WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FINLAND)
+                 || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.SLOVAKIA)
+                 || WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.POLAND))
+                && vehicleInfo != null && vehicleInfo.DatabaseId == item.DatabaseId)
+                return true;
+            return false;
         }
 
 
@@ -447,16 +456,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
+
+            //Plurimedia
             VehicleInformation vehicleInfo = new VehicleInformation();
             vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
             Core.Domain.Media pluremedia = new Core.Domain.Media();
             if (vehicleInfo != null)
             {
-                pluremedia.Id = (long)VhCstes.plurimedia;
-                pluremedia.MediaEnum = VehiclesInformation.DatabaseIdToEnum((long)VhCstes.plurimedia);
+                pluremedia.Id = vehicleInfo.DatabaseId;
+                pluremedia.MediaEnum = VhCstes.plurimedia;
                 pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia, webSession.SiteLanguage);
                 vehiclesList.Add(pluremedia);
             }
+                    
+           
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
 

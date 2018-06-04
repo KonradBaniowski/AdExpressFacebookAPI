@@ -311,6 +311,14 @@
                     {
                         <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.ANALYSE_DES_PROGRAMMES)].Title</div>
                     }
+                    @if (Model.ModuleRight.ContainsKey(Module.Name.VP))
+                    {
+                        <a href="#" class="list-group-item text-left" id="@Module.Name.VP">@Model.Modules[(Module.Name.VP)].Title</a>
+                    }
+                    else
+                    {
+                        <div class="list-group-item text-left disabled-effect">@Model.Modules[(Module.Name.VP)].Title</div>
+                    }
                     @if (Model.ModuleRight.ContainsKey(Module.Name.HEALTH))
                     {
                         <a href="@Url.Action("HealthMediaSelection", "Selection" )" class="list-group-item text-left  module-done" id="@Module.Name.HEALTH">@Model.Modules[(Module.Name.HEALTH)].Title</a>

@@ -581,7 +581,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// </summary>
         /// <param name="type">Type of table to use</param>
         /// <returns>Dynamic Report Data Request</returns>
-        protected string GetRequest(CstDB.TableType.Type type)
+        protected virtual string GetRequest(CstDB.TableType.Type type)
         {
 
             #region Constantes
@@ -673,7 +673,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     }
                     else
                     {
-                        groupOptional = string.Format(", {0}.{1} ", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
+                        groupOptional = GetGroupOptional(u, DATA_TABLE_PREFIXE);
                     }
                 }
 
@@ -691,9 +691,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 {
                     try
                     {
-                        dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
+                         AppendGad(ref dataTableNameForGad, schAdExpr03, DATA_TABLE_PREFIXE, ref dataFieldsForGad, ref dataJointForGad);
                     }
                     catch (SQLGeneratorException) { ;}
                 }
@@ -761,6 +759,19 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
 
         }
+
+        protected virtual void AppendGad(ref string dataTableNameForGad, Schema schAdExpr03, string DATA_TABLE_PREFIXE,
+            ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+           
+                dataTableNameForGad = ", " + schAdExpr03.Sql + FctWeb.SQLGenerator.GetTablesForGad(_session) + " " +
+                                      CstDB.Tables.GAD_PREFIXE;
+
+            dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad();
+            dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(DATA_TABLE_PREFIXE);
+           
+        }
+
         protected string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod)
         {
             StringBuilder sql = new StringBuilder();
@@ -928,11 +939,11 @@ namespace TNS.AdExpressI.LostWon.DAL
                 UnitInformation u = _session.GetSelectedUnit();
                 if (type != CstDB.TableType.Type.webPlan)
                 {
-                    groupOptional = string.Format(", {0}.{1}", DATA_TABLE_PREFIXE, u.DatabaseField);
+                    groupOptional = GetGroupOptional(u, DATA_TABLE_PREFIXE);
                 }
                 else
                 {
-                    groupOptional = string.Format(", {0}.{1}", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
+                    groupOptional = $", {WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label}.LISTNUM_TO_CHAR({DATA_TABLE_PREFIXE}.{u.DatabaseMultimediaField}) ";
                 }
             }
             else
@@ -1234,6 +1245,13 @@ namespace TNS.AdExpressI.LostWon.DAL
             if (ids.Count > 0) return String.Join(",", ids);
             return mediaList;
         }
+
+        #region Group BY
+        protected virtual string GetGroupOptional(UnitInformation u, string dataTablePrefixe)
+        {
+            return string.Format(", {0}.{1} ", dataTablePrefixe, u.DatabaseMultimediaField);
+        }
+        #endregion
 
     }
 

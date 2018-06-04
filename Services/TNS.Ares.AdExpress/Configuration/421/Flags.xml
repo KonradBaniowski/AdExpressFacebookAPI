@@ -25,4 +25,5 @@
   <flag id="276" description="Accéder aux création Evaliant Mobile"/>
   <flag id="286" description="Accès détail Publicité Interrieur"/>
   <flag id="287" description="Accéder aux creations Pub Interrieur"/>
+  <flag id="373" description="Accès AUX LeFac"/>
 </flags>

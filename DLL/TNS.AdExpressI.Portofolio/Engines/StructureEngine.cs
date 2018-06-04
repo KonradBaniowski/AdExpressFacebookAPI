@@ -695,7 +695,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     }
                     else
                     {
-                        gridData[0, k] = string.Format(fp, unitInformationList[i].StringFormat, totalUnit);
+                        gridData[0, k] = Units.ConvertUnitValueAndPdmToString(totalUnit, WebCst.CustomerSessions.Unit.duration, false, fp);
+                        //gridData[0, k] = string.Format(fp, unitInformationList[i].StringFormat, totalUnit);
                     }
                 }
 
@@ -725,7 +726,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                         else
                         {
                             if (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value)
-                                gridData[currentLineIndex, k] = string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()]));
+                                gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], WebCst.CustomerSessions.Unit.duration, false, fp);
+                            //gridData[currentLineIndex, k] = string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()]));
                             else gridData[currentLineIndex, k] = string.Empty;
                         }
                     }

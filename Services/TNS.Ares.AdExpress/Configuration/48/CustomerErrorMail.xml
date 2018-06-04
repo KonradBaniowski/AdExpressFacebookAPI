@@ -2,9 +2,8 @@
 <smtp>
   <server adress="poczta.expert-monitor.pl" port="25"/>
   <message from="tnsadexpress@kantarmedia.com">
-    <to>guillaume.facon@kantarmedia.com</to>
-    <to>benjamin.masson@kantarmedia.com</to>
     <to>youssef.rkaina@kantarmedia.com</to>
     <to>dede.mussuma@kantarmedia.com</to>
+    <to>stephane.fassier@kantarmedia.com</to>
   </message>
 </smtp>

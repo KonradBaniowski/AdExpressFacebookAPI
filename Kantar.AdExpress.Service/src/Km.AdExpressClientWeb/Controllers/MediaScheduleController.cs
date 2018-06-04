@@ -61,6 +61,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEEN = "En";
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
+        private const string CALENDARLANGUAGESK = "sk";
         private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
 
@@ -237,6 +238,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 case TNS.AdExpress.Constantes.DB.Language.FINNOIS:
                     periodModel.LanguageName = CALENDARLANGUAGEFI;
                     break;
+                case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
+                    periodModel.LanguageName = CALENDARLANGUAGESK;
+                    break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;
                     break;
@@ -360,7 +364,12 @@ namespace Km.AdExpressClientWeb.Controllers
 
             CoreDomain.MSCreatives creatives = _mediaSchedule.GetMSCreatives(idWebSession, zoomDate, this.HttpContext);
 
-            return PartialView("_MSCreativesResult", creatives);
+            VM.MSCreativesViewModel msCreativesViewModel = new VM.MSCreativesViewModel { MSCreatives = creatives };
+
+            var pageHelper = new Helpers.PageHelper();
+            msCreativesViewModel.Labels = pageHelper.LoadPageLabels(creatives.SiteLanguage);
+
+            return PartialView("_MSCreativesResult", msCreativesViewModel);
         }
 
         public void SetMSCreatives(Int64[] slogans)
@@ -489,6 +498,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
@@ -516,7 +526,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
             };
 
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;

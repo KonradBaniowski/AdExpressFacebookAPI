@@ -2000,7 +2000,14 @@ namespace TNS.AdExpress.Constantes.Web
         /// Country Code For UK
         /// </summary>
         public const string UK = "44";
-
+        /// <summary>
+        /// Country Code For Turkey
+        /// </summary>
+        public const string TURKEY = "90";
+        /// <summary>
+        /// Country Code For Slovakia
+        /// </summary>
+        public const string SLOVAKIA = "421";
     }
     #endregion
 

@@ -254,6 +254,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
                 //Get Table GAD
                 Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+                if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                    tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
 
                 // Get classification fields
                 if (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
@@ -329,8 +331,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                         groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                         break;
                     default:
-                        unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
-                        groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+                        unitFieldName = GetUnitFieldName();
+                        groupByOptional = GetGroupByOptional();
                         break;
                 }
                 sql.AppendFormat("{0}", unitFieldName);
@@ -708,6 +710,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
                 //Get Table GAD
                 Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+                if (_session.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.Customer.DB.Flag.id.leFac.GetHashCode()))
+                    tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.leFac);
 
                 // Get the classification table
                 productTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
@@ -773,8 +777,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
                     break;
                 default:
-                    unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
-                    groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+                    unitFieldName = GetUnitFieldName();
+                    groupByOptional = GetGroupByOptional();
                     break;
             }
             sql.AppendFormat("{0}", unitFieldName);
@@ -1184,5 +1188,16 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
         #endregion
 
+        #region Get Unit & Group By
+        protected virtual string GetUnitFieldName()
+        {
+            return string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
+        }
+
+        protected virtual string GetGroupByOptional()
+        {
+            return string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+        }
+        #endregion
     }
 }

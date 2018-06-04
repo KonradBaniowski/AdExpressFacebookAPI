@@ -28,6 +28,7 @@ namespace KM.Framework.Constantes
         public string Refine { get; set; }
         public string ErrorMessageLimitKeyword { get; set; }//1370
         public string ErrorMessageLimitUniverses { get; set; }
+        public string ErrorMessageSameLevel { get; set; }
         public string ErrorMininumInclude { get; set; }
         public string ErrorMediaSelected { get; set; }
         public string ErrorNoSupport { get; set; }
@@ -35,6 +36,7 @@ namespace KM.Framework.Constantes
         public string DeleteAll { get; set; }// 2279
         public string ErrorOnlyOneItemAllowed { get; set; }//3036
         public string ErrorOverLimit { get; set; }//w2264==> only 200items
+        public string CompanyNameLabel { get; set; }//758
         public string SaveUnivers { get; set; }//769
         public string AddConcurrent { get; set; }//3037
         public string ErrorSupportAlreadyDefine { get; set; } // 3038
@@ -222,6 +224,27 @@ namespace KM.Framework.Constantes
         // 1851
 
         // 1397
+
+        public string AccountFindOutMoreLabel { get; set; } //3114
+
+        public string AllRightsReservedLabel { get; set; } //3115
+
+        public string FindOutMoreLabel { get; set; } //3116
+
+        public string PressCreativesdetailLabel { get; set; } //3122
+        public string NoSelectedItemLabel { get; set; } //3123
+        public string FilterLabel { get; set; } //3124
+        public string CancelLabel { get; set; } //3125
+
+        public string ContactInformationsRegisterLabel { get; set; } //3127
+
+        public string LearnMoreAboutUsCancelLabel { get; set; } //3128
+        public string KantarUrl { get; set; } //3129
+
+        public string ReturToLogin { get; set; } //3130
+
+        public string RequiredFields { get; set; } //3133
+	public string IdSlogansLabel { get; set; } //1888
 
     }
 }

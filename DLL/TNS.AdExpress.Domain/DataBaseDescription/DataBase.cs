@@ -1229,6 +1229,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 
 
         /// <summary>
+        /// Recap Social Segment
+        /// </summary>
+        leFac = 270,
+
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

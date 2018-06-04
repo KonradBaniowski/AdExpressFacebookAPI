@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <CustomerMail server="smtpmmuk.grpitsrv.com" port="25" from="tnsadexpress-sk@kantarmedia.com" webServer="http://kantarmedia.sk" subject="AdExpress"/>
+  <PdfPath path="F:\ClientFiles\"/>
+  <!--<PdfPath path="\\frmitch-ws003\adexdatas\FR\AdExCustomerFiles"/>-->
+  <!--If path empty then path = current directory of executable-->
+  <ThemePath path="App_Themes"/>
+  <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+  <VMCScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect"/>
+  <OutdoorScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor"/>
+  <PdfProperties author="TNS Media Intelligence" subject="Plan Média" title="Plan Média" producer="TNS AdExpress (Anubis)" keywords="Plan Média,adExpress,TNS Media Intelligence"/>
+</Configuration>

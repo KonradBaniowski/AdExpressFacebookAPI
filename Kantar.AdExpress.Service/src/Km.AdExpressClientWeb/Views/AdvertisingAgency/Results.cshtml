@@ -14,7 +14,7 @@
 <div class="row">
     @Html.Partial("Presentation", Model.Presentation)
     @Html.Partial("DetailSelection")
-    @Html.Hidden("ExportController", "TestExport")
+    @Html.Hidden("ExportController", "AdvertisingAgencyExport")
     @Html.HiddenFor(e => e.Labels.ResultError)
     @Html.HiddenFor(e => e.Labels.WarningBackNavigator)
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
@@ -113,6 +113,11 @@
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>

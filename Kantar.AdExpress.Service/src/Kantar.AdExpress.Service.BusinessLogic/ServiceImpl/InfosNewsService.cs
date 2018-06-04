@@ -69,7 +69,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
 
-                throw;
+               // throw;
             }
             return documents;
         }

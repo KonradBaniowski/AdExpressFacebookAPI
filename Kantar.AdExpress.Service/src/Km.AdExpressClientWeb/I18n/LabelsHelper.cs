@@ -32,6 +32,7 @@ namespace Km.AdExpressClientWeb.I18n
                 Refine = GestionWeb.GetWebWord(LanguageConstantes.RefineCode, siteLanguage),
                 ErrorMessageLimitKeyword = GestionWeb.GetWebWord(LanguageConstantes.LimitKeyword, siteLanguage),
                 ErrorMessageLimitUniverses = GestionWeb.GetWebWord(LanguageConstantes.LimitUniverses, siteLanguage),
+                ErrorMessageSameLevel = GestionWeb.GetWebWord(LanguageConstantes.SameLevel, siteLanguage),
                 ErrorMininumInclude = GestionWeb.GetWebWord(LanguageConstantes.MininumInclude, siteLanguage),
                 ErrorItemExceeded = GestionWeb.GetWebWord(LanguageConstantes.ItemExceeded, siteLanguage),
                 ErrorMediaSelected = GestionWeb.GetWebWord(LanguageConstantes.MediaSelected, siteLanguage),
@@ -189,10 +190,22 @@ namespace Km.AdExpressClientWeb.I18n
                 LienCheminDeFerLabel = GestionWeb.GetWebWord(LanguageConstantes.LienCheminDeFerLabel, siteLanguage),
                 GroupAdvertisingAgencyLabel = GestionWeb.GetWebWord(LanguageConstantes.GroupAdvertisingAgencyLabel, siteLanguage),
                 AdvertisingAgencyLabel = GestionWeb.GetWebWord(LanguageConstantes.AdvertisingAgencyLabel, siteLanguage),
-
+                AccountFindOutMoreLabel = GestionWeb.GetWebWord(LanguageConstantes.AccountFindOutMoreLabel, siteLanguage),
+                AllRightsReservedLabel = string.Format(GestionWeb.GetWebWord(LanguageConstantes.AllRightsReservedLabel, siteLanguage),DateTime.Now.Year),
+                FindOutMoreLabel = GestionWeb.GetWebWord(LanguageConstantes.FindOutMoreLabel, siteLanguage),
+                CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
+                ContactInformationsRegisterLabel = GestionWeb.GetWebWord(LanguageConstantes.ContactInformationsRegisterLabel, siteLanguage),
+                LearnMoreAboutUsCancelLabel = GestionWeb.GetWebWord(LanguageConstantes.LearnMoreAboutUsCancelLabel, siteLanguage),
+                CompanyNameLabel = GestionWeb.GetWebWord(LanguageConstantes.CompanyNameLabel, siteLanguage),
+                KantarUrl = GestionWeb.GetWebWord(LanguageConstantes.KantarUrl, siteLanguage),
+                ReturToLogin = GestionWeb.GetWebWord(LanguageConstantes.ReturToLogin, siteLanguage),
+                RequiredFields = GestionWeb.GetWebWord(LanguageConstantes.RequiredFields, siteLanguage),
+                IdSlogansLabel = GestionWeb.GetWebWord(LanguageConstantes.IdSlogansLabel, siteLanguage)
             };
 
-            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
+                || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
             return result;

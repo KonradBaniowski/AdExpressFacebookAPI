@@ -31,6 +31,7 @@ using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.Classification.Universe;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
@@ -224,6 +225,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return sql.ToString();
         }
         #endregion
+
+        protected virtual void GetGad(ref string dataTableNameForGad, ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+            
+                dataTableNameForGad = ", " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad).SqlWithPrefix;
+            dataFieldsForGad = ", " + SQLGenerator.GetFieldsAddressForGad();
+            dataJointForGad = "and " +
+                              SQLGenerator.GetJointForGad(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+        }
 
         protected virtual string GetBannerGroupby()
         {

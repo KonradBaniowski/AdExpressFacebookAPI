@@ -2822,6 +2822,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string GetUnitFieldNameSumWithAlias(WebSession webSession, DBConstantes.TableType.Type type, string prefixe)
         {
             StringBuilder sql = new StringBuilder();
+            string adexprSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
             if (!string.IsNullOrEmpty(prefixe))
                 prefixe += ".";
             else
@@ -2857,7 +2858,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         }
                         else
                         {
-                            sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}{2}) as {3}", adexprSchema, prefixe,
+                                    unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
+                            else
+                                sql.AppendFormat("{0}{1} as {2}", prefixe, unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
                         }
                         return sql.ToString();
                     }
@@ -3064,8 +3069,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
-				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
+				case ClassificationConstantes.DB.Vehicles.names.plurimedia:              
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluri, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTactic, isRetailerSelected).Sql;
@@ -3118,8 +3122,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, isRetailerSelected).Sql;                    
-                case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
+                case ClassificationConstantes.DB.Vehicles.names.plurimedia:               
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, isRetailerSelected).Sql;                    
@@ -3143,7 +3146,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #endregion
 
-        #region Gad
+        #region Gad / LeFac
 
         /// <summary>
         /// Détermine la table contenant les adresses Gad des annonceurs
@@ -3155,6 +3158,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             return (DBConstantes.Tables.GAD);
         }
+
+        /// <summary>
+        /// Détermine la table contenant les adresses Gad des annonceurs
+        /// </summary>
+        /// <exception cref="/TNS.AdExpress.Web.Exceptions.SQLGeneratorException">Le niveau de détail produit demandé ne gère pas les données du gad</exception>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>Nom de la table</returns>
+        public static string GetTablesForLeFac(WebSession webSession)
+        {
+            return (DBConstantes.Tables.LEFAC);
+        }
+        
 
         /// <summary>
         /// Détermine le champ addresse du gad

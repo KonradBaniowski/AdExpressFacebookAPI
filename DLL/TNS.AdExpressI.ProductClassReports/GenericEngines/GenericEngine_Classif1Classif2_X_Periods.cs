@@ -140,7 +140,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 MAIN_LEVELS = DetailLevelItemsInformation.Translate(_session.PreformatedMediaDetail);
                 SECOND_LEVELS = DetailLevelItemsInformation.Translate(_session.PreformatedProductDetail);
                 //Fake level to replace total line
-                if (_vehicle == Vehicles.names.plurimedia || _vehicle == Vehicles.names.PlurimediaWithoutMms)
+                if (_vehicle == Vehicles.names.plurimedia )
                 {
                     MAIN_LEVELS.Insert(0, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.slogan));
                 }
@@ -593,47 +593,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                             }
                         }
                     }
-                    //                        if (_isPersonalized > 0)
-                    //                        {
-                    //                            for (int j = 0; j < mainLevelIds.Count; j++)
-                    //                            {
-                    //                                List<Int64> parentKeys = mainLevelIds.GetRange(0, j + 1);
-                    //                                cLine = tab.Contains(parentKeys, scdLevelIds);
-                    //                                //Advertisers
-                    //#region OLD
-
-                    //                                //ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
-
-                    //                                //if (Convert.ToInt32(row["inref"]) > 0)
-                    //                                //{
-                    //                                //    ls.SetUniversType(UniversType.reference);
-                    //                                //}
-                    //                                //if (Convert.ToInt32(row["incomp"]) > 0)
-                    //                                //{
-                    //                                //    ls.SetUniversType(UniversType.concurrent);
-                    //                                //}
-                    //                                //if (Convert.ToInt32(row["inneutral"]) > 0)
-                    //                                //{
-                    //                                //    ls.SetUniversType(UniversType.neutral);
-                    //                                //}
-                    //                                //if (C2_TYPE == CstClassif.Branch.type.product)
-                    //                                //{
-                    //                                //    switch (SECOND_LEVELS[i].Id)
-                    //                                //    {
-                    //                                //        case DetailLevelItemInformation.Levels.advertiser:
-                    //                                //        case DetailLevelItemInformation.Levels.brand:
-                    //                                //        case DetailLevelItemInformation.Levels.product:
-                    //                                //            DisplayPerso(ls,row, SECOND_LEVELS[i].Id);
-                    //                                //            break;
-                    //                                //        default:
-                    //                                //            break;
-                    //                                //    }
-                    //                                //}
-                    //#endregion
-                    //                                SetPersoAdvertiser(tab, cLine, row, SECOND_LEVELS[i].Id, C2_TYPE);
-                    //                            }
-                    //                        }
-                    //                    }
+                   
                     #endregion
 
                     #region Affect values

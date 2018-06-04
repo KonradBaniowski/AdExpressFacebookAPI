@@ -16,11 +16,11 @@
     <div class="col-md-12">
         <div class="pull-right custom-button selectexporttype">
             <select id="export-type" class="selectdatepicker hide">
-                <option value="1">Résultat Formaté</option>
+                <option value="1">@Model.Labels.ExportFormattedResult</option>
                 @if (!Model.IsAdNetTrack)
                 {
-                    <option value="2">Résultat avec valeurs</option>
-                    <option value="3">Résultat brut</option>
+                    <option value="2">@Model.Labels.ExportResultWithValue</option>
+                    <option value="3">@Model.Labels.ExportGrossResult</option>
                 }
             </select>&nbsp;
             <button class="btn btn-save" id="btn-export"><i class="fa fa-file-excel-o fa-file-excel-size"></i></button>&nbsp;
@@ -80,6 +80,11 @@
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
@@ -378,7 +383,7 @@
                             if ($(this).is(":checked")) {
                                 creatives.push($(this).attr("value"));
                                 $("#creativeNb").html(creatives.length);
-                                $("#creativeNbLabel").html(" élément(s) sélectionné(s) &nbsp;");
+                                $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3126, Model.SiteLanguage) &nbsp;");
                                 $("#creative-btn").prop('disabled', false);
                             }
                             else {
@@ -386,12 +391,12 @@
 
                                 if (creatives.length == 0) {
                                     $("#creativeNb").html("");
-                                    $("#creativeNbLabel").html(" Aucun élément sélectionné &nbsp;");
+                                    $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3122, Model.SiteLanguage) &nbsp;");
                                     $("#creative-btn").prop('disabled', true);
                                 }
                                 else {
                                     $("#creativeNb").html(creatives.length);
-                                    $("#creativeNbLabel").html(" élément(s) sélectionné(s) &nbsp;");
+                                    $("#creativeNbLabel").html(" @GestionWeb.GetWebWord(3126, Model.SiteLanguage) &nbsp;");
                                 }
                             }
                         });

@@ -598,13 +598,30 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
                                     if (_showTopDiffusion)
                                     {
+                                        long TOP_DIFFUSION_VISIBILITY_DATE = 20170904;
+                                        var MEDIA_IDS_TOP_DIFFUSION_VISIBILITY = new List<long> { 3168, 18560, 18564, 24982 };
+                                        long dateNum = Convert.ToInt64(row["date_media_num"]);
+                                        long idMedia = Convert.ToInt64(row["id_media"]);
+
+                                        /*A partir de la date_media 04 / 09, ces chaines 
+                                         * 3168 - FRANCE O
+                                         * 18560 - HD1
+                                         * 18564 - NUMERO 23
+                                         * 24982 – RMC DECOUVERTE S
+                                         * devront être gérées comme de la pige réelle (catégorie 31), 
+                                        donc elles ne constitueront plus un cas particulier. En revanche attention, toutes les lignes qui ont une date_media au 03 / 09 
+                                            et avant doivent rester gérées comme aujourd’hui.Le changement dans la règle de transfert ne concerne que les données à partir du 04 / 09.
+                                            */
+                                        
+
                                         type = assembly.GetType(Column.CellType);
                                         curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
-                                        if (row[Column.DataBaseField].ToString().Length > 0)
+                                        if (row[Column.DataBaseField].ToString().Length > 0
+                                            && !(MEDIA_IDS_TOP_DIFFUSION_VISIBILITY.Contains(idMedia) && dateNum < TOP_DIFFUSION_VISIBILITY_DATE))
                                             curCell = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
                                         else
-                                            curCell = new CellAiredTime(0);
+                                            curCell = new CellEmpty();//new CellAiredTime(0);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }

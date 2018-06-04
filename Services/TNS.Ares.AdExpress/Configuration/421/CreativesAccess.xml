@@ -37,5 +37,6 @@
     <Network id="LOCAL_PATH_ADEXREVIEW" name="Fichiers AdExReview" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\adexreview\"/>
     <Network id="LOCAL_PATH_NOUVEAUTES" name="" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
     <Network id="LOCAL_PATH_MEDIA_UPDATE" name="Fichiers contenant la liste des médias dispo" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\"/>
+    <Network id="LOCAL_PATH_EVALIANT" name="Fichiers contenant la liste des médias evaliant" value="F:\EvaliantCreatives\"/>
   </Networks>
 </CreativesAccess>

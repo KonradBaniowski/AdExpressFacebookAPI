@@ -761,7 +761,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
             Schema schAdEx = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
 
             //Get Table GAD
-            Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+            var tblGad = GetGadtable();
 
             StringBuilder sql = new StringBuilder();
             string columnDetailLevel = string.Empty;
@@ -838,6 +838,12 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
             }
             #endregion
 
+        }
+
+        protected virtual Table GetGadtable()
+        {
+            Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);           
+            return tblGad;
         }
 
         protected virtual string InitQueryParams(CstDB.TableType.Type type, string dataTableName, Schema schAdEx, CustomerPeriod customerPeriod, Table tblGad

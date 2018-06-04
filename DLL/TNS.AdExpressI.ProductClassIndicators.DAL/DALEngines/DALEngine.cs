@@ -232,8 +232,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 case CstDBClassif.Vehicles.names.magazine:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMagazine, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, _session.IsSelectRetailerDisplay);
-                case CstDBClassif.Vehicles.names.plurimedia:
-                case CstDBClassif.Vehicles.names.PlurimediaWithoutMms:
+                case CstDBClassif.Vehicles.names.plurimedia:               
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mediasTactics:

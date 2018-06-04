@@ -5,6 +5,7 @@ using Km.AdExpressClientWeb.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +23,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguage = siteLanguage;
+            ViewBag.SiteLanguageCode = siteLanguage;
             var model = new ContactViewModel();
             model.QuestionsTagItem = new List<SelectListItem>();
             var labels = LabelsHelper.LoadPageLabels(siteLanguage);
@@ -36,6 +38,10 @@ namespace Km.AdExpressClientWeb.Controllers
                 case CountryCode.FINLAND:
                     model.ClientServicePhoneNumber = "+358 9 613 500";
                     model.ClientServiceEmail = "tnsfinland@tnsglobal.com";
+                    break;
+                case CountryCode.POLAND:
+                    model.ClientServicePhoneNumber = "+48 71 78 75 300";
+                    model.ClientServiceEmail = "aleksandra.misterska@kantarmedia.com";
                     break;
                 default:
                     model.ClientServicePhoneNumber = "01 30 74 87 78";
@@ -76,7 +82,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
+                var body =
+                    "<p>Email From: {0} ({1}-{6})</p><p>Infos:</p><p>{2} {3} {4}</p><p>Message:</p><p>{5}</p>";
                 var message = new MailMessage();
 
                 switch (WebApplicationParameters.CountryCode)
@@ -84,29 +91,64 @@ namespace Km.AdExpressClientWeb.Controllers
                     case CountryCode.FINLAND:
                         message.To.Add(new MailAddress("tnsfinland@tnsglobal.com"));
                         break;
+                    case CountryCode.POLAND:
+                        message.To.Add(new MailAddress("aleksandra.misterska@kantarmedia.com"));
+                        break;
                     default:
-                        message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
+                        //message.To.Add(new MailAddress("sc.adexpress@kantarmedia.com"));
+                        message.To.Add(new MailAddress("dede.mussuma@kantarmedia.com"));
                         break;
                 }
                 message.Subject = form.QuestionTag;
-                message.Body = string.Format(body,
-                    form.Name,
-                    form.Mail,
-                    form.Country,
-                    form.Company,
-                    form.PhoneNumber,
-                    form.Comment,
-                    form.JobTitle);
+
+                if (WebApplicationParameters.CountryCode == CountryCode.POLAND)
+                {
+                    message.Body = GestionWeb.GetWebWord(68, siteLang) + ": " + form.Company + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(67, siteLang) + ": " + form.Name + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(1976, siteLang) + ": " + form.JobTitle + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(71, siteLang) + ": " + form.PhoneNumber + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(1136, siteLang) + ": " + form.Mail + "</br>";
+                    message.Body += GestionWeb.GetWebWord(70, siteLang) + ": " + form.Country + "<br/>";
+                    message.Body += GestionWeb.GetWebWord(74, siteLang) + ": " + form.Comment + "<br/>";
+                }
+                else
+                {
+                    message.Body = string.Format(body,
+                        form.Name,
+                        form.Mail,
+                        form.Country,
+                        form.Company,
+                        form.PhoneNumber,
+                        form.Comment,
+                        form.JobTitle);
+                }
+
                 message.IsBodyHtml = true;
                 using (var smtp = new SmtpClient())
                 {
+                    if (WebApplicationParameters.CountryCode == CountryCode.POLAND)
+                    {
+                        message.From = new MailAddress("tswro-tech@kantarmedia.com");
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = new NetworkCredential("tswro-tech@kantarmedia.com", "wil0XAz3",
+                            "smtp.office365.com");
+                        smtp.Host = "smtp.office365.com";
+                        smtp.Port = 587;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.EnableSsl = true;
+                    }
                     smtp.Send(message);
                 }
 
                 TempData["success"] = GestionWeb.GetWebWord(1486, siteLang);
             }
+            else
+            {
+                return View(form);
+            }
 
-            return RedirectToAction("Index", new { siteLanguage = siteLang });
+
+            return RedirectToAction("Index", new {siteLanguage = siteLang});
         }
 
         private PresentationModel LoadPresentationBar(int siteLanguage, bool showCurrentSelection = true)
