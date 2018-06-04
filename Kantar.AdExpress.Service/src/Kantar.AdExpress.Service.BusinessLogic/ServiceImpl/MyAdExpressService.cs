@@ -1043,11 +1043,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                 webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(levelInfoId);
 
                                 if (WebApplicationParameters.CountryCode.Equals(CountryCode.FRANCE)
-                                    && ( VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimedia).DatabaseId == levelInfoId
-                                    || (VehiclesInformation.Contains(DBClassifConstantes.Vehicles.names.plurimediaWithSearch) && VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimediaWithSearch).DatabaseId == levelInfoId)
-                                    || (VehiclesInformation.Contains(DBClassifConstantes.Vehicles.names.plurimediaOnline) && VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimediaOnline).DatabaseId == levelInfoId)
-                                    || (VehiclesInformation.Contains(DBClassifConstantes.Vehicles.names.plurimediaOffline) && VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimediaOffline).DatabaseId == levelInfoId)
-                                    )
+                                    &&  VehiclesInformation.Get(DBClassifConstantes.Vehicles.names.plurimedia).DatabaseId == levelInfoId                                                                      
+                                    
                                     )
                                 {
                                     string mmsLastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBClassifConstantes.Vehicles.names.mms));

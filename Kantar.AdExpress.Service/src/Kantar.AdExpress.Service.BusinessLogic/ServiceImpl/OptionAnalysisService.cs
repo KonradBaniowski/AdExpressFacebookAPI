@@ -44,11 +44,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicle.Id);
                 #endregion
 
-                if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia
-                                && vehicle.Id != DBConstantesClassification.Vehicles.names.PlurimediaWithoutMms
-                                && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaOffline
-                                 && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaOnline
-                                  && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaWithSearch)
+                if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia)
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
                 else
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle;
@@ -98,11 +94,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             case ClassificationCst.DB.Vehicles.names.czinternet:
                             case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                             case ClassificationCst.DB.Vehicles.names.emailing:
-                            case ClassificationCst.DB.Vehicles.names.plurimedia:
-                            case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaOffline:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaOnline:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaWithSearch:
+                            case ClassificationCst.DB.Vehicles.names.plurimedia:                           
                             case ClassificationCst.DB.Vehicles.names.directMarketing:
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
@@ -120,34 +112,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         switch (vehicleInfo.Id)
                         {
-                            case ClassificationCst.DB.Vehicles.names.plurimedia:
-                            case ClassificationCst.DB.Vehicles.names.PlurimediaWithoutMms:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaOffline:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaOnline:
-                            case ClassificationCst.DB.Vehicles.names.plurimediaWithSearch:
+                            case ClassificationCst.DB.Vehicles.names.plurimedia:                          
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
-                                mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2652, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString() });
-                                //if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
-                                //    (_customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
-                                //    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2740, _customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegion.GetHashCode().ToString()));
+                                mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2652, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString() });                               
                                 break;
-                            default:
-                                //if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
-                                //   (_customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
-                                //    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                            default:                                
 
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(971, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString() });
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2652, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString() });
-                                //if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
-                                //  (_customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
-                                //    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2740, _customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegion.GetHashCode().ToString()));
-                                mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1544, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString() });
-                                //if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
-                                //   (_customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
-                                //{
-                                //    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2731, _customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.regionMedia.GetHashCode().ToString()));
-                                //    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2741, _customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegionMedia.GetHashCode().ToString()));
-                                //}
+                              
+                                mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1544, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString() });                             
                                 break;
                         }
                     }

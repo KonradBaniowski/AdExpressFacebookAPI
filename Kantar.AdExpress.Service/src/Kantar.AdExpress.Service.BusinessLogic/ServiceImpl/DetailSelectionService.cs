@@ -514,16 +514,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                if (VehiclesInformation.Contains(Vehicles.names.plurimedia)
                 && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimedia) == searchTodo[key].FirstOrDefault()               
-                ) return GestionWeb.GetWebWord(210, dataLanguage);
-                 if(VehiclesInformation.Contains(Vehicles.names.plurimediaOffline)
-                && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaOffline) == searchTodo[key].FirstOrDefault())
-                    return GestionWeb.GetWebWord(3111, dataLanguage);
-                 if (VehiclesInformation.Contains(Vehicles.names.plurimediaOnline)
-              && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaOnline) == searchTodo[key].FirstOrDefault())
-                    return GestionWeb.GetWebWord(3112, dataLanguage);
-                 if (VehiclesInformation.Contains(Vehicles.names.plurimediaWithSearch)
-              && VehiclesInformation.EnumToDatabaseId(Vehicles.names.plurimediaWithSearch) == searchTodo[key].FirstOrDefault())
-                    return GestionWeb.GetWebWord(3113, dataLanguage);
+                ) return GestionWeb.GetWebWord(210, dataLanguage);                
             }
 
             return string.Empty;

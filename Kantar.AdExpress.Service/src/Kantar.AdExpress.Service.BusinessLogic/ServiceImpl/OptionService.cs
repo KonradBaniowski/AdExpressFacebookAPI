@@ -1255,11 +1255,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             if (vehicleInfo != null &&
-                (vehicleInfo.Id == Vehicles.names.plurimedia
-                 || vehicleInfo.Id == Vehicles.names.PlurimediaWithoutMms
-                 || vehicleInfo.Id == Vehicles.names.plurimediaOnline
-                 || vehicleInfo.Id == Vehicles.names.plurimediaOffline
-                 || vehicleInfo.Id == Vehicles.names.plurimediaWithSearch
+                (vehicleInfo.Id == Vehicles.names.plurimedia                
                 )
                 && current.Id == FrameWorkResults.ProductClassAnalysis.EVOLUTION &&
                 WebApplicationParameters.HidePlurimediaEvol)

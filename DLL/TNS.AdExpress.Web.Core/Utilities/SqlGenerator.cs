@@ -3069,11 +3069,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
-				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaWithSearch:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaOnline:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaOffline:
-                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
+				case ClassificationConstantes.DB.Vehicles.names.plurimedia:              
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluri, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTactic, isRetailerSelected).Sql;
@@ -3126,11 +3122,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, isRetailerSelected).Sql;                    
-                case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                case ClassificationConstantes.DB.Vehicles.names.PlurimediaWithoutMms:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaWithSearch:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaOffline:
-                case ClassificationConstantes.DB.Vehicles.names.plurimediaOnline:
+                case ClassificationConstantes.DB.Vehicles.names.plurimedia:               
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
                     return WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, isRetailerSelected).Sql;                    

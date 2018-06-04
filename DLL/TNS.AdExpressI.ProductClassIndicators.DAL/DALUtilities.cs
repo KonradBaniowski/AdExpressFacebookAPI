@@ -47,9 +47,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
             temp = FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, prefix, !first);
             sql.Append(" " + temp);
 
-            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.PlurimediaWithoutMms
-               && _vehicle != CstDBClassif.Vehicles.names.plurimediaWithSearch && _vehicle != CstDBClassif.Vehicles.names.plurimediaOnline
-                 &&   _vehicle != CstDBClassif.Vehicles.names.plurimediaOffline)
+            if (_vehicle != CstDBClassif.Vehicles.names.plurimedia 
+              )
             {
                 if (!string.IsNullOrEmpty(temp)) first = false;
                 sql.Append(FctUtilities.SQLGenerator.getAccessVehicleList(_session, prefix, !first));

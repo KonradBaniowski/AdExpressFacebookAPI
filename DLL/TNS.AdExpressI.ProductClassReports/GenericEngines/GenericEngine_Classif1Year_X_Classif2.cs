@@ -72,9 +72,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 if (dtData.Columns[i].ColumnName.IndexOf("ID_M") >= 0)
                 {
-                    if (_vehicle == CstDBClassif.Vehicles.names.plurimedia ||
-                        _vehicle == CstDBClassif.Vehicles.names.plurimediaOnline || _vehicle == CstDBClassif.Vehicles.names.plurimediaOffline 
-                        || _vehicle == CstDBClassif.Vehicles.names.plurimediaWithSearch || (!firstMedia))                   
+                    if (_vehicle == CstDBClassif.Vehicles.names.plurimedia ||                       
+                        (!firstMedia))                   
                     {
                         DATA_MEDIA_INDEXES.Add(i);
                     }
@@ -181,10 +180,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             string vehicleLabel = dtData.Rows[0]["M1"].ToString();
             switch (_vehicle)
             {
-                case CstDBClassif.Vehicles.names.plurimedia:
-                case CstDBClassif.Vehicles.names.plurimediaOnline:
-                case CstDBClassif.Vehicles.names.plurimediaOffline:
-                case CstDBClassif.Vehicles.names.plurimediaWithSearch:
+                case CstDBClassif.Vehicles.names.plurimedia:              
                     headers.Root.Add(new Header(true, GestionWeb.GetWebWord(210, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.press:                   
@@ -224,8 +220,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategory:
                 case CstFormat.PreformatedMediaDetails.vehicleMedia:
-                    sortStr = _vehicle != CstDBClassif.Vehicles.names.plurimedia && _vehicle != CstDBClassif.Vehicles.names.plurimediaOnline
-                        && _vehicle != CstDBClassif.Vehicles.names.plurimediaOffline && _vehicle != CstDBClassif.Vehicles.names.plurimediaWithSearch
+                    sortStr = _vehicle != CstDBClassif.Vehicles.names.plurimedia 
                         ? "M2,ID_M2" : "M1,ID_M1,M2,ID_M2";
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
