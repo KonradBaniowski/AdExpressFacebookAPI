@@ -384,7 +384,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
                     (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
                 {
-                    _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                    {
+                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                            .GetResultPageInformation(_customerWebSession.CurrentTab)
+                            .GetDefaultUnit(vehicleInformation.Id)
+                    };
                 }
 
                 foreach (UnitInformation currentUnit in units)
@@ -394,26 +399,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         if (currentUnit.Id != ConstantesSession.Unit.volumeMms || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
                             unitOption.Unit.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentUnit.WebTextId, _customerWebSession.SiteLanguage), Value = currentUnit.Id.GetHashCode().ToString() });
                         else if (_customerWebSession.Unit == ConstantesSession.Unit.volumeMms)
-                            _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                            _customerWebSession.Units = new List<ConstantesSession.Unit>
+                            {
+                                UnitsInformation.DefaultCurrency
+                            };
                     }
                     else if (_customerWebSession.Unit == ConstantesSession.Unit.volume)
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>{ UnitsInformation.DefaultCurrency };
                 }
 
                 if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
                 {
                     if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    {
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    }
                     else
-                        _customerWebSession.Unit = units[0].Id;
+                        _customerWebSession.Units = new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
-                    if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-                    else
-                        _customerWebSession.Unit = units[0].Id;
+                    _customerWebSession.Units = ContainsDefaultCurrency(units)
+                        ? new List<ConstantesSession.Unit> {UnitsInformation.DefaultCurrency}
+                        : new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
                 unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
@@ -812,7 +824,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                     && userFilter.UnitFilter.Unit != WebConstantes.CustomerSessions.Unit.none.GetHashCode()
                     )
-                    _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                    _customerWebSession.Units = new List<ConstantesSession.Unit> { (ConstantesSession.Unit)userFilter.UnitFilter.Unit };
                 #endregion
 
                 #region PercentageFilter

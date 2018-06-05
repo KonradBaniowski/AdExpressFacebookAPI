@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -354,10 +355,15 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         protected Constantes.Web.CustomerSessions.Period.DisplayLevel detailPeriod = Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly;
 
+        ///// <summary>
+        ///// Unité utilisé (€, spots...)
+        ///// </summary>
+        //protected Constantes.Web.CustomerSessions.Unit unit = UnitsInformation.DefaultCurrency;
+
         /// <summary>
         /// Unité utilisé (€, spots...)
         /// </summary>
-        protected Constantes.Web.CustomerSessions.Unit unit = UnitsInformation.DefaultCurrency;
+        private List<WebConstantes.CustomerSessions.Unit> _units = new List<WebConstantes.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency }; 
 
         /// <summary>
         /// Unité en pourcentage
@@ -690,16 +696,11 @@ namespace TNS.AdExpress.Web.Core.Sessions
         public WebSession(TNS.AdExpress.Right login)
         {
 
-            try
-            {
+          
                 this.customerLogin = login;
                 //Construction de l'identifiant de session
                 idSession = DateTime.Now.ToString("yyyyMMddHHmmss") + Convert.ToString(customerLogin.IdLogin);
-            }
-            catch (System.Exception e)
-            {
-                throw new WebSessionException("WebSession.WebSession(...) : Paramètre \"login\" invalide : " + e.Message);
-            }
+           
         }
 
         #endregion
@@ -1711,14 +1712,21 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <summary>
         /// Get/Set Unité utilisé (€, spots...)
         /// </summary>
-        public Constantes.Web.CustomerSessions.Unit Unit
+        public Constantes.Web.CustomerSessions.Unit Unit => _units.First();
+
+        /// <summary>
+        /// Unité utilisé (€, spots...)
+        /// </summary>
+        public List<WebConstantes.CustomerSessions.Unit> Units
         {
-            get { return unit; }
+            get { return _units; }
             set
             {
-                if (unit != value)
+                var list1 = _units.Except(value).ToList();
+                var list2 = value.Except(_units).ToList();
+                if (!list1.Any() && !list2.Any())
                 {
-                    unit = value;
+                    _units = value;                   
                     OnSetUnit();
                     modificationDate = DateTime.Now;
                 }
@@ -3435,6 +3443,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             set { userParameters[CoreConstantes.SessionParamters.excluWeb] = value; }
         }
 
+      
 
         public void CopyFrom(WebSession session)
         {
@@ -4304,7 +4313,8 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
+                _units.ForEach(unit => DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit));
+               
             }
             catch (System.Exception) { }
         }
@@ -4371,14 +4381,9 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Identifiant du texte</returns>
         public Int64 GetUnitLabelId()
         {
-            try
-            {
-                return this.GetSelectedUnit().WebTextId;
-            }
-            catch
-            {
-                throw (new UnitException("Unit selection is not managed"));
-            }
+
+            return GetSelectedUnit().WebTextId;
+
         }
 
         /// <summary>
@@ -4387,20 +4392,14 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns></returns>
         public CellUnitFactory GetCellUnitFactory()
         {
-            try
-            {
-                //System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+                       
                 UnitInformation selectedUnit = GetSelectedUnit();
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(selectedUnit.Assembly);
                 Type type = assembly.GetType(selectedUnit.CellType);
                 Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
                 cellUnit.StringFormat = selectedUnit.StringFormat;
                 return (new CellUnitFactory((CellUnit)cellUnit));
-            }
-            catch
-            {
-                throw (new UnitException("Unit selection is not managed"));
-            }
+         
         }
 
         /// <summary>
@@ -4409,8 +4408,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Valid Unit List for current result</returns>
         public List<UnitInformation> GetValidUnitForResult()
         {
-            try
-            {
+          
                 Module moduleDescription = ModulesList.GetModule(currentModule);
                 ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
                 string listStr = GetSelection(SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
@@ -4446,11 +4444,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 }
 
                 return units;
-            }
-            catch
-            {
-                throw (new UnitException("Unit selection is not managed"));
-            }
+         
         }
 
         /// <summary>
@@ -4459,14 +4453,17 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Selected unit information</returns>
         public Domain.Units.UnitInformation GetSelectedUnit()
         {
-            try
-            {
-                return UnitsInformation.Get(this.unit);
-            }
-            catch
-            {
-                throw (new UnitException("Unit selection is not managed"));
-            }
+            return GetSelectedUnits().First();
+        }
+
+        /// <summary>
+        /// Get selected unit information
+        /// </summary>
+        /// <returns>Selected unit information</returns>
+        /// 
+        public List<Domain.Units.UnitInformation> GetSelectedUnits()
+        {
+             return UnitsInformation.Get(_units);
         }
 
         /// <summary>
@@ -4475,17 +4472,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Valid Campaign type List for current result</returns>
         public List<Domain.CampaignTypes.CampaignTypeInformation> GetValidCampaignTypeForResult()
         {
-            try
-            {
+           
                 Module moduleDescription = ModulesList.GetModule(currentModule);
                 ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
 
                 return resultPageInformation.GetValidCampaignTypes();
-            }
-            catch
-            {
-                throw (new Exception("Campaign Type selection is not managed"));
-            }
+          
         }
 
         /// <summary>
@@ -4494,17 +4486,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Default Campaign type for current result</returns>
         public TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType GetDefaultCampaignType()
         {
-            try
-            {
+           
                 Module moduleDescription = ModulesList.GetModule(currentModule);
                 ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
 
                 return resultPageInformation.DefaultCampaignType;
-            }
-            catch
-            {
-                throw (new Exception("Campaign Type default selection is not managed"));
-            }
+           
         }
 
         #endregion
@@ -4516,8 +4503,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Vehicles Selected</returns>
         public Dictionary<Int64, VehicleInformation> GetVehiclesSelected()
         {
-            try
-            {
+            
                 string listStr = GetSelection(SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess);
                 var vehicleList = new Dictionary<Int64, VehicleInformation>();
                 if (!string.IsNullOrEmpty(listStr))
@@ -4535,11 +4521,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
 
 
                 return vehicleList;
-            }
-            catch
-            {
-                throw (new VehicleException("Vehicle selection is not managed"));
-            }
+          
         }
         #endregion
 
@@ -4551,8 +4533,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Common Valid Format List</returns>
         public Dictionary<Int64, FilterItem> GetValidFormatList(Dictionary<Int64, VehicleInformation> vehicleInformationList)
         {
-            try
-            {
+           
                 var activeBannersFormatList = new Dictionary<Int64, FilterItem>();
                 if (WebApplicationParameters.VehiclesFormatInformation.Use)
                 {
@@ -4582,11 +4563,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
                     }
                 }
                 return activeBannersFormatList;
-            }
-            catch (Exception e)
-            {
-                throw (new BannersFormatException("Valid Format List is not managed", e));
-            }
+           
         }
         /// <summary>
         /// Get Valid Format List
@@ -4625,8 +4602,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Valid Format List</returns>
         public List<Int64> GetValidFormatSelectedList(Dictionary<Int64, VehicleInformation> vehicleInformationList, bool returnAlwaysValues)
         {
-            try
-            {
+            
                 var activeBannersFormatList = new List<Int64>();
                 if (WebApplicationParameters.VehiclesFormatInformation.Use && vehicleInformationList != null && vehicleInformationList.Count > 0)
                 {
@@ -4648,11 +4624,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
                     }
                 }
                 return activeBannersFormatList;
-            }
-            catch
-            {
-                throw (new BannersFormatException("Valid Format Selected List is not managed"));
-            }
+            
         }
         #endregion
 

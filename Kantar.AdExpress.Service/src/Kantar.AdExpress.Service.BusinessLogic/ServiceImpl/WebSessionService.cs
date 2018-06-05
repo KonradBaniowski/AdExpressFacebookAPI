@@ -600,7 +600,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 _webSession.PeriodEndDate = "";
                 _webSession.Graphics = true;
 
-                _webSession.Unit = UnitsInformation.DefaultCurrency;
+                _webSession.Units = new List<CstWeb.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency };
 
                 TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
                 if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
