@@ -1724,7 +1724,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 var list1 = _units.Except(value).ToList();
                 var list2 = value.Except(_units).ToList();
-                if (!list1.Any() && !list2.Any())
+                if (list1.Any() || list2.Any())
                 {
                     _units = value;                   
                     OnSetUnit();
