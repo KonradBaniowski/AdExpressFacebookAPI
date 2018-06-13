@@ -63,7 +63,7 @@
                                             <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
                                                 @foreach (var item in Model.UnitOption.Unit.Items)
                                                 {
-                                                    if (item.Value == Model.UnitOption.Unit.SelectedId)
+                                                    if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
                                                     {
                                                         <option value="@item.Value" selected>@item.Text</option>
                                                     }

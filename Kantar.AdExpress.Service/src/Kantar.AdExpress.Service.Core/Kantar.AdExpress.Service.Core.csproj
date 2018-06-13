@@ -125,6 +125,7 @@
     <Compile Include="Domain\MSCreatives.cs" />
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\PortfolioAlertResultResponse.cs" />
+    <Compile Include="Domain\ResultOptions\UnitSelectControl.cs" />
     <Compile Include="Domain\UserCriteria.cs" />
     <Compile Include="Domain\PostModel.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />

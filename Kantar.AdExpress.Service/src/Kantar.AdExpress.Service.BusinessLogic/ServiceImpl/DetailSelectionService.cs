@@ -161,7 +161,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Unité :
-            domain.UniteLabel = GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage);
+            GetUnitLabels(_webSession, domain);
             #endregion
 
             #region Slogan :
@@ -261,6 +261,18 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             return domain;
+        }
+
+        private static void GetUnitLabels(WebSession webSession, DetailSelectionResponse domain)
+        {
+
+            var units = webSession.GetSelectedUnits();
+           List<string>  unitLabels =new List<string>();
+            units.ForEach(unit =>
+            {
+                unitLabels.Add(GestionWeb.GetWebWord(unit.WebTextId, webSession.SiteLanguage));
+            });
+            domain.UniteLabel = String.Join(", ", unitLabels);
         }
 
         private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, long currentModule, bool defaultFcbUniverse = false)
