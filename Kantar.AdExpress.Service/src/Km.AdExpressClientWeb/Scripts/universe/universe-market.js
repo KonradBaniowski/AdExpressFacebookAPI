@@ -33,7 +33,7 @@ $('#move-item').on('click', function () {
         var activeTreeContainer = $('.nav.nav-tabs > li[class="active"]  a').attr('data-target');
         var activeTreeAccessType = $(activeTreeContainer + ' .panel-group').attr('data-access-type');
 
-        if (activeTreeAccessType != 0) {
+        if (activeTreeAccessType != 0 && $('#CurrentModule').val() != 17109) {
             var isSameLevel = false;
             $.each($('.nav.nav-tabs > li:not(.active) a'),
                 function(index, elem) {
