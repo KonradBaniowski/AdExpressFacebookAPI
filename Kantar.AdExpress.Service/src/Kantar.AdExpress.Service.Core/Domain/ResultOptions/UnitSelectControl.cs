@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
-    public class UnitOption
+    public class UnitSelectControl : SelectControl
     {
-        public UnitSelectControl Unit { get; set; }
+        public List<string> SelectedIds { get; set; }
 
-         
+        public bool EnableMultiple { get; set; }
+
     }
 }

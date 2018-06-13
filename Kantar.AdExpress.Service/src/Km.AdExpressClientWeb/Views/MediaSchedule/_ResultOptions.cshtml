@@ -4,6 +4,7 @@
 @{
     var optionsNb = 1;
     var classHide = "";
+    string multiple = Model.UnitOption.Unit.EnableMultiple ? "multiple" : string.Empty;
 }
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
@@ -31,10 +32,10 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body mi-padder">
                                     <div class="selectoptioncontainer">
-                                        <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
+                                        <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker" @multiple>
                                             @foreach (var item in Model.UnitOption.Unit.Items)
                                             {
-                                                if (item.Value == Model.UnitOption.Unit.SelectedId)
+                                                if ( Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
                                                 {
                                                     <option value="@item.Value" selected>@item.Text</option>
                                                 }

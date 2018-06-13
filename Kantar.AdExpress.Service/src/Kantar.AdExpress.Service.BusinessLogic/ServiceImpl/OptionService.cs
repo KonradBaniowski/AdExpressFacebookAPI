@@ -1,4 +1,4 @@
-﻿#define Debug
+﻿
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
@@ -30,6 +30,10 @@ using Kantar.AdExpress.Service.Core.Domain;
 using NLog;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using System.Linq;
+using System.Web.UI.WebControls;
+using System.Windows.Forms;
+
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -371,7 +375,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 UnitOption unitOption = new UnitOption();
 
-                unitOption.Unit = new SelectControl();
+                unitOption.Unit = new UnitSelectControl();
                 unitOption.Unit.Id = "unit";
                 unitOption.Unit.Items = new List<SelectItem>();
                 var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
@@ -384,39 +388,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
                     (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
                 {
-                    _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
-                }
-
-                foreach (UnitInformation currentUnit in units)
-                {
-                    if (currentUnit.Id != ConstantesSession.Unit.volume || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
                     {
-                        if (currentUnit.Id != ConstantesSession.Unit.volumeMms || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
-                            unitOption.Unit.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentUnit.WebTextId, _customerWebSession.SiteLanguage), Value = currentUnit.Id.GetHashCode().ToString() });
-                        else if (_customerWebSession.Unit == ConstantesSession.Unit.volumeMms)
-                            _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-                    }
-                    else if (_customerWebSession.Unit == ConstantesSession.Unit.volume)
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                            .GetResultPageInformation(_customerWebSession.CurrentTab)
+                            .GetDefaultUnit(vehicleInformation.Id)
+                    };
                 }
 
-                if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
+                AddUnitOptions(units, unitOption);
+
+                var exceptUnits = units.Intersect(UnitsInformation.Get(_customerWebSession.Units));
+                if (!exceptUnits.Any())
                 {
                     if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    {
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    }
                     else
-                        _customerWebSession.Unit = units[0].Id;
+                        _customerWebSession.Units = new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
-                    if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-                    else
-                        _customerWebSession.Unit = units[0].Id;
+                    _customerWebSession.Units = ContainsDefaultCurrency(units)
+                        ? new List<ConstantesSession.Unit> {UnitsInformation.DefaultCurrency}
+                        : new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
-                unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
+                unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
+
+                
 
                 options.UnitOption = unitOption;
                 #endregion
@@ -492,6 +497,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 options.AutoPromoOption = autoPromoOption;
                 #endregion
+
+                
 
                 #region FormatOption
                 FormatOption formatOption = new FormatOption();
@@ -695,6 +702,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             return options;
         }
 
+        private void AddUnitOptions(List<UnitInformation> units, UnitOption unitOption)
+        {
+            foreach (UnitInformation currentUnit in units)
+            {
+               
+
+                if (currentUnit.Id == ConstantesSession.Unit.volume &&
+                   !_customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    continue;
+                }
+
+                if (currentUnit.Id == ConstantesSession.Unit.volumeMms &&
+                    !_customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    continue;
+                }
+
+
+                    unitOption.Unit.Items.Add(new SelectItem
+                {
+                    Text = GestionWeb.GetWebWord(currentUnit.WebTextId,
+                               _customerWebSession.SiteLanguage),
+                    Value = currentUnit.Id.GetHashCode().ToString()
+                });
+            }
+        }
+
         public void SetOptions(string idWebSession, UserFilter userFilter, HttpContextBase httpContext)
         {
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
@@ -812,7 +855,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                     && userFilter.UnitFilter.Unit != WebConstantes.CustomerSessions.Unit.none.GetHashCode()
                     )
-                    _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                    _customerWebSession.Units = new List<ConstantesSession.Unit> { (ConstantesSession.Unit)userFilter.UnitFilter.Unit };
                 #endregion
 
                 #region PercentageFilter

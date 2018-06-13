@@ -1248,7 +1248,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             webSession.ReferenceUniversMedia = webSessionSave.ReferenceUniversMedia;
                             webSession.ReferenceUniversProduct = webSessionSave.ReferenceUniversProduct;
                             webSession.Sorting = webSessionSave.Sorting;
-                            webSession.Unit = webSessionSave.Unit;
+                            webSession.Units = webSessionSave.Units;
 
                             //Patch last reahce result URL pour tableaux Dynamiques
                             webSession.LastReachedResultUrl = webSessionSave.LastReachedResultUrl;

@@ -39,9 +39,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 GenericLevelOption mediaDetail = new GenericLevelOption();
                 GenericLevelOption productDetail = new GenericLevelOption();
 
-                #region Unit
+                #region Unitf
                 VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicle.Id);
+                _customerWebSession.Units = new List<SessionCst.Unit>
+                {
+                    WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                        .GetResultPageInformation(_customerWebSession.CurrentTab)
+                        .GetDefaultUnit(vehicle.Id)
+                };
                 #endregion
 
                 if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia)

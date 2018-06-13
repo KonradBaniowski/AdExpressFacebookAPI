@@ -496,6 +496,19 @@ namespace Km.AdExpressClientWeb.Helpers
             clientInformation.ServerMachineName = httpContext.Server.MachineName;
             return clientInformation;
         }
+
+        public static bool CanSelectMultipleUnit(string countryCode)
+        {
+            switch (countryCode)
+            {
+                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+                    return true;                   
+               default:
+                    return false;
+              
+            }
+
+        }
     }
 
 }

@@ -77,6 +77,27 @@ namespace TNS.AdExpress.Domain.Units {
 		}
 
         /// <summary>
+        /// Get Unit informations
+        /// </summary>
+        public static List<UnitInformation> Get(List<CustomerSessions.Unit> ids)
+        {
+            try
+            {
+                List<UnitInformation> unitInformations = new List<UnitInformation>();
+                ids.ForEach(unit =>
+                {
+                    unitInformations.Add(_list[unit]);
+                });
+                return unitInformations;
+            }
+            catch (Exception err)
+            {
+                throw (new ArgumentException("impossible to reteive the requested units", err));
+            }
+        }
+
+
+        /// <summary>
         /// Get Parent unit id 
         /// </summary>
         /// <param name="id">Unit id</param>

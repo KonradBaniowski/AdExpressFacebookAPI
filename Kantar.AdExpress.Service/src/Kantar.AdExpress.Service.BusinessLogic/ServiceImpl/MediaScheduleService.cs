@@ -437,7 +437,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerSession.CurrentModule = moduleId;
                 CustomerSession.DetailPeriod = periodDisplay;
                 CustomerSession.CurrentTab = oldCurrentTab;
-                CustomerSession.Unit = oldUnit;
+                CustomerSession.Units = new List<WebConstantes.CustomerSessions.Unit> {oldUnit};
                 CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
 
             }
@@ -496,11 +496,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (mediaTypeIds.Count == 1 && VehiclesInformation.Get(mediaTypeIds[0]).Id == Vehicles.names.adnettrack)
                 {
                     webSession.SiteLanguage = creativeMediaScheduleRequest.SiteLanguage;
-                    webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                    webSession.Units = new List<WebConstantes.CustomerSessions.Unit>
+                    {
+                        WebConstantes.CustomerSessions.Unit.occurence
+                    };
                     SetAdNetTrackProductSelection(webSession, Convert.ToInt64(creativeMediaScheduleRequest.CreativeIds));
                     SetSessionProductDetailLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
                 }
-                else webSession.Unit = UnitsInformation.DefaultCurrency;
+                else webSession.Units = new List<WebConstantes.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency};
 
                 webSession.LastReachedResultUrl = string.Empty;
 

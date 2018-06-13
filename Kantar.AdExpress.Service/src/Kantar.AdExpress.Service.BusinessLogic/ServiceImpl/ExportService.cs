@@ -182,7 +182,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     #endregion
 
                                     if (!string.IsNullOrEmpty(_idUnit))
-                                        webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
+                                        webSession.Units = new List<WebCst.CustomerSessions.Unit> {(WebCst.CustomerSessions.Unit)int.Parse(_idUnit)};
 
                                     idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, AnubisCst.Result.type.apis) :
                                         ExportResultsDAL.Save(webSession, resultType);
