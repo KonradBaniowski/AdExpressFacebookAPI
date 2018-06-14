@@ -151,9 +151,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 productDetail.LevelDetail.Id = "productDetail";
                 productDetail.LevelDetail.Visible = true;
                 productDetail.LevelDetail.Items = new List<SelectItem>();
+                long productLabelCode = 1164;
 
                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
                 {
+                    productLabelCode = 1146;
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(175, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.sector.GetHashCode().ToString() });
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1491, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser.GetHashCode().ToString() });
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(552, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.subSector.GetHashCode().ToString() });
@@ -232,15 +234,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 resultTypeOption.ResultType.Visible = true;
                 resultTypeOption.ResultType.Items = new List<SelectItem>();
 
-
+               
                 resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0} / {1}", GestionWeb.GetWebWord(2933, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.media_X_Year.GetHashCode().ToString() });
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0} / {1}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0} / {1}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.product_X_Year.GetHashCode().ToString() });
                 // "Produits+Supports / Année"
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(2933, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.productMedia_X_Year.GetHashCode().ToString() });
                 //"Supports+Produits / Année  "
@@ -249,7 +251,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.mediaProduct_X_Year.GetHashCode().ToString() });
                 //"Produits+Supports / Année+Mensuel"
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}+{3}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}+{3}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(2933, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3079, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.productMedia_X_YearMensual.GetHashCode().ToString() });
@@ -259,16 +261,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     GestionWeb.GetWebWord(3079, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.mediaProduct_X_YearMensual.GetHashCode().ToString() });
                 // "Produits+Année / Supports"
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(2933, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.productYear_X_Media.GetHashCode().ToString() });
                 //"Produits+Année / Mensuel+Cumul"
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}+{3}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}+{3}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(2933, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(3079, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3078, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.productYear_X_Mensual.GetHashCode().ToString() });
                 //"Produits+Année / Mensuel Cumulé"
-                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(1164, _customerWebSession.SiteLanguage),
+                resultTypeOption.ResultType.Items.Add(new SelectItem { Text = string.Format("{0}+{1} / {2}", GestionWeb.GetWebWord(productLabelCode, _customerWebSession.SiteLanguage),
                     GestionWeb.GetWebWord(3076, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(3077, _customerWebSession.SiteLanguage)),
                     Value = SessionCst.PreformatedDetails.PreformatedTables.productYear_X_Cumul.GetHashCode().ToString() });
                 //"Supports+Année / Mensuel+Cumul"
