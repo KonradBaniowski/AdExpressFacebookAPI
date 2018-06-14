@@ -123,7 +123,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
         #region Couleurs
         Color HeaderTabBackground = Color.FromArgb(128, 128, 128);
-        Color HeaderTabText = Color.Black;
+        Color HeaderTabText = Color.White;
         Color HeaderBorderTab = Color.Black;
 
         Color L1Background = Color.FromArgb(166, 166, 166);
@@ -139,7 +139,7 @@ namespace Km.AdExpressClientWeb.Controllers
         Color L4Text = Color.Black;
 
         Color LTotalBackground = Color.FromArgb(128, 128, 128);
-        Color LTotalText = Color.Black;
+        Color LTotalText = Color.White;
 
         Color TabBackground = Color.Black;
         Color TabText = Color.Black;
