@@ -12,5 +12,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public bool EnableMultiple { get; set; }
 
+        public List<GroupItems> Groups { get; set; }
+
+        public bool EnableGroups { get; set; }
     }
 }

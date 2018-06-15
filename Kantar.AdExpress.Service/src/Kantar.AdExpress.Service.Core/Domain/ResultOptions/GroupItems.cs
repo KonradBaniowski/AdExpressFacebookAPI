@@ -7,20 +7,16 @@ using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
-    public class SelectItem
+    public class GroupItems
     {
-        public string Text { get; set; }
-
-        public string Value { get; set; }
-
-        public bool slogan { get; set; }
-
-        public bool Enabled { get; set; }
+        public GroupSelection.GroupType GroupType { get; set; }
 
         public int GroupId { get; set; }
 
-        public GroupSelection.GroupType GroupType { get; set; }
-
         public Int64 GroupTextId { get; set; }
+
+        public string GroupName { get; set; }
+
+        public List<SelectItem> Items { get; set; }
     }
 }

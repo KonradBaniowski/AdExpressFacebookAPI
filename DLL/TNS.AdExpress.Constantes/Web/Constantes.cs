@@ -4135,6 +4135,28 @@ namespace TNS.AdExpress.Constantes.Web
         }
 	}
 
-	#endregion
+    #endregion
 
+    #region Common Layers
+    /// <summary>
+    /// contains all constantes to identify Group Selection
+    /// </summary>
+    public class GroupSelection
+    {
+        /// <summary>
+        /// Group Type
+        /// </summary>
+        public enum GroupType
+        {
+            /// <summary>
+            /// Mono Selection
+            /// </summary>
+            mono = 0,
+            /// <summary>
+            ///Multi Selection
+            /// </summary>
+            multi = 1
+        }
+    }
+    #endregion
 }

@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using System.Web.Mvc;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using TNS.Alert.Domain;
 
 namespace Km.AdExpressClientWeb.Helpers
@@ -501,13 +502,50 @@ namespace Km.AdExpressClientWeb.Helpers
         {
             switch (countryCode)
             {
-                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+                case CountryCode.TURKEY:
                     return true;                   
                default:
                     return false;
               
             }
+        }
 
+        public static bool CanDisplayGroups(string countryCode)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    return true;
+                default:
+                    return false;
+
+            }
+        }
+
+        public static void SetGroupItems(int siteLanguage, string countryCode, UnitSelectControl units)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    units.Groups = new List<GroupItems>();
+
+                    foreach (var group in units.Items.Select(i => new { i.GroupId, i.GroupType, i.GroupTextId }).Distinct())
+                    {
+                        var GroupItems = new GroupItems
+                        {
+                            GroupId = group.GroupId,
+                            GroupType = group.GroupType,
+                            GroupTextId = group.GroupTextId,
+                            GroupName = GestionWeb.GetWebWord(group.GroupTextId, siteLanguage)
+                        };
+                        GroupItems.Items = units.Items.Where(i => i.GroupId == group.GroupId).ToList();
+                        units.Groups.Add(GroupItems);
+                    }
+                    break;
+                default:
+                    units.Groups = null;
+                    break;
+            }
         }
     }
 

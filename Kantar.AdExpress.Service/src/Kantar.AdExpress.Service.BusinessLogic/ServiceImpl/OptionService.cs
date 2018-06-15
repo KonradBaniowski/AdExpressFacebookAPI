@@ -733,8 +733,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     Text = GestionWeb.GetWebWord(currentUnit.WebTextId,
                                _customerWebSession.SiteLanguage),
-                    Value = currentUnit.Id.GetHashCode().ToString()
-                });
+                    Value = currentUnit.Id.GetHashCode().ToString(),
+                    GroupId = currentUnit.GroupId,
+                    GroupType = currentUnit.GroupType,
+                    GroupTextId = currentUnit.GroupTextId
+                    });
             }
         }
 
