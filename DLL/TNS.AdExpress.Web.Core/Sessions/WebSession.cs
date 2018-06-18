@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -355,15 +356,16 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         protected Constantes.Web.CustomerSessions.Period.DisplayLevel detailPeriod = Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly;
 
-        ///// <summary>
-        ///// Unité utilisé (€, spots...)
-        ///// </summary>
-        //protected Constantes.Web.CustomerSessions.Unit unit = UnitsInformation.DefaultCurrency;
+        /// <summary>
+        /// Unité utilisé (€, spots...)
+        /// </summary>
+        protected Constantes.Web.CustomerSessions.Unit unit = UnitsInformation.DefaultCurrency;
 
         /// <summary>
         /// Unité utilisé (€, spots...)
         /// </summary>
-        private List<WebConstantes.CustomerSessions.Unit> _units = new List<WebConstantes.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency }; 
+        [OptionalField(VersionAdded = 2)]
+        protected List<WebConstantes.CustomerSessions.Unit> _units = new List<WebConstantes.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency }; 
 
         /// <summary>
         /// Unité en pourcentage
@@ -4856,7 +4858,15 @@ namespace TNS.AdExpress.Web.Core.Sessions
         }
         #endregion
 
-
+        //[OnDeserialized]
+        //private void SetUnisDefault(StreamingContext sc)
+        //{
+        //    if (unit != WebConstantes.CustomerSessions.Unit.euro)
+        //    {
+        //        var t = unit;
+        //    }
+        //    _units = new List<WebConstantes.CustomerSessions.Unit> { unit };
+        //}
 
 
     }

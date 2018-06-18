@@ -2409,5 +2409,8 @@
     <item mnemonic="w3131" type="System.String">Le document PowerPoint </item>
     <item mnemonic="w3132" type="System.String">AdExpress -- Fichier PowerPoint Alerte Plan Média</item>
     <item mnemonic="w3133" type="System.String">Champs requis</item>   
+    <item mnemonic="w3134" type="System.String">TL</item>
+    <item mnemonic="w3135" type="System.String">Turkish Liras</item>
+    <item mnemonic="w3136" type="System.String">$</item>
   </items>
 </localization>

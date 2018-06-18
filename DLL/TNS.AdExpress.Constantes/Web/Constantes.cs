@@ -686,7 +686,11 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// number of post
             /// </summary>
-            numberPost =28
+            numberPost =28,
+            /// <summary>
+            /// Turkish Lira
+            /// </summary>
+            tl=29
 		}
 		#endregion
 
