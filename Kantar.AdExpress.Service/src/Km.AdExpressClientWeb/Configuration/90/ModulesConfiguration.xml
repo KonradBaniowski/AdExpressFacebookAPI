@@ -63,11 +63,12 @@
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
+              <allowedUniverseLevel id="34" name="ad slogan"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="2">
-              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
-              <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
-              <allowedUniverseBranch id="3" name="brand\product"/>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_"/>
+              <allowedUniverseBranch id="2"  name="holding_company\advertiser\brand\product"/>
+              <allowedUniverseBranch id="3" name="brand\product\ad slogan"/>
             </allowedUniverseBranches>
           </selection>        
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />

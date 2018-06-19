@@ -2412,5 +2412,13 @@
     <item mnemonic="w3134" type="System.String">TL</item>
     <item mnemonic="w3135" type="System.String">Turkish Liras</item>
     <item mnemonic="w3136" type="System.String">$</item>
+
+    <item mnemonic="w3137" type="System.String">!</item>
+    <item mnemonic="w3138" type="System.String">!</item>
+    <item mnemonic="w3139" type="System.String">!</item>
+    <item mnemonic="w3140" type="System.String">!</item>
+    <item mnemonic="w3141" type="System.String">!</item>
+    <item mnemonic="w3142" type="System.String">!</item>
+    <item mnemonic="w3143" type="System.String">!</item>
   </items>
 </localization>
