@@ -2,7 +2,7 @@
 <universeLevels>
   <level id="1" name="sector" labelId="1103" dbId="id_sector" dbTable="sector"/>
   <level id="2" name="subsector" labelId="552" dbId="id_subsector" dbTable="subsector"/>
-  <level id="3" name="group_" labelId="1110" dbId="id_group_" dbTable="group_"/>
+  <level id="3" name="group_" labelId="3143" dbId="id_group_" dbTable="group_"/>
   <level id="4" name="segment" labelId="592" dbId="id_segment" dbTable="segment"/>
   <level id="7" name="holding_company" labelId="1589" dbId="id_holding_company" dbTable="holding_company"/>
   <level id="6" name="advertiser" labelId="857" dbId="id_advertiser" dbTable="advertiser"/>
@@ -21,8 +21,13 @@
   <level id="24" name="programme genre" labelId="2122" dbId="id_program_type" dbTable="program_type" dbTablePrefixe="pt"/>  
   <level id="27" name="title" labelId="1976" dbId="id_title" dbTable="title"/>
   <level id="28" name="media_Seller" labelId="1383" dbId="id_media_seller" dbTable="media_seller"/>
-  <level id="29" name="Canal" labelId="1292" dbId="id_canal" dbLabel="canal" dbTable="canal" dbTablePrefixe="cl"/>
-  <level id="30" name="Medecin" labelId="1991" dbId="id_medecin" dbLabel="medecin" dbTable="medecin" dbTablePrefixe="im"/>
-  <level id="31" name="Formes de Parrainage" labelId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
-  <level id="32" name="grp_pharma" labelId="3109" dbId="id_grp_pharma" dbLabel="grp_pharma" dbTable="grp_pharma" dbTablePrefixe="gp"/>
+  
+  <level id="33" name="advertiser_type" labelId="3137" dbId="id_advertiser_type" dbTable="advertiser_type"/>
+  <level id="34" name="ad_slogan" labelId="3138" dbId="id_ad_slogan" dbTable="ad_slogan"/>
+  <level id="35" name="purchasing_agency" labelId="3139" dbId="id_purchasing_agency" dbTable="purchasing_agency"/>
+  <level id="36" name="creative_agency" labelId="3140" dbId="id_creative_agency" dbTable="creative_agency"/>
+  <level id="37" name="spot_genre" labelId="3141" dbId="id_spot_genre" dbTable="spot_genre"/>
+  <level id="38" name="spot_sub_genre" labelId="3142" dbId="id_spot_sub_genre" dbTable="spot_sub_genre"/>
+
+
 </universeLevels>

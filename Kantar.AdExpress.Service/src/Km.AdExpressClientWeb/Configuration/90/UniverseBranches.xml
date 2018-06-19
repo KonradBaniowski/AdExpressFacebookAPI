@@ -4,16 +4,18 @@
     <level id="1" name="sector"/>
     <level id="2" name="subsector"/>
     <level id="3" name="group_"/>
-    <level id="4" name="segment"/>
+    <!--<level id="4" name="segment"/>-->
   </branch>
   <branch id="2"  name="advertiser" labelId="857">
     <level id="7" name ="holding_company"/>
     <level id="6" name ="advertiser"/>
+    <level id="8" name ="brand"/>
     <level id="5" name ="product"/>
   </branch>
   <branch id="3" name="brand" labelId="1889">
     <level id="8" name ="brand"/>
     <level id="5" name ="product"/>
+    <level id="34" name ="ad slogan "/>    
   </branch>
   <branch id="4"  name="advertiser" labelId="857">
     <level id="6" name ="advertiser"/>
