@@ -208,6 +208,9 @@ namespace Km.AdExpressClientWeb.I18n
                 || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
 
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
+                result.PreSelection = string.Empty;
+
             return result;
         }
     }

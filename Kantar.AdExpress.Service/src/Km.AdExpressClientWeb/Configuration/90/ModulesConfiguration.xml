@@ -78,9 +78,13 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
+              <allowedUniverseLevel id="39" name="media_owner"/>
+              <allowedUniverseLevel id="40" name="program"/>
+              <allowedUniverseLevel id="41" name="program_typology"/>
+              <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="7">
-              <allowedUniverseBranch id="7" name="vehicle\category\media"/>
+              <allowedUniverseBranch id="7" name="vehicle\category\interest_center\media_owner\media\program\program_typology\spot_sub_type"/>
               <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
           </selection>

@@ -236,6 +236,23 @@ namespace TNS.Classification.Universe {
         /// Spot sub genre level
         /// </summary>
         public const Int64 SPOT_SUB_GENRE = 38;
+
+        /// <summary>
+        /// Media Owner level
+        /// </summary>
+        public const Int64 MEDIA_OWNER = 39;
+        /// <summary>
+        /// Program level
+        /// </summary>
+        public const Int64 PROGRAM = 40;
+        /// <summary>
+        /// Program Typology level
+        /// </summary>
+        public const Int64 PROGRAM_TYPOLOGY = 41;
+        /// <summary>
+        /// Spot Sub Type level
+        /// </summary>
+        public const Int64 SPOT_SUB_TYPE = 42;
     }
     #endregion
 }

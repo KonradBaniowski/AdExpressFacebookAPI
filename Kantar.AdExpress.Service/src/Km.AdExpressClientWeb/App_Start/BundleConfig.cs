@@ -72,10 +72,15 @@ namespace Km.AdExpressClientWeb
 
             #region CSS spécifique par langues
             //Francais 
-            bundles.Add(new StyleBundle("~/Content/css/33/FR"));
+            bundles.Add(new StyleBundle("~/Content/css/33/FR").Include(
+                "~/Content/site-Fr.css"
+            ));
 
             //Anglais 
-            bundles.Add(new StyleBundle("~/Content/css/33/EN"));
+            bundles.Add(new StyleBundle("~/Content/css/33/EN").Include(
+                "~/Content/site-En.css"
+            ));
+
             bundles.Add(new StyleBundle("~/Content/css/35/EN").Include(
                 "~/Content/site-Fi_en.css"
             ));
@@ -84,9 +89,14 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new StyleBundle("~/Content/css/35/FI").Include(
                 "~/Content/site-Fi.css"
             ));
+
+            //Turkey 
+            bundles.Add(new StyleBundle("~/Content/css/90/EN").Include(
+                "~/Content/site-Tk.css"
+            ));
             #endregion
 
-            
+
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                   "~/Scripts/module-selection/module-selection.js"));
