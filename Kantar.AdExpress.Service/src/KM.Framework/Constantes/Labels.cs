@@ -244,7 +244,8 @@ namespace KM.Framework.Constantes
         public string ReturToLogin { get; set; } //3130
 
         public string RequiredFields { get; set; } //3133
-	public string IdSlogansLabel { get; set; } //1888
+	    public string IdSlogansLabel { get; set; } //1888
 
+        public string UnitSelectionLabel { get; set; } //3149
     }
 }

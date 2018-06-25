@@ -21,6 +21,7 @@ using TNS.AdExpress.Domain.Web;
 using NLog;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using ConstantesSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -191,6 +192,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 options.GenericDetailLevel = genericDetailLevelOption;
 
+                #region GRP Turkey
+                CheckBoxOption grp = new CheckBoxOption();
+                grp.Id = "grp";
+                grp.Value = _customerWebSession.Grp;
+                options.Grp = grp;
+
+                CheckBoxOption grp30S = new CheckBoxOption();
+                grp30S.Id = "grp30S";
+                grp30S.Value = _customerWebSession.Grp30S;
+                options.Grp30S = grp30S;
+
+                CheckBoxOption spendsGrp = new CheckBoxOption();
+                spendsGrp.Id = "spendsGrp";
+                spendsGrp.Value = _customerWebSession.SpendsGrp;
+                options.SpendsGrp = spendsGrp;
+                if (_customerWebSession.Unit == ConstantesSession.Unit.euro
+                    || _customerWebSession.Unit == ConstantesSession.Unit.tl
+                    || _customerWebSession.Unit == ConstantesSession.Unit.usd)
+                    options.SpendsSelected = true;
+                #endregion
 
                 #endregion
 
@@ -307,6 +328,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region PeriodDetailFilter
                 _customerWebSession.DetailPeriod = (ConstantesPeriod.DisplayLevel)userFilter.PeriodDetailFilter.PeriodDetailType;
                 #endregion
+
+                _customerWebSession.Grp = userFilter.Grp;
+                _customerWebSession.Grp30S = userFilter.Grp30S;
+                _customerWebSession.SpendsGrp = userFilter.SpendsGrp;
 
                 _customerWebSession.Save();
             }

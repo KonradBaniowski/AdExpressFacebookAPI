@@ -689,6 +689,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                     options.IsSelectRetailerDisplay = false;
 
+                #region GRP Turkey
+                CheckBoxOption grp = new CheckBoxOption();
+                grp.Id = "grp";
+                grp.Value = _customerWebSession.Grp;
+                options.Grp = grp;
+
+                CheckBoxOption grp30S = new CheckBoxOption();
+                grp30S.Id = "grp30S";
+                grp30S.Value = _customerWebSession.Grp30S;
+                options.Grp30S = grp30S;
+
+                CheckBoxOption spendsGrp = new CheckBoxOption();
+                spendsGrp.Id = "spendsGrp";
+                spendsGrp.Value = _customerWebSession.SpendsGrp;
+                options.SpendsGrp = spendsGrp;
+
+                if (_customerWebSession.Unit == ConstantesSession.Unit.euro
+                    || _customerWebSession.Unit == ConstantesSession.Unit.tl
+                    || _customerWebSession.Unit == ConstantesSession.Unit.usd)
+                    options.SpendsSelected = true;
+                #endregion
+
                 _customerWebSession.ReachedModule = true;
                 _customerWebSession.Save();
             }
@@ -856,9 +878,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region UnitFilter
                 if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
 
-                    && userFilter.UnitFilter.Unit != WebConstantes.CustomerSessions.Unit.none.GetHashCode()
+                    && !userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
                     )
-                    _customerWebSession.Units = new List<ConstantesSession.Unit> { (ConstantesSession.Unit)userFilter.UnitFilter.Unit };
+                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
                 #endregion
 
                 #region PercentageFilter
@@ -957,6 +979,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
                 }
+
+                _customerWebSession.Grp = userFilter.Grp;
+                _customerWebSession.Grp30S = userFilter.Grp30S;
+                _customerWebSession.SpendsGrp = userFilter.SpendsGrp;
 
                 _customerWebSession.Save();
             }

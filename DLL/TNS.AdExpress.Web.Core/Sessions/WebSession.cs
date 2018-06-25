@@ -2284,6 +2284,87 @@ namespace TNS.AdExpress.Web.Core.Sessions
             }
         }
 
+        /// <summary>
+        /// Get or Set GRP
+        /// </summary>
+        public bool Grp
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.grp))
+                {
+                    try
+                    {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.grp];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.grp] = false;
+                    }
+                }
+                return false;
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.grp] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set GRP 30s
+        /// </summary>
+        public bool Grp30S
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.grp30s))
+                {
+                    try
+                    {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.grp30s];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.grp30s] = false;
+                    }
+                }
+                return false;
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.grp30s] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set GRP 30s
+        /// </summary>
+        public bool SpendsGrp
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.spendsGrp))
+                {
+                    try
+                    {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.spendsGrp];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.spendsGrp] = false;
+                    }
+                }
+                return false;
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.spendsGrp] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
         #region Accesseurs Répartition
         /// <summary>
         /// Obtient /définit le format spot

@@ -295,6 +295,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long ReturToLogin = 3130;
         public const long RequiredFields = 3133;
         public const long IdSlogansLabel = 1888;
+        public const long UnitSelectionLabel = 3149;
         #endregion
     }
 }

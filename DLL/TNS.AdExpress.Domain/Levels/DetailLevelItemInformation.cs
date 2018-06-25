@@ -333,8 +333,39 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Health Canal
             /// </summary>
-            canal = 78
-
+            canal = 78,
+            /// <summary>
+            /// Media Owner
+            /// </summary>
+            mediaOwner = 79,
+            /// <summary>
+            /// Program Typology
+            /// </summary>
+            programTypology = 80,
+            /// <summary>
+            /// Spot Type
+            /// </summary>
+            spotType = 81,
+            /// <summary>
+            /// Spot Sub Type
+            /// </summary>
+            spotSubType = 82,
+            /// <summary>
+            /// Ad Slogan
+            /// </summary>
+            adSlogan = 83,
+            /// <summary>
+            /// Spot Rank Type
+            /// </summary>
+            spotRankType = 84,
+            /// <summary>
+            /// Program Commercial Item Position Type
+            /// </summary>
+            programComItemPositionType = 85,
+            /// <summary>
+            /// Version Name
+            /// </summary>
+            sloganName = 86,
         }
 		#endregion
 

@@ -14,5 +14,6 @@ namespace Km.AdExpressClientWeb.Models.Shared
         public Labels Labels { get; set; }
         public bool IsAlertVisible { get; set; }
         public List<ExportTypeViewModel> ExportTypeViewModels { get; set; }
+        public bool GrpAvailable { get; set; }
     }
 }

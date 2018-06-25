@@ -409,6 +409,48 @@
                     <div class="col-md-4">
                         @if (WebApplicationParameters.UseComparativeMediaSchedule)
                         {
+                            if (Model.Grp.Visible)
+                            {
+                                <div class="checkbox padder media-schedule-option">
+                                    @if (Model.Grp.Value)
+                                    {
+                                        <input id="grp" type="checkbox" name="grp" class="with-font" checked />
+                                    }
+                                    else
+                                    {
+                                        <input id="grp" type="checkbox" name="grp" class="with-font" />
+                                    }
+                                    <label for="grp">@GestionWeb.GetWebWord(3150, Model.SiteLanguage)</label>
+                                </div>
+                            }
+                            if (Model.Grp30S.Visible)
+                            {
+                                <div class="checkbox padder media-schedule-option">
+                                    @if (Model.Grp30S.Value)
+                                    {
+                                        <input id="grp30S" type="checkbox" name="grp30S" class="with-font" checked />
+                                    }
+                                    else
+                                    {
+                                        <input id="grp30S" type="checkbox" name="grp30S" class="with-font" />
+                                    }
+                                    <label for="grp30S">@GestionWeb.GetWebWord(3151, Model.SiteLanguage)</label>
+                                </div>
+                            }
+                            if (Model.SpendsGrp.Visible)
+                            {
+                                <div class="checkbox padder media-schedule-option">
+                                    @if (Model.SpendsGrp.Value && Model.SpendsSelected)
+                                    {
+                                        <input id="spendsGrp" type="checkbox" name="spendsGrp" class="with-font" checked />
+                                    }
+                                    else
+                                    {
+                                        <input id="spendsGrp" type="checkbox" name="spendsGrp" class="with-font" />
+                                    }
+                                    <label for="spendsGrp">@GestionWeb.GetWebWord(3152, Model.SiteLanguage)</label>
+                                </div>
+                            }
                             <div class="checkbox padder media-schedule-option">
                                 @if (Model.ComparativeStudy)
                                 {

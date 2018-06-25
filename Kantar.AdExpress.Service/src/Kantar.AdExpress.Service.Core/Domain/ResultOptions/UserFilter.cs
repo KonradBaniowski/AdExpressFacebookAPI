@@ -44,5 +44,11 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool IsSelectRetailerDisplay { get; set; }
 
         public PercentageFilter PercentageFilter { get; set; }
+
+        public bool Grp { get; set; }
+
+        public bool Grp30S { get; set; }
+
+        public bool SpendsGrp { get; set; }
     }
 }

@@ -318,7 +318,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Presentation = pageHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = pageHelper.LoadPageLabels(result.WebSession.SiteLanguage, _controller),
                 IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage),
+                GrpAvailable = PageHelper.IsGrpAvailable(WebApplicationParameters.CountryCode)
             };
 
             return View(model);
@@ -408,6 +409,7 @@ namespace Km.AdExpressClientWeb.Controllers
             options.UnitOption.Unit.EnableMultiple = PageHelper.CanSelectMultipleUnit(WebApplicationParameters.CountryCode);
             options.UnitOption.Unit.EnableGroups = PageHelper.CanDisplayGroups(WebApplicationParameters.CountryCode);
             PageHelper.SetGroupItems(options.SiteLanguage, WebApplicationParameters.CountryCode, options.UnitOption.Unit);
+            PageHelper.SetGrp(WebApplicationParameters.CountryCode, options);
             return PartialView("_ResultOptions", options);
         }
 
@@ -526,7 +528,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
-                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage),
+                UnitSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.UnitSelectionLabel, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

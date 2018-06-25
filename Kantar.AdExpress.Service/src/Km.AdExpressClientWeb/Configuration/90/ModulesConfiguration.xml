@@ -21,33 +21,45 @@
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
-            <defaultMediaDetailLevel id="1" name="media\catégorie" />
-            <defaultMediaDetailLevel id="2" name="media\catégorie\support" />
-            <defaultMediaDetailLevel id="3" name="media\catégorie\support\version" />
-            <defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />
-            <defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />
-            <defaultMediaDetailLevel id="6" name="media\regie\support" />
-            <defaultMediaDetailLevel id="7" name="media\regie\support\version" />
-            <defaultMediaDetailLevel id="8" name="media\version\support" />
+            <defaultMediaDetailLevel id="41" name="Classe\Groupe" />
+            <defaultMediaDetailLevel id="78" name="Classe\Groupe\Marque\product" />
+            <defaultMediaDetailLevel id="79" name="advertiser\brand\product/version" />
+            <defaultMediaDetailLevel id="80" name="Marque\product\version" />
+            <defaultMediaDetailLevel id="81" name="Marque\product\versionName" />
+            <defaultMediaDetailLevel id="82" name="catégorie\centre d'interet\support" />
+            <defaultMediaDetailLevel id="83" name="Vehicle\Marque\product" />
+            <defaultMediaDetailLevel id="84" name="Vehicle\Program" />
+            <defaultMediaDetailLevel id="86" name="Vehicle\Program\Marque" />
+            <defaultMediaDetailLevel id="87" name="programTypology\Program\Marque" />
+            <defaultMediaDetailLevel id="88" name="Support\spotSubType" />
+            <defaultMediaDetailLevel id="89" name="Support\spotSubType\Marque" />
+            <defaultMediaDetailLevel id="90" name="spotType\spotSubType" />
+            <defaultMediaDetailLevel id="91" name="spotType\spotSubType\Marque" />
+            <defaultMediaDetailLevel id="92" name="Program\spotSubType" />
+            <defaultMediaDetailLevel id="93" name="programTypology\spotSubType" />
           </defaultMediaDetailLevels>
           <allowedMediaLevelItems>
             <allowedMediaLevelItem id="1" name="Media"/>
             <allowedMediaLevelItem id="2" name="Categorie"/>
             <allowedMediaLevelItem id="3" name="Support"/>
             <allowedMediaLevelItem id="4" name="Centre d'interet"/>
-            <allowedMediaLevelItem id="77" name="Media Group"/>
-            <allowedMediaLevelItem id="5" name="Régie"/>
+            <allowedMediaLevelItem id="79" name="MediaOwner"/>
+            <allowedMediaLevelItem id="24" name="Program"/>
             <allowedMediaLevelItem id="6" name="Version"/>
-            <allowedMediaLevelItem id="7" name="holding_company"/>
+            <allowedMediaLevelItem id="80" name="programTypology"/>
+            <allowedMediaLevelItem id="81" name="spotType"/>
+            <allowedMediaLevelItem id="82" name="spotSubType"/>
+            <allowedMediaLevelItem id="84" name="spotRankType"/>
+            <allowedMediaLevelItem id="85" name="programComItemPositionType"/>
+            <!--<allowedMediaLevelItem id="7" name="holding_company"/>-->
             <allowedMediaLevelItem id="8" name="Annonceur"/>
             <allowedMediaLevelItem id="9" name="Marque"/>
             <allowedMediaLevelItem id="10" name="Produit"/>
+            <allowedMediaLevelItem id="83" name="adSlogan"/>
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
             <allowedMediaLevelItem id="14" name="Variété"/>
-            <allowedMediaLevelItem id="15" name="Groupe d'agence"/>
-            <allowedMediaLevelItem id="16" name="Agence"/>
             <allowedMediaLevelItem id="17" name="Titre"/>
             <allowedMediaLevelItem id="26" name="Pays"/>
           </allowedMediaLevelItems>

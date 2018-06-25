@@ -330,7 +330,19 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// Selected Mms Banners Format List
             /// </summary>
-            selectedMmsBannersFormatList = 76
+            selectedMmsBannersFormatList = 76,
+            /// <summary>
+            /// GRP
+            /// </summary>
+            grp = 77,
+            /// <summary>
+            /// GRP 30s
+            /// </summary>
+            grp30s = 78,
+            /// <summary>
+            /// Spends per GRP
+            /// </summary>
+            spendsGrp = 79
 		}
 
         /// <summary>

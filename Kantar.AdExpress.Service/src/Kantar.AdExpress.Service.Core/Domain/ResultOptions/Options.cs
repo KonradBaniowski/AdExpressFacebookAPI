@@ -46,5 +46,13 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool IsSelectRetailerDisplay { get; set; }
 
         public PercentageOption PercentageOption { get; set; }
+
+        public CheckBoxOption Grp { get; set; }
+
+        public CheckBoxOption Grp30S { get; set; }
+
+        public CheckBoxOption SpendsGrp { get; set; }
+
+        public bool SpendsSelected { get; set; }
     }
 }

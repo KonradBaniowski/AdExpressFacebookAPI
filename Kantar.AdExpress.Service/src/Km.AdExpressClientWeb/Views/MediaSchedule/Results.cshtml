@@ -151,6 +151,9 @@
             var hasMSCreatives = false;
             var creatives = [];
             var gridWidth;
+            var EURO = '@TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()';
+            var TL = '@TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.tl.GetHashCode()';
+            var USD = '@TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.usd.GetHashCode()';
 
             function GetItems(idItems) {
                 var items = '';
@@ -211,6 +214,9 @@
                 this.IsSelectRetailerDisplay = false;
                 this.InitializeMedia = false;
                 this.ComparativePeriodType = 1;
+                this.Grp = false;
+                this.Grp30S = false;
+                this.SpendsGrp = false;
             }
 
             var userFilter = new UserFilter();
@@ -954,8 +960,8 @@
                         if (data != null && data != "") {
                             if (data.Id > 0) {
                                 $("#customDetail")
-                                .append('<option value="' + data.Id + '">' + data.Label + '</option>')
-                                .selectpicker('refresh');
+                                    .append('<option value="' + data.Id + '">' + data.Label + '</option>')
+                                    .selectpicker('refresh');
                             }
                             bootbox.alert(data.Message);
                         }
@@ -990,19 +996,25 @@
             });
 
             $('#validate-options').on('click', function (e) {
-                $("#grid").addClass("hide");
-                $("#gridLoader").removeClass("hide");
-                $("#collapseContainerOne").collapse('hide');
 
-                if ($("#initializeMedia").prop('checked') == true) {
-                    $("#initializeMediaContainer").hide();
-                }
+                var unit = $('#unit').val();
+                if (unit == null || unit == undefined) {
+                    bootbox.alert("@Model.Labels.UnitSelectionLabel");
+                } else {
+                    $("#grid").addClass("hide");
+                    $("#gridLoader").removeClass("hide");
+                    $("#collapseContainerOne").collapse('hide');
 
-                CallSetOptions();
+                    if ($("#initializeMedia").prop('checked') == true) {
+                        $("#initializeMediaContainer").hide();
+                    }
 
-                if ($("#initializeMedia").prop('checked') == true) {
-                    $('#initializeMedia').attr('checked', false);
-                    userFilter.InitializeMedia = false;
+                    CallSetOptions();
+
+                    if ($("#initializeMedia").prop('checked') == true) {
+                        $('#initializeMedia').attr('checked', false);
+                        userFilter.InitializeMedia = false;
+                    }
                 }
             });
 
@@ -1019,7 +1031,22 @@
             $('#unit').selectpicker();
 
             $('#unit').on('change', function (e) {
-                userFilter.UnitFilter.Unit = $('#unit').val();
+                var unitVal = $('#unit').val();
+                userFilter.UnitFilter.Unit = unitVal;
+                @if (Model.GrpAvailable)
+                {
+                    <text>
+                        if (jQuery.inArray(EURO, unitVal) == 0 || jQuery.inArray(TL, unitVal) == 0 || jQuery.inArray(USD, unitVal) == 0) {
+                            $('#spendsGrp').show();
+                            $("label[for='spendsGrp']").css('display', 'block');
+                        } else {
+                            $('#spendsGrp').hide();
+                            $("label[for='spendsGrp']").css('display', 'none');
+                            $('#spendsGrp').prop('checked', false);
+                            userFilter.SpendsGrp = false;
+                        }
+                    </text>
+                }
             });
 
             $('#insertion').selectpicker();
@@ -1088,18 +1115,18 @@
                 if ($(lx).val() == $(ly).val()) {
                     $(ly).selectpicker('val', '-1');
                     switch (ly) {
-                        case "#l1Detail":
-                            userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
-                            break;
-                        case "#l2Detail":
-                            userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
-                            break;
-                        case "#l3Detail":
-                            userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
-                            break;
-                        case "#l4Detail":
-                            userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
-                            break;
+                    case "#l1Detail":
+                        userFilter.GenericDetailLevelFilter.L1DetailValue = -1;
+                        break;
+                    case "#l2Detail":
+                        userFilter.GenericDetailLevelFilter.L2DetailValue = -1;
+                        break;
+                    case "#l3Detail":
+                        userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
+                        break;
+                    case "#l4Detail":
+                        userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
+                        break;
                     }
                 }
             }
@@ -1156,6 +1183,63 @@
                 userFilter.GenericDetailLevelFilter.L3DetailValue = -1;
                 userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
             }
+
+            @if (Model.GrpAvailable)
+             {
+                 <text>
+            if ($("#grp").prop('checked') == true) {
+                userFilter.Grp = true;
+            }
+            else {
+                userFilter.Grp = false;
+            }
+
+            $("#grp").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.Grp = true;
+                    userFilter.Grp30S = false;
+                    $('#grp30S').prop('checked', false);
+                }
+                else {
+                    userFilter.Grp = false;
+                }
+            });
+
+            if ($("#grp30S").prop('checked') == true) {
+                userFilter.Grp30S = true;
+            }
+            else {
+                userFilter.Grp30S = false;
+            }
+
+            $("#grp30S").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.Grp30S = true;
+                    userFilter.Grp = false;
+                    $('#grp').prop('checked', false);
+                }
+                else {
+                    userFilter.Grp30S = false;
+                }
+            });
+
+            if ($("#spendsGrp").prop('checked') == true) {
+                userFilter.SpendsGrp = true;
+            }
+            else {
+                userFilter.SpendsGrp = false;
+            }
+
+            $("#spendsGrp").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.SpendsGrp = true;
+                }
+                else {
+                    userFilter.SpendsGrp = false;
+                }
+            });
+                 </text>
+             }
 
             Array.prototype.remove = function (value) {
                 if (this.indexOf(value) !== -1) {

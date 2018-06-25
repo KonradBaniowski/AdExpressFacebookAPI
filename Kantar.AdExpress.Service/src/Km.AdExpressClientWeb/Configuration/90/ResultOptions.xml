@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resultOptions>
-  <inset available="true" description="Specify if the option inset is available overall the website">
-    <insetItem  id="encart" dataBaseId="108"/>
-    <insetItem  id="flyingEncart" dataBaseId="85"/>
-    <insetItem  id="Excart" dataBaseId="999"/>
-    <insetItem  id="subScriberEncart" dataBaseId="1983"/>
-  </inset>
+  <inset available="false" description="Specify if the option inset is available overall the website"/>
   <campaignType available="false" description="Specify if the option campaign Type is available overall the website"/>
   <refineUniverse keepSelection="false" description="Specify if client select is kept when go back to universe refine selection page"/>
   <lostWon useComparative="false"  useDiponibility="true" useType="true"/>
   <mediaSchedule useComparative="true"/>
-  <tendency useComparativeWeekType="true"/>
+  <tendency useComparativeWeekType="false"/>
   <news displayNews="true"/>
-  <evaliantCountryAccess applyEvaliantCountryAccess="true"/>
+  <evaliantCountryAccess applyEvaliantCountryAccess="false"/>
   <plurimediaEvol hidePlurimediaEvol="false"/>
-  <purchaseMode use="true"/>
+  <purchaseMode use="false"/>
   <showPickaNews use="false"/>
-  <bannersFormat use="true">
-    <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners"               formatTableName="groupFormatBanners"/>
-    <allowVehicle id="20" description="mms"     rightBannersType="None"                   dataTableName="groupFormatBanners"    formatTableName="groupFormatBanners" excludedFormats="0,4"/>
-  </bannersFormat>
+  <bannersFormat use="false"/>
   <retailer use="false"/>
 </resultOptions>

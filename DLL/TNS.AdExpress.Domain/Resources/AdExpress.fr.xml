@@ -2426,5 +2426,13 @@
     <item mnemonic="w3146" type="System.String">!</item>
     <item mnemonic="w3147" type="System.String">!</item>
     <item mnemonic="w3148" type="System.String">!</item>
+    <item mnemonic="w3149" type="System.String">Vous devez sélectionner au moins une unité</item>
+    <item mnemonic="w3150" type="System.String">!</item>
+    <item mnemonic="w3151" type="System.String">!</item>
+    <item mnemonic="w3152" type="System.String">!</item>
+    <item mnemonic="w3153" type="System.String">!</item>
+    <item mnemonic="w3154" type="System.String">!</item>
+    <item mnemonic="w3155" type="System.String">!</item>
+    <item mnemonic="w3156" type="System.String">!</item>
   </items>
 </localization>

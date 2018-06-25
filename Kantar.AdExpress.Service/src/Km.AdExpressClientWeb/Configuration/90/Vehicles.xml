@@ -14,60 +14,37 @@
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
       <allowedMediaLevelItems>
-        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
-        <!-- Media -->
-        <allowedMediaLevelItem>category</allowedMediaLevelItem>
-        <!-- Categorie -->
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>
-        <!-- Support -->
-        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
-        <!-- Centre d'interet -->
-        <allowedMediaLevelItem>mediaGroup</allowedMediaLevelItem>
-        <!-- Media Group -->
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
-        <!-- Régie -->
-        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
-        <!-- Version -->
-        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
-        <!-- Groupe de société -->
-        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
-        <!-- Annonceur -->
-        <allowedMediaLevelItem>brand</allowedMediaLevelItem>
-        <!-- Marque -->
-        <allowedMediaLevelItem>product</allowedMediaLevelItem>
-        <!-- Produit -->
-        <allowedMediaLevelItem>sector</allowedMediaLevelItem>
-        <!-- Famille -->
-        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>
-        <!-- Classe -->
-        <allowedMediaLevelItem>group</allowedMediaLevelItem>
-        <!-- Groupe -->
-        <allowedMediaLevelItem>segment</allowedMediaLevelItem>
-        <!-- Variété -->
-        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
-        <!-- Groupe d'agences -->
-        <allowedMediaLevelItem>agency</allowedMediaLevelItem>
-        <!-- Agence -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>
-        <!-- Titre -->
-        <allowedMediaLevelItem>programType</allowedMediaLevelItem>
-        <!-- Genre d'émission -->
-        <allowedMediaLevelItem>program</allowedMediaLevelItem>
-        <!-- Emission -->
-        <allowedMediaLevelItem>sponsorshipForm</allowedMediaLevelItem>
-        <!-- Forme de parrainage -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                      <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>                     <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>                        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>               <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaOwner</allowedMediaLevelItem>                   <!-- Media Owner -->
+        <allowedMediaLevelItem>program</allowedMediaLevelItem>                      <!-- Program -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>                       <!-- Version -->
+        <allowedMediaLevelItem>programTypology</allowedMediaLevelItem>              <!-- Program Typology -->
+        <allowedMediaLevelItem>spotType</allowedMediaLevelItem>                     <!-- Spot Type -->
+        <allowedMediaLevelItem>spotSubType</allowedMediaLevelItem>                  <!-- Spot Sub Type -->
+        <allowedMediaLevelItem>spotRankType</allowedMediaLevelItem>                 <!-- Spot Rank Type -->
+        <allowedMediaLevelItem>programComItemPositionType</allowedMediaLevelItem>   <!-- Program Commercial Item Position Type -->
+        <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>                   <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>                        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>                      <!-- Produit -->
+        <allowedMediaLevelItem>adSlogan</allowedMediaLevelItem>                     <!-- Ad Slogan -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>                       <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                    <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>                        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>                      <!-- Variété -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>                      <!-- Pays -->
         <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
-      <MediaSelectionParent>interestCenter</MediaSelectionParent>
-      <!-- Centre d'interet -->
-      <MediaSelectionParent>mediaSeller</MediaSelectionParent>
-      <!-- Régie -->
-      <MediaSelectionParent>title</MediaSelectionParent>
-      <!-- Titre -->
+      <MediaSelectionParent>interestCenter</MediaSelectionParent> <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>    <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>          <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
@@ -78,16 +55,11 @@
         <defaultMediaSelectionDetailLevel id="25" name="Catégorie\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
-        <allowedMediaSelectionLevelItem id="3"/>
-        <!-- Support -->
-        <allowedMediaSelectionLevelItem id="2"/>
-        <!-- Catégorie -->
-        <allowedMediaSelectionLevelItem id="4"/>
-        <!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="5"/>
-        <!-- Régie -->
-        <allowedMediaSelectionLevelItem id="17"/>
-        <!-- Titre -->
+        <allowedMediaSelectionLevelItem id="3"/>    <!-- Support -->
+        <allowedMediaSelectionLevelItem id="2"/>    <!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/>    <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/>    <!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/>   <!-- Titre -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -95,12 +67,9 @@
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
-        <!-- Media -->
-        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
-        <!-- Categorie -->
-        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>
-        <!-- Support -->
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>    <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>   <!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>      <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->

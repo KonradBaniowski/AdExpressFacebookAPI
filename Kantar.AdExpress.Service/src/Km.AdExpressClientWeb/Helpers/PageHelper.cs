@@ -258,7 +258,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 NoSelectedItemLabel = GestionWeb.GetWebWord(LanguageConstantes.NoSelectedItemLabel, siteLanguage),
                 FilterLabel = GestionWeb.GetWebWord(LanguageConstantes.FilterLabel, siteLanguage),
                 CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
-
+                UnitSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.UnitSelectionLabel, siteLanguage)
             };
 
 
@@ -545,6 +545,34 @@ namespace Km.AdExpressClientWeb.Helpers
                 default:
                     units.Groups = null;
                     break;
+            }
+        }
+
+        public static void SetGrp(string countryCode, Options options)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    options.Grp.Visible = true;
+                    options.Grp30S.Visible = true;
+                    options.SpendsGrp.Visible = true;
+                    break;
+                default:
+                    options.Grp.Visible = false;
+                    options.Grp30S.Visible = false;
+                    options.SpendsGrp.Visible = false;
+                    break;
+            }
+        }
+
+        public static bool IsGrpAvailable(string countryCode)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    return true;
+                default:
+                    return false;
             }
         }
     }
