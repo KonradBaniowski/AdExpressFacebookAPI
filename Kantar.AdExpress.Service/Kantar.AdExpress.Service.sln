@@ -231,6 +231,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.NewCreatives
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.NewCreatives.DAL.France", "..\DLL\TNS.AdExpressI.NewCreatives.DAL.France\TNS.AdExpressI.NewCreatives.DAL.France.csproj", "{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.Turkey", "..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Turkey\TNS.AdExpressI.MediaSchedule.DAL.Turkey.csproj", "{4D40A586-3723-4B80-86E6-EA6980395E0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -779,7 +781,6 @@ Global
 		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAE54EED-B912-4D1A-95C0-B96B7636D8B5}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{AD4FB0A1-BE64-47CD-A2D9-7A862F2467A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD4FB0A1-BE64-47CD-A2D9-7A862F2467A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD4FB0A1-BE64-47CD-A2D9-7A862F2467A3}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
@@ -870,6 +871,12 @@ Global
 		{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -988,5 +995,6 @@ Global
 		{53A5812D-A5F5-4EA6-8A9B-9311315FF67C} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{0E1A25D6-3749-4F69-85BE-9870C6E579F8} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 		{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{4D40A586-3723-4B80-86E6-EA6980395E0E} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 	EndGlobalSection
 EndGlobal
