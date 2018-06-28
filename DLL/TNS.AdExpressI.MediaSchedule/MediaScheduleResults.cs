@@ -372,7 +372,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <summary>
         /// Active periods
         /// </summary>
-        private List<string> _activePeriods = null;
+        protected List<string> _activePeriods = null;
         /// <summary>
         /// Get /Set Active periods
         /// </summary>
@@ -3725,7 +3725,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <param name="Level">level requested</param>
         /// <returns>cqfd</returns>
-        private bool IsAgencyLevelType(int Level) {
+        protected bool IsAgencyLevelType(int Level) {
             return(
                 _session.GenericMediaDetailLevel.LevelIds.Count >Level &&
                 (

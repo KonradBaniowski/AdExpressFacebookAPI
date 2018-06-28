@@ -366,7 +366,7 @@
                 if (columns != null) {
 
                     columns.forEach(function (elem) {
-                        if (elem.key == "PERIOD" || elem.key == "PERIOD_COMP") {
+                        if (elem.key.length > 0 && (elem.key.startsWith("PERIOD") || elem.key.startsWith("PERIOD_COMP"))) {
                             if (unit == "duration")
                                 elem.formatter = DurationFormatter;
                             else if (unit == "pages")
@@ -374,7 +374,7 @@
                             else
                                 elem.formatter = UnitFormatter;
                         }
-                        else if (elem.key == "EVOL") {
+                        else if (elem.key.length > 0 && elem.key.startsWith("EVOL")) {
                             elem.formatter = EvolFormatter;
                         }
                     });
