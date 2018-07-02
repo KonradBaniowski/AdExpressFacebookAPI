@@ -449,13 +449,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     idLv1 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv1;
 
-                                    //foreach (var unit in units)
+                                    foreach (var unit in units)
                                     {
-                                        SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unitTmp);
-                                    }
+                                        SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit, ref unitColumnIndex);
 
-                                    //if (_session.Grp || _session.Grp30S)
-                                    //    SetGRP(data, ref gridData, i, ref gridColumnId, ref gridColumnId);
+                                        if (IsCurrency(unit) && IsGrpSelected())
+                                        {
+                                            SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+
+                                            if(_session.SpendsGrp)
+                                                SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                        }
+                                    }
 
                                     if (idLv1 == 1)
                                         gridData[i - 1, gridColumnId++] = -1;
@@ -498,13 +503,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     idLv2 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv2;
 
-                                    //foreach (var unit in units)
+                                    foreach (var unit in units)
                                     {
-                                        SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb,j, ref gridColumnId, fp, unitTmp);
-                                    }
+                                        SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb,j, ref gridColumnId, fp, unit, ref unitColumnIndex);
 
-                                    //if (_session.Grp || _session.Grp30S)
-                                    //    SetGRP(data, ref gridData, i, ref gridColumnId, ref gridColumnId);
+                                        if (IsCurrency(unit) && IsGrpSelected())
+                                        {
+                                            SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+
+                                            if (_session.SpendsGrp)
+                                                SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                        }
+                                    }
 
                                     gridData[i - 1, gridColumnId++] = idLv1;
                                     if (_allowVersion)
@@ -530,13 +540,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     idLv3 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv3;
 
-                                    //foreach (var unit in units)
+                                    foreach (var unit in units)
                                     {
-                                        SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unitTmp);
-                                    }
+                                        SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unit, ref unitColumnIndex);
 
-                                    //if (_session.Grp || _session.Grp30S)
-                                    //    SetGRP(data, ref gridData, i, ref gridColumnId, ref gridColumnId);
+                                        if (IsCurrency(unit) && IsGrpSelected())
+                                        {
+                                            SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+
+                                            if (_session.SpendsGrp)
+                                                SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                        }
+                                    }
 
                                     gridData[i - 1, gridColumnId++] = idLv2;
                                     if (_allowVersion)
@@ -560,13 +575,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 idLv4 = pid;
                                 gridData[i - 1, gridColumnId++] = idLv4;
 
-                                //foreach (var unit in units)
+                                foreach (var unit in units)
                                 {
-                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unitTmp);
-                                }
+                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unit, ref unitColumnIndex);
 
-                                //if (_session.Grp || _session.Grp30S)
-                                //    SetGRP(data, ref gridData, i, ref gridColumnId, ref gridColumnId);
+                                    if (IsCurrency(unit) && IsGrpSelected())
+                                    {
+                                        SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+
+                                        if (_session.SpendsGrp)
+                                            SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                    }
+                                }
 
                                 gridData[i - 1, gridColumnId++] = idLv3;
                                 if (_allowVersion)
@@ -674,8 +694,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
         protected void SetLabelTotalPDM(object[,] data, ref object[,] gridData, int line, string cssClasse,
             string cssClasseNb, int col, ref int gridColumnId, IFormatProvider fp, UnitInformation unit, ref int unitColumnIndex)
         {
-            //int unitColumnIndexOld = unitColumnIndex;
-            int unitColumnIndexOld = 0;
+            int unitColumnIndexOld = unitColumnIndex;
+            //int unitColumnIndexOld = 0;
             gridData[line - 1, gridColumnId++] = data[line, col];
 
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
@@ -789,6 +809,39 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COLUMN_INDEX + unitColumnIndexOld]) / 100;
                 unitColumnIndex++;
             }
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+            {
+                //Evol
+                double evol = (double)data[line, EVOL_COLUMN_INDEX + unitColumnIndexOld];
+
+                if (Double.IsInfinity(evol))
+                {
+                    gridData[line - 1, gridColumnId++] = (evol < 0) ? "-Infinity" : "+Infinity";
+                }
+                else if (Double.IsNaN(evol))
+                {
+                    gridData[line - 1, gridColumnId++] = null;
+                }
+                else if (evol == 0)
+                {
+                    gridData[line - 1, gridColumnId++] = 0;
+                }
+                else
+                {
+                    gridData[line - 1, gridColumnId++] = ((double)evol) / 100;
+                }
+                unitColumnIndex++;
+            }
+        }
+        #endregion
+
+        #region SetSpendsPerGRP
+        /// <summary>
+        /// Set Spends Per GRP
+        /// </summary>
+        protected void SetSpendsPerGRP(object[,] data, ref object[,] gridData, int line, ref int gridColumnId, ref int unitColumnIndex)
+        {
+            SetGRP(data, ref gridData, line, ref gridColumnId, ref unitColumnIndex);
         }
         #endregion
 
@@ -997,6 +1050,28 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             }
 
             return tableWidth;
+        }
+        #endregion
+
+        #region Is Grp Selected
+        private bool IsGrpSelected()
+        {
+            if (_session.Grp || _session.Grp30S)
+                return true;
+
+            return false;
+        }
+        #endregion
+
+        #region Is Currency
+        private bool IsCurrency(UnitInformation unit)
+        {
+            if (unit.Id == CstWeb.CustomerSessions.Unit.euro ||
+                unit.Id == CstWeb.CustomerSessions.Unit.tl ||
+                unit.Id == CstWeb.CustomerSessions.Unit.usd)
+                return true;
+
+            return false;
         }
         #endregion
 
