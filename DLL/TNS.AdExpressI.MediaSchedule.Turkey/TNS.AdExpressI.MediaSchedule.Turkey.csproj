@@ -70,6 +70,10 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
+      <Project>{39325692-d25f-400c-8e46-080bcb3b3524}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23e7e071-0fb0-43d4-b19d-b964ec3082f6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>

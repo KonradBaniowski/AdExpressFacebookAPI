@@ -545,34 +545,9 @@ namespace TNS.AdExpressI.MediaSchedule {
             DataTable dtComp = null;
             DataTable dtLevels = null;
             object[] param = null;
-            IMediaScheduleResultDAL mediaScheduleDAL = null;
-            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
-            if (IsPlanMediaAdnettrack())
-            {
-                param = new object[3];
-                param[0] = _session;
-                param[1] = _period;
-                param[2] = _vehicleId;
-                mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-                mediaScheduleDAL.Module = _module;
-                ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
-            }
-            else
-            {
-                param = new object[2];
-                param[0] = _session;
-                param[1] = _period;
-                mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-                mediaScheduleDAL.Module = _module;
+          
+            IMediaScheduleResultDAL mediaScheduleDAL = GetData( ref ds, ref dsComp, ref dtComp);
 
-                ds = mediaScheduleDAL.GetMediaScheduleData();
-                if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule)
-                {
-                    mediaScheduleDAL.PeriodComparative = _period.GetMediaSchedulePeriodComparative();
-                    dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
-                    dtComp = dsComp.Tables[0];
-                }
-            }
             #endregion
 
             #region Build Tab
@@ -1692,6 +1667,52 @@ namespace TNS.AdExpressI.MediaSchedule {
             #endregion
 
             return oTab;
+        }
+
+        protected virtual IMediaScheduleResultDAL GetData( ref DataSet ds,
+            ref DataSet dsComp, ref DataTable dtComp)
+        {
+            object[] param;
+            IMediaScheduleResultDAL mediaScheduleDAL;
+            if (_module.CountryDataAccessLayer == null)
+                throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
+            if (IsPlanMediaAdnettrack())
+            {
+                param = new object[3];
+                param[0] = _session;
+                param[1] = _period;
+                param[2] = _vehicleId;
+                mediaScheduleDAL =
+                    (IMediaScheduleResultDAL)
+                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                        AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName,
+                        _module.CountryDataAccessLayer.Class, false,
+                        BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                mediaScheduleDAL.Module = _module;
+                ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
+            }
+            else
+            {
+                param = new object[2];
+                param[0] = _session;
+                param[1] = _period;
+                mediaScheduleDAL =
+                    (IMediaScheduleResultDAL)
+                    AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                        AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName,
+                        _module.CountryDataAccessLayer.Class, false,
+                        BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                mediaScheduleDAL.Module = _module;
+
+                ds = mediaScheduleDAL.GetMediaScheduleData();
+                if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule)
+                {
+                    mediaScheduleDAL.PeriodComparative = _period.GetMediaSchedulePeriodComparative();
+                    dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
+                    dtComp = dsComp.Tables[0];
+                }
+            }
+            return mediaScheduleDAL;
         }
 
         #region Get Level Id / Label
