@@ -3174,3 +3174,13 @@ video::-webkit-media-controls-panel {
 .sk-module-title {
     font-size: 23px!important;
 }
+
+input[type=checkbox][disabled] + label {
+    color: #777777;
+    cursor: not-allowed;
+}
+
+.media-schedule-option input[type=checkbox][disabled].with-font ~ label:before {
+    content: "\f0c8";
+    color: #777;
+}

@@ -1036,12 +1036,11 @@
                 @if (Model.GrpAvailable)
                 {
                     <text>
-                        if (jQuery.inArray(EURO, unitVal) == 0 || jQuery.inArray(TL, unitVal) == 0 || jQuery.inArray(USD, unitVal) == 0) {
-                            $('#spendsGrp').show();
-                            $("label[for='spendsGrp']").css('display', 'block');
+                        if ((jQuery.inArray(EURO, unitVal) == 0 || jQuery.inArray(TL, unitVal) == 0 || jQuery.inArray(USD, unitVal) == 0)
+                            && (userFilter.Grp || userFilter.Grp30S)) {
+                            $('#spendsGrp').prop("disabled", false);
                         } else {
-                            $('#spendsGrp').hide();
-                            $("label[for='spendsGrp']").css('display', 'none');
+                            $('#spendsGrp').prop("disabled", true);
                             $('#spendsGrp').prop('checked', false);
                             userFilter.SpendsGrp = false;
                         }
@@ -1187,57 +1186,74 @@
             @if (Model.GrpAvailable)
              {
                  <text>
-            if ($("#grp").prop('checked') == true) {
-                userFilter.Grp = true;
-            }
-            else {
-                userFilter.Grp = false;
-            }
+                    if ($("#grp").prop('checked') == true) {
+                        userFilter.Grp = true;
+                    }
+                    else {
+                        userFilter.Grp = false;
+                    }
 
-            $("#grp").click(function () {
-                if ($(this).prop('checked') == true) {
-                    userFilter.Grp = true;
-                    userFilter.Grp30S = false;
-                    $('#grp30S').prop('checked', false);
-                }
-                else {
-                    userFilter.Grp = false;
-                }
-            });
+                    $("#grp").click(function () {
+                        if ($(this).prop('checked') == true) {
+                            userFilter.Grp = true;
+                            userFilter.Grp30S = false;
+                            $('#grp30S').prop('checked', false);
+                            if ((jQuery.inArray(EURO, userFilter.UnitFilter.Unit) == 0 ||
+                                jQuery.inArray(TL, userFilter.UnitFilter.Unit) == 0 ||
+                                jQuery.inArray(USD, userFilter.UnitFilter.UnititVal) == 0)) {
+                                $('#spendsGrp').prop("disabled", false);
+                            }
+                        }
+                        else {
+                            userFilter.Grp = false;
+                            $('#spendsGrp').prop("disabled", true);
+                            $('#spendsGrp').prop('checked', false);
+                            userFilter.SpendsGrp = false;
+                        }
+                    });
 
-            if ($("#grp30S").prop('checked') == true) {
-                userFilter.Grp30S = true;
-            }
-            else {
-                userFilter.Grp30S = false;
-            }
+                    if ($("#grp30S").prop('checked') == true) {
+                        userFilter.Grp30S = true;
+                    }
+                    else {
+                        userFilter.Grp30S = false;
+                    }
 
-            $("#grp30S").click(function () {
-                if ($(this).prop('checked') == true) {
-                    userFilter.Grp30S = true;
-                    userFilter.Grp = false;
-                    $('#grp').prop('checked', false);
-                }
-                else {
-                    userFilter.Grp30S = false;
-                }
-            });
+                    $("#grp30S").click(function () {
+                        if ($(this).prop('checked') == true) {
+                            userFilter.Grp30S = true;
+                            userFilter.Grp = false;
+                            $('#grp').prop('checked', false);
+                            if ((jQuery.inArray(EURO, userFilter.UnitFilter.Unit) == 0 ||
+                               jQuery.inArray(TL, userFilter.UnitFilter.Unit) == 0 ||
+                               jQuery.inArray(USD, userFilter.UnitFilter.UnititVal) == 0)) {
+                                $('#spendsGrp').prop("disabled", false);
+                            }
+                        }
+                        else {
+                            userFilter.Grp30S = false;
+                            $('#spendsGrp').prop("disabled", true);
+                            $('#spendsGrp').prop('checked', false);
+                            userFilter.SpendsGrp = false;
+                        }
+                    });
 
-            if ($("#spendsGrp").prop('checked') == true) {
-                userFilter.SpendsGrp = true;
-            }
-            else {
-                userFilter.SpendsGrp = false;
-            }
+                    if ($("#spendsGrp").prop('checked') == true) {
+                        userFilter.SpendsGrp = true;
+                    }
+                    else {
+                        $('#spendsGrp').prop("disabled", true);
+                        userFilter.SpendsGrp = false;
+                    }
 
-            $("#spendsGrp").click(function () {
-                if ($(this).prop('checked') == true) {
-                    userFilter.SpendsGrp = true;
-                }
-                else {
-                    userFilter.SpendsGrp = false;
-                }
-            });
+                    $("#spendsGrp").click(function () {
+                        if ($(this).prop('checked') == true) {
+                            userFilter.SpendsGrp = true;
+                        }
+                        else {
+                            userFilter.SpendsGrp = false;
+                        }
+                    });
                  </text>
              }
 
