@@ -105,12 +105,11 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
             if (!string.IsNullOrEmpty(_dateMedia))
             {
 
-                const string format = "{0}\\{1}\\{2}\\3{3}.{4}";
-                var objArray = new object[5]
+                const string format = "{0}\\{1}\\3{2}.{3}";
+                var objArray = new object[4]
                     {
                         CreationServerPathes.LOCAL_PATH_VIDEO,
-                        this._dateMedia.Substring(0, 4),
-                        "240",
+                        this._dateMedia.Substring(0, 4),                      
                         _idSlogan,
                         MP4_EXTENSION
                     };
@@ -195,13 +194,13 @@ namespace TNS.AdExpressI.Insertions.France.CreativeResult
         {
             SetDateMedia();
             if (HasCreationReadRights && !string.IsNullOrEmpty(_dateMedia))
-                _pathReadingFile = string.Format("{0}/{1}/{2}/3{3}.{4}", CreationServerPathes.DOWNLOAD_TV_SERVER,
-                    _dateMedia.Substring(0, 4), "240", _idSlogan, MP4_EXTENSION);
+                _pathReadingFile = string.Format("{0}/{1}/3{2}.{3}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _dateMedia.Substring(0, 4),  _idSlogan, MP4_EXTENSION);
             if (!HasCreationDownloadRights)
                 return;
             if (!string.IsNullOrEmpty(_dateMedia))
-                _pathDownloadingFile = string.Format("{0}/{1}/{2}/3{3}.{4}", CreationServerPathes.DOWNLOAD_TV_SERVER,
-                    _dateMedia.Substring(0, 4), "240", _idSlogan, MP4_EXTENSION);
+                _pathDownloadingFile = string.Format("{0}/{1}/3{2}.{3}", CreationServerPathes.DOWNLOAD_TV_SERVER,
+                    _dateMedia.Substring(0, 4),  _idSlogan, MP4_EXTENSION);
         }
 
         protected override void GetDoohCreativePathes()
