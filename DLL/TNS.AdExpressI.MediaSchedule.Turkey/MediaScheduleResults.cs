@@ -19,17 +19,13 @@ using TNS.AdExpressI.MediaSchedule.Exceptions;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using CstFrameWorkResult = TNS.AdExpress.Constantes.FrameWork.Results;
 
 namespace TNS.AdExpressI.MediaSchedule.Turkey
 {
     public class MediaScheduleResults : MediaSchedule.MediaScheduleResults
     {
-        const string TOTAL_COLUMN_INDEX_KEY = "TOTAL_COLUMN_INDEX";
-        const string PDM_COLUMN_INDEX_KEY = "PDM_COLUMN_INDEX";
-        const string TOTAL_COMPARATIVE_COLUMN_INDEX_KEY = "TOTAL_COMPARATIVE_COLUMN_INDEX";
-        const string PDM_COMPARATIVE_COLUMN_INDEX_KEY = "PDM_COMPARATIVE_COLUMN_INDEX";
-        const string EVOL_COLUMN_INDEX_KEY = "EVOL_COLUMN_INDEX";
-        const string SPEND_PER_GRP_COLUMN_INDEX_KEY = "SPEND_PER_GRP_COLUMN_INDEX";
+       
 
 
         #region Constructors
@@ -105,16 +101,16 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             {
                 if (_session.ComparativeStudy)
                 {
-                    firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                    firstPeriodIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + 1;
                 }
                 else
                 {
-                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                    firstPeriodIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
                 }
             }
             else
             {
-                firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                firstPeriodIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
             }
 
             firstPeriodIndex += nbColYear;
@@ -435,10 +431,10 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         {
 
                             #region Level 1
-                            case L1_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    if (i == TOTAL_LINE_INDEX)
+                                    if (i == CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)
                                     {
                                         cssClasse = _style.CellLevelTotal;
                                         cssClasseNb = _style.CellLevelTotalNb;
@@ -461,9 +457,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     foreach (var unit in units)
                                     {
                                         if (firstUnit)
-                                            unitColumnIndex = TOTAL_COLUMN_INDEX - 1;
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
                                         else
-                                            unitColumnIndex = EVOL_COLUMN_INDEX + (unitIndex++ * 5);
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + (unitIndex++ * 5);
                                         SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit, unitColumnIndex);
                                         firstUnit = false;
 
@@ -483,7 +479,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
                                     if (_allowVersion)
                                     {
-                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
+                                        if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
                                         {
                                             SetCreativeLink(data, ref gridData, i, ref gridColumnId, cssClasse, j);
                                         }
@@ -495,7 +491,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
+                                        if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
                                         {
                                             SetInsertionLink(data, ref gridData, i, ref gridColumnId, cssClasse, j);
                                         }
@@ -510,7 +506,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             #endregion
 
                             #region Level 2
-                            case L2_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
                                     ++pid;
@@ -520,9 +516,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     foreach (var unit in units)
                                     {
                                         if (firstUnit)
-                                            unitColumnIndex = TOTAL_COLUMN_INDEX - 1;
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
                                         else
-                                            unitColumnIndex = EVOL_COLUMN_INDEX + (unitIndex++ * 5);
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + (unitIndex++ * 5);
                                         SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb,j, ref gridColumnId, fp, unit, unitColumnIndex);
                                         firstUnit = false;
 
@@ -538,12 +534,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     gridData[i - 1, gridColumnId++] = idLv1;
                                     if (_allowVersion)
                                     {
-                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
                                     j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
@@ -552,7 +548,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             #endregion
 
                             #region Level 3
-                            case L3_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
                                     ++pid;
@@ -562,9 +558,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     foreach (var unit in units)
                                     {
                                         if (firstUnit)
-                                            unitColumnIndex = TOTAL_COLUMN_INDEX - 1;
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
                                         else
-                                            unitColumnIndex = EVOL_COLUMN_INDEX + (unitIndex++ * 5);
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + (unitIndex++ * 5);
                                         SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unit, unitColumnIndex);
                                         firstUnit = false;
 
@@ -580,12 +576,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     gridData[i - 1, gridColumnId++] = idLv2;
                                     if (_allowVersion)
                                     {
-                                        if (!IsAgencyLevelType(L3_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (!IsAgencyLevelType(L3_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
                                     j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
@@ -594,7 +590,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             #endregion
 
                             #region Level 4
-                            case L4_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX:
                                 ++pid;
                                 idLv4 = pid;
                                 gridData[i - 1, gridColumnId++] = idLv4;
@@ -602,9 +598,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 foreach (var unit in units)
                                 {
                                     if (firstUnit)
-                                        unitColumnIndex = TOTAL_COLUMN_INDEX - 1;
+                                        unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
                                     else
-                                        unitColumnIndex = EVOL_COLUMN_INDEX + (unitIndex++ * 5);
+                                        unitColumnIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + (unitIndex++ * 5);
                                     SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unit, unitColumnIndex);
                                     firstUnit = false;
 
@@ -620,12 +616,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 gridData[i - 1, gridColumnId++] = idLv3;
                                 if (_allowVersion)
                                 {
-                                    if (!IsAgencyLevelType(L4_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
                                 }
                                 if (_allowInsertions)
                                 {
-                                    if (!IsAgencyLevelType(L4_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
                                 }
                                 j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
@@ -812,10 +808,10 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             {
                 if (_allowTotal)
                 {
-                    if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld] != null)
+                    if (data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld] != null)
                     {
                         gridData[line - 1, gridColumnId++] =
-                            Convert.ToDouble(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld]);
+                            Convert.ToDouble(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld]);
                     }
                     else
                         gridData[line - 1, gridColumnId++] = "";
@@ -824,24 +820,24 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 }
                 if (_allowPdm)
                 {
-                    gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld]) / 100;
+                    gridData[line - 1, gridColumnId++] = ((double)data[line, CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX + unitColumnIndexOld]) / 100;
                     unitColumnIndex++;
                 }
             }
             if (_allowTotal)
             {
-                gridData[line - 1, gridColumnId++] = Convert.ToDouble(data[line, TOTAL_COLUMN_INDEX + unitColumnIndexOld]);
+                gridData[line - 1, gridColumnId++] = Convert.ToDouble(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX + unitColumnIndexOld]);
                 unitColumnIndex++;
             }
             if (_allowPdm)
             {
-                gridData[line - 1, gridColumnId++] = ((double)data[line, PDM_COLUMN_INDEX + unitColumnIndexOld]) / 100;
+                gridData[line - 1, gridColumnId++] = ((double)data[line, CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX + unitColumnIndexOld]) / 100;
                 unitColumnIndex++;
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
             {
                 //Evol
-                double evol = (double)data[line, EVOL_COLUMN_INDEX + unitColumnIndexOld];
+                double evol = (double)data[line, CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + unitColumnIndexOld];
 
                 if (Double.IsInfinity(evol))
                 {
@@ -1194,8 +1190,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 #region Create periods table
 
                 List<Int64> periodItemsList = new List<Int64>();
-                Dictionary<int, int> years_index = new Dictionary<int, int>();
-                int currentDate = _period.Begin.Year;
+                // Dictionary<int, int> years_index = new Dictionary<int, int>();
+               var years_index = new Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>>();
+                   int currentDate = _period.Begin.Year;
                 int oldCurrentDate = _period.End.Year;
 
                 int firstPeriodIndex = 0;
@@ -1226,26 +1223,26 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     selectUnits.Insert(0, CstWeb.CustomerSessions.Unit.grp);
                 }
 
-                int currentColumnIndex = L4_ID_COLUMN_INDEX;
+                int currentColumnIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
                 bool first = true;
 
                 //Add columns indexes for each unit selected
                 selectUnits.ForEach(u =>
                 {
                     
-                    currentColumnIndex = AddUnitsColumnIndexes(currentColumnIndex, first, unitsColumnIndexes, u);
+                    currentColumnIndex = AddUnitsColumnIndexes(currentColumnIndex, first, unitsColumnIndexes, u, _period.Begin.Year, _period.End.Year,years_index);
 
-                    if (first)
+                    if (first && !years_index.Any())
                     {
                         
-                        currentColumnIndex = isComparativeStudy ? EVOL_COLUMN_INDEX : L4_ID_COLUMN_INDEX;
+                        currentColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
                         first = false;
                     }
 
                     if (u == CstWeb.CustomerSessions.Unit.grp && hasAdSpend && _session.SpendsGrp)
                     {
                         //Add Spend per grp column Index
-                        unitsColumnIndexes[u].Add(SPEND_PER_GRP_COLUMN_INDEX_KEY, ++currentColumnIndex);
+                        unitsColumnIndexes[u].Add(CstFrameWorkResult.MediaSchedule.SPEND_PER_GRP_COLUMN_INDEX_KEY, ++currentColumnIndex);
                     }
                 });
 
@@ -1287,14 +1284,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     default:
                         throw (new MediaScheduleException("Unable to build periods table."));
                 }
-                if (currentDate != oldCurrentDate)
-                {
-                    for (int k = currentDate; k <= oldCurrentDate; k++)
-                    {
-                        years_index.Add(k, firstPeriodIndex);
-                        firstPeriodIndex++;
-                    }
-                }
+               
                 currentDate = 0;
                 oldCurrentDate = 0;
 
@@ -1324,9 +1314,14 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     oTab[0, currentDate + firstPeriodIndex] = periodItemsList[currentDate].ToString(); ;
                     currentDate++;
                 }
-                foreach (int i in years_index.Keys)
+               
+                foreach (var unit in years_index.Keys)
                 {
-                    oTab[0, years_index[i]] = i;
+                    foreach (var kpv in years_index[unit])
+                    {
+                        oTab[0, kpv.Value] = kpv.Key;
+                    }
+                  
                 }
                 #endregion
 
@@ -1340,21 +1335,26 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     selectUnits.ForEach(u =>
                     {
 
-                        if (unitsColumnIndexes[u].ContainsKey(TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
+                        if (unitsColumnIndexes[u].ContainsKey(CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
                         {
 
-                            oTab[currentTotalIndex, unitsColumnIndexes[u][TOTAL_COMPARATIVE_COLUMN_INDEX_KEY]] = null;
+                            oTab[currentTotalIndex, unitsColumnIndexes[u][CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY]] = null;
 
                         }
                     });
                 }
 
-                foreach (int i in years_index.Keys)
+               
+                foreach (var unit in years_index.Keys)
                 {
-                    if (selectUnits.Contains(CstWeb.CustomerSessions.Unit.versionNb))
-                        oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = new CellIdsNumber();
-                    else
-                        oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = (double)0.0;
+                    foreach (var kpv in years_index[unit])
+                    {
+                        if (unit == CstWeb.CustomerSessions.Unit.versionNb)
+                            oTab[currentLineIndex, kpv.Value] = new CellIdsNumber();
+                        else
+                            oTab[currentLineIndex, kpv.Value] = (double) 0.0;                        
+                    }
+
                 }
                 #endregion
 
@@ -1362,9 +1362,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 for (int mpi = firstPeriodIndex; mpi < nbCol; mpi++)
                 {
                     if (selectUnits.Contains(CstWeb.CustomerSessions.Unit.versionNb))
-                        oTab[TOTAL_LINE_INDEX, mpi] = new MediaPlanItemIds(-1);
+                        oTab[CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX, mpi] = new MediaPlanItemIds(-1);
                     else
-                        oTab[TOTAL_LINE_INDEX, mpi] = new MediaPlanItem(-1);
+                        oTab[CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX, mpi] = new MediaPlanItem(-1);
                 }
                 #endregion
 
@@ -1382,8 +1382,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 Dictionary< CstWeb.CustomerSessions.Unit ,double>  unitDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
                 Dictionary<CstWeb.CustomerSessions.Unit, double> unitComparativeDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
                 CellIdsNumber unitIds = null;
-                CstWeb.CustomerSessions.Unit selectedUnit = _session.GetSelectedUnit().Id;
-                string unitAlias = SQLGenerator.GetUnitAlias(_session);
+           
                 DataRow currentRow = null;
 
                 foreach (DataRow currentRowLevels in dtLevels.Rows)
@@ -1409,8 +1408,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 selectUnits.ForEach(un =>
                                 {                                  
 
-                                    int totalColumnIndex = unitsColumnIndexes[un][TOTAL_COLUMN_INDEX_KEY];
-                                    int pdmColumnIndex = unitsColumnIndexes[un][PDM_COLUMN_INDEX_KEY];
+                                    int totalColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                                    int pdmColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
 
                                     SetLevelPDM(un, oTab, tabL2Index[i],  totalColumnIndex, currentL1Index, pdmColumnIndex);
 
@@ -1418,12 +1417,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     if (WebApplicationParameters.UseComparativeMediaSchedule &&
                                         _session.ComparativeStudy)
                                     {
-                                        if (unitsColumnIndexes[un].ContainsKey(TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
+                                        if (unitsColumnIndexes[un].ContainsKey(CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
                                         {
                                             int totalComparativeColumnIndex =
-                                                unitsColumnIndexes[un][TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
                                             int pdmComparativeColumnIndex =
-                                                unitsColumnIndexes[un][PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
 
                                             SetLevelPDM(un, oTab, tabL2Index[i],  totalComparativeColumnIndex, currentL1Index, pdmComparativeColumnIndex);                                          
                                         }
@@ -1439,26 +1438,26 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         currentL1PDMIndex++;
 
                         currentLineIndex++;
-                        oTab[currentLineIndex, L1_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 1, detailLevel);
-                        oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 1, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 1, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 1, detailLevel);
 
                         if (nbLevels <= 1)
-                            if (isPeriodN) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
-                            else oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = "0";
+                            if (isPeriodN) oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
+                            else oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = "0";
 
                         //Init years totals
-                        InitYearsTotals(years_index, selectUnits, oTab, currentLineIndex);
+                        InitYearsTotals(years_index,  oTab, currentLineIndex);
 
                         currentL1Index = currentLineIndex;
                         oldIdL1 = GetLevelId(currentRowLevels, 1, detailLevel);
                         currentDate = 0;
                         numberOflineToAdd++;
-                        oTab[currentLineIndex, L2_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L3_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L3_ID_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L4_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L4_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
 
                         // Create MediaPlan Items
                         CreateMediaPlanItems(firstPeriodIndex, nbCol, selectUnits, oTab, currentLineIndex);
@@ -1483,8 +1482,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 selectUnits.ForEach(un =>
                                 {
 
-                                    int totalColumnIndex = unitsColumnIndexes[un][TOTAL_COLUMN_INDEX_KEY];
-                                    int pdmColumnIndex = unitsColumnIndexes[un][PDM_COLUMN_INDEX_KEY];
+                                    int totalColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                                    int pdmColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
 
                                     SetLevelPDM(un, oTab, tabL3Index[i],  totalColumnIndex, currentL2Index, pdmColumnIndex);
 
@@ -1492,12 +1491,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     if (WebApplicationParameters.UseComparativeMediaSchedule &&
                                         _session.ComparativeStudy)
                                     {
-                                        if (unitsColumnIndexes[un].ContainsKey(TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
+                                        if (unitsColumnIndexes[un].ContainsKey(CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
                                         {
                                             int totalComparativeColumnIndex =
-                                                unitsColumnIndexes[un][TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
                                             int pdmComparativeColumnIndex =
-                                                unitsColumnIndexes[un][PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
 
                                             SetLevelPDM(un, oTab, tabL3Index[i],  totalComparativeColumnIndex, currentL2Index, pdmComparativeColumnIndex);
                                         }
@@ -1513,27 +1512,27 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         currentL2PDMIndex++;
 
                         currentLineIndex++;
-                        oTab[currentLineIndex, L2_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 2, detailLevel);
-                        oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 2, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 2, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 2, detailLevel);
 
-                        oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_ID_COLUMN_INDEX] = oldIdL1;
                         if (nbLevels <= 2)
-                            if (isPeriodN) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
-                            else oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = "0";
+                            if (isPeriodN) oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
+                            else oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = "0";
 
                         //Init years totals
-                        InitYearsTotals(years_index, selectUnits, oTab, currentLineIndex);
+                        InitYearsTotals(years_index,  oTab, currentLineIndex);
                        
                         currentL2Index = currentLineIndex;
                         oldIdL2 = GetLevelId(currentRowLevels, 2, detailLevel);
                         currentDate = 0;
                         numberOflineToAdd++;
-                        oTab[currentLineIndex, L1_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] = null;
 
-                        oTab[currentLineIndex, L3_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L3_ID_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L4_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L4_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
                        
                         // Create MediaPlan Items
                         CreateMediaPlanItems(firstPeriodIndex, nbCol, selectUnits, oTab, currentLineIndex);
@@ -1557,8 +1556,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 selectUnits.ForEach(un =>
                                 {
 
-                                    int totalColumnIndex = unitsColumnIndexes[un][TOTAL_COLUMN_INDEX_KEY];
-                                    int pdmColumnIndex = unitsColumnIndexes[un][PDM_COLUMN_INDEX_KEY];
+                                    int totalColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                                    int pdmColumnIndex = unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
 
                                     SetLevelPDM(un, oTab, i,  totalColumnIndex, currentL3Index, pdmColumnIndex);
 
@@ -1566,12 +1565,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                     if (WebApplicationParameters.UseComparativeMediaSchedule &&
                                         _session.ComparativeStudy)
                                     {
-                                        if (unitsColumnIndexes[un].ContainsKey(TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
+                                        if (unitsColumnIndexes[un].ContainsKey(CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY))
                                         {
                                             int totalComparativeColumnIndex =
-                                                unitsColumnIndexes[un][TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
                                             int pdmComparativeColumnIndex =
-                                                unitsColumnIndexes[un][PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                                                unitsColumnIndexes[un][CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
 
                                             SetLevelPDM(un, oTab, i,  totalComparativeColumnIndex, currentL3Index, pdmComparativeColumnIndex);
                                         }
@@ -1585,27 +1584,27 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         currentL3PDMIndex++;
 
                         currentLineIndex++;
-                        oTab[currentLineIndex, L3_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 3, detailLevel);
-                        oTab[currentLineIndex, L3_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 3, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 3, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 3, detailLevel);
 
-                        oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
-                        oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = oldIdL2;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_ID_COLUMN_INDEX] = oldIdL1;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_ID_COLUMN_INDEX] = oldIdL2;
                         if (nbLevels <= 3)
-                            if (isPeriodN) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
-                            else oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = "0";
+                            if (isPeriodN) oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
+                            else oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = "0";
                       
                         //Init years totals
-                        InitYearsTotals(years_index, selectUnits, oTab, currentLineIndex);
+                        InitYearsTotals(years_index,  oTab, currentLineIndex);
 
                         currentL3Index = currentLineIndex;
                         oldIdL3 = GetLevelId(currentRowLevels, 3, detailLevel);
                         currentDate = 0;
                         numberOflineToAdd++;
-                        oTab[currentLineIndex, L1_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L2_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] = null;
 
-                        oTab[currentLineIndex, L4_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L4_ID_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
 
                       
                         // Create MediaPlan Items
@@ -1619,25 +1618,25 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     {
                         newL4 = false;
                         currentLineIndex++;
-                        oTab[currentLineIndex, L4_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 4, detailLevel);
-                        oTab[currentLineIndex, L4_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 4, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 4, detailLevel);
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 4, detailLevel);
 
-                        oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
-                        oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = oldIdL2;
-                        oTab[currentLineIndex, L3_ID_COLUMN_INDEX] = oldIdL3;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_ID_COLUMN_INDEX] = oldIdL1;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_ID_COLUMN_INDEX] = oldIdL2;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = oldIdL3;
                         if (nbLevels <= 4)
-                            if (isPeriodN) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
-                            else oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = "0";
+                            if (isPeriodN) oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = dt.Rows[indexPeriod + 1]["period_count"].ToString();
+                            else oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX] = "0";
 
                         //Init year totals
-                        InitYearsTotals(years_index, selectUnits, oTab, currentLineIndex);
+                        InitYearsTotals(years_index,  oTab, currentLineIndex);
 
                         currentL4Index = currentLineIndex;
                         oldIdL4 = GetLevelId(currentRowLevels, 4, detailLevel);
                         currentDate = 0;
-                        oTab[currentLineIndex, L1_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L2_COLUMN_INDEX] = null;
-                        oTab[currentLineIndex, L3_COLUMN_INDEX] = null;                     
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] = null;
+                        oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = null;                     
 
                         // Create MediaPlan Items
                         CreateMediaPlanItems(firstPeriodIndex, nbCol, selectUnits, oTab, currentLineIndex);
@@ -1678,7 +1677,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 if (selectUnits.Contains(CstWeb.CustomerSessions.Unit.versionNb))
                                     oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(-1);
                                 else
-                                    oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem((long)-1);
+                                    oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem((long) -1);
                             }
                             currentDate++;
                         }
@@ -1700,22 +1699,23 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                             new MediaPlanItemIds(
                                                 Math.Max(
                                                     ((MediaPlanItemIds)
-                                                        oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId,
+                                                        oTab[currentLineIndex, firstPeriodIndex + currentDate])
+                                                    .PeriodicityId,
                                                     Int64.Parse(currentRow["period_count"].ToString())));
                                     else
-                                        ((MediaPlanItemIds)oTab[currentLineIndex, firstPeriodIndex + currentDate])
+                                        ((MediaPlanItemIds) oTab[currentLineIndex, firstPeriodIndex + currentDate])
                                             .PeriodicityId = Int64.Parse(currentRow["period_count"].ToString());
 
                                 }
-                               
+
 
                             }
                             else
                             {
-                               
 
-                                if(unitDictionary.ContainsKey(ut))
-                                unitDictionary[ut] = double.Parse(currentRow[ut.ToString()].ToString());
+
+                                if (unitDictionary.ContainsKey(ut))
+                                    unitDictionary[ut] = double.Parse(currentRow[ut.ToString()].ToString());
                                 else unitDictionary.Add(ut, double.Parse(currentRow[ut.ToString()].ToString()));
 
                                 if (firstUnit)
@@ -1724,14 +1724,15 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                         oTab[currentLineIndex, firstPeriodIndex + currentDate] =
                                             new MediaPlanItem(
                                                 Math.Max(
-                                                    ((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate])
+                                                    ((MediaPlanItem)
+                                                        oTab[currentLineIndex, firstPeriodIndex + currentDate])
                                                     .PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
                                     else
-                                        ((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate])
+                                        ((MediaPlanItem) oTab[currentLineIndex, firstPeriodIndex + currentDate])
                                             .PeriodicityId = Int64.Parse(currentRow["period_count"].ToString());
                                 }
 
-                               
+
 
                             }
                             firstUnit = false;
@@ -1739,50 +1740,56 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
                         if (nbLevels >= 4)
                         {
-                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL4Index, currentRow, firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
+                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL4Index, currentRow,
+                                firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
                         }
 
                         if (nbLevels >= 3)
                         {
-                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL3Index, currentRow, firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
+                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL3Index, currentRow,
+                                firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
                         }
 
                         if (nbLevels >= 2)
                         {
-                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL2Index, currentRow, firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
+                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL2Index, currentRow,
+                                firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
                         }
 
                         if (nbLevels >= 1)
                         {
-                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL1Index, currentRow, firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
+                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL1Index, currentRow,
+                                firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
                         }
 
-                        AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentTotalIndex, currentRow, firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
+                        AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentTotalIndex, currentRow,
+                            firstPeriodIndex, currentDate, unitDictionary, hasAdSpend);
 
                         //Years total
-                        int k = int.Parse(currentRow["date_num"].ToString().Substring(0, 4));
+                        //int k = int.Parse(currentRow["date_num"].ToString().Substring(0, 4));
                         if (years_index.Any())
                         {
-                            k = int.Parse(years_index[k].ToString());
+
 
                             if (nbLevels >= 4)
                             {
-                                AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL4Index, k, currentRow, unitDictionary, hasAdSpend);
+                                AddUnitValue(oTab, currentL4Index, currentRow, unitDictionary, years_index);
+
                             }
                             if (nbLevels >= 3)
                             {
-                                AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL3Index, k, currentRow, unitDictionary, hasAdSpend);
+                                AddUnitValue(oTab, currentL3Index, currentRow, unitDictionary, years_index);
                             }
                             if (nbLevels >= 2)
                             {
-                                AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL2Index, k, currentRow, unitDictionary, hasAdSpend);
+                                AddUnitValue(oTab, currentL2Index, currentRow, unitDictionary, years_index);
                             }
                             if (nbLevels >= 1)
                             {
-                                AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentL1Index, k, currentRow, unitDictionary, hasAdSpend);
+                                AddUnitValue(oTab, currentL1Index, currentRow, unitDictionary, years_index);
                             }
 
-                            AddUnitValue(selectUnits, unitsColumnIndexes, oTab, currentTotalIndex, k, currentRow, unitDictionary, hasAdSpend);
+                            AddUnitValue(oTab, currentTotalIndex, currentRow, unitDictionary, years_index);
                         }
                         currentDate++;
                         oldCurrentDate = currentDate;
@@ -1803,6 +1810,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             oldCurrentDate++;
                         }
                         currentDate = 0;
+
                         #endregion
 
 
@@ -1915,11 +1923,11 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     selectUnits.ForEach(p =>
                     {
                         var unitColumns = unitsColumnIndexes[p];
-                        var pdmColumnIndex = unitColumns[PDM_COLUMN_INDEX_KEY];
+                        var pdmColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
                         int pdmComparativeColumnIndex = -1;
                         if (isComparativeStudy)
                         {                          
-                            pdmComparativeColumnIndex = unitColumns[PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                            pdmComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
                         }
                         oTab[currentTotalIndex, pdmColumnIndex] = (double)100.0;
 
@@ -1937,7 +1945,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 #region Compute Evol
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
                 {
-                    ComputeEvolution(selectUnits, unitsColumnIndexes, currentTotalIndex, currentLineIndex, oTab, selectedUnit);                   
+                    ComputeEvolution(selectUnits, unitsColumnIndexes, currentTotalIndex, currentLineIndex, oTab);                   
                 }
                 #endregion
 
@@ -1950,13 +1958,13 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 {
                     if (oTab[i, 0] != null) if (oTab[i, 0].GetType() == typeof(MemoryArrayEnd)) break;
                     // N1 line
-                    if (oTab[i, L1_COLUMN_INDEX] != null) currentL1Index = i;
+                    if (oTab[i, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] != null) currentL1Index = i;
                     // N2 line
-                    if (oTab[i, L2_COLUMN_INDEX] != null) currentL2Index = i;
+                    if (oTab[i, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] != null) currentL2Index = i;
                     // N3 line
-                    if (oTab[i, L3_COLUMN_INDEX] != null) currentL3Index = i;
+                    if (oTab[i, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] != null) currentL3Index = i;
                     // N4 line
-                    if (oTab[i, L4_COLUMN_INDEX] != null) currentL4Index = i;
+                    if (oTab[i, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] != null) currentL4Index = i;
                     // lower level
                     if ((nbLevels == 1 && currentL1Index == i) || (nbLevels == 2 && currentL2Index == i) ||
                         (nbLevels == 3 && currentL3Index == i) || (nbLevels == 4 && currentL4Index == i))
@@ -1985,9 +1993,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                 if (nbLevels > 1 &&
                                     (tmp = (MediaPlanItem) oTab[currentL1Index, j + k]).GraphicItemType !=
                                     MediaPlan.graphicItemType.present) tmp.GraphicItemType = graphicType;
-                                if (oTab[TOTAL_LINE_INDEX, j + k] == null)
-                                    oTab[TOTAL_LINE_INDEX, j + k] = new MediaPlanItem();
-                                if ((tmp = (MediaPlanItem) oTab[TOTAL_LINE_INDEX, j + k]).GraphicItemType !=
+                                if (oTab[CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX, j + k] == null)
+                                    oTab[CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX, j + k] = new MediaPlanItem();
+                                if ((tmp = (MediaPlanItem) oTab[CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX, j + k]).GraphicItemType !=
                                     MediaPlan.graphicItemType.present) tmp.GraphicItemType = graphicType;
                             }
                         }
@@ -2015,14 +2023,14 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
         private void ComputeEvolution(List<CstWeb.CustomerSessions.Unit> selectUnits,
             Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>> unitsColumnIndexes, long currentTotalIndex,
-            long currentLineIndex, object[,] oTab, CstWeb.CustomerSessions.Unit selectedUnit)
+            long currentLineIndex, object[,] oTab)
         {
             selectUnits.ForEach(ue =>
             {
                 var unitColumns = unitsColumnIndexes[ue];
-                var totalColumnIndex = unitColumns[TOTAL_COLUMN_INDEX_KEY];
-                int totalComparativeColumnIndex = unitColumns[TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
-                int evolColumnIndex = unitColumns[EVOL_COLUMN_INDEX_KEY];
+                var totalColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                int totalComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                int evolColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX_KEY];
 
                 for (long i = currentTotalIndex; i <= currentLineIndex; i++)
                 {
@@ -2059,7 +2067,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     }
                     else if (oTab[i, totalComparativeColumnIndex] != null)
                     {
-                        if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                        if (ue == CstWeb.CustomerSessions.Unit.versionNb)
                             oTab[i, evolColumnIndex] =
                                 ((CellIdsNumber) oTab[i, totalComparativeColumnIndex]).Value *
                                 Double.NegativeInfinity;
@@ -2083,16 +2091,16 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 if (unitsColumnIndexes.ContainsKey(unt))
                 {
                     var unitColumns = unitsColumnIndexes[unt];
-                    var totalColumnIndex = unitColumns[TOTAL_COLUMN_INDEX_KEY];
-                    var pdmColumnIndex = unitColumns[PDM_COLUMN_INDEX_KEY];
+                    var totalColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                    var pdmColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
 
 
                     int totalComparativeColumnIndex = -1;
                     int pdmComparativeColumnIndex = -1;
                     if (isComparativeStudy)
                     {
-                        totalComparativeColumnIndex = unitColumns[TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
-                        pdmComparativeColumnIndex = unitColumns[PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                        totalComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                        pdmComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
                     }
 
 
@@ -2151,8 +2159,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 if (unitsColumnIndexes.ContainsKey(unt))
                 {
                     var unitColumns = unitsColumnIndexes[unt];
-                    var totalColumnIndex = unitColumns[TOTAL_COLUMN_INDEX_KEY];
-                    var pdmColumnIndex = unitColumns[PDM_COLUMN_INDEX_KEY];
+                    var totalColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                    var pdmColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY];
                     bool isComparativeStudy = WebApplicationParameters.UseComparativeMediaSchedule &&
                                               _session.ComparativeStudy;
 
@@ -2160,8 +2168,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     int pdmComparativeColumnIndex = -1;
                     if (isComparativeStudy)
                     {
-                        totalComparativeColumnIndex = unitColumns[TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
-                        pdmComparativeColumnIndex = unitColumns[PDM_COMPARATIVE_COLUMN_INDEX_KEY];
+                        totalComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                        pdmComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY];
                     }
 
 
@@ -2220,7 +2228,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 if (unitsColumnIndexes.ContainsKey(unt))
                 {
                     var unitColumns = unitsColumnIndexes[unt];
-                    var totalComparativeColumnIndex = unitColumns[TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
+                    var totalComparativeColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY];
 
                     //Init cell
                     if (oTab[currentLevelIndex, totalComparativeColumnIndex] == null)
@@ -2251,28 +2259,29 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             });
         }
 
-        private void AddUnitValue(List<CstWeb.CustomerSessions.Unit> selectUnits,
-            Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>> unitsColumnIndexes,
-            object[,] oTab, long currentLevelIndex, int k,
-            DataRow currentRow, Dictionary<CstWeb.CustomerSessions.Unit, double> unitDictionary, bool hasAdSpend)
+        private void AddUnitValue(
+            object[,] oTab, long currentLevelIndex,
+            DataRow currentRow, Dictionary<CstWeb.CustomerSessions.Unit, double> unitDictionary
+            , Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>> yearsIndex)
         {
-            selectUnits.ForEach(unt =>
+            foreach (var unit in yearsIndex.Keys)
             {
-                if (unitsColumnIndexes.ContainsKey(unt))
+                foreach (var kpv in yearsIndex[unit])
                 {
-                    //Set cell unit value
-                    if (unt == CstWeb.CustomerSessions.Unit.versionNb)
+                    if (unit == CstWeb.CustomerSessions.Unit.versionNb)
                     {
-                        ((CellIdsNumber) oTab[currentLevelIndex, k]).Add(
-                            currentRow[unt.ToString()].ToString().Split(','));
+                        ((CellIdsNumber) oTab[currentLevelIndex, kpv.Value]).Add(
+                            currentRow[unit.ToString()].ToString().Split(','));
                     }
                     else
                     {
-                        double unit = (unitDictionary.ContainsKey(unt)) ? unitDictionary[unt] : (double) 0.0;
-                        oTab[currentLevelIndex, k] = (double) oTab[currentLevelIndex, k] + unit;
+                        double currentUnit = (unitDictionary.ContainsKey(unit)) ? unitDictionary[unit] : (double) 0.0;
+                        oTab[currentLevelIndex, kpv.Value] = (double) oTab[currentLevelIndex, kpv.Value] + currentUnit;
                     }
+
                 }
-            });
+
+            }
 
         }
 
@@ -2288,7 +2297,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 if (unitsColumnIndexes.ContainsKey(unt))
                 {
                     var unitColumns = unitsColumnIndexes[unt];
-                    var totalColumnIndex = unitColumns[TOTAL_COLUMN_INDEX_KEY];
+                    var totalColumnIndex = unitColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
 
                     //Init cell
                     if (oTab[currentLevelIndex, totalColumnIndex] == null)
@@ -2318,8 +2327,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         {
                             var adSpendsUnit = selectUnits[unitIndex - 1];
                             var adSpendsColumns = unitsColumnIndexes[adSpendsUnit];
-                            int totalSpendsColumnIndex = adSpendsColumns[TOTAL_COLUMN_INDEX_KEY];
-                            var totalSpendsPerGrpColumnIndex = unitsColumnIndexes[unt][SPEND_PER_GRP_COLUMN_INDEX_KEY];
+                            int totalSpendsColumnIndex = adSpendsColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                            var totalSpendsPerGrpColumnIndex = unitsColumnIndexes[unt][CstFrameWorkResult.MediaSchedule.SPEND_PER_GRP_COLUMN_INDEX_KEY];
                             if (unitSum > 0)
                                 oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = (double) oTab[currentLevelIndex, totalSpendsColumnIndex] / unitSum;
                             else
@@ -2345,14 +2354,20 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             }
         }
 
-        private void InitYearsTotals(Dictionary<int, int> yearsIndex, List<CstWeb.CustomerSessions.Unit> selectUnits, object[,] oTab, long currentLineIndex)
+        private void InitYearsTotals(Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>> yearsIndex,  object[,] oTab, long currentLineIndex)
         {
-            foreach (int i in yearsIndex.Keys)
+           
+
+            foreach (var unit in yearsIndex.Keys)
             {
-                if (selectUnits.Contains(CstWeb.CustomerSessions.Unit.versionNb))
-                    oTab[currentLineIndex, yearsIndex[i]] = new CellIdsNumber();
-                else
-                    oTab[currentLineIndex, yearsIndex[i]] = (double) 0.0;
+                foreach (var kpv in yearsIndex[unit])
+                {
+                    if (unit == CstWeb.CustomerSessions.Unit.versionNb)
+                        oTab[currentLineIndex, kpv.Value] = new CellIdsNumber();
+                    else
+                        oTab[currentLineIndex, kpv.Value] = (double)0.0;
+                }
+
             }
         }
 
@@ -2398,35 +2413,54 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             return list1.Intersect(list2).Any();
         }
 
-        private int AddUnitsColumnIndexes(int currentColumnIndex, bool first, Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>> unitsColumnIndexes,
-             CstWeb.CustomerSessions.Unit unit)
+        private int AddUnitsColumnIndexes(int currentColumnIndex, bool first, Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>> unitsColumnIndexes
+            , CstWeb.CustomerSessions.Unit unit, int beginYear, int endYear, Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>> yearsIndex)
         {
             var currentUnitColumnIndexes = new Dictionary<string, int>();
+            bool isComparativeStudy = WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy;
 
             //Add Total column Indexes
-            currentColumnIndex = (first) ? TOTAL_COLUMN_INDEX : ++currentColumnIndex;
-            currentUnitColumnIndexes.Add(TOTAL_COLUMN_INDEX_KEY, currentColumnIndex);
+            currentColumnIndex = (first) ? CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX : ++currentColumnIndex;
+            currentUnitColumnIndexes.Add(CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY, currentColumnIndex);
 
             //Add PDM column Indexes
-            currentColumnIndex = (first) ? PDM_COLUMN_INDEX : ++currentColumnIndex;
-            currentUnitColumnIndexes.Add(PDM_COLUMN_INDEX_KEY, currentColumnIndex);
+            currentColumnIndex = (first) ? CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX : ++currentColumnIndex;
+            currentUnitColumnIndexes.Add(CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX_KEY, currentColumnIndex);
 
-            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+            if (isComparativeStudy)
             {
                 //Add Total Comparative column Indexes                      
-                currentColumnIndex = (first) ? TOTAL_COMPARATIVE_COLUMN_INDEX : ++currentColumnIndex;
-                currentUnitColumnIndexes.Add(TOTAL_COMPARATIVE_COLUMN_INDEX_KEY, currentColumnIndex);
+                currentColumnIndex = (first) ? CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX : ++currentColumnIndex;
+                currentUnitColumnIndexes.Add(CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX_KEY, currentColumnIndex);
 
 
                 //Add PDM Comparative column Indexes
-                currentColumnIndex = (first) ? PDM_COMPARATIVE_COLUMN_INDEX : ++currentColumnIndex;
-                currentUnitColumnIndexes.Add(PDM_COMPARATIVE_COLUMN_INDEX_KEY, currentColumnIndex);
+                currentColumnIndex = (first) ? CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX : ++currentColumnIndex;
+                currentUnitColumnIndexes.Add(CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX_KEY, currentColumnIndex);
 
                 //Add Evolution column Indexes
-                currentColumnIndex = (first) ? EVOL_COLUMN_INDEX : ++currentColumnIndex;
-                currentUnitColumnIndexes.Add(EVOL_COLUMN_INDEX_KEY, currentColumnIndex);
+                currentColumnIndex = (first) ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : ++currentColumnIndex;
+                currentUnitColumnIndexes.Add(CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX_KEY, currentColumnIndex);
             }
-
+            if (beginYear != endYear)
+            {
+                var currentYearColumnIndexes = new Dictionary<int, int>();
+                for (int k = beginYear; k <= endYear; k++)
+                {
+                    if (first && k == beginYear)
+                    {
+                        currentColumnIndex = (isComparativeStudy) ? 1 + CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : 1 + CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
+                        currentYearColumnIndexes.Add(k, currentColumnIndex);
+                    }
+                    else
+                    {
+                        currentColumnIndex++;
+                        currentYearColumnIndexes.Add(k, currentColumnIndex);
+                    }
+                                      
+                }
+                yearsIndex.Add(unit, currentYearColumnIndexes);
+            }
             unitsColumnIndexes.Add(unit, currentUnitColumnIndexes);
             return currentColumnIndex;
         }
