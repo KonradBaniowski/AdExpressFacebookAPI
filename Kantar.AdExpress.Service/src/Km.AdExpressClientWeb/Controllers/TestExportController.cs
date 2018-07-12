@@ -3259,6 +3259,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 {
                     #region Media Schedule
                     int currentColMediaPlan = 0;
+                    
 
                     first = true;
                     nbColTabCell = colFirstMediaPlan;
@@ -3287,7 +3288,8 @@ namespace Km.AdExpressClientWeb.Controllers
                         #endregion
 
                         #region Line Treatement
-                        currentColMediaPlan = colFirstMediaPlan;
+                        currentColMediaPlan = currentExcelColumnIndex;
+                        var firstUnit = selectUnits.First();
                         for (int j = 0; j < nbColTab; j++)
                         {
                             switch (j)
@@ -3417,96 +3419,117 @@ namespace Km.AdExpressClientWeb.Controllers
                                     }
                                     break;
 
-                                    #endregion
+                                #endregion
 
-                                    #region Other
-                                    //default:
-                                    //    if (data[i, j] == null)
-                                    //    {
-                                    //        sheet.Cells[cellRow, currentColMediaPlan].Value = null;
+                                #region Other
+                                default:
+                                    if (data[i, j] == null)
+                                    {
+                                        sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                    //        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
-                                    //        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
+                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
+                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
 
-                                    //        currentColMediaPlan++;
-                                    //        break;
-                                    //    }
-                                    //    if (data[i, j] is MediaPlanItem)
-                                    //    {
-                                    //        switch (((MediaPlanItem)data[i, j]).GraphicItemType)
-                                    //        {
-                                    //            case DetailledMediaPlan.graphicItemType.present:
-                                    //                if (_showValues)
-                                    //                {
-                                    //                    if (isVersionNb)
-                                    //                        sheet.Cells[cellRow, currentColMediaPlan].Value = Units.ConvertUnitValue(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit);
-                                    //                    else
-                                    //                        sheet.Cells[cellRow, currentColMediaPlan].Value = Units.ConvertUnitValue(((MediaPlanItem)data[i, j]).Unit, _session.Unit);
+                                        currentColMediaPlan++;
+                                        break;
+                                    }
+                                    if (data[i, j] is MediaPlanItem)
+                                    {
+                                        switch (((MediaPlanItem) data[i, j]).GraphicItemType)
+                                        {
+                                            case DetailledMediaPlan.graphicItemType.present:
+                                                if (_showValues)
+                                                {
+                                                    if (data[i, j] is MediaPlanItemIds)
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value =
+                                                            Units.ConvertUnitValue(
+                                                                ((MediaPlanItemIds) data[i, j]).IdsNumber.Value,
+                                                                CstWeb.CustomerSessions.Unit.versionNb);
+                                                    else
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value =
+                                                            Units.ConvertUnitValue(((MediaPlanItem) data[i, j]).Unit,
+                                                               firstUnit);
 
-                                    //                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
-                                    //                    SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
+                                                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
+                                                    SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
 
-                                    //                    if (i == TOTAL_LINE_INDEX)
-                                    //                    {
-                                    //                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                    //                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                    }
-                                    //                    else
-                                    //                    {
-                                    //                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                    //                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                    }
-                                    //                }
-                                    //                else
-                                    //                {
-                                    //                    sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
+                                                    if (i == TOTAL_LINE_INDEX)
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                    else
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
 
-                                    //                    if (i == TOTAL_LINE_INDEX)
-                                    //                    {
-                                    //                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                    //                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                    }
-                                    //                    else
-                                    //                    {
-                                    //                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText, PresentBackground);
-                                    //                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                    }
-                                    //                }
-                                    //                break;
-                                    //            case DetailledMediaPlan.graphicItemType.extended:
-                                    //                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
+                                                    if (i == TOTAL_LINE_INDEX)
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                    else
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                }
+                                                break;
+                                            case DetailledMediaPlan.graphicItemType.extended:
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                    //                if (i == TOTAL_LINE_INDEX)
-                                    //                {
-                                    //                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                    //                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                }
-                                    //                else
-                                    //                {
-                                    //                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText, ExtendedBackground);
-                                    //                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                }
+                                                if (i == TOTAL_LINE_INDEX)
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
+                                                        ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
+                                                }
+                                                else
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
+                                                        ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
+                                                }
 
-                                    //                break;
-                                    //            default:
-                                    //                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
+                                                break;
+                                            default:
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                    //                if (i == TOTAL_LINE_INDEX)
-                                    //                {
-                                    //                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                    //                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                }
-                                    //                else
-                                    //                {
-                                    //                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText, NotPresentBackground);
-                                    //                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
-                                    //                }
+                                                if (i == TOTAL_LINE_INDEX)
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
+                                                        NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
+                                                }
+                                                else
+                                                {
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
+                                                        NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
+                                                }
 
-                                    //                break;
-                                    //        }
-                                    //        currentColMediaPlan++;
-                                    //    }
-                                    //    break;
+                                                break;
+                                        }
+                                        currentColMediaPlan++;
+                                    }
+                                    break;
                                     #endregion
                             }
                         }
@@ -3526,10 +3549,55 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     throw;
                 }
+
+                #region Ajoute les icones des cellules
+                if (isComparativeStudy)
+                {
+                    int idxCondis = sheet.ConditionalFormattings.Add();
+                    FormatConditionCollection fcs = sheet.ConditionalFormattings[idxCondis];
+
+                    CellArea cellArea = new CellArea();
+                    cellArea.StartRow = cellRowStart;
+                    cellArea.EndRow = cellRow;
+                    cellArea.StartColumn = colEvo;
+                    cellArea.EndColumn = colEvo;
+
+                    fcs.AddArea(cellArea);
+
+                    // Adds condition.
+                    int conditionIndex = fcs.AddCondition(FormatConditionType.IconSet, OperatorType.None, "0", "0");
+                    fcs[conditionIndex].IconSet.Type = IconSetType.Arrows3;
+                             
+                    fcs[conditionIndex].IconSet.Cfvos[1].Type = FormatConditionValueType.Number;
+                    fcs[conditionIndex].IconSet.Cfvos[1].Value = 0;
+                    fcs[conditionIndex].IconSet.Cfvos[2].Type = FormatConditionValueType.Number;
+                    fcs[conditionIndex].IconSet.Cfvos[2].Value = 0;
+                }
+                #endregion
+
+                #region Ajustement de la taile des cellules en fonction du contenu 
+
+                sheet.AutoFitColumns();
+
+                #endregion
             }
 
 
             #endregion
+
+            string documentFileNameRoot;
+            documentFileNameRoot = $"Export_{DateTime.Now:ddMMyyyy}.{(document.FileFormat == FileFormatType.Excel97To2003 ? "xls" : "xlsx")}";
+
+            Response.Clear();
+            Response.AppendHeader("content-disposition", "attachment; filename=" + documentFileNameRoot);
+            Response.ContentType = "application/octet-stream";
+            
+
+            document.Save(Response.OutputStream, new XlsSaveOptions(SaveFormat.Xlsx));
+
+
+
+            Response.End();
         }
 
         private void AddTotalYearsValues(int yearBegin, int yearEnd,
