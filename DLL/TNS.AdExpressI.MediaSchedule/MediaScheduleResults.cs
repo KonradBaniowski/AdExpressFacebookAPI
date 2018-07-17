@@ -783,7 +783,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_ID_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = null;
-                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX] = null;
+                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
                             // Create MediaPlan Items
                             for (int mpi = firstPeriodIndex; mpi < nbCol; mpi++)
@@ -873,7 +873,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L3_ID_COLUMN_INDEX] = null;
-                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX] = null;
+                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
                             // Création des MediaPlanItem
                             for (int mpi = firstPeriodIndex; mpi < nbCol; mpi++)
@@ -958,7 +958,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX] = null;
 
-                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX] = null;
+                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = null;
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = null;
                             // Création des MediaPlanItem
                             for (int mpi = firstPeriodIndex; mpi < nbCol; mpi++)
@@ -976,7 +976,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         {
                             newL4 = false;
                             currentLineIndex++;
-                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX] = GetLevelLabel(currentRowLevels, 4, detailLevel);
+                            oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] = GetLevelLabel(currentRowLevels, 4, detailLevel);
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX] = GetLevelId(currentRowLevels, 4, detailLevel);
 
                             oTab[currentLineIndex, CstFrameWorkResult.MediaSchedule.L1_ID_COLUMN_INDEX] = oldIdL1;
@@ -1534,7 +1534,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         // N3 line
                         if (oTab[i, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX] != null) currentL3Index = i;
                         // N4 line
-                        if (oTab[i, CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX] != null) currentL4Index = i;
+                        if (oTab[i, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX] != null) currentL4Index = i;
                         // lower level
                         if ((nbLevels == 1 && currentL1Index == i) || (nbLevels == 2 && currentL2Index == i) || (nbLevels == 3 && currentL3Index == i) || (nbLevels == 4 && currentL4Index == i))
                         {
@@ -2259,12 +2259,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 gridData[i - 1, gridColumnId++] = idLv3;
                                 if (_allowVersion)
                                 {
-                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) SetCreativeLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
                                 }
                                 if (_allowInsertions)
                                 {
-                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
                                 }
                                 // TODO : Remove commented code for countries that don't use Comparative study
@@ -3231,7 +3231,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 }
                                 if (_allowInsertions)
                                 {
-                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
                                 if (!WebApplicationParameters.UseComparativeMediaSchedule)

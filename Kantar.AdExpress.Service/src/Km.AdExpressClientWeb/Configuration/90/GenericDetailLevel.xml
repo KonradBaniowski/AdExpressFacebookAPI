@@ -89,7 +89,7 @@
     <level id="82" name="spotSubType"      webTextId="3148" dbId="id_spot_sub_type" dbLabel="spot_sub_type" dbTable="spot_sub_type" dbTablePrefixe="sst"/>
     <level id="83" name="adSlogan"      webTextId="3138" dbId="id_ad_slogan" dbLabel="ad_slogan" dbTable="ad_slogan" dbTablePrefixe="ads"/>
     <level id="84" name="spotRankType"      webTextId="3154" dbId="id_spot_rank_type" dbLabel="spot_rank_type" dbTable="spot_rank_type" dbTablePrefixe="srt"/>
-    <level id="85" name="programComItemPositionType"      webTextId="3155" dbId="id_program_com_item_pos_type" dbLabel="program_com_item_pos_type" dbTable="program_com_item_pos_type" dbTablePrefixe="srt"/>
+    <level id="85" name="programComItemPositionType"      webTextId="3155" dbId="id_program_com_item_pos_type" dbLabel="program_com_item_pos_type" dbTable="program_com_item_pos_type" dbTablePrefixe="pcipt"/>
     <level id="86" name="VersionName" webTextId="3156" dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="slogan" dbLabelAlias="slogan" convertNullDbLabel="true"/>
   </detaillevelItems>
 

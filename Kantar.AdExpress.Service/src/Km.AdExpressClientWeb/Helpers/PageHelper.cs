@@ -550,30 +550,36 @@ namespace Km.AdExpressClientWeb.Helpers
 
         public static void SetGrp(string countryCode, Options options)
         {
-            switch (countryCode)
-            {
-                case CountryCode.TURKEY:
-                    options.Grp.Visible = true;
-                    options.Grp30S.Visible = true;
-                    options.SpendsGrp.Visible = true;
-                    break;
-                default:
-                    options.Grp.Visible = false;
-                    options.Grp30S.Visible = false;
-                    options.SpendsGrp.Visible = false;
-                    break;
-            }
+            options.Grp.Visible = false;
+            options.Grp30S.Visible = false;
+            options.SpendsGrp.Visible = false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        options.Grp.Visible = true;
+            //        options.Grp30S.Visible = true;
+            //        options.SpendsGrp.Visible = true;
+            //        break;
+            //    default:
+            //        options.Grp.Visible = false;
+            //        options.Grp30S.Visible = false;
+            //        options.SpendsGrp.Visible = false;
+            //        break;
+            //}
         }
 
         public static bool IsGrpAvailable(string countryCode)
         {
-            switch (countryCode)
-            {
-                case CountryCode.TURKEY:
-                    return true;
-                default:
-                    return false;
-            }
+            return false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        return true;
+            //    default:
+            //        return false;
+            //}
         }
     }
 

@@ -361,15 +361,15 @@
                 return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
             }
 
-            function GetColumnsFormatter(columns, unit) {
+            function GetColumnsFormatter(columns) {
 
                 if (columns != null) {
 
                     columns.forEach(function (elem) {
                         if (elem.key.length > 0 && (elem.key.startsWith("PERIOD") || elem.key.startsWith("PERIOD_COMP"))) {
-                            if (unit == "duration")
+                            if (elem.key.endsWith("duration"))
                                 elem.formatter = DurationFormatter;
-                            else if (unit == "pages")
+                            else if (elem.key.endsWith("pages"))
                                 elem.formatter = PageFormatter;
                             else
                                 elem.formatter = UnitFormatter;
@@ -421,7 +421,7 @@
                             }
                             else {
                                 dataTreeGrid = data.datagrid;
-                                cols = GetColumnsFormatter(data.columns, data.unit);
+                                cols = GetColumnsFormatter(data.columns);
                                 colsFixed = data.columnsfixed;
                                 columnsNotAllowedSorting = data.columnsNotAllowedSorting;
                                 needFixedColumns = data.needfixedcolumns;

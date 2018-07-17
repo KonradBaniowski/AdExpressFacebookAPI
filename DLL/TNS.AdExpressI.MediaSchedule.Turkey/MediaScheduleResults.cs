@@ -125,6 +125,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 firstPeriodIndex++;
 
             firstPeriodIndex += unitsNumber * unitColumnsNb;
+            firstPeriodIndex += unitsNumber * nbColYear;
 
             int nbColTab = data.GetLength(1);
             int nbPeriod = nbColTab - firstPeriodIndex - 1;
@@ -189,9 +190,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     }
                     else if (_session.Grp30S)
                     {
-                        tableWidth = AddComparativePeriodColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3151, _session.SiteLanguage), format, tableWidth, 3151);
-                        tableWidth = AddCurrentPeriodColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3151, _session.SiteLanguage), format, tableWidth, 3151);
-                        tableWidth = AddEvolutionColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3151, _session.SiteLanguage), format, tableWidth);
+                        tableWidth = AddComparativePeriodColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3150, _session.SiteLanguage), format, tableWidth, 3151);
+                        tableWidth = AddCurrentPeriodColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3150, _session.SiteLanguage), format, tableWidth, 3151);
+                        tableWidth = AddEvolutionColumns(columns, schemaFields, columnsFixed, GestionWeb.GetWebWord(3150, _session.SiteLanguage), format, tableWidth);
                     }
 
                     if (_session.SpendsGrp)
@@ -483,12 +484,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                             firstUnit = false;
                                         }
 
+                                        unitColumnIndex += nbColYear;
+
                                         if (IsCurrency(unit) && IsGrpSelected())
                                         {
                                             SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                            unitColumnIndex += nbColYear;
 
-                                            if(_session.SpendsGrp)
+                                            if (_session.SpendsGrp)
+                                            {
                                                 SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                                unitColumnIndex += nbColYear;
+                                            }
                                         }
                                     }
 
@@ -546,12 +553,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                             firstUnit = false;
                                         }
 
+                                        unitColumnIndex += nbColYear;
+
                                         if (IsCurrency(unit) && IsGrpSelected())
                                         {
                                             SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                            unitColumnIndex += nbColYear;
 
                                             if (_session.SpendsGrp)
+                                            {
                                                 SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                                unitColumnIndex += nbColYear;
+                                            }
                                         }
                                     }
 
@@ -592,12 +605,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                             firstUnit = false;
                                         }
 
+                                        unitColumnIndex += nbColYear;
+
                                         if (IsCurrency(unit) && IsGrpSelected())
                                         {
                                             SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                            unitColumnIndex += nbColYear;
 
                                             if (_session.SpendsGrp)
+                                            {
                                                 SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                                unitColumnIndex += nbColYear;
+                                            }
                                         }
                                     }
 
@@ -636,12 +655,18 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                                         firstUnit = false;
                                     }
 
+                                    unitColumnIndex += nbColYear;
+
                                     if (IsCurrency(unit) && IsGrpSelected())
                                     {
                                         SetGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                        unitColumnIndex += nbColYear;
 
                                         if (_session.SpendsGrp)
+                                        {
                                             SetSpendsPerGRP(data, ref gridData, i, ref gridColumnId, ref unitColumnIndex);
+                                            unitColumnIndex += nbColYear;
+                                        }
                                     }
                                 }
 
@@ -736,6 +761,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
             gridResult.Data = gridData;
             gridResult.Unit = _session.Unit.ToString();
+            gridResult.Units = _session.Units;
 
             _session.Save();
 
@@ -1285,8 +1311,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     {
                         
                         currentColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
-                        first = false;
                     }
+                    first = false;
 
                     if (u == CstWeb.CustomerSessions.Unit.grp && hasAdSpend && _session.SpendsGrp)
                     {
@@ -2393,7 +2419,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             int totalSpendsColumnIndex = adSpendsColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
                             var totalSpendsPerGrpColumnIndex = unitsColumnIndexes[unt][CstFrameWorkResult.MediaSchedule.SPEND_PER_GRP_COLUMN_INDEX_KEY];
                             if (unitSum > 0)
-                                oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = (double) oTab[currentLevelIndex, totalSpendsColumnIndex] / unitSum;
+                                oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = Math.Round((double) oTab[currentLevelIndex, totalSpendsColumnIndex] / unitSum, 2);
                             else
                                 oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = 0;
                         }
