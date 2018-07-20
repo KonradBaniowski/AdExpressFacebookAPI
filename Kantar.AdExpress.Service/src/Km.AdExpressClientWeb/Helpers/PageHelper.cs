@@ -431,7 +431,6 @@ namespace Km.AdExpressClientWeb.Helpers
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
                 case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
-                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
                 case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
