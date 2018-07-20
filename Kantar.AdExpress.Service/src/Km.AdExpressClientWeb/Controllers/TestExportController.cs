@@ -1573,7 +1573,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 int sloganIndex = GetSloganIdIndex();
                 string stringItem = "";
                 int labColSpan = 1;
-                int nbColTabFirst = 0;
+                int nbColTabFirst = 1;
                 bool isComparativeStudy = WebApplicationParameters.UseComparativeMediaSchedule &&
                                           _session.ComparativeStudy;
                 //Units Indexes
@@ -1666,6 +1666,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     range = AdHeaderCellValue(sheet, currentRowIndex, currentExcelColumnIndex, rowSpanNb, labColSpan,
                         cellValue);
+                    currentUnitExcelColumnIndexes.Add(FrameWorkResults.MediaSchedule.TOTAL_COLUMN_INDEX_KEY,
+                        currentExcelColumnIndex);
                     currentExcelColumnIndex++;
 
 
@@ -1774,6 +1776,133 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 #endregion
 
+                #region Period
+                nbPeriod = 0;
+                int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+                int lastPeriod = prevPeriod;
+                // bool first = true;
+                 colFirstMediaPlan = currentExcelColumnIndex;
+                nbColTabFirst = currentExcelColumnIndex - 1;
+
+                switch (period.PeriodDetailLEvel)
+                {
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+                        prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+                        for (int j = firstPeriodIndex, currentColMediaPlan = colFirstMediaPlan; j < nbColTab; j++, currentColMediaPlan++)
+                        {
+                            if (prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4)))
+                            {
+                                sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
+
+                                if (nbPeriod < 3)
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
+
+                                else
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
+
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                                BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
+
+                                nbColTabFirst += nbPeriod;
+                                nbPeriod = 0;
+                                prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
+
+                            }
+
+                            switch (period.PeriodDetailLEvel)
+                            {
+                                case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+
+                                    sheet.Cells[startIndex, currentColMediaPlan].Value = MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1);
+
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
+
+                                    break;
+                                case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+
+                                    sheet.Cells[startIndex, currentColMediaPlan].Value = int.Parse(data[0, j].ToString().Substring(4, 2));
+
+                                    TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                                    BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
+
+                                    break;
+
+                            }
+                            nbPeriod++;
+                            nbPeriodTotal++;
+                        }
+
+                        // Compute last date                        
+                        sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
+
+                        if (nbPeriod < 3)
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
+                        else
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = prevPeriod;
+
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
+
+                        break;
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
+                        DateTime currentDay = DateString.YYYYMMDDToDateTime((string)data[0, firstPeriodIndex]);
+                        prevPeriod = currentDay.Month;
+                        currentDay = currentDay.AddDays(-1);
+                        for (int j = firstPeriodIndex, currentColMediaPlan = colFirstMediaPlan; j < nbColTab; j++, currentColMediaPlan++)
+                        {
+                            currentDay = currentDay.AddDays(1);
+                            if (currentDay.Month != prevPeriod)
+                            {
+                                sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
+                                range = sheet.Cells.CreateRange(startIndex - 1, nbColTabFirst + 1, startIndex - 1 + 1 - 1, nbColTabFirst + 1 + nbPeriod - 1);
+
+                                if (nbPeriod >= 8)
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
+                                else
+                                    sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
+
+                                TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                                BorderStyle(sheet, range, CellBorderType.Hair, HeaderBorderTab);
+
+                                nbColTabFirst += nbPeriod;
+                                nbPeriod = 0;
+                                prevPeriod = currentDay.Month;
+                            }
+                            nbPeriod++;
+                            nbPeriodTotal++;
+                            //Period Number
+                            sheet.Cells[startIndex, currentColMediaPlan].Value = currentDay.ToString("dd");
+
+                            TextStyle(sheet.Cells[startIndex, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                            BorderStyle(sheet, startIndex, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
+
+                            //Period day
+                            if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
+                                sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
+                            else
+                                sheet.Cells[startIndex + 1, currentColMediaPlan].Value = DayString.GetCharacters(currentDay, cultureInfo, 1);
+
+                            TextStyle(sheet.Cells[startIndex + 1, currentColMediaPlan], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                            BorderStyle(sheet, startIndex + 1, currentColMediaPlan, CellBorderType.Hair, HeaderBorderTab);
+                        }
+
+                        sheet.Cells.Merge(startIndex - 1, nbColTabFirst + 1, 1, nbPeriod);
+
+                        if (nbPeriod >= 8)
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM"));
+                        else
+                            sheet.Cells[startIndex - 1, nbColTabFirst + 1].Value = null;
+
+                        TextStyle(sheet.Cells[startIndex - 1, nbColTabFirst + 1], TextAlignmentType.Center, TextAlignmentType.Center, HeaderTabText, HeaderTabBackground);
+                        BorderStyle(sheet, startIndex - 1, nbColTabFirst + 1, CellBorderType.Hair, HeaderBorderTab);
+
+                        break;
+
+                }
+                #endregion
+
                 #region init Row Media Shedule
 
                 cellRow++;
@@ -1786,334 +1915,342 @@ namespace Km.AdExpressClientWeb.Controllers
                 // Fige les entêtes de lignes et de colonnes
                 sheet.FreezePanes(cellRow, colFirstMediaPlan, cellRow, colFirstMediaPlan);
 
-                #region Media Schedule
-                int currentColMediaPlan = 0;
-
-                string[] classifLabels = new string[detailLevel.GetNbLevels];
-                first = true;
-                nbColTabCell = colFirstMediaPlan;
-
-
-                #region Get Max Level                
-                int nbLevels = detailLevel.GetNbLevels;
-                #endregion
-
-                SetSetsOfColorByMaxLevel(nbLevel);
-
-                for (int i = 1; i < nbline; i++)
+                try
                 {
-                    #region Color Management
-                    if (sloganIndex != -1 && data[i, sloganIndex] != null &&
-                        ((_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == _session.GenericMediaDetailLevel.GetNbLevels) ||
-                         (_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < _session.GenericMediaDetailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
-                    {
-                        stringItem = "x";
-                    }
-                    else
-                    {
-                        stringItem = "";
-                    }
+                    #region Media Schedule
+                    int currentColMediaPlan = 0;
+
+                    string[] classifLabels = new string[detailLevel.GetNbLevels];
+                    first = true;
+                    nbColTabCell = colFirstMediaPlan;
+
+
+                    #region Get Max Level                
+                    int nbLevels = detailLevel.GetNbLevels;
                     #endregion
 
-                    #region Line Treatement
-                    currentColMediaPlan = currentExcelColumnIndex;
-                    var firstUnit = selectUnits.First();
-                    for (int j = 0; j < nbColTab; j++)
+                    SetSetsOfColorByMaxLevel(nbLevel);
+
+                    for (int i = 1; i < nbline; i++)
                     {
-                        switch (j)
+                        #region Color Management
+                        if (sloganIndex != -1 && data[i, sloganIndex] != null &&
+                            ((_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == _session.GenericMediaDetailLevel.GetNbLevels) ||
+                             (_session.GenericMediaDetailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < _session.GenericMediaDetailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
                         {
+                            stringItem = "x";
+                        }
+                        else
+                        {
+                            stringItem = "";
+                        }
+                        #endregion
+
+                        #region Line Treatement
+                        currentColMediaPlan = currentExcelColumnIndex;
+                        var firstUnit = selectUnits.First();
+                        for (int j = 0; j < nbColTab; j++)
+                        {
+                            switch (j)
+                            {
                                 #region Level 1
 
-                            case FrameWorkResults.MediaSchedule.L1_COLUMN_INDEX:
-                                if (data[i, j] != null)
-                                {
-
-                                    if (data[i, j].GetType() == typeof(MemoryArrayEnd))
+                                case FrameWorkResults.MediaSchedule.L1_COLUMN_INDEX:
+                                    if (data[i, j] != null)
                                     {
-                                        i = int.MaxValue - 2;
-                                        j = int.MaxValue - 2;
-                                        break;
+
+                                        if (data[i, j].GetType() == typeof(MemoryArrayEnd))
+                                        {
+                                            i = int.MaxValue - 2;
+                                            j = int.MaxValue - 2;
+                                            break;
+                                        }
+
+                                        #region Label
+                                        sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
+
+                                        classifLabels[0] = WebUtility.HtmlDecode(data[i, j].ToString());
+
+                                        for (int colLevel = colSupport; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++)
+                                        {
+
+                                            if (colLevel != colSupport)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+                                            }
+
+                                            if (i == TOTAL_LINE_INDEX)
+                                            {
+                                                TextStyle(sheet.Cells[cellRow, colLevel], LTotalText, LTotalBackground);
+                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                            }
+                                            else
+                                            {
+                                                TextStyle(sheet.Cells[cellRow, colLevel], L1Text, L1Background);
+                                                BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                            }
+                                        }
+                                        #endregion
+
+                                        selectUnits.ForEach(u =>
+                                        {
+                                            AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
+                                                unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
+                                                yearsExcelIndex, L1Text, L1Background);
+                                        });
+
                                     }
-
-                                    #region Label
-                                    sheet.Cells[cellRow, colSupport].Value = WebUtility.HtmlDecode(data[i, j].ToString());
-
-                                    classifLabels[0] = WebUtility.HtmlDecode(data[i, j].ToString());
-
-                                    for (int colLevel = colSupport; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++)
-                                    {
-
-                                        if (colLevel != colSupport)
-                                        {
-                                            sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
-                                        }
-
-                                        if (i == TOTAL_LINE_INDEX)
-                                        {
-                                            TextStyle(sheet.Cells[cellRow, colLevel], LTotalText, LTotalBackground);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
-                                        }
-                                        else
-                                        {
-                                            TextStyle(sheet.Cells[cellRow, colLevel], L1Text, L1Background);
-                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
-                                        }
-                                    }
-                                    #endregion
-
-                                    selectUnits.ForEach(u =>
-                                    {
-                                        AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
-                                            unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
-                                            yearsExcelIndex, L1Text, L1Background);
-                                    });
-
-                                }
-                                break;
+                                    break;
 
                                 #endregion
 
                                 #region Level 2
 
-                            case FrameWorkResults.MediaSchedule.L2_COLUMN_INDEX:
-                                if (data[i, j] != null)
-                                {
-
-                                    #region Label
-                                       
-                                    classifLabels[1] = WebUtility.HtmlDecode(data[i, j].ToString());
-
-                                    for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                case FrameWorkResults.MediaSchedule.L2_COLUMN_INDEX:
+                                    if (data[i, j] != null)
                                     {
 
-                                        if (level <= 1)
-                                        {
-                                            sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
-                                        }
-                                        else if (level > 1)
-                                        {
-                                            sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
-                                        }
+                                        #region Label
 
-                                        TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
-                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                        classifLabels[1] = WebUtility.HtmlDecode(data[i, j].ToString());
+
+                                        for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                        {
+
+                                            if (level <= 1)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
+                                            }
+                                            else if (level > 1)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+                                            }
+
+                                            TextStyle(sheet.Cells[cellRow, colLevel], L2Text, L2Background);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                        }
+                                        #endregion
+
+                                        selectUnits.ForEach(u =>
+                                        {
+                                            AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
+                                                unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
+                                                yearsExcelIndex, L2Text, L2Background);
+                                        });
+
                                     }
-                                    #endregion
-
-                                    selectUnits.ForEach(u =>
-                                    {
-                                        AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
-                                            unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
-                                            yearsExcelIndex, L2Text, L2Background);
-                                    });
-
-                                }
-                                break;
+                                    break;
 
                                 #endregion
 
                                 #region Level 3
 
-                            case FrameWorkResults.MediaSchedule.L3_COLUMN_INDEX:
-                                if (data[i, j] != null)
-                                {
-
-                                    #region Label
-
-                                    classifLabels[2] = WebUtility.HtmlDecode(data[i, j].ToString());
-
-                                    for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                case FrameWorkResults.MediaSchedule.L3_COLUMN_INDEX:
+                                    if (data[i, j] != null)
                                     {
 
-                                        if (level <= 2)
+                                        #region Label
+
+                                        classifLabels[2] = WebUtility.HtmlDecode(data[i, j].ToString());
+
+                                        for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                         {
-                                            sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
-                                        }
-                                        else if (level > 2)
-                                        {
-                                            sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+
+                                            if (level <= 2)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
+                                            }
+                                            else if (level > 2)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+                                            }
+
+                                            TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                         }
 
-                                        TextStyle(sheet.Cells[cellRow, colLevel], L3Text, L3Background);
-                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                        #endregion
+
+                                        selectUnits.ForEach(u =>
+                                        {
+                                            AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
+                                                unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
+                                                yearsExcelIndex, L3Text, L3Background);
+                                        });
+
                                     }
-
-                                    #endregion
-
-                                    selectUnits.ForEach(u =>
-                                    {
-                                        AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
-                                            unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
-                                            yearsExcelIndex, L3Text, L3Background);
-                                    });
-
-                                }
-                                break;
+                                    break;
 
                                 #endregion
 
                                 #region Level 4
 
-                            case FrameWorkResults.MediaSchedule.L4_COLUMN_INDEX:
-                                if (data[i, j] != null)
-                                {
-
-                                    #region Label
-
-                                    classifLabels[3] = WebUtility.HtmlDecode(data[i, j].ToString());
-
-                                    for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
+                                case FrameWorkResults.MediaSchedule.L4_COLUMN_INDEX:
+                                    if (data[i, j] != null)
                                     {
 
-                                        if (level <= 3)
+                                        #region Label
+
+                                        classifLabels[3] = WebUtility.HtmlDecode(data[i, j].ToString());
+
+                                        for (int colLevel = colSupport, level = 0; colLevel < colSupport + detailLevel.GetNbLevels; colLevel++, level++)
                                         {
-                                            sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
-                                        }
-                                        else if (level > 3)
-                                        {
-                                            sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+
+                                            if (level <= 3)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = classifLabels[level];
+                                            }
+                                            else if (level > 3)
+                                            {
+                                                sheet.Cells[cellRow, colLevel].Value = WebUtility.HtmlDecode(GestionWeb.GetWebWord(1401, _session.SiteLanguage));
+                                            }
+
+                                            TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
+                                            BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
                                         }
 
-                                        TextStyle(sheet.Cells[cellRow, colLevel], L4Text, L4Background);
-                                        BorderStyle(sheet, cellRow, colLevel, CellBorderType.Hair, BorderTab);
+                                        #endregion
+
+                                        selectUnits.ForEach(u =>
+                                        {
+                                            AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
+                                                unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
+                                                yearsExcelIndex, L4Text, L4Background);
+                                        });
+
                                     }
-
-                                    #endregion
-
-                                    selectUnits.ForEach(u =>
-                                    {
-                                        AddLevelValues(data, isComparativeStudy, unitsColumnIndexes, u,
-                                            unitsExcelColumnIndexes, i, sheet, cellRow, yearBegin, yearEnd, yearsIndex,
-                                            yearsExcelIndex, L4Text, L4Background);
-                                    });
-
-                                }
-                                break;
+                                    break;
 
                                 #endregion
 
                                 #region Other
-                            default:
-                                if (data[i, j] == null)
-                                {
-                                    sheet.Cells[cellRow, currentColMediaPlan].Value = null;
+                                default:
+                                    //if (data[i, j] == null)
+                                    //{
+                                    //    sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
-                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
+                                    //    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
+                                    //    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
 
-                                    currentColMediaPlan++;
-                                    break;
-                                }
-                                if (data[i, j] is MediaPlanItem)
-                                {
-                                    switch (((MediaPlanItem)data[i, j]).GraphicItemType)
+                                    //    currentColMediaPlan++;
+                                    //    break;
+                                    //}
+                                    if (data[i, j] is MediaPlanItem)
                                     {
-                                        case DetailledMediaPlan.graphicItemType.present:
-                                            if (_showValues)
-                                            {
-                                                if (data[i, j] is MediaPlanItemIds)
-                                                    sheet.Cells[cellRow, currentColMediaPlan].Value =
-                                                        Units.ConvertUnitValue(
-                                                            ((MediaPlanItemIds)data[i, j]).IdsNumber.Value,
-                                                            CstWeb.CustomerSessions.Unit.versionNb);
-                                                else
-                                                    sheet.Cells[cellRow, currentColMediaPlan].Value =
-                                                        Units.ConvertUnitValue(((MediaPlanItem)data[i, j]).Unit,
-                                                            firstUnit);
+                                        switch (((MediaPlanItem)data[i, j]).GraphicItemType)
+                                        {
+                                            case DetailledMediaPlan.graphicItemType.present:
+                                                if (_showValues)
+                                                {
+                                                    if (data[i, j] is MediaPlanItemIds)
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value =
+                                                            Units.ConvertUnitValue(
+                                                                ((MediaPlanItemIds)data[i, j]).IdsNumber.Value,
+                                                                CstWeb.CustomerSessions.Unit.versionNb);
+                                                    else
+                                                        sheet.Cells[cellRow, currentColMediaPlan].Value =
+                                                            Units.ConvertUnitValue(((MediaPlanItem)data[i, j]).Unit,
+                                                                firstUnit);
 
-                                                SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
-                                                SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
+                                                    SetDecimalFormat(sheet.Cells[cellRow, currentColMediaPlan]);
+                                                    SetIndentLevel(sheet.Cells[cellRow, currentColMediaPlan], 1, true);
+
+                                                    if (i == TOTAL_LINE_INDEX)
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                    else
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
+
+                                                    if (i == TOTAL_LINE_INDEX)
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                    else
+                                                    {
+                                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
+                                                            PresentBackground);
+                                                        BorderStyle(sheet, cellRow, currentColMediaPlan,
+                                                            CellBorderType.Hair, BorderTab);
+                                                    }
+                                                }
+                                                break;
+                                            case DetailledMediaPlan.graphicItemType.extended:
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
-                                                        PresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan,
-                                                        CellBorderType.Hair, BorderTab);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
+                                                        ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
                                                 }
                                                 else
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
-                                                        PresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan,
-                                                        CellBorderType.Hair, BorderTab);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
+                                                        ExtendedBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
                                                 }
-                                            }
-                                            else
-                                            {
-                                                sheet.Cells[cellRow, currentColMediaPlan].Value = stringItem;
+
+                                                break;
+                                            default:
+                                                sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
                                                 if (i == TOTAL_LINE_INDEX)
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
-                                                        PresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan,
-                                                        CellBorderType.Hair, BorderTab);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
+                                                        NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
                                                 }
                                                 else
                                                 {
-                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], PresentText,
-                                                        PresentBackground);
-                                                    BorderStyle(sheet, cellRow, currentColMediaPlan,
-                                                        CellBorderType.Hair, BorderTab);
+                                                    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
+                                                        NotPresentBackground);
+                                                    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
+                                                        BorderTab);
                                                 }
-                                            }
-                                            break;
-                                        case DetailledMediaPlan.graphicItemType.extended:
-                                            sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                            if (i == TOTAL_LINE_INDEX)
-                                            {
-                                                TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
-                                                    ExtendedBackground);
-                                                BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
-                                                    BorderTab);
-                                            }
-                                            else
-                                            {
-                                                TextStyle(sheet.Cells[cellRow, currentColMediaPlan], ExtendedText,
-                                                    ExtendedBackground);
-                                                BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
-                                                    BorderTab);
-                                            }
-
-                                            break;
-                                        default:
-                                            sheet.Cells[cellRow, currentColMediaPlan].Value = null;
-
-                                            if (i == TOTAL_LINE_INDEX)
-                                            {
-                                                TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
-                                                    NotPresentBackground);
-                                                BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
-                                                    BorderTab);
-                                            }
-                                            else
-                                            {
-                                                TextStyle(sheet.Cells[cellRow, currentColMediaPlan], NotPresentText,
-                                                    NotPresentBackground);
-                                                BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair,
-                                                    BorderTab);
-                                            }
-
-                                            break;
+                                                break;
+                                        }
+                                        currentColMediaPlan++;
                                     }
-                                    currentColMediaPlan++;
-                                }
-                                break;
-                                #endregion
+                                    break;
+                                    #endregion
+                            }
                         }
+                        if (first)
+                        {
+                            first = !first;
+                            nbColTabCell += currentColMediaPlan - 1;
+                        }
+                        cellRow++;
+                        #endregion
                     }
-                    if (first)
-                    {
-                        first = !first;
-                        nbColTabCell += currentColMediaPlan - 1;
-                    }
-                    cellRow++;
+
                     #endregion
                 }
+                catch (Exception)
+                {
 
-                #endregion
+                    throw;
+                }
 
                 #region Ajustement de la taile des cellules en fonction du contenu 
 
@@ -3727,6 +3864,8 @@ namespace Km.AdExpressClientWeb.Controllers
 
                     range = AdHeaderCellValue(sheet, currentRowIndex, currentExcelColumnIndex, rowSpanNb, labColSpan,
                         cellValue);
+                    currentUnitExcelColumnIndexes.Add(FrameWorkResults.MediaSchedule.TOTAL_COLUMN_INDEX_KEY,
+                       currentExcelColumnIndex);
                     currentExcelColumnIndex++;
 
 
@@ -3767,6 +3906,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 cellValue);
                             currentExcelColumnIndex++;
                         }
+                        
                         yearsExcelIndex.Add(un, currentYearColumnIndexes);
                     }
 
@@ -3821,7 +3961,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 });
 
                 int firstPeriodIndex = currentColumnIndex + 1;
-                nbColTabFirst = currentColumnIndex;
+               
 
                 int nbColTab = data.GetLength(1);
                 int nbline = data.GetLength(0);
@@ -3839,6 +3979,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 nbPeriod = 0;
                 int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
                 int lastPeriod = prevPeriod;
+                colFirstMediaPlan = currentExcelColumnIndex;
+                nbColTabFirst = currentExcelColumnIndex - 1;
 
                 switch (_period.PeriodDetailLEvel)
                 {
@@ -4165,16 +4307,16 @@ namespace Km.AdExpressClientWeb.Controllers
 
                                 #region Other
                                 default:
-                                    if (data[i, j] == null)
-                                    {
-                                        sheet.Cells[cellRow, currentColMediaPlan].Value = null;
+                                    //if (data[i, j] == null)
+                                    //{
+                                    //    sheet.Cells[cellRow, currentColMediaPlan].Value = null;
 
-                                        TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
-                                        BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
+                                    //    TextStyle(sheet.Cells[cellRow, currentColMediaPlan], TabText, TabBackground);
+                                    //    BorderStyle(sheet, cellRow, currentColMediaPlan, CellBorderType.Hair, BorderTab);
 
-                                        currentColMediaPlan++;
-                                        break;
-                                    }
+                                    //    currentColMediaPlan++;
+                                    //    break;
+                                    //}
                                     if (data[i, j] is MediaPlanItem)
                                     {
                                         switch (((MediaPlanItem) data[i, j]).GraphicItemType)
