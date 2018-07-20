@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <vehicle id="1" name="presse">
+      <detailColumn id="18"/>
+    </vehicle>   
+    <vehicle id="4" name="radio">
+      <detailColumn id="19"/>
+    </vehicle>
+    <vehicle id="6" name="télévision">
+      <detailColumn id="19"/>
+    </vehicle>
+    <vehicle id="3" name="Publicité extérieure">
+      <detailColumn id="20"/>
+    </vehicle>   
+    <vehicle id="2" name="adnettrack">
+      <detailColumn id="37"/>
+    </vehicle>   
+  </vehicleGroups>
+</configuration>

@@ -431,6 +431,7 @@ namespace Km.AdExpressClientWeb.Helpers
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
                 case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
+                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
             }
@@ -448,11 +449,8 @@ namespace Km.AdExpressClientWeb.Helpers
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     ids.Add(ExportResultWithValue);
-                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
-                    {
-                        ids.Add(ExportPdfResult);
-                        ids.Add(ExportPptResult);
-                    }
+                    ids.Add(ExportPdfResult);
+                    ids.Add(ExportPptResult);
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
