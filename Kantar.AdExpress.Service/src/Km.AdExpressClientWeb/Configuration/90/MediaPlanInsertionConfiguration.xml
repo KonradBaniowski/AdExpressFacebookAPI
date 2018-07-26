@@ -118,9 +118,9 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>-->
-    <vehicle id="6"   name="télévision" >
+    <vehicle id="1"   name="télévision" >
       <detailColumns>
-        <detailColumn id="3">
+        <detailColumn id="8">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="perdu/gagné" privilegecode="197"/>

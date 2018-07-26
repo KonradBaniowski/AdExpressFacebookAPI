@@ -4,17 +4,17 @@
     <column id="1" name="Media" webTextId="363" dbId="id_vehicle" dbLabel="vehicle" dbTable="vehicle" dbTablePrefixe="vh" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="1"/>
     <column id="2" name="Categorie" webTextId="1382" dbId="id_category" dbLabel="category" dbTable="category" dbTablePrefixe="ct" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="2"/>
     <column id="3" name="Support" webTextId="971" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="3"/>
-    <column id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="4"/>
-    <column id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="5"/>
+    <column id="4" name="Centre d'interet" webTextId="3144" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="4"/>
+    <column id="5" name="Régie" webTextId="3159" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="5"/>
     <column id="6" name="Version" webTextId="1888"  dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true" idLevel="6"/>
-    <column id="7" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="8"/>
-    <column id="8" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="13"/>
+    <column id="7" name="Annonceur" webTextId="3169" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="8"/>
+    <column id="8" name="Groupe" webTextId="3143" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="13"/>
     <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="10"/>
     <column id="10" name="Spot" webTextId="869"  dbLabel="associated_file"/>
     <column id="11" name="Format" webTextId="1420" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="fo"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="20"/>
     <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
     <column id="13" name="Couleur" webTextId="1438" dbId="id_color" dbLabel="color" dbTable="color" dbTablePrefixe="cl"   dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="14" name="Prix" webTextId="1936" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="14" name="Prix" webTextId="3194" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="15" name="Descriptif" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
       <constraints>
         <dbConstraints>
@@ -40,17 +40,17 @@
       </constraints>
     </column>
     <column id="16" name="Top de diffusion radio" webTextId="860" dbLabel="id_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
-    <column id="17" name="Top de diffusion télévision" webTextId="860" dbLabel="top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
+    <column id="17" name="Top de diffusion télévision" webTextId="3172" dbLabel="top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
     <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"/>
     <column id="19" name="Position radio" webTextId="862"  dbLabel="rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="20" name="Position télévision" webTextId="862"  dbLabel="id_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="21" name="Durée écran" webTextId="597"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="20" name="Position télévision" webTextId="3175"  dbLabel="id_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="21" name="Durée écran" webTextId="3182"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
     <column id="22" name="Nombre Spots écran télévision" webTextId="1937"  dbLabel="number_message_commercial_brea" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="23" name="Nombre Spots écran radio" webTextId="1937"  dbLabel="number_spot_com_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="24" name="Position hap" webTextId="599"  dbLabel="rank_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="25" name="Durée écran hap" webTextId="600"  dbLabel="duration_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
     <column id="26" name="Nombre spots hap" webTextId="1938"  dbLabel="number_spot_com_break_wap" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="27" name="Code écran" webTextId="495"  dbLabel="id_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" idLevel="21"/>
+    <column id="27" name="Code écran" webTextId="3179"  dbLabel="id_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" idLevel="21"/>
     <column id="28" name="Nombre de panneaux" webTextId="1939"  dbLabel="number_board" CellType="TNS.FrameWork.WebResultUI.CellInsertion" format="max0"/>
     <column id="29" name="Format du panneau" webTextId="1420"  dbLabel="type_board" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="22"/>
     <column id="30" name="Type de réseau" webTextId="1609"  dbLabel="type_sale" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -83,13 +83,13 @@
     </column>
     <column id="36" name="Position presse" webTextId="862"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="37" name="Genre d'émissions" webTextId="2050" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="23"/>
-    <column id="38" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="24"/>
+    <column id="38" name="Emissions" webTextId="3146" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="24"/>
     <column id="39" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="25"/>
     <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
     <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
     <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="44" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="11"/>
+    <column id="44" name="Famille" webTextId="3168" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="11"/>
     <column id="45" name="Surface en mmc" webTextId="595"  dbLabel="area_mmc" CellType="TNS.FrameWork.WebResultUI.CellMMC" format="max0"/>
     <column id="46" name="Rang famille" webTextId="1426"  dbLabel="rank_sector" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="47" name="Rang groupe" webTextId="1427"  dbLabel="rank_group_" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -141,7 +141,7 @@
     <column id="79" name="Dimension banner" webTextId="2542" dbId="id_dimension_banners" dbLabel="dimension_banners" dbLabelAlias="dimension_banners" dbTable="dimension_banners" dbTablePrefixe="dban"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
     <column id="80" name="Banner url" webTextId="1420" isMax="true" dbLabel="url" dbLabelAlias="url" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="81" name="Banner hashcode" webTextId="1888" dbLabel="hashcode" dbLabelAlias="hashcode" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="82" name="Classe" webTextId="552" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="12"/>
+    <column id="82" name="Classe" webTextId="3167" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="12"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="20"/>
     <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
@@ -231,7 +231,7 @@
     <column id="175" name="country" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="cou" CellType="TNS.FrameWork.WebResultUI.CellLabel" isContainsSeparator="true" idLevel="26"/>
     <column id="178" name="Media Group" webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="77"/>
     <!--End New columns for Russia-->
-    <column id="180" name="Groupe de société" webTextId="1589" dbId="id_holding_company" dbLabel="holding_company" dbTable="holding_company" dbTablePrefixe="hc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="7"/>
+    <column id="180" name="Groupe de société" webTextId="3171" dbId="id_holding_company" dbLabel="holding_company" dbTable="holding_company" dbTablePrefixe="hc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="7"/>
     <column id="181" name="Groupe d'agence" webTextId="1890" dbId="id_group_advertising_agency" dbLabel="group_advertising_agency" dbTable="group_advertising_agency" dbTablePrefixe="gadv" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="15"/>
     <column id="182" name="Agence" webTextId="1891" dbId="id_advertising_agency" dbLabel="advertising_agency" dbTable="advertising_agency" dbTablePrefixe="adva" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="16"/>
     <column id="183" name="Titre" webTextId="1976" dbId="id_title" dbLabel="title" dbTable="title" dbTablePrefixe="tt" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="17"/>
@@ -243,6 +243,61 @@
     <column id="189" name="Target"      webTextId="1991" dbId="id_target"  dbLabel="target"   dbTable="target"   dbTablePrefixe="tg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="74"/>
     <column id="190" name="Wave"      webTextId="1762" dbId="id_wave"  dbLabel="wave"   dbTable="wave"   dbTablePrefixe="wv" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="75"/>
     <column id="191" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="76"/>
+
+    <!--Start New levels for Turkey-->
+    <column id="192" name="Media Owner" webTextId="3145" dbId="id_media_owner" dbLabel="media_owner" dbTable="media_owner" dbTablePrefixe="mo" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="79"/>
+    <column id="193" name="Periodicity" webTextId="3160" dbId="id_periodicity" dbLabel="periodicity" dbTable="periodicity" dbTablePrefixe="pcty" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="194" name="Program Status" webTextId="3161" dbId="id_program_status" dbLabel="program_status" dbTable="program_status" dbTablePrefixe="pgst" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="195" name="Program Typology" webTextId="3147" dbId="id_program_typology" dbLabel="program_typology" dbTable="program_typology" dbTablePrefixe="pgt" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="80" />    
+    <column id="196" name="Program Beginning Time" webTextId="3162"  dbLabel="program_beginning_time"  dbTablePrefixe="pbt" CellType="TNS.FrameWork.WebResultUI.CellDate" format="timepattern"/>    
+    <column id="197" name="Program Ending Time" webTextId="3163"  dbLabel="program_ending_time"  dbTablePrefixe="pet" CellType="TNS.FrameWork.WebResultUI.CellDate" format="timepattern"/>
+    <column id="198" name="Spot Type"      webTextId="3153" dbId="id_spot_type"  dbLabel="spot_type"   dbTable="spot_type"   dbTablePrefixe="st" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="81"/>
+    <column id="199" name="Spot Sub Type"      webTextId="3148" dbId="id_spot_sub_type"  dbLabel="spot_sub_type"   dbTable="spot_sub_type"   dbTablePrefixe="sst" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="82"/>
+    <column id="200" name="Spot Genre"      webTextId="3141" dbId="id_spot_genre"  dbLabel="spot_genre"   dbTable="spot_genre"   dbTablePrefixe="sptg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="201" name="Spot Sub Genre"      webTextId="3142" dbId="id_spot_sub_genre"  dbLabel="spot_sub_genre"   dbTable="spot_sub_genre"   dbTablePrefixe="ssg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="202" name="Language of the Ad" webTextId="3164"  dbLabel="id_language_data_i"  dbTablePrefixe="ildi" CellType="TNS.FrameWork.WebResultUI.CellNumber" />
+    <column id="203" name="Version Name" webTextId="3156" dbId="id_slogan" dbIdAlias="id_slogan" dbLabel="slogan" dbLabelAlias="slogan"  idLevel="86"/>
+    <column id="204" name="Creative Agency"      webTextId="3140" dbId="id_creative_agency"  dbLabel="creative_agency"   dbTable="creative_agency"   dbTablePrefixe="crag" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="205" name="Campaign"      webTextId="3165" dbId="id_campaign"  dbLabel="campaign"   dbTable="ad_slogan"   dbTablePrefixe="cagn" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="206" name="Ad Slogan"      webTextId="3138" dbId="id_ad_slogan"  dbLabel="ad_slogan"   dbTable="ad_slogan"   dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="83"/>
+    <column id="207" name="Type of Advertising Company" webTextId="3170" dbId="id_advertiser_type" dbLabel="advertiser_type" dbTable="advertiser_type" dbTablePrefixe="adt" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="208" name="Purchasing Advertising" webTextId="3170" dbId="id_purchasing_agency" dbLabel="purchasing_agency" dbTable="purchasing_agency" dbTablePrefixe="pura" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="209" name="Spot End Time" webTextId="3173" dbLabel="top_diffusion_end" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
+    <column id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)" webTextId="3174" dbId="id_spot_pos_com_break_type" dbLabel="spot_pos_com_break_type" dbTable="spot_pos_com_break_type" dbTablePrefixe="spcb" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="211" name="Number of Spots in Commercial Break" webTextId="3176"  dbLabel="number_message_commercial_brea" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="212" name="Spot Rank Type"      webTextId="3154" dbId="id_spot_rank_type"  dbLabel="spot_rank_type"   dbTable="spot_rank_type"   dbTablePrefixe="srtp" CellType="TNS.FrameWork.WebResultUI.CellLabel"  idLevel="84"/> 
+    <column id="213" name="Commercial Break Beginning Time"      webTextId="3180"  dbLabel="com_break_begin_time"  dbTablePrefixe="cbbt" CellType="TNS.FrameWork.WebResultUI.CellDate" format="timepattern"/>
+    <column id="214"  name="Commercial Break Ending Time"      webTextId="3181"  dbLabel="com_break_end_time"  dbTablePrefixe="cbet" CellType="TNS.FrameWork.WebResultUI.CellDate" format="timepattern"/>
+    <column id="215" name="Number of Commercial Breaks in the Program" webTextId="3183"  dbLabel="spots_nb" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="216" name="Commercial Item Place the Program" webTextId="3184" dbId="id_program_com_item_rank_type" dbLabel="program_com_item_rank_type" dbTable="program_com_item_rank_type" dbTablePrefixe="pcir" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="217" name="Number of Spots" webTextId="3185"  dbLabel="spots_nb" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" webTextId="3186"  dbLabel="spot_rank_all_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" webTextId="3187"  dbLabel="com_break_nb" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="220" name="Commercial item Place \ Position in the Program" webTextId="3188"  dbLabel="program_com_item_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="221" name="Commercial Item Category Name" webTextId="3189" dbId="id_com_item_category" dbLabel="com_item_category" dbTable="com_item_category" dbTablePrefixe="cic" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="222" name="Commercial Item Category Code" webTextId="3190" dbId="id_com_item_sub_category" dbLabel="com_item_sub_category" dbTable="com_item_sub_category" dbTablePrefixe="cisc" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="223" name="Commercial Item Position within the program" webTextId="3191" dbId="id_program_com_item_position_type" dbLabel="program_com_item_position_type" dbTable="program_com_item_position_type" dbTablePrefixe="pcipt" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="224" name="AdSpends par TV Spot in TL" webTextId="3193" dbLabel="expenditure_tl" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="225" name="AdSpends par TV Spot in USD" webTextId="3195" dbLabel="expenditure_usd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>   
+    <column id="226" name="Second Product" webTextId="3196" dbId="id_product_cobranding" dbLabel="product_cobranding" dbTable="all_product_cobranding_" dbTablePrefixe="sprcob" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="227" name="Second Product Type" webTextId="3197" dbId="id_group_cobranding" dbLabel="group_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="228" name="Second Product Brand" webTextId="3198" dbId="id_brand_cobranding" dbLabel="brand_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="229" name="Second Product Advertising Company" webTextId="3199" dbId="id_advertiser_cobranding" dbLabel="advertiser_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="230" name="Type of Second Product's Advertising Company" webTextId="3200" dbId="id_advertiser_type_cobranding" dbLabel="advertiser_type_cobranding" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="231" name="Second Product: Holding of The Advertising Company" webTextId="3201" dbId="id_holding_company_cobranding" dbLabel="holding_company_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="232" name="Second Product Sub Sector" webTextId="3202" dbId="id_subsector_cobranding" dbLabel="subsector_cobranding" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="233" name="Second Product Main Sector" webTextId="3203" dbId="id_sector_cobranding" dbLabel="sector_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="234" name="Collective Product" webTextId="3204" dbId="id_product_collective" dbLabel="product_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="235" name="Collective Product Type" webTextId="3205"  dbLabel="group_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="236" name="Collective Product Brand" webTextId="3206" dbLabel="brand_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="237" name="Collective Product Advertising Company" webTextId="3207" dbLabel="advertiser_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="238" name="Collective Product Type of Advertising Company" webTextId="3208" dbLabel="advertiser_type_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="239" name="Collective Product : Holding of The Advertising Company" webTextId="3209" dbLabel="holding_company_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>    
+     <column id="240" name="Collective Product Main Sector" webTextId="3210" dbLabel="sector_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="241" name="Collective Product Sub Sector" webTextId="3211" dbLabel="subsector_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="242" name="Sequence Of the Week In The Year" webTextId="3212" dbLabel="week_nb"  CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+  
+    <!--End New levels for Turkey-->
   </columnItems>
 
   <detailColumns>
@@ -397,23 +452,76 @@
     <!--TV-->
     <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
       <columnItem id="10" name="Spot"/>
-      <columnItem id="49" name="Date de diffusion"/>
-      <columnItem id="7" name="Annonceur"/>
-      <columnItem id="43" name="Agence Media"/>
-      <columnItem id="53" name="Plan Media"/>
-      <columnItem id="3" name="Support"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="44" name="Famille"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="17" name="Top de diffusion télévision"/>
-      <columnItem id="18" name="Durée"/>
-      <columnItem id="27" name="Code écran"/>
-      <columnItem id="20" name="Position télévision"/>
-      <columnItem id="21" name="Durée écran hap"/>
-      <columnItem id="22" name="Nombre Spots écran télévision"/>
-      <columnItem id="14" name="Prix"/>
-      <columnItem id="51" name="Prix du 30 sec"/>
-      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="33" name="Date" idDetailLevelMatching="18" isKey="true"/>
+      <columnItem id="242" name="Sequence Of the Week In The Year "/>
+      <columnItem id="1" name="Media"/>
+      <columnItem id="3" name="Channel" isKey="true"/>
+      <columnItem id="4" name="Content Type" />
+      <columnItem id="5" name="The Company Selling the Ad" />
+      <columnItem id="2" name="TV Broadcasting Type" />
+      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
+      <columnItem id="193" name="Periodicity"   />
+      <columnItem id="194" name="Program Status"  />
+      <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />
+      <columnItem id="196" name="Program Beginning Time" />
+      <columnItem id="197" name="Program Ending Time" />
+      <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>
+      <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>
+      <columnItem id="200" name="Spot Genre"        />
+      <columnItem id="201" name="Spot Sub Genre"       />
+      <columnItem id="202" name="Language of the Ad"   />
+      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>
+      <columnItem id="204" name="Creative Agency"       />
+      <columnItem id="205" name="Campaign"       />
+      <columnItem id="9" name="Product"/>
+      <columnItem id="101" name="Brand" />
+      <columnItem id="100" name="Sub brand" />
+      <columnItem id="8" name="Product Type" />
+      <columnItem id="82" name="Sub Sector" />
+      <columnItem id="44" name="Sector" />
+      <columnItem id="7" name="Advertising Company" />
+      <columnItem id="207" name="Type of Advertising Company"   />
+      <columnItem id="180" name="Holding of The Advertising Company"   />
+      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
+      <columnItem id="208" name="Purchasing Advertising"   />
+      <columnItem id="17" name="Spot Beginning Time" isKey="true"/>
+      <columnItem id="209" name="Spot End Time" />
+      <columnItem id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)"   />
+      <columnItem id="20" name="Spot Place  in the Commercial Break"       />
+      <columnItem id="211" name="Number of Spots in Commercial Break" />
+      <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>
+      <columnItem id="27" name="Ad \ Commercial Break Code"/>
+      <columnItem id="213" name="Commercial Break Beginning Time"     />
+      <columnItem id="214"  name="Commercial Break Ending Time"     />
+      <columnItem id="21" name="Total duration of a Commercial Break " />
+      <columnItem id="215" name="Number of Commercial Breaks in the Program" />
+      <columnItem id="216" name="Commercial Item Place the Program"   />
+      <columnItem id="217" name="Number of Spots" />
+      <columnItem id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" />
+      <columnItem id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" />
+      <columnItem id="220" name="Commercial item Place \ Position in the Program" />
+      <columnItem id="221" name="Commercial Item Category Name"   />
+      <columnItem id="222" name="Commercial Item Category Code"  />
+      <columnItem id="223" name="Commercial Item Position within the program"   />
+      <columnItem id="14" name="AdSpends par TV Spot in Euro" />
+      <columnItem id="224" name="AdSpends par TV Spot in TL" />
+      <columnItem id="225" name="AdSpends par TV Spot in USD" />
+      <columnItem id="226" name="Second Product"   />
+      <columnItem id="227" name="Second Product Type"   />
+      <columnItem id="228" name="Second Product Brand"   />
+      <columnItem id="229" name="Second Product Advertising Company"   />
+      <columnItem id="230" name="Type of Second Product's Advertising Company" />
+      <columnItem id="231" name="Second Product: Holding of The Advertising Company"  />
+      <columnItem id="232" name="Second Product Sub Sector"  />
+      <columnItem id="233" name="Second Product Main Sector"   />
+      <columnItem id="234" name="Collective Product"   />
+      <columnItem id="235" name="Collective Product Type"   />
+      <columnItem id="236" name="Collective Product Brand"   />
+      <columnItem id="237" name="Collective Product Advertising Company"   />
+      <columnItem id="238" name="Collective Product Type of Advertising Company"   />
+      <columnItem id="239" name="Collective Product : Holding of The Advertising Company"   />
+      <columnItem id="240" name="Collective Product Main Sector"  />
+      <columnItem id="241" name="Collective Product Sub Sector"   />
     </detailColumn>
     <!--Presse-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
@@ -485,15 +593,14 @@
     <!--TV-->
     <detailColumn id="13" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
       <columnItem id="7" name="Annonceur"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="85" name="Budget"/>
-      <columnItem id="74" name="Nb spots"/>
+      <columnItem id="101" name="Brand" />
+      <columnItem id="9" name="Product"/>    
+      <columnItem id="203" name="Version" isKey="true"/>
       <columnItem id="69" name="Durée"/>
-      <columnItem id="70" name="nb Support"/>
-      <columnItem id="87" name="Gad" visible="false"/>
-      <columnItem id="75" name="Spot"/>
+      <columnItem id="85" name="Budget"/>
+      <columnItem id="74" name="Nb spots"/>     
+      <columnItem id="70" name="Nb Support"/>     
+      <columnItem id="75" name="Spot" visible="false"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
