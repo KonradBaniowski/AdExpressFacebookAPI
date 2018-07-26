@@ -55,6 +55,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpress.Anubis.Miysis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.France", "..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.France\TNS.AdExpressI.MediaSchedule.DAL.France.csproj", "{19CE2D49-1ADF-4567-98FC-183EB5CEF225}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.DAL.Turkey", "..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Turkey\TNS.AdExpressI.MediaSchedule.DAL.Turkey.csproj", "{4D40A586-3723-4B80-86E6-EA6980395E0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.Turkey", "..\..\DLL\TNS.AdExpressI.MediaSchedule.Turkey\TNS.AdExpressI.MediaSchedule.Turkey.csproj", "{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -212,6 +216,18 @@ Global
 		{19CE2D49-1ADF-4567-98FC-183EB5CEF225}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{19CE2D49-1ADF-4567-98FC-183EB5CEF225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CE2D49-1ADF-4567-98FC-183EB5CEF225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D40A586-3723-4B80-86E6-EA6980395E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,5 +255,7 @@ Global
 		{4762D913-FC82-42BD-840F-5BCB43E5979D} = {D6C03B49-AA00-4561-BA12-AB54D095D5BC}
 		{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4} = {D6C03B49-AA00-4561-BA12-AB54D095D5BC}
 		{19CE2D49-1ADF-4567-98FC-183EB5CEF225} = {D6C03B49-AA00-4561-BA12-AB54D095D5BC}
+		{4D40A586-3723-4B80-86E6-EA6980395E0E} = {D6C03B49-AA00-4561-BA12-AB54D095D5BC}
+		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5} = {D6C03B49-AA00-4561-BA12-AB54D095D5BC}
 	EndGlobalSection
 EndGlobal

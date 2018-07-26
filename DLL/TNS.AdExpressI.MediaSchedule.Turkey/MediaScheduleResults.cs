@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
@@ -20,6 +21,7 @@ using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFrameWorkResult = TNS.AdExpress.Constantes.FrameWork.Results;
+using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpressI.MediaSchedule.Turkey
 {
@@ -2553,6 +2555,921 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
             unitsColumnIndexes.Add(unit, currentUnitColumnIndexes);
             return currentColumnIndex;
         }
+
+        #endregion
+
+        #region Design table
+        /// <summary>
+        /// Provide html Code to present Media Schedule
+        /// </summary>
+        /// <param name="data">Preformated Data</param>
+        /// <returns>HTML code</returns>
+        protected override MediaScheduleData ComputeDesign(object[,] data)
+        {
+
+            StringBuilder t = new System.Text.StringBuilder();
+
+            MediaScheduleData oMediaScheduleData = new MediaScheduleData();
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+            IFormatProvider fp =
+                (!_isExcelReport || _isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
+                : WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfoExcel;
+            bool isComparativeStudy = WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy;
+
+            #region Theme Name
+            string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
+            #endregion
+
+            #region No data
+            if (data.GetLength(0) == 0)
+            {
+                oMediaScheduleData.HTMLCode = string.Empty;
+                return (oMediaScheduleData);
+            }
+            #endregion
+
+            #region Init Variables
+            int yearBegin = _period.Begin.Year;
+            int yearEnd = _period.End.Year;
+            if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
+            {
+                yearBegin = new AtomicPeriodWeek(_period.Begin).Year;
+                yearEnd = new AtomicPeriodWeek(_period.End).Year;
+            }
+            int nbColYear = yearEnd - yearBegin;
+            if (nbColYear > 0) nbColYear++;
+            int firstPeriodIndex = 0;
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule)
+            {
+                if (_session.ComparativeStudy)
+                {
+                    firstPeriodIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + 1;
+                }
+                else
+                {
+                    firstPeriodIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
+                }
+            }
+            else
+            {
+                firstPeriodIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
+            }
+
+            firstPeriodIndex += nbColYear;
+
+            var unitsNumber = _session.Units.Count - 1;
+            var unitColumnsNb = isComparativeStudy ? 5 : 2;
+            if (_session.Grp || _session.Grp30S)
+                unitsNumber++;
+
+            if (_session.SpendsGrp)
+                firstPeriodIndex++;
+
+            firstPeriodIndex += unitsNumber * unitColumnsNb;
+            firstPeriodIndex += unitsNumber * nbColYear;
+
+            int nbColTab = data.GetLength(1);
+            int nbPeriod = nbColTab - firstPeriodIndex - 1;
+            int nbline = data.GetLength(0);
+
+            try { _session.SloganColors.Add((Int64)0, _style.VersionCell0); }
+            catch (System.Exception) { }
+            oMediaScheduleData.PeriodNb = (Int64)Math.Round((double)(nbColTab - firstPeriodIndex) / 7);
+
+            bool isExport = _isExcelReport || _isPDFReport;
+            int labColSpan = (isExport && !_allowTotal) ? 2 : 1;
+            //UnitInformation unit = UnitsInformation.Get(_session.Unit);
+            List<UnitInformation> units = _session.GetSelectedUnits();
+            #endregion
+
+            #region Rappel de sélection
+            // TODO : Commented temporarily for new AdExpress
+            //if (_isExcelReport)
+            //{
+            //    if (_isCreativeDivisionMS)
+            //    {
+            //        t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
+            //    }
+            //    else
+            //    {
+            //        if (_module.Id != CstWeb.Module.Name.BILAN_CAMPAGNE)
+            //        {
+            //            t.Append(FctExcel.GetLogo(_session));
+            //            if (VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack
+            //                || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+            //            {
+            //                t.Append(FctExcel.GetExcelHeaderForAdnettrackMediaPlanPopUp(_session, false, Zoom, (int)_session.DetailPeriod));
+            //            }
+            //            else
+            //            {
+            //                try
+            //                {
+            //                    t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
+            //                }
+            //                catch (Exception)
+            //                {
+            //                    t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            t.Append(FctExcel.GetAppmLogo(_session));
+            //            t.Append(FctExcel.GetExcelHeader(_session, GestionWeb.GetWebWord(1474, _session.SiteLanguage)));
+            //        }
+            //    }
+            //}
+            #endregion
+
+            #region Colonnes
+
+            #region basic columns (product, total, PDM, version, insertion, years totals)
+            int rowSpanNb = 3;
+            if (_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
+            {
+                rowSpanNb = 2;
+            }
+            t.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
+            // Product Column (Force nowrap in this column)
+            t.AppendFormat("\r\n\t\t<td colSpan=\"{4}\" rowspan=\"{3}\" width=\"250px\" class=\"{0}\">{1}{2}</td>"
+                , _style.CellTitle
+                , GestionWeb.GetWebWord(804, _session.SiteLanguage)
+                , (!isExport) ? string.Empty : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                , rowSpanNb
+                , labColSpan);
+
+            foreach (var unit in units)
+            {
+                AddComparativePeriodColumnsHtml(data, unit, fp, rowSpanNb, ref t);
+                AddPeriodColumnsHtml(data, unit, fp, rowSpanNb, ref t);
+            }
+
+            if (!WebApplicationParameters.UseComparativeMediaSchedule)
+            {
+                // Years necessary if the period consists of several years
+                for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++)
+                {
+                    t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, data[0, k], rowSpanNb);
+                }
+            }
+            #endregion
+
+            #region Period
+            nbPeriod = 0;
+            int prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+            StringBuilder periods = new StringBuilder();
+            StringBuilder headers = new StringBuilder();
+            string periodClass;
+            string link = string.Empty;
+
+            if (!_isPDFReport)
+            {
+                System.Uri uri = new Uri(_session.LastWebPage);
+                link = uri.AbsolutePath;
+            }
+
+            switch (_period.PeriodDetailLEvel)
+            {
+                case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+                case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+                    prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
+                    for (int j = firstPeriodIndex; j < nbColTab; j++)
+                    {
+                        if (prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4)))
+                        {
+                            if (nbPeriod < 3)
+                                headers.AppendFormat("<td colspan={0} class=\"{1}\">&nbsp;</td>", nbPeriod, _style.CellYear1);
+                            else
+                                headers.AppendFormat("<td colspan={0} class=\"{1}\">{2}</td>", nbPeriod, _style.CellYear1, prevPeriod);
+                            nbPeriod = 0;
+                            prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
+                        }
+
+                        switch (_period.PeriodDetailLEvel)
+                        {
+                            case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+
+                                #region Period Color Management
+                                // First Period or last period is incomplete
+                                periodClass = _style.CellPeriod;
+                                if ((j == firstPeriodIndex && _period.Begin.Day != 1)
+                                   || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day))
+                                {
+                                    periodClass = _style.CellPeriodIncomplete;
+                                }
+                                #endregion
+
+                                if (!isExport)
+                                {
+                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}&u={6}\">&nbsp;{5}&nbsp;</td>"
+                                        , periodClass
+                                        , _style.CellPeriod
+                                        , link
+                                        , _session.IdSession
+                                        , data[0, j]
+                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1)
+                                        , _session.Unit.GetHashCode());
+                                }
+                                else
+                                {
+                                    periods.AppendFormat("<td class=\"{0}\">&nbsp;{1}&nbsp;</td>"
+                                        , periodClass
+                                        , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
+                                }
+                                break;
+                            case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+
+                                #region Period Color Management
+                                periodClass = _style.CellPeriod;
+                                if ((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
+                                   || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday))
+                                {
+                                    periodClass = _style.CellPeriodIncomplete;
+                                }
+                                #endregion
+
+                                if (!isExport && !IsCreativeDivisionMS)
+                                {
+
+                                    periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}&u={6}\">&nbsp;{5}&nbsp;</a></td>"
+                                        , periodClass
+                                        , _style.CellPeriod
+                                        , link
+                                        , _session.IdSession
+                                        , data[0, j]
+                                        , data[0, j].ToString().Substring(4, 2)
+                                        , _session.Unit.GetHashCode());
+                                }
+                                else
+                                {
+                                    periods.AppendFormat("<td class=\"{0}\">&nbsp;{1}&nbsp;</td>"
+                                        , periodClass
+                                        , data[0, j].ToString().Substring(4, 2));
+                                }
+                                break;
+
+                        }
+                        nbPeriod++;
+                    }
+                    // Compute last date
+                    if (nbPeriod < 3)
+                        headers.AppendFormat("<td colspan={0} class=\"{1}\">&nbsp;</td>", nbPeriod, _style.CellYear);
+                    else
+                        headers.AppendFormat("<td colspan={0} class=\"{1}\">{2}</td>", nbPeriod, _style.CellYear, prevPeriod);
+
+                    t.AppendFormat("{0}</tr>", headers);
+
+                    t.AppendFormat("<tr>{0}</tr>", periods);
+
+                    oMediaScheduleData.Headers = t.ToString();
+
+                    // t.Append("\r\n\t<tr>");
+
+                    break;
+                case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
+                    StringBuilder days = new StringBuilder();
+                    periods.Append("<tr>");
+                    days.Append("\r\n\t<tr>");
+                    DateTime currentDay = DateString.YYYYMMDDToDateTime((string)data[0, firstPeriodIndex]);
+                    prevPeriod = currentDay.Month;
+                    currentDay = currentDay.AddDays(-1);
+                    for (int j = firstPeriodIndex; j < nbColTab; j++)
+                    {
+                        currentDay = currentDay.AddDays(1);
+                        if (currentDay.Month != prevPeriod)
+                        {
+                            if (nbPeriod >= 8)
+                                headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>{2}</td>", nbPeriod, _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")));
+                            else
+                                headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>&nbsp;</td>", nbPeriod, _style.CellTitle);
+                            nbPeriod = 0;
+                            prevPeriod = currentDay.Month;
+                        }
+                        nbPeriod++;
+                        //Period Number
+                        periods.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;{1}&nbsp;</td>", _style.CellPeriod, currentDay.ToString("dd"));
+                        //Period day
+                        if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
+                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDayWE, DayString.GetCharacters(currentDay, cultureInfo, 1));
+                        else
+                            days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDay, DayString.GetCharacters(currentDay, cultureInfo, 1));
+
+                    }
+                    if (nbPeriod >= 8)
+                        headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>{2}</td>", nbPeriod, _style.CellTitle, TNS.FrameWork.Convertion.ToHtmlString(TNS.AdExpress.Web.Core.Utilities.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM"))));
+                    else
+                        headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>&nbsp;</td>", nbPeriod, _style.CellTitle);
+
+                    periods.Append("</tr>");
+                    days.Append("</tr>");
+                    headers.Append("</tr>");
+
+                    t.Append(headers);
+                    t.Append(periods);
+                    t.Append(days);
+
+                    oMediaScheduleData.Headers = t.ToString();
+                    break;
+            }
+            #endregion
+
+            #endregion
+
+            #region Media Schedule
+            int i = -1;
+            try
+            {
+                int colorItemIndex = 1;
+                int colorNumberToUse = 0;
+                int sloganIndex = GetSloganIdIndex();
+                Int64 sloganId = long.MinValue;
+                string stringItem = "&nbsp;";
+                string cssPresentClass = string.Empty;
+                string cssExtendedClass = string.Empty;
+                string cssClasse = string.Empty;
+                string cssClasseNb = string.Empty;
+                GenericDetailLevel detailLevel = null;
+                detailLevel = GetDetailsLevelSelected();
+                _activePeriods = new List<string>();
+                bool firstUnit = true;
+                int unitColumnIndex = 0;
+
+                for (i = 1; i < nbline; i++)
+                {
+
+                    #region Color Management
+                    if (sloganIndex != -1 && data[i, sloganIndex] != null &&
+                        ((detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == detailLevel.GetNbLevels) ||
+                        (detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < detailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
+                    {
+                        sloganId = Convert.ToInt64(data[i, sloganIndex]);
+                        if (!_session.SloganColors.ContainsKey(sloganId))
+                        {
+                            colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
+                            cssClasse = _style.CellVersions[colorNumberToUse];
+                            cssClasseNb = _style.CellVersions[colorNumberToUse];
+                            _session.SloganColors.Add(sloganId, _style.CellVersions[colorNumberToUse]);
+                            if (_allowVersion)
+                            {
+                                oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, cssClasse));
+                            }
+                            else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId))
+                            {
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
+                                {
+                                    case CstDBClassif.Vehicles.names.directMarketing:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
+                                        break;
+                                    case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
+                                    case CstDBClassif.Vehicles.names.indoor:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, cssClasse));
+                                        break;
+                                    case CstDBClassif.Vehicles.names.instore:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportInstoreVersionItem(sloganId, cssClasse));
+                                        break;
+                                    default:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, cssClasse));
+                                        break;
+                                }
+
+                            }
+                            colorItemIndex++;
+                        }
+                        if (sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId))
+                        {
+                            if (_allowVersion)
+                            {
+                                oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                            }
+                            else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId))
+                            {
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
+                                {
+                                    case CstDBClassif.Vehicles.names.directMarketing:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                        break;
+                                    case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.dooh:
+                                    case CstDBClassif.Vehicles.names.indoor:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                        break;
+                                    case CstDBClassif.Vehicles.names.instore:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportInstoreVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                        break;
+                                    default:
+                                        oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
+                                        break;
+                                }
+
+                            }
+                        }
+                        cssPresentClass = _session.SloganColors[sloganId].ToString();
+                        cssExtendedClass = _session.SloganColors[sloganId].ToString();
+                        stringItem = "x";
+                    }
+                    else
+                    {
+                        cssPresentClass = _style.CellPresent;
+                        cssExtendedClass = _style.CellExtended;
+                        stringItem = "&nbsp;";
+                    }
+                    #endregion
+
+                    #region Line Treatement
+                    for (int j = 0; j < nbColTab; j++)
+                    {
+                        firstUnit = true;
+                        switch (j)
+                        {
+
+                            #region Level 1
+                            case CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX:
+                                if (data[i, j] != null)
+                                {
+                                    if (i == CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)
+                                    {
+                                        cssClasse = _style.CellLevelTotal;
+                                        cssClasseNb = _style.CellLevelTotalNb;
+                                    }
+                                    else
+                                    {
+                                        cssClasse = _style.CellLevelL1;
+                                        cssClasseNb = _style.CellLevelL1Nb;
+                                    }
+                                    if (data[i, j].GetType() == typeof(MemoryArrayEnd))
+                                    {
+                                        i = int.MaxValue - 2;
+                                        j = int.MaxValue - 2;
+                                        break;
+                                    }
+
+                                    foreach (var unit in units)
+                                    {
+                                        if (firstUnit)
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
+
+                                        AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan, fp, unit, ref unitColumnIndex, firstUnit);
+
+                                        if (firstUnit)
+                                        {
+                                            unitColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
+                                            firstUnit = false;
+                                        }
+
+                                        unitColumnIndex += nbColYear;
+                                    }
+
+                                    //Totals
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
+                                            AppendYearsTotal(data, t, i, cssClasseNb, (j + firstPeriodIndex - nbColYear - 1) + k, fp, _session.GetSelectedUnit());
+                                        }
+                                    }
+                                    j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
+                                }
+                                break;
+                            #endregion
+
+                            #region Level 2
+                            case CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX:
+                                if (data[i, j] != null)
+                                {
+                                    foreach (var unit in units)
+                                    {
+                                        if (firstUnit)
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
+
+                                        AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan, fp, unit, ref unitColumnIndex, firstUnit);
+
+                                        if (firstUnit)
+                                        {
+                                            unitColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
+                                            firstUnit = false;
+                                        }
+
+                                        unitColumnIndex += nbColYear;
+                                    }
+
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
+                                            AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, fp, _session.GetSelectedUnit());
+                                        }
+                                    }
+                                    j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
+                                }
+                                break;
+                            #endregion
+
+                            #region Level 3
+                            case CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX:
+                                if (data[i, j] != null)
+                                {
+                                    foreach (var unit in units)
+                                    {
+                                        if (firstUnit)
+                                            unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
+
+                                        AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan, fp, unit, ref unitColumnIndex, firstUnit);
+
+                                        if (firstUnit)
+                                        {
+                                            unitColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
+                                            firstUnit = false;
+                                        }
+
+                                        unitColumnIndex += nbColYear;
+                                    }
+
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
+                                            AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, fp, _session.GetSelectedUnit());
+                                        }
+                                    }
+                                    j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
+                                }
+                                break;
+                            #endregion
+
+                            #region Level 4
+                            case CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX:
+                               
+
+                                foreach (var unit in units)
+                                {
+                                    if (firstUnit)
+                                        unitColumnIndex = CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX - 1;
+
+                                    AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan, fp, unit, ref unitColumnIndex, firstUnit);
+
+                                    if (firstUnit)
+                                    {
+                                        unitColumnIndex = isComparativeStudy ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
+                                        firstUnit = false;
+                                    }
+
+                                    unitColumnIndex += nbColYear;
+                                }
+
+                                if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                {
+                                    for (int k = 1; k <= nbColYear; k++)
+                                    {
+                                        AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, fp, _session.GetSelectedUnit());
+                                    }
+                                }
+                                j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
+                                break;
+                            #endregion
+
+                            #region Other
+                            default:
+                                if (data[i, j] == null)
+                                {
+                                    t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
+                                    break;
+                                }
+                                if (data[i, j] is MediaPlanItem)
+                                {
+                                    //if(data[i, j].GetType() == typeof(MediaPlanItem) || data[i, j].GetType() == typeof(MediaPlanItemIds)) {
+                                    switch (((MediaPlanItem)data[i, j]).GraphicItemType)
+                                    {
+                                        case DetailledMediaPlan.graphicItemType.present:
+                                            if (_showValues)
+                                            {
+                                               if (_isCreativeDivisionMS || !IsExcelReport || _session.GetSelectedUnit().Id != CstWeb.CustomerSessions.Unit.duration)
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
+                                                else
+                                                    t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, string.Format(fp, _session.GetSelectedUnit().StringFormat, ((MediaPlanItem)data[i, j]).Unit));
+                                            }
+                                            else
+                                            {
+                                                t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, stringItem);
+                                            }
+                                            //if (string.IsNullOrEmpty(_zoom) && data[0, j] != null && !_activePeriods.Contains(Convert.ToString(data[0, j]).Trim()))
+                                            //{
+                                            //    _activePeriods.Add(Convert.ToString(data[0, j]).Trim());
+                                            //}
+                                            break;
+                                        case DetailledMediaPlan.graphicItemType.extended:
+                                            t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", cssExtendedClass);
+                                            break;
+                                        default:
+                                            t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
+                                            break;
+                                    }
+                                }
+                                break;
+                                #endregion
+
+                        }
+                    }
+                    t.Append("</tr>");
+                    #endregion
+
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new MediaScheduleException("Error i=" + i, err));
+            }
+            t.Append("</table>");
+            #endregion
+
+            // Release table
+            data = null;
+
+            // TODO : Commented temporarily for new AdExpress
+            //if (_isExcelReport && !_isCreativeDivisionMS)
+            //{
+            //    t.Append(FctExcel.GetFooter(_session));
+            //}
+
+            oMediaScheduleData.HTMLCode = t.ToString();
+            return oMediaScheduleData;
+
+        }
+
+        #region Table Building Functions
+        /// <summary>
+        /// Append Total for a specific year
+        /// </summary>
+        /// <param name="data">Data Source</param>
+        /// <param name="t">StringBuilder to fill</param>
+        /// <param name="line">Current line</param>
+        /// <param name="cssClasseNb">Line syle</param>
+        /// <param name="tmpCol">Year column in data source</param>
+        protected override void AppendYearsTotal(object[,] data, StringBuilder t, int line,
+            string cssClasseNb, int tmpCol, IFormatProvider fp, UnitInformation unit)
+        {
+            if (_allowTotal)
+            {
+                string s = string.Empty;
+                if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                {
+                    s = Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
+                }
+                else
+                {
+                    s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, tmpCol])).Trim();
+                }
+                if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
+                {
+                    s = Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
+                    if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
+                    {
+                        s = "&nbsp;";
+                    }
+
+                }
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssClasseNb, s);
+
+            }
+        }
+
+        /// <summary>
+        /// Append Label, Total and PDM
+        /// </summary>
+        /// <param name="data">Data Source</param>
+        /// <param name="t">StringBuilder to fill</param>
+        /// <param name="line">Current line</param>
+        /// <param name="cssClasse">Line syle</param>
+        /// <param name="cssClasseNb">Line syle for numbers</param>
+        /// <param name="col">Column to consider</param>
+        /// <param name="padding">Stirng to insert before Label</param>
+        protected void AppenLabelTotalPDM(object[,] data, StringBuilder t, int line, string cssClasse,
+            string cssClasseNb, int col, string padding, int labColSpan, IFormatProvider fp, UnitInformation unit, ref int unitColumnIndex, bool first)
+        {
+            int TOTAL_INDEX = 1;
+            int PDM_INDEX = 2;
+            int TOTAL_COMPARATIVE_INDEX = 3;
+            int PDM_COMPARATIVE_INDEX = 4;
+            int EVOL_INDEX = 5;
+            int startColumnIndex = unitColumnIndex;
+            int currentColumnIndex = 0;
+
+            if (unitColumnIndex == CstFrameWorkResult.MediaSchedule.PERIODICITY_COLUMN_INDEX)
+            {
+                t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
+                    , cssClasse
+                    , labColSpan
+                    , padding
+                    , data[line, col]
+                    , ((_isExcelReport) ? "=\"" : "")
+                    , ((_isExcelReport) ? "\"" : ""));
+            }
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+            {
+                if (_allowTotal)
+                {
+                    string s = string.Empty;
+                    if (data[line, first ? CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX : startColumnIndex + TOTAL_COMPARATIVE_INDEX] != null)
+                    {
+                        if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                        {
+                            s = Units.ConvertUnitValueToString(data[line, first ? CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX : startColumnIndex + TOTAL_COMPARATIVE_INDEX],_session.Unit, fp).Trim();
+                        }
+                        else
+                        {
+                            s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, first ? CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX : startColumnIndex + TOTAL_COMPARATIVE_INDEX])).Trim();
+                        }
+                    }
+                    else s = "&nbsp;";
+
+                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                        , cssClasseNb
+                        , s);
+                    unitColumnIndex++;
+                }
+                if (_allowPdm)
+                {
+                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                        , cssClasseNb
+                        ,
+                        string.Format(fp, "{0:percentWOSign}",
+                            data[line, first ? CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX : startColumnIndex + PDM_COMPARATIVE_INDEX]));
+                }
+                unitColumnIndex++;
+            }
+            if (_allowTotal)
+            {
+                string s = string.Empty;
+                if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                {
+                    s = Units.ConvertUnitValueToString(data[line, first ? CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX : startColumnIndex + TOTAL_INDEX], _session.Unit, fp).Trim();
+                }
+                else
+                {
+                    s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, first ?  CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX : startColumnIndex + TOTAL_INDEX])).Trim();
+                }
+
+                t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                    , cssClasseNb
+                    , s);
+                unitColumnIndex++;
+            }
+            if (_allowPdm)
+            {
+                t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                    , cssClasseNb
+                    , string.Format(fp, "{0:pdm}", data[line, first ? CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX : startColumnIndex + PDM_INDEX]));
+                unitColumnIndex++;
+            }
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+            {
+                //Evol
+                var str = new StringBuilder();
+                double evol = (double) data[line, first ? CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX : startColumnIndex + EVOL_INDEX];
+                if (evol != 0)
+                {
+                    if (Double.IsInfinity(evol))
+                    {
+                        str.Append((evol < 0) ? "-" : "+");
+                    }
+                    else if (Double.IsNaN(evol))
+                    {
+                        str.Append("&nbsp;");
+                    }
+                    else if (evol == 0)
+                    {
+                        str.Append("0");
+                    }
+                    else
+                    {
+                        str.Append(string.Format(fp, "{0:percentage}", evol));
+                    }
+                }
+                else
+                {
+                    str.Append("&nbsp;");
+                }
+                if (!_isExcelReport)
+                {
+                    //Evolution
+                    if (evol > 0) //hausse
+                        if (_isPDFReport)
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.gif\">");
+                        else
+                            str.Append("<img src=\"/I/g.gif\">");
+                    else if (evol < 0) //baisse
+                        if (_isPDFReport)
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.gif\">");
+                        else
+                            str.Append("<img src=\"/I/r.gif\">");
+                    else if (!Double.IsNaN(evol)) // 0 exactement
+                        if (_isPDFReport)
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.gif\">");
+                        else
+                            str.Append("<img src=\"/I/o.gif\">");
+                    else
+                        str.Append("&nbsp;");
+                }
+                //Evol
+                t.AppendFormat("<td class=\"{0}\" nowrap=\"nowrap\">{1}</td>"
+                    , cssClasseNb
+                    , str.ToString());
+                unitColumnIndex++;
+            }
+        }
+
+        /// <summary>
+        /// Add Comparative Period Columns Html
+        /// </summary>
+        private void AddComparativePeriodColumnsHtml(object[,] data, UnitInformation unit, IFormatProvider fp, int rowSpanNb, ref StringBuilder t)
+        {
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+            {
+                if (_allowTotal)
+                {
+                    MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle,
+                        TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                        + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern), rowSpanNb);
+
+                    //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                    int nbtot;
+                    if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                    {
+                        nbtot = Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
+                    }
+                    else
+                        nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
+
+                    int nbSpace = (nbtot - 1) / 3;
+                    int nbCharTotal = nbtot + nbSpace - 5;
+                    if (nbCharTotal < 5) nbCharTotal = 0;
+                    for (int h = 0; h < nbCharTotal; h++)
+                    {
+                        t.Append("&nbsp;");
+                    }
+                    t.Append("</td>");
+                }
+                //PDM
+                if (_allowPdm)
+                {
+                    t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add Period Columns Html
+        /// </summary>
+        private void AddPeriodColumnsHtml(object[,] data, UnitInformation unit, IFormatProvider fp, int rowSpanNb, ref StringBuilder t)
+        {
+            // Total Column
+            if (_allowTotal)
+            {
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle,
+                        TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
+                        + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern), rowSpanNb);
+                else
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
+
+                //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                int nbtot;
+                if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                    nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                {
+                    nbtot = Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
+                }
+                else
+                    nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX])).Length;
+
+                int nbSpace = (nbtot - 1) / 3;
+                int nbCharTotal = nbtot + nbSpace - 5;
+                if (nbCharTotal < 5) nbCharTotal = 0;
+                for (int h = 0; h < nbCharTotal; h++)
+                {
+                    t.Append("&nbsp;");
+                }
+                t.Append("</td>");
+            }
+            //PDM
+            if (_allowPdm)
+            {
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
+            }
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+            {
+                //Evol
+                //if (_allowPdm) {
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(1212, _session.SiteLanguage), rowSpanNb);
+                //}
+            }
+        }
+        #endregion
 
         #endregion
 

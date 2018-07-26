@@ -452,11 +452,8 @@ namespace Km.AdExpressClientWeb.Helpers
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     ids.Add(ExportResultWithValue);
-                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
-                    {
-                        ids.Add(ExportPdfResult);
-                        ids.Add(ExportPptResult);
-                    }
+                    ids.Add(ExportPdfResult);
+                    ids.Add(ExportPptResult);
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
