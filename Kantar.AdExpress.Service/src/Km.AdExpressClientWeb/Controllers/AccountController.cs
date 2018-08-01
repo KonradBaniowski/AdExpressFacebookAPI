@@ -158,7 +158,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
                 //TODO : a modifier
-                if(!WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
+               // if(!WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
                     _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
 
                 // On met à jour IDataSource à partir de la session elle même.

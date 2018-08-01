@@ -235,6 +235,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.MediaSchedule.Turkey", "..\DLL\TNS.AdExpressI.MediaSchedule.Turkey\TNS.AdExpressI.MediaSchedule.Turkey.csproj", "{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.Insertions.DAL.Turkey", "..\DLL\TNS.AdExpressI.Insertions.DAL.Turkey\TNS.AdExpressI.Insertions.DAL.Turkey.csproj", "{C24D332F-12E1-4C96-913B-21F7C2328EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassReports.DAL.Turkey", "..\DLL\TNS.AdExpressI.ProductClassReports.DAL.Turkey\TNS.AdExpressI.ProductClassReports.DAL.Turkey.csproj", "{239C5C2B-9888-421A-8879-44E14404D206}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -885,6 +889,18 @@ Global
 		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{239C5C2B-9888-421A-8879-44E14404D206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1005,5 +1021,7 @@ Global
 		{CE6CE4D4-C99A-4C7E-87E1-52A3028CCEFE} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{4D40A586-3723-4B80-86E6-EA6980395E0E} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{5BFD1FD1-4D7C-4830-9157-10153CECD3C5} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{C24D332F-12E1-4C96-913B-21F7C2328EF7} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{239C5C2B-9888-421A-8879-44E14404D206} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 	EndGlobalSection
 EndGlobal

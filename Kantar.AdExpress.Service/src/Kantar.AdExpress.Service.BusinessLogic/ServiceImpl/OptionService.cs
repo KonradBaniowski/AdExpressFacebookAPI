@@ -980,9 +980,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
                 }
 
-                _customerWebSession.Grp = userFilter.Grp;
-                _customerWebSession.Grp30S = userFilter.Grp30S;
-                _customerWebSession.SpendsGrp = userFilter.SpendsGrp;
+                //_customerWebSession.Grp = userFilter.Grp;
+                //_customerWebSession.Grp30S = userFilter.Grp30S;
+                //_customerWebSession.SpendsGrp = userFilter.SpendsGrp;
 
                 _customerWebSession.Save();
             }

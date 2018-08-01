@@ -459,17 +459,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             //Plurimedia
             VehicleInformation vehicleInfo = new VehicleInformation();
-            vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
-            Core.Domain.Media pluremedia = new Core.Domain.Media();
-            if (vehicleInfo != null)
+
+            if (!WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
             {
-                pluremedia.Id = vehicleInfo.DatabaseId;
-                pluremedia.MediaEnum = VhCstes.plurimedia;
-                pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia, webSession.SiteLanguage);
-                vehiclesList.Add(pluremedia);
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+                Core.Domain.Media pluremedia = new Core.Domain.Media();
+                if (vehicleInfo != null)
+                {
+                    pluremedia.Id = vehicleInfo.DatabaseId;
+                    pluremedia.MediaEnum = VhCstes.plurimedia;
+                    pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia,
+                        webSession.SiteLanguage);
+                    vehiclesList.Add(pluremedia);
+                }
             }
-                    
-           
+
+
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
 
