@@ -158,8 +158,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     productLabelCode = 1146;
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(175, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.sector.GetHashCode().ToString() });
+                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1532, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.sectorSubsector.GetHashCode().ToString() });
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1491, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser.GetHashCode().ToString() });
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(552, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.subSector.GetHashCode().ToString() });
+                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3213, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorGroup.GetHashCode().ToString() });
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2610, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser.GetHashCode().ToString() });
                 }
 

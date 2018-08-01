@@ -2494,5 +2494,6 @@
     <item mnemonic="w3210" type="System.String">!</item>
     <item mnemonic="w3211" type="System.String">!</item>
     <item mnemonic="w3212" type="System.String">!</item>
+    <item mnemonic="w3213" type="System.String">Classe/Groupe</item>
   </items>
 </localization>
