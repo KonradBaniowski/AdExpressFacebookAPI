@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
+using TNS.Classification.Universe;
 using Table = TNS.AdExpress.Domain.DataBaseDescription.Table;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -28,6 +29,301 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
         /// <param name="session">User session</param>
         public ProductClassReportDAL(WebSession session) : base(session) { }
         #endregion
+
+
+        #region AppendSelectClause
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>!!!!!La classe métier qui s'appuie sur cette classe BDD utilise l'ordre des champs ds le select
+        ///	Il n'est pas recommandé de changer l'ordre des champs media, produit...
+        ///	étape:
+        ///		- Sauvegardede l'index du dernier caractère de la requête a son arrivé afin de pouvoir insérer un pmrceau de requête si nécessaire
+        ///		- Traitement des champs qualitatifs:
+        ///			- Si le tableau preformaté affiche des données de la nomenclature media:
+        ///				suivant le niveau de détail demandé, on ajoute les champs à la requete en normalisant leurs noms
+        ///				chaque nom représente la nomenclature media (id_m) et le niveau considéré(id_m1, id_m2...)
+        ///				Au cas ou le niveau de détail n'est pas repertorié, on applique par défaut le niveau vehicle uniquement et on update la session
+        ///			- Si le tableau preformaté affiche des données de la nomenclature produit:
+        ///				suivant le détail demandé, on ajoute les champs à la requete en normalisant leurs noms
+        ///				chaque nom représente la nomenclature produit (id_p) et le niveau considéré(id_p1, id_p2)
+        ///				Au cas ou le niveau de détail n'est pas repertorié, on applique par défaut le détail group uniquement et on update la session
+        ///				Pour les niveaux faisant intervenir la nomenclature annonceur, on sauvegarde dans une strig un morceau de requete ramenant l'id_advertiser
+        ///			- si la nompenclature produit est la nomenclature principale, on l'insere devant les champs 
+        ///			de la nomenclature support qui devient par consequent la omenclature secondaire.
+        ///		- Traitement des champs quantitatifs:
+        ///			- ON commence par valider la période considérées en fonction de la fréquence de livraison des données
+        ///			Si jamais la période n'est pas valide (données non accessiblkes par raport a la frequence), on lance une exception NoData
+        ///			- construction de la liste des mois month a attaquer. POur chaquer mois, on fera la somme des lignes a ramener
+        ///			- si le tableau nécessite des années, on utilise le champ total_year
+        ///			- si le tableau est un mensuel cimulé, on construit la requete en faisant la somme des mois precedent sur la période pour chaque mois a rapatrier
+        ///			exemple: periode Mars ==> mai, on prend mars et mars+avril et mars+avril+mai...
+        ///			- si le tableau est un mensuel + total, on ramene tous les mois de la liste month plus un champ qui est la somme de tous les mois
+        ///		-Traitement de la notion d'annonceur referent ou concurrent:
+        ///			si l'univers d'annonceurs concurrents ou l'univers d'annonceurs de reference ne sont pas vides (non exclusif), on concatene a la requete le champ id_advertiser
+        ///		- La colonne total est une facilité de programmation pour la construction des tableaux de type 5.
+        ///			en effet, en considérant un champ 'total' bidon, on inclu dans la requete un niveau de 
+        ///			nomenclature suplémentaire qui sera traite de la meme maniere que la nomenclature principale
+        ///			dans les classes metier (valable uniquement pour la ableau de type 5 pour l instant)
+        /// </remarks>
+        /// <param name="_session">Session utilisateur</param>
+        /// <param name="sql">StringBuilder contenant la requete sql</param>
+        protected override void AppendSelectClause(StringBuilder sql)
+        {
+
+            sql.Append("select");
+
+          
+            int downLoadDate = _session.DownLoadDate;
+
+            #region champs descriptifs
+            int mediaIndex = _reportFormat.ToString().IndexOf("edia");
+            int productIndex = _reportFormat.ToString().IndexOf("roduct");
+            int beginningIndex = sql.Length;
+            string annonceurPerso = "", brandPerso = "";
+
+            AppendMediaFields(sql, mediaIndex);
+
+            #region Champs nomenclature produit
+            if (productIndex > -1)
+            {
+                string sqlStr = "";
+                //nomenclature produit présente dans le tableau préformaté
+                switch (_session.PreformatedProductDetail)
+                {
+                    case CstFormat.PreformatedProductDetails.group:
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.groupSegment:
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1, {0}.id_segment as id_p2, segment as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.groupBrand:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1, {0}.id_brand as id_p2, brand as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.groupProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1, {0}.id_product as id_p2, product as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.groupAdvertiser:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1, {0}.id_advertiser as id_p2, advertiser as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.advertiser:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_advertiser as id_p1, advertiser as p1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.advertiserBrand:
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_advertiser as id_p1, advertiser as p1, {0}.id_brand as id_p2, brand as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.advertiserProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_advertiser as id_p1, advertiser as p1, {0}.id_product as id_p2, product as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.brand:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_brand as id_p1, brand as p1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.brandProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_brand as id_p1, brand as p1, {0}.id_product as id_p2, product as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.product:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_product as id_p1, product as p1", _dataTable.Prefix);
+                        break;
+
+                    //changes to accomodate variété/Announceurs, Variétés/produit, Variétés/Marques 
+
+                    case CstFormat.PreformatedProductDetails.segmentAdvertiser:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_segment as id_p1, segment as p1, {0}.id_advertiser as id_p2, advertiser as p2 ", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.segmentProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_segment as id_p1, segment as p1, {0}.id_product as id_p2, product as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.segmentBrand:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_segment as id_p1, segment as p1, {0}.id_brand as id_p2, brand as p2 ", _dataTable.Prefix);
+                        break;
+
+                    /*Select clause added for the sector and subsector levels (Finnish version)
+                    **/
+                    case CstFormat.PreformatedProductDetails.sector:
+                        sqlStr = string.Format(" {0}.id_sector as id_p1, sector as p1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.subSector:
+                        sqlStr = string.Format(" {0}.id_subsector as id_p1, subsector as p1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.sectorAdvertiser:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_sector as id_p1, sector as p1, {0}.id_advertiser as id_p2, advertiser as p2", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.subSectorAdvertiser:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_subsector as id_p1, subsector as p1, {0}.id_advertiser as id_p2, advertiser as p2", _dataTable.Prefix);
+                        break;
+                    /***************************/
+
+                    default:
+                        //throw new ASDynamicTablesDataAccessException("Le format de détail " + _session.PreformatedProductDetail.ToString() + " n'est pas un cas valide.");
+                        sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1", _dataTable.Prefix);
+                        _session.PreformatedProductDetail = CstFormat.PreformatedProductDetails.group;
+                        break;
+                }
+                if (productIndex < 2)
+                {
+                    //nomenclature produit en position de parent de la nomenclature media
+                    sql.Insert(beginningIndex, sqlStr + (mediaIndex > -1 ? ", " : ""));
+                }
+                else
+                {
+                    //nomenclature produit en position d'enfant de la nomenclature media
+                    sql.Append(((mediaIndex > -1) ? ", " : " ") + sqlStr);
+                }
+            }
+            #endregion
+
+            #endregion
+
+            #region champs de données quantitatives
+            //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
+            //du dernier mois dispo en BDD
+            //traitement de la notion de fréquence
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName,
+                cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+            if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
+                throw new NoDataException();
+
+            //Liste des mois de la période sélectionnée
+            //Calcul de l'index année dans une table recap (N, N1 ou N2)
+
+
+            int i = DateTime.Now.Year - int.Parse(_session.PeriodBeginningDate.Substring(0, 4));
+
+            if (DateTime.Now.Year > downLoadDate)
+            {
+                i = i - 1;
+            }
+
+            string year = (i > 0) ? i.ToString() : "";
+            string previousYear = (int.Parse(year != "" ? year : "0") + 1).ToString();
+
+            //Détermination du nombre de mois et Instanciation de la liste des champs mois
+            int firstMonth = int.Parse(_session.PeriodBeginningDate.Substring(4, 2));
+            string[] months = new string[int.Parse(absolutEndPeriod.Substring(4, 2)) -
+                firstMonth + 1];
+            string[] persoMonths = new string[int.Parse(absolutEndPeriod.Substring(4, 2)) -
+              firstMonth + 1];
+            string[] previousYearMonths = (_session.ComparativeStudy) ? new string[months.GetUpperBound(0) + 1] : null;
+            string[] persoPreviousYearMonths = (_session.ComparativeStudy) ? new string[months.GetUpperBound(0) + 1] : null;
+            GetMonthsFileds(sql, months, year, firstMonth, persoMonths, previousYearMonths, previousYear, persoPreviousYearMonths);
+            bool first = true;
+            //Cumul,
+            if (_reportFormat.ToString().IndexOf("_Cumul") > -1)
+            {
+                int j;
+                for (i = 0; i < months.Length; i++)
+                {
+                    sql.Append(", ");
+                    first = true;
+                    for (j = 0; j <= i; j++)
+                    {
+                        if (!first) sql.Append("+");
+                        else first = false;
+                        sql.Append(months[j]);
+                    }
+                    sql.AppendFormat(" as N{0}_{1}", year, j);
+                    //Year N-1 si désirée et possible
+                    if (_session.ComparativeStudy)
+                    {
+                        sql.Append(", ");
+                        first = true;
+                        for (j = 0; j <= i; j++)
+                        {
+                            if (!first) sql.Append("+");
+                            else first = false;
+                            sql.Append(previousYearMonths[j]);
+                        }
+                        sql.AppendFormat(" as N{0}_{1}", previousYear, j);
+                    }
+                }
+            }
+
+            //Mensual
+            if (_reportFormat.ToString().IndexOf("_Mensual") > -1)
+            {
+                int cumulIndex = sql.Length;
+                first = true;
+                string previousYearTotal = "";
+                for (i = 0; i < months.Length; i++)
+                {
+                    sql.AppendFormat(", {0}", months[i]);
+                    if (_session.ComparativeStudy) sql.AppendFormat(", {0}", previousYearMonths[i]);
+                    if (!first)
+                    {
+                        sql.Insert(cumulIndex, string.Format("{0}+", months[i]));
+                        if (_session.ComparativeStudy) previousYearTotal = String.Format("{0} + {1}", previousYearMonths[i], previousYearTotal);
+                    }
+                    else
+                    {
+                        first = false;
+                        sql.Insert(cumulIndex, string.Format("{0} as total_N{1}", months[i], year));
+                        if (_session.ComparativeStudy) previousYearTotal = string.Format("{0} as total_N{1}", previousYearMonths[i], previousYear);
+                    }
+                }
+                sql.Insert(cumulIndex, ", ");
+                if (_session.ComparativeStudy) sql.Insert(sql.ToString().IndexOf(" as total_N" + year) + 11 + year.Length, ", " + previousYearTotal);
+            }
+
+            //Year+Mensual (ajout des mois)
+            if (_reportFormat.ToString().IndexOf("_YearMensual") > -1)
+            {
+                int cumulIndex = sql.Length;
+                first = true;
+                for (i = 0; i < months.Length; i++)
+                {
+                    sql.AppendFormat(", {0} as Mo_{1}", months[i], (i + 1));
+                }
+                if (_session.ComparativeStudy && previousYearMonths != null)
+                {
+                    for (i = 0; i < previousYearMonths.Length; i++)
+                    {
+                        sql.AppendFormat(", {0} as Mo1_{1}", previousYearMonths[i], (i + 1));
+                    }
+                }
+            }
+            #endregion
+
+            
+
+            #region Colonne total
+            if (_reportFormat == CstFormat.PreformatedTables.productMedia_X_Year ||
+                _reportFormat == CstFormat.PreformatedTables.productMedia_X_YearMensual)
+                sql.Insert(beginningIndex, " '0' as id_p, 'TOTAL' as p, ");
+            if ((_reportFormat == CstFormat.PreformatedTables.mediaProduct_X_Year || _reportFormat == CstFormat.PreformatedTables.mediaProduct_X_YearMensual)
+                && _vehicle == CstDBClassif.Vehicles.names.plurimedia)
+            {
+                sql.Insert(beginningIndex, " '0' as id_m, 'TOTAL' as m, ");
+            }
+            #endregion
+
+        }
+        #endregion
+
 
         #region getVehicleTableName
         /// <summary>
@@ -204,8 +500,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 
         #endregion
 
+        #region GetMonthsFileds
+
+
         protected override void GetMonthsFileds(StringBuilder sql, string[] months, string year, int firstMonth, string[] persoMonths,
-            string[] previousYearMonths, string previousYear, string[] persoPreviousYearMonths)
+           string[] previousYearMonths, string previousYear, string[] persoPreviousYearMonths)
         {
             int i;
             string unitLabel = _session.Unit.ToString();
@@ -214,11 +513,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
             for (i = 0; i < months.Length; i++)
             {
                 months[i] = $"sum(exp_{unitLabel}_n{year}_{(i + firstMonth)})";
-                persoMonths[i] = $"exp_{unitLabel}_n{year}_{(i + firstMonth)}";
+               // persoMonths[i] = $"exp_{unitLabel}_n{year}_{(i + firstMonth)}";
                 if (_session.ComparativeStudy)
                 {
                     previousYearMonths[i] = $"sum(exp_{unitLabel}_n{previousYear}_{(i + firstMonth)})";
-                    persoPreviousYearMonths[i] = $"exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}";
+                   // persoPreviousYearMonths[i] = $"exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}";
                 }
             }
 
@@ -259,5 +558,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                     sql.AppendFormat(", {0}", comparativeStudyMonths);
             }
         }
+        #endregion
+
+
     }
 }
