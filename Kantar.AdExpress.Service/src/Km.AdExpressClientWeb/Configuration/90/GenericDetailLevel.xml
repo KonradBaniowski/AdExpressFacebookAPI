@@ -456,5 +456,30 @@
       <levelItem id="80" name="programTypology"/>
       <levelItem id="82" name="spotSubType"/>
     </detailLevel>
+    
+    <detailLevel id="94" name="famille\annonceur\marque">
+      <levelItem id="11" name="Famille"/>
+      <levelItem id="8" name="Annonceur"/>
+      <levelItem id="9" name="Marque"/>
+    </detailLevel>
+    <detailLevel id="95" name="annonceur\marque">
+      <levelItem id="8" name="Annonceur"/>
+      <levelItem id="9" name="Marque"/>
+    </detailLevel>
+    <detailLevel id="96" name="advertiser\brand\product">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="9" name="Brand"/>
+      <levelItem id="10" name="Product"/>
+    </detailLevel>
+    <detailLevel id="97" name="advertiser\brand\adSlogan">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="9" name="Brand"/>
+      <levelItem id="83" name="adSlogan"/>
+    </detailLevel>
+    <detailLevel id="98" name="marque\product\adSlogan">
+      <levelItem id="9" name="Brand"/>
+      <levelItem id="10" name="Product"/>
+      <levelItem id="83" name="adSlogan"/>
+    </detailLevel>
   </detailLevels>
 </genericDetailLevel>

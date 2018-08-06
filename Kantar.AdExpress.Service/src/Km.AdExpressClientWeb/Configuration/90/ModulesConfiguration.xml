@@ -97,7 +97,6 @@
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="7">
               <allowedUniverseBranch id="7" name="vehicle\category\interest_center\media_owner\media\program\program_typology\spot_sub_type"/>
-              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
@@ -139,24 +138,33 @@
             <defaultProductDetailLevel id="11" name="famille" />
             <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
             <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
             <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
             <defaultProductDetailLevel id="19" name="groupe" />
             <defaultProductDetailLevel id="20" name="groupe\annonceur" />
             <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="95" name="annonceur\marque" />
             <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+            <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
             <defaultProductDetailLevel id="21" name="produit" />
+            <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="83" name="adSlogan"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
-            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="16" name="Agence"/>
+            <allowedProductLevelItem id="24" name="Program"/>
+            <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="82" name="spotSubType"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <ColumnDetailLevel>
@@ -187,13 +195,19 @@
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
               <allowedUniverseLevel id="27" name="title"/>
-              <allowedUniverseLevel id="28" name="media_Seller"/>
+              <allowedUniverseLevel id="39" name="media_owner"/>
+              <allowedUniverseLevel id="40" name="program"/>
+              <allowedUniverseLevel id="41" name="program_typology"/>
+              <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="13" name="title\media"/>
-              <allowedUniverseBranch id="14" name="media_Sellermedia"/>
+              <allowedUniverseBranch id="29" name="media_owner\media"/>
               <allowedUniverseBranch id="25" name="category\media"/>
+              <allowedUniverseBranch id="30" name="program\media"/>
+              <allowedUniverseBranch id="31" name="program_typology\media"/>
+              <allowedUniverseBranch id="32" name="spot_sub_type\media"/>
             </allowedUniverseBranches>
           </selection>
           <!--<selection id="5" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/DetailVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected">-->
@@ -397,24 +411,33 @@
                 <defaultProductDetailLevel id="11" name="famille" />
                 <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
                 <defaultProductDetailLevel id="16" name="famille\annonceur" />
+                <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
                 <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
                 <defaultProductDetailLevel id="19" name="groupe" />
                 <defaultProductDetailLevel id="20" name="groupe\annonceur" />
                 <defaultProductDetailLevel id="10" name="annonceur" />
+                <defaultProductDetailLevel id="95" name="annonceur\marque" />
                 <defaultProductDetailLevel id="18" name="annonceur\produit" />
+                <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+                <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
                 <defaultProductDetailLevel id="21" name="produit" />
+                <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
               </defaultProductDetailLevels>
               <allowedProductLevelItems>
                 <allowedProductLevelItem id="11" name="Famille"/>
                 <allowedProductLevelItem id="12" name="Classe"/>
                 <allowedProductLevelItem id="13" name="Groupe"/>
-                <allowedProductLevelItem id="14" name="Variete"/>
+                <allowedProductLevelItem id="83" name="adSlogan"/>
                 <allowedProductLevelItem id="10" name="Produit"/>
                 <allowedProductLevelItem id="9" name="Marque"/>
-                <allowedProductLevelItem id="7" name="Groupe de société"/>
                 <allowedProductLevelItem id="8" name="Annonceur"/>
-                <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+                <allowedProductLevelItem id="7" name="Groupe de société"/>
                 <allowedProductLevelItem id="16" name="Agence"/>
+                <allowedProductLevelItem id="24" name="Program"/>
+                <allowedProductLevelItem id="80" name="programTypology"/>
+                <allowedProductLevelItem id="82" name="spotSubType"/>
+                <allowedProductLevelItem id="14" name="Variete"/>
+                <allowedProductLevelItem id="15" name="Groupe d'agence"/>
               </allowedProductLevelItems>
             </ProductDetailLevel>
             <allowedUnits>
@@ -460,24 +483,33 @@
             <defaultProductDetailLevel id="11" name="famille" />
             <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
             <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
             <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
             <defaultProductDetailLevel id="19" name="groupe" />
             <defaultProductDetailLevel id="20" name="groupe\annonceur" />
             <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="95" name="annonceur\marque" />
             <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+            <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
             <defaultProductDetailLevel id="21" name="produit" />
+            <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="83" name="adSlogan"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
-            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="16" name="Agence"/>
+            <allowedProductLevelItem id="24" name="Program"/>
+            <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="82" name="spotSubType"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <ColumnDetailLevel>
@@ -509,13 +541,19 @@
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
               <allowedUniverseLevel id="27" name="title"/>
-              <allowedUniverseLevel id="28" name="media_Seller"/>
+              <allowedUniverseLevel id="39" name="media_owner"/>
+              <allowedUniverseLevel id="40" name="program"/>
+              <allowedUniverseLevel id="41" name="program_typology"/>
+              <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="12">
               <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="13" name="title\media"/>
-              <allowedUniverseBranch id="14" name="media_Sellermedia"/>
+              <allowedUniverseBranch id="29" name="media_owner\media"/>
               <allowedUniverseBranch id="25" name="category\media"/>
+              <allowedUniverseBranch id="30" name="program\media"/>
+              <allowedUniverseBranch id="31" name="program_typology\media"/>
+              <allowedUniverseBranch id="32" name="spot_sub_type\media"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="5" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionHelp.aspx" validationMethod="isMediaSelected">          

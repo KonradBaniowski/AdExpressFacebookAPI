@@ -94,4 +94,21 @@
     <level id="5" name="product"/>
   </branch>
 
+  <branch id="29"  name="media_owner" labelId="3145">
+    <level id="39" name="media_owner"/>
+    <level id="14" name="media"/>
+  </branch>
+  <branch id="30"  name="program" labelId="3146">
+    <level id="40" name="program"/>
+    <level id="14" name="media"/>
+  </branch>
+  <branch id="31"  name="program_typology" labelId="3147">
+    <level id="41" name="program_typology"/>
+    <level id="14" name="media"/>
+  </branch>
+  <branch id="32"  name="spot_sub_type" labelId="3148">
+    <level id="42" name="spot_sub_type"/>
+    <level id="14" name="media"/>
+  </branch>
+
 </universeBranches>
