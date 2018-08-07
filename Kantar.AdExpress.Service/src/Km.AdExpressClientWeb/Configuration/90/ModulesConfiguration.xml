@@ -220,18 +220,11 @@
         </selections>      
         <results>
           <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
-            <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
+            <allowedUnits>            
               <allowedUnit>euro</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
-              <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>spot</allowedUnit>           
+              <allowedUnit>duration</allowedUnit>            
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -252,17 +245,10 @@
           </page>
           <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -283,17 +269,10 @@
           </page>
           <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -314,17 +293,10 @@
           </page>
           <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -345,17 +317,10 @@
           </page>
           <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -376,17 +341,10 @@
           </page>
           <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" remoteCreativeExportUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -441,17 +399,10 @@
               </allowedProductLevelItems>
             </ProductDetailLevel>
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -566,18 +517,10 @@
         <results>
           <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -601,18 +544,10 @@
           </page>
           <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -636,18 +571,10 @@
           </page>
           <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -671,18 +598,10 @@
           </page>
           <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -706,18 +625,10 @@
           </page>
           <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -741,18 +652,10 @@
           </page>
           <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -776,18 +679,10 @@
           </page>
           <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
