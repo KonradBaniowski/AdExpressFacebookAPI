@@ -1589,10 +1589,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             VehicleListDataAccess vl = new VehicleListDataAccess(webSession);
             DataTable dtVehicle = vl.List;
-            List<long> ids = new List<long>
+
+
+            List<long> ids = new List<long>();
+           
+
+            if (!WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
             {
-                VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId                
-            };
+                ids.Add(VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId);
+            }
 
             foreach (DataRow row in dtVehicle.Rows)
             {
@@ -1605,4 +1610,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         }
         #endregion
     }
+
+ 
 }

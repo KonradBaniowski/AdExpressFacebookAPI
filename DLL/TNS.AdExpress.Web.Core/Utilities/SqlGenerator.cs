@@ -2926,6 +2926,29 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
         /// <summary>
+        /// Get Units Alias
+        /// </summary>
+        /// <param name="webSession">Web session</param>
+        /// <returns>Units alias list</returns>
+        public static List<string> GetUnitsAlias(WebSession webSession)
+        {
+            try
+            {
+                List<string> unitsFieldName = new List<string>();
+                List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+                foreach(var unit in unitsInformation)
+                    unitsFieldName.Add(unit.Id.ToString());
+
+                return unitsFieldName;
+            }
+            catch
+            {
+                throw new SQLGeneratorException("Not managed unit (Alert Module)");
+            }
+        }
+
+        /// <summary>
         /// Détermine le nom du champ à utiliser pour l'unité
         /// 
         /// Nouvelle version: 25/10/2007
@@ -4862,6 +4885,100 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     catch {
                         throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
                     }
+
+                default:
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
+
+            }
+        }
+
+        /// <summary>
+        /// Get unit field to use in query
+        /// </summary>
+        ///<param name="webSession">Web session</param>
+        /// <param name="vehicleId">Vehicle id</param>
+        /// <param name="periodType">Period type</param>
+        /// <returns>Unit field name</returns>
+        public static List<string> GetUnitsFieldName(WebSession webSession, Int64 vehicleId, CstPeriod.PeriodBreakdownType periodType)
+        {
+            List<string> unitsFieldName = new List<string>();
+            List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+            switch (periodType)
+            {
+                case CstPeriod.PeriodBreakdownType.week:
+                case CstPeriod.PeriodBreakdownType.month:
+
+                    try
+                    {
+                        foreach (var unit in unitsInformation)
+                        {
+                            unitsFieldName.Add(unit.DatabaseMultimediaField);
+                        }
+
+                        return unitsFieldName;
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+
+                    try
+                    {
+                        foreach(var unitInformation in unitsInformation)
+                        {
+                            unitsFieldName.Add(UnitsInformation.List[unitInformation.Id].DatabaseField);
+                        }
+
+                        return unitsFieldName;
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                default:
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
+
+            }
+        }
+
+        /// <summary>
+        /// Get unit field to use in query
+        /// </summary>
+        ///<param name="webSession">Web session</param>
+        /// <param name="vehicleId">Vehicle id</param>
+        /// <param name="periodType">Period type</param>
+        /// <returns>Unit field name</returns>
+        public static string GetUnitsFieldNameWithAlias(WebSession webSession, Int64 vehicleId, CstPeriod.PeriodBreakdownType periodType)
+        {
+            string unitsFieldName = string.Empty;
+            List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+            switch (periodType)
+            {
+                case CstPeriod.PeriodBreakdownType.week:
+                case CstPeriod.PeriodBreakdownType.month:
+                 
+                    foreach (var unit in unitsInformation)
+                    {
+                        unitsFieldName += $"sum({unit.DatabaseMultimediaField}) as {unit.Id.ToString()}, ";
+                    }
+                        
+                    return unitsFieldName.Substring(0, unitsFieldName.Length - 2);
+
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+                   
+                    foreach (var unit in unitsInformation)
+                    {
+                        unitsFieldName += $"sum({UnitsInformation.List[unit.Id].DatabaseField}) as {unit.Id.ToString()}, ";
+                    }
+
+                    return unitsFieldName.Substring(0, unitsFieldName.Length - 2);
 
                 default:
                     throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));

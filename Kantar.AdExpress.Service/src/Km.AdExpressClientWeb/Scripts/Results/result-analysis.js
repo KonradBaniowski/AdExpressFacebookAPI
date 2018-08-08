@@ -54,9 +54,15 @@
         this.ResultType = $('#resultType').val();
     }
 
+
+    function UnitFilter() {
+        this.Unit = $('#unit').val();
+    }
+
     function UserFilter() {
         this.MediaDetailLevel = new MediaDetailLevel();
         this.ProductDetailLevel = new ProductDetailLevel();
+        this.UnitFilter = new UnitFilter();
         this.Evol = false;
         this.PDM = false;
         this.PDV = false;
@@ -64,6 +70,10 @@
     }
 
     var userFilter = new UserFilter();
+
+
+   
+
     function CallSetOptions() {
         $.ajax({
             url: '/Analysis/SetResultOptions',
@@ -207,6 +217,12 @@
         $("#gridLoader").removeClass("hide");
         $("#collapseContainerOne").collapse('hide');
         CallSetOptions();
+    });
+
+    $('#unit').selectpicker();
+
+    $('#unit').on('change', function (e) {
+        userFilter.UnitFilter.Unit = $('#unit').val();
     });
 
     //$(document).on('click', '.ui-iggrid-header.ui-widget-header', function (event) {
@@ -412,6 +428,8 @@
             bootbox.alert(error);
         }
     }
+
+  
 
     //Export
     $("#btn-save-result").click(function () {

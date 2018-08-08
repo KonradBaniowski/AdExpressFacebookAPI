@@ -340,7 +340,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 MediaSchedulePeriod period = null;
                 Int64 moduleId = CustomerSession.CurrentModule;
                 ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
-                WebConstantes.CustomerSessions.Unit oldUnit = CustomerSession.Unit;
+                List<WebConstantes.CustomerSessions.Unit> oldUnits = CustomerSession.Units;
                 // TODO : Commented temporarily for new AdExpress
                 //if (UseCurrentUnit) webSession.Unit = CurrentUnit;
                 object[] param = null;
@@ -437,7 +437,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerSession.CurrentModule = moduleId;
                 CustomerSession.DetailPeriod = periodDisplay;
                 CustomerSession.CurrentTab = oldCurrentTab;
-                CustomerSession.Units = new List<WebConstantes.CustomerSessions.Unit> {oldUnit};
+                CustomerSession.Units = oldUnits;
                 CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
 
             }

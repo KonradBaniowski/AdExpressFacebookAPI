@@ -14,6 +14,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public ResultTypeFilter ResultTypeFilter { get; set; }
 
+        public UnitFilter UnitFilter { get; set; }
+
         public bool Evol { get; set; }
 
         public bool PDM { get; set; }

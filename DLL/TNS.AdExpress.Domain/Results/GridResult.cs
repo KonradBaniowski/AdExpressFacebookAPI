@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TNS.AdExpress.Domain.Insertions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.Results
 {
@@ -27,6 +28,7 @@ namespace TNS.AdExpress.Domain.Results
         public bool HasMoreThanMaxRowsAllowed { get; set; }
         public bool HasMSCreatives { get; set; }
         public string Unit { get; set; }
+        public List<WebConstantes.CustomerSessions.Unit> Units { get; set; }
         public Filter Filter { get; set; }
         public string LinkAllPeriod { get; set; }
         public int SortOrder { get; set; }

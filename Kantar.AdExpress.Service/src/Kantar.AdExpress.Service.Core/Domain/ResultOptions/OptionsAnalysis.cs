@@ -23,5 +23,7 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool IsSelectRetailerDisplay { get; set; }
 
         public int SiteLanguage { get; set; }
+
+        public UnitOption UnitOption { get; set; }
     }
 }

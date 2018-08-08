@@ -1377,6 +1377,24 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             }
         }
 
+        protected virtual string GetUnitsFieldNameSumUnionWithAlias(WebSession webSession)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+                foreach (var unit in unitsInformation)
+                    sql.AppendFormat("sum({0}) as {0}, ", unit.Id.ToString());
+
+                return sql.ToString().Substring(0, sql.Length - 2); ;
+            }
+            catch
+            {
+                throw new MediaScheduleDALException("Not managed unit (Alert Module)");
+            }
+        }
+
         /// <summary>
         /// Obtient le code SQL des champs correspondant aux éléments du niveau de détail
         /// </summary>

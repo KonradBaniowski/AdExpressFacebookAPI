@@ -372,6 +372,12 @@
     <Content Include="Configuration\420\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\90\Plugins\Miysis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\90\Plugins\MiysisPptx.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

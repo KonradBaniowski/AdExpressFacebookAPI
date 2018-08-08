@@ -17,6 +17,7 @@ using NLog;
 using System;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -324,6 +325,54 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 resultTypeOption.ResultType.SelectedId = _customerWebSession.PreformatedTable.GetHashCode().ToString();
                 #endregion
 
+                #region UnitOption
+
+                UnitOption unitOption = new UnitOption();
+
+                unitOption.Unit = new UnitSelectControl();
+                unitOption.Unit.Id = "unit";
+                unitOption.Unit.Items = new List<SelectItem>();
+                var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+               
+                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                for (int i = 0; i < units.Count; i++)
+                {
+                    unitInformationDictionary.Add(units[i].Id, units[i]);
+                }
+                if ((!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
+                {
+                    _customerWebSession.Units = new List<SessionCst.Unit>
+                    {
+                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                            .GetResultPageInformation(_customerWebSession.CurrentTab)
+                            .GetDefaultUnit(vehicle.Id)
+                    };
+                }
+
+                AddUnitOptions(units, unitOption);
+
+                var exceptUnits = units.Intersect(UnitsInformation.Get(_customerWebSession.Units));
+                if (!exceptUnits.Any())
+                {
+                    if (ContainsDefaultCurrency(units))
+                    {
+                        _customerWebSession.Units = new List<SessionCst.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    }
+                    else
+                        _customerWebSession.Units = new List<SessionCst.Unit> { units[0].Id };
+                }
+
+               
+                unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
+
+
+
+                options.UnitOption = unitOption;
+                #endregion
+
                 options.MediaDetailLevel = mediaDetail;
                 options.ProductDetailLevel = productDetail;
                 options.Evol = evol;
@@ -355,12 +404,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
-                _customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails)userFilter.MediaDetailLevel.LevelDetailValue;
-                _customerWebSession.PreformatedProductDetail = (SessionCst.PreformatedDetails.PreformatedProductDetails)userFilter.ProductDetailLevel.LevelDetailValue;
+                #region UnitFilter
+
+                if (!userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
+                )
+                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
+
+                #endregion
+
+                _customerWebSession.PreformatedMediaDetail =
+                    (SessionCst.PreformatedDetails.PreformatedMediaDetails) userFilter.MediaDetailLevel.LevelDetailValue;
+                _customerWebSession.PreformatedProductDetail =
+                    (SessionCst.PreformatedDetails.PreformatedProductDetails)
+                    userFilter.ProductDetailLevel.LevelDetailValue;
                 _customerWebSession.Evolution = userFilter.Evol;
                 _customerWebSession.PDM = userFilter.PDM;
                 _customerWebSession.PDV = userFilter.PDV;
-                _customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
+                _customerWebSession.PreformatedTable =
+                    (SessionCst.PreformatedDetails.PreformatedTables) userFilter.ResultTypeFilter.ResultType;
 
                 if (WebApplicationParameters.UseRetailer)
                 {
@@ -371,11 +432,40 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace,
+                    _customerWebSession);
                 Logger.Log(LogLevel.Error, cwe.GetLog());
 
                 throw;
             }
         }
+
+        private void AddUnitOptions(List<UnitInformation> units, UnitOption unitOption)
+        {
+            foreach (UnitInformation currentUnit in units)
+            {
+
+                unitOption.Unit.Items.Add(new SelectItem
+                {
+                    Text = GestionWeb.GetWebWord(currentUnit.WebTextId,
+                           _customerWebSession.SiteLanguage),
+                    Value = currentUnit.Id.GetHashCode().ToString(),
+                    GroupId = currentUnit.GroupId,
+                    GroupType = currentUnit.GroupType,
+                    GroupTextId = currentUnit.GroupTextId
+                });
+            }
+        }
+
+        #region Unit Option Methodes
+        private bool ContainsDefaultCurrency(List<UnitInformation> units)
+        {
+            foreach (UnitInformation currentUnit in units)
+                if (currentUnit.Id == UnitsInformation.DefaultCurrency)
+                    return true;
+
+            return false;
+        }
+        #endregion
     }
 }

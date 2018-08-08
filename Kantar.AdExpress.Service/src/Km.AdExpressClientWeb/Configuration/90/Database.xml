@@ -7,7 +7,7 @@
   <defaultConnections>
     <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"     dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"  dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
     <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
     <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" isUtf8="true"/>
@@ -102,7 +102,7 @@
     <table enumId="69" description="Classif: Application Media" schemaEnumId="0" label="application_media" prefix="am"/>
     <table enumId="70" description="Recap Data: Pluri" schemaEnumId="4" label="recap_pluri" prefix="rcp"/>
     <table enumId="71" description="Recap Data: Press" schemaEnumId="4" label="recap_press" prefix="rcp"/>
-    <table enumId="72" description="Recap Data: TV" schemaEnumId="4" label="recap_tv" prefix="rcp"/>
+    <table enumId="72" description="Recap Data: TV" schemaEnumId="4" label="recap_tv_" prefix="rcp"/>
     <table enumId="73" description="Recap Data: Radio" schemaEnumId="4" label="recap_radio" prefix="rcp"/>
     <table enumId="74" description="Recap Data: Outdoor" schemaEnumId="4" label="recap_outdoor" prefix="rcp"/>
     <table enumId="75" description="Recap Data: Internet" schemaEnumId="4" label="recap_internet" prefix="rcp"/>
@@ -110,7 +110,7 @@
     <table enumId="77" description="Recap Data: Tactic" schemaEnumId="4" label="recap_tactic" prefix="rcp"/>
     <table enumId="78" description="Recap Data: Pluri Segment" schemaEnumId="4" label="recap_pluri_segment" prefix="rcp"/>
     <table enumId="79" description="Recap Data: Press Segment" schemaEnumId="4" label="recap_press_segment" prefix="rcp"/>
-    <table enumId="80" description="Recap Data: TV Segment" schemaEnumId="4" label="recap_tv_segment" prefix="rcp"/>
+    <table enumId="80" description="Recap Data: TV Segment" schemaEnumId="4" label="recap_tv_" prefix="rcp"/>
     <table enumId="81" description="Recap Data: Radio Segment" schemaEnumId="4" label="recap_radio_segment" prefix="rcp"/>
     <table enumId="82" description="Recap Data: Outdoor Segment" schemaEnumId="4" label="recap_outdoor_segment" prefix="rcp"/>
     <table enumId="83" description="Recap Data: Internet Segment" schemaEnumId="4" label="recap_internet_segment" prefix="rcp"/>

@@ -37,7 +37,7 @@
         </detailColumn>
       </detailColumns>
     </vehicle>-->
-    <vehicle id="6"   name="télévision" >
+    <vehicle id="1"   name="télévision" >
       <detailColumns>
         <detailColumn id="13">
           <allowedModules>

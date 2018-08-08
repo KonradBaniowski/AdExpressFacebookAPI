@@ -636,7 +636,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
 
                         //Add GAD fields for Sql SELECT clause without prefix
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-                            dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                            dataFieldsForGadWithoutTablePrefix = GetFieldsForGadWithoutTablePrefix();
 
                         //SELECT clause
                         sql = new StringBuilder();
@@ -922,9 +922,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
                 {
                     try
                     {
-                        dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        InitGadParams(tblGad, ref dataTableNameForGad, ref dataFieldsForGad, ref dataJointForGad);
                     }
                     catch (SQLGeneratorException)
                     {
@@ -1346,6 +1344,28 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
         }
         #endregion
 
+        #region Get Fields For Gad Without Table Prefix
+        /// <summary>
+        /// Get Fields For Gad Without Table Prefix
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetFieldsForGadWithoutTablePrefix()
+        {
+            return ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+        }
+        #endregion
+
+        #region Init Gad Params
+        /// <summary>
+        /// Init Gad Params
+        /// </summary>
+        protected virtual void InitGadParams(Table tblGad, ref string dataTableNameForGad, ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+            dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
+            dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+            dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+        }
+        #endregion
 
         /// <summary>
         /// Get Data Source

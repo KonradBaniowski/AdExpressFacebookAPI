@@ -433,6 +433,10 @@ namespace Km.AdExpressClientWeb.Helpers
                 case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportGrossResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage), Visible = true });
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
             }
 
             SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
@@ -448,11 +452,8 @@ namespace Km.AdExpressClientWeb.Helpers
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     ids.Add(ExportResultWithValue);
-                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
-                    {
-                        ids.Add(ExportPdfResult);
-                        ids.Add(ExportPptResult);
-                    }
+                    ids.Add(ExportPdfResult);
+                    ids.Add(ExportPptResult);
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
@@ -550,30 +551,36 @@ namespace Km.AdExpressClientWeb.Helpers
 
         public static void SetGrp(string countryCode, Options options)
         {
-            switch (countryCode)
-            {
-                case CountryCode.TURKEY:
-                    options.Grp.Visible = true;
-                    options.Grp30S.Visible = true;
-                    options.SpendsGrp.Visible = true;
-                    break;
-                default:
-                    options.Grp.Visible = false;
-                    options.Grp30S.Visible = false;
-                    options.SpendsGrp.Visible = false;
-                    break;
-            }
+            options.Grp.Visible = false;
+            options.Grp30S.Visible = false;
+            options.SpendsGrp.Visible = false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        options.Grp.Visible = true;
+            //        options.Grp30S.Visible = true;
+            //        options.SpendsGrp.Visible = true;
+            //        break;
+            //    default:
+            //        options.Grp.Visible = false;
+            //        options.Grp30S.Visible = false;
+            //        options.SpendsGrp.Visible = false;
+            //        break;
+            //}
         }
 
         public static bool IsGrpAvailable(string countryCode)
         {
-            switch (countryCode)
-            {
-                case CountryCode.TURKEY:
-                    return true;
-                default:
-                    return false;
-            }
+            return false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        return true;
+            //    default:
+            //        return false;
+            //}
         }
     }
 

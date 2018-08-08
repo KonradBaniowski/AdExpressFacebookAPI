@@ -453,8 +453,18 @@ namespace TNS.AdExpressI.Date.DAL {
             }
 
             sql = sql.Remove(sql.Length - 1, 1);
-
-            sql += " from " + SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
+            if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+            {
+                sql += " from " +
+                       SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(
+                           VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay) + _session.Unit.ToString();
+            }
+            else
+            {
+                sql += " from " +
+                     SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(
+                         VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
+            }
             #endregion
 
             #region Exécution de la requete

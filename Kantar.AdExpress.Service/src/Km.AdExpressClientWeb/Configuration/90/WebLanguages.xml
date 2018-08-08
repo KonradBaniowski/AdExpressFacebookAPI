@@ -22,6 +22,7 @@
       <dateFormats>
         <dateFormat name="shortdatepattern" format="dd.MM.yyyy"           excelFormat="dd.MM.yyyy"/>
         <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
+        <dateFormat name="timepattern" format="HH:mm:ss"   excelFormat="HH:mm:ss"/>
       </dateFormats>
       <companyNameTexts companyName="2841" companyShortName="2842"/>
     </language>
