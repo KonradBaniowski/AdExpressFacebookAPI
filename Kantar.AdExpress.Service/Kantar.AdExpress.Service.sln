@@ -241,6 +241,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.ProductClassReports.Turkey", "..\DLL\TNS.AdExpressI.ProductClassReports.Turkey\TNS.AdExpressI.ProductClassReports.Turkey.csproj", "{8C0BC650-9387-4C30-9EF3-E497CC0251AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.LostWon.DAL.Turkey", "..\DLL\TNS.AdExpressI.LostWon.DAL.Turkey\TNS.AdExpressI.LostWon.DAL.Turkey.csproj", "{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNS.AdExpressI.LostWon.Turkey", "..\DLL\TNS.AdExpressI.LostWon.Turkey\TNS.AdExpressI.LostWon.Turkey.csproj", "{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -909,6 +913,18 @@ Global
 		{8C0BC650-9387-4C30-9EF3-E497CC0251AF}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
 		{8C0BC650-9387-4C30-9EF3-E497CC0251AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C0BC650-9387-4C30-9EF3-E497CC0251AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Release [Mixed Platforms]|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Release [Mixed Platforms]|Any CPU.Build.0 = Release|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1032,5 +1048,7 @@ Global
 		{C24D332F-12E1-4C96-913B-21F7C2328EF7} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{239C5C2B-9888-421A-8879-44E14404D206} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
 		{8C0BC650-9387-4C30-9EF3-E497CC0251AF} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
+		{4F5457C2-A9E5-457B-8D10-CC61AE0642C3} = {C6F8D5E7-CC65-40E9-8214-BDBFB9AA0D1A}
+		{4D2F27F7-06E0-4FC5-B52D-E4481E9E1CD7} = {A47F5D50-CAEF-45FD-887F-68C3C6A5F258}
 	EndGlobalSection
 EndGlobal

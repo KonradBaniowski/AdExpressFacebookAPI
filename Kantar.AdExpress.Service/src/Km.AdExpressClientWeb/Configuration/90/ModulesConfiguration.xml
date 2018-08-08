@@ -423,8 +423,8 @@
       </module>
       <!-- *****************************************      Lost / Won                          *****************************************-->
       <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/LostWon/MediaSelection" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
-        <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
-        <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
+        <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Turkey.dll" class="TNS.AdExpressI.LostWon.Turkey.LostWonResult"/>
+        <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Turkey.dll" class="TNS.AdExpressI.LostWon.DAL.Turkey.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
