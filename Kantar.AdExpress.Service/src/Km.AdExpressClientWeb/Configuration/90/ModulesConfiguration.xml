@@ -127,8 +127,8 @@
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/PresentAbsent/MediaSelection" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
-       <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
-        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.France.dll" class="TNS.AdExpressI.PresentAbsent.DAL.France.PresentAbsentDAL"/>
+       <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Turkey.dll" class="TNS.AdExpressI.PresentAbsent.Turkey.PresentAbsentResult"/>
+        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Turkey.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Turkey.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
@@ -223,6 +223,7 @@
             <allowedUnits>            
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>           
               <allowedUnit>duration</allowedUnit>            
             </allowedUnits>
@@ -247,6 +248,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -271,6 +273,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -295,6 +298,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -319,6 +323,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -343,6 +348,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -401,6 +407,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -519,6 +526,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -546,6 +554,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -573,6 +582,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -600,6 +610,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -627,6 +638,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -654,6 +666,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -681,6 +694,7 @@
             <allowedUnits>
               <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
