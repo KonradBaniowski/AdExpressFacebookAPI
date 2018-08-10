@@ -2411,8 +2411,9 @@ namespace TNS.AdExpressI.PresentAbsent
                         }
                         else if (cell is AdExpressCellLevel)
                         {
-                            string label = ((AdExpressCellLevel)cell).RawString();
-                            string gadLeFacParams = ((AdExpressCellLevel)cell).GetGadLeFacParams();
+                            var adExpressCellLevel = ((AdExpressCellLevel)cell);
+                            string label = adExpressCellLevel.RawString();
+                            string gadLeFacParams = adExpressCellLevel.GetGadLeFacParams();
 
                             if (gadLeFacParams.Length > 0)
                                 gridData[currentLine, 2] = gadLeFacParams;
@@ -2421,9 +2422,9 @@ namespace TNS.AdExpressI.PresentAbsent
 
                             gridData[currentLine, k + 2 + pk] = label;
 
-                            if (_allowPickaNews)
+                            if (_allowPickaNews && IsShowPickaNewsLink(adExpressCellLevel.Level - 1))
                             {
-                                string url = string.Format("/find?q={0}#mon-dashboard", Uri.EscapeDataString(label));
+                                string url = string.Format("/find?ee={0}#mon-dashboard", Uri.EscapeDataString(label));
 
                                 gridData[currentLine, 3] = string.Format("<center><a href='{0}{1}' target='_blank' alt='pickanews link'><span class='fa fa-search-plus'></span></a></center>"
                                     , pickanewsLink
@@ -2469,5 +2470,25 @@ namespace TNS.AdExpressI.PresentAbsent
 
             return ids.ConvertAll(Convert.ToString);
         }
+
+        #region IsShowPickaNewsLink
+        /// <summary>
+        /// Check if show Pickanews Link
+        /// </summary>
+        /// <param name="Level">level requested</param>
+        /// <returns>True if show Pickanews Link </returns>
+        private bool IsShowPickaNewsLink(int Level)
+        {
+            return (
+                _session.GenericProductDetailLevel.LevelIds.Count > Level &&
+                (
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericProductDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.holdingCompany ||
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericProductDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.advertiser ||
+                   (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericProductDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.brand ||
+                     (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericProductDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.product
+               )
+            );
+        }
+        #endregion
     }
 }

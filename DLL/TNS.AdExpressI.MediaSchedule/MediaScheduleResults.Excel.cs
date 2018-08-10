@@ -628,7 +628,9 @@ namespace TNS.AdExpressI.MediaSchedule
 
                                     if (_allowVersion)
                                     {
+
                                         if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
+
                                         {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
                                         }
@@ -640,7 +642,9 @@ namespace TNS.AdExpressI.MediaSchedule
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
+
                                         {
                                             AppendInsertionLink(data, t, themeName, i, cssClasse, j);
                                         }
@@ -670,12 +674,16 @@ namespace TNS.AdExpressI.MediaSchedule
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 2);
                                     if (_allowVersion)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" ></td>");
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" ></td>");
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -698,12 +706,16 @@ namespace TNS.AdExpressI.MediaSchedule
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 3);
                                     if (_allowVersion)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\"></td>");
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\"></td>");
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -724,12 +736,16 @@ namespace TNS.AdExpressI.MediaSchedule
                                 AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 4);
                                 if (_allowVersion)
                                 {
+
                                     if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\" ></td>");
                                 }
                                 if (_allowInsertions)
                                 {
+
                                     if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\"></td>");
                                 }
                                 if (!WebApplicationParameters.UseComparativeMediaSchedule)

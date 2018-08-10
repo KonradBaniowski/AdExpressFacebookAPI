@@ -2142,7 +2142,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     idLv1 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv1;
 
-                                    SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit);
+                                    SetLabelTotalPDM(data, ref gridData, i, cssClasse, cssClasseNb, j, ref gridColumnId, fp, unit, CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX);
 
                                     if (idLv1 == 1)
                                         gridData[i - 1, gridColumnId++] = -1;
@@ -2193,7 +2193,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     ++pid;
                                     idLv2 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv2;
-                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, ref gridColumnId, fp, unit);
+                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, ref gridColumnId, fp, unit, CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX);
                                     gridData[i - 1, gridColumnId++] = idLv1;
                                     if (_allowVersion)
                                     {
@@ -2205,14 +2205,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL2, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
-                                    // TODO : Remove commented code for countries that don't use Comparative study
-                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    //{
-                                    //    for (int k = 1; k <= nbColYear; k++)
-                                    //    {
-                                    //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, ref gridColumnId, fp, unit);
-                                    //    }
-                                    //}
+                                  
                                     j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
                                 }
                                 break;
@@ -2225,7 +2218,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     ++pid;
                                     idLv3 = pid;
                                     gridData[i - 1, gridColumnId++] = idLv3;
-                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unit);
+                                    SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, ref gridColumnId, fp, unit, CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX);
                                     gridData[i - 1, gridColumnId++] = idLv2;
                                     if (_allowVersion)
                                     {
@@ -2237,14 +2230,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL3, j);
                                         else gridData[i - 1, gridColumnId++] = string.Empty;
                                     }
-                                    // TODO : Remove commented code for countries that don't use Comparative study
-                                    //if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                    //{
-                                    //    for (int k = 1; k <= nbColYear; k++)
-                                    //    {
-                                    //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, ref gridColumnId, fp, unit);
-                                    //    }
-                                    //}
+                               
                                     j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                 }
                                 break;
@@ -2255,7 +2241,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 ++pid;
                                 idLv4 = pid;
                                 gridData[i - 1, gridColumnId++] = idLv4;
-                                SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unit);
+                                SetLabelTotalPDM(data, ref gridData, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, ref gridColumnId, fp, unit, CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX);
                                 gridData[i - 1, gridColumnId++] = idLv3;
                                 if (_allowVersion)
                                 {
@@ -2266,15 +2252,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 {
                                     if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) SetInsertionLink(data, ref gridData, i, ref gridColumnId, _style.CellLevelL4, j);
                                     else gridData[i - 1, gridColumnId++] = string.Empty;
-                                }
-                                // TODO : Remove commented code for countries that don't use Comparative study
-                                //if (!WebApplicationParameters.UseComparativeMediaSchedule)
-                                //{
-                                //    for (int k = 1; k <= nbColYear; k++)
-                                //    {
-                                //        //SetYearsTotal(data, ref gridData, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, ref gridColumnId, fp, unit);
-                                //    }
-                                //}
+                                }                              
                                 j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
                                 break;
                             #endregion
@@ -2380,18 +2358,23 @@ namespace TNS.AdExpressI.MediaSchedule {
         }
 
         #region Table Building Functions
+
         /// <summary>
         /// Append Label, Total and PDM
         /// </summary>
         /// <param name="data">Data Source</param>
-        /// <param name="t">StringBuilder to fill</param>
+        /// <param name="gridData"></param>
         /// <param name="line">Current line</param>
         /// <param name="cssClasse">Line syle</param>
         /// <param name="cssClasseNb">Line syle for numbers</param>
         /// <param name="col">Column to consider</param>
+        /// <param name="gridColumnId"></param>
+        /// <param name="fp"></param>
+        /// <param name="unit"></param>
+        /// <param name="l2ColumnIndex"></param>
+        /// <param name="t">StringBuilder to fill</param>
         /// <param name="padding">Stirng to insert before Label</param>
-        protected virtual void SetLabelTotalPDM(object[,] data, ref object[,] gridData, int line, string cssClasse,
-            string cssClasseNb, int col, ref int gridColumnId, IFormatProvider fp, UnitInformation unit)
+        protected virtual void SetLabelTotalPDM(object[,] data, ref object[,] gridData, int line, string cssClasse, string cssClasseNb, int col, ref int gridColumnId, IFormatProvider fp, UnitInformation unit, int levelColumnIndex)
         {
             string tmpLabel = string.Empty;
             if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
@@ -2400,7 +2383,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                 if (_allowPickaNews)
                 {
-                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId);
+                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId, levelColumnIndex);
                 }
 
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
@@ -2435,7 +2418,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                 if (_allowPickaNews)
                 {
-                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId);
+                    SetPickaNewsLink(data, ref gridData, line, col, ref gridColumnId, levelColumnIndex);
                 }
 
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
@@ -2586,13 +2569,13 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
         }
 
-        protected virtual void SetPickaNewsLink(object[,] data, ref object[,] gridData, int line, int col, ref int gridColumnId)
+        protected virtual void SetPickaNewsLink(object[,] data, ref object[,] gridData, int line, int col, ref int gridColumnId,int levelColumnIndex)
         {
 
-            if (line != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
+            if (line != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && IsShowPickaNewsLink(levelColumnIndex))
             {
                 //TODO : A faire côté client
-                string url = string.Format("/find?q={0}#mon-dashboard"
+                string url = string.Format("/find?ee={0}#mon-dashboard"
                             , Uri.EscapeDataString(data[line, col].ToString())
                             //, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
                             //, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern)
@@ -3133,6 +3116,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan, fp, unit);
                                     if (_allowVersion)
                                     {
+
                                         if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
                                         {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
@@ -3145,6 +3129,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
                                         {
                                             AppendInsertionLink(data, t, themeName, i, cssClasse, j);
@@ -3174,12 +3159,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan, fp, unit);
                                     if (_allowVersion)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -3201,12 +3190,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan, fp, unit);
                                     if (_allowVersion)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
                                     if (_allowInsertions)
                                     {
+
                                         if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -3226,12 +3219,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan, fp, unit);
                                 if (_allowVersion)
                                 {
+
                                     if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
                                 if (_allowInsertions)
                                 {
+
                                     if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
                                 if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -3674,18 +3671,41 @@ namespace TNS.AdExpressI.MediaSchedule {
         }
         #endregion
 
+
         #region IsAgencyLevelType
         /// <summary>
         /// True if the level requested id Agency network or agency
         /// </summary>
         /// <param name="Level">level requested</param>
         /// <returns>cqfd</returns>
+
         protected bool IsAgencyLevelType(int Level) {
             return(
                 _session.GenericMediaDetailLevel.LevelIds.Count >Level &&
+
                 (
-               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.groupMediaAgency || 
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.groupMediaAgency ||
                (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.agency
+               )
+            );
+        }
+        #endregion
+
+        #region IsShowPickaNewsLink
+        /// <summary>
+        /// Check if show Pickanews Link
+        /// </summary>
+        /// <param name="Level">level requested</param>
+        /// <returns>True if show Pickanews Link </returns>
+        private bool IsShowPickaNewsLink(int Level)
+        {
+            return (
+                _session.GenericMediaDetailLevel.LevelIds.Count > Level &&
+                (
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.holdingCompany ||
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.advertiser ||
+                   (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.brand ||
+                     (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.product
                )
             );
         }
