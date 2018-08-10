@@ -4,6 +4,7 @@ using Km.AdExpressClientWeb.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -116,6 +117,12 @@ namespace Km.AdExpressClientWeb.Controllers
                             beginDate = SecurityHelper.Decrypt(b, SecurityHelper.CryptKey);
                             if (beginDate.Length != 8)
                                 model.ErrorMessages.Add("Erreur : Le champ b est invalide");
+
+                            if (siteLanguage == WebConstantes.CountryCode.FRANCE)
+                            {
+                                var bDate = CheckMinHitoryDate(beginDate);
+                                b = SecurityHelper.Encrypt(bDate, SecurityHelper.CryptKey);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -132,6 +139,12 @@ namespace Km.AdExpressClientWeb.Controllers
                             endDate = SecurityHelper.Decrypt(e, SecurityHelper.CryptKey);
                             if (endDate.Length != 8)
                                 model.ErrorMessages.Add("Erreur : Le champ e est invalide");
+
+                            if (siteLanguage == WebConstantes.CountryCode.FRANCE)
+                            {
+                                var eDate = CheckMinHitoryDate(endDate);
+                                e = SecurityHelper.Encrypt(eDate, SecurityHelper.CryptKey);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -236,6 +249,17 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 return jsonModel;
             }
+        }
+
+        private string CheckMinHitoryDate(string date)
+        {
+            var checkDate = DateTime.ParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture);
+            var allowedBeginDate = new DateTime(DateTime.Now.AddYears(-2).Year, 1, 1);
+
+            if(checkDate.Date < allowedBeginDate.Date)
+                return allowedBeginDate.ToString("yyyyMMdd");
+
+            return checkDate.ToString("yyyyMMdd");
         }
     }
 }
