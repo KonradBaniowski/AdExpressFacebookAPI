@@ -481,5 +481,9 @@
       <levelItem id="10" name="Product"/>
       <levelItem id="83" name="adSlogan"/>
     </detailLevel>
+    <detailLevel id="99" name="advertiser\Program">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="24" name="Program"/>
+    </detailLevel>
   </detailLevels>
 </genericDetailLevel>

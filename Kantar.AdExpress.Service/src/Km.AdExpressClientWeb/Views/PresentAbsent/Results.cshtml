@@ -224,6 +224,7 @@
                 this.ResultTypeFilter = new ResultTypeFilter();
                 this.InitializeProduct = false;
                 this.PDM = false;
+                this.PDV = false;
                 this.IsSelectRetailerDisplay = false;
             }
 
@@ -409,6 +410,9 @@
                                 if (elem.group[i].key.indexOf("pdm") > -1) {
                                     elem.group[i].formatter = PercentFormatter;
                                 }
+                                if (elem.group[i].key.indexOf("pdv") > -1) {
+                                    elem.group[i].formatter = PercentFormatter;
+                                }
                             }
                         } else if (elem.key.indexOf("unit") > -1) {
                             if (unit == "duration")
@@ -421,6 +425,9 @@
                             elem.formatter = EvolFormatter;
                         }
                         else if (elem.key.indexOf("pdm") > -1) {
+                            elem.formatter = PercentFormatter;
+                        }
+                        else if (elem.key.indexOf("pdv") > -1) {
                             elem.formatter = PercentFormatter;
                         }
                     });
@@ -700,11 +707,33 @@
             $("#set-pdm").click(function () {
                 if ($(this).prop('checked') == true) {
                     userFilter.PDM = true;
+                    userFilter.PDV = false;
+                    $("#set-pdv").prop('checked', false);
                 }
                 else {
                     userFilter.PDM = false;
                 }
             });
+
+            //PDV
+            if ($("#set-pdv").prop('checked') == true) {
+                userFilter.PDV = true;
+            }
+            else {
+                 userFilter.PDV = false;
+            }
+
+            $("#set-pdv").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.PDV = true;
+                    userFilter.PDM = false;
+                    $("#set-pdm").prop('checked', false);
+                }
+                else {
+                    userFilter.PDV = false;
+                }
+            });
+            //END PDV
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
@@ -791,10 +820,16 @@
                 if (userFilter.ResultTypeFilter.ResultType == 4 || userFilter.ResultTypeFilter.ResultType == 5) {// 4: tab Forces  5: tab Potentiels
                     $("#set-pdm").prop('checked', true);
                     userFilter.PDM = true;
+                    $("#set-pdv").prop('checked', false);
+                    $("#set-pdv").prop('disabled', true);
+                    userFilter.PDV = false;
                 } else if (userFilter.ResultTypeFilter.ResultType == 6) {//6 tab synthesis
                     $("#set-pdm").prop('checked', false);
                     userFilter.PDM = false;
+                    $("#set-pdv").prop('disabled', false);
                 }
+                else
+                    $("#set-pdv").prop('disabled', false);
             });
 
             $('#insertion').selectpicker();

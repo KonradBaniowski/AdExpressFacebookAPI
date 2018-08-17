@@ -1457,6 +1457,7 @@ namespace TNS.AdExpressI.PresentAbsent
             #region Init indexes and tables
             ResultTable tab = new ResultTable(nbLine, grossTable.NewHeaders);
             bool computePDM = (_session.Percentage) ? true : false;
+            bool computePDV = (_session.PDV) ? true : false;
             Int32 cLine = 0;
             Int32 creaIndex = tab.GetHeadersIndexInResultTable(CREATIVE_HEADER_ID.ToString());
             Int32 msIndex = tab.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_HEADER_ID.ToString());
@@ -1473,15 +1474,18 @@ namespace TNS.AdExpressI.PresentAbsent
             #region Init Units dimensions
             CellUnitFactory cellFactory = _session.GetCellUnitFactory();
             InitFinalLineValuesDelegate initLine;
+            InitPdvFinalLineValuesDelegate initPdvLine;
             SetFinalLineDelegate setLine;
             switch (_session.Unit)
             {
                 case CstWeb.CustomerSessions.Unit.versionNb:
                     initLine = new InitFinalLineValuesDelegate(InitFinalListValuesLine);
+                    initPdvLine = new InitPdvFinalLineValuesDelegate(InitPdvFinalListValuesLine);
                     setLine = new SetFinalLineDelegate(SetFinalListLine);
                     break;
                 default:
                     initLine = new InitFinalLineValuesDelegate(InitFinalDoubleValuesLine);
+                    initPdvLine = new InitPdvFinalLineValuesDelegate(InitPdvFinalDoubleValuesLine);
                     setLine = new SetFinalLineDelegate(SetFinalDoubleLine);
                     break;
             }
@@ -1497,7 +1501,10 @@ namespace TNS.AdExpressI.PresentAbsent
             if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
             if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelTotal, _session, _session.GenericProductDetailLevel);
             if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelTotal, _session);
-            initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
+            if (computePDV)
+                initPdvLine(iFirstDataIndex, tab, cLine, cellFactory, null);
+            else
+                initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
             #endregion
 
             #region Nombre parutions by media
@@ -1540,7 +1547,11 @@ namespace TNS.AdExpressI.PresentAbsent
 
                 #region Init Line
                 cLine = InitFinalLine(grossTable, tab, i, parents[((CellLevel)grossTable[i, 1]).Level], creaIndex, insertIndex, msIndex);
-                initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
+                if (computePDV)
+                    initPdvLine(iFirstDataIndex, tab, cLine, cellFactory, ((CellLevel) tab[cLine, 1]).ParentLevel);
+                else
+                    initLine(iFirstDataIndex, tab, cLine, cellFactory, computePDM);
+                
                 cLevel = (CellLevel)tab[cLine, 1];
                 #endregion
 
@@ -1558,6 +1569,91 @@ namespace TNS.AdExpressI.PresentAbsent
 
             return tab;
         }
+
+        #region PDV
+        protected delegate Int32 InitPdvFinalLineValuesDelegate(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level);
+        protected virtual Int32 InitPdvFinalDoubleValuesLine(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level)
+        {
+
+            Int32 t = toTab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
+            CellUnit cell = null;
+            if (t > -1)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, t] = cell = GetCellPDM(null);
+                    ((CellUnit) toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, t] = cell = GetCellPDM((CellUnit) toTab[level.LineIndexInResultTable, t]);
+                    ((CellUnit) toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
+                }
+                t++;
+            }
+            else
+            {
+                t = iFirstDataIndex;
+            }
+
+            for (Int32 i = t; i <= toTab.DataColumnsNumber; i++)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, i] = GetCellPDM(null);
+                    ((CellUnit) toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, i] = GetCellPDM((CellUnit) toTab[level.LineIndexInResultTable, i]);
+                    ((CellUnit) toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            return toLine;
+
+        }
+
+        protected Int32 InitPdvFinalListValuesLine(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level)
+        {
+
+            Int32 t = toTab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
+            CellVersionNbPDM cell = null;
+            if (t > -1)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, t] = cell = new CellVersionNbPDM(null);
+                    ((CellVersionNbPDM) toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, t] = cell = new CellVersionNbPDM((CellVersionNbPDM) toTab[level.LineIndexInResultTable, t]);
+                    ((CellVersionNbPDM) toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
+                }
+                t++;
+            }
+            else
+            {
+                t = iFirstDataIndex;
+            }
+
+            for (Int32 i = t; i <= toTab.DataColumnsNumber; i++)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, i] = new CellVersionNbPDM(cell);
+                    ((CellVersionNbPDM) toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, i] = new CellVersionNbPDM((CellVersionNbPDM) toTab[level.LineIndexInResultTable, i]);
+                    ((CellVersionNbPDM) toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            return toLine;
+
+        }
+        #endregion
 
         #region InitFinalLineValuesDelegate
         protected delegate Int32 InitFinalLineValuesDelegate(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM);
@@ -2262,7 +2358,7 @@ namespace TNS.AdExpressI.PresentAbsent
                         {
                             if (resultTable.NewHeaders.Root[j].Label == GestionWeb.GetWebWord(805, _session.SiteLanguage))
                             {
-                                if (_session.Percentage)
+                                if (_session.Percentage || _session.PDV)
                                 {
                                     format = "percent";
                                     colKey += "-pdm";

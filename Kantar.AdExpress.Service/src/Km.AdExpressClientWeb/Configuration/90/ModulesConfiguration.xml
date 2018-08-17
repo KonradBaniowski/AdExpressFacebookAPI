@@ -24,6 +24,7 @@
             <defaultMediaDetailLevel id="41" name="Classe\Groupe" />
             <defaultMediaDetailLevel id="78" name="Classe\Groupe\Marque\product" />
             <defaultMediaDetailLevel id="79" name="advertiser\brand\product/version" />
+            <defaultMediaDetailLevel id="99" name="advertiser\Program" />
             <defaultMediaDetailLevel id="80" name="Marque\product\version" />
             <defaultMediaDetailLevel id="81" name="Marque\product\versionName" />
             <defaultMediaDetailLevel id="82" name="catégorie\centre d'interet\support" />

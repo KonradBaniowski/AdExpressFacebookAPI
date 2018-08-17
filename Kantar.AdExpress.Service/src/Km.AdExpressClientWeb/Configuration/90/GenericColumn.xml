@@ -765,20 +765,82 @@
 
     <!--insertions TV portefeuille-->
     <detailColumn id="22" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
-      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
-      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      
+      <!--<columnItem id="22" name="Nombre Spots écran"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>-->
+
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
-      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
-      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="242" name="Sequence Of the Week In The Year "/>
+      <columnItem id="1" name="Media"/>
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="4" name="Content Type" />
+      <columnItem id="5" name="The Company Selling the Ad" />
+      <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>
+      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
+      <columnItem id="193" name="Periodicity"   />
+      <columnItem id="194" name="Program Status"  />
+      <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />
+      <columnItem id="196" name="Program Beginning Time" />
+      <columnItem id="197" name="Program Ending Time" />
+      <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>
+      <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>
+      <columnItem id="200" name="Spot Genre"        />
+      <columnItem id="201" name="Spot Sub Genre"       />
+      <columnItem id="202" name="Language of the Ad"   />
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
-      <columnItem id="20" name="Position" isKey="true"/>
-      <columnItem id="21" name="Durée écran"/>
-      <columnItem id="22" name="Nombre Spots écran"/>
-      <columnItem id="14" name="Prix"/>
-      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>
+      <columnItem id="204" name="Creative Agency"       />
+      <columnItem id="205" name="Campaign"       />
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="101" name="Brand" />
+      <columnItem id="100" name="Sub brand" />
+      <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>
+      <columnItem id="82" name="Sub Sector" />
+      <columnItem id="44" name="Sector" />
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="207" name="Type of Advertising Company"   />
+      <columnItem id="180" name="Holding of The Advertising Company"   />
+      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
+      <columnItem id="208" name="Purchasing Advertising"   />
+      <columnItem id="17" name="Spot Beginning Time" isKey="true"/>
+      <columnItem id="209" name="Spot End Time" />
+      <columnItem id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)"   />
+      <columnItem id="20" name="Spot Place  in the Commercial Break"       />
+      <columnItem id="211" name="Number of Spots in Commercial Break" />
+      <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>
+      <columnItem id="27" name="Ad \ Commercial Break Code" idDetailLevelMatching="21"/>
+      <columnItem id="213" name="Commercial Break Beginning Time"     />
+      <columnItem id="214"  name="Commercial Break Ending Time"     />
+      <columnItem id="21" name="Total duration of a Commercial Break " />
+      <columnItem id="215" name="Number of Commercial Breaks in the Program" />
+      <columnItem id="216" name="Commercial Item Place the Program"   />
+      <columnItem id="217" name="Number of Spots" />
+      <columnItem id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" />
+      <columnItem id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" />
+      <columnItem id="220" name="Commercial item Place \ Position in the Program" />
+      <columnItem id="221" name="Commercial Item Category Name"   />
+      <columnItem id="222" name="Commercial Item Category Code"  />
+      <columnItem id="223" name="Commercial Item Position within the program"   idDetailLevelMatching="85"/>
+      <columnItem id="14" name="AdSpends par TV Spot in Euro" />
+      <columnItem id="224" name="AdSpends par TV Spot in TL" />
+      <columnItem id="225" name="AdSpends par TV Spot in USD" />
+      <columnItem id="226" name="Second Product"   />
+      <columnItem id="227" name="Second Product Type"   />
+      <columnItem id="228" name="Second Product Brand"   />
+      <columnItem id="229" name="Second Product Advertising Company"   />
+      <columnItem id="230" name="Type of Second Product's Advertising Company" />
+      <columnItem id="231" name="Second Product: Holding of The Advertising Company"  />
+      <columnItem id="232" name="Second Product Sub Sector"  />
+      <columnItem id="233" name="Second Product Main Sector"   />
+      <columnItem id="234" name="Collective Product"   />
+      <columnItem id="235" name="Collective Product Type"   />
+      <columnItem id="236" name="Collective Product Brand"   />
+      <columnItem id="237" name="Collective Product Advertising Company"   />
+      <columnItem id="238" name="Collective Product Type of Advertising Company"   />
+      <columnItem id="239" name="Collective Product : Holding of The Advertising Company"   />
+      <columnItem id="240" name="Collective Product Main Sector"  />
+      <columnItem id="241" name="Collective Product Sub Sector"   />
     </detailColumn>
     <!--Radio-->
     <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">

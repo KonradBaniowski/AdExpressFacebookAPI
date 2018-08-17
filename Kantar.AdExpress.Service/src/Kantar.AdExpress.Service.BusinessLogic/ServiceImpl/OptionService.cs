@@ -630,6 +630,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
+                #region PDV
+                if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY &&
+                    (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                  || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE))
+                {
+                    CheckBoxOption pdv = new CheckBoxOption();
+                    pdv.Id = "pdvEvol";
+
+                    pdv.Value = _customerWebSession.PDV;
+
+                    options.PDV = pdv;
+                }
+                #endregion
+
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     #region Evolution
@@ -790,11 +804,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
-                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-                    )
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
                 {
                     SetGenericColumnLevelDetailOptions(userFilter);
                     _customerWebSession.Percentage = userFilter.PDM;
+                    if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY)
+                        _customerWebSession.PDV = userFilter.PDV;
                 }
 
 
