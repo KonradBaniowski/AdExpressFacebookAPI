@@ -1175,6 +1175,7 @@ namespace TNS.AdExpressI.LostWon
             #endregion
 
             bool computePDM = _session.Percentage;
+            bool computePDV = _session.PDV;
 
             #region Parutions
             Dictionary<string, double> resNbParution = null;
@@ -1212,6 +1213,7 @@ namespace TNS.AdExpressI.LostWon
             #region Unit selection
             CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
             InitFinalLineValuesDelegate initValues = null;
+            InitPdvFinalLineValuesDelegate initPdvValues = null;
             SetFinalLineDelegate setValues = null;
             switch (_session.Unit)
             {
@@ -1221,6 +1223,7 @@ namespace TNS.AdExpressI.LostWon
                     break;
                 default:
                     initValues = new InitFinalLineValuesDelegate(InitFinalDoubleValuesLine);
+                    initPdvValues = new InitPdvFinalLineValuesDelegate(InitPdvFinalDoubleValuesLine);
                     setValues = new SetFinalLineDelegate(SetFinalDoubleLine);
                     break;
             }
@@ -1232,7 +1235,10 @@ namespace TNS.AdExpressI.LostWon
             levels[0] = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, cLine);
             tabResult[cLine, levelIndex] = levels[0];
             if (_showMediaSchedule) tabResult[cLine, msIndex] = new CellMediaScheduleLink(levels[0], _session);
-            initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+            if (computePDV)
+                initPdvValues(tabResult, cLine, cellUnitFactory, null, computePDV, NIndex, N1Index, EvolIndex);
+            else
+                initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
             #endregion
 
             #region Nombre parutions by media
@@ -1296,7 +1302,10 @@ namespace TNS.AdExpressI.LostWon
 
                 #region Init Line
                 cLine = InitFinalLine(tabData, tabResult, i, levels[((CellLevel)tabData[i, 1]).Level - 1], msIndex);
-                initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+                if (computePDV)
+                    initPdvValues(tabResult, cLine, cellUnitFactory, ((CellLevel)tabResult[cLine, 1]).ParentLevel, computePDV, NIndex, N1Index, EvolIndex);
+                else
+                    initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
                 cLevel = (CellLevel)tabResult[cLine, 1];
                 #endregion
 
@@ -1314,6 +1323,104 @@ namespace TNS.AdExpressI.LostWon
 
             return (tabResult);
         }
+
+        #region PDV
+        protected delegate Int32 InitPdvFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level, bool isPDV, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);
+        protected virtual Int32 InitPdvFinalDoubleValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level, bool isPDV, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
+        {
+
+            // Units
+            if (isPDV)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, NIndex] = new CellPDM(0.0, null);
+                    ((CellPDM) toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, NIndex] = new CellPDM(0.0, (CellPDM)toTab[level.LineIndexInResultTable, NIndex]);
+                    ((CellPDM)toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            else
+            {
+                toTab[toLine, NIndex] = cellFactory.Get(0.0);
+            }
+            //year N
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
+            {
+                if (isPDV)
+                {
+                    if (level == null)
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, null);
+                        ((CellPDM) toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                    else
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[level.LineIndexInResultTable, k]);
+                        ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //year N1
+            if (isPDV)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, N1Index] = new CellPDM(0.0, null);
+                    ((CellPDM) toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, N1Index] = new CellPDM(0.0, (CellPDM)toTab[level.LineIndexInResultTable, N1Index]);
+                    ((CellPDM)toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            else
+            {
+                toTab[toLine, N1Index] = cellFactory.Get(0.0);
+            }
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                if (isPDV)
+                {
+                    if (level == null)
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, null);
+                        ((CellPDM) toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                    else
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[level.LineIndexInResultTable, k]);
+                        ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //Evol
+            CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
+            cEvol.StringFormat = "{0:percentage}";
+            toTab[toLine, EvolIndex] = cEvol;
+            for (Int32 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            {
+                cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
+                cEvol.StringFormat = "{0:percentage}";
+                toTab[toLine, k] = cEvol;
+            }
+
+            return toLine;
+
+        }
+        #endregion
 
         #region InitFinalLineValuesDelegate
         protected delegate Int32 InitFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);

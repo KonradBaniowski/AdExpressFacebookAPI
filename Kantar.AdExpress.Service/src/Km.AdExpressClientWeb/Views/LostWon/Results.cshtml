@@ -234,6 +234,7 @@
                 this.ResultTypeFilter = new ResultTypeFilter();
                 this.InitializeProduct = false;
                 this.PDM = false;
+                this.PDV = false;
                 this.IsSelectRetailerDisplay = false;
             }
 
@@ -756,11 +757,33 @@
             $("#set-pdm").click(function () {
                 if ($(this).prop('checked') == true) {
                     userFilter.PDM = true;
+                    userFilter.PDV = false;
+                    $("#set-pdv").prop('checked', false);
                 }
                 else {
                     userFilter.PDM = false;
                 }
             });
+
+            //PDV
+            if ($("#set-pdv").prop('checked') == true) {
+                userFilter.PDV = true;
+            }
+            else {
+                userFilter.PDV = false;
+            }
+
+            $("#set-pdv").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.PDV = true;
+                    userFilter.PDM = false;
+                    $("#set-pdm").prop('checked', false);
+                }
+                else {
+                    userFilter.PDV = false;
+                }
+            });
+            //END PDV
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
