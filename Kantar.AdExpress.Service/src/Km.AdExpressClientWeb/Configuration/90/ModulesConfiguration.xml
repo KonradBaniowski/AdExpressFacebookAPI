@@ -767,24 +767,33 @@
             <defaultProductDetailLevel id="11" name="famille" />
             <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
             <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
             <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
             <defaultProductDetailLevel id="19" name="groupe" />
             <defaultProductDetailLevel id="20" name="groupe\annonceur" />
             <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="95" name="annonceur\marque" />
             <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+            <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
             <defaultProductDetailLevel id="21" name="produit" />
+            <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="83" name="adSlogan"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
-            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="16" name="Agence"/>
+            <allowedProductLevelItem id="24" name="Program"/>
+            <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="82" name="spotSubType"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
@@ -844,18 +853,9 @@
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
               <!--<allowedUnit>kEuro</allowedUnit>-->
-              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>mmPerCol</allowedUnit>
-              <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
-              <allowedUnit>occurence</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>              
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -874,14 +874,11 @@
           </page>
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5,8,11"/>
+              <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
-              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
-              <allowedUnit>volumeMms</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -894,14 +891,12 @@
           </page>
           <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5,11"/>
+              <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
-              <allowedUnit>euro</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
-              <allowedUnit>numberPost</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -914,7 +909,7 @@
           </page>
           <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5,6,8,9,11,15"/>
+              <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
