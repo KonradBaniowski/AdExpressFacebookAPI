@@ -1,0 +1,219 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpressI.Portofolio.Exceptions;
+using TNS.FrameWork.WebResultUI;
+using AbstractResult = TNS.AdExpressI.Portofolio;
+
+namespace TNS.AdExpressI.Portofolio.Turkey
+{
+    public class PortofolioResults : AbstractResult.PortofolioResults
+    {
+        #region Variables
+        /// <summary>
+        /// Time Slot
+        /// </summary>
+        protected string _timeSlot;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        public PortofolioResults(WebSession webSession) : base(webSession) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="timeSlot">Time Slot</param>
+        /// <param name="dayOfWeek">Day of week</param>
+        public PortofolioResults(WebSession webSession, string timeSlot, string dayOfWeek)
+            : this(webSession)
+        {
+            _timeSlot = timeSlot;
+            _dayOfWeek = dayOfWeek;
+        }
+        #endregion
+
+        #region Implementation of abstract methods
+        /// <summary>
+        /// Get ResultTable for some portofolio result
+        ///  - DETAIL_PORTOFOLIO
+        ///  - CALENDAR
+        ///  - SYNTHESIS (only result table)
+        /// </summary>
+        /// <returns>Result Table</returns>
+        public override ResultTable GetResultTable()
+        {
+            Engines.SynthesisEngine result = null;
+            try
+            {
+                switch (_webSession.CurrentTab)
+                {
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        return base.GetResultTable();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd).GetResultTable();
+                        break;
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                        result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
+                        break;
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_TYPOLOGY_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology)).GetResultTable();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.program)).GetResultTable();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.SUBTYPE_SPOTS_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.spotSubType)).GetResultTable();
+                    default:
+                        throw (new PortofolioException("Impossible to identified current tab "));
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioException("Impossible to compute portofolio results", err));
+            }
+
+            return result.GetResultTable();
+        }
+        #endregion
+
+        public override GridResult GetBreakdownGridResult(bool excel, DetailLevelItemInformation level)
+        {
+            return GetBreakdownEngine(excel, level).GetGridResult();
+        }
+
+        public Engines.BreakdownEngine GetBreakdownEngine(bool excel, DetailLevelItemInformation level)
+        {
+            Engines.BreakdownEngine result = null;
+            result = new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel, level);
+            return result;
+        }
+
+        public override GridResult GetDetailMediaGridResult(bool excel)
+        {
+            Engines.MediaDetailEngine result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel);
+            StringBuilder t = new StringBuilder(5000);
+
+            GridResult gridResult = null;
+
+            switch (_vehicleInformation.Id)
+            {
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                    gridResult = result.GetAllPeriodSpotsGridResult(GestionWeb.GetWebWord(1836, _webSession.SiteLanguage));
+                    return gridResult;
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+        }
+
+        public override GridResult GetDetailMediaPopUpGridResult()
+        {
+            GridResult gridResult = new GridResult();
+            gridResult.HasData = false;
+
+            ResultTable data = GetInsertionDetailResultTable(false);
+
+            if (data != null)
+            {
+                ComputeGridData(gridResult, data);
+            }
+            else
+            {
+                gridResult.HasData = false;
+                return (gridResult);
+            }
+
+            return gridResult;
+
+        }
+
+        #region Insetion detail
+        /// <summary>
+        /// Get media insertion detail
+        /// </summary>
+        /// <returns></returns>
+        public override ResultTable GetInsertionDetailResultTable(bool excel)
+        {
+            Engines.InsertionDetailEngine result = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _timeSlot, _dayOfWeek, excel);
+            return result.GetResultTable();
+        }
+        #endregion
+
+        protected override void ComputeGridData(GridResult gridResult, ResultTable data)
+        {
+            data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+            data.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+
+            int i, j, k;
+            //int creativeIndexInResultTable = -1;
+            object[,] gridData = new object[data.LinesNumber, data.ColumnsNumber + 2]; //+2 car ID et PID en plus  -  //_data.LinesNumber
+            List<object> columns = new List<object>();
+            List<object> schemaFields = new List<object>();
+            List<object> columnsFixed = new List<object>();
+
+
+            columns.Add(new { headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "ID" });
+            columns.Add(new { headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true });
+            schemaFields.Add(new { name = "PID" });
+
+            if (data.NewHeaders != null)
+            {
+                for (j = 0; j < data.NewHeaders.Root.Count; j++)
+                {
+                    //Key pour "Spot" = 869
+                    //key pour "Plan Media du produit" = 1478
+                    //Key pour "Visuel" = 1909
+
+                    columns.Add(new { headerText = data.NewHeaders.Root[j].Label, key = data.NewHeaders.Root[j].Key, dataType = "string", width = "*" });
+                    schemaFields.Add(new { name = data.NewHeaders.Root[j].Key });
+                    columnsFixed.Add(new { columnKey = data.NewHeaders.Root[j].Key, isFixed = true, allowFixing = true });
+                }
+            }
+            else
+            {
+                columns.Add(new { headerText = "", key = "Visu", dataType = "string", width = "*" });
+                schemaFields.Add(new { name = "Visu" });
+            }
+
+            try
+            {
+                for (i = 0; i < data.LinesNumber; i++) //_data.LinesNumber
+                {
+                    gridData[i, 0] = i; // Pour column ID
+                    gridData[i, 1] = data.GetSortedParentIndex(i); // Pour column PID
+
+                    for (k = 1; k < data.ColumnsNumber - 1; k++)
+                    {
+                        gridData[i, k + 1] = data[i, k].RenderString();
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                throw (new Exception(err.Message));
+            }
+
+            //if (columns.Count > 10)
+            //    gridResult.NeedFixedColumns = true;
+            gridResult.NeedFixedColumns = false;
+
+            gridResult.HasData = true;
+            gridResult.Columns = columns;
+            gridResult.Schema = schemaFields;
+            gridResult.ColumnsFixed = columnsFixed;
+            gridResult.Data = gridData;
+        }
+    }
+}

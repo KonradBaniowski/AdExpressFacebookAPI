@@ -1000,6 +1000,11 @@
 
             $('#resultType').on('change', function (e) {
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+                if (userFilter.ResultTypeFilter.ResultType == "6") {
+                    $('#perioddetailTypeContainer').css({ 'display': "block" });
+                } else {
+                    $('#perioddetailTypeContainer').css({ 'display': "none" });
+                }
             });
 
             $('#insertion').selectpicker();

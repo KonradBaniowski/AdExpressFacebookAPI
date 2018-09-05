@@ -131,7 +131,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY &&
                     (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
-                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE))
+                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE))
                     genericDetailLevelOption.DefaultDetail.SelectedId = "3";
                 else
                     genericDetailLevelOption.DefaultDetail.SelectedId = "0";

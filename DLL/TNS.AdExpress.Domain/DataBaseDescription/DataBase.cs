@@ -1244,7 +1244,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Static Nav Session
         /// </summary>
-        staticNav = 400
+        staticNav = 400,
+        /// <summary>
+        /// Media Owner
+        /// </summary>
+        mediaOwner = 401
     }
     #endregion
 

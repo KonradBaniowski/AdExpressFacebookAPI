@@ -25,6 +25,7 @@ using NLog;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -67,6 +68,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
                         gridResult = portofolioResult.GetStructureGridResult(false);
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_TYPOLOGY_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology));
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.program));
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SUBTYPE_SPOTS_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.spotSubType));
                         break;
                     default:
                         gridResult = portofolioResult.GetGridResult();

@@ -1997,12 +1997,24 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		/// Calendrier d'action
 		/// </summary>
 		public const int CALENDAR=6;
-
-		#region Détail d'un portefeuille
-		/// <summary>
-		/// Index de la colonne id Media
+        /// <summary>
+		/// Program Typology Breakdown
 		/// </summary>
-		public	const int MEDIA_ID_COLUMN_INDEX=0;
+		public const int PROGRAM_TYPOLOGY_BREAKDOWN = 7;
+        /// <summary>
+		/// Program Breakdown
+		/// </summary>
+		public const int PROGRAM_BREAKDOWN = 8;
+        /// <summary>
+		/// Sub-type of Spots Breakdown
+		/// </summary>
+		public const int SUBTYPE_SPOTS_BREAKDOWN = 9;
+
+        #region Détail d'un portefeuille
+        /// <summary>
+        /// Index de la colonne id Media
+        /// </summary>
+        public	const int MEDIA_ID_COLUMN_INDEX=0;
 		/// <summary>
 		/// Index de l'identifiant de l'élément N
 		/// </summary>
@@ -2409,7 +2421,11 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// <summary>
             /// Spot Data
             /// </summary>
-            spotData
+            spotData,
+            /// <summary>
+            /// Media Owner
+            /// </summary>
+            mediaOwner
         }
 	}
 

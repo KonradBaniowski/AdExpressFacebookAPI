@@ -756,8 +756,8 @@
       </module>
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Portfolio/MediaSelection" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
-        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
-        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.France.dll" class="TNS.AdExpressI.Portofolio.DAL.France.PortofolioDAL"/>
+        <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Turkey.dll" class="TNS.AdExpressI.Portofolio.Turkey.PortofolioResults"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Turkey.dll" class="TNS.AdExpressI.Portofolio.DAL.Turkey.PortofolioDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
@@ -924,6 +924,60 @@
               <detailSelection id="30" name="Auto promo"/>
               <detailSelection id="36" name="Format Banners Selected"/>
               <detailSelection id="40" name="Purchase Mode Selected"/>
+            </detailSelections>
+          </page>
+          <page id="7" resultid="68" name="Program Typology Breakdown" traductioncode="3219" url="" printExcelUrl="" exportJpegUrl="" menuTextId="3219" helpUrl="" createAlertUrl="">
+            <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
+              <ResultVehicles list="1"/>
+            </ResultAllowedMediaUniverse>
+            <allowedUnits>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="8" resultid="69" name="Program Breakdown" traductioncode="3220" url="" printExcelUrl="" exportJpegUrl="" menuTextId="3220" helpUrl="" createAlertUrl="">
+            <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
+              <ResultVehicles list="1"/>
+            </ResultAllowedMediaUniverse>
+            <allowedUnits>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+            </detailSelections>
+          </page>
+          <page id="9" resultid="70" name="Sub-type of Spots Breakdown" traductioncode="3221" url="" printExcelUrl="" exportJpegUrl="" menuTextId="3221" helpUrl="" createAlertUrl="">
+            <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
+              <ResultVehicles list="1"/>
+            </ResultAllowedMediaUniverse>
+            <allowedUnits>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
           </page>
         </results>

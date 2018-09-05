@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engines\BreakdownEngine.cs" />
     <Compile Include="Engines\CalendarEngine.cs" />
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Engines\InsertionDetailEngine.cs" />

@@ -93,7 +93,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 						productFieldNameWithoutTablePrefix = _webSession.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
 						if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-							dataFieldsForGadWithoutTablePrefix = ", " + SQLGenerator.GetFieldsAddressForGad("");
+							dataFieldsForGadWithoutTablePrefix = GetFieldsAddressForGad();
 						sql = "";
                         string unitSelect = SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
                         if(unitSelect!=null && unitSelect.Length>0) unitSelect = ", " + unitSelect;
@@ -381,8 +381,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return sqlUnit.ToString();
         }
 
+	    protected virtual string GetFieldsAddressForGad()
+	    {
+	        return ", " + SQLGenerator.GetFieldsAddressForGad("");
+	    }
+
         #region Get Group By
-	    protected virtual string GetUnit(int i, List<UnitInformation> unitsList)
+        protected virtual string GetUnit(int i, List<UnitInformation> unitsList)
 	    {
 	        return string.Format("{0} as {1}", unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
 	    }

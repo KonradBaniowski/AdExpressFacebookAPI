@@ -103,6 +103,16 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <param name="idMedia">Id media</param>
         /// <param name="periodBeginning">Period Beginning </param>
         /// <param name="periodEnd">Period End</param>
+        public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
+            : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
         /// <param name="adBreak">Ad break</param>
         /// <param name="dayOfWeek">Day of week</param>
         /// <param name="excel">Excel</param>

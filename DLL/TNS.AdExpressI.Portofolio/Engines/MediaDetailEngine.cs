@@ -54,7 +54,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <summary>
         /// Day name of Week
         /// </summary>
-        private string[] dayName = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+        protected string[] dayName = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         #endregion
 
         #region Constructor
@@ -451,7 +451,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
 		/// </summary>
 		/// <param name="excel">true for excel result</param>
 		/// <returns>HTML Code</returns>
-		protected GridResult GetDetailMediaGridResult()
+		protected virtual GridResult GetDetailMediaGridResult()
         {
           
             UnitInformation unitInformation = null;

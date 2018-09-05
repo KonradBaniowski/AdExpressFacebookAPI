@@ -86,6 +86,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					return GetCategoryData();
                 case PortofolioSynthesis.dataType.mediaSeller:
                     return GetMediaSellerData();
+                case PortofolioSynthesis.dataType.mediaOwner:
+                    return GetMediaOwnerData();
                 case PortofolioSynthesis.dataType.interestCenter:
                     return GetInterestCenterData();
                 case PortofolioSynthesis.dataType.periodicity:
@@ -942,6 +944,53 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             catch (System.Exception err) {
                 throw (new PortofolioDALException("Impossible to get data for GetMediaSellerData() : " + sql, err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Get Media Owner
+        /// <summary>
+        /// Get Media Seller
+        /// </summary>
+        /// <returns>Media Seller</returns>
+        protected virtual DataSet GetMediaOwnerData()
+        {
+
+            #region Variables
+            string sql = "";
+            #endregion
+
+            #region Construction de la requête
+            try
+            {
+                sql += " select media_owner";
+
+                sql += " from ";
+                sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.media) + ", ";
+                sql += WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.mediaOwner);
+
+                sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media=" + _idMedia + "";
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media_owner=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.mediaOwner).Prefix + ".id_media_owner";
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language=" + _webSession.DataLanguage + " ";
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.mediaOwner).Prefix + ".id_language=" + _webSession.DataLanguage + " ";
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to build the request", err));
+            }
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to get data for GetMediaOwnerData() : " + sql, err));
             }
             #endregion
 

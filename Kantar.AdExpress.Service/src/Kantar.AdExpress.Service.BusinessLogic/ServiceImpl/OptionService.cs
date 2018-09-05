@@ -284,6 +284,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
 
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE &&
+                    WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY)
+                {
+                    _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                    PeriodDetail.PeriodDetailType.Visible = true;
+                }
+                else if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE)
+                    PeriodDetail.PeriodDetailType.Visible = false;
+
                 PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
 
                 options.PeriodDetail = PeriodDetail;

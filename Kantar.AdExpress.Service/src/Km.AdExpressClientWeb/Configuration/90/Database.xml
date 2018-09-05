@@ -311,6 +311,7 @@
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
+    <table enumId="401" description="Classif: Media Owner" schemaEnumId="0" label="media_owner" prefix="mo"/>
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_program_" prefix="allm"/>

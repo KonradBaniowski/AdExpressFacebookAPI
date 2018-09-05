@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using System.Collections;
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpressI.Portofolio {
@@ -34,6 +35,13 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <param name="excel">True if export excel</param>
 		/// <returns>html code</returns>
 		GridResult GetStructureGridResult(bool excel);
+        /// <summary>
+		/// Get Breakdown grid result
+		/// </summary>
+		/// <param name="excel">True if export excel</param>
+		/// <param name="level">Level</param>
+		/// <returns>html code</returns>
+		GridResult GetBreakdownGridResult(bool excel, DetailLevelItemInformation level);
         /// <summary>
         /// Get structure chart data
         /// </summary>
