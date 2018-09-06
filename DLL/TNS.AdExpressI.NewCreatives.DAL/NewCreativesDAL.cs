@@ -214,20 +214,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 
                 // order by
                 sql.Append(" order by " + detailProductOrderBy + ", date_creation ");
+
+                return _session.Source.Fill(sql.ToString());
             }
             catch(Exception err) {
                 throw (new NewCreativesDALException("Unable to build request for new creatives : " + sql, err));
             }
             #endregion
 
-            #region Execution de la requête
-            try {
-                return _session.Source.Fill(sql.ToString());
-            }
-            catch(System.Exception err) {
-                throw (new NewCreativesDALException("Unable to load data for new creatives : " + sql, err));
-            }
-            #endregion
+          
 
         }
 
