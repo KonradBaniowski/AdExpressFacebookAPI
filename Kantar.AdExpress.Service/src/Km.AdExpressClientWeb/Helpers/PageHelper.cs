@@ -551,9 +551,9 @@ namespace Km.AdExpressClientWeb.Helpers
 
         public static void SetGrp(string countryCode, Options options)
         {
-            options.Grp.Visible = false;
-            options.Grp30S.Visible = false;
-            options.SpendsGrp.Visible = false;
+            //options.Grp.Visible = false;
+            //options.Grp30S.Visible = false;
+            //options.SpendsGrp.Visible = false;
             // Remove comment in case turkey wants GRP
             //switch (countryCode)
             //{

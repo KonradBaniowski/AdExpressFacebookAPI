@@ -602,6 +602,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 _webSession.Units = new List<CstWeb.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency };
 
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
+                    && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                {
+                    _webSession.Units = new List<CstWeb.CustomerSessions.Unit> {CstWeb.CustomerSessions.Unit.versionNb };
+                }
+
                 TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
                 if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
                 TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
@@ -727,6 +733,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
                 }
 
+              
                 _webSession.ComparativeStudy = false;
                 if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
                 {

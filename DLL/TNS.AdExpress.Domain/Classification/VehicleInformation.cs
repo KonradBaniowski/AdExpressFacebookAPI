@@ -422,7 +422,13 @@ namespace TNS.AdExpress.Domain.Classification {
             get { return _mediaAgencyFlag; }
             set { _mediaAgencyFlag = value; }
         }
-       
+
+
+        /// <summary>
+        /// Get option filter spot sub type
+        /// </summary>
+        public bool FilterSpotSubType { get; set; }
+
         #endregion
 
         #region Public Methods

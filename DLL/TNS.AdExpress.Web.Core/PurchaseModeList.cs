@@ -34,7 +34,7 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         public static void Init() {
 
-            var filterItemsList = new Dictionary<Int64, FilterItem>();
+            new Dictionary<Int64, FilterItem>();
             DataSet ds;
             ds = TNS.AdExpress.Web.Core.DataAccess.PurchaseModeListDataAccess.GetData();
 

@@ -360,6 +360,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
                 string[] vehicles = vehicleListId.Split(',');
                 bool autopromoEvaliantOption = false;
+                bool filterSpotSubType = false;
+
                 bool insertOption = false;
                 foreach (string cVehicle in vehicles)
                 {
@@ -375,6 +377,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case Vehicles.names.magazine:
                         case Vehicles.names.internationalPress:
                             if (WebApplicationParameters.AllowInsetOption) insertOption = true;
+                            break;
+                        case Vehicles.names.tv:
+                            filterSpotSubType = WebApplicationParameters.UseSpotSubType
+                 && _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES;
                             break;
                     }
                 }
@@ -427,6 +433,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         ? new List<ConstantesSession.Unit> {UnitsInformation.DefaultCurrency}
                         : new List<ConstantesSession.Unit> {units[0].Id};
                 }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES
+                    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit> { ConstantesSession.Unit.versionNb };
+                }
+
 
                 unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
 
@@ -507,14 +520,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 options.AutoPromoOption = autoPromoOption;
                 #endregion
 
-                
 
-                #region FormatOption
+
+                #region FormatOption              
                 FormatOption formatOption = new FormatOption();
 
                 formatOption.Format = new SelectControl();
                 formatOption.Format.Id = "format";
-                formatOption.Format.Visible = autopromoEvaliantOption;
+                formatOption.Format.Visible = autopromoEvaliantOption ;
                 formatOption.Format.Items = new List<SelectItem>();
 
                 var activeBannersFormatList = new List<FilterItem>(_customerWebSession.GetValidFormatList(_customerWebSession.GetVehiclesSelected()).Values);
@@ -537,12 +550,38 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 options.FormatOption = formatOption;
                 #endregion
 
+                #region Spot Sub Type Option
+                if (filterSpotSubType)
+                {
+                    SpotSubTypeOption spotSubTypeOption = new SpotSubTypeOption();
+                    spotSubTypeOption.SubType = new SelectControl();
+                    spotSubTypeOption.SubType.Id = "__spotSubType";
+                    spotSubTypeOption.SubType.Visible = filterSpotSubType;
+                    spotSubTypeOption.SubType.Items = new List<SelectItem>();
+
+                    var spotSubTypeItems = SpotSubTypes.GetItems()[_customerWebSession.DataLanguage];
+                    if (spotSubTypeItems.Any())
+                    {
+                        spotSubTypeItems.ForEach(spotSubType =>
+                        {
+                            spotSubTypeOption.SubType.Items.Add(new SelectItem { Text = spotSubType.Label, Value = spotSubType.Id.ToString() });
+                        });
+                        spotSubTypeOption.SubType.SelectedId = !string.IsNullOrEmpty(_customerWebSession.SelectedSpotSubTypes) ? 
+                            string.Join(",", spotSubTypeItems.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray())
+                            : string.Empty;
+                    }
+                    else
+                    {
+                        spotSubTypeOption.SubType.Visible = false;
+                    }
+                    options.SpotSubTypeOption = spotSubTypeOption;
+                }              
+                #endregion
+
                 #region PurchaseModeOption
-                bool showPurchaseMode = false;
-                if (WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
-                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-                    showPurchaseMode = true;
+                bool showPurchaseMode = WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.TABLEAU_DYNAMIQUE;
 
                 PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
 
@@ -713,25 +752,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     options.IsSelectRetailerDisplay = false;
 
                 #region GRP Turkey
-                CheckBoxOption grp = new CheckBoxOption();
-                grp.Id = "grp";
-                grp.Value = _customerWebSession.Grp;
-                options.Grp = grp;
+                //CheckBoxOption grp = new CheckBoxOption();
+                //grp.Id = "grp";
+                //grp.Value = _customerWebSession.Grp;
+                //options.Grp = grp;
 
-                CheckBoxOption grp30S = new CheckBoxOption();
-                grp30S.Id = "grp30S";
-                grp30S.Value = _customerWebSession.Grp30S;
-                options.Grp30S = grp30S;
+                //CheckBoxOption grp30S = new CheckBoxOption();
+                //grp30S.Id = "grp30S";
+                //grp30S.Value = _customerWebSession.Grp30S;
+                //options.Grp30S = grp30S;
 
-                CheckBoxOption spendsGrp = new CheckBoxOption();
-                spendsGrp.Id = "spendsGrp";
-                spendsGrp.Value = _customerWebSession.SpendsGrp;
-                options.SpendsGrp = spendsGrp;
+                //CheckBoxOption spendsGrp = new CheckBoxOption();
+                //spendsGrp.Id = "spendsGrp";
+                //spendsGrp.Value = _customerWebSession.SpendsGrp;
+                //options.SpendsGrp = spendsGrp;
 
-                if (_customerWebSession.Unit == ConstantesSession.Unit.euro
-                    || _customerWebSession.Unit == ConstantesSession.Unit.tl
-                    || _customerWebSession.Unit == ConstantesSession.Unit.usd)
-                    options.SpendsSelected = true;
+                //if (_customerWebSession.Unit == ConstantesSession.Unit.euro
+                //    || _customerWebSession.Unit == ConstantesSession.Unit.tl
+                //    || _customerWebSession.Unit == ConstantesSession.Unit.usd)
+                //    options.SpendsSelected = true;
                 #endregion
 
                 _customerWebSession.ReachedModule = true;
@@ -918,6 +957,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
                 string[] vehicles = vehicleListId.Split(',');
                 bool autopromoEvaliantOption = false;
+                bool filterSpotSubType = false;
                 bool insertOption = false;
                 foreach (string cVehicle in vehicles)
                 {
@@ -933,6 +973,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
                         case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
                             insertOption = true;
+                            break;
+                        case Vehicles.names.tv:
+                            filterSpotSubType = WebApplicationParameters.UseSpotSubType
+                 && _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES;
                             break;
                     }
                 }
@@ -955,6 +999,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region FormatFilter
                 if (autopromoEvaliantOption && userFilter.FormatFilter.Formats != null)
                     _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
+                #endregion
+
+                #region SpotSub type filter
+                if (filterSpotSubType && !string.IsNullOrEmpty(userFilter.SpotSubTypeFilter?.SpotSubTypes))
+                    _customerWebSession.SelectedSpotSubTypes = userFilter.SpotSubTypeFilter.SpotSubTypes;
                 #endregion
 
                 #region PurchaseModeFilter

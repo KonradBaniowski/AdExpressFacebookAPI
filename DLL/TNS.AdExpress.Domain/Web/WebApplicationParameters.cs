@@ -705,6 +705,11 @@ namespace TNS.AdExpress.Domain.Web {
             get { return _insertionOptions; }
             set { _insertionOptions = value; }
         }
+
+        /// <summary>
+        /// Get / Set Use Spot Sub Type
+        /// </summary>     
+        public static bool UseSpotSubType { get; set; }
         #endregion
 
     }

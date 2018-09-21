@@ -1276,29 +1276,40 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
                 var units = _session.GetSelectedUnits();
 
-                bool hasGrp = _session.Grp || _session.Grp30S;
+                //bool hasGrp = _session.Grp || _session.Grp30S;
 
                 //Units Indexes
                 Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>> unitsColumnIndexes =
                     new Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<string, int>>();
 
-                List<CstWeb.CustomerSessions.Unit> adspendUnits = GetAdSpendsUnit();
-                List<CstWeb.CustomerSessions.Unit> selectUnits = new List<CstWeb.CustomerSessions.Unit>();
+             
+              
+                List<CstWeb.CustomerSessions.Unit> adspendUnits;
+                if (_session.CurrentModule == CstWeb.Module.Name.NEW_CREATIVES)
+                {
+                    adspendUnits = new List<CstWeb.CustomerSessions.Unit> {CstWeb.CustomerSessions.Unit.versionNb};
+                    _allowInsertions = false;
+                }
+                else adspendUnits = GetAdSpendsUnit();
+
+
+
+                List<CstWeb.CustomerSessions.Unit>  selectUnits = new List<CstWeb.CustomerSessions.Unit>();
                 bool hasAdSpend = false;
                 units.ForEach(u =>
                 {
                     selectUnits.Add(u.Id);
-                    if (hasGrp && adspendUnits.Contains(u.Id))
-                    {
-                        selectUnits.Add(CstWeb.CustomerSessions.Unit.grp);
-                        hasAdSpend = true;
-                    }
+                    //if (hasGrp && adspendUnits.Contains(u.Id))
+                    //{
+                    //    selectUnits.Add(CstWeb.CustomerSessions.Unit.grp);
+                    //    hasAdSpend = true;
+                    //}
                 });
 
-                if (hasGrp && !hasAdSpend)
-                {
-                    selectUnits.Insert(0, CstWeb.CustomerSessions.Unit.grp);
-                }
+                //if (hasGrp && !hasAdSpend)
+                //{
+                //    selectUnits.Insert(0, CstWeb.CustomerSessions.Unit.grp);
+                //}
 
                 int currentColumnIndex = CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX;
                 bool first = true;

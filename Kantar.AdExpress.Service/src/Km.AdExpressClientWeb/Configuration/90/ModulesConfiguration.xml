@@ -107,6 +107,13 @@
           </optionalSelection>
         </optionalSelections>
         <results>
+          <allowedUnits>
+            <allowedUnit>euro</allowedUnit>
+            <allowedUnit>tl</allowedUnit>
+            <allowedUnit>usd</allowedUnit>
+            <allowedUnit>spot</allowedUnit>
+            <allowedUnit>duration</allowedUnit>
+          </allowedUnits>
           <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx"  rawExcelUrl="/Private/Results/RawExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -2059,46 +2066,100 @@
     <moduleGroup name="Evaliant" type="1" privilegecode="150" traductioncode="2555" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2556">
       <!-- *****************************************      Nouvelles créations              *****************************************-->
       <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2557" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2558" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">      
-        <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>
-        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Default.dll" class="TNS.AdExpressI.NewCreatives.DAL.Default.NewCreativesDAL"/>
+        <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Turkey.dll" class="TNS.AdExpressI.NewCreatives.Turkey.NewCreativesResult"/>
+        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Turkey.dll" class="TNS.AdExpressI.NewCreatives.DAL.Turkey.NewCreativesDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1"/>
+        </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
             <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
             <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
             <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
             <defaultProductDetailLevel id="19" name="groupe" />
             <defaultProductDetailLevel id="20" name="groupe\annonceur" />
             <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="95" name="annonceur\marque" />
             <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+            <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
             <defaultProductDetailLevel id="21" name="produit" />
+            <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="83" name="adSlogan"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
+            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <allowedProductLevelItem id="16" name="Agence"/>
+            <allowedProductLevelItem id="24" name="Program"/>
+            <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="82" name="spotSubType"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
-              <allowedUniverseLevel id="1" name="sector"/>             
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="5">
-              <allowedUniverseBranch id="5" name="sector"/>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
           <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         </selections>
         <results>
+          <allowedUnits>
+            <allowedUnit>versionNb</allowedUnit>         
+          </allowedUnits>
           <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2557" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/NewCreativesResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <ProductDetailLevel>
+              <defaultProductDetailLevels>
+                <defaultProductDetailLevel id="11" name="famille" />
+                <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+                <defaultProductDetailLevel id="16" name="famille\annonceur" />
+                <defaultProductDetailLevel id="94" name="famille\annonceur\marque" />
+                <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+                <defaultProductDetailLevel id="19" name="groupe" />
+                <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+                <defaultProductDetailLevel id="10" name="annonceur" />
+                <defaultProductDetailLevel id="95" name="annonceur\marque" />
+                <defaultProductDetailLevel id="18" name="annonceur\produit" />
+                <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
+                <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
+                <defaultProductDetailLevel id="21" name="produit" />
+                <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
+              </defaultProductDetailLevels>
+              <allowedProductLevelItems>
+                <allowedProductLevelItem id="11" name="Famille"/>
+                <allowedProductLevelItem id="12" name="Classe"/>
+                <allowedProductLevelItem id="13" name="Groupe"/>
+                <allowedProductLevelItem id="83" name="adSlogan"/>
+                <allowedProductLevelItem id="10" name="Produit"/>
+                <allowedProductLevelItem id="9" name="Marque"/>
+                <allowedProductLevelItem id="8" name="Annonceur"/>
+                <allowedProductLevelItem id="7" name="Groupe de société"/>
+                <allowedProductLevelItem id="16" name="Agence"/>
+                <allowedProductLevelItem id="24" name="Program"/>
+                <allowedProductLevelItem id="80" name="programTypology"/>
+                <allowedProductLevelItem id="82" name="spotSubType"/>
+                <allowedProductLevelItem id="14" name="Variete"/>
+                <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+              </allowedProductLevelItems>
+            </ProductDetailLevel>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>

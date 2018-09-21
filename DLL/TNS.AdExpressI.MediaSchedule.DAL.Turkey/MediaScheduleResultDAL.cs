@@ -58,6 +58,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
             string[] listVehicles = null;
             StringBuilder sql = new StringBuilder();
             string groupOptional = string.Empty;
+            UnitInformation u = _session.GetSelectedUnit();
             #endregion
 
             #region Query Building
@@ -67,11 +68,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                 listVehicles = new string[1] { _vehicleId.ToString() };
 
             // Select
-            sql.AppendFormat("select {0}, {1}{2} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), additionalSelect, GetUnitsFieldNameSumUnionWithAlias(_session));
+            sql.AppendFormat("select {0}, {1}{2} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), additionalSelect, GetUnitFieldNameSumUnionWithAlias(_session));
 
             // SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = period.SubPeriods;
-            foreach (MediaScheduleSubPeriod subPeriods in subPeriodsSet)
+
+         
+
+                foreach (MediaScheduleSubPeriod subPeriods in subPeriodsSet)
             {
                 switch (subPeriods.SubPeriodType)
                 {
@@ -83,7 +87,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                             {
                                 if (!first) sql.Append(" union all ");
                                 else first = false;
-                                sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
+
+                                if (u.Id == CstWeb.CustomerSessions.Unit.versionNb)
+                                    sql.AppendFormat("({0})", GetNbVersionQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
+                                else sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
                             }
                             catch (System.Exception err)
                             {
@@ -95,8 +102,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                     case CstPeriod.PeriodBreakdownType.month:
                         if (!first) sql.Append(" union all ");
                         else first = false;
-
-                        sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
+                        if (u.Id == CstWeb.CustomerSessions.Unit.versionNb)
+                            sql.AppendFormat("({0})", GetQueryForWebPlanNbVersionTv(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty, isComparative));
+                        else sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
                         break;
                     default:
                         throw new MediaScheduleDALException("Unable to determine type of subPeriod.");
@@ -105,7 +113,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
 
             sql.Append(") ");
             sql.AppendFormat(" group by {0}{1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), additionalGroup);
-            UnitInformation u = _session.GetSelectedUnit();
+           
             if (u.Id == CstWeb.CustomerSessions.Unit.versionNb)
             {
                 sql.AppendFormat(", {0} ", u.Id.ToString());
@@ -343,7 +351,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                         if (_session.Grp)
                             grpFieldName = ", sum(TOTAL_GRP_SPOT) as GRP";
 
-                        if(_session.Grp30S)
+                        if (_session.Grp30S)
                             grpFieldName = ", sum(TOTAL_GRP_SPOT_30S) as GRP";
 
                         return grpFieldName;
@@ -377,6 +385,412 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
             }
         }
 
+        protected string GetNbVersionQuery(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, Int64 vehicleId, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
+        {
+            #region Variables
+            StringBuilder sql = new StringBuilder();
+            string list = "";
+            string tableName = null;
+            string mediaTableName = null;
+            string dateFieldName = null;
+            string mediaFieldName = null;
+            string mediaPeriodicity = null;
+            string orderFieldName = null;
+            string unitsFieldNameWithAlias = string.Empty;
+            string mediaJoinCondition = null;
+            string groupByFieldName = null;
+            string groupByOptional = null;
+            VehicleInformation vehicleInfo = null;
+            #endregion
+
+            if (VehiclesInformation.Contains(vehicleId))
+                vehicleInfo = VehiclesInformation.Get(vehicleId);
+
+            #region Construction de la requête
+            try
+            {
+                // Get the name of the data table
+                tableName = WebApplicationParameters.GetDataTable(TableIds.dataTv, false).SqlWithPrefix;
+
+                List<UnitInformation> unitsInformation = _session.GetSelectedUnits();
+                unitsFieldNameWithAlias = $" count(distinct {unitsInformation.First().DatabaseMultimediaField}) as {unitsInformation.First().Id.ToString()} ";
+               
+                // Get the classification table
+                mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
+                if (mediaTableName.Length > 0) mediaTableName += ",";
+
+                // Get unit field
+                dateFieldName = CstDB.Fields.DATE_MEDIA_NUM;
+
+                // Periodicity field               
+                 mediaPeriodicity = "1 as period_count";
+
+                // Get classification fields
+                mediaFieldName = detailLevel.GetSqlFields();
+
+                // Get field order
+                orderFieldName = detailLevel.GetSqlOrderFields();
+
+                // Get group by clause
+                groupByFieldName = detailLevel.GetSqlGroupByFields();
+
+                // Get joins for classification
+                mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            }
+            catch (System.Exception err)
+            {
+                throw (new MediaScheduleDALException("Unable to build the query.", err));
+            }
+
+            // Select : Media classificaion selection
+            sql.AppendFormat("select {0} ", mediaFieldName);
+
+            // Date selection
+            if (periodDisplay != CstPeriod.DisplayLevel.dayly
+                && (periodBreakDown == CstPeriod.PeriodBreakdownType.data
+                || periodBreakDown == CstPeriod.PeriodBreakdownType.data_4m))
+            {
+                sql.AppendFormat(
+                    periodDisplay != CstPeriod.DisplayLevel.weekly
+                        ? ", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'YYYYMM')) as date_num,"
+                        : ", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'IYYYIW')) as date_num,", dateFieldName);
+            }
+            else
+            {
+                sql.AppendFormat(", {0} as date_num,", dateFieldName);
+            }
+
+
+
+            //  Periodicity field    
+            sql.AppendFormat("{0}, ", mediaPeriodicity);
+
+            sql.AppendFormat(unitsFieldNameWithAlias);
+            
+
+            // From : Tables
+            sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
+
+            // Where : Conditions media
+            sql.AppendFormat("where 0=0 {0}", mediaJoinCondition);
+
+            // Period
+            bool first = true;
+            foreach (PeriodItem periodItem in periodItems)
+            {
+                if (first)
+                {
+                    first = false;
+                    sql.Append(" and ((");
+                }
+                else
+                {
+                    sql.Append(") or (");
+                }
+                sql.AppendFormat("{0}>={1:yyyyMMdd}", dateFieldName, _period.Begin);
+                sql.AppendFormat(" and {0}<={1:yyyyMMdd}", dateFieldName, _period.End);
+            }
+            if (!first)
+            {
+                sql.Append(")) ");
+            }
+
+            // Additional conditions            
+            if (additionalConditions.Length > 0)
+            {
+                sql.AppendFormat(" {0} ", additionalConditions);
+            }
+
+        
+
+          
+            // Selection and right managment
+
+            #region Nomenclature Produit (droits)
+            //Access rgithDroits en accès
+            if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_session,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+
+            GetExcludeProudcts(sql);
+            #endregion
+
+            #region Nomenclature Produit (Niveau de détail)
+            // Product level
+            sql.Append(SQLGenerator.getLevelProduct(_session,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            #endregion
+
+            #region Sélection produit
+            // product
+            sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            #endregion
+
+            #region Sélection support
+            // media
+            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            #endregion
+
+            #region Media classification
+
+            #region Rights
+            sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            #endregion
+
+            #region Selection
+            list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
+            if (vehicleId > -1)
+            {
+                sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
+            }
+            else
+            {
+                sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
+            }
+            #endregion
+
+            //Universe media
+            sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+            #endregion
+
+            //SPOT SUB TYPES
+            string spotSubTypes = _session.SelectedSpotSubTypes;
+            if (!string.IsNullOrEmpty(spotSubTypes))
+            {
+                Table spotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.spotSubType);
+                sql.Append($" and {WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.ID_{spotSubType.Label} in ({spotSubTypes}) ");
+
+            }
+
+            // Order
+            sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
+            // And date
+            sql.AppendFormat(", {0} ", dateFieldName);
+            #endregion
+
+            return (sql.ToString());
+        }
+
+
+        #region Get Query web plan Nb versions TV
+        /// <summary>
+        /// Build query
+        /// </summary>
+        /// <param name="detailLevel">Detail levels selection</param>
+        /// <param name="periodDisplay">Period detail display</param>
+        /// <param name="periodBreakDown">Type of period (days, weeks, monthes)</param>
+        /// <param name="vehicleId">Vehicle filter for desagregated data</param>
+        /// <param name="beginningDate">Period Beginning</param>
+        /// <param name="endDate">Period End</param>
+        /// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <returns>Sql query as a string</returns>
+        protected  string GetQueryForWebPlanNbVersionTv(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay,
+            CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
+        {
+
+            #region Variables
+            StringBuilder sql = new StringBuilder();
+            string list = "";
+            string tableName = null;
+            string mediaTableName = null;
+            string dateFieldName = null;
+            string mediaFieldName = null;
+            string mediaPeriodicity = null;
+            string orderFieldName = null;
+            string unitFieldName = null;
+            string unitAlias = null;
+            string mediaJoinCondition = null;
+            string groupByFieldName = null;
+            string groupByOptional = null;
+            //VehicleInformation vehicleInfo = null;
+            #endregion
+
+            //if (VehiclesInformation.Contains(vehicleId))
+            //    vehicleInfo = VehiclesInformation.Get(vehicleId);
+
+            #region Construction de la requête
+          
+                // Get the name of the data table	
+                switch (periodBreakDown)
+                {
+                    case CstPeriod.PeriodBreakdownType.month:
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
+                        break;
+                    case CstPeriod.PeriodBreakdownType.week:
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.weekData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
+                        break;
+                    default:
+                        throw (new MediaScheduleDALException("Unable to determine table to use."));
+                }
+                //Get unit field
+                unitFieldName = _session.GetSelectedUnit().DatabaseMultimediaField;
+
+                // Get the classification table
+                mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
+                if (mediaTableName.Length > 0) mediaTableName += ",";
+
+                // Get unit field
+                dateFieldName = SQLGenerator.GetDateFieldName(periodBreakDown);
+              //  unitAlias = SQLGenerator.GetUnitAlias(_session);
+
+                // isComparative
+                if (!isComparative)
+                    mediaPeriodicity = GetPeriodicity(periodBreakDown, -1, periodDisplay);
+
+                // Get classification fields				
+                mediaFieldName = GetAdnettrackSqlFields(detailLevel);
+
+                // Get field order
+                orderFieldName = detailLevel.GetSqlOrderFields();
+
+                // Get group by clause				
+                groupByFieldName = GetAdnettrackSqlGroupByFields(detailLevel);
+
+                // Get joins for classification
+                mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+           
+
+            // Select : Media classificaion selection
+            sql.AppendFormat("select {0} ", mediaFieldName);
+
+            // Date selection
+            if (periodDisplay != CstPeriod.DisplayLevel.dayly
+                && (periodBreakDown == CstPeriod.PeriodBreakdownType.data
+                || periodBreakDown == CstPeriod.PeriodBreakdownType.data_4m))
+            {
+                if (periodDisplay != CstPeriod.DisplayLevel.weekly)
+                    sql.AppendFormat(", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'YYYYMM')) as date_num,", dateFieldName);
+                else
+                    sql.AppendFormat(", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'IYYYIW')) as date_num,", dateFieldName);
+            }
+            else
+            {
+                sql.AppendFormat(", {0} as date_num,", dateFieldName);
+            }
+
+            // isComparative
+            if (!isComparative)
+                sql.AppendFormat("{0}, ", mediaPeriodicity);
+
+            switch (periodBreakDown)
+            {
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+                    unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
+                    groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseField);
+                    break;
+                default:
+                    unitFieldName = GetUnitFieldName();
+                    groupByOptional = GetGroupByOptional();
+                    break;
+            }
+            sql.AppendFormat("{0}", unitFieldName);
+
+            // From : Tables
+            sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
+
+            // Where : Conditions media
+            sql.AppendFormat("where 0=0 {0}", mediaJoinCondition);
+
+            // Period
+            bool first = true;
+            foreach (PeriodItem periodItem in periodItems)
+            {
+                if (first)
+                {
+                    first = false;
+                    sql.Append(" and ((");
+                }
+                else
+                {
+                    sql.Append(") or (");
+                }
+                sql.AppendFormat("{0}>={1}", dateFieldName, periodItem.Begin);
+                sql.AppendFormat(" and {0}<={1}", dateFieldName, periodItem.End);
+            }
+            if (!first)
+            {
+                sql.Append(")) ");
+            }
+          
+            // Additional conditions            
+            if (additionalConditions.Length > 0)
+            {
+                sql.AppendFormat(" {0} ", additionalConditions);
+            }
+                
+            // Selection and right managment
+
+            #region Nomenclature Produit (droits)
+            //Access rgithDroits en accès
+            if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_session,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+
+            // Exclude product if radio selected)
+            GetExcludeProudcts(sql);
+            #endregion
+
+            #region Nomenclature Produit (Niveau de détail)
+            // Product level
+            sql.Append(SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            #endregion
+
+            #region Sélection produit
+            // product
+            sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            #endregion
+
+            #region Sélection support
+            // media
+            sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            #endregion
+
+            #region Media classification
+
+            #region Rights
+            sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            #endregion
+
+            #region Selection
+            list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
+            if (list.Length > 0)
+            {
+                sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
+            }
+            #endregion
+
+            //Universe media
+            sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+            #endregion
+
+            //SPOT SUB TYPEs
+            string spotSubTypes = _session.SelectedSpotSubTypes;
+            if (!string.IsNullOrEmpty(spotSubTypes))
+            {
+                Table spotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.spotSubType);
+                sql.Append($" and {WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.ID_{spotSubType.Label} in ({spotSubTypes}) ");
+
+            }            
+
+            // Order
+            sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
+
+            // And date
+            sql.AppendFormat(", {0} ", dateFieldName);
+            #endregion
+
+            return (sql.ToString());
+        }
+        #endregion
+
         protected override string GetUnitsFieldNameSumUnionWithAlias(WebSession webSession)
         {
             try
@@ -397,5 +811,17 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                 throw new MediaScheduleDALException("Not managed unit (Alert Module)");
             }
         }
+
+        #region Unit & group By
+        protected override string GetUnitFieldName()
+        {
+            return $" {_schAdexpr03.Label}.CREATIVESLISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) as {_session.GetSelectedUnit().Id.ToString()} ";
+        }
+
+        protected override string GetGroupByOptional()
+        {
+            return $", {_schAdexpr03.Label}.CREATIVESLISTNUM_TO_CHAR({WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.{_session.GetSelectedUnit().DatabaseMultimediaField}) ";
+        }
+        #endregion
     }
 }

@@ -905,5 +905,13 @@
       <columnItem id="65" name="Contenu"/>
       <columnItem id="41" name="Visuel"/>
     </detailColumn>
+    <!--TV-->
+    <detailColumn id="39" name="Spot\Annonceur\Groupe\Produit\Version\">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="101" name="Brand" />
+      <columnItem id="9" name="Product"/>
+      <columnItem id="203" name="Version" isKey="true"/>     
+      <columnItem id="75" name="Spot" visible="false"/>
+    </detailColumn>
   </detailColumns>
 </genericColumn>

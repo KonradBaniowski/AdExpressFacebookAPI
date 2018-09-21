@@ -1228,10 +1228,19 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         canal= 269,
 
 
+
         /// <summary>
         /// Recap Social Segment
         /// </summary>
         leFac = 270,
+        /// <summary>
+        /// Spot TV data
+        /// </summary>
+        spotTv = 271,
+        /// <summary>
+        /// Spot Sub type
+        /// </summary>
+        spotSubType = 272,
 
         /// <summary>
         /// Alert description
