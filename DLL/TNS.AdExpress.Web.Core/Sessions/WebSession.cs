@@ -403,6 +403,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         protected string _selectedPurchaseModeList = string.Empty;
 
         /// <summary>
+        /// Selected Spot Sub Types
+        /// </summary>
+        [System.NonSerialized]
+        protected string _selectedSpotSubTypes = string.Empty;
+
+        /// <summary>
         /// Evaliant Country Access List
         /// </summary>
         [System.NonSerialized]
@@ -2014,6 +2020,35 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 }
 
                 userParameters[CoreConstantes.SessionParamters.selectedPurchaseModeList] = _selectedPurchaseModeList;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Selected spot sub types
+        /// </summary>
+        public string SelectedSpotSubTypes
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedSpotSubTypes))
+                {
+                    _selectedSpotSubTypes = userParameters[CoreConstantes.SessionParamters.selectedSpotSubTypes].ToString();
+                }
+
+                return _selectedSpotSubTypes;
+            }
+            set
+            {
+                _selectedSpotSubTypes = value;
+
+                //if (string.IsNullOrEmpty(_selectedSpotSubTypes))
+                //{
+                //    var spotSubTypes = SpotSubTypes.GetItems()[DataLanguage];
+                //    _selectedSpotSubTypes = string.Join(",", spotSubTypes.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
+                //}
+
+                userParameters[CoreConstantes.SessionParamters.selectedSpotSubTypes] = _selectedSpotSubTypes;
                 modificationDate = DateTime.Now;
             }
         }

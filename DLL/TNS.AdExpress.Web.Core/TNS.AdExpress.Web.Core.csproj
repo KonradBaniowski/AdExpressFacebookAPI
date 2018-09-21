@@ -160,11 +160,13 @@
     <Compile Include="DataAccess\Helpers\Functions.cs" />
     <Compile Include="DataAccess\PurchaseModeListDataAccess.cs" />
     <Compile Include="DataAccess\Selections\Medias\MediaPublicationDatesDataAccess.cs" />
+    <Compile Include="DataAccess\SpotSubTypesDAL.cs" />
     <Compile Include="Exceptions\BannersFormatException.cs" />
     <Compile Include="Exceptions\FunctionsException.cs" />
     <Compile Include="Exceptions\PurchaseModeListDataAccessException.cs" />
     <Compile Include="Exceptions\VehicleException.cs" />
     <Compile Include="PurchaseModeList.cs" />
+    <Compile Include="SpotSubTypes.cs" />
     <Compile Include="Utilities\Converters.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\HtmlFunctions.cs" />

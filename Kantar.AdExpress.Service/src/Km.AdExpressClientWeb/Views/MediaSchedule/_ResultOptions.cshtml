@@ -409,7 +409,7 @@
                     <div class="col-md-4">
                         @if (WebApplicationParameters.UseComparativeMediaSchedule)
                         {
-                            if (Model.Grp.Visible)
+                            @*if (Model.Grp.Visible)
                             {
                                 <div class="checkbox padder media-schedule-option">
                                     @if (Model.Grp.Value)
@@ -450,7 +450,7 @@
                                     }
                                     <label for="spendsGrp">@GestionWeb.GetWebWord(3152, Model.SiteLanguage)</label>
                                 </div>
-                            }
+                            }*@
                             <div class="checkbox padder media-schedule-option">
                                 @if (Model.ComparativeStudy)
                                 {

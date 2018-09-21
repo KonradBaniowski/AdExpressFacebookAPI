@@ -342,8 +342,13 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// Spends per GRP
             /// </summary>
-            spendsGrp = 79
-		}
+            spendsGrp = 79,
+
+            /// <summary>
+            /// Selected Spot Sub Types
+            /// </summary>
+            selectedSpotSubTypes = 80,
+        }
 
         /// <summary>
         /// Max allowed rows number to display

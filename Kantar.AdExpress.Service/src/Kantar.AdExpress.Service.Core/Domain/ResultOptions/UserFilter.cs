@@ -25,6 +25,9 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public PurchaseModeFilter PurchaseModeFilter { get; set; }
 
+
+        public SpotSubTypeFilter SpotSubTypeFilter { get; set; }
+
         public ResultTypeFilter ResultTypeFilter { get; set; }
 
         public bool InitializeMedia { get; set; }

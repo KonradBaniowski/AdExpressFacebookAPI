@@ -46,7 +46,12 @@
             <allowedModule name="lost/won" privilegecode="197"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
             <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
-            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>         
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="39">
+          <allowedModules>          
+            <allowedModule name="New banners" privilegecode="4369"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>

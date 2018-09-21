@@ -107,7 +107,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         /// Get Data for new creatives
         /// </summary>
         /// <returns>Data for new creatives</returns>
-        public DataSet GetData() {
+        public virtual DataSet GetData() {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
@@ -254,7 +254,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="isRetailerSelection">Is Retailer Selectioned</param>
         /// <returns>Table</returns>
-        private Table GetTable(VehicleInformation vehicle, bool isRetailerSelection) {
+        protected virtual Table GetTable(VehicleInformation vehicle, bool isRetailerSelection) {
             switch (vehicle.Id) {
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.GetDataTable(TableIds.banners, isRetailerSelection);

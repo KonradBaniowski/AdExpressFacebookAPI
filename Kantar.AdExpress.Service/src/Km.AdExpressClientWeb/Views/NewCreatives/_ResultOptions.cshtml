@@ -113,6 +113,40 @@
 
                         </div>
                     }
+                    @if (@Model.SpotSubTypeOption!=null && @Model.SpotSubTypeOption.SubType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(3148, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.SpotSubTypeOption.SubType.Id" class="selectdatepicker" multiple data-actions-box="true">
+                                                
+                                                @foreach (var item in Model.SpotSubTypeOption.SubType.Items)
+                                                {
+                                                    if (!string.IsNullOrEmpty(Model.SpotSubTypeOption.SubType.SelectedId) && Model.SpotSubTypeOption.SubType.SelectedId.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }                                                 
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                   
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
                 </div>
                 <div class='row'>
                     <div class="col-md-4"></div>

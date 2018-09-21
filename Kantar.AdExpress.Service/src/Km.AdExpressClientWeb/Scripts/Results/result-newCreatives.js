@@ -52,10 +52,16 @@
         this.Formats = GetItems($('#format').val());
     }
 
+    function SpotSubTypeFilter() {
+        this.SpotSubTypes = GetItems($('#__spotSubType').val());
+    }
+
     function UserFilter() {
         this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
         this.PeriodDetailFilter = new PeriodDetailFilter();
         this.FormatFilter = new FormatFilter();
+        this.SpotSubTypeFilter = new SpotSubTypeFilter();
+
     }
 
     var userFilter = new UserFilter();
@@ -161,6 +167,13 @@
 
     $('#format').on('change', function (e) {
         userFilter.FormatFilter.Formats = GetItems($('#format').val());
+    });
+    
+
+    $('#__spotSubType').selectpicker();
+
+    $('#__spotSubType').on('change', function (e) {
+        userFilter.SpotSubTypeFilter.SpotSubTypes = GetItems($('#__spotSubType').val());
     });
 
     $('#defaultDetail').selectpicker();
