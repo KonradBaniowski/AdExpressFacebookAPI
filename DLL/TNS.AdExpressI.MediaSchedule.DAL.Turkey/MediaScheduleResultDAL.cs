@@ -410,10 +410,19 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
             try
             {
                 // Get the name of the data table
-                tableName = WebApplicationParameters.GetDataTable(TableIds.dataTv, false).SqlWithPrefix;
+                switch (periodBreakDown)
+                {                  
+                    case CstPeriod.PeriodBreakdownType.data_4m:
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, false).SqlWithPrefix;
+                        break;
+                    default:
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.dataTv, false).SqlWithPrefix;
+                        break;
+                }
+              
 
                 List<UnitInformation> unitsInformation = _session.GetSelectedUnits();
-                unitsFieldNameWithAlias = $" count(distinct {unitsInformation.First().DatabaseMultimediaField}) as {unitsInformation.First().Id.ToString()} ";
+                unitsFieldNameWithAlias = $" to_char( count(distinct {unitsInformation.First().DatabaseField})) as {unitsInformation.First().Id.ToString()} ";
                
                 // Get the classification table
                 mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
@@ -487,8 +496,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                 {
                     sql.Append(") or (");
                 }
-                sql.AppendFormat("{0}>={1:yyyyMMdd}", dateFieldName, _period.Begin);
-                sql.AppendFormat(" and {0}<={1:yyyyMMdd}", dateFieldName, _period.End);
+                sql.AppendFormat("{0}>={1}", dateFieldName, periodItem.Begin);
+                sql.AppendFormat(" and {0}<={1}", dateFieldName, periodItem.End);
             }
             if (!first)
             {
