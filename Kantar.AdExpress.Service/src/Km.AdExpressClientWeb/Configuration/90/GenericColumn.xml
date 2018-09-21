@@ -255,13 +255,13 @@
     <column id="199" name="Spot Sub Type"      webTextId="3148" dbId="id_spot_sub_type"  dbLabel="spot_sub_type"   dbTable="spot_sub_type"   dbTablePrefixe="sst" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="82"/>
     <column id="200" name="Spot Genre"      webTextId="3141" dbId="id_spot_genre"  dbLabel="spot_genre"   dbTable="spot_genre"   dbTablePrefixe="sptg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="201" name="Spot Sub Genre"      webTextId="3142" dbId="id_spot_sub_genre"  dbLabel="spot_sub_genre"   dbTable="spot_sub_genre"   dbTablePrefixe="ssg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
-    <column id="202" name="Language of the Ad" webTextId="3164"  dbLabel="id_language_data_i"  CellType="TNS.FrameWork.WebResultUI.CellNumber" />
-    <column id="203" name="Version Name" webTextId="3156" dbId="id_slogan" dbLabel="slogan"  dbTable="slogan"  dbTablePrefixe="slo" idLevel="86"/>
+    <column id="202" name="Language of the Ad" webTextId="3164"  dbLabel="id_language_data_i"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="203" name="Version Name" webTextId="3156" dbId="id_slogan" dbLabel="slogan"  dbTable="slogan"  dbTablePrefixe="slo" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="86"/>
     <column id="204" name="Creative Agency"      webTextId="3140" dbId="id_creative_agency"  dbLabel="creative_agency"   dbTable="creative_agency"   dbTablePrefixe="crag" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
-    <column id="205" name="Campaign"      webTextId="3165" dbId="id_campaign"  dbLabel="campaign"      CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="205" name="Campaign"      webTextId="3165" dbId="id_campaign"  dbLabel="campaign"  dbTablePrefixe="ads"    CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="206" name="Ad Slogan"      webTextId="3138" dbId="id_ad_slogan"  dbLabel="ad_slogan"   dbTable="ad_slogan"   dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="83"/>
     <column id="207" name="Type of Advertising Company" webTextId="3170" dbId="id_advertiser_type" dbLabel="advertiser_type" dbTable="advertiser_type" dbTablePrefixe="adt" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
-    <column id="208" name="Purchasing Advertising" webTextId="3170" dbId="id_purchasing_agency" dbLabel="purchasing_agency" dbTable="purchasing_agency" dbTablePrefixe="pura" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
+    <column id="208" name="Purchasing Advertising" webTextId="3139" dbId="id_purchasing_agency" dbLabel="purchasing_agency" dbTable="purchasing_agency" dbTablePrefixe="pura" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="209" name="Spot End Time" webTextId="3173" dbLabel="top_diffusion_end" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
     <column id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)" webTextId="3174" dbId="id_spot_pos_com_break_type" dbLabel="spot_pos_com_break_type" dbTable="spot_pos_com_break_type" dbTablePrefixe="spcb" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="211" name="Number of Spots in Commercial Break" webTextId="3176"  dbLabel="number_message_commercial_brea" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -279,24 +279,39 @@
     <column id="223" name="Commercial Item Position within the program" webTextId="3191" dbId="id_program_com_item_pos_type" dbLabel="program_com_item_pos_type" dbTable="program_com_item_pos_type" dbTablePrefixe="pcipt" CellType="TNS.FrameWork.WebResultUI.CellLabel"  idLevel="85"/>
     <column id="224" name="AdSpends par TV Spot in TL" webTextId="3193" dbLabel="expenditure_tl" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="225" name="AdSpends par TV Spot in USD" webTextId="3195" dbLabel="expenditure_usd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>   
-    <column id="226" name="Second Product" webTextId="3196" dbId="id_product_cobranding" dbLabel="product_cobranding" dbTable="all_product_cobranding_44" dbTablePrefixe="aprcob" useActivation="false" useLanguage="false" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="227" name="Second Product Type" webTextId="3197" dbId="id_group_cobranding" dbLabel="group_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="228" name="Second Product Brand" webTextId="3198" dbId="id_brand_cobranding" dbLabel="brand_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="229" name="Second Product Advertising Company" webTextId="3199" dbId="id_advertiser_cobranding" dbLabel="advertiser_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="230" name="Type of Second Product's Advertising Company" webTextId="3200" dbId="id_advertiser_type_cobranding" dbLabel="advertiser_type_cobranding" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="231" name="Second Product: Holding of The Advertising Company" webTextId="3201" dbId="id_holding_company_cobranding" dbLabel="holding_company_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="232" name="Second Product Sub Sector" webTextId="3202" dbId="id_subsector_cobranding" dbLabel="subsector_cobranding" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="233" name="Second Product Main Sector" webTextId="3203" dbId="id_sector_cobranding" dbLabel="sector_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="234" name="Collective Product" webTextId="3204"  dbLabel="product_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="235" name="Collective Product Type" webTextId="3205"  dbLabel="group_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="236" name="Collective Product Brand" webTextId="3206" dbLabel="brand_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="237" name="Collective Product Advertising Company" webTextId="3207" dbLabel="advertiser_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="238" name="Collective Product Type of Advertising Company" webTextId="3208" dbLabel="advertiser_type_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="239" name="Collective Product : Holding of The Advertising Company" webTextId="3209" dbLabel="holding_company_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>    
-     <column id="240" name="Collective Product Main Sector" webTextId="3210" dbLabel="sector_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="241" name="Collective Product Sub Sector" webTextId="3211" dbLabel="subsector_collective"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="242" name="Sequence Of the Week In The Year" webTextId="3212" dbLabel="week_nb"  CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
-  
+    <column id="226" name="Second Product" webTextId="3196" dbId="id_product_cobranding" dbLabel="product_cobranding" dbTable="all_product_cobranding_90" dbTablePrefixe="aprcob" useActivation="false" useLanguage="false" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="227" name="Second Product Type" webTextId="3197" dbId="id_group_cobranding" dbLabel="group_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="228" name="Second Product Brand" webTextId="3198" dbId="id_brand_cobranding" dbLabel="brand_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="229" name="Second Product Advertising Company" webTextId="3199" dbId="id_advertiser_cobranding" dbLabel="advertiser_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="230" name="Type of Second Product's Advertising Company" webTextId="3200" dbId="id_advertiser_type_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" dbLabel="advertiser_type_cobranding" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="231" name="Second Product: Holding of The Advertising Company" webTextId="3201" dbId="id_holding_company_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" dbLabel="holding_company_cobranding"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="232" name="Second Product Sub Sector" webTextId="3202" dbId="id_subsector_cobranding" dbLabel="subsector_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="233" name="Second Product Main Sector" webTextId="3203" dbId="id_sector_cobranding" dbLabel="sector_cobranding" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="234" name="Collective Product" webTextId="3204"  dbLabel="product_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="235" name="Collective Product Type" webTextId="3205"  dbLabel="group_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="236" name="Collective Product Brand" webTextId="3206" dbLabel="brand_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="237" name="Collective Product Advertising Company" webTextId="3207" dbLabel="advertiser_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="238" name="Collective Product Type of Advertising Company" webTextId="3208" dbLabel="advertiser_type_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="239" name="Collective Product : Holding of The Advertising Company" webTextId="3209" dbLabel="holding_company_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>    
+     <column id="240" name="Collective Product Main Sector" webTextId="3210" dbLabel="sector_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="241" name="Collective Product Sub Sector" webTextId="3211" dbLabel="subsector_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="242" name="Sequence Of the Week In The Year" webTextId="3212" dbLabel="week_nb"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="243" name="Program tk" webTextId="3146" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="244" name="Commercial Break Place \ Position in the Program" webTextId="3222"  dbLabel="program_com_break_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    
+    <column id="245" name="Day" webTextId="1574"  dbLabel="date_media_num" dbLabelAlias="day" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="daypattern"/>
+    <column id="246" name="Month" webTextId="2290"  dbLabel="date_media_num" dbLabelAlias="month" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="monthpattern"/>
+    <column id="247" name="Year" webTextId="3076"  dbLabel="date_media_num" dbLabelAlias="year" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="yearpattern"/>
+    <column id="248" name="Month Year" webTextId="3223"  dbLabel="date_media_num" dbLabelAlias="monthYear" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="monthyearpattern"/>
+    <column id="249" name="Day Name" webTextId="3224"  dbLabel="date_media_num" dbLabelAlias="dayName" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="daynamepattern"/>
+    <column id="250" name="Spot Place in the Commercial Break out of all spots" webTextId="3225"  dbLabel="id_rank || '/' || number_message_commercial_brea" dbLabelAlias="spot_rank_out_of_all_spots" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="251" name="Com break place / Number of com breaks in the Program" webTextId="3226"  dbLabel="program_com_break_rank || '/' || program_com_break_nb" dbLabelAlias="com_break_rank_out_of_all_breaks" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="252" name="Category Name / Position / Sequence # of Commercial Break" webTextId="3227"  dbLabel="com_item_category || ' - ' || program_com_item_pos_type || ' - ' || program_com_break_rank || '/' || program_com_break_nb" dbLabelAlias="categor_name_position_sequence" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="253" name="Sequence # of commercial items / blocks broadcasted throughout the program" webTextId="3228"  dbLabel="program_com_item_rank || '/' || com_item_nb" dbLabelAlias="program_com_item_rank_com_item_nb" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="254" name="Commercial Item Category Name and Position" webTextId="3229"  dbLabel="com_item_category || '/' || program_com_item_pos_type" dbLabelAlias="com_item_category_pos_type" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="255" name="Media Code"    webTextId="3230" dbId="id_vehicle"   dbLabel="id_vehicle"  dbTablePrefixe="vh"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="256" name="Version Code"  webTextId="3231" dbId="id_slogan"    dbLabel="id_slogan"   dbTablePrefixe="slo"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="257" name="Campaign Code" webTextId="3232" dbId="id_campaign"  dbLabel="id_campaign" dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" />
     <!--End New levels for Turkey-->
   </columnItems>
 
@@ -451,58 +466,74 @@
     </detailColumn>
     <!--TV-->
     <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
-      <columnItem id="10" name="Spot"/>
-      <columnItem id="33" name="Date" idDetailLevelMatching="18" isKey="true"/>
-      <columnItem id="242" name="Sequence Of the Week In The Year "/>
-      <columnItem id="1" name="Media"/>
-      <columnItem id="3" name="Channel" isKey="true"/>
-      <columnItem id="4" name="Content Type" />
-      <columnItem id="5" name="The Company Selling the Ad" />
-      <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>
-      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
-      <columnItem id="193" name="Periodicity"   />
-      <columnItem id="194" name="Program Status"  />
-      <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />
-      <columnItem id="196" name="Program Beginning Time" />
-      <columnItem id="197" name="Program Ending Time" />
-      <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>
-      <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>
-      <columnItem id="200" name="Spot Genre"        />
-      <columnItem id="201" name="Spot Sub Genre"       />
-      <columnItem id="202" name="Language of the Ad"   />
-      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>
-      <columnItem id="204" name="Creative Agency"       />
-      <columnItem id="205" name="Campaign"       />
-      <columnItem id="9" name="Product"/>
-      <columnItem id="101" name="Brand" />
-      <columnItem id="100" name="Sub brand" />
-      <columnItem id="8" name="Product Type" />
-      <columnItem id="82" name="Sub Sector" />
-      <columnItem id="44" name="Sector" />
-      <columnItem id="7" name="Advertising Company" />
-      <columnItem id="207" name="Type of Advertising Company"   />
-      <columnItem id="180" name="Holding of The Advertising Company"   />
-      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
-      <columnItem id="208" name="Purchasing Advertising"   />
-      <columnItem id="17" name="Spot Beginning Time" isKey="true"/>
-      <columnItem id="209" name="Spot End Time" />
-      <columnItem id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)"   />
-      <columnItem id="20" name="Spot Place  in the Commercial Break"       />
-      <columnItem id="211" name="Number of Spots in Commercial Break" />
-      <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>
-      <columnItem id="27" name="Ad \ Commercial Break Code"/>
-      <columnItem id="213" name="Commercial Break Beginning Time"     />
-      <columnItem id="214"  name="Commercial Break Ending Time"     />
-      <columnItem id="21" name="Total duration of a Commercial Break " />
-      <columnItem id="215" name="Number of Commercial Breaks in the Program" />
-      <columnItem id="216" name="Commercial Item Place the Program"   />
-      <columnItem id="217" name="Number of Spots" />
-      <columnItem id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" />
-      <columnItem id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" />
-      <columnItem id="220" name="Commercial item Place \ Position in the Program" />
-      <columnItem id="221" name="Commercial Item Category Name"   />
-      <columnItem id="222" name="Commercial Item Category Code"  />
-      <columnItem id="223" name="Commercial Item Position within the program"   idDetailLevelMatching="85"/>
+      <columnItem id="10" name="Spot"/>                                                                                       <!-- associated_file -->
+      <columnItem id="33" name="Date" idDetailLevelMatching="18" isKey="true"/>                                               <!-- date_media_num -->
+      <columnItem id="245" name="Day"/>                                                                                       <!-- day -->
+      <columnItem id="246" name="Month"/>                                                                                     <!-- month -->
+      <columnItem id="247" name="Year"/>                                                                                      <!-- year -->
+      <columnItem id="248" name="MonthYear"/>                                                                                 <!-- month year -->
+      <columnItem id="249" name="DayName"/>                                                                                   <!-- day name -->
+      <columnItem id="242" name="Sequence Of the Week In The Year"/>                                                          <!-- week_nb -->
+      <columnItem id="1" name="Media"/>                                                                                       <!-- vehicle -->
+      <columnItem id="3" name="Channel" isKey="true"/>                                                                        <!-- id_media -->
+      <columnItem id="255" name="Media Code"/>                                                                                <!-- media -->
+      <columnItem id="4" name="Content Type" />                                                                               <!-- id_interest_center -->
+      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>                                                   <!-- id_media_owner -->
+      <columnItem id="5" name="The Company Selling the Ad" />                                                                 <!-- id_media_seller -->
+      <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>                                             <!-- id_category -->
+      <columnItem id="193" name="Periodicity"   />                                                                            <!-- id_periodicity -->
+      <columnItem id="243" name="Program"  />                                                                                 <!-- id_program -->
+      <columnItem id="194" name="Program Status"  />                                                                          <!-- id_program_status -->
+      <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />                                             <!-- id_program_typology -->
+      <columnItem id="196" name="Program Beginning Time" />                                                                   <!-- program_beginning_time -->
+      <columnItem id="197" name="Program Ending Time" />                                                                      <!-- program_ending_time -->
+      <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>                                                  <!-- id_spot_type -->
+      <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>                                           <!-- id_spot_sub_type -->
+      <columnItem id="200" name="Spot Genre"        />                                                                        <!-- id_spot_genre -->
+      <columnItem id="201" name="Spot Sub Genre"       />                                                                     <!-- id_spot_sub_genre -->
+      <columnItem id="202" name="Language of the Ad"   />                                                                     <!-- id_language_data_i -->
+      <columnItem id="18" name="Duration"/>                                                                                   <!-- duration -->
+      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>                                                   <!-- slogan -->
+      <columnItem id="256" name="Version Code"/>                                                                              <!-- id_slogan -->
+      <columnItem id="204" name="Creative Agency"       />                                                                    <!-- id_creative_agency -->
+      <columnItem id="205" name="Campaign"       />                                                                           <!-- campaign -->
+      <columnItem id="257" name="Campaign Code"       />                                                                      <!-- id_campaign -->
+      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>                                               <!-- id_ad_slogan -->
+      <columnItem id="9" name="Product"/>                                                                                     <!-- id_product -->
+      <columnItem id="101" name="Brand" />                                                                                    <!-- id_brand -->
+      <columnItem id="100" name="Sub brand" />                                                                                <!-- id_sub_brand -->
+      <columnItem id="8" name="Product Type" />                                                                               <!-- id_group_ -->
+      <columnItem id="82" name="Sub Sector" />                                                                                <!-- id_subsector -->
+      <columnItem id="44" name="Sector" />                                                                                    <!-- id_sector -->
+      <columnItem id="7" name="Advertising Company" />                                                                        <!-- id_advertiser -->
+      <columnItem id="207" name="Type of Advertising Company"   />                                                            <!-- id_advertiser_type -->
+      <columnItem id="180" name="Holding of The Advertising Company"   />                                                     <!-- id_holding_company -->
+      <columnItem id="208" name="Purchasing Advertising"   />                                                                 <!-- id_purchasing_agency -->
+      <columnItem id="17" name="Spot Beginning Time" isKey="true"/>                                                           <!-- top_diffusion -->
+      <columnItem id="209" name="Spot End Time" />                                                                            <!-- top_diffusion_end -->
+      <columnItem id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)"   />                       <!--id_spot_pos_com_break_type-->
+      <columnItem id="20" name="Spot Place  in the Commercial Break"       />                                                 <!-- id_rank -->
+      <columnItem id="211" name="Number of Spots in Commercial Break" />                                                      <!-- number_message_commercial_brea -->
+      <columnItem id="250" name="Spot Place  in the Commercial Break"       />                                                <!-- id_rank || '/' || number_message_commercial_brea -->
+      <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>                                           <!-- id_spot_rank_type -->
+      <columnItem id="27" name="Ad \ Commercial Break Code"/>                                                                 <!-- id_commercial_break -->
+      <columnItem id="213" name="Commercial Break Beginning Time"     />                                                      <!-- com_break_begin_time -->
+      <columnItem id="214"  name="Commercial Break Ending Time"     />                                                        <!-- com_break_end_time -->
+      <columnItem id="21" name="Total duration of a Commercial Break " />                                                     <!-- duration_commercial_break -->
+      <columnItem id="215" name="Number of Commercial Breaks in the Program" />                                               <!-- program_com_break_nb -->
+      <columnItem id="244" name="Commercial Break Place \ Position in the Program" />                                         <!-- program_com_break_rank -->
+      <columnItem id="251" name="Commercial Break Place \ Position in the Program" />                                         <!-- program_com_break_rank || '/' || program_com_break_nb -->
+      <columnItem id="216" name="Commercial Item Place the Program"   />                                                      <!-- id_program_com_item_rank_type -->
+      <columnItem id="252" name="Category Name / Position / Sequence # of Commercial Break"   />                              <!-- com_item_category || '/' || program_com_item_pos_type || '/' || program_com_break_rank || '/' || program_com_break_nb -->
+      <columnItem id="217" name="Number of Spots" />                                                                          <!-- spots_nb -->
+      <columnItem id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" />         <!-- spot_rank_all_break -->
+      <columnItem id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" /> <!-- com_item_nb -->
+      <columnItem id="220" name="Commercial item Place \ Position in the Program" />                                          <!-- program_com_item_rank -->
+      <columnItem id="253" name="Sequence # of commercial items / blocks broadcasted throughout the program" />               <!-- program_com_item_rank || '/' || com_item_nb -->
+      <columnItem id="221" name="Commercial Item Category Name"   />                                                          <!-- id_com_item_category -->
+      <columnItem id="222" name="Commercial Item Category Code"  />                                                           <!-- id_com_item_sub_category -->
+      <columnItem id="223" name="Commercial Item Position within the program"   idDetailLevelMatching="85"/>                  <!-- id_program_com_item_pos_type -->
+      <columnItem id="254" name="Commercial Item Category Name and Position"/>                                                <!-- com_item_category || '/' || program_com_item_pos_type -->
       <columnItem id="14" name="AdSpends par TV Spot in Euro" />
       <columnItem id="224" name="AdSpends par TV Spot in TL" />
       <columnItem id="225" name="AdSpends par TV Spot in USD" />
@@ -771,14 +802,21 @@
 
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="245" name="Day"/>
+      <columnItem id="246" name="Month"/>
+      <columnItem id="247" name="Year"/>
+      <columnItem id="248" name="MonthYear"/>
+      <columnItem id="249" name="DayName"/>
       <columnItem id="242" name="Sequence Of the Week In The Year "/>
       <columnItem id="1" name="Media"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="255" name="Media Code"/>
       <columnItem id="4" name="Content Type" />
+      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
       <columnItem id="5" name="The Company Selling the Ad" />
       <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>
-      <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
       <columnItem id="193" name="Periodicity"   />
+      <columnItem id="243" name="Program"  />
       <columnItem id="194" name="Program Status"  />
       <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />
       <columnItem id="196" name="Program Beginning Time" />
@@ -790,8 +828,11 @@
       <columnItem id="202" name="Language of the Ad"   />
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>
+      <columnItem id="256" name="Version Code"/>
       <columnItem id="204" name="Creative Agency"       />
       <columnItem id="205" name="Campaign"       />
+      <columnItem id="257" name="Campaign Code"       />
+      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="101" name="Brand" />
       <columnItem id="100" name="Sub brand" />
@@ -801,27 +842,32 @@
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="207" name="Type of Advertising Company"   />
       <columnItem id="180" name="Holding of The Advertising Company"   />
-      <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
       <columnItem id="208" name="Purchasing Advertising"   />
       <columnItem id="17" name="Spot Beginning Time" isKey="true"/>
       <columnItem id="209" name="Spot End Time" />
       <columnItem id="210" name="Spots Place in Commercial Break (In or Outside Commercial Break)"   />
       <columnItem id="20" name="Spot Place  in the Commercial Break"       />
       <columnItem id="211" name="Number of Spots in Commercial Break" />
+      <columnItem id="250" name="Spot Place  in the Commercial Break"       />
       <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>
       <columnItem id="27" name="Ad \ Commercial Break Code" idDetailLevelMatching="21"/>
       <columnItem id="213" name="Commercial Break Beginning Time"     />
       <columnItem id="214"  name="Commercial Break Ending Time"     />
       <columnItem id="21" name="Total duration of a Commercial Break " />
       <columnItem id="215" name="Number of Commercial Breaks in the Program" />
+      <columnItem id="244" name="Commercial Break Place \ Position in the Program" />
+      <columnItem id="251" name="Commercial Break Place \ Position in the Program" />
       <columnItem id="216" name="Commercial Item Place the Program"   />
+      <columnItem id="252" name="Category Name / Position / Sequence # of Commercial Break"   />
       <columnItem id="217" name="Number of Spots" />
       <columnItem id="218" name="Spots Place ( or position ) in the Program when adding all breaks in the program" />
       <columnItem id="219" name="Commercial Item Counter - Total number of commercial items before and within the program" />
       <columnItem id="220" name="Commercial item Place \ Position in the Program" />
+      <columnItem id="253" name="Sequence # of commercial items / blocks broadcasted throughout the program" />
       <columnItem id="221" name="Commercial Item Category Name"   />
       <columnItem id="222" name="Commercial Item Category Code"  />
       <columnItem id="223" name="Commercial Item Position within the program"   idDetailLevelMatching="85"/>
+      <columnItem id="254" name="Commercial Item Category Name and Position"/>
       <columnItem id="14" name="AdSpends par TV Spot in Euro" />
       <columnItem id="224" name="AdSpends par TV Spot in TL" />
       <columnItem id="225" name="AdSpends par TV Spot in USD" />

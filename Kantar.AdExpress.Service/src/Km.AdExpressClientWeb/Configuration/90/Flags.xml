@@ -15,5 +15,6 @@
   <flag id="245" description="Accéder aux créations Autres"/>
   <flag id="246" description="Accéder aux créations Presse Internationale"/>
   <flag id="251" description="Accéder aux créations du Media Courrier"/>
-  <flag id="328" description="Accès export des créations Internet Evaliant"/>  
+  <flag id="328" description="Accès export des créations Internet Evaliant"/>
+  <flag id="300" description="Accès Agences Media TV"/>
 </flags>

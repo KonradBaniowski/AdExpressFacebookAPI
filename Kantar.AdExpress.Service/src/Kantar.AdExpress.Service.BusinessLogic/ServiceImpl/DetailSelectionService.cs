@@ -112,7 +112,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = _webSession.Source;
-            param[1] = _webSession.SiteLanguage;
+            param[1] = _webSession.DataLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             //TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
@@ -463,7 +463,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = webSession.Source;
-            param[1] = webSession.SiteLanguage;
+            param[1] = webSession.DataLanguage;
             ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             result.ModuleLabel = adExpressUniverse.FirstOrDefault().Value.UniverseDimension.ToString();
             switch (adExpressUniverse.FirstOrDefault().Value.UniverseDimension)
@@ -498,7 +498,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = _webSession.Source;
-            param[1] = _webSession.SiteLanguage;
+            param[1] = _webSession.DataLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 

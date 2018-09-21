@@ -1233,7 +1233,34 @@ namespace TNS.AdExpress.Domain.Level
             /// Sequence Of the Week In The Year
             /// </summary>
             WeekNumber = 242,
-
+            /// <summary>
+            /// Program turkey
+            /// </summary>
+            ProgramTk = 243,
+            /// <summary>
+            /// Program Commercial Break Rank
+            /// </summary>
+            ProgramComBreakRank = 244,
+            /// <summary>
+            /// Day
+            /// </summary>
+            Day = 245,
+            /// <summary>
+            /// Month
+            /// </summary>
+            Month = 246,
+            /// <summary>
+            /// Year
+            /// </summary>
+            Year = 247,
+            /// <summary>
+            /// Month Year
+            /// </summary>
+            MonthYear = 248,
+            /// <summary>
+            /// Day Name
+            /// </summary>
+            DayName = 249,
         }
 
         #endregion
