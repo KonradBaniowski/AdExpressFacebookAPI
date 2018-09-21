@@ -6,24 +6,24 @@
   <projects>
     <project id="Global">
       <files>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
       </files>
     </project>
     <project id="Poland">
       <files>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-pln.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-pln.xml</file>
+        <file>F:\Dev\AdExpress-MVC5\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
   </projects>
   <outputs>
-    <dir>F:\Dev\Github\AdExpress (mvc5)\Libs</dir>
+    <dir>F:\Dev\AdExpress-MVC5\Libs</dir>
   </outputs>
 </assembly>

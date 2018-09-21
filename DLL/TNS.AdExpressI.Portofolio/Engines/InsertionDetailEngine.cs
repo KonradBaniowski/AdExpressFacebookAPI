@@ -589,6 +589,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     break;
                                 case GenericColumnItemInformation.Columns.dateParution:// Parution Date and  diffusion Date
                                 case GenericColumnItemInformation.Columns.dateDiffusion:
+                                case GenericColumnItemInformation.Columns.dateMediaNum:
+                                case GenericColumnItemInformation.Columns.Day:
+                                case GenericColumnItemInformation.Columns.Month:
+                                case GenericColumnItemInformation.Columns.Year:
+                                case GenericColumnItemInformation.Columns.MonthYear:
+                                case GenericColumnItemInformation.Columns.DayName:
                                     if (_showDate)
                                     {
                                         type = assembly.GetType(Column.CellType);
@@ -655,7 +661,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
-                                        curCell.SetCellValue(GetColumnValue(Column, row[Column.DataBaseField]));
+                                        var columnLabel = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                            ? row[Column.DataBaseField]
+                                            : row[Column.DataBaseAliasField];
+                                        curCell.SetCellValue(GetColumnValue(Column, columnLabel));
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;

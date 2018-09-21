@@ -701,9 +701,19 @@ namespace Km.AdExpressClientWeb.Controllers
             else if (cell is CellDate)
             {
 
-                sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+                if (((CellDate) cell).StringFormat.Contains("date"))
+                {
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate) cell).Date.ToShortDateString();
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                }
+                else
+                {
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate) cell).Date;
+                    SetAsposeCustomFormat(sheet.Cells[cellRow, cellCol], ((CellDate)cell).StringFormat);
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                }
 
-                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                
             }
             else if (cell is CellUnit)
             {
@@ -1265,6 +1275,38 @@ namespace Km.AdExpressClientWeb.Controllers
             Style style = cell.GetStyle();
 
             style.Number = asposeFormat;
+
+            cell.SetStyle(style);
+        }
+
+        private void SetAsposeCustomFormat(Aspose.Cells.Cell cell, string asposeFormat)
+        {
+            Style style = cell.GetStyle();
+
+            switch (asposeFormat)
+            {
+                case "{0:daypattern}":
+                    style.Custom = "dd";
+                    break;
+                case "{0:monthpattern}":
+                    style.Custom = "MMMM";
+                    break;
+                case "{0:yearpattern}":
+                    style.Custom = "yyyy";
+                    break;
+                case "{0:monthyearpattern}":
+                    style.Custom = "MMMM yyyy";
+                    break;
+                case "{0:daynamepattern}":
+                    style.Custom = "dddd";
+                    break;
+                case "{0:timepattern}":
+                    style.Custom = "h:mm:ss";
+                    break;
+                default:
+                    style.Custom = "";
+                    break;
+            }
 
             cell.SetStyle(style);
         }

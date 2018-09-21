@@ -732,8 +732,11 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                     return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
                                 #endregion
 
-                                #region Sub Brand
+                                #region Sub Brand, Program, Program Typology, Sub Type of Spots
                                 case DetailLevelItemInformation.Levels.subBrand:
+                                case DetailLevelItemInformation.Levels.program:
+                                case DetailLevelItemInformation.Levels.programTypology:
+                                case DetailLevelItemInformation.Levels.spotSubType:
                                     return (true);
                                 #endregion
 

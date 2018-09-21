@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C0BC650-9387-4C30-9EF3-E497CC0251AF}</ProjectGuid>
+    <ProjectGuid>{83A638D8-D5AF-4B48-A352-39903291E2B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TNS.AdExpressI.ProductClassReports.Turkey</RootNamespace>
-    <AssemblyName>TNS.AdExpressI.ProductClassReports.Turkey</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>TNS.AdExpressI.Insertions.Turkey</RootNamespace>
+    <AssemblyName>TNS.AdExpressI.Insertions.Turkey</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Kantar.AdExpress.Service\src\Km.AdExpressClientWeb\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,31 +36,22 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="TNS.AdExpress.Constantes, Version=3.4.0.20282, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\TNS.AdExpress.Constantes\bin\Debug\TNS.AdExpress.Constantes.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.AdExpressI.Date.DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\TNS.AdExpressI.Date.DAL\bin\Debug\TNS.AdExpressI.Date.DAL.dll</HintPath>
-    </Reference>
-    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\TNS.FrameWork.dll</HintPath>
-    </Reference>
     <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26715, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericEngines\GenericEngine_Classif1Classif2_X_Monthes.cs" />
-    <Compile Include="ProductClassReports.cs" />
+    <Compile Include="Cells\CellCreativesTvInformation.cs" />
+    <Compile Include="InsertionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>
       <Name>TNS.AdExpress.Domain</Name>
@@ -69,12 +60,15 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
-      <Project>{c0d576be-bb8d-4f27-b361-385162442113}</Project>
-      <Name>TNS.AdExpressI.ProductClassReports</Name>
+    <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6e75699b-838c-4534-99f7-d4c3e768cd57}</Project>
+      <Name>TNS.AdExpress</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

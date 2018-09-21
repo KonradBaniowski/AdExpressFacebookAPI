@@ -133,7 +133,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
                      || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
                      || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE))
+                {
                     genericDetailLevelOption.DefaultDetail.SelectedId = "3";
+
+                    // Niveau de détail par défaut
+                    ArrayList levelsIds = new ArrayList();
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.advertiser);
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
+                    
+                    if (isAdNetTrack)
+                        _customerWebSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                    else
+                        _customerWebSession.GenericMediaDetailLevel = new GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                }
+                    
                 else
                     genericDetailLevelOption.DefaultDetail.SelectedId = "0";
                 #endregion
