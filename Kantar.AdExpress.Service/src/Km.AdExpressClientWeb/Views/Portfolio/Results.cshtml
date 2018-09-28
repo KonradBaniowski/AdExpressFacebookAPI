@@ -1000,16 +1000,20 @@
 
             if ($('#resultType').val() == "6") {
                 $('#perioddetailTypeContainer').css({ 'display': "block" });
+                $('#unitTypeContainer').css({ 'display': "block" });
             } else {
                 $('#perioddetailTypeContainer').css({ 'display': "none" });
+                $('#unitTypeContainer').css({ 'display': "none" });
             }
 
             $('#resultType').on('change', function (e) {
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
                 if (userFilter.ResultTypeFilter.ResultType == "6") {
                     $('#perioddetailTypeContainer').css({ 'display': "block" });
+                    $('#unitTypeContainer').css({ 'display': "block" });
                 } else {
                     $('#perioddetailTypeContainer').css({ 'display': "none" });
+                    $('#unitTypeContainer').css({ 'display': "none" });
                 }
             });
 

@@ -98,8 +98,13 @@
               <allowedUniverseLevel id="41" name="program_typology"/>
               <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="7">
-              <allowedUniverseBranch id="7" name="vehicle\category\interest_center\media_owner\media\program\program_typology\spot_sub_type"/>
+            <allowedUniverseBranches defaultBranchId="33">
+              <!--<allowedUniverseBranch id="7" name="vehicle\category\interest_center\media_owner\media\program\program_typology\spot_sub_type"/>-->
+              <allowedUniverseBranch id="33" name="vehicle"/>
+              <allowedUniverseBranch id="12" name="interest_center"/>
+              <allowedUniverseBranch id="29" name="media_owner"/>
+              <allowedUniverseBranch id="34" name="program"/>
+              <allowedUniverseBranch id="35" name="spot_sub_type"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
@@ -109,14 +114,14 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <allowedUnits>
-            <allowedUnit>euro</allowedUnit>
-            <allowedUnit>tl</allowedUnit>
-            <allowedUnit>usd</allowedUnit>
-            <allowedUnit>spot</allowedUnit>
-            <allowedUnit>duration</allowedUnit>
-          </allowedUnits>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx"  rawExcelUrl="/Private/Results/RawExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx"  rawExcelUrl="/Private/Results/RawExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -201,16 +206,15 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
               <allowedUniverseLevel id="39" name="media_owner"/>
               <allowedUniverseLevel id="40" name="program"/>
               <allowedUniverseLevel id="41" name="program_typology"/>
               <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="12">
-              <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
+            <allowedUniverseBranches defaultBranchId="29">
               <allowedUniverseBranch id="29" name="media_owner\media"/>
+              <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="25" name="category\media"/>
               <allowedUniverseBranch id="30" name="program\media"/>
               <allowedUniverseBranch id="31" name="program_typology\media"/>
@@ -502,16 +506,15 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
               <allowedUniverseLevel id="39" name="media_owner"/>
               <allowedUniverseLevel id="40" name="program"/>
               <allowedUniverseLevel id="41" name="program_typology"/>
               <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="12">
-              <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
+            <allowedUniverseBranches defaultBranchId="29">
               <allowedUniverseBranch id="29" name="media_owner\media"/>
+              <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="25" name="category\media"/>
               <allowedUniverseBranch id="30" name="program\media"/>
               <allowedUniverseBranch id="31" name="program_typology\media"/>
@@ -816,16 +819,15 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="27" name="title"/>
+              <!--<allowedUniverseLevel id="27" name="title"/>-->
               <allowedUniverseLevel id="39" name="media_owner"/>
               <allowedUniverseLevel id="40" name="program"/>
               <allowedUniverseLevel id="41" name="program_typology"/>
               <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="12">
-              <allowedUniverseBranch id="12" name="interest_center\media"/>
-              <allowedUniverseBranch id="13" name="title\media"/>
+            <allowedUniverseBranches defaultBranchId="29">
               <allowedUniverseBranch id="29" name="media_owner\media"/>
+              <allowedUniverseBranch id="12" name="interest_center\media"/>
               <allowedUniverseBranch id="25" name="category\media"/>
               <allowedUniverseBranch id="30" name="program\media"/>
               <allowedUniverseBranch id="31" name="program_typology\media"/>
@@ -911,6 +913,13 @@
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1093,6 +1102,13 @@
         <results>
           <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
