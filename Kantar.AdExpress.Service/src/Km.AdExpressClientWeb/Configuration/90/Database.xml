@@ -309,6 +309,11 @@
 
     <table enumId="271" description="Data : Spot TV" schemaEnumId="0" label="spot_tv" prefix="stv"/>
     <table enumId="272" description="Data : Spot Sub Type" schemaEnumId="0" label="spot_sub_type" prefix="sst"/>
+   
+    <table enumId="273" description="Recap Data : Spot Type" schemaEnumId="4" label="spot_type" prefix="stp"/>
+    <table enumId="274" description="Recap Data : Spot Sub Type" schemaEnumId="4" label="spot_sub_type" prefix="sst"/>
+    <table enumId="275" description="Recap Data : Ad Slogan" schemaEnumId="4" label="ad_slogan" prefix="ads"/>
+
 
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

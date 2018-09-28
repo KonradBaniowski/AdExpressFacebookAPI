@@ -1091,7 +1091,15 @@
           </optionalSelection>-->
         </optionalSelections>
         <results>
+         
           <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
             <!--<page name="Synthèses" traductioncode="750" url="#" />-->
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

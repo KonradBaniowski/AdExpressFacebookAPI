@@ -22,6 +22,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 {
     public class ProductClassReportDAL : DAL.ProductClassReportDAL
     {
+
+        protected Table _recapInterestCenter = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.interestCenter);
+        protected Table _recapSpotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSpotSubType);
+        protected Table _recapSpotType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSpotType);
+        protected Table _recapAdSlogan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapAdSlogan);
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -543,7 +549,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                     }
                     else if (months.Length == 1)
                     {
-                        sql.Append($", sum(exp{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
+                        sql.Append($", sum(exp_{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
                         comparativeStudyMonths =
                             $"{comparativeStudyMonths} sum(exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}) as N{previousYear}";
                     }
@@ -560,6 +566,146 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
         }
         #endregion
 
+        protected override void AppendMediaFields(StringBuilder sql, int mediaIndex)
+        {
+            #region Champs nomenclature media
 
+            if (mediaIndex > -1)
+            {
+                //nomenclature media présente dans le tableau préformaté
+                switch (_session.PreformatedMediaDetail)
+                {
+                    case CstFormat.PreformatedMediaDetails.vehicle:
+                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleCategory:
+                        sql.AppendFormat(
+                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
+                        sql.AppendFormat(
+                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_category as id_m2, category as m2, {0}.id_media as id_m3, media as m3",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleInterestCenterMedia:
+                        sql.AppendFormat(
+                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_INTEREST_CENTER as id_m2, INTEREST_CENTER as m2, {0}.id_media as id_m3, media as m3",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.vehicleMedia:
+                        sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_media as id_m2, media as m2",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.spotTypeSpotSubType:
+                        sql.AppendFormat(
+                            " {0}.ID_SPOT_TYPE as id_m1, SPOT_TYPE as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            _dataTable.Prefix);
+                        break;
+                    default:
+                        _session.PreformatedMediaDetail = CstFormat.PreformatedMediaDetails.vehicle;
+                        sql.Append(" {0}.id_vehicle as id_m1, vehicle as m1");
+                        break;
+                }
+            }
+        }
+
+            #endregion
+
+            #region appendJointClause
+            /// <summary>
+            /// Ajoute a la requête sql les conditions dfe jointures entre la table des recap et les tabmes de 
+            /// nomenclature. Pour chaque champ de nomenclmature susceptible d'aparaitre dans la requête, on 
+            /// vérifie sa présence effective et si c'est le cas, on effectue la jointure avec la table de recap
+            /// </summary>
+            /// <param name="_session">Session utilisateur</param>
+            /// <param name="sql">Requête sql</param>
+        protected override void AppendJointClause(StringBuilder sql)
+        {
+
+            string linkWord = " where ";
+
+            #region nomenclature produit
+            if (sql.ToString().IndexOf(_recapGroup.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_group_ = {2}.id_group_", linkWord, _recapGroup.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapSegment.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_segment = {2}.id_segment", linkWord, _recapSegment.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+
+            /* Joint clause for the sector and subsector levels added for the Finnish version
+            **/
+            if (sql.ToString().IndexOf(_recapSector.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_sector = {2}.id_sector", linkWord, _recapSector.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapSubSector.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_subsector = {2}.id_subsector", linkWord, _recapSubSector.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            /*********************/
+
+            if (sql.ToString().IndexOf(_recapBrand.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_brand = {2}.id_brand", linkWord, _recapBrand.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapProduct.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_product = {2}.id_product", linkWord, _recapProduct.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapAdvertiser.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_advertiser = {2}.id_advertiser", linkWord, _recapAdvertiser.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.ID_AD_SLOGAN = {2}.ID_AD_SLOGAN", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            #endregion
+
+            #region nomenclature media
+            if (sql.ToString().IndexOf(_recapVehicle.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_vehicle = {2}.id_vehicle", linkWord, _recapVehicle.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapCategory.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_category = {2}.id_category", linkWord, _recapCategory.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapMedia.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_media = {2}.id_media", linkWord, _recapMedia.Prefix, _dataTable.Prefix);
+            }
+
+            if (sql.ToString().IndexOf(_recapInterestCenter.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_INTEREST_CENTER = {2}.id_INTEREST_CENTER", linkWord, _recapInterestCenter.Prefix, _dataTable.Prefix);
+            }
+            if (sql.ToString().IndexOf(_recapSpotSubType.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.ID_SPOT_SUB_TYPE = {2}.ID_SPOT_SUB_TYPE", linkWord, _recapSpotSubType.Prefix, _dataTable.Prefix);
+            }
+            if (sql.ToString().IndexOf(_recapSpotType.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.ID_SPOT_TYPE = {2}.ID_SPOT_TYPE", linkWord, _recapSpotType.Prefix, _dataTable.Prefix);
+            }
+            #endregion
+
+
+        }
+        #endregion
     }
 }
+

@@ -74,6 +74,9 @@
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>    <!-- Media -->
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>   <!-- Categorie -->
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>      <!-- Support -->
+        <allowedRecapMediaLevelItem>spotType</allowedRecapMediaLevelItem>    <!-- spot Type -->
+        <allowedRecapMediaLevelItem>spotSubType</allowedRecapMediaLevelItem>    <!-- spot Sub Type -->
+        <allowedRecapMediaLevelItem>interestCenter</allowedRecapMediaLevelItem>      <!-- interest Center -->        
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->

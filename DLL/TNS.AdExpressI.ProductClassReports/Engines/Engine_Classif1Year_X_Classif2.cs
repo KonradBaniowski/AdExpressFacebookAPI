@@ -157,7 +157,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 					sortStr = "ID_M1,ID_M2";
 					break;
 				case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
-					sortStr = "ID_M1,ID_M2,ID_M3";
+                case CstFormat.PreformatedMediaDetails.vehicleInterestCenterMedia:
+                    sortStr = "ID_M1,ID_M2,ID_M3";
 					break;
 				default:
 					throw new ProductClassReportsException("Detail format " + _session.PreformatedMediaDetail.ToString() + " unvalid.");

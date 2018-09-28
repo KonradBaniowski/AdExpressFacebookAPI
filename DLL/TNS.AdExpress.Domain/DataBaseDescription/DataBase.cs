@@ -1241,6 +1241,18 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Spot Sub type
         /// </summary>
         spotSubType = 272,
+        /// <summary>
+        /// Recap Spot type
+        /// </summary>
+        recapSpotType = 273,
+        /// <summary>
+        /// Recap Spot Sub type
+        /// </summary>
+        recapSpotSubType = 274,
+        /// <summary>
+        /// Recap Ad Slogan
+        /// </summary>
+        recapAdSlogan = 275,
 
         /// <summary>
         /// Alert description

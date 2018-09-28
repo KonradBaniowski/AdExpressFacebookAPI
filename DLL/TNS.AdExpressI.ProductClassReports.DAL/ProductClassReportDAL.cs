@@ -1108,6 +1108,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             {
                 sql.AppendFormat("{0} {1}.id_media = {2}.id_media", linkWord, _recapMedia.Prefix, _dataTable.Prefix);
             }
+
+          
             #endregion
 
 
