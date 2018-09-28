@@ -475,11 +475,11 @@
       <columnItem id="249" name="DayName"/>                                                                                   <!-- day name -->
       <columnItem id="242" name="Sequence Of the Week In The Year"/>                                                          <!-- week_nb -->
       <columnItem id="1" name="Media"/>                                                                                       <!-- vehicle -->
-      <columnItem id="3" name="Channel" isKey="true"/>                                                                        <!-- id_media -->
-      <columnItem id="255" name="Media Code"/>                                                                                <!-- media -->
-      <columnItem id="4" name="Content Type" />                                                                               <!-- id_interest_center -->
+      <columnItem id="3" name="Channel" isKey="true" idDetailLevelMatching="3"/>                                              <!-- id_media -->
+      <columnItem id="255" name="Media Code" idDetailLevelMatching="3"/>                                                      <!-- media -->
+      <columnItem id="4" name="Content Type" idDetailLevelMatching="4"/>                                                      <!-- id_interest_center -->
       <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>                                                   <!-- id_media_owner -->
-      <columnItem id="5" name="The Company Selling the Ad" />                                                                 <!-- id_media_seller -->
+      <columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>                                        <!-- id_media_seller -->
       <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>                                             <!-- id_category -->
       <columnItem id="193" name="Periodicity"   />                                                                            <!-- id_periodicity -->
       <columnItem id="243" name="Program"  />                                                                                 <!-- id_program -->
@@ -492,22 +492,22 @@
       <columnItem id="200" name="Spot Genre"        />                                                                        <!-- id_spot_genre -->
       <columnItem id="201" name="Spot Sub Genre"       />                                                                     <!-- id_spot_sub_genre -->
       <columnItem id="202" name="Language of the Ad"   />                                                                     <!-- id_language_data_i -->
-      <columnItem id="18" name="Duration"/>                                                                                   <!-- duration -->
-      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>                                                   <!-- slogan -->
-      <columnItem id="256" name="Version Code"/>                                                                              <!-- id_slogan -->
+      <columnItem id="18" name="Duration" idDetailLevelMatching="19"/>                                                        <!-- duration -->
+      <columnItem id="203" name="Version Name" />                                                                             <!-- slogan -->
+      <columnItem id="256" name="Version Code" idDetailLevelMatching="6"/>                                                    <!-- id_slogan -->
       <columnItem id="204" name="Creative Agency"       />                                                                    <!-- id_creative_agency -->
       <columnItem id="205" name="Campaign"       />                                                                           <!-- campaign -->
       <columnItem id="257" name="Campaign Code"       />                                                                      <!-- id_campaign -->
       <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>                                               <!-- id_ad_slogan -->
-      <columnItem id="9" name="Product"/>                                                                                     <!-- id_product -->
-      <columnItem id="101" name="Brand" />                                                                                    <!-- id_brand -->
+      <columnItem id="9" name="Product" idDetailLevelMatching="10"/>                                                          <!-- id_product -->
+      <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>                                                           <!-- id_brand -->
       <columnItem id="100" name="Sub brand" />                                                                                <!-- id_sub_brand -->
-      <columnItem id="8" name="Product Type" />                                                                               <!-- id_group_ -->
-      <columnItem id="82" name="Sub Sector" />                                                                                <!-- id_subsector -->
-      <columnItem id="44" name="Sector" />                                                                                    <!-- id_sector -->
-      <columnItem id="7" name="Advertising Company" />                                                                        <!-- id_advertiser -->
+      <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>                                                     <!-- id_group_ -->
+      <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12" />                                                     <!-- id_subsector -->
+      <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>                                                          <!-- id_sector -->
+      <columnItem id="7" name="Advertising Company" idDetailLevelMatching="8"/>                                               <!-- id_advertiser -->
       <columnItem id="207" name="Type of Advertising Company"   />                                                            <!-- id_advertiser_type -->
-      <columnItem id="180" name="Holding of The Advertising Company"   />                                                     <!-- id_holding_company -->
+      <columnItem id="180" name="Holding of The Advertising Company" idDetailLevelMatching="7"/>                              <!-- id_holding_company -->
       <columnItem id="208" name="Purchasing Advertising"   />                                                                 <!-- id_purchasing_agency -->
       <columnItem id="17" name="Spot Beginning Time" isKey="true"/>                                                           <!-- top_diffusion -->
       <columnItem id="209" name="Spot End Time" />                                                                            <!-- top_diffusion_end -->
@@ -516,7 +516,7 @@
       <columnItem id="211" name="Number of Spots in Commercial Break" />                                                      <!-- number_message_commercial_brea -->
       <columnItem id="250" name="Spot Place  in the Commercial Break"       />                                                <!-- id_rank || '/' || number_message_commercial_brea -->
       <columnItem id="212" name="Spot Rank Type"       idDetailLevelMatching="84"/>                                           <!-- id_spot_rank_type -->
-      <columnItem id="27" name="Ad \ Commercial Break Code"/>                                                                 <!-- id_commercial_break -->
+      <columnItem id="27" name="Ad \ Commercial Break Code" idDetailLevelMatching="21"/>                                      <!-- id_commercial_break -->
       <columnItem id="213" name="Commercial Break Beginning Time"     />                                                      <!-- com_break_begin_time -->
       <columnItem id="214"  name="Commercial Break Ending Time"     />                                                        <!-- com_break_end_time -->
       <columnItem id="21" name="Total duration of a Commercial Break " />                                                     <!-- duration_commercial_break -->
@@ -810,10 +810,10 @@
       <columnItem id="242" name="Sequence Of the Week In The Year "/>
       <columnItem id="1" name="Media"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
-      <columnItem id="255" name="Media Code"/>
-      <columnItem id="4" name="Content Type" />
+      <columnItem id="255" name="Media Code" idDetailLevelMatching="3"/>
+      <columnItem id="4" name="Content Type" idDetailLevelMatching="4"/>
       <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
-      <columnItem id="5" name="The Company Selling the Ad" />
+      <columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>
       <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>
       <columnItem id="193" name="Periodicity"   />
       <columnItem id="243" name="Program"  />
@@ -827,21 +827,21 @@
       <columnItem id="201" name="Spot Sub Genre"       />
       <columnItem id="202" name="Language of the Ad"   />
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
-      <columnItem id="203" name="Version Name" idDetailLevelMatching="86"/>
-      <columnItem id="256" name="Version Code"/>
+      <columnItem id="203" name="Version Name" />
+      <columnItem id="256" name="Version Code" idDetailLevelMatching="6"/>
       <columnItem id="204" name="Creative Agency"       />
       <columnItem id="205" name="Campaign"       />
       <columnItem id="257" name="Campaign Code"       />
       <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
-      <columnItem id="101" name="Brand" />
+      <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>
       <columnItem id="100" name="Sub brand" />
       <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>
-      <columnItem id="82" name="Sub Sector" />
-      <columnItem id="44" name="Sector" />
+      <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12"/>
+      <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="207" name="Type of Advertising Company"   />
-      <columnItem id="180" name="Holding of The Advertising Company"   />
+      <columnItem id="180" name="Holding of The Advertising Company" idDetailLevelMatching="7"/>
       <columnItem id="208" name="Purchasing Advertising"   />
       <columnItem id="17" name="Spot Beginning Time" isKey="true"/>
       <columnItem id="209" name="Spot End Time" />

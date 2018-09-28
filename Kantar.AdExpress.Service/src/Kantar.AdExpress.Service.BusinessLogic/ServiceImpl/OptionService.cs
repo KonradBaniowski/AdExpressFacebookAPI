@@ -395,7 +395,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 unitOption.Unit.Items = new List<SelectItem>();
                 var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
                 var vehicleInformation = VehiclesInformation.Get(Convert.ToInt64(vehicles[0]));
-                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                List<UnitInformation> units;
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    units = GetValidUnitForResult(_customerWebSession.CurrentModule, FrameWorkResults.Portofolio.CALENDAR);
+                }
+                else
+                    units = _customerWebSession.GetValidUnitForResult();
+
                 for (int i = 0; i < units.Count; i++)
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
@@ -440,6 +449,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _customerWebSession.Units = new List<ConstantesSession.Unit> { ConstantesSession.Unit.versionNb };
                 }
 
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                   && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    unitOption.Unit.Visible = true;
+                }
 
                 unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
 
@@ -1646,6 +1660,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             }
             return hasMediaLevel;
+        }
+
+        /// <summary>
+        /// Get Valid Unit List for a specific result
+        /// </summary>
+        /// <returns>Valid Unit List for a specific result</returns>
+        public List<UnitInformation> GetValidUnitForResult(long currentModule, int currentTab)
+        {
+            WebNavigation.Module moduleDescription = WebNavigation.ModulesList.GetModule(currentModule);
+            WebNavigation.ResultPageInformation resultPageInformation = moduleDescription.GetResultPageInformation(currentTab);
+            Dictionary<Int64, VehicleInformation> vehcileInformationList = _customerWebSession.GetVehiclesSelected();
+            List<Vehicles.names> vehicleList = new List<Vehicles.names>();
+            foreach (var cVehicleInformation in vehcileInformationList.Values)
+            {
+                vehicleList.Add(cVehicleInformation.Id);
+            }
+
+            List<UnitInformation> units = resultPageInformation.GetValidUnits(vehicleList);
+
+            return units;
         }
 
     }

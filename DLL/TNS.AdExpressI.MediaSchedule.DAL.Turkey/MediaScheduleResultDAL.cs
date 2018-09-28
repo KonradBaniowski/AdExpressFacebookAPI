@@ -68,7 +68,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                 listVehicles = new string[1] { _vehicleId.ToString() };
 
             // Select
-            sql.AppendFormat("select {0}, {1}{2} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), additionalSelect, GetUnitFieldNameSumUnionWithAlias(_session));
+            sql.AppendFormat("select {0}, {1}{2} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), additionalSelect, GetUnitsFieldNameSumUnionWithAlias(_session));
 
             // SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = period.SubPeriods;
@@ -808,10 +808,15 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
                 List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
 
                 foreach (var unit in unitsInformation)
-                    sql.AppendFormat("sum({0}) as {0}, ", unit.Id.ToString());
+                {
+                    if (webSession.GetSelectedUnit().Id != CstWeb.CustomerSessions.Unit.versionNb)
+                        sql.AppendFormat("sum({0}) as {0}, ", unit.Id.ToString());
+                    else
+                        sql.AppendFormat("{0} as {0}, ", unit.Id.ToString());
+                }
 
-                if (_session.Grp || _session.Grp30S)
-                    sql.AppendFormat("sum(GRP) as GRP, ");
+                //if (_session.Grp || _session.Grp30S)
+                //    sql.AppendFormat("sum(GRP) as GRP, ");
 
                 return sql.ToString().Substring(0, sql.Length - 2);
             }
