@@ -1005,46 +1005,30 @@
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="41" name="Classe\Groupe" />
-            <defaultMediaDetailLevel id="78" name="Classe\Groupe\Marque\product" />
-            <defaultMediaDetailLevel id="79" name="advertiser\brand\product/version" />
-            <defaultMediaDetailLevel id="80" name="Marque\product\version" />
-            <defaultMediaDetailLevel id="81" name="Marque\product\versionName" />
+            <defaultMediaDetailLevel id="78" name="Classe\Groupe\Marque\product" />               
             <defaultMediaDetailLevel id="82" name="catégorie\centre d'interet\support" />
-            <defaultMediaDetailLevel id="83" name="Vehicle\Marque\product" />
-            <defaultMediaDetailLevel id="84" name="Vehicle\Program" />
-            <defaultMediaDetailLevel id="86" name="Vehicle\Program\Marque" />
-            <defaultMediaDetailLevel id="87" name="programTypology\Program\Marque" />
+            <defaultMediaDetailLevel id="83" name="Vehicle\Marque\product" />           
             <defaultMediaDetailLevel id="88" name="Support\spotSubType" />
             <defaultMediaDetailLevel id="89" name="Support\spotSubType\Marque" />
             <defaultMediaDetailLevel id="90" name="spotType\spotSubType" />
             <defaultMediaDetailLevel id="91" name="spotType\spotSubType\Marque" />
-            <defaultMediaDetailLevel id="92" name="Program\spotSubType" />
-            <defaultMediaDetailLevel id="93" name="programTypology\spotSubType" />
+          
           </defaultMediaDetailLevels>
           <allowedMediaLevelItems>
             <allowedMediaLevelItem id="1" name="Media"/>
             <allowedMediaLevelItem id="2" name="Categorie"/>
             <allowedMediaLevelItem id="3" name="Support"/>
             <allowedMediaLevelItem id="4" name="Centre d'interet"/>
-            <allowedMediaLevelItem id="79" name="MediaOwner"/>
-            <allowedMediaLevelItem id="24" name="Program"/>
-            <allowedMediaLevelItem id="6" name="Version"/>
-            <allowedMediaLevelItem id="80" name="programTypology"/>
+            <allowedMediaLevelItem id="79" name="MediaOwner"/>                    
             <allowedMediaLevelItem id="81" name="spotType"/>
-            <allowedMediaLevelItem id="82" name="spotSubType"/>
-            <allowedMediaLevelItem id="84" name="spotRankType"/>
-            <allowedMediaLevelItem id="85" name="programComItemPositionType"/>
-            <!--<allowedMediaLevelItem id="7" name="holding_company"/>-->
+            <allowedMediaLevelItem id="82" name="spotSubType"/>                    
             <allowedMediaLevelItem id="8" name="Annonceur"/>
             <allowedMediaLevelItem id="9" name="Marque"/>
             <allowedMediaLevelItem id="10" name="Produit"/>
             <allowedMediaLevelItem id="83" name="adSlogan"/>
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
-            <allowedMediaLevelItem id="13" name="Groupe"/>
-            <allowedMediaLevelItem id="14" name="Variété"/>
-            <allowedMediaLevelItem id="17" name="Titre"/>
-            <allowedMediaLevelItem id="26" name="Pays"/>
+            <allowedMediaLevelItem id="13" name="Groupe"/>              
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
@@ -1067,20 +1051,20 @@
             </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
-          <selection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+          <selection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">            
             <allowedUniverseLevels>
               <allowedUniverseLevel id="11" name="vehicle"/>
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
-              <allowedUniverseLevel id="39" name="media_owner"/>
-              <allowedUniverseLevel id="40" name="program"/>
-              <allowedUniverseLevel id="41" name="program_typology"/>
+              <allowedUniverseLevel id="39" name="media_owner"/>            
               <allowedUniverseLevel id="42" name="spot_sub_type"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="7">
-              <allowedUniverseBranch id="7" name="vehicle\category\interest_center\media_owner\media\program\program_typology\spot_sub_type"/>
-              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+            <allowedUniverseBranches defaultBranchId="33">              
+              <allowedUniverseBranch id="33" name="vehicle"/>
+              <allowedUniverseBranch id="12" name="interest_center"/>
+              <allowedUniverseBranch id="29" name="media_owner"/>            
+              <allowedUniverseBranch id="35" name="spot_sub_type"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
