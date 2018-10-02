@@ -1272,8 +1272,12 @@ namespace TNS.AdExpress.Constantes.Web
 		        /// <summary>
 		        /// Table detailed by Spot Type\Spot Sub type
 		        /// </summary>
-		        spotTypeSpotSubType
-		    }
+		        spotTypeSpotSubType,
+                /// <summary>
+                /// Tableau détaillé par Categorie , centre d'intérêts et supports
+                /// </summary>
+                categoryInterestCenterMedia,
+            }
 
 
 		    /// <summary>

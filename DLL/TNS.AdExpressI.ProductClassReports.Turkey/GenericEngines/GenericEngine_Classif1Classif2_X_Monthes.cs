@@ -222,20 +222,24 @@ namespace TNS.AdExpressI.ProductClassReports.Turkey.GenericEngines
                
                     for (int j = 0; j < nbMonthes; j++)
                 {
-                    headers.Root.Add(new Header(true, cMonth.ToString("MMMM", cInfo), cMonth.Month));                  
+                    headers.Root.Add(new Header(true,
+                        $"{cMonth.ToString("MMMM", cInfo)} {cMonth.ToString("yyyy", cInfo)}", cMonth.Month));                  
                     cMonth = cMonth.AddMonths(1);
 
                     //Comparative Months
                     if (_session.ComparativeStudy)
                     {
-                        headers.Root.Add(new Header(true, cComprativeMonth.ToString("MMMM", cInfo), cComprativeMonth.Month + COMPARATIVE_OFFSET));                       
-                        cComprativeMonth = cComprativeMonth.AddMonths(1);
+                        headers.Root.Add(new Header(true,$"{cComprativeMonth.ToString("MMMM", cInfo)} {cComprativeMonth.ToString("yyyy", cInfo)}" 
+                            , cComprativeMonth.Month + COMPARATIVE_OFFSET));                       
+                       
 
                         //Evol month
                         if (_session.Evolution)
                         {
                             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1168, _session.SiteLanguage), cComprativeMonth.Month + EVOL_MONTH_OFFSET));
                         }
+
+                        cComprativeMonth = cComprativeMonth.AddMonths(1);
                     }
 
                 

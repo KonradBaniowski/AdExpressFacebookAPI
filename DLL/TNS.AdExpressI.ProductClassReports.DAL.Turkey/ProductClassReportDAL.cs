@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Exceptions;
@@ -11,12 +11,12 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
-using TNS.Classification.Universe;
 using Table = TNS.AdExpress.Domain.DataBaseDescription.Table;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstRight = TNS.AdExpress.Constantes.Customer.Right;
+using CstDB = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 {
@@ -28,12 +28,19 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
         protected Table _recapSpotType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSpotType);
         protected Table _recapAdSlogan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapAdSlogan);
 
+        protected string expenditurePrefix = "exp_";
+
         #region Constructor
+
         /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public ProductClassReportDAL(WebSession session) : base(session) { }
+        public ProductClassReportDAL(WebSession session) : base(session)
+        {
+            if (session.Unit == CustomerSessions.Unit.spot || session.Unit == CustomerSessions.Unit.duration)
+                expenditurePrefix = string.Empty;
+        }
         #endregion
 
 
@@ -382,6 +389,18 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 sql.AppendFormat(", {0} ", _recapCategory.SqlWithPrefix);
             if (sql.ToString().IndexOf("media") > -1)
                 sql.AppendFormat(", {0} ", _recapMedia.SqlWithPrefix);
+            if (sql.ToString().IndexOf("INTEREST_CENTER") > -1)
+                sql.AppendFormat(", {0} ", _recapInterestCenter.SqlWithPrefix);
+            if (sql.ToString().IndexOf("SPOT_SUB_TYPE") > -1)
+                sql.AppendFormat(", {0} ", _recapSpotSubType.SqlWithPrefix);
+            if (sql.ToString().IndexOf("SPOT_TYPE") > -1)
+                sql.AppendFormat(", {0} ", _recapSpotType.SqlWithPrefix);
+
+
+
+
+
+        
             #endregion
 
             #region nomenclature produit
@@ -402,6 +421,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
             if (sql.ToString().IndexOf("subsector") > -1)
                 sql.AppendFormat(", {0} ", _recapSubSector.SqlWithPrefix);
             /******************/
+
+            if (sql.ToString().IndexOf("AD_SLOGAN") > -1)
+                sql.AppendFormat(", {0} ", _recapAdSlogan.SqlWithPrefix);
+          
             #endregion
 
         }
@@ -518,12 +541,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 
             for (i = 0; i < months.Length; i++)
             {
-                months[i] = $"sum(exp_{unitLabel}_n{year}_{(i + firstMonth)})";
-               // persoMonths[i] = $"exp_{unitLabel}_n{year}_{(i + firstMonth)}";
+                months[i] = $"sum({expenditurePrefix}{unitLabel}_n{year}_{(i + firstMonth)})";
+            
                 if (_session.ComparativeStudy)
                 {
-                    previousYearMonths[i] = $"sum(exp_{unitLabel}_n{previousYear}_{(i + firstMonth)})";
-                   // persoPreviousYearMonths[i] = $"exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}";
+                    previousYearMonths[i] = $"sum({expenditurePrefix}{unitLabel}_n{previousYear}_{(i + firstMonth)})";
+                  
                 }
             }
 
@@ -537,27 +560,27 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 {
                     if (i == months.Length - 1 && months.Length > 1)
                     {
-                        sql.Append($"exp_{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
+                        sql.Append($"{expenditurePrefix}{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
                         comparativeStudyMonths =
-                            $"{comparativeStudyMonths} exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}) as N{previousYear}";
+                            $"{comparativeStudyMonths} {expenditurePrefix}{unitLabel}_n{previousYear}_{(i + firstMonth)}) as N{previousYear}";
                     }
                     else if (i == 0 && months.Length > 1)
                     {
-                        sql.Append($", sum(exp_{unitLabel}_n{year}_{(i + firstMonth)} + ");
+                        sql.Append($", sum({expenditurePrefix}{unitLabel}_n{year}_{(i + firstMonth)} + ");
                         comparativeStudyMonths =
-                            $"{comparativeStudyMonths} sum(exp_{unitLabel}_n{previousYear}_{(i + firstMonth)} + ";
+                            $"{comparativeStudyMonths} sum({expenditurePrefix}{unitLabel}_n{previousYear}_{(i + firstMonth)} + ";
                     }
                     else if (months.Length == 1)
                     {
-                        sql.Append($", sum(exp_{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
+                        sql.Append($", sum({expenditurePrefix}{unitLabel}_n{year}_{(i + firstMonth)}) as N{year}");
                         comparativeStudyMonths =
-                            $"{comparativeStudyMonths} sum(exp_{unitLabel}_n{previousYear}_{(i + firstMonth)}) as N{previousYear}";
+                            $"{comparativeStudyMonths} sum({expenditurePrefix}{unitLabel}_n{previousYear}_{(i + firstMonth)}) as N{previousYear}";
                     }
                     else
                     {
-                        sql.Append($"exp_{unitLabel}_n{year}_{(i + firstMonth)} + ");
+                        sql.Append($"{expenditurePrefix}{unitLabel}_n{year}_{(i + firstMonth)} + ");
                         comparativeStudyMonths =
-                            $"{comparativeStudyMonths} exp_{unitLabel}_n{previousYear}_{(i + firstMonth)} + ";
+                            $"{comparativeStudyMonths} {expenditurePrefix}{unitLabel}_n{previousYear}_{(i + firstMonth)} + ";
                     }
                 }
                 if (_session.ComparativeStudy)
@@ -593,6 +616,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                             " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_INTEREST_CENTER as id_m2, INTEREST_CENTER as m2, {0}.id_media as id_m3, media as m3",
                             _dataTable.Prefix);
                         break;
+                    case CstFormat.PreformatedMediaDetails.categoryInterestCenterMedia:
+                        sql.AppendFormat(
+                            " {0}.id_category as id_m1, category as m1, {0}.id_INTEREST_CENTER as id_m2, INTEREST_CENTER as m2, {0}.id_media as id_m3, media as m3",
+                            _dataTable.Prefix);
+                        break;
                     case CstFormat.PreformatedMediaDetails.vehicleMedia:
                         sql.AppendFormat(" {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_media as id_m2, media as m2",
                             _dataTable.Prefix);
@@ -600,6 +628,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                     case CstFormat.PreformatedMediaDetails.spotTypeSpotSubType:
                         sql.AppendFormat(
                             " {0}.ID_SPOT_TYPE as id_m1, SPOT_TYPE as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.mediaSpotSubType:
+                        sql.AppendFormat(
+                            " {0}.id_media as id_m1, media as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
                             _dataTable.Prefix);
                         break;
                     default:
@@ -706,6 +739,90 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 
         }
         #endregion
+
+        protected override void AppendActivationLanguageClause(StringBuilder sql)
+        {
+            #region nomenclature produit
+            if (sql.ToString().IndexOf(_recapGroup.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapGroup.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapGroup.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapSegment.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSegment.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapSegment.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapBrand.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapBrand.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapBrand.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapProduct.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapProduct.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapProduct.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapAdvertiser.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapAdvertiser.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapAdvertiser.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+
+            /*Added for the sector and subsector levels (Finnish version)
+            * */
+            if (sql.ToString().IndexOf(_recapSector.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSector.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapSector.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapSubSector.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSubSector.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapSubSector.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            /***********************************/
+
+            if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapAdSlogan.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapAdSlogan.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            #endregion
+
+            #region nomenclature media
+            if (sql.ToString().IndexOf(_recapVehicle.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapVehicle.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapVehicle.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapCategory.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapCategory.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapCategory.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapMedia.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapMedia.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapMedia.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapInterestCenter.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapInterestCenter.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapInterestCenter.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapSpotSubType.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSpotSubType.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapSpotSubType.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            if (sql.ToString().IndexOf(_recapSpotType.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapSpotType.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapSpotType.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+            #endregion
+        }
     }
 }
 

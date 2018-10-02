@@ -100,7 +100,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
                                         && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.interestCenter))
                                         mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3236, _customerWebSession.SiteLanguage),
-                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia.GetHashCode().ToString() });
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.categoryInterestCenterMedia.GetHashCode().ToString() });
 
                                     if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)                                      
                                         && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType))

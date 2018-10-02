@@ -397,6 +397,19 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.region));
                     levels.Add(Get(DetailLevelItemInformation.Levels.media));
                     break;
+                case CstFormat.PreformatedMediaDetails.categoryInterestCenterMedia:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.category));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.interestCenter));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.media));
+                    break;
+                case CstFormat.PreformatedMediaDetails.mediaSpotSubType:                
+                    levels.Add(Get(DetailLevelItemInformation.Levels.media));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.spotSubType));
+                    break;
+                case CstFormat.PreformatedMediaDetails.spotTypeSpotSubType:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.spotType));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.spotSubType));
+                    break;
                 default:
                     throw (new ArgumentException("Performated detail not supported"));
             }
