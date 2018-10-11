@@ -112,18 +112,43 @@ namespace TNS.AdExpressI.Insertions.Turkey
                 {
                     string str = string.Empty;
                     //if (_getInsertionsExcel && columns[index1].Id == GenericColumnItemInformation.Columns.dateMediaNum)
-                    if (columns[index1].Id == GenericColumnItemInformation.Columns.dateMediaNum
-                        || columns[index1].Id == GenericColumnItemInformation.Columns.Day
-                        || columns[index1].Id == GenericColumnItemInformation.Columns.Month
-                        || columns[index1].Id == GenericColumnItemInformation.Columns.Year
-                        || columns[index1].Id == GenericColumnItemInformation.Columns.MonthYear
-                        || columns[index1].Id == GenericColumnItemInformation.Columns.DayName)
+                    if (columns[index1].Id == GenericColumnItemInformation.Columns.dateMediaNum)
                     {
                         int num = Convert.ToInt32(row[columnsName[index1]]);
                         int year = num / 10000;
                         int month = (num - 10000 * year) / 100;
                         int day = num - (10000 * year + 100 * month);
                         tab[cLine, index2] = new CellDate(new DateTime(year, month, day), string.Format("{{0:{0}}}", columnItemInformation1.StringFormat));
+                    }
+                    else if (columns[index1].Id == GenericColumnItemInformation.Columns.Day 
+                        || columns[index1].Id == GenericColumnItemInformation.Columns.Month
+                        || columns[index1].Id == GenericColumnItemInformation.Columns.Year
+                        || columns[index1].Id == GenericColumnItemInformation.Columns.MonthYear
+                        || columns[index1].Id == GenericColumnItemInformation.Columns.DayName)
+                    {
+                        AdExpressCultureInfo cultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+                        int num = Convert.ToInt32(row[columnsName[index1]]);
+                        int year = num / 10000;
+                        int month = (num - 10000 * year) / 100;
+                        int day = num - (10000 * year + 100 * month);
+                        var date = new DateTime(year, month, day);
+                        
+                        switch (columns[index1].Id)
+                        {
+                            case GenericColumnItemInformation.Columns.Day:
+                                tab[cLine, index2] = new CellNumber(day);
+                                ((CellNumber)tab[cLine, index2]).StringFormat = string.Format("{{0:{0}}}", "codeEcran");
+                                break;
+                            case GenericColumnItemInformation.Columns.Year:
+                                tab[cLine, index2] = new CellNumber(year);
+                                ((CellNumber)tab[cLine, index2]).StringFormat = string.Format("{{0:{0}}}", "codeEcran");
+                                break;
+                            case GenericColumnItemInformation.Columns.Month:
+                            case GenericColumnItemInformation.Columns.MonthYear:
+                            case GenericColumnItemInformation.Columns.DayName:
+                                tab[cLine, index2] = new CellLabel(date.ToString(cultureInfo.GetFormatPattern(columnItemInformation1.StringFormat)));
+                                break;
+                        }
                     }
                     else if (!string.IsNullOrEmpty(row[columnsName[index1]].ToString()) &&
                         (columns[index1].Id == GenericColumnItemInformation.Columns.ProgramBeginningTime
@@ -193,6 +218,28 @@ namespace TNS.AdExpressI.Insertions.Turkey
                                 }
                                 ((CellLabel)tab[cLine, index2]).Label = string.Format("{0}, {1}", ((CellLabel)tab[cLine, index2]).Label, label3);
                                 break;
+                            case GenericColumnItemInformation.Columns.WeekNumber:
+                                var weekNb = row[columnsName[index1]].ToString();
+                                if (string.IsNullOrEmpty(weekNb))
+                                {
+                                    tab[cLine, index2] = new CellLabel("");
+                                }
+                                else
+                                {
+                                    tab[cLine, index2] = new CellLabel(weekNb.Insert(4," / "));
+                                }
+                                break;
+                            case GenericColumnItemInformation.Columns.LanguageOfTheAd:
+                                var languageId = row[columnsName[index1]].ToString();
+                                if (string.IsNullOrEmpty(languageId))
+                                {
+                                    tab[cLine, index2] = new CellLabel("");
+                                }
+                                else
+                                {
+                                    tab[cLine, index2] = new CellLabel(GetLanguageLabel(languageId));
+                                }
+                                break;
                             default:
                                 if (tab[cLine, index2] == null)
                                 {
@@ -238,6 +285,19 @@ namespace TNS.AdExpressI.Insertions.Turkey
                 if (tpart.Length == 2) millisecond = Convert.ToInt32(tpart[1]);
             }
             return new DateTime(1970, 1, 1, hour, minute, second, millisecond);
+        }
+
+        private string GetLanguageLabel(string languageId)
+        {
+            switch (languageId)
+            {
+                case "90":
+                    return GestionWeb.GetWebWord(3241, _session.SiteLanguage).ToUpper();
+                case "44":
+                    return GestionWeb.GetWebWord(2478, _session.SiteLanguage).ToUpper();
+                default:
+                    return "";
+            }
         }
     }
 }

@@ -654,6 +654,28 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
+                                case GenericColumnItemInformation.Columns.WeekNumber:
+                                    var weekNb = GetColumnValue(Column, row[Column.DataBaseField]).ToString();
+                                    if (string.IsNullOrEmpty(weekNb))
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel(weekNb.Insert(4, " / "));
+                                    }
+                                    break;
+                                case GenericColumnItemInformation.Columns.LanguageOfTheAd:
+                                    var languageId = GetColumnValue(Column, row[Column.DataBaseField]).ToString();
+                                    if (string.IsNullOrEmpty(languageId))
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel(GetLanguageLabel(languageId));
+                                    }
+                                    break;
                                 default:
                                     if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
                                     {
@@ -713,6 +735,20 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region GetLanguageLabel
+        private string GetLanguageLabel(string languageId)
+        {
+            switch (languageId)
+            {
+                case "90":
+                    return GestionWeb.GetWebWord(3241, _webSession.SiteLanguage).ToUpper();
+                case "44":
+                    return GestionWeb.GetWebWord(2478, _webSession.SiteLanguage).ToUpper();
+                default:
+                    return "";
+            }
+        }
+        #endregion
 
     }
 }

@@ -255,7 +255,7 @@
     <column id="199" name="Spot Sub Type"      webTextId="3148" dbId="id_spot_sub_type"  dbLabel="spot_sub_type"   dbTable="spot_sub_type"   dbTablePrefixe="sst" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="82"/>
     <column id="200" name="Spot Genre"      webTextId="3141" dbId="id_spot_genre"  dbLabel="spot_genre"   dbTable="spot_genre"   dbTablePrefixe="sptg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="201" name="Spot Sub Genre"      webTextId="3142" dbId="id_spot_sub_genre"  dbLabel="spot_sub_genre"   dbTable="spot_sub_genre"   dbTablePrefixe="ssg" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
-    <column id="202" name="Language of the Ad" webTextId="3164"  dbLabel="id_language_data_i"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="202" name="Language of the Ad" webTextId="3164"  dbLabel="id_language_data_i"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="203" name="Version Name" webTextId="3156" dbId="id_slogan" dbLabel="slogan"  dbTable="slogan"  dbTablePrefixe="slo" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="86"/>
     <column id="204" name="Creative Agency"      webTextId="3140" dbId="id_creative_agency"  dbLabel="creative_agency"   dbTable="creative_agency"   dbTablePrefixe="crag" CellType="TNS.FrameWork.WebResultUI.CellLabel" />
     <column id="205" name="Campaign"      webTextId="3165" dbId="id_campaign"  dbLabel="campaign"  dbTablePrefixe="ads"    CellType="TNS.FrameWork.WebResultUI.CellLabel" />
@@ -295,7 +295,7 @@
     <column id="239" name="Collective Product : Holding of The Advertising Company" webTextId="3209" dbLabel="holding_company_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>    
      <column id="240" name="Collective Product Main Sector" webTextId="3210" dbLabel="sector_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="241" name="Collective Product Sub Sector" webTextId="3211" dbLabel="subsector_collective" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="242" name="Sequence Of the Week In The Year" webTextId="3212" dbLabel="week_nb"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="242" name="Sequence Of the Week In The Year" webTextId="3212" dbLabel="week_nb"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="243" name="Program tk" webTextId="3146" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="244" name="Commercial Break Place \ Position in the Program" webTextId="3222"  dbLabel="program_com_break_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     
@@ -312,6 +312,7 @@
     <column id="255" name="Media Code"    webTextId="3230" dbId="id_vehicle"   dbLabel="id_vehicle"  dbTablePrefixe="vh"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="256" name="Version Code"  webTextId="3231" dbId="id_slogan"    dbLabel="id_slogan"   dbTablePrefixe="slo"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="257" name="Campaign Code" webTextId="3232" dbId="id_campaign"  dbLabel="id_campaign" dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" />
+    <column id="258" name="Program Genre" webTextId="3240" dbId="id_program_genre" dbLabel="program_genre" dbTable="program_genre" dbTablePrefixe="pgg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <!--End New levels for Turkey-->
   </columnItems>
 
@@ -484,6 +485,7 @@
       <columnItem id="193" name="Periodicity"   />                                                                            <!-- id_periodicity -->
       <columnItem id="243" name="Program"  />                                                                                 <!-- id_program -->
       <columnItem id="194" name="Program Status"  />                                                                          <!-- id_program_status -->
+      <columnItem id="258" name="Program Genre"/>                                                                             <!-- id_program_genre -->
       <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />                                             <!-- id_program_typology -->
       <columnItem id="196" name="Program Beginning Time" />                                                                   <!-- program_beginning_time -->
       <columnItem id="197" name="Program Ending Time" />                                                                      <!-- program_ending_time -->
@@ -501,7 +503,7 @@
       <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>                                               <!-- id_ad_slogan -->
       <columnItem id="9" name="Product" idDetailLevelMatching="10"/>                                                          <!-- id_product -->
       <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>                                                           <!-- id_brand -->
-      <columnItem id="100" name="Sub brand" />                                                                                <!-- id_sub_brand -->
+      <!--<columnItem id="100" name="Sub brand" />                                                                                --><!-- id_sub_brand -->
       <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>                                                     <!-- id_group_ -->
       <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12" />                                                     <!-- id_subsector -->
       <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>                                                          <!-- id_sector -->
@@ -818,6 +820,7 @@
       <columnItem id="193" name="Periodicity"   />
       <columnItem id="243" name="Program"  />
       <columnItem id="194" name="Program Status"  />
+      <columnItem id="258" name="Program Genre"/>
       <columnItem id="195" name="Program Typology"  idDetailLevelMatching="80" />
       <columnItem id="196" name="Program Beginning Time" />
       <columnItem id="197" name="Program Ending Time" />
@@ -835,7 +838,7 @@
       <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>
-      <columnItem id="100" name="Sub brand" />
+      <!--<columnItem id="100" name="Sub brand" />-->
       <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>
       <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12"/>
       <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>

@@ -700,20 +700,17 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else if (cell is CellDate)
             {
-
-                if (((CellDate) cell).StringFormat.Contains("date"))
+                if (string.IsNullOrEmpty(((CellDate)cell).StringFormat))
                 {
-                    sheet.Cells[cellRow, cellCol].Value = ((CellDate) cell).Date.ToShortDateString();
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
                     SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
                 }
                 else
                 {
-                    sheet.Cells[cellRow, cellCol].Value = ((CellDate) cell).Date;
-                    SetAsposeCustomFormat(sheet.Cells[cellRow, cellCol], ((CellDate)cell).StringFormat);
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date;
+                    SetAsposeCustomFormat(session, sheet.Cells[cellRow, cellCol], ((CellDate)cell).StringFormat);
                     SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
                 }
-
-                
             }
             else if (cell is CellUnit)
             {
@@ -1279,34 +1276,12 @@ namespace Km.AdExpressClientWeb.Controllers
             cell.SetStyle(style);
         }
 
-        private void SetAsposeCustomFormat(Aspose.Cells.Cell cell, string asposeFormat)
+        private void SetAsposeCustomFormat(WebSession session, Aspose.Cells.Cell cell, string stringFormat)
         {
             Style style = cell.GetStyle();
+            AdExpressCultureInfo cultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfoExcel;
 
-            switch (asposeFormat)
-            {
-                case "{0:daypattern}":
-                    style.Custom = "dd";
-                    break;
-                case "{0:monthpattern}":
-                    style.Custom = "MMMM";
-                    break;
-                case "{0:yearpattern}":
-                    style.Custom = "yyyy";
-                    break;
-                case "{0:monthyearpattern}":
-                    style.Custom = "MMMM yyyy";
-                    break;
-                case "{0:daynamepattern}":
-                    style.Custom = "dddd";
-                    break;
-                case "{0:timepattern}":
-                    style.Custom = "h:mm:ss";
-                    break;
-                default:
-                    style.Custom = "";
-                    break;
-            }
+            style.Custom = cultureInfo.GetExcelFormatPatternFromStringFormat(stringFormat);
 
             cell.SetStyle(style);
         }

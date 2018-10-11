@@ -1261,6 +1261,42 @@ namespace TNS.AdExpress.Domain.Level
             /// Day Name
             /// </summary>
             DayName = 249,
+            /// <summary>
+            /// Spot Place in the Commercial Break out of all spots
+            /// </summary>
+            SpotPlaceCommercialBreak = 250,
+            /// <summary>
+            /// Com break place / Number of com breaks in the Program
+            /// </summary>
+            ComBreakCustom = 251,
+            /// <summary>
+            /// Category Name / Position / Sequence # of Commercial Break
+            /// </summary>
+            ComItemCustom = 252,
+            /// <summary>
+            /// Sequence # of commercial items / blocks broadcasted throughout the program
+            /// </summary>
+            PorgramComItemCustom = 253,
+            /// <summary>
+            /// Commercial Item Category Name and Position
+            /// </summary>
+            ComItemCategoryCustom = 254,
+            /// <summary>
+            /// Media Code
+            /// </summary>
+            MediaCode = 255,
+            /// <summary>
+            /// Version Code
+            /// </summary>
+            VersionCode = 256,
+            /// <summary>
+            /// Campaign Code
+            /// </summary>
+            CampaignCode = 257,
+            /// <summary>
+            /// Program Genre
+            /// </summary>
+            ProgramGenre = 258
         }
 
         #endregion

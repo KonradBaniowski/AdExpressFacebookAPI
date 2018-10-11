@@ -2521,5 +2521,7 @@
     <item mnemonic="w3237" type="System.String">!</item>
     <item mnemonic="w3238" type="System.String">!</item>
     <item mnemonic="w3239" type="System.String">!</item>
+    <item mnemonic="w3240" type="System.String">!</item>
+    <item mnemonic="w3241" type="System.String">!</item>
   </items>
 </localization>
