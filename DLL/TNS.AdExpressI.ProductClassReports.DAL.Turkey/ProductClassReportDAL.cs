@@ -183,6 +183,19 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_subsector as id_p1, subsector as p1, {0}.id_advertiser as id_p2, advertiser as p2", _dataTable.Prefix);
                         break;
+
+                    case CstFormat.PreformatedProductDetails.advertiserBrandProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format("  {0}.id_advertiser as id_p1, advertiser as p1 , {0}.id_brand as id_p2, brand as p2, {0}.id_product as id_p3, product as p3", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.brandProductSlogan:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format("   {0}.id_brand as id_p1, brand as p1, {0}.id_product as id_p2, product as p2, {0}.id_ad_slogan as id_p3, ad_slogan as p3", _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedProductDetails.productSlogan:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        sqlStr = string.Format("  {0}.id_product as id_p1, product as p1, {0}.id_ad_slogan as id_p2, ad_slogan as p2", _dataTable.Prefix);
+                        break;
                     /***************************/
 
                     default:
@@ -389,18 +402,18 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 sql.AppendFormat(", {0} ", _recapCategory.SqlWithPrefix);
             if (sql.ToString().IndexOf("media") > -1)
                 sql.AppendFormat(", {0} ", _recapMedia.SqlWithPrefix);
-            if (sql.ToString().IndexOf("INTEREST_CENTER") > -1)
+            if (sql.ToString().IndexOf("interest_center") > -1)
                 sql.AppendFormat(", {0} ", _recapInterestCenter.SqlWithPrefix);
-            if (sql.ToString().IndexOf("SPOT_SUB_TYPE") > -1)
+            if (sql.ToString().IndexOf("spot_sub_type") > -1)
                 sql.AppendFormat(", {0} ", _recapSpotSubType.SqlWithPrefix);
-            if (sql.ToString().IndexOf("SPOT_TYPE") > -1)
+            if (sql.ToString().IndexOf("spot_type") > -1)
                 sql.AppendFormat(", {0} ", _recapSpotType.SqlWithPrefix);
+         
 
 
 
 
 
-        
             #endregion
 
             #region nomenclature produit
@@ -422,7 +435,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 sql.AppendFormat(", {0} ", _recapSubSector.SqlWithPrefix);
             /******************/
 
-            if (sql.ToString().IndexOf("AD_SLOGAN") > -1)
+            if (sql.ToString().IndexOf("ad_slogan") > -1)
                 sql.AppendFormat(", {0} ", _recapAdSlogan.SqlWithPrefix);
           
             #endregion
@@ -630,6 +643,16 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                             " {0}.ID_SPOT_TYPE as id_m1, SPOT_TYPE as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
                             _dataTable.Prefix);
                         break;
+                    case CstFormat.PreformatedMediaDetails.programTypologySpotSubType:
+                        sql.AppendFormat(
+                            " {0}.ID_PROGRAM_TYPOLOGY as id_m1, PROGRAM_TYPOLOGY as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            _dataTable.Prefix);
+                        break;
+                    case CstFormat.PreformatedMediaDetails.programTypology:
+                        sql.AppendFormat(
+                            " {0}.ID_PROGRAM_TYPOLOGY as id_m1, PROGRAM_TYPOLOGY as m1",
+                            _dataTable.Prefix);
+                        break;
                     case CstFormat.PreformatedMediaDetails.mediaSpotSubType:
                         sql.AppendFormat(
                             " {0}.id_media as id_m1, media as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
@@ -734,6 +757,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
             {
                 sql.AppendFormat("{0} {1}.ID_SPOT_TYPE = {2}.ID_SPOT_TYPE", linkWord, _recapSpotType.Prefix, _dataTable.Prefix);
             }
+            if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.ID_AD_SLOGAN = {2}.ID_AD_SLOGAN", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
+            }
             #endregion
 
 
@@ -821,8 +848,97 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 sql.AppendFormat(" and {0}.id_language = {1}", _recapSpotType.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapSpotType.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
+            if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapAdSlogan.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapAdSlogan.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
             #endregion
         }
+
+        #region appendRegroupmentAndOrderClause
+        /// <summary>
+        /// Ajoute les clause order by et group by a la requête
+        /// </summary>
+        /// <param name="_session">Session Utilisateur</param>
+        /// <param name="sql">sql</param>
+        protected override void AppendRegroupmentAndOrderClause(StringBuilder sql)
+        {
+
+            #region Group
+            string groupClause = sql.ToString().Remove(sql.ToString().IndexOf("sum("), sql.Length - sql.ToString().IndexOf("sum("))
+                .Remove(0, 6)
+                .Replace("as id_m1", "")
+                .Replace("as m1", "")
+                .Replace("as id_m2", "")
+                .Replace("as m2", "")
+                .Replace("as id_m3", "")
+                .Replace("as m3", "")
+                .Replace("as id_m", "")
+                .Replace("as m", "")
+                .Replace("as id_p1", "")
+                .Replace("as p1", "")
+                .Replace("as id_p2", "")
+                .Replace("as p2", "")
+                 .Replace("as id_p3", "")
+                .Replace("as p3", "")
+                .Replace("as id_p", "")
+                .Replace("as p", "");
+            groupClause = groupClause.Remove(groupClause.LastIndexOf(','), groupClause.Length - groupClause.LastIndexOf(','));
+
+            sql.Append(" group by " + groupClause);
+            #endregion
+
+            #region Order
+            switch (_reportFormat)
+            {
+                case CstFormat.PreformatedTables.media_X_Year:
+                case CstFormat.PreformatedTables.mediaYear_X_Cumul:
+                case CstFormat.PreformatedTables.mediaYear_X_Mensual:
+                    sql.Append(" order by m1, id_m1");
+                    if (sql.ToString().IndexOf("id_m2") > -1) sql.Append(", m2, id_m2");
+                    if (sql.ToString().IndexOf("id_m3") > -1) sql.Append(", m3, id_m3");
+                    break;
+                case CstFormat.PreformatedTables.mediaProduct_X_Year:
+                case CstFormat.PreformatedTables.mediaProduct_X_YearMensual:
+                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia)
+                        sql.Append(" order by m1, id_m1");
+                    else
+                        sql.Append(" order by m,id_m, m1, id_m1");
+                    if (sql.ToString().IndexOf("id_m2") > -1) sql.Append(", m2, id_m2");
+                    if (sql.ToString().IndexOf("id_m3") > -1) sql.Append(", m3, id_m3");
+                    sql.Append(", id_p1");
+                    if (sql.ToString().IndexOf("id_p2") > -1) sql.Append(", p2, id_p2");
+                    if (sql.ToString().IndexOf("id_p3") > -1) sql.Append(", p3, id_p3");
+                    break;
+                case CstFormat.PreformatedTables.productMedia_X_Year:
+                case CstFormat.PreformatedTables.productMedia_X_YearMensual:
+                    sql.Append(" order by p, id_p, p1, id_p1");
+                    if (sql.ToString().IndexOf("id_p2") > -1) sql.Append(", p2, id_p2");
+                    if (sql.ToString().IndexOf("id_p3") > -1) sql.Append(", p3, id_p3");
+                    sql.Append(", m1, id_m1");
+                    if (sql.ToString().IndexOf("id_m2") > -1) sql.Append(", m2, id_m2");
+                    if (sql.ToString().IndexOf("id_m3") > -1) sql.Append(", m3, id_m3");
+                    break;
+                case CstFormat.PreformatedTables.productYear_X_Media:
+                case CstFormat.PreformatedTables.product_X_Year:
+                case CstFormat.PreformatedTables.productYear_X_Cumul:
+                case CstFormat.PreformatedTables.productYear_X_Mensual:
+                    sql.Append(" order by p1, id_p1");
+                    if (sql.ToString().IndexOf("id_p2") > -1) sql.Append(", p2, id_p2");
+                    if (sql.ToString().IndexOf("id_p3") > -1) sql.Append(", p3, id_p3");
+                    break;
+                default:
+                    _reportFormat = CstFormat.PreformatedTables.media_X_Year;
+                    sql.Append(" order by m1, id_m1");
+                    if (sql.ToString().IndexOf("id_m2") > -1) sql.Append(", m2, id_m2");
+                    if (sql.ToString().IndexOf("id_m3") > -1) sql.Append(", m3, id_m3");
+                    break;
+            }
+            #endregion
+
+        }
+        #endregion
     }
 }
 

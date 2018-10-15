@@ -2523,5 +2523,7 @@
     <item mnemonic="w3239" type="System.String">!</item>
     <item mnemonic="w3240" type="System.String">!</item>
     <item mnemonic="w3241" type="System.String">!</item>
+    <item mnemonic="w3242" type="System.String">!</item>
+    <item mnemonic="w3243" type="System.String">!</item>
   </items>
 </localization>

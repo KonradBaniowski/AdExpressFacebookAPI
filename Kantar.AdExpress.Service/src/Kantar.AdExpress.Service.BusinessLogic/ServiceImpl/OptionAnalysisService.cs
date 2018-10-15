@@ -102,6 +102,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3236, _customerWebSession.SiteLanguage),
                                             Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.categoryInterestCenterMedia.GetHashCode().ToString() });
 
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.programTypology))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3242, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.programTypology.GetHashCode().ToString()
+                                        });
+
+
                                     if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)                                      
                                         && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType))
                                         mediaDetail.LevelDetail.Items.Add(new SelectItem
@@ -116,6 +124,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                         {
                                             Text = GestionWeb.GetWebWord(3235, _customerWebSession.SiteLanguage),
                                             Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.spotTypeSpotSubType.GetHashCode().ToString()
+                                        });
+
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType)
+                                   && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.programTypology))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3243, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.programTypologySpotSubType.GetHashCode().ToString()
                                         });
                                 }
                                 break;
@@ -209,13 +225,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1145, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString() });
                 //modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
                 if (_showSegment)
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1577, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString() });
-                if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1578, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString() });
-                if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1579, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString() });
+                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1577, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString() });
+
+                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1578, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString() });
+                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1579, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString() });
+                    }
+
                 }
+
+
                 productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1146, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString() });
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {

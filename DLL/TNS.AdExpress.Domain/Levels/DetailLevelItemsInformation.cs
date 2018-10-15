@@ -347,6 +347,15 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.brand));
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
                     break;
+                case CstFormat.PreformatedProductDetails.brandProductSlogan:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.group));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.adSlogan));
+                    break;
+                case CstFormat.PreformatedProductDetails.productSlogan:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.product));                 
+                    levels.Add(Get(DetailLevelItemInformation.Levels.adSlogan));
+                    break;
                 default:
                     throw (new ArgumentException("Performated detail not supported"));
                     break;
@@ -408,6 +417,13 @@ namespace TNS.AdExpress.Domain.Level {
                     break;
                 case CstFormat.PreformatedMediaDetails.spotTypeSpotSubType:
                     levels.Add(Get(DetailLevelItemInformation.Levels.spotType));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.spotSubType));
+                    break;
+                case CstFormat.PreformatedMediaDetails.programTypology:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.programTypology));
+                    break;
+                case CstFormat.PreformatedMediaDetails.programTypologySpotSubType:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.programTypology));
                     levels.Add(Get(DetailLevelItemInformation.Levels.spotSubType));
                     break;
                 default:

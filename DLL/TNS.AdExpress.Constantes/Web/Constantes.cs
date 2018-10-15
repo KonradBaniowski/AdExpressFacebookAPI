@@ -1277,6 +1277,14 @@ namespace TNS.AdExpress.Constantes.Web
                 /// Tableau détaillé par Categorie , centre d'intérêts et supports
                 /// </summary>
                 categoryInterestCenterMedia,
+                /// <summary>
+                /// Tableau détaillé par Program typology
+                /// </summary>
+                programTypology,
+                /// <summary>
+                /// Table detailed by program Typology\Spot Sub type
+                /// </summary>
+                programTypologySpotSubType,
             }
 
 
