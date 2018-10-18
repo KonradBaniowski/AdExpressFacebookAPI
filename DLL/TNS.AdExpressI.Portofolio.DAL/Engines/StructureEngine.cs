@@ -138,7 +138,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// </summary>
 		/// <remarks>Used for tv or radio</remarks>		
 		/// <returns>DataSet</returns>
-		protected virtual DataSet GetStructData() {
+		public virtual DataSet GetStructData() {
 
 			#region variables
 			string tableName = "";
@@ -244,7 +244,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// </summary>		
 		/// <returns>SQL</returns>
 		protected virtual string GetStructFields(string hourIntevalKey) {
-            return " '" + hourIntevalKey + "' as HourInterval," + SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            return " '" + hourIntevalKey + "' as HourInterval," + GetUnitFieldsNameForPortofolio();
 		}
 		#endregion
 
@@ -537,5 +537,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
-	}
+	    protected virtual string GetUnitFieldsNameForPortofolio()
+	    {
+	        return SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+	    }
+    }
 }

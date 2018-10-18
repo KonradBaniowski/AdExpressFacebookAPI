@@ -397,27 +397,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var vehicleInformation = VehiclesInformation.Get(Convert.ToInt64(vehicles[0]));
                 List<UnitInformation> units;
 
-                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
-                    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
-                {
-                    units = GetValidUnitForResult(_customerWebSession.CurrentModule, FrameWorkResults.Portofolio.CALENDAR);
-                }
-                else
+                //if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                //    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                //{
+                //    units = GetValidUnitForResult(_customerWebSession.CurrentModule, FrameWorkResults.Portofolio.CALENDAR);
+                //}
+                //else
                     units = _customerWebSession.GetValidUnitForResult();
 
                 for (int i = 0; i < units.Count; i++)
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
                 }
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
-                    (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
+
+                if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                      || !WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY)))
                 {
-                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                    if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
+                        (!_customerWebSession.ReachedModule ||
+                         !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
                     {
-                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
-                            .GetResultPageInformation(_customerWebSession.CurrentTab)
-                            .GetDefaultUnit(vehicleInformation.Id)
-                    };
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                                .GetResultPageInformation(_customerWebSession.CurrentTab)
+                                .GetDefaultUnit(vehicleInformation.Id)
+                        };
+                    }
                 }
 
                 AddUnitOptions(units, unitOption);

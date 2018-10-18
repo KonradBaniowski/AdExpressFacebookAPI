@@ -1647,7 +1647,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage)));
 
                 //data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
-                CellNumber cell = new CellNumber((double)nbrSpotByEcran);
+                double nbrSpotByEcranRound = Math.Round((double) nbrSpotByEcran, 2);
+                CellNumber cell = new CellNumber(nbrSpotByEcranRound);
                 cell.StringFormat = "{0:max2}";
                 cell.AsposeFormat = 4;
                 cell.CssClass = "left";
@@ -1738,8 +1739,23 @@ namespace TNS.AdExpressI.Portofolio.Engines
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
+            #region Media Type
+            dataTemp = ComputeDataMediaType();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Interest center
+            dataTemp = ComputeDataInterestCenter();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
             #region Category
             dataTemp = ComputeDataCategory();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Media Owner
+            dataTemp = ComputeDataMediaOwner();
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1750,11 +1766,6 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             #region Volume for Marketing Direct
             dataTemp = ComputeDataVolumeForMarketingDirect(_dataUnit);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Interest center
-            dataTemp = ComputeDataInterestCenter();
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1849,6 +1860,21 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             throw new NotImplementedException();
         }
+
+        #region ComputeDataMediaType
+        protected virtual List<ICell> ComputeDataMediaType()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeDataMediaOwner
+        protected virtual List<ICell> ComputeDataMediaOwner()
+        {
+            return null;
+        }
+        #endregion
+
         #endregion
 
         #endregion
@@ -2095,6 +2121,21 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region GetDuration
+        /// <summary>
+        /// Get Duration
+        /// </summary>
+        public virtual decimal GetDuration()
+        {
+            if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
+            {
+                return decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString());
+            }
+
+            return 0;
+        }
+        #endregion
+
         #region GetAverageDuration
         /// <summary>
         /// Get Average Duration of a spot
@@ -2107,6 +2148,22 @@ namespace TNS.AdExpressI.Portofolio.Engines
             }
             else return 0;
         }
+        #endregion
+
+        #region GetSpotNumber
+
+        /// <summary>
+        /// Get Spot Number
+        /// </summary>
+        public virtual decimal GetSpotNumber()
+        {
+            if (_dt != null && _dt.Rows[0]["nbre_spot"] != System.DBNull.Value)
+            {
+                return decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString());
+            }
+            return 0;
+        }
+
         #endregion
 
         #region GetSpotNumberByEcran

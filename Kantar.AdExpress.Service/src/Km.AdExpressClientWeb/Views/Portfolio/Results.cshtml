@@ -444,14 +444,14 @@
 
             function UnitFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number");
+                    return $.ig.formatter(parseFloat(val), "number");
 
                 return "";
             }
 
             function PageFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number", "#,##0.###");
+                    return $.ig.formatter(parseFloat(val), "number", "#,##0.###");
 
                 return "";
             }
@@ -1000,9 +1000,15 @@
 
             if ($('#resultType').val() == "6") {
                 $('#perioddetailTypeContainer').css({ 'display': "block" });
-                $('#unitTypeContainer').css({ 'display': "block" });
+                //$('#unitTypeContainer').css({ 'display': "block" });
             } else {
                 $('#perioddetailTypeContainer').css({ 'display': "none" });
+                //$('#unitTypeContainer').css({ 'display': "none" });
+            }
+
+            if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {
+                $('#unitTypeContainer').css({ 'display': "block" });
+            } else {
                 $('#unitTypeContainer').css({ 'display': "none" });
             }
 
@@ -1010,9 +1016,15 @@
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
                 if (userFilter.ResultTypeFilter.ResultType == "6") {
                     $('#perioddetailTypeContainer').css({ 'display': "block" });
-                    $('#unitTypeContainer').css({ 'display': "block" });
+                    //$('#unitTypeContainer').css({ 'display': "block" });
                 } else {
                     $('#perioddetailTypeContainer').css({ 'display': "none" });
+                    //$('#unitTypeContainer').css({ 'display': "none" });
+                }
+
+                if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {
+                    $('#unitTypeContainer').css({ 'display': "block" });
+                } else {
                     $('#unitTypeContainer').css({ 'display': "none" });
                 }
             });

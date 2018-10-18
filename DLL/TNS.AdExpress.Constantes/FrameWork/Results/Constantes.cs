@@ -2425,7 +2425,11 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// <summary>
             /// Media Owner
             /// </summary>
-            mediaOwner
+            mediaOwner,
+            /// <summary>
+            /// Commercial Item Number
+            /// </summary>
+            commercialItemNumber
         }
 	}
 

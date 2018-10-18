@@ -126,7 +126,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
         {
             StringBuilder sql = new StringBuilder();
 
-            sql.Append(SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M));
+            sql.Append(SQLGenerator.GetUnitFieldsNameForPortofolioMulti(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M));
             switch (_vehicleInformation.Id)
             {
                 case DBClassificationConstantes.Vehicles.names.tv:

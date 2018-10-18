@@ -174,7 +174,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
         /// <returns>SQL</returns>
         protected virtual string GetBreakdownFields()
         {
-            return _level.GetSqlField() + ", " + SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, AdExpress.Constantes.DB.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            return _level.GetSqlField() + ", " + SQLGenerator.GetUnitFieldsNameForPortofolioMulti(_webSession, AdExpress.Constantes.DB.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
         }
         #endregion
     }

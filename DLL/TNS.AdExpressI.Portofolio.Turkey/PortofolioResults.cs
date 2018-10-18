@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using TNS.AdExpress.Domain.Level;
@@ -11,6 +12,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using AbstractResult = TNS.AdExpressI.Portofolio;
+using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 
 namespace TNS.AdExpressI.Portofolio.Turkey
 {
@@ -59,10 +61,12 @@ namespace TNS.AdExpressI.Portofolio.Turkey
             {
                 switch (_webSession.CurrentTab)
                 {
-                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                     case AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-                    case AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
                         return base.GetResultTable();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        return GetStructureEngine(true).GetResultTable();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                        return new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _showInsertions, _showCreatives).GetResultTable();
                     case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
                         new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd).GetResultTable();
                         break;
@@ -136,6 +140,68 @@ namespace TNS.AdExpressI.Portofolio.Turkey
 
             return gridResult;
 
+        }
+
+        public override GridResult GetStructureGridResult(bool excel)
+        {
+            return GetStructureEngine(excel).GetGridResult();
+        }
+
+        public override Portofolio.Engines.StructureEngine GetStructureEngine(bool excel)
+        {
+            Portofolio.Engines.StructureEngine result = null;
+            switch (_vehicleInformation.Id)
+            {
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
+                    Dictionary<string, double> hourBeginningList = new Dictionary<string, double>();
+                    Dictionary<string, double> hourEndList = new Dictionary<string, double>();
+                    GetHourIntevalList(hourBeginningList, hourEndList);
+                    result = new Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, hourBeginningList, hourEndList, excel);
+                    break;
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get structure chart data
+        /// </summary>
+        /// <returns></returns>
+        public override DataTable GetStructureChartData()
+        {
+            Portofolio.Engines.StructureEngine result = null;
+
+            switch (_vehicleInformation.Id)
+            {
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.others:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
+                    Dictionary<string, double> hourBeginningList = new Dictionary<string, double>();
+                    Dictionary<string, double> hourEndList = new Dictionary<string, double>();
+                    GetHourIntevalList(hourBeginningList, hourEndList);
+                    result = new Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, hourBeginningList, hourEndList, false);
+                    break;
+                default:
+                    throw new PortofolioException("Vehicle unknown.");
+            }
+            return result.GetChartData();
         }
 
         #region Insetion detail
@@ -214,6 +280,28 @@ namespace TNS.AdExpressI.Portofolio.Turkey
             gridResult.Schema = schemaFields;
             gridResult.ColumnsFixed = columnsFixed;
             gridResult.Data = gridData;
+        }
+
+        protected override void SetSort(ref GridResult gridResult, ref ResultTable resultTable, List<int> indexInResultTableAllowSortingList)
+        {
+            if (_webSession.CurrentTab == FrameWorkResultConstantes.Portofolio.SYNTHESIS
+                    || string.IsNullOrEmpty(_webSession.SortKey) ||
+               (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
+            {
+                if (_webSession.CurrentTab != FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                    resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                gridResult.SortKey = 1;
+                _webSession.Sorting = ResultTable.SortOrder.NONE;
+                _webSession.SortKey = "1";
+                _webSession.Save();
+            }
+            else
+            {
+                resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
+            }
         }
     }
 }
