@@ -71,6 +71,10 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.PresentAbsent.DAL\TNS.AdExpressI.PresentAbsent.DAL.csproj">
+      <Project>{234dc672-6124-4101-a1bc-2f8c9d75b50f}</Project>
+      <Name>TNS.AdExpressI.PresentAbsent.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.PresentAbsent\TNS.AdExpressI.PresentAbsent.csproj">
       <Project>{459f24ec-384d-404f-a6d2-f3b76c288a57}</Project>
       <Name>TNS.AdExpressI.PresentAbsent</Name>

@@ -2555,7 +2555,7 @@ namespace TNS.AdExpressI.PresentAbsent
 
         #endregion
 
-        private List<string> GetCompetitormedias(int position)
+        protected List<string> GetCompetitormedias(int position)
         {
             string mediaList = string.Empty;
             List<long> ids = new List<long>();
