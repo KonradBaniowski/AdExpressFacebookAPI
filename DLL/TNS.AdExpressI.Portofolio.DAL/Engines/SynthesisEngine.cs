@@ -118,7 +118,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return GetNumberBanner();
                 case PortofolioSynthesis.dataType.spotData:
                     return GetSpotData();
-				default: throw new PortofolioDALException("The synthesis result type is not defined.");
+                case PortofolioSynthesis.dataType.commercialItemNumber:
+                    return GetCommercialItemNumber();
+                default: throw new PortofolioDALException("The synthesis result type is not defined.");
 			}
 		}
 		#endregion
@@ -1661,5 +1663,15 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
+        #region Get Commercial Item Nuumber
+        /// <summary>
+        /// Get Commercial Item Nuumber
+        /// </summary>
+        /// <returns>Commercial Item Nuumber</returns>
+        public virtual DataSet GetCommercialItemNumber()
+        {
+            return null;
+        }
+        #endregion
     }
 }

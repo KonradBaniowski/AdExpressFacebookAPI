@@ -779,14 +779,17 @@
             <defaultProductDetailLevel id="20" name="groupe\annonceur" />
             <defaultProductDetailLevel id="10" name="annonceur" />
             <defaultProductDetailLevel id="95" name="annonceur\marque" />
+            <defaultProductDetailLevel id="97" name="advertiser\brand\adSlogan" />
             <defaultProductDetailLevel id="18" name="annonceur\produit" />
             <defaultProductDetailLevel id="96" name="advertiser\brand\product" />
             <defaultProductDetailLevel id="21" name="produit" />
+            <defaultProductDetailLevel id="98" name="marque\product\adSlogan" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
             <allowedProductLevelItem id="12" name="Classe"/>
             <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="83" name="adSlogan"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
@@ -795,8 +798,8 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
-            <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
+            <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
@@ -838,6 +841,13 @@
         </selections>       
         <results>
           <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -854,8 +864,9 @@
           <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
-              <!--<allowedUnit>kEuro</allowedUnit>-->
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -879,8 +890,11 @@
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -896,7 +910,9 @@
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -940,7 +956,9 @@
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -958,7 +976,9 @@
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>
@@ -976,7 +996,9 @@
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
               <allowedUnit>tl</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
             </allowedUnits>

@@ -399,6 +399,10 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
+            options.UnitOption.Unit.EnableMultiple = PageHelper.CanSelectMultipleUnit(WebApplicationParameters.CountryCode);
+            options.UnitOption.Unit.EnableGroups = PageHelper.CanDisplayGroups(WebApplicationParameters.CountryCode);
+            PageHelper.SetGroupItems(options.SiteLanguage, WebApplicationParameters.CountryCode, options.UnitOption.Unit);
+            PageHelper.SetGrp(WebApplicationParameters.CountryCode, options);
             return PartialView("_ResultOptions", options);
         }
 

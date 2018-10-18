@@ -2875,6 +2875,68 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
         }
 
+        public static string GetUnitFieldNameSumWithAliasMulti(WebSession webSession, DBConstantes.TableType.Type type)
+        {
+            StringBuilder sql = new StringBuilder();
+            string prefixe = "";
+            string adexprSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+            if (!string.IsNullOrEmpty(prefixe))
+                prefixe += ".";
+            else
+                prefixe = "";
+            switch (type)
+            {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try
+                    {
+                        List<UnitInformation> unitInformations = webSession.GetSelectedUnits();
+                        foreach (var unit in unitInformations)
+                        {
+                            if (unit.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                            {
+                                sql.AppendFormat("sum({0}{1}) as {2}, ", prefixe, unit.DatabaseField, unit.Id.ToString());
+                            }
+                            else
+                            {
+                                sql.AppendFormat("to_char({0}{1}) as {2}, ", prefixe, unit.DatabaseField, unit.Id.ToString());
+                            }
+                        }
+                        return sql.ToString().Substring(0, sql.Length - 2);
+                    }
+                    catch
+                    {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try
+                    {
+                        List<UnitInformation> unitInformations = webSession.GetSelectedUnits();
+                        foreach (var unit in unitInformations)
+                        {
+                            if (unit.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                            {
+                                sql.AppendFormat("sum({0}{1}) as {2}, ", prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                            }
+                            else
+                            {
+                                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                    sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}{2}) as {3}", adexprSchema, prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                                else
+                                    sql.AppendFormat("{0}{1} as {2}, ", prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                            }
+                        }
+                        return sql.ToString().Substring(0, sql.Length - 2);
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
+
         /// <summary>
         /// Détermine le nom du champ à utiliser pour l'unité
         /// 
@@ -4856,6 +4918,31 @@ namespace TNS.AdExpress.Web.Core.Utilities
             return sqlUnit.ToString();
         }
 
+        public static string GetUnitFieldsNameMulti(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe)
+        {
+            List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+            StringBuilder sqlUnit = new StringBuilder();
+            if (dataTablePrefixe != null && dataTablePrefixe.Length > 0)
+                dataTablePrefixe += ".";
+            else
+                dataTablePrefixe = "";
+            for (int i = 0; i < unitsList.Count; i++)
+            {
+                if (i > 0) sqlUnit.Append(",");
+                switch (type)
+                {
+                    case DBConstantes.TableType.Type.dataVehicle:
+                    case DBConstantes.TableType.Type.dataVehicle4M:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                        break;
+                    case DBConstantes.TableType.Type.webPlan:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                        break;
+                }
+            }
+            return sqlUnit.ToString();
+        }
+
         /// <summary>
         /// Get unit field to use in query
         /// </summary>
@@ -5032,6 +5119,47 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
         }
 
+        public static string GetUnitFieldsNameForPortofolioMulti(WebSession webSession, DBConstantes.TableType.Type type)
+        {
+            return GetUnitFieldsNameForPortofolioMulti(webSession, type, string.Empty);
+        }
+
+        public static string GetUnitFieldsNameForPortofolioMulti(WebSession webSession, DBConstantes.TableType.Type type, string prefixe)
+        {
+            try
+            {
+                List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList)
+                {
+                    if (currentUnit.Id != CstCustomerSessions.Unit.versionNb)
+                    {
+                        switch (type)
+                        {
+                            case DBConstantes.TableType.Type.dataVehicle:
+                            case DBConstantes.TableType.Type.dataVehicle4M:
+                                if (!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLDetailledSum("");
+                                break;
+                            case DBConstantes.TableType.Type.webPlan:
+                                if (!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLSum("");
+                                break;
+                        }
+                    }
+                }
+                return sqlUnit;
+            }
+            catch
+            {
+                throw new SQLGeneratorException("GetUnitFieldsNameForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
+            }
+        }
+
 
         /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media
@@ -5054,6 +5182,28 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         else first = false;
                         sqlUnit += currentUnit.GetSQLUnionSum();
                     }
+                }
+                return sqlUnit;
+            }
+            catch
+            {
+                throw new SQLGeneratorException("GetUnitFieldsNameUnionForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
+            }
+        }
+
+        public static string GetUnitFieldsNameUnionForPortofolioMulti(WebSession webSession)
+        {
+            try
+            {
+                List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList)
+                {
+                    if (!first) sqlUnit += ", ";
+                    else first = false;
+                    sqlUnit += currentUnit.GetSQLUnionSum();
                 }
                 return sqlUnit;
             }

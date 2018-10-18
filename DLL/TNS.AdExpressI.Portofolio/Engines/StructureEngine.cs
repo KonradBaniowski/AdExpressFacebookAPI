@@ -466,7 +466,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
-                unitInformationList = _webSession.GetValidUnitForResult();
+                unitInformationList = GetValidUnitForResult();
                     
 				t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
 
@@ -623,7 +623,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
                 dt = ds.Tables[0];
-                unitInformationList = _webSession.GetValidUnitForResult();
+                unitInformationList = GetValidUnitForResult();
 
                 object[,] gridData = new object[dt.Rows.Count +1, dt.Columns.Count + 2]; //Rows : +2 car hedaer et ligne total // Columns : +2 car ID et PID en plus
                 List<object> columns = new List<object>();
@@ -852,7 +852,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
-                unitInformationList = _webSession.GetValidUnitForResult();  
+                unitInformationList = GetValidUnitForResult();  
 
 				dtResult = new DataTable();
 				dtResult.Columns.Add("idUnit", System.Type.GetType("System.Int64"));
@@ -880,5 +880,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 		#endregion
 
-	}
+	    protected virtual List<UnitInformation> GetValidUnitForResult()
+	    {
+	        return _webSession.GetValidUnitForResult();
+	    }
+    }
 }

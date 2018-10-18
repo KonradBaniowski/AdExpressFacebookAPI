@@ -3184,3 +3184,7 @@ input[type=checkbox][disabled] + label {
     content: "\f0c8";
     color: #777;
 }
+
+.ui-widget-content a {
+    color: #ffffff!important;
+}

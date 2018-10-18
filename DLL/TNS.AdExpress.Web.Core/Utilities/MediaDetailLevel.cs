@@ -754,6 +754,9 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                                 #endregion
 
+                                case DetailLevelItemInformation.Levels.adSlogan:
+                                    return (true);
+
                                 default:
                                     return (false);
                             }

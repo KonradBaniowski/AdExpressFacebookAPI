@@ -95,7 +95,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             bool start = true;
             #endregion
 
-            List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
+            List<UnitInformation> unitsList = _webSession.GetSelectedUnits();
 
             DataSet ds = portofolioDAL.GetData();
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && unitsList != null && unitsList.Count > 0)
@@ -226,7 +226,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             }
             #endregion
 
-            List<UnitInformation> unitsList = _webSession.GetValidUnitForResult();
+            List<UnitInformation> unitsList = _webSession.GetSelectedUnits();
             int NbColumn = 9;
             object[,] gridData = new object[dt.Rows.Count, NbColumn + 2]; //+2 car ID et PID en plus
             List<object> columns = new List<object>();

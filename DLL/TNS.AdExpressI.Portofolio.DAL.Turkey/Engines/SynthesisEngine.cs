@@ -10,11 +10,14 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using AbsctractDAL = TNS.AdExpressI.Portofolio.DAL.Engines;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
 {
@@ -202,6 +205,65 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             }
             #endregion
 
+        }
+        #endregion
+
+        #region Get Commercial Item Nuumber
+        /// <summary>
+        /// Get Commercial Item Nuumber
+        /// </summary>
+        /// <returns>Commercial Item Nuumber</returns>
+        public override DataSet GetCommercialItemNumber()
+        {
+            #region Variables
+            CustomerPeriod customerPeriod = _webSession.CustomerPeriodSelected;
+            string table = string.Empty;
+            #endregion
+
+            #region Build Sql query
+            //Data table			
+            if (customerPeriod.IsSliding4M)
+            {
+                table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+            }
+            else
+            {
+                table = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+            }
+            string product = GetProductData();
+            string mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+            //list product hap
+            string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            string date = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + DBConstantes.Fields.DATE_MEDIA_NUM;
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.AppendFormat("select SUM(COM_ITEM_NB) as COM_ITEM_NB from ( ");
+            sql.AppendFormat("select ID_PROGRAM, SUM(COM_ITEM_NB) as COM_ITEM_NB ");
+            sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
+
+            // Period
+            sql.AppendFormat(" and {0}>={1} and {0}<={2}", date, customerPeriod.StartDate, customerPeriod.EndDate);
+
+            sql.Append(product);
+            sql.Append(productsRights);
+            sql.Append(mediaRights);
+            sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            sql.Append(listProductHap);
+            sql.AppendFormat(" group by ID_PROGRAM )");
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to exectue query" + sql, err));
+            }
+            #endregion
         }
         #endregion
     }

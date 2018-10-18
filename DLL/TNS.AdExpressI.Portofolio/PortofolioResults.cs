@@ -383,22 +383,7 @@ namespace TNS.AdExpressI.Portofolio
                     }
                 }
 
-                if (string.IsNullOrEmpty(_webSession.SortKey) ||
-                (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
-                {
-                    resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
-                    gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
-                    gridResult.SortKey = 1;
-                    _webSession.Sorting = ResultTable.SortOrder.NONE;
-                    _webSession.SortKey = "1";
-                    _webSession.Save();
-                }
-                else
-                {
-                    resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
-                    gridResult.SortOrder = _webSession.Sorting.GetHashCode();
-                    gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
-                }
+                SetSort(ref gridResult, ref resultTable, indexInResultTableAllowSortingList);
 
                 //table body rows
                 for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
@@ -1439,7 +1424,7 @@ namespace TNS.AdExpressI.Portofolio
         }
 
 
-        public Engines.StructureEngine GetStructureEngine(bool excel)
+        public virtual Engines.StructureEngine GetStructureEngine(bool excel)
         {
             Engines.StructureEngine result = null;
             switch (_vehicleInformation.Id)
@@ -1472,7 +1457,7 @@ namespace TNS.AdExpressI.Portofolio
             return result;
         }
 
-        public GridResult GetStructureGridResult(bool excel)
+        public virtual GridResult GetStructureGridResult(bool excel)
         {
             return GetStructureEngine(excel).GetGridResult();
         }
@@ -1698,6 +1683,26 @@ namespace TNS.AdExpressI.Portofolio
 
             return gridResult;
 
+        }
+
+        protected virtual void SetSort(ref GridResult gridResult, ref ResultTable resultTable, List<int> indexInResultTableAllowSortingList)
+        {
+            if (string.IsNullOrEmpty(_webSession.SortKey) ||
+               (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
+            {
+                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                gridResult.SortKey = 1;
+                _webSession.Sorting = ResultTable.SortOrder.NONE;
+                _webSession.SortKey = "1";
+                _webSession.Save();
+            }
+            else
+            {
+                resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
+            }
         }
 
         #endregion

@@ -610,6 +610,21 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
+                                case GenericColumnItemInformation.Columns.ProgramBeginningTime:
+                                case GenericColumnItemInformation.Columns.ProgramEndingTime:
+                                case GenericColumnItemInformation.Columns.CommercialBreakBeginningTime:
+                                case GenericColumnItemInformation.Columns.CommercialBreakEndingTime:
+                                    var s = row[Column.DataBaseField].ToString();
+                                    if (!string.IsNullOrEmpty(s))
+                                    {
+                                        DateTime d = ToDateTime(row[Column.DataBaseField].ToString());
+                                        tab[iCurLine, iCurColumn++] = new CellDate(d, string.Format("{{0:{0}}}", Column.StringFormat));
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
                                     if (_showTopDiffusion)
@@ -749,6 +764,26 @@ namespace TNS.AdExpressI.Portofolio.Engines
             }
         }
         #endregion
+
+        private DateTime ToDateTime(string datetime, char dateSpliter = '-', char timeSpliter = ':',
+            char millisecondSpliter = ',')
+        {
+            datetime = datetime.Trim();
+            datetime = datetime.Replace("  ", " ");
+            string[] body = datetime.Split(' ');
+            string[] date = body[0].Split(dateSpliter);
+            int hour = 0, minute = 0, second = 0, millisecond = 0;
+            if (body.Length == 2)
+            {
+                string[] tpart = body[1].Split(millisecondSpliter);
+                string[] time = tpart[0].Split(timeSpliter);
+                hour = Convert.ToInt32(time[0]);
+                minute = Convert.ToInt32(time[1]);
+                if (time.Length == 3) second = Convert.ToInt32(time[2]);
+                if (tpart.Length == 2) millisecond = Convert.ToInt32(tpart[1]);
+            }
+            return new DateTime(1970, 1, 1, hour, minute, second, millisecond);
+        }
 
     }
 }

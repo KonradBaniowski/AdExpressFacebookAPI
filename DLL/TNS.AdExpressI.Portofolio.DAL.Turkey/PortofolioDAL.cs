@@ -7,6 +7,7 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpressI.Portofolio.DAL.Engines;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using AbsctractDAL = TNS.AdExpressI.Portofolio.DAL;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
@@ -177,5 +178,36 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey
             var res = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, _timeSlot);
             return res.GetData();
         }
+
+        #region Get Struct Data
+        /// <summary>
+        /// Get structure data 
+        /// </summary>
+        /// <remarks>Used for tv or radio</remarks>
+        /// <returns>DataSet</returns>
+        protected override StructureEngine GetStructData()
+        {
+            Engines.StructureEngine res = null;
+
+            switch (_vehicleInformation.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                    res = new Engines.StructureEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, _hourBeginningList, _hourEndList);
+                    break;
+                default:
+                    throw (new PortofolioDALException("Impossible to identified current vehicle "));
+            }
+            return res;
+        }
+        #endregion
     }
 }

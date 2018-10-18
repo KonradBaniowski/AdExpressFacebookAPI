@@ -52,6 +52,7 @@
     <Compile Include="Engines\InsertionDetailEngine.cs" />
     <Compile Include="Engines\MediaDetailEngine.cs" />
     <Compile Include="Engines\PortofolioDetailEngine.cs" />
+    <Compile Include="Engines\StructureEngine.cs" />
     <Compile Include="Engines\SynthesisEngine.cs" />
     <Compile Include="PortofolioDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

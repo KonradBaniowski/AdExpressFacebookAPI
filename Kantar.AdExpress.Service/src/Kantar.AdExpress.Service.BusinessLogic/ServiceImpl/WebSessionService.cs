@@ -608,6 +608,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _webSession.Units = new List<CstWeb.CustomerSessions.Unit> {CstWeb.CustomerSessions.Unit.versionNb };
                 }
 
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
+                   && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                {
+                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.spot);
+                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.duration);
+                }
+
                 TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
                 if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
                 TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);

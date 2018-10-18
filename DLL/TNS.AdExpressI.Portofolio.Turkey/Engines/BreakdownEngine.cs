@@ -84,6 +84,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             string classCss = "acl1";
             string hourIntervallLabel = "";
             double totalUnit = 0;
+            AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             IFormatProvider fp = (_excel) ?
                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfoExcel
                 : WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
@@ -103,7 +104,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
                 dt = ds.Tables[0];
-                unitInformationList = _webSession.GetValidUnitForResult();
+                unitInformationList = _webSession.GetSelectedUnits();
 
                 object[,] gridData = new object[dt.Rows.Count + 1, dt.Columns.Count + 2]; //Rows : +2 car hedaer et ligne total // Columns : +2 car ID et PID en plus
                 List<object> columns = new List<object>();
@@ -125,10 +126,11 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
 
                 for (int i = 0; i < unitInformationList.Count; i++)
                 {
-                    colKey = string.Format("Key_{0}", i);
-                    string typeOfData = "string";//number
-                    if (unitInformationList[i].Id == WebCst.CustomerSessions.Unit.duration) typeOfData = "string";
-                    columns.Add(new { headerText = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage), key = colKey, dataType = typeOfData, width = "*" });
+                    colKey = string.Format("key{0}-unit-{1}", i, unitInformationList[i].Id);
+                    string typeOfData = "number";//number
+                    string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(unitInformationList[i].Id).StringFormat);
+                    if (unitInformationList[i].Id == WebCst.CustomerSessions.Unit.duration) format = "duration";
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(unitInformationList[i].WebTextId, _webSession.SiteLanguage), key = colKey, dataType = typeOfData, format = format, width = "*", columnCssClass = "colStyle", allowSorting = true });
                     schemaFields.Add(new { name = colKey });
                     // if (j == 0) columnsFixed.Add(new { columnKey = colKey, isFixed = true, allowFixing = false });                  
                 }
@@ -151,15 +153,8 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                     {
                         totalUnit += (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value) ? double.Parse(dr[unitInformationList[i].Id.ToString()].ToString()) : 0;
                     }
-                    if (unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
-                    {
-                        gridData[0, k] = Units.ConvertUnitValueAndPdmToString(totalUnit, unitInformationList[i].Id, false, fp);
-                    }
-                    else
-                    {
-                        gridData[0, k] = Units.ConvertUnitValueAndPdmToString(totalUnit, WebCst.CustomerSessions.Unit.duration, false, fp);
-                        //gridData[0, k] = string.Format(fp, unitInformationList[i].StringFormat, totalUnit);
-                    }
+
+                    gridData[0, k] = Units.ConvertUnitValue(totalUnit, unitInformationList[i].Id);
                 }
 
 
@@ -180,17 +175,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                     for (int i = 0; i < unitInformationList.Count; i++)
                     {
                         k++;
-                        if (unitInformationList[i].Id != WebCst.CustomerSessions.Unit.duration)
-                        {
-                            gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id, false, fp);
-                        }
-                        else
-                        {
-                            if (dr[unitInformationList[i].Id.ToString()] != System.DBNull.Value)
-                                gridData[currentLineIndex, k] = Units.ConvertUnitValueAndPdmToString(dr[unitInformationList[i].Id.ToString()], WebCst.CustomerSessions.Unit.duration, false, fp);
-                            //gridData[currentLineIndex, k] = string.Format(fp, unitInformationList[i].StringFormat, Convert.ToDouble(dr[unitInformationList[i].Id.ToString()]));
-                            else gridData[currentLineIndex, k] = string.Empty;
-                        }
+                        gridData[currentLineIndex, k] = Units.ConvertUnitValue(dr[unitInformationList[i].Id.ToString()], unitInformationList[i].Id);
                     }
 
                     currentLineIndex++;

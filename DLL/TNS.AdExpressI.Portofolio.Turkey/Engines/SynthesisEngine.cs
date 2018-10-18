@@ -45,14 +45,12 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             List<ICell> data = base.GetDataCellList();
             List<ICell> dataTemp = null;
 
-            #region Media Type
-            dataTemp = ComputeDataMediaType();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Media Owner
-            dataTemp = ComputeDataMediaOwner();
-            if (dataTemp != null) data.AddRange(dataTemp);
+            #region Commercial Item Number
+            if (_webSession.CustomerPeriodSelected.IsSliding4M)
+            {
+                dataTemp = ComputeCommercialItemNumber();
+                if (dataTemp != null) data.AddRange(dataTemp);
+            }
             #endregion
 
             #region Total Data Spot Number By Ecran
@@ -102,7 +100,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         #endregion
 
         #region ComputeDataMediaType
-        protected List<ICell> ComputeDataMediaType()
+        protected override List<ICell> ComputeDataMediaType()
         {
 
             #region Variables
@@ -127,7 +125,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         #endregion
 
         #region ComputeDataMediaOwner
-        protected List<ICell> ComputeDataMediaOwner()
+        protected override List<ICell> ComputeDataMediaOwner()
         {
 
             #region Variables
@@ -146,6 +144,30 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 data.Add(new CellLabel(GestionWeb.GetWebWord(3145, _webSession.SiteLanguage)));
                 data.Add(new CellLabel(mediaOwner));
             }
+            #endregion
+
+            return data;
+
+        }
+        #endregion
+
+        #region ComputeCommercialItemNumber
+        protected List<ICell> ComputeCommercialItemNumber()
+        {
+
+            #region Variables
+            int commercialItemNumber = 0;
+            List<ICell> data = null;
+            #endregion
+
+            #region Get Data
+            commercialItemNumber = GetCommercialItemNumber();
+            #endregion
+
+            #region Compute data
+            data = new List<ICell>(2);
+            data.Add(new CellLabel(GestionWeb.GetWebWord(3187, _webSession.SiteLanguage)));
+            data.Add(new CellNumber(commercialItemNumber));
             #endregion
 
             return data;
@@ -234,19 +256,18 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
 
             #region Variables
             List<ICell> data = null;
-            string nbrEcran = null;
+            decimal spotNumber = 0;
             #endregion
 
             #region Get Data
             if (dataEcran != null)
             {
-                nbrEcran = dataEcran.GetNumber();
+                spotNumber = dataEcran.GetSpotNumber();
             }
             #endregion
 
             #region Compute data
-            if (!string.IsNullOrEmpty(nbrEcran)
-                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
@@ -264,7 +285,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(3216, _webSession.SiteLanguage)));
 
-                CellNumber cell = new CellNumber(Convert.ToDouble(nbrEcran));
+                CellNumber cell = new CellNumber(Convert.ToDouble(spotNumber));
                 cell.StringFormat = "{0:max2}";
                 cell.AsposeFormat = 4;
                 cell.CssClass = "left";
@@ -283,19 +304,18 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
 
             #region Variables
             List<ICell> data = null;
-            string nbrEcran = null;
+            decimal duration = 0;
             #endregion
 
             #region Get Data
             if (dataEcran != null)
             {
-                nbrEcran = dataEcran.GetNumber();
+                duration = dataEcran.GetDuration();
             }
             #endregion
 
             #region Compute data
-            if (!string.IsNullOrEmpty(nbrEcran)
-                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
@@ -313,7 +333,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
 
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(3217, _webSession.SiteLanguage)));
-                CellDuration cD1 = new CellDuration(Convert.ToDouble(nbrEcran));
+                CellDuration cD1 = new CellDuration(Convert.ToDouble(duration));
                 cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
                 cD1.CssClass = "left";
                 data.Add(cD1);
@@ -504,6 +524,26 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                     return (dt.Rows[0]);
             }
             return null;
+        }
+        #endregion
+
+        #region GetCommercialItemNumber
+        /// <summary>
+        /// GetDataCategory
+        /// </summary>
+        protected int GetCommercialItemNumber()
+        {
+            DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.commercialItemNumber);
+            DataTable dt = ds.Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                var itemsNb = dt.Rows[0]["COM_ITEM_NB"].ToString();
+                if (string.IsNullOrEmpty(itemsNb))
+                    return 0;
+                else
+                    return (Convert.ToInt32(itemsNb));
+            }
+            return 0;
         }
         #endregion
 
