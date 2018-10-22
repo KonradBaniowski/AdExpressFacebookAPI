@@ -46,9 +46,9 @@
             <allowedMediaLevelItem id="3" name="Support"/>
             <allowedMediaLevelItem id="4" name="Centre d'interet"/>
             <allowedMediaLevelItem id="79" name="MediaOwner"/>
-            <allowedMediaLevelItem id="24" name="Program"/>
             <allowedMediaLevelItem id="6" name="Version"/>
             <allowedMediaLevelItem id="86" name="VersionName"/>
+            <allowedMediaLevelItem id="24" name="Program"/>
             <allowedMediaLevelItem id="80" name="programTypology"/>
             <allowedMediaLevelItem id="81" name="spotType"/>
             <allowedMediaLevelItem id="82" name="spotSubType"/>
@@ -62,9 +62,9 @@
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
-            <allowedMediaLevelItem id="14" name="Variété"/>
+            <!--<allowedMediaLevelItem id="14" name="Variété"/>
             <allowedMediaLevelItem id="17" name="Titre"/>
-            <allowedMediaLevelItem id="26" name="Pays"/>
+            <allowedMediaLevelItem id="26" name="Pays"/>-->
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
