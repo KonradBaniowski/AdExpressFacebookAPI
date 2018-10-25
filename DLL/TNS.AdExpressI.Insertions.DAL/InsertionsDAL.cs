@@ -1752,7 +1752,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     , listMediaAccess.Substring(0, listMediaAccess.Length), tData.Prefix);
             }
 
-            if (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0)
+            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && (_session.PrincipalMediaUniverses != null && _session.PrincipalMediaUniverses.Count > 0))
             {
                 sql.Append((vehicle.Id == Vehicles.names.mailValo)
                                ? _session.PrincipalMediaUniverses[0].GetSqlConditions(tData.Prefix, true, ReplaceMailValoByVmc)

@@ -496,7 +496,7 @@
       <columnItem id="202" name="Language of the Ad"   />                                                                     <!-- id_language_data_i -->
       <columnItem id="18" name="Duration" idDetailLevelMatching="19"/>                                                        <!-- duration -->
       <columnItem id="203" name="Version Name" />                                                                             <!-- slogan -->
-      <columnItem id="256" name="Version Code" idDetailLevelMatching="6"/>                                                    <!-- id_slogan -->
+      <columnItem id="256" name="Version Code" idDetailLevelMatching="87"/>                                                    <!-- id_slogan -->
       <columnItem id="204" name="Creative Agency"       />                                                                    <!-- id_creative_agency -->
       <columnItem id="205" name="Campaign"       />                                                                           <!-- campaign -->
       <columnItem id="257" name="Campaign Code"       />                                                                      <!-- id_campaign -->

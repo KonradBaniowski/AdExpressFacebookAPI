@@ -7,6 +7,7 @@
     string multiple = Model.UnitOption.Unit.EnableMultiple ? "multiple" : string.Empty;
     bool displayGroups = Model.UnitOption.Unit.EnableGroups;
     string data_max_options = "";
+    string monoUnit = "_mono";
 }
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
@@ -322,8 +323,8 @@
                 
                     @if (@Model.UnitOption.Unit.Visible)
                     {
-                        <div class="col-md-4">
-                            <div id="unitTypeContainer" class="panel-primary panel-options-results">
+                        <div class="col-md-4" id="unitTypeContainer">
+                            <div class="panel-primary panel-options-results">
                                 <div class="panel-heading head-options-results">
                                     <p class="panel-title options ">
                                         @GestionWeb.GetWebWord(304, Model.SiteLanguage)
@@ -372,6 +373,34 @@
                                                     }
                                                 }
                                             </select>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="unitTypeContainerMono">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.UnitOption.Unit.Id@monoUnit" class="selectdatepicker">
+                                                    @foreach (var item in Model.UnitOption.Unit.Items)
+                                                    {
+                                                        if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
+                                                        {
+                                                            <option value="@item.Value" selected>@item.Text</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    }
+                                                </select>
                                         </div>
                                     </div>
                                 </div>

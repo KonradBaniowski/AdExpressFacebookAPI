@@ -2035,6 +2035,18 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             return ("0");
         }
+
+        /// <summary>
+        /// GetInvestment by currency
+        /// </summary>
+        public virtual string GetInvestmentByCurrency(WebCst.CustomerSessions.Unit unit)
+        {
+
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(unit) && _dt.Columns.Contains(UnitsInformation.List[unit].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[unit].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[unit].Id.ToString()].ToString());
+
+            return ("0");
+        }
         #endregion
 
         #endregion

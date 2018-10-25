@@ -3185,6 +3185,6 @@ input[type=checkbox][disabled] + label {
     color: #777;
 }
 
-.ui-widget-content a {
+.ui-widget-content-a-prf {
     color: #ffffff!important;
 }

@@ -151,6 +151,52 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         }
         #endregion
 
+        #region ComputeDataInvestissementsTotal
+        /// <summary>
+        /// Compute Data Investissements Total
+        /// </summary>
+        /// <param name="dataUnit">data Unit</param>
+        /// <returns>List of cells</returns>
+        protected override List<ICell> ComputeDataInvestissementsTotal(AbstractResult.DataUnit dataUnit)
+        {
+
+            #region Variables
+            List<ICell> data = null;
+            List<ICell> allData = new List<ICell>();
+            string investment = string.Empty;
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
+            List<WebCst.CustomerSessions.Unit> units = new List<WebCst.CustomerSessions.Unit> { WebCst.CustomerSessions.Unit.tl, WebCst.CustomerSessions.Unit.euro, WebCst.CustomerSessions.Unit.usd };
+            #endregion
+
+            foreach (var unit in units)
+            {
+                #region Get Data
+                investment = dataUnit.GetInvestmentByCurrency(unit);
+                #endregion
+
+                #region Compute data
+
+                if (dataUnit != null && investment != null && investment.Length > 0)
+                {
+                    data = new List<ICell>(2);
+                    data.Add(new CellLabel(string.Format("{0} ({1})",
+                        GestionWeb.GetWebWord(2787, _webSession.SiteLanguage),
+                        UnitsInformation.Get(unit).GetUnitWebText(_webSession.SiteLanguage))));
+                    CellEuro cE = new CellEuro(double.Parse(investment));
+                    cE.StringFormat = UnitsInformation.Get(unit).StringFormat;
+                    cE.CssClass = "left";
+                    data.Add(cE);
+                    allData.AddRange(data);
+                }
+
+                #endregion
+            }
+
+            return allData;
+
+        }
+        #endregion
+
         #region ComputeCommercialItemNumber
         protected List<ICell> ComputeCommercialItemNumber()
         {

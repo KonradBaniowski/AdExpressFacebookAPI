@@ -990,24 +990,38 @@
                 }
             });
 
+            function getFirstUnit() {
+                return $('#unit').val()[0];
+            }
+
             $('#unit').selectpicker();
 
             $('#unit').on('change', function (e) {
                 userFilter.UnitFilter.Unit = $('#unit').val();
+                $('#unit_mono').selectpicker('val', getFirstUnit());
+            });
+
+            $('#unit_mono').selectpicker();
+            $('#unit_mono').selectpicker('val', getFirstUnit());
+
+            $('#unit_mono').on('change', function (e) {
+                userFilter.UnitFilter.Unit = $('#unit_mono').val();
+                $('#unit').selectpicker('val', $('#unit_mono').val());
             });
 
             $('#resultType').selectpicker();
 
             if ($('#resultType').val() == "6") {
                 $('#perioddetailTypeContainer').css({ 'display': "block" });
-                //$('#unitTypeContainer').css({ 'display': "block" });
+                $('#unitTypeContainerMono').css({ 'display': "block" });
             } else {
                 $('#perioddetailTypeContainer').css({ 'display': "none" });
-                //$('#unitTypeContainer').css({ 'display': "none" });
+                $('#unitTypeContainerMono').css({ 'display': "none" });
             }
 
             if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {
                 $('#unitTypeContainer').css({ 'display': "block" });
+
             } else {
                 $('#unitTypeContainer').css({ 'display': "none" });
             }
@@ -1016,10 +1030,10 @@
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
                 if (userFilter.ResultTypeFilter.ResultType == "6") {
                     $('#perioddetailTypeContainer').css({ 'display': "block" });
-                    //$('#unitTypeContainer').css({ 'display': "block" });
+                    $('#unitTypeContainerMono').css({ 'display': "block" });
                 } else {
                     $('#perioddetailTypeContainer').css({ 'display': "none" });
-                    //$('#unitTypeContainer').css({ 'display': "none" });
+                    $('#unitTypeContainerMono').css({ 'display': "none" });
                 }
 
                 if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {

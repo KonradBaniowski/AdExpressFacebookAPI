@@ -346,7 +346,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                             // idMedia = 2003 & dayOfWeek = Wednesday & ecran = 515
                             k++;
                             gridData[currentLineIndex, k] =
-                                string.Format("<a href='{0}?idMedia={1}&dayOfWeek={2}&ecran={3}' target='_blank'>{4}</a>",
+                                string.Format("<a href='{0}?idMedia={1}&dayOfWeek={2}&ecran={3}' target='_blank' class='ui-widget-content-a-prf'>{4}</a>",
                                 insertionDetailPath, _idMedia, dayName[i], dr["timeSlot"].ToString(), Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
 
                         }
