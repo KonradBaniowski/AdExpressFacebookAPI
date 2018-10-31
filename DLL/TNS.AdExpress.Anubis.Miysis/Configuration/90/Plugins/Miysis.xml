@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-  <CustomerMail server="frmitpu-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://km-adexpress.kantarmedia.fr" subject="AdExpress"/>
+  <CustomerMail server="172.22.181.20" port="25" from="adexTR@kantarmedia.com.tr" webServer="http://km-adexpress.kantarmedia.fr" subject="AdExpress"/>
   <!--<PdfPath path="\\KMCHMFS001\Adex\Multimedia\AdexDatas\FR\AdExCustomerFiles"/>-->
   <PdfPath path="C:\ClientFiles\"/>
   <!--<PdfPath path="\\frmitch-ws003\adexdatas\FR\AdExCustomerFiles"/>-->

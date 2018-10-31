@@ -118,9 +118,9 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>-->
-    <vehicle id="6"   name="télévision" >
+    <vehicle id="1"   name="télévision" >
       <detailColumns>
-        <detailColumn id="3">
+        <detailColumn id="8">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="perdu/gagné" privilegecode="197"/>
@@ -147,7 +147,6 @@
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
           <allowedMediaLevelItem id="4" name="Centre d'interet"/>
-          <allowedMediaLevelItem id="77" name="Media Group"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
           <allowedMediaLevelItem id="7" name="Groupe de société"/>

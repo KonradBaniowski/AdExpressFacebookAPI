@@ -10,6 +10,7 @@
   <evaliantCountryAccess applyEvaliantCountryAccess="false"/>
   <plurimediaEvol hidePlurimediaEvol="false"/>
   <purchaseMode use="false"/>
+  <spotSubType use="true"/>
   <showPickaNews use="false"/>
   <bannersFormat use="false"/>
   <retailer use="false"/>
