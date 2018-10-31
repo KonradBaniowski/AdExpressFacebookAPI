@@ -2,26 +2,24 @@
 <database>
   <customerConnections>
 
-    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"     dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"     dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"  dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
     <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
-    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--<defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
-    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"    dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--<defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
-    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"            dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
-    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"    dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="ADEXTR.TVM" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="TURKEY" password="TURKEY2016"    dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="ADEXTR.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
 
@@ -104,7 +102,7 @@
     <table enumId="69" description="Classif: Application Media" schemaEnumId="0" label="application_media" prefix="am"/>
     <table enumId="70" description="Recap Data: Pluri" schemaEnumId="4" label="recap_pluri" prefix="rcp"/>
     <table enumId="71" description="Recap Data: Press" schemaEnumId="4" label="recap_press" prefix="rcp"/>
-    <table enumId="72" description="Recap Data: TV" schemaEnumId="4" label="recap_tv" prefix="rcp"/>
+    <table enumId="72" description="Recap Data: TV" schemaEnumId="4" label="recap_tv_" prefix="rcp"/>
     <table enumId="73" description="Recap Data: Radio" schemaEnumId="4" label="recap_radio" prefix="rcp"/>
     <table enumId="74" description="Recap Data: Outdoor" schemaEnumId="4" label="recap_outdoor" prefix="rcp"/>
     <table enumId="75" description="Recap Data: Internet" schemaEnumId="4" label="recap_internet" prefix="rcp"/>
@@ -112,7 +110,7 @@
     <table enumId="77" description="Recap Data: Tactic" schemaEnumId="4" label="recap_tactic" prefix="rcp"/>
     <table enumId="78" description="Recap Data: Pluri Segment" schemaEnumId="4" label="recap_pluri_segment" prefix="rcp"/>
     <table enumId="79" description="Recap Data: Press Segment" schemaEnumId="4" label="recap_press_segment" prefix="rcp"/>
-    <table enumId="80" description="Recap Data: TV Segment" schemaEnumId="4" label="recap_tv_segment" prefix="rcp"/>
+    <table enumId="80" description="Recap Data: TV Segment" schemaEnumId="4" label="recap_tv_" prefix="rcp"/>
     <table enumId="81" description="Recap Data: Radio Segment" schemaEnumId="4" label="recap_radio_segment" prefix="rcp"/>
     <table enumId="82" description="Recap Data: Outdoor Segment" schemaEnumId="4" label="recap_outdoor_segment" prefix="rcp"/>
     <table enumId="83" description="Recap Data: Internet Segment" schemaEnumId="4" label="recap_internet_segment" prefix="rcp"/>
@@ -309,15 +307,24 @@
 
     <table enumId="269" description="Health : Canal" schemaEnumId="13" label="canal" prefix="cl"/>
 
+    <table enumId="271" description="Data : Spot TV" schemaEnumId="0" label="spot_tv" prefix="stv"/>
+    <table enumId="272" description="Data : Spot Sub Type" schemaEnumId="0" label="spot_sub_type" prefix="sst"/>
+
+    <table enumId="273" description="Recap Data : Spot Type" schemaEnumId="4" label="spot_type" prefix="stp"/>
+    <table enumId="274" description="Recap Data : Spot Sub Type" schemaEnumId="4" label="spot_sub_type" prefix="sst"/>
+    <table enumId="275" description="Recap Data : Ad Slogan" schemaEnumId="4" label="ad_slogan" prefix="ads"/>
+
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
+    <table enumId="401" description="Classif: Media Owner" schemaEnumId="0" label="media_owner" prefix="mo"/>
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_program_" prefix="allm"/>
     <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
-    <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_program_" prefix="allrm"/>
+    <view enumId="2" description="Classif: all Recap media" schemaEnumId="0" label="all_media_program_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
     <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>

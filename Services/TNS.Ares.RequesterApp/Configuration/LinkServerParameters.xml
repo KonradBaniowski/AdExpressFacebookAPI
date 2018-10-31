@@ -15,5 +15,5 @@
   <!-- Russia -->
   <server server_id="7" host="adexpr-ww.Gallup.tns" port="30000" />
   <!-- Turkey -->
-  <server server_id="8" host="turkey-server" port="30000" />
+  <server server_id="8" host="KMISBADXEXP" port="30000" />
 </servers>

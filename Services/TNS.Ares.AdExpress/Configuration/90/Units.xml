@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<units defaultCurrency="euro" defaultKCurrency="kEuro">
+<units defaultCurrency="tl" defaultKCurrency="kEuro">
   <unit id="usd"       format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"      field="expenditure_usd"      multimediaField="total_usd"        trendsField="expenditure" webTextId="2648" webTextSignId="3136" groupId="0" groupType="mono" groupTextId="1770"/>
   <unit id="tl"       format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"      field="expenditure_tl"        multimediaField="total_tl"         trendsField="expenditure" webTextId="3135" webTextSignId="3134" groupId="0" groupType="mono" groupTextId="1770"/>
   <unit id="euro"        format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"       field="expenditure_euro"  multimediaField="total_euro"       trendsField="expenditure" webTextId="938"  webTextSignId="2797" groupId="0" groupType="mono" groupTextId="1770"/>
@@ -12,9 +12,9 @@
   <unit id="grp"         format="max1"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"                                                                            webTextId="1679" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="volume"      format="max0"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellVolume"     field="volume"            multimediaField="totalvolume"                                webTextId="2991" groupId="1" groupType="multi" groupTextId="2061"/>
   <!--<unit id="versionNb"   format="max0"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="id_banners"        multimediaField="list_banners"                               webTextId="2479"/>-->
-  <unit id="versionNb"   format="max0"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="hashcode"          multimediaField="list_banners"                                 webTextId="2479" groupId="1" groupType="multi" groupTextId="2061"/>
+  <unit id="versionNb"   format="max0"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="id_slogan"          multimediaField="LIST_CREATIVES"                                 webTextId="3233" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="occurence"   format="max0"      baseId ="insertion"   assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="total_insertion"      trendsField="insertion"   webTextId="940" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="volumeMms"   format="max0"      baseId ="insertion"   assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="total_insertion"      trendsField="insertion"   webTextId="2216" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="numberPost"   format="max0"     baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellNumber"     field="number_post"       multimediaField="totalpost"                              webTextId="3029" groupId="1" groupType="multi" groupTextId="2061"/>
-  
+
 </units>

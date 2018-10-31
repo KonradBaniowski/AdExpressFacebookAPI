@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pluginConfiguration defaultConnectionId="alert">
+<pluginConfiguration defaultConnectionId="session">
   <dataAccessLayers>
     <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
   </dataAccessLayers>
