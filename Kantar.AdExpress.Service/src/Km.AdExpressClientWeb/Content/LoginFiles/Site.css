@@ -15,6 +15,11 @@
 	{
 	width: 50%;
 	}
+
+#privacy_wrapper, .right_side
+	{
+	width: 50%;
+	}
 }
 
 @media screen and (max-width : 1000px )
@@ -25,7 +30,7 @@
 		max-width: 100%;
 		
     }
-	
+
 .right_side
 	{
 	visibility: hidden;
@@ -45,6 +50,13 @@ div#contact_wrapper {
 	min-width: 320px;
 	width:  70%; 
 	}
+
+div#privacy_wrapper {
+	max-height: 360px;
+	min-width: 320px;
+	width:  70%; 
+	}
+
 #logo #position #logocontent   {
 	width: 40%;
 }	
@@ -65,7 +77,9 @@ div#contact_wrapper {
       #contact_wrapper {
       width: 70%;       
     } 
-
+    #privacy_wrapper {
+     width: 70%;      
+    } 
   }
    /*@media screen and (min-height: 700px) {
     #contact_wrapper {    
@@ -204,6 +218,9 @@ textarea {
 #footercontainer #footer a {
 	color: #FFFFFF;
 	text-decoration: none;
+}
+#footercontainer #footer a:hover {
+	color: #9c1e8d;
 }
 span #resetPassword u {
 	text-decoration: none;
@@ -618,6 +635,24 @@ div#position {
 	position: relative;
 }
 
+#privacy_wrapper {
+	background: white;
+	background-image: linear-gradient(to right, #FFFFFF, #FAFAFA ); 
+	border-radius: 3px;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 280px;
+	min-width: 315px;
+	overflow: hidden;
+	text-align: center;
+	width: 80%;
+	margin-bottom: 100px;
+	max-width: 1000px;
+	top: auto;
+	position: relative;
+}
+
 #login2 {
 	margin-left: auto;
 	margin-right: auto;
@@ -640,6 +675,16 @@ div#position {
 	/*width: 310px;*/
 }
 
+.privacy_left_side {
+	display: inline-block;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+	margin-right: 0px;
+    text-align: left;
+    text-align: justify;
+}
 
 
 .right_side {
@@ -824,6 +869,16 @@ div#position {
 	line-height: 1.1;
 }
 
+.privacy_left_side h1 {
+	font-size: 2.5em;
+	color: #282828;
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	font-weight: 300;
+	line-height: 1.1;
+}
+
 .feedEkList{
 	list-style: none outside none;
 	background-color: #FFFFFF;
@@ -913,6 +968,10 @@ div#position {
 
 .text-danger {
     color: #cd0a0a;
+}
+
+.text-color {
+	color: #9c1e8d ;
 }
 
 .pg-required-text {

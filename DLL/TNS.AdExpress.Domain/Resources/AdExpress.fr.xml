@@ -2525,5 +2525,7 @@
     <item mnemonic="w3241" type="System.String">!</item>
     <item mnemonic="w3242" type="System.String">!</item>
     <item mnemonic="w3243" type="System.String">!</item>
+    <item mnemonic="w3244" type="System.String">Politique de confidentialité</item>
+    <item mnemonic="w3245" type="System.String">Politique de cookies</item>
   </items>
 </localization>

@@ -12,42 +12,23 @@
 </head>
 
 
-<body id="loginpage">
-
-    <div id="headerlanguagecontainer">
-        <div id="headerlanguage">
-            @{ int counter = 0;  }
-
-            @*<span>*@
-            @foreach (WebLanguage currentLanguage in WebApplicationParameters.AllowedLanguages.Values)
-            {
-                var activeLink = (currentLanguage.Id == ViewBag.SiteLanguageCode) ? "active country-link" : "country-link";
-                <a href="#" data-language-id="@currentLanguage.Id" data-url-action="/Account/ChangeLanguage" class="@activeLink">@currentLanguage.Name.Substring(0, 2).ToUpper()</a> if (WebApplicationParameters.AllowedLanguages.Values.Count > 1 && counter < WebApplicationParameters.AllowedLanguages.Values.Count - 1)
-                {
-                    @HttpUtility.HtmlDecode("|")
-                }
-
-                counter++;
-            }
-            @*</span>*@
-
-        </div>
-    </div>
+<body id="privacypage">
 
     <div id="header">
         <div id="logo">
             <div id="position">
                 <div id="logocontent">
-                    <img id="km_logo" src="/Content/LoginFiles/images/@WebApplicationParameters.CountryCode/All_master_logos_Small_300dpi_Kantar_Media.png" alt="Kantar Media">
+                    <a href="javascript:history.back()">
+                        <img id="km_logo" src="/Content/LoginFiles/images/@WebApplicationParameters.CountryCode/All_master_logos_Small_300dpi_Kantar_Media.png" alt="Kantar Media">
+                    </a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <div id="contact_wrapper">
-        <div class="left_side">
-            <h1>AdExpress</h1>
+    <div id="privacy_wrapper">
+        <div class="privacy_left_side">
             @RenderBody()
         </div>
         <div id="bottom">
@@ -59,14 +40,13 @@
 
     </div>
 
-
-
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/ajax")
     @Scripts.Render("~/bundles/language-choice")
 
 
     @RenderSection("scripts", required: false)
 </body>
+
 </html>
+
+
