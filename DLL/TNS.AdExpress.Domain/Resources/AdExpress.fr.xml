@@ -2527,5 +2527,10 @@
     <item mnemonic="w3243" type="System.String">!</item>
     <item mnemonic="w3244" type="System.String">Politique de confidentialité</item>
     <item mnemonic="w3245" type="System.String">Politique de cookies</item>
+    <item mnemonic="w3246" type="System.String">Ce site internet utilise des cookies et d'autres technologies similaires afin de collecter des informations sans lesquels il ne pourrait pas fonctionner normalement. Pour plus d’informations, nous vous invitons à consulter la</item>
+    <item mnemonic="w3247" type="System.String">Je comprends !</item>
+    <item mnemonic="w3248" type="System.String">Nécessaire</item>
+    <item mnemonic="w3249" type="System.String">Ces cookies sont nécessaires au bon fonctionnement du site.</item>
+    <item mnemonic="w3250" type="System.String">Cookies et Confidentialité</item>
   </items>
 </localization>

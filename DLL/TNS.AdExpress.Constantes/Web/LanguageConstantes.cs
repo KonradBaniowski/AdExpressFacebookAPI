@@ -296,6 +296,13 @@ namespace TNS.AdExpress.Constantes.Web
         public const long RequiredFields = 3133;
         public const long IdSlogansLabel = 1888;
         public const long UnitSelectionLabel = 3149;
+
+        public const long CookiesMessage = 3246;
+        public const long MoreInfoLabel = 3245;
+        public const long AcceptBtnLabel = 3247;
+        public const long FixedCookieTypeLabel = 3248;
+        public const long FixedCookieTypeDesc = 3249;
+        public const long CookiesTitle = 3250;
         #endregion
     }
 }

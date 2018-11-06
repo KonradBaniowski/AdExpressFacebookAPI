@@ -200,7 +200,14 @@ namespace Km.AdExpressClientWeb.I18n
                 KantarUrl = GestionWeb.GetWebWord(LanguageConstantes.KantarUrl, siteLanguage),
                 ReturToLogin = GestionWeb.GetWebWord(LanguageConstantes.ReturToLogin, siteLanguage),
                 RequiredFields = GestionWeb.GetWebWord(LanguageConstantes.RequiredFields, siteLanguage),
-                IdSlogansLabel = GestionWeb.GetWebWord(LanguageConstantes.IdSlogansLabel, siteLanguage)
+                IdSlogansLabel = GestionWeb.GetWebWord(LanguageConstantes.IdSlogansLabel, siteLanguage),
+
+                CookiesMessage = GestionWeb.GetWebWord(LanguageConstantes.CookiesMessage, siteLanguage),
+                MoreInfoLabel = GestionWeb.GetWebWord(LanguageConstantes.MoreInfoLabel, siteLanguage),
+                AcceptBtnLabel = GestionWeb.GetWebWord(LanguageConstantes.AcceptBtnLabel, siteLanguage),
+                FixedCookieTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeLabel, siteLanguage),
+                FixedCookieTypeDesc = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeDesc, siteLanguage),
+                CookiesTitle = GestionWeb.GetWebWord(LanguageConstantes.CookiesTitle, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

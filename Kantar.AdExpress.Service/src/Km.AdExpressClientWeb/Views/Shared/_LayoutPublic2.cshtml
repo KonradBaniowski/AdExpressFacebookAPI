@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title | AdExpress</title>   
     @Styles.Render("~/Content/Login-files")  
+    @if (WebApplicationParameters.EnableGdpr)
+    {
+        @Styles.Render("~/Content/Gdpr")
+    }
     <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />  
 </head>
 
@@ -55,7 +59,14 @@
     </div>
 
     <div id="footercontainer">
-        <div id="footer">&copy; @DateTime.Now.Year @GestionWeb.GetWebWord(3115, ViewBag.SiteLanguageCode) | <a href="@Url.Action("Index", "PrivacyPolicy", new { siteLanguage = ViewBag.SiteLanguageCode})" class="">@GestionWeb.GetWebWord(3244, ViewBag.SiteLanguageCode)</a> | <a href="@Url.Action("Index", "CookiePolicy", new { siteLanguage = ViewBag.SiteLanguageCode})" class="">@GestionWeb.GetWebWord(3245, ViewBag.SiteLanguageCode)</a></div>
+        <div id="footer">
+            &copy; @DateTime.Now.Year @GestionWeb.GetWebWord(3115, ViewBag.SiteLanguageCode)
+            @if(WebApplicationParameters.EnableGdpr) {
+                <text>
+                |  <a href="@Url.Action("Index", "PrivacyPolicy", new {siteLanguage = ViewBag.SiteLanguageCode})" class="">@GestionWeb.GetWebWord(3244, ViewBag.SiteLanguageCode)</a> | <a href="@Url.Action("Index", "CookiePolicy", new {siteLanguage = ViewBag.SiteLanguageCode})" class="">@GestionWeb.GetWebWord(3245, ViewBag.SiteLanguageCode)</a>
+                </text>
+            }
+        </div>
 
     </div>
 

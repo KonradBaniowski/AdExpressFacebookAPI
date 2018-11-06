@@ -227,6 +227,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Use Purchase Mode
         /// </summary>
         protected static bool _showPickaNews = false;
+        /// <summary>
+        /// Enable GDPR
+        /// </summary>
+        protected static bool _enableGdpr = false;
         #endregion
 
         #region Contructeur
@@ -239,6 +243,7 @@ namespace TNS.AdExpress.Domain.Web {
 
             _webSiteName=WebParamtersXL.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _webSiteUri= WebParamtersXL.LoadSiteUri(new XmlReaderDataSource(_configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
+            _enableGdpr = WebParamtersXL.LoadEnableGdpr(new XmlReaderDataSource(_configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
 
             _countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _countryConfigurationDirectoryRoot = _configurationDirectoryRoot + _countryCode + @"\";
@@ -615,6 +620,13 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public static CustomStyles CustomStyles {
             get { return _customStyles; }
+        }
+        /// <summary>
+        /// Get Enable GDPR
+        /// </summary>
+        public static bool EnableGdpr
+        {
+            get { return _enableGdpr; }
         }
         #endregion
 

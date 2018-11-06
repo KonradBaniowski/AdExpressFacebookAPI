@@ -247,5 +247,12 @@ namespace KM.Framework.Constantes
 	    public string IdSlogansLabel { get; set; } //1888
 
         public string UnitSelectionLabel { get; set; } //3149
+
+        public string CookiesMessage { get; set; } //3246
+        public string MoreInfoLabel { get; set; } //3245
+        public string AcceptBtnLabel { get; set; } //3247
+        public string FixedCookieTypeLabel { get; set; } //3248
+        public string FixedCookieTypeDesc { get; set; } //3249
+        public string CookiesTitle { get; set; } //3250
     }
 }

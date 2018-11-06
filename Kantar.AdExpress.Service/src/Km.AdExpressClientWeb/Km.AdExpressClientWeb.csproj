@@ -287,6 +287,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\gdpr.css" />
     <Content Include="Content\img\48\export_logo_km.png" />
     <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\48\logo_kantarmedia.png" />
@@ -319,6 +320,8 @@
     <Content Include="Content\site-En.css" />
     <Content Include="Content\site-Fr.css" />
     <Content Include="Content\site-Tk.css" />
+    <Content Include="Scripts\gdpr\gdpr.js" />
+    <Content Include="Scripts\gdpr\jquery.ihavecookies.js" />
     <Content Include="_app_offline.htm" />
     <Content Include="Configuration\90\AdExpressConfiguration.xml" />
     <Content Include="Configuration\90\AdNetTrackDetailLevel.xml" />
