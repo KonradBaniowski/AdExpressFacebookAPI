@@ -17,6 +17,7 @@ using System.Web.Routing;
 using Aspose.Cells.Drawing;
 using Aspose.Cells.Rendering;
 using Infragistics.Imaging;
+using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
@@ -180,7 +181,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
             this.cInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
-            
+
             data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
@@ -265,7 +266,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             if (detailLevel != null)
                             {
                                 Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
-                            
+
                                 headerBase.Add(headerTmp);
                             }
                         }
@@ -1014,7 +1015,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 cellRow++;
 
-               
+
 
 
                 #region New version
@@ -1327,7 +1328,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             foreach (HeaderBase item in root)
             {
-                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
+                if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                    && item.Count > 0) || item is HeaderGroup)
                 {
                     int tmp = NbRow(item, session);
 
@@ -1349,14 +1353,20 @@ namespace Km.AdExpressClientWeb.Controllers
             int nbCol = 0;
             int maxCol = 0;
 
-            if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && root.Count > 0) || root is HeaderGroup)
+            if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                && root.Count > 0) || root is HeaderGroup)
             {
                 if (root.Capacity == 0)
                     maxCol++;
 
                 foreach (HeaderBase item in root)
                 {
-                    if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
+                    if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                        || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                        || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                        && item.Count > 0) || item is HeaderGroup)
                     {
                         int tmp = NbColumn(item, session);
 
@@ -1408,7 +1418,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     BorderStyle(sheet, rowStart, colStart, CellBorderType.Hair, HeaderBorderTab);
                 }
 
-                if (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && header.Count > 0)
+                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                    && header.Count > 0)
                 {
                     DrawHeaders(header, sheet, session, rowStart + rowSpan, colStart);
                 }

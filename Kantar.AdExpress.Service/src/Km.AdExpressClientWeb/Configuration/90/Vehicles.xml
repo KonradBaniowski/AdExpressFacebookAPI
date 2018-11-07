@@ -37,8 +37,8 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                    <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                        <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                      <!-- Variété -->
-        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>             <!-- Groupe d'agences -->
-        <allowedMediaLevelItem>agency</allowedMediaLevelItem>                       <!-- Agence -->
+        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>             --><!-- Groupe d'agences --><!--
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>                       --><!-- Agence -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>                        <!-- Titre -->
         <allowedMediaLevelItem>country</allowedMediaLevelItem>                      <!-- Pays -->
         <!-- Pays -->
