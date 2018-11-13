@@ -78,8 +78,11 @@ namespace TNS.AdExpress.Web.Core.Result{
 					detailLevelItemInformation==DetailLevelItemInformation.Levels.subSector||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.group ||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.segment ||
-                    detailLevelItemInformation == DetailLevelItemInformation.Levels.subBrand 
-                    )
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.subBrand ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.program ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.programTypology ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.spotSubType ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.adSlogan)
                 {
 
                     //return(_link.Replace("{0}",_webSession.IdSession).Replace("{1}",_classificationId.ToString()).Replace("{2}",_level.ToString()));

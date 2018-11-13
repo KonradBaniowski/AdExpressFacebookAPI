@@ -99,7 +99,11 @@
     <Compile Include="MediaBrand\MediaSellerLevelListDALs.cs" />
     <Compile Include="MediaBrand\TitleLevelListDAL.cs" />
     <Compile Include="MediaBrand\VehicleLevelListDAL.cs" />
+    <Compile Include="ProductBrand\AdSloganLevelListDAL.cs" />
     <Compile Include="ProductBrand\AdvertiserLevelListDAL.cs" />
+    <Compile Include="ProductBrand\ProgramLevelListDAL.cs" />
+    <Compile Include="ProductBrand\ProgramTypologyLevelListDAL.cs" />
+    <Compile Include="ProductBrand\SpotSubTypeLevelListDAL.cs" />
     <Compile Include="ProductBrand\VpProductLevelListDAL.cs" />
     <Compile Include="ProductBrand\vpSegmentLevelListDAL.cs" />
     <Compile Include="ProductBrand\vpSubSegmentLevelListDAL.cs" />

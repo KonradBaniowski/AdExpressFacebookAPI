@@ -1289,7 +1289,11 @@ namespace TNS.AdExpressI.PresentAbsent
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand)
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.program) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.programTypology) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.spotSubType) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.adSlogan)
                 )
                 && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null
                 )

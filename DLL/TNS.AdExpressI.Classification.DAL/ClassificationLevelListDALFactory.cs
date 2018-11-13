@@ -280,6 +280,22 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.siteAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.siteException:
                     return new MediaBrand.SiteLevelListDAL(_language, _source);
+                //Create a list of porgram turkey level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTkAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTkException:
+                    return new ProductBrand.ProgramLevelListDAL(_language, _source);
+                //Create a list of porgram typology level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypologyException:
+                    return new ProductBrand.ProgramTypologyLevelListDAL(_language, _source);
+                //Create a list of spot sub type level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeException:
+                    return new ProductBrand.SpotSubTypeLevelListDAL(_language, _source);
+                //Create a list of Ad Slogan level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.adSloganException:
+                    return new ProductBrand.AdSloganLevelListDAL(_language, _source);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }

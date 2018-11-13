@@ -736,6 +736,30 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     tree.Checked = true;
                     webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.subBrand, tree);
                     break;
+                case DetailLevelItemInformation.Levels.program:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programTkAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programTkAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.program, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.programTypology:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.programTypology, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.spotSubType:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.spotSubType, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.adSlogan:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.adSlogan, tree);
+                    break;
             }
 
             webSession.Save();

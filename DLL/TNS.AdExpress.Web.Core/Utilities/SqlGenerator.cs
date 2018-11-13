@@ -5426,6 +5426,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case (ClassificationConstantes.Level.type.brand):
                         sql += " " + tablePrefixe + ".id_brand in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.brandAccess) + ")";
                         break;
+                    case (ClassificationConstantes.Level.type.program):
+                        sql += " " + tablePrefixe + ".id_program in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programTkAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.programTypology):
+                        sql += " " + tablePrefixe + ".id_program_typology in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programTypologyAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.spotSubType):
+                        sql += " " + tablePrefixe + ".id_spot_sub_type in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.spotSubTypeAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.adSlogan):
+                        sql += " " + tablePrefixe + ".id_ad_slogan in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.adSloganAccess) + ")";
+                        break;
                 }
             }
 
