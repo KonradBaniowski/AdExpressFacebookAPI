@@ -1889,6 +1889,10 @@
     <Content Include="Views\PrivacyPolicy\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPrivacy.cshtml" />
     <Content Include="Views\CookiePolicy\Index.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyFr.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyEn.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicyFr.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicyEn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
