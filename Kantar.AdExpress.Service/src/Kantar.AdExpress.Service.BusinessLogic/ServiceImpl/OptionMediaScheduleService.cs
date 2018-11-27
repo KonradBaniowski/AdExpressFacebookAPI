@@ -132,10 +132,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY &&
                     (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
                      || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
                      || _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES))
                 {
-                    genericDetailLevelOption.DefaultDetail.SelectedId = "3";
+                        genericDetailLevelOption.DefaultDetail.SelectedId = "3";
 
                     // Niveau de détail par défaut
                     ArrayList levelsIds = new ArrayList();

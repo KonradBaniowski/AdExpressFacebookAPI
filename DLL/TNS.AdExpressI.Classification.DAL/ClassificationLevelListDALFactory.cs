@@ -288,6 +288,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.programTypologyException:
                     return new ProductBrand.ProgramTypologyLevelListDAL(_language, _source);
+                //Create a list of porgram genre level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programGenreAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programGenreException:
+                    return new ProductBrand.ProgramGenreLevelListDAL(_language, _source);
                 //Create a list of spot sub type level 's  items		
                 case TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeException:

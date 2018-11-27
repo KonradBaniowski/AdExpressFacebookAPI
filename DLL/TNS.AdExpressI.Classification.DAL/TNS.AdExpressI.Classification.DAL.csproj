@@ -101,6 +101,7 @@
     <Compile Include="MediaBrand\VehicleLevelListDAL.cs" />
     <Compile Include="ProductBrand\AdSloganLevelListDAL.cs" />
     <Compile Include="ProductBrand\AdvertiserLevelListDAL.cs" />
+    <Compile Include="ProductBrand\ProgramGenreLevelListDAL.cs" />
     <Compile Include="ProductBrand\ProgramLevelListDAL.cs" />
     <Compile Include="ProductBrand\ProgramTypologyLevelListDAL.cs" />
     <Compile Include="ProductBrand\SpotSubTypeLevelListDAL.cs" />

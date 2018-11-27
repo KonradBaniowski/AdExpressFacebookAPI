@@ -45,14 +45,6 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             List<ICell> data = base.GetDataCellList();
             List<ICell> dataTemp = null;
 
-            #region Commercial Item Number
-            if (_webSession.CustomerPeriodSelected.IsSliding4M)
-            {
-                dataTemp = ComputeCommercialItemNumber();
-                if (dataTemp != null) data.AddRange(dataTemp);
-            }
-            #endregion
-
             #region Total Data Spot Number By Ecran
             dataTemp = ComputeTotalDataSpotNumberByEcran(_dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
@@ -63,10 +55,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
-            #region Total Duration spot by Ecran
-            dataTemp = ComputeDataAverageDuration(_dataUnit, _dataEcran);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
+            
 
             return data;
         }
@@ -198,7 +187,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         #endregion
 
         #region ComputeCommercialItemNumber
-        protected List<ICell> ComputeCommercialItemNumber()
+        protected override List<ICell> ComputeCommercialItemNumber()
         {
 
             #region Variables
@@ -393,7 +382,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         #endregion
 
         #region ComputeDataAverageDuration
-        protected virtual List<ICell> ComputeDataAverageDuration(AbstractResult.DataUnit dataUnit, AbstractResult.DataEcran dataEcran)
+        protected override List<ICell> ComputeDataAverageDuration(AbstractResult.DataUnit dataUnit, AbstractResult.DataEcran dataEcran)
         {
 
             #region Variables
@@ -434,6 +423,60 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(3218, _webSession.SiteLanguage)));
                 CellDuration cD1 = new CellDuration(Convert.ToDouble(averageDuration));
+                cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
+                cD1.CssClass = "left";
+                data.Add(cD1);
+
+            }
+            #endregion
+
+            return data;
+
+        }
+        #endregion
+
+        #region ComputeDataAverageDurationEcran
+        protected override List<ICell> ComputeDataAverageDurationEcran(AbstractResult.DataEcran dataEcran)
+        {
+
+            #region Variables
+            List<ICell> data = null;
+            decimal averageDurationEcran = 0;
+            string nbrEcran = null;
+            #endregion
+
+            #region Get Data
+            if (dataEcran != null)
+            {
+                nbrEcran = dataEcran.GetNumber();
+                if (nbrEcran.Length > 0)
+                {
+                    averageDurationEcran = dataEcran.GetAverageDurationInBreak();
+                }
+            }
+            #endregion
+
+            #region Compute data
+            if (nbrEcran != null && nbrEcran.Length > 0
+                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+                && dataEcran.IsAlertModule)
+            {
+
+                // Durée moyenne d'un écran
+
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GetAverageDurationOfSpostLabel()));
+                CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
                 cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
                 cD1.CssClass = "left";
                 data.Add(cD1);

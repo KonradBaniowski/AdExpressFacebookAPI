@@ -303,5 +303,31 @@ namespace TNS.AdExpressI.Portofolio.Turkey
                 gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
             }
         }
+
+        /// <summary>
+        /// Get hour interval list
+        /// </summary>
+        /// <param name="hourBeginningList">hour begininng list</param>
+        /// <param name="hourEndList">hour end list</param>
+        protected override void GetHourIntevalList(Dictionary<string, double> hourBeginningList, Dictionary<string, double> hourEndList)
+        {
+            if (hourBeginningList == null) hourBeginningList = new Dictionary<string, double>();
+            if (hourEndList == null) hourEndList = new Dictionary<string, double>();
+
+            switch (_vehicleInformation.Id)
+            {
+                case AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                    hourBeginningList.Add("0007", 240000); hourEndList.Add("0007", 70000);
+                    hourBeginningList.Add("0712", 70000); hourEndList.Add("0712", 120000);
+                    hourBeginningList.Add("1214", 120000); hourEndList.Add("1214", 140000);
+                    hourBeginningList.Add("1417", 140000); hourEndList.Add("1417", 170000);
+                    hourBeginningList.Add("1719", 170000); hourEndList.Add("1719", 190000);
+                    hourBeginningList.Add("1922", 190000); hourEndList.Add("1922", 220000);
+                    hourBeginningList.Add("2224", 220000); hourEndList.Add("2224", 240000);
+                    break;
+                default:
+                    throw new PortofolioException("GetHourIntevalList(): Vehicle unknown.");
+            }
+        }
     }
 }

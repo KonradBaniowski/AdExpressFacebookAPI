@@ -81,6 +81,7 @@ namespace TNS.AdExpress.Web.Core.Result{
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.subBrand ||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.program ||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.programTypology ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.programGenre ||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.spotSubType ||
                     detailLevelItemInformation == DetailLevelItemInformation.Levels.adSlogan)
                 {

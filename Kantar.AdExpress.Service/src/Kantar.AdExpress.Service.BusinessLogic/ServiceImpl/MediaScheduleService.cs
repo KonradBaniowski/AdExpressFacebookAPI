@@ -748,6 +748,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     tree.Checked = true;
                     webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.programTypology, tree);
                     break;
+                case DetailLevelItemInformation.Levels.programGenre:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programGenreAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programGenreAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.programGenre, tree);
+                    break;
                 case DetailLevelItemInformation.Levels.spotSubType:
                     levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id.ToString());
                     tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id, levels[id]);

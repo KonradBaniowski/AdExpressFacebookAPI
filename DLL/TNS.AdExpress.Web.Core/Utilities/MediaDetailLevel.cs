@@ -736,6 +736,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                 case DetailLevelItemInformation.Levels.subBrand:
                                 case DetailLevelItemInformation.Levels.program:
                                 case DetailLevelItemInformation.Levels.programTypology:
+                                case DetailLevelItemInformation.Levels.programGenre:
                                 case DetailLevelItemInformation.Levels.spotSubType:
                                 case DetailLevelItemInformation.Levels.adSlogan:
                                     return (true);

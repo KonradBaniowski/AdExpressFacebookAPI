@@ -17,7 +17,7 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
         public ProgramTypologyLevelListDAL(int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), language, source) {
+			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology), language, source) {
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand
         /// <param name="source">Data source</param>
         /// <param name="dbSchema">Schema</param>
         public ProgramTypologyLevelListDAL(int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), language, source, dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology), language, source, dbSchema)
         {
         }
         /// <summary>
@@ -37,7 +37,7 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
         public ProgramTypologyLevelListDAL(string idList, int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), idList, language, source) {
+			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology), idList, language, source) {
         }
         /// <summary>
         /// Constructor
@@ -47,7 +47,7 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand
         /// <param name="source">Data source</param>
         /// <param name="dbSchema">Schema</param>
         public ProgramTypologyLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), idList, language, source, dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology), idList, language, source, dbSchema)
         {
         }
         #endregion

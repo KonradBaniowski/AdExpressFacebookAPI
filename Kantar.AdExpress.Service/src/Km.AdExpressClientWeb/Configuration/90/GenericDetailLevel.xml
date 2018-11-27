@@ -93,6 +93,7 @@
     <level id="85" name="programComItemPositionType"      webTextId="3155" dbId="id_program_com_item_pos_type" dbLabel="program_com_item_pos_type" dbTable="program_com_item_pos_type" dbTablePrefixe="pcipt"/>
     <level id="86" name="VersionName" webTextId="3156" dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="slogan" dbLabelAlias="slogan" convertNullDbLabel="true" dbTable="slogan" dbTablePrefixe="slo"/>
     <level id="87" name="VersionTk" webTextId="1888" dbId="id_slogan" dbLabel="id_slogan" dbTablePrefixe="slo"/>
+    <level id="88" name="programGenre"      webTextId="3240" dbId="id_program_genre" dbLabel="program_genre" dbTable="program_genre" dbTablePrefixe="pgg"/>
   </detaillevelItems>
 
   <detailLevels>

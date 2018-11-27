@@ -238,6 +238,77 @@
 
             }
 
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var nbToFillWithZero = 6 - s.length;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.key.length > 0 && (elem.key.startsWith("PERIOD") || elem.key.startsWith("PERIOD_COMP"))) {
+                            if (elem.key.endsWith("duration"))
+                                elem.formatter = DurationFormatter;
+                            else if (elem.key.endsWith("pages"))
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        }
+                        else if (elem.key.length > 0 && elem.key.startsWith("EVOL")) {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
             function CallMediaScheduleResult(zoomDateParam) {
 
                 $("#gridMessage").addClass("hide");
@@ -274,7 +345,7 @@
                             }
                             else {
                                 dataTreeGrid = data.datagrid;
-                                cols = data.columns;
+                                cols = GetColumnsFormatter(data.columns);
                                 colsFixed = data.columnsfixed;
                                 needFixedColumns = data.needfixedcolumns;
                                 hasMSCreatives = data.hasMSCreatives;
@@ -308,7 +379,7 @@
             }
 
             CallMediaScheduleResult(paramsUrl.ZoomDate);
-
+           
             function CallMSCreativesResult(zoomDateParam) {
 
                 zoomDate = zoomDateParam;

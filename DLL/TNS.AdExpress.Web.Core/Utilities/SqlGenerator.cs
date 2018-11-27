@@ -5432,6 +5432,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case (ClassificationConstantes.Level.type.programTypology):
                         sql += " " + tablePrefixe + ".id_program_typology in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programTypologyAccess) + ")";
                         break;
+                    case (ClassificationConstantes.Level.type.programGenre):
+                        sql += " " + tablePrefixe + ".id_program_genre in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programGenreAccess) + ")";
+                        break;
                     case (ClassificationConstantes.Level.type.spotSubType):
                         sql += " " + tablePrefixe + ".id_spot_sub_type in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.spotSubTypeAccess) + ")";
                         break;

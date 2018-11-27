@@ -9,6 +9,7 @@ using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Portofolio.DAL;
@@ -182,6 +183,35 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                     start = false;
                 }
                 #endregion
+
+                if (dtResult.Rows.Count > 0)
+                {
+                    int slotIndex = 0;
+                    for (int i = 0; i < dtResult.Rows.Count; i = i + 3)
+                    {
+                        timeSlot = dtResult.Rows[i]["timeSlot"].ToString();
+                        var timeSlotHour = Convert.ToInt32(timeSlot.Substring(0, 2));
+
+                        if (timeSlotHour > slotIndex)
+                        {
+                            var insertAtOndex = i;
+                            while (timeSlotHour > slotIndex)
+                            {
+                                for (int j = 0; j < unitsList.Count; j++)
+                                {
+                                    newRow = dtResult.NewRow();
+                                    newRow["timeSlot"] = slotIndex.ToString("00") + "H - " + (slotIndex + 1).ToString("00") + "H";
+                                    newRow["IdUnit"] = unitsList[j].Id.GetHashCode();
+                                    dtResult.Rows.InsertAt(newRow, insertAtOndex++);
+                                }
+
+                                slotIndex++;
+                            }
+                        }
+                        else
+                            slotIndex++;
+                    }
+                }
             }
             return dtResult;
         }

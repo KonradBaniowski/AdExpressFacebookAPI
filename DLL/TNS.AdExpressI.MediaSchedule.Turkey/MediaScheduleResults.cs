@@ -1087,7 +1087,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     columns.Add(
                         new
                         {
-                            headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage),
+                            headerText = GestionWeb.GetWebWord(unitTextId, _session.SiteLanguage),
                             key = $"PERIOD_{unitName}",
                             dataType = "number",
                             format = format,

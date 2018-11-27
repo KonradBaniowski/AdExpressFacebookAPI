@@ -991,7 +991,8 @@
             });
 
             function getFirstUnit() {
-                return $('#unit').val()[0];
+                if ($('#unit').val() != null && $('#unit').val() !== undefined)
+                    return $('#unit').val()[0];
             }
 
             $('#unit').selectpicker();

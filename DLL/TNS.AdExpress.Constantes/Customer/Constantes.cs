@@ -296,7 +296,15 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Ad Slogan en exception
             /// </summary>
-            adSloganException
+            adSloganException,
+            /// <summary>
+            ///  Program Genre en accès
+            /// </summary>
+            programGenreAccess,
+            /// <summary>
+            /// Program Genre en exception
+            /// </summary>
+            programGenreException
         }
 		#endregion
 	}
