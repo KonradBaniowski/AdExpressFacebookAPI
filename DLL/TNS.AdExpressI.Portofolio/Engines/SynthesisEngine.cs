@@ -1809,10 +1809,19 @@ namespace TNS.AdExpressI.Portofolio.Engines
             dataTemp = ComputeDataSpotNumber(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
 
+            if (_webSession.CustomerPeriodSelected.IsSliding4M)
+            {
+                dataTemp = ComputeCommercialItemNumber();
+                if (dataTemp != null) data.AddRange(dataTemp);
+            }
+
             dataTemp = ComputeDataEcranNumber(_dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
 
             dataTemp = ComputeDataTotalDuration(_dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataAverageDuration(_dataUnit, _dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
 
             dataTemp = ComputeDataEvaliantInsertionNumber(_dataUnit);
@@ -1870,6 +1879,20 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
         #region ComputeDataMediaOwner
         protected virtual List<ICell> ComputeDataMediaOwner()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeCommercialItemNumber
+        protected virtual List<ICell> ComputeCommercialItemNumber()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeDataAverageDuration
+        protected virtual List<ICell> ComputeDataAverageDuration(DataUnit dataUnit, DataEcran dataEcran)
         {
             return null;
         }
@@ -2157,6 +2180,20 @@ namespace TNS.AdExpressI.Portofolio.Engines
             if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
             {
                 return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+            }
+            else return 0;
+        }
+        #endregion
+
+        #region GetAverageDurationInBreak
+        /// <summary>
+        /// Get Average Duration of a spot in the break
+        /// </summary>
+        public virtual decimal GetAverageDurationInBreak()
+        {
+            if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
+            {
+                return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()));
             }
             else return 0;
         }

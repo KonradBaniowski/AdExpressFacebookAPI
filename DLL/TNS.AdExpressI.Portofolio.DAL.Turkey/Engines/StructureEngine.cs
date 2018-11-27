@@ -8,7 +8,9 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
 {
@@ -36,5 +38,37 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
         {
             return SQLGenerator.GetUnitFieldsNameForPortofolioMulti(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
         }
+
+        #region Get Hour Interval
+        /// <summary>
+        /// Get Hour Interval
+        /// </summary>
+        /// <param name="hourBegin">Hour Begin</param>
+        /// <param name="hourEnd">Hour End</param>
+        /// <returns>String SQL</returns>
+        protected override string GetHourInterval(double hourBegin, double hourEnd)
+        {
+            string sql = "";
+            switch (_vehicleInformation.Id)
+            {
+                case DBClassificationConstantes.Vehicles.names.tv:
+                    if (hourBegin == 240000)
+                    {
+                        sql += " and ((" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion>= " + hourBegin;
+                        sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion<= 255959)";
+                        sql += " or (" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion>= 20000";
+                        sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion< " + hourEnd + "))";
+                    }
+                    else
+                    {
+                        sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion>=" + hourBegin;
+                        sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion<" + hourEnd;
+                    }
+                    return sql;
+                default:
+                    throw new PortofolioDALException("GetHourInterval : Vehicle unknown.");
+            }
+        }
+        #endregion
     }
 }

@@ -1041,7 +1041,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship:
                 case DBClassificationConstantes.Vehicles.names.radioMusic:
-                    sql += " select  distinct ID_COBRANDING_ADVERTISER";
+                    sql += " select  distinct date_media_num, commercial_break, ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
                     sql += string.Format(" ,{0} ",
@@ -1054,7 +1054,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 case DBClassificationConstantes.Vehicles.names.tvSponsorship:
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.tvAnnounces:
-                    sql += "select  distinct id_commercial_break ";
+                    sql += "select  distinct date_media_num, id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
                     sql += string.Format(" ,{0} ",

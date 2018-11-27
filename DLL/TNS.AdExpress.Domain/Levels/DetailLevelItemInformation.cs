@@ -366,6 +366,10 @@ namespace TNS.AdExpress.Domain.Level{
             /// Version Name
             /// </summary>
             sloganName = 86,
+            /// <summary>
+            /// Program Genre
+            /// </summary>
+            programGenre = 88
         }
 		#endregion
 

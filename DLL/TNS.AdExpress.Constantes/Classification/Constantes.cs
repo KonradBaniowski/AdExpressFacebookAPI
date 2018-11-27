@@ -225,10 +225,28 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Niveau de nomenclature region
             /// </summary>
-            region
-
-
-		}
+            region,
+            /// <summary>
+            /// Niveau de nomenclature program
+            /// </summary>
+            program,
+            /// <summary>
+            /// Niveau de nomenclature Program Typology
+            /// </summary>
+            programTypology,
+            /// <summary>
+            /// Niveau de nomenclature Spot Sub Type
+            /// </summary>
+            spotSubType,
+            /// <summary>
+            /// Niveau de nomenclature Ad Slogan
+            /// </summary>
+            adSlogan,
+            /// <summary>
+            /// Niveau de nomenclature Program Genre
+            /// </summary>
+            programGenre
+        }
 		#endregion
 
 	}

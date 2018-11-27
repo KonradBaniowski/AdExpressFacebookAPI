@@ -24,6 +24,7 @@
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>                       <!-- Version -->
         <allowedMediaLevelItem>sloganName</allowedMediaLevelItem>                   <!-- Version Name -->
         <allowedMediaLevelItem>programTypology</allowedMediaLevelItem>              <!-- Program Typology -->
+        <allowedMediaLevelItem>programGenre</allowedMediaLevelItem>                 <!-- Program Genre -->
         <allowedMediaLevelItem>spotType</allowedMediaLevelItem>                     <!-- Spot Type -->
         <allowedMediaLevelItem>spotSubType</allowedMediaLevelItem>                  <!-- Spot Sub Type -->
         <allowedMediaLevelItem>spotRankType</allowedMediaLevelItem>                 <!-- Spot Rank Type -->
