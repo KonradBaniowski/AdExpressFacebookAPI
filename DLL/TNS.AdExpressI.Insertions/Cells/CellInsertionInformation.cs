@@ -298,7 +298,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                     if (cValue != _previousValues[i] && cValue.Length > 0)
                     {
                         CellLabel c = ((CellLabel)cCell);
-                        c.Label = string.Format("{0}{2}{1}", c.Label, cValue, ((c.Label.Length > 0) ? "," : ""));
+                        c.Label = string.Format("{0}{2}{1}", c.Label, cValue.Replace(":", "-"), ((c.Label.Length > 0) ? "," : ""));
                     }
                 }
                 _previousValues[i] = cValue;
