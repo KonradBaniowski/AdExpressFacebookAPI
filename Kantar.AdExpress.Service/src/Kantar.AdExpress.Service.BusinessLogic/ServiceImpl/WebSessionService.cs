@@ -611,7 +611,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                    && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
                 {
-                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.spot);
+                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.tl);
                     _webSession.Units.Add(CstWeb.CustomerSessions.Unit.duration);
                 }
 

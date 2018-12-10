@@ -429,6 +429,10 @@ namespace TNS.AdExpressI.Date.DAL {
             if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
             {
                 string unitLabel = _session.Unit.ToString();
+                string expenditurePrefix = "";
+                if(_session.Unit == WebConstantes.CustomerSessions.Unit.euro)
+                    expenditurePrefix = "exp_";
+
                 // Cas ou l'année en cours est différente de la dernière année chargée
                 if (DateTime.Now.Year > _session.DownLoadDate)
                 {
@@ -436,7 +440,7 @@ namespace TNS.AdExpressI.Date.DAL {
                     {
                         for (int j = 1; j <= 12; j++)
                         {
-                            sql += " max(exp_"+ unitLabel + "_" + ((i - 1 != 0) ? "N" + (i - 1) : "N") + "_" + j + ") as N"
+                            sql += " max("+ expenditurePrefix + unitLabel + "_" + ((i - 1 != 0) ? "N" + (i - 1) : "N") + "_" + j + ") as N"
                                 + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
                         }
                     }
@@ -448,7 +452,7 @@ namespace TNS.AdExpressI.Date.DAL {
                     {
                         for (int j = 1; j <= 12; j++)
                         {
-                            sql += " max(exp_" + unitLabel + "_" + ((i != 0) ? "N" + i : "N") + "_" + j + ") as N"
+                            sql += " max("+ expenditurePrefix + unitLabel + "_" + ((i != 0) ? "N" + i : "N") + "_" + j + ") as N"
                                 + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
                         }
                     }

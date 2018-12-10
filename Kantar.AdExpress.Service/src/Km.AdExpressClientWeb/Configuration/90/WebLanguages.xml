@@ -31,8 +31,8 @@
       </dateFormats>
       <companyNameTexts companyName="2841" companyShortName="2842"/>
     </language>
-    <!--<language id="90" name="turkish" imageSourceText="/Images/Common/turkey.gif"  localization="en-GB" classificationLanguageId="90" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" pdfContentEncoding="windows-1252" nlsSort="BINARY" NumberDecimalSeparator="," NumberGroupSeparator=" " PercentDecimalSeparator=",">
-      <rss display="true" filePath="http://localhost/Rss/44/AdExpressFeed.xml" link="http://www.tnsadexpress.fi/Rss/44/AdExpressFeed.xml"/>
+    <language id="90" name="turkish" imageSourceText="/Images/Common/turkey.gif"  localization="tr" classificationLanguageId="90" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" pdfContentEncoding="windows-1252" nlsSort="BINARY" NumberDecimalSeparator="," NumberGroupSeparator=" " PercentDecimalSeparator=",">
+      <rss display="true" filePath="http://localhost/Rss/90/AdExpressFeed.xml" link="http://www.tnsadexpress.fi/Rss/90/AdExpressFeed.xml"/>
       <unitformats>
         <unitformat name="max0"             format="#,###0;-#,##0;"                  excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"   asposeFormat="37"/>
         <unitformat name="max1"             format="#,##0.#;-#,##0.#;"               excelFormat="#,##0.0;-#,##0.0;&amp;nbsp\;"               asposeFormat="39"/>
@@ -53,6 +53,6 @@
         <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
       <companyNameTexts companyName="758" companyShortName="2843"/>
-    </language>-->
+    </language>
   </languages>
 </configuration>
