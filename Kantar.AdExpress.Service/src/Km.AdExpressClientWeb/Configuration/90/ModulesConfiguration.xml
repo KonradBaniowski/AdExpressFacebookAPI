@@ -1022,9 +1022,9 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Turkey.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Turkey.ProductClassReportDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ResultLimitation size="50000"/>       
-        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleCategories list="1"/>
-        </ModuleAllowedMediaUniverse>
+        </ModuleAllowedMediaUniverse>-->
         <!--<overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>-->
         <MediaDetailLevel>
           <defaultMediaDetailLevels>

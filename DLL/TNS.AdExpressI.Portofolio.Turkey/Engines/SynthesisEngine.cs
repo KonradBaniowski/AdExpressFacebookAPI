@@ -313,7 +313,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && dataEcran.IsAlertModule)
+                && (dataEcran!=null && dataEcran.IsAlertModule))
             {
 
                 // Nombre moyen de spots par écran
@@ -361,7 +361,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && dataEcran.IsAlertModule)
+                && (dataEcran != null && dataEcran.IsAlertModule))
             {
 
                 // Durée moyenne d'un écran
@@ -415,7 +415,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && dataEcran.IsAlertModule)
+                && (dataEcran!=null && dataEcran.IsAlertModule))
             {
 
                 // Durée moyenne d'un écran
@@ -469,7 +469,7 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && dataEcran.IsAlertModule)
+                && (dataEcran != null && dataEcran.IsAlertModule))
             {
 
                 // Durée moyenne d'un écran

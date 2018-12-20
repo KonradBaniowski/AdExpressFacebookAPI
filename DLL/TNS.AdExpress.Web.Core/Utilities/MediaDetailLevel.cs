@@ -680,6 +680,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                                 #region Version
                                 case DetailLevelItemInformation.Levels.slogan:
+                                case DetailLevelItemInformation.Levels.sloganName:
                                     if (
                                         currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                                         // Sélection par produit ou marque ou annonceur
@@ -890,6 +891,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
 
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
@@ -1162,6 +1164,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
 
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
@@ -1222,6 +1225,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)
                                 )
