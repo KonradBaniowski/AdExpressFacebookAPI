@@ -78,7 +78,7 @@
         <allowedRecapMediaLevelItem>spotType</allowedRecapMediaLevelItem>    <!-- spot Type -->
         <allowedRecapMediaLevelItem>spotSubType</allowedRecapMediaLevelItem>    <!-- spot Sub Type -->
         <allowedRecapMediaLevelItem>interestCenter</allowedRecapMediaLevelItem>      <!-- interest Center -->
-        <allowedRecapMediaLevelItem>programTypology</allowedRecapMediaLevelItem>      <!-- programTypology -->        
+        <!--<allowedRecapMediaLevelItem>programTypology</allowedRecapMediaLevelItem>      --><!-- programTypology -->        
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->
