@@ -176,7 +176,7 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="83" name="AdSlogan"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -185,7 +185,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
@@ -475,7 +475,7 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -484,7 +484,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>

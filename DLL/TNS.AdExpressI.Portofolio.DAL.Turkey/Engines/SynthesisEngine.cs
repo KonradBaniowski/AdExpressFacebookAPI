@@ -103,7 +103,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             if (_endDate.Length > 0)
                 sql.AppendFormat(" and date_media_num<={0} ", _endDate);
 
-            sql.AppendFormat(" and id_spot_pos_com_break_type = 1 ");
+            sql.AppendFormat(" and id_spot_pos_com_break_type = 3 ");
 
             sql.AppendFormat(" and {0}={1}"
                             , unitInformation.DatabaseField
@@ -183,7 +183,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
                             , unitInformation.DatabaseField
                             , this._cobrandindConditionValue);
 
-            sql.AppendFormat(" and id_spot_pos_com_break_type = 1 ");
+            sql.AppendFormat(" and id_spot_pos_com_break_type = 3 ");
 
             sql.Append(product);
             sql.Append(productsRights);
@@ -240,7 +240,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             StringBuilder sql = new StringBuilder();
 
             sql.AppendFormat("select SUM(COM_ITEM_NB) as COM_ITEM_NB from ( ");
-            sql.AppendFormat("select DATE_MEDIA_NUM, ID_PROGRAM, SUM(COM_ITEM_NB) as COM_ITEM_NB ");
+            sql.AppendFormat("select distinct PROGRAM_BEGINNING_TIME, ID_PROGRAM, COM_ITEM_NB ");
             sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
 
             // Period
@@ -251,7 +251,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             sql.Append(mediaRights);
             sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             sql.Append(listProductHap);
-            sql.AppendFormat(" group by DATE_MEDIA_NUM, ID_PROGRAM )");
+            //sql.AppendFormat(" group by DATE_MEDIA_NUM, ID_PROGRAM )");
+            sql.AppendFormat(" )");
             #endregion
 
             #region Execution de la requête

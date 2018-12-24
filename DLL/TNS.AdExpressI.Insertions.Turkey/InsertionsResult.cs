@@ -49,6 +49,7 @@ namespace TNS.AdExpressI.Insertions.Turkey
                     switch (columns[index1].Id)
                     {
                         case GenericColumnItemInformation.Columns.topDiffusion:
+                        case GenericColumnItemInformation.Columns.SpotEndTime:
                             if (IsTvVehicle(vehicle))
                             {
                                 long num2 = Convert.ToInt64(row[WebApplicationParameters.GenericColumnItemsInformation.Get(89L).DataBaseField].ToString());
@@ -100,13 +101,26 @@ namespace TNS.AdExpressI.Insertions.Turkey
                     }
                     if (tab[cLine, index2] == null)
                     {
-                        if (num1 == 0.0 && columns[index1].Id == GenericColumnItemInformation.Columns.topDiffusion)
+                        if (num1 == 0.0 
+                            && (columns[index1].Id == GenericColumnItemInformation.Columns.topDiffusion || columns[index1].Id == GenericColumnItemInformation.Columns.SpotEndTime))
                             tab[cLine, index2] = new CellAiredTime(null);
                         else
-                            tab[cLine, index2] = ((CellUnit)cells[index1]).Clone(num1);
+                        {
+                            if (columns[index1].Id == GenericColumnItemInformation.Columns.topDiffusion
+                                || columns[index1].Id == GenericColumnItemInformation.Columns.SpotEndTime)
+                            {
+                                tab[cLine, index2] = ((CellUnit) cells[index1]).Clone(GetTopDiffusion(num1));
+                            }
+                            else
+                            {
+                                tab[cLine, index2] = ((CellUnit) cells[index1]).Clone(num1);
+                            }
+                        }
                     }
                     else
+                    {
                         ((CellUnit)tab[cLine, index2]).Add(num1);
+                    }
                 }
                 else
                 {
@@ -298,6 +312,28 @@ namespace TNS.AdExpressI.Insertions.Turkey
                 default:
                     return "";
             }
+        }
+
+        private double GetTopDiffusion(double value)
+        {
+            if (value.ToString().Length == 6)
+            {
+                //Hour
+                string h = value.ToString().Substring(0, 2);
+                // Minutes Seconds
+                string ms = value.ToString().Substring(2, 4);
+
+                // For Turkey 25h = 1h
+                if (h == "25")
+                    return Convert.ToDouble("1" + ms);
+
+                if (h == "24")
+                    return Convert.ToDouble(ms);
+
+                return value;
+            }
+
+            return value;
         }
     }
 }

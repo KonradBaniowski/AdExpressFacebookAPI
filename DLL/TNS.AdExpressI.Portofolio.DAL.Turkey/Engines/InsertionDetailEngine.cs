@@ -194,53 +194,53 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             switch (timeSlot)
             {
                 case "00H - 01H":
-                    return " top_diffusion >= 240000 and top_diffusion >= 245959 ";
+                    return " top_diffusion >= 240000 and top_diffusion <= 245959 ";
                 case "01H - 02H":
-                    return " top_diffusion >= 250000 and top_diffusion >= 255959 ";
+                    return " top_diffusion >= 250000 and top_diffusion <= 255959 ";
                 case "02H - 03H":
-                    return " top_diffusion >= 020000 and top_diffusion >= 025959 ";
+                    return " top_diffusion >= 020000 and top_diffusion <= 025959 ";
                 case "03H - 04H":
-                    return " top_diffusion >= 030000 and top_diffusion >= 035959 ";
+                    return " top_diffusion >= 030000 and top_diffusion <= 035959 ";
                 case "04H - 05H":
-                    return " top_diffusion >= 040000 and top_diffusion >= 045959 ";
+                    return " top_diffusion >= 040000 and top_diffusion <= 045959 ";
                 case "05H - 06H":
-                    return " top_diffusion >= 050000 and top_diffusion >= 055959 ";
+                    return " top_diffusion >= 050000 and top_diffusion <= 055959 ";
                 case "06H - 07H":
-                    return " top_diffusion >= 060000 and top_diffusion >= 065959 ";
+                    return " top_diffusion >= 060000 and top_diffusion <= 065959 ";
                 case "07H - 08H":
-                    return " top_diffusion >= 070000 and top_diffusion >= 075959 ";
+                    return " top_diffusion >= 070000 and top_diffusion <= 075959 ";
                 case "08H - 09H":
-                    return " top_diffusion >= 080000 and top_diffusion >= 085959 ";
+                    return " top_diffusion >= 080000 and top_diffusion <= 085959 ";
                 case "09H - 10H":
-                    return " top_diffusion >= 090000 and top_diffusion >= 095959 ";
+                    return " top_diffusion >= 090000 and top_diffusion <= 095959 ";
                 case "10H - 11H":
-                    return " top_diffusion >= 100000 and top_diffusion >= 105959 ";
+                    return " top_diffusion >= 100000 and top_diffusion <= 105959 ";
                 case "11H - 12H":
-                    return " top_diffusion >= 110000 and top_diffusion >= 115959 ";
+                    return " top_diffusion >= 110000 and top_diffusion <= 115959 ";
                 case "12H - 13H":
-                    return " top_diffusion >= 120000 and top_diffusion >= 125959 ";
+                    return " top_diffusion >= 120000 and top_diffusion <= 125959 ";
                 case "13H - 14H":
-                    return " top_diffusion >= 130000 and top_diffusion >= 135959 ";
+                    return " top_diffusion >= 130000 and top_diffusion <= 135959 ";
                 case "14H - 15H":
-                    return " top_diffusion >= 140000 and top_diffusion >= 145959 ";
+                    return " top_diffusion >= 140000 and top_diffusion <= 145959 ";
                 case "15H - 16H":
-                    return " top_diffusion >= 150000 and top_diffusion >= 155959 ";
+                    return " top_diffusion >= 150000 and top_diffusion <= 155959 ";
                 case "16H - 17H":
-                    return " top_diffusion >= 160000 and top_diffusion >= 165959 ";
+                    return " top_diffusion >= 160000 and top_diffusion <= 165959 ";
                 case "17H - 18H":
-                    return " top_diffusion >= 170000 and top_diffusion >= 175959 ";
+                    return " top_diffusion >= 170000 and top_diffusion <= 175959 ";
                 case "18H - 19H":
-                    return " top_diffusion >= 180000 and top_diffusion >= 185959 ";
+                    return " top_diffusion >= 180000 and top_diffusion <= 185959 ";
                 case "19H - 20H":
-                    return " top_diffusion >= 190000 and top_diffusion >= 195959 ";
+                    return " top_diffusion >= 190000 and top_diffusion <= 195959 ";
                 case "20H - 21H":
-                    return " top_diffusion >= 200000 and top_diffusion >= 205959 ";
+                    return " top_diffusion >= 200000 and top_diffusion <= 205959 ";
                 case "21H - 22H":
-                    return " top_diffusion >= 210000 and top_diffusion >= 215959 ";
+                    return " top_diffusion >= 210000 and top_diffusion <= 215959 ";
                 case "22H - 23H":
-                    return " top_diffusion >= 220000 and top_diffusion >= 225959 ";
+                    return " top_diffusion >= 220000 and top_diffusion <= 225959 ";
                 case "23H - 24H":
-                    return " top_diffusion >= 230000 and top_diffusion >= 235959 ";
+                    return " top_diffusion >= 230000 and top_diffusion <= 235959 ";
                 default:
                     return string.Empty;
             }
