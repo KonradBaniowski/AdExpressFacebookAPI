@@ -1309,9 +1309,7 @@
             <allowedProductLevelItem id="9" name="Marque"/>
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <allowedProductLevelItem id="7" name="Groupe de société"/>
-            <allowedProductLevelItem id="16" name="Agence"/>
-            <allowedProductLevelItem id="24" name="Program"/>
-            <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="16" name="Agence"/>           
             <allowedProductLevelItem id="82" name="spotSubType"/>
             <allowedProductLevelItem id="14" name="Variete"/>
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
@@ -1363,9 +1361,7 @@
                 <allowedProductLevelItem id="9" name="Marque"/>
                 <allowedProductLevelItem id="8" name="Annonceur"/>
                 <allowedProductLevelItem id="7" name="Groupe de société"/>
-                <allowedProductLevelItem id="16" name="Agence"/>
-                <allowedProductLevelItem id="24" name="Program"/>
-                <allowedProductLevelItem id="80" name="programTypology"/>
+                <allowedProductLevelItem id="16" name="Agence"/>              
                 <allowedProductLevelItem id="82" name="spotSubType"/>
                 <allowedProductLevelItem id="14" name="Variete"/>
                 <allowedProductLevelItem id="15" name="Groupe d'agence"/>

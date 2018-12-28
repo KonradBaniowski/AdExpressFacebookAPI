@@ -1467,12 +1467,13 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                 int indexPeriod = -1;
                 int indexPeriodComparative = -1;
                 int numberOflineToAdd = 0;
-                Dictionary< CstWeb.CustomerSessions.Unit ,double>  unitDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
-                Dictionary<CstWeb.CustomerSessions.Unit, double> unitComparativeDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
+                var unitDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
+               var unitComparativeDictionary = new Dictionary<CstWeb.CustomerSessions.Unit, double>();
+                var unitByYearDictionary = new Dictionary<int, Dictionary<CstWeb.CustomerSessions.Unit, double>>(); 
                 CellIdsNumber unitIds = null;
            
                 DataRow currentRow = null;
-
+                
                 foreach (DataRow currentRowLevels in dtLevels.Rows)
                 {
                     isPeriodN = dt.Rows.Count > indexPeriod + 1
@@ -1755,6 +1756,7 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     {
                         indexPeriod++;
                         currentRow = dt.Rows[indexPeriod];
+                        unitByYearDictionary = new Dictionary<int, Dictionary<CstWeb.CustomerSessions.Unit, double>>();
 
                         #region Treat present Period
 
@@ -1803,8 +1805,14 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
 
                                 if (unitDictionary.ContainsKey(ut))
+                                {
                                     unitDictionary[ut] = double.Parse(currentRow[ut.ToString()].ToString());
-                                else unitDictionary.Add(ut, double.Parse(currentRow[ut.ToString()].ToString()));
+                                }
+                                else
+                                {
+                                    unitDictionary.Add(ut, double.Parse(currentRow[ut.ToString()].ToString()));
+                                }
+                              
 
                                 if (firstUnit)
                                 {
@@ -1825,6 +1833,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             }
                             firstUnit = false;
                         });
+
+                        if (years_index.Any())
+                        {
+                            int dateYear = int.Parse(currentRow["date_num"].ToString().Substring(0, 4));                            
+                                unitByYearDictionary.Add(dateYear, unitDictionary);
+                        }
 
                         if (nbLevels >= 4)
                         {
@@ -1861,23 +1875,23 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
                             if (nbLevels >= 4)
                             {
-                                AddUnitValue(oTab, currentL4Index, currentRow, unitDictionary, years_index);
+                                AddUnitValue(oTab, currentL4Index, currentRow, unitByYearDictionary, years_index);
 
                             }
                             if (nbLevels >= 3)
                             {
-                                AddUnitValue(oTab, currentL3Index, currentRow, unitDictionary, years_index);
+                                AddUnitValue(oTab, currentL3Index, currentRow, unitByYearDictionary, years_index);
                             }
                             if (nbLevels >= 2)
                             {
-                                AddUnitValue(oTab, currentL2Index, currentRow, unitDictionary, years_index);
+                                AddUnitValue(oTab, currentL2Index, currentRow, unitByYearDictionary, years_index);
                             }
                             if (nbLevels >= 1)
                             {
-                                AddUnitValue(oTab, currentL1Index, currentRow, unitDictionary, years_index);
+                                AddUnitValue(oTab, currentL1Index, currentRow, unitByYearDictionary, years_index);
                             }
 
-                            AddUnitValue(oTab, currentTotalIndex, currentRow, unitDictionary, years_index);
+                            AddUnitValue(oTab, currentTotalIndex, currentRow, unitByYearDictionary, years_index);
                         }
                         currentDate++;
                         oldCurrentDate = currentDate;
@@ -2363,8 +2377,9 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
 
         private void AddUnitValue(
             object[,] oTab, long currentLevelIndex,
-            DataRow currentRow, Dictionary<CstWeb.CustomerSessions.Unit, double> unitDictionary
-            , Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>> yearsIndex)
+            DataRow currentRow, Dictionary<int, Dictionary<CstWeb.CustomerSessions.Unit, double>> unitByYearDictionary
+            , Dictionary<CstWeb.CustomerSessions.Unit, Dictionary<int, int>> yearsIndex
+           )
         {
             foreach (var unit in yearsIndex.Keys)
             {
@@ -2377,7 +2392,8 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                     }
                     else
                     {
-                        double currentUnit = (unitDictionary.ContainsKey(unit)) ? unitDictionary[unit] : (double) 0.0;
+                        double currentUnit = unitByYearDictionary.ContainsKey(kpv.Key) && unitByYearDictionary[kpv.Key].ContainsKey(unit) 
+                            ? unitByYearDictionary[kpv.Key][unit] : (double) 0.0;
                         oTab[currentLevelIndex, kpv.Value] = (double) oTab[currentLevelIndex, kpv.Value] + currentUnit;
                     }
 
@@ -2425,17 +2441,17 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                         oTab[currentLevelIndex, totalColumnIndex] = unitSum;
                         ((MediaPlanItem) oTab[currentLevelIndex, firstPeriodIndex + currentDate]).Unit += unit;
 
-                        if (unt == CstWeb.CustomerSessions.Unit.grp && hasAdSpend && _session.SpendsGrp)
-                        {
-                            var adSpendsUnit = selectUnits[unitIndex - 1];
-                            var adSpendsColumns = unitsColumnIndexes[adSpendsUnit];
-                            int totalSpendsColumnIndex = adSpendsColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
-                            var totalSpendsPerGrpColumnIndex = unitsColumnIndexes[unt][CstFrameWorkResult.MediaSchedule.SPEND_PER_GRP_COLUMN_INDEX_KEY];
-                            if (unitSum > 0)
-                                oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = Math.Round((double) oTab[currentLevelIndex, totalSpendsColumnIndex] / unitSum, 2);
-                            else
-                                oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = 0;
-                        }
+                        //if (unt == CstWeb.CustomerSessions.Unit.grp && hasAdSpend && _session.SpendsGrp)
+                        //{
+                        //    var adSpendsUnit = selectUnits[unitIndex - 1];
+                        //    var adSpendsColumns = unitsColumnIndexes[adSpendsUnit];
+                        //    int totalSpendsColumnIndex = adSpendsColumns[CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX_KEY];
+                        //    var totalSpendsPerGrpColumnIndex = unitsColumnIndexes[unt][CstFrameWorkResult.MediaSchedule.SPEND_PER_GRP_COLUMN_INDEX_KEY];
+                        //    if (unitSum > 0)
+                        //        oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = Math.Round((double) oTab[currentLevelIndex, totalSpendsColumnIndex] / unitSum, 2);
+                        //    else
+                        //        oTab[currentLevelIndex, totalSpendsPerGrpColumnIndex] = 0;
+                        //}
                     }
                 }
                 unitIndex++;
