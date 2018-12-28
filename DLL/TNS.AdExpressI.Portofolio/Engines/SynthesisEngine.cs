@@ -2179,9 +2179,13 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
             {
-                return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+                decimal insertionNb = decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+
+                if (insertionNb > 0)
+                    return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / insertionNb);
             }
-            else return 0;
+
+            return 0;
         }
         #endregion
 
@@ -2193,9 +2197,13 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
             {
-                return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()));
+                decimal spotNb = decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString());
+
+                if (spotNb > 0)
+                    return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / spotNb);
             }
-            else return 0;
+
+            return 0;
         }
         #endregion
 
@@ -2228,7 +2236,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
             {
                 if (_dt != null && _dt.Rows[0]["nbre_spot"] != System.DBNull.Value)
                 {
-                    nbrSpotByEcran = (decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+                    decimal insertionNb = decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                    if (insertionNb > 0)
+                        nbrSpotByEcran = (decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()) / insertionNb);
                 }
                 else nbrSpotByEcran = 0;
             }

@@ -627,6 +627,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
+                                case GenericColumnItemInformation.Columns.SpotEndTime:
                                     if (_showTopDiffusion)
                                     {
                                         long TOP_DIFFUSION_VISIBILITY_DATE = 20170904;
@@ -650,7 +651,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         if (row[Column.DataBaseField].ToString().Length > 0
                                             && !(MEDIA_IDS_TOP_DIFFUSION_VISIBILITY.Contains(idMedia) && dateNum < TOP_DIFFUSION_VISIBILITY_DATE))
-                                            curCell = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+                                            curCell = new CellAiredTime(GetTopDiffusion(Convert.ToDouble(row[Column.DataBaseField])));
                                         else
                                             curCell = new CellEmpty();//new CellAiredTime(0);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
@@ -783,6 +784,11 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 if (tpart.Length == 2) millisecond = Convert.ToInt32(tpart[1]);
             }
             return new DateTime(1970, 1, 1, hour, minute, second, millisecond);
+        }
+
+        protected virtual double GetTopDiffusion(double value)
+        {
+            return value;
         }
 
     }
