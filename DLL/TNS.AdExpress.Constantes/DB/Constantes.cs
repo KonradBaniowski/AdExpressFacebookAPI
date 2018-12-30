@@ -90,6 +90,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Langue Finnoise
         /// </summary>
         public const int SLOVAKIA = 421;
+        /// <summary>
+        /// Langue Turque
+        /// </summary>
+        public const int TURKEY = 90;
     }
 
 	#endregion

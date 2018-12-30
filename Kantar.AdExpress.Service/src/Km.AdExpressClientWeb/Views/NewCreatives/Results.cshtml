@@ -96,6 +96,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+            <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -117,7 +122,10 @@
 
         // Set text for select picker
         $.fn.selectpicker.defaults = {
-            all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
+            all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)',
+            selectAllText: '@GestionWeb.GetWebWord(3252, Model.Presentation.SiteLanguage)',
+            deselectAllText: '@GestionWeb.GetWebWord(3253, Model.Presentation.SiteLanguage)',
+            noneSelectedText: '@GestionWeb.GetWebWord(3254, Model.Presentation.SiteLanguage)'
         };
     });
     </script>

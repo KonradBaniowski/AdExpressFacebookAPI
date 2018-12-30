@@ -48,6 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
         private const string CALENDARLANGUAGESK = "sk";
+        private const string CALENDARLANGUAGETR = "tr";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private const int MaxIncludeNbr = 2;
@@ -226,6 +227,9 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
                     periodModel.LanguageName = CALENDARLANGUAGESK;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.TURKEY:
+                    periodModel.LanguageName = CALENDARLANGUAGETR;
                     break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;

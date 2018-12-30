@@ -62,6 +62,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
         private const string CALENDARLANGUAGESK = "sk";
+        private const string CALENDARLANGUAGETR = "tr";
         private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
 
@@ -240,6 +241,9 @@ namespace Km.AdExpressClientWeb.Controllers
                     break;
                 case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
                     periodModel.LanguageName = CALENDARLANGUAGESK;
+                    break;
+                case TNS.AdExpress.Constantes.DB.Language.TURKEY:
+                    periodModel.LanguageName = CALENDARLANGUAGETR;
                     break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;

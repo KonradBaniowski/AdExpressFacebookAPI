@@ -2532,5 +2532,9 @@
     <item mnemonic="w3248" type="System.String">Nécessaire</item>
     <item mnemonic="w3249" type="System.String">Ces cookies sont nécessaires au bon fonctionnement du site.</item>
     <item mnemonic="w3250" type="System.String">Cookies et Confidentialité</item>
+    <item mnemonic="w3251" type="System.String">Votre demande a été prise en compte.</item>
+    <item mnemonic="w3252" type="System.String">Tout sélectionner</item>
+    <item mnemonic="w3253" type="System.String">Tout désélectionner</item>
+    <item mnemonic="w3254" type="System.String">Aucune sélection</item>
   </items>
 </localization>

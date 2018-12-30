@@ -320,6 +320,7 @@
     <Content Include="Content\site-En.css" />
     <Content Include="Content\site-Fr.css" />
     <Content Include="Content\site-Tk.css" />
+    <Content Include="IgniteUI\js\modules\i18n\infragistics.ui.grid-tr.js" />
     <Content Include="Scripts\gdpr\gdpr.js" />
     <Content Include="Scripts\gdpr\jquery.ihavecookies.js" />
     <Content Include="_app_offline.htm" />
