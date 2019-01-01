@@ -303,6 +303,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long FixedCookieTypeLabel = 3248;
         public const long FixedCookieTypeDesc = 3249;
         public const long CookiesTitle = 3250;
+        public const long Success = 3255;
         #endregion
     }
 }

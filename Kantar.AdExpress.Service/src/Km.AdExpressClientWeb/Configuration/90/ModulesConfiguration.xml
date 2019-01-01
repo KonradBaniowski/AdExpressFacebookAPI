@@ -1313,7 +1313,7 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -1367,7 +1367,7 @@
                 <allowedProductLevelItem id="24" name="Program"/>
                 <allowedProductLevelItem id="80" name="programTypology"/>
                 <allowedProductLevelItem id="82" name="spotSubType"/>
-                <allowedProductLevelItem id="14" name="Variete"/>
+                <!--<allowedProductLevelItem id="14" name="Variete"/>-->
                 <allowedProductLevelItem id="15" name="Groupe d'agence"/>
               </allowedProductLevelItems>
             </ProductDetailLevel>

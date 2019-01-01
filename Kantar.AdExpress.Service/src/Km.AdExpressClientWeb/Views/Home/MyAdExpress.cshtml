@@ -18,6 +18,7 @@
     @Html.HiddenFor(e => e.Labels.DeleteRequestMessageConfirmLabel)
     @Html.HiddenFor(e => e.Labels.DeleteUniversMessageConfirmLabel)
     @Html.HiddenFor(e => e.Labels.DeleteResultMessageConfirmLabel)
+    @Html.HiddenFor(e => e.Labels.Success)
     <ul id="tab-myadexpress" class="nav nav-tabs">
         <li role="presentation" class="active"><a href="#@(UniversType.Result)" data-toggle="tab">@Model.Labels.MyResults</a></li>
         <li role="presentation"><a href="#@(UniversType.Univers)" data-toggle="tab">@Model.Labels.UserUniversCode</a></li>

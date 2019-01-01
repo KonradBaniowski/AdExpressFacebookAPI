@@ -207,7 +207,8 @@ namespace Km.AdExpressClientWeb.I18n
                 AcceptBtnLabel = GestionWeb.GetWebWord(LanguageConstantes.AcceptBtnLabel, siteLanguage),
                 FixedCookieTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeLabel, siteLanguage),
                 FixedCookieTypeDesc = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeDesc, siteLanguage),
-                CookiesTitle = GestionWeb.GetWebWord(LanguageConstantes.CookiesTitle, siteLanguage)
+                CookiesTitle = GestionWeb.GetWebWord(LanguageConstantes.CookiesTitle, siteLanguage),
+                Success = GestionWeb.GetWebWord(LanguageConstantes.Success, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

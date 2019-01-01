@@ -2536,5 +2536,6 @@
     <item mnemonic="w3252" type="System.String">Tout sélectionner</item>
     <item mnemonic="w3253" type="System.String">Tout désélectionner</item>
     <item mnemonic="w3254" type="System.String">Aucune sélection</item>
+    <item mnemonic="w3255" type="System.String">Success</item>
   </items>
 </localization>

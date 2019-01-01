@@ -254,5 +254,6 @@ namespace KM.Framework.Constantes
         public string FixedCookieTypeLabel { get; set; } //3248
         public string FixedCookieTypeDesc { get; set; } //3249
         public string CookiesTitle { get; set; } //3250
+        public string Success { get; set; } //3255
     }
 }
