@@ -103,7 +103,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             if (_endDate.Length > 0)
                 sql.AppendFormat(" and date_media_num<={0} ", _endDate);
 
-            sql.AppendFormat(" and id_spot_pos_com_break_type = 3 ");
+            sql.AppendFormat(" and id_spot_pos_com_break_type = 1 ");
 
             sql.AppendFormat(" and {0}={1}"
                             , unitInformation.DatabaseField
@@ -183,7 +183,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
                             , unitInformation.DatabaseField
                             , this._cobrandindConditionValue);
 
-            sql.AppendFormat(" and id_spot_pos_com_break_type = 3 ");
+            sql.AppendFormat(" and id_spot_pos_com_break_type = 1 ");
 
             sql.Append(product);
             sql.Append(productsRights);
