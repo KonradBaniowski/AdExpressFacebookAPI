@@ -76,5 +76,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// Get Data to build an AdNettrack Media Schedule
         /// </summary>
         DataSet GetMediaScheduleAdNetTrackData();
+
+        /// <summary>
+        /// Get data to count a Media Schedule Report rows
+        /// </summary>
+        long CountMediaScheduleData();
     }
 }

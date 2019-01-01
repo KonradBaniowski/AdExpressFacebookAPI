@@ -13,7 +13,9 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -68,10 +70,15 @@ namespace Km.AdExpressClientWeb.Controllers
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             JsonResult jsonModel;
 
-            var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, this.HttpContext, isVehicleChanged);
+          
 
             try
             {
+              
+                
+
+                var reponse = _insertionsService.GetInsertionsGridResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle, this.HttpContext, isVehicleChanged);
+
                 if (!reponse.GridResult.HasData)
                     return null;
 
@@ -87,7 +94,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 if (reponse.Message == null)
                 {
                     jsonData = JsonConvert.SerializeObject(reponse.GridResult.Data);
-                    jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema, columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
+                    jsonModel = Json(new { datagrid = jsonData, columns = reponse.GridResult.Columns, schema = reponse.GridResult.Schema,
+                        columnsfixed = reponse.GridResult.ColumnsFixed, needfixedcolumns = reponse.GridResult.NeedFixedColumns }, JsonRequestBehavior.AllowGet);
                     jsonModel.MaxJsonLength = Int32.MaxValue;
 
                     return jsonModel;

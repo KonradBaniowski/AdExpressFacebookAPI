@@ -88,6 +88,9 @@ namespace TNS.AdExpressI.Insertions
         /// <returns>Creative Links string</returns>
         string GetCreativeLinks(long idVehicle, DataRow currentRow);
 
-     
+        long CountInsertions(VehicleInformation vehicle, int fromDate,
+           int toDate, string filters, int universId, string zoomDate);
+
+
     }
 }

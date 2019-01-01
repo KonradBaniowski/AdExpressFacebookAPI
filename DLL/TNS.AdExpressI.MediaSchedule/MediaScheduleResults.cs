@@ -3825,6 +3825,12 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             return dtLevels;
         }
+
+        public virtual long CountData()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion
