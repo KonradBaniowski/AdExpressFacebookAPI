@@ -810,7 +810,50 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
 
         }
+
+
+
         #endregion
+
+        public long CountMediaScheduleData(string idWebSession, HttpContextBase httpContext)
+        {
+           long result = 0;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "", "", httpContext);
+                result = mediaScheduleResult.CountData();
+            }
+            catch (Exception ex)
+            {
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                throw;
+            }
+            return result;
+        }
+
+        public long CountMediaScheduleData(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext)
+        {
+           long result = 0;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle, httpContext);
+                result = mediaScheduleResult.CountData();
+            }
+            catch (Exception ex)
+            {
+                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                throw;
+            }
+            return result;
+        }
 
     }
 }

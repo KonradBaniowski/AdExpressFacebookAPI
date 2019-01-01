@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.FrameWork;
 using TNS.AdExpress.Constantes.FrameWork.Results;
@@ -20,7 +19,6 @@ using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.MediaSchedule;
-using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.Date;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
@@ -28,8 +26,6 @@ using System.Net;
 using FwkWebRsltUI = TNS.FrameWork.WebResultUI;
 using Kantar.AdExpress.Service.Core.Domain;
 using Km.AdExpressClientWeb.Helpers;
-using TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Domain.Classification;
 using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
@@ -133,6 +129,24 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = CountNbDataRows(zoomDate);
+                if (nbRows > CstWeb.Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    _session = (WebSession) WebSession.Load(idWebSession);
+                    string maxAllowedRows = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRows,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsBis = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsBis,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsRefine = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsRefine,
+                        _session.SiteLanguage);
+                    return
+                        Content(
+                            $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>");
+                }
+            }
+
             Export(false, null, zoomDate);
 
             return View();
@@ -143,8 +157,24 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
 
-           
-                Export(true, null, zoomDate);
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = CountNbDataRows(zoomDate);
+                if (nbRows > CstWeb.Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    _session = (WebSession)WebSession.Load(idWebSession);
+                    string maxAllowedRows = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRows,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsBis = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsBis,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsRefine = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsRefine,
+                        _session.SiteLanguage);
+                    return
+                        Content(
+                            $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>");
+                }
+            }
+            Export(true, null, zoomDate);
            
 
             return View();
@@ -154,8 +184,24 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
-            if(WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = CountNbDataRows(zoomDate);
+                if (nbRows > CstWeb.Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    _session = (WebSession)WebSession.Load(idWebSession);
+                    string maxAllowedRows = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRows,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsBis = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsBis,
+                        _session.SiteLanguage);
+                    string maxAllowedRowsRefine = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.MaxAllowedRowsRefine,
+                        _session.SiteLanguage);
+                    return
+                        Content(
+                            $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>");
+                }
+            }
+            if (WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
                 ExportWithMultipleUnitBrut(zoomDate);
             else ExportBrut(zoomDate);
 
@@ -2293,6 +2339,8 @@ namespace Km.AdExpressClientWeb.Controllers
         }
 
 
+      
+
         void Export(bool _showValues = false, CreativeMediaScheduleRequest request = null, string zoomDate = "")
         {
             var claim = new ClaimsPrincipal(User.Identity);
@@ -2302,10 +2350,19 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (request == null)
             {
-                if(!string.IsNullOrEmpty(zoomDate))
-                    data = _mediaSchedule.GetMediaScheduleData(idWebSession,zoomDate, "", this.HttpContext);
+               
+                if (!string.IsNullOrEmpty(zoomDate))
+                {
+                  
+                    data = _mediaSchedule.GetMediaScheduleData(idWebSession, zoomDate, "", this.HttpContext);
+                }
+
                 else
-                    data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
+                {
+                   data = _mediaSchedule.GetMediaScheduleData(idWebSession, this.HttpContext);
+
+                }
+                   
             }
             else
             {
@@ -5098,8 +5155,21 @@ namespace Km.AdExpressClientWeb.Controllers
            
         }
 
-      
-       
+
+        private Int64 CountNbDataRows(string zoomDate)
+        {
+            var claim = new ClaimsPrincipal(User.Identity);
+            string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            long nbRows = 0;
+
+            if (!string.IsNullOrEmpty(zoomDate))
+                nbRows = _mediaSchedule.CountMediaScheduleData(idWebSession, zoomDate, "", this.HttpContext);
+            else
+                nbRows = _mediaSchedule.CountMediaScheduleData(idWebSession, this.HttpContext);
+
+            return nbRows;
+        }
 
 
     }

@@ -38,6 +38,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Turkey
         public MediaScheduleResultDAL(WebSession session, MediaSchedulePeriod period, Int64 idVehicle) : base(session, period, idVehicle) { }
         #endregion
 
+        
+
         #region GetMasterQuery
         /// <summary>
         /// Get Master Query

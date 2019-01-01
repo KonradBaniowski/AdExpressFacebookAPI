@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 
@@ -37,10 +39,26 @@ namespace Km.AdExpressClientWeb.Controllers
            
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            WebSession session = (WebSession)WebSession.Load(idWebSession);
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows =  _insertionsService.CountInsertions(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle.Value, this.HttpContext, true);
+                if (nbRows > Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {                    string maxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows,
+                        session.SiteLanguage);
+                    string maxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis,
+                        session.SiteLanguage);
+                    string maxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine,
+                        session.SiteLanguage);
+                    return
+                        Content(
+                            $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>");
+                }
+            }
 
             var data = _insertionsService.GetInsertionsResult(idWebSession, ids, zoomDate, idUnivers, moduleId, idVehicle.Value, this.HttpContext, true);
 
-            WebSession session = (WebSession)WebSession.Load(idWebSession);
+         
 
             ExportAspose export = new ExportAspose();
 

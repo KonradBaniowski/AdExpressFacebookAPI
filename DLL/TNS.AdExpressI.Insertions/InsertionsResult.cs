@@ -1952,7 +1952,7 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
 
-        private void ComputeGridData(GridResult gridResult, ResultTable _data, int nbLine)
+        protected  virtual void ComputeGridData(GridResult gridResult, ResultTable _data, int nbLine)
         {
             _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
@@ -2037,7 +2037,7 @@ namespace TNS.AdExpressI.Insertions
         }
 
 
-        public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        public virtual GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
@@ -2271,6 +2271,24 @@ namespace TNS.AdExpressI.Insertions
 
             return columns;
         }
+
+
+
         #endregion
+
+        #region CountInsertions
+
+        public long CountInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId,
+         string zoomDate)
+        {
+            _getCreatives = false;
+            _zoomDate = zoomDate;
+            _universId = universId;
+            return _dalLayer.CountInsertionsData(vehicle, fromDate, toDate, universId, filters);
+           
+        }
+
+        #endregion
+
     }
 }

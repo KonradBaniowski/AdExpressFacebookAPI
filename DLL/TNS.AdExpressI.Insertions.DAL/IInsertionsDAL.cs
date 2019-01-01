@@ -169,6 +169,17 @@ namespace TNS.AdExpressI.Insertions.DAL
         /// <returns></returns>
         string GetVersionMinParutionDate(string idVersion, VehicleInformation vehicleInformation);
 
+        /// <summary>
+        /// Count insertions rows 
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information (differents informations about a media type like databaseId, showInsertions..., this object is more detailed above)</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
+        /// <param name="universId">User Univers Selection (correspondig to which is the current univers if we have a competitor study)</param>
+        /// <param name="filters">Filters Identifiers (A list of values correspondig to the classification levels)</param>
+        /// <returns>Advertising detail Data</returns>
+        long CountInsertionsData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters);
+
 
     }
 }

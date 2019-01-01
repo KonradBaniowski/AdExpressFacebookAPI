@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
@@ -268,6 +269,58 @@ namespace TNS.AdExpressI.Insertions.Turkey
             }
         }
         #endregion
+
+        public override GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId,
+            string zoomDate)
+        {
+            GridResult gridResult = new GridResult {HasData = false};
+            long nbRows = CountInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
+            if (nbRows == 0)
+            {
+                 gridResult = new GridResult { HasData = false };
+                return (gridResult);
+
+            }
+            if (nbRows >
+                Core.MAX_ALLOWED_INSERTION_VERSION_ROWS_NB)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return (gridResult);
+
+            }
+
+            int nbLines = 0;
+            ResultTable _data = GetInsertions(vehicle, fromDate, toDate, filters, universId, zoomDate);
+        
+
+            if (_data != null)
+            {
+                for (int startline = 0; startline < _data.LinesNumber; startline++)
+                {
+                    if (!(_data[startline, 0] is LineHide))//Filtre (LineHide)
+                    {
+                        nbLines++;
+                    }
+                }
+
+                if (nbLines > Core.MAX_ALLOWED_INSERTION_VERSION_ROWS_NB)
+                {
+                    gridResult.HasData = true;
+                    gridResult.HasMoreThanMaxRowsAllowed = true;
+                    return (gridResult);
+                }
+
+                ComputeGridData(gridResult, _data, nbLines);
+            }
+            else
+            {
+                gridResult.HasData = false;
+                return (gridResult);
+            }
+
+            return gridResult;
+        }
 
         protected override Insertions.Cells.CellCreativesTvInformation GetCellCreativesTvInformation(VehicleInformation vehicle,
               List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells)

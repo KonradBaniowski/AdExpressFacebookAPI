@@ -22,5 +22,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         MSCreatives GetMSCreatives(string idWebSession, string zoomDate, HttpContextBase httpContext);
         void SetMSCreatives(string idWebSession, ArrayList slogans);
         void SetProductLevel(string idWebSession, Int64 id, int level);
+       long CountMediaScheduleData(string idWebSession, HttpContextBase httpContext);
+       long CountMediaScheduleData(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext);
     }
 }
