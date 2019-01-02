@@ -142,7 +142,7 @@
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/PresentAbsent/MediaSelection" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
-        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Turkey.dll" class="TNS.AdExpressI.PresentAbsent.Turkey.PresentAbsentResult"/>
+       <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Turkey.dll" class="TNS.AdExpressI.PresentAbsent.Turkey.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Turkey.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Turkey.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
@@ -176,7 +176,7 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="83" name="AdSlogan"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -185,7 +185,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
@@ -475,7 +475,7 @@
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -484,7 +484,7 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <allowedColumnDetailLevelItem id="17" name="Titre"/>
+            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
@@ -798,6 +798,7 @@
             <allowedProductLevelItem id="16" name="Agence"/>
             <allowedProductLevelItem id="24" name="Program"/>
             <allowedProductLevelItem id="80" name="programTypology"/>
+            <allowedProductLevelItem id="88" name="programGenre"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
             <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
@@ -952,7 +953,7 @@
               <detailSelection id="40" name="Purchase Mode Selected"/>
             </detailSelections>
           </page>
-          <page id="7" resultid="68" name="Program Typology Breakdown" traductioncode="3219" url="" printExcelUrl="" exportJpegUrl="" menuTextId="3219" helpUrl="" createAlertUrl="">
+          <!--<page id="7" resultid="68" name="Program Typology Breakdown" traductioncode="3219" url="" printExcelUrl="" exportJpegUrl="" menuTextId="3219" helpUrl="" createAlertUrl="">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1"/>
             </ResultAllowedMediaUniverse>
@@ -1011,7 +1012,7 @@
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
-          </page>
+          </page>-->
         </results>
       </module>
       <!--******************************************      Analyse secto : Tableaux dynamiques *****************************************-->
@@ -1021,9 +1022,9 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Turkey.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Turkey.ProductClassReportDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ResultLimitation size="50000"/>
-        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleCategories list="1"/>
-        </ModuleAllowedMediaUniverse>
+        </ModuleAllowedMediaUniverse>-->
         <!--<overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>-->
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -1309,10 +1310,8 @@
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <allowedProductLevelItem id="7" name="Groupe de société"/>
             <allowedProductLevelItem id="16" name="Agence"/>
-            <allowedProductLevelItem id="24" name="Program"/>
-            <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <allowedProductLevelItem id="14" name="Variete"/>
+            <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
@@ -1363,10 +1362,8 @@
                 <allowedProductLevelItem id="8" name="Annonceur"/>
                 <allowedProductLevelItem id="7" name="Groupe de société"/>
                 <allowedProductLevelItem id="16" name="Agence"/>
-                <allowedProductLevelItem id="24" name="Program"/>
-                <allowedProductLevelItem id="80" name="programTypology"/>
                 <allowedProductLevelItem id="82" name="spotSubType"/>
-                <allowedProductLevelItem id="14" name="Variete"/>
+                <!--<allowedProductLevelItem id="14" name="Variete"/>-->
                 <allowedProductLevelItem id="15" name="Groupe d'agence"/>
               </allowedProductLevelItems>
             </ProductDetailLevel>

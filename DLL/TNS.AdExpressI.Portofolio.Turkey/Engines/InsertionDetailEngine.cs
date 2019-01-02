@@ -201,5 +201,32 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         }
 
         #endregion
+
+        protected override double GetTopDiffusion(double value)
+        {
+            if (value.ToString().Length == 6)
+            {
+                //Hour
+                string h = value.ToString().Substring(0, 2);
+                // Minutes Seconds
+                string ms = value.ToString().Substring(2, 4);
+
+                // For Turkey 25h = 1h
+                if (h == "25")
+                    return Convert.ToDouble("1" + ms);
+
+                if (h == "24")
+                    return Convert.ToDouble(ms);
+
+                return value;
+            }
+
+            return value;
+        }
+
+        protected override int GetTvId()
+        {
+            return Convert.ToInt32(VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv));
+        }
     }
 }

@@ -240,7 +240,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             StringBuilder sql = new StringBuilder();
 
             sql.AppendFormat("select SUM(COM_ITEM_NB) as COM_ITEM_NB from ( ");
-            sql.AppendFormat("select DATE_MEDIA_NUM, ID_PROGRAM, SUM(COM_ITEM_NB) as COM_ITEM_NB ");
+            sql.AppendFormat("select distinct PROGRAM_BEGINNING_TIME, ID_PROGRAM, COM_ITEM_NB ");
             sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
 
             // Period
@@ -251,7 +251,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             sql.Append(mediaRights);
             sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             sql.Append(listProductHap);
-            sql.AppendFormat(" group by DATE_MEDIA_NUM, ID_PROGRAM )");
+            //sql.AppendFormat(" group by DATE_MEDIA_NUM, ID_PROGRAM )");
+            sql.AppendFormat(" )");
             #endregion
 
             #region Execution de la requête

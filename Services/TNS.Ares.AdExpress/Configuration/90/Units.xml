@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<units defaultCurrency="tl" defaultKCurrency="kEuro">
+<units defaultCurrency="spot" defaultKCurrency="kEuro">
   <unit id="usd"       format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"      field="expenditure_usd"      multimediaField="total_usd"        trendsField="expenditure" webTextId="2648" webTextSignId="3136" groupId="0" groupType="mono" groupTextId="1770"/>
   <unit id="tl"       format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"      field="expenditure_tl"        multimediaField="total_tl"         trendsField="expenditure" webTextId="3135" webTextSignId="3134" groupId="0" groupType="mono" groupTextId="1770"/>
   <unit id="euro"        format="max0"      baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellEuro"       field="expenditure_euro"  multimediaField="total_euro"       trendsField="expenditure" webTextId="938"  webTextSignId="2797" groupId="0" groupType="mono" groupTextId="1770"/>

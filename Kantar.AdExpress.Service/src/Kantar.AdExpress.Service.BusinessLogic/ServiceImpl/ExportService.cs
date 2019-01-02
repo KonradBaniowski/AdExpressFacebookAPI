@@ -218,7 +218,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     #endregion
                     response.Success = true;
-                    response.Message = (webSession.SiteLanguage == 33) ? "Votre demande a été prise en compte" : "You have successfully created your export file. You will receive an email shortly.";
+                    response.Message = GestionWeb.GetWebWord(3251, webSession.SiteLanguage);
                 }
                 catch (System.Exception ex)
                 {

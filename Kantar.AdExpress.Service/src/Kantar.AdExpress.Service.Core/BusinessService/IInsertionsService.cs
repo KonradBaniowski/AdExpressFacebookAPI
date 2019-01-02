@@ -19,5 +19,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         ResultTable GetInsertionsResult(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext, bool isExcel = false);
 
         SpotResponse GetCreativePath(string idWebSession, string idVersion, long idVehicle, HttpContextBase httpContext);
+
+        long CountInsertions(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle, HttpContextBase httpContext, bool isExcel = false);
     }
 }

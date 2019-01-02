@@ -22,6 +22,13 @@
         <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
+    <project id="Turkey">
+      <files>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-tr.xml</file>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.tr.xml</file>
+        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+      </files>
+    </project>
   </projects>
   <outputs>
     <dir>F:\Dev\Github\AdExpress (mvc5)\Libs</dir>

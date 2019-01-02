@@ -626,12 +626,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                         break;
                     case CstFormat.PreformatedMediaDetails.vehicleInterestCenterMedia:
                         sql.AppendFormat(
-                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_INTEREST_CENTER as id_m2, INTEREST_CENTER as m2, {0}.id_media as id_m3, media as m3",
+                            " {0}.id_vehicle as id_m1, vehicle as m1, {0}.id_interest_center as id_m2, interest_center as m2, {0}.id_media as id_m3, media as m3",
                             _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedMediaDetails.categoryInterestCenterMedia:
                         sql.AppendFormat(
-                            " {0}.id_category as id_m1, category as m1, {0}.id_INTEREST_CENTER as id_m2, INTEREST_CENTER as m2, {0}.id_media as id_m3, media as m3",
+                            " {0}.id_category as id_m1, category as m1, {0}.id_interest_center as id_m2, interest_center as m2, {0}.id_media as id_m3, media as m3",
                             _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedMediaDetails.vehicleMedia:
@@ -640,22 +640,22 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                         break;
                     case CstFormat.PreformatedMediaDetails.spotTypeSpotSubType:
                         sql.AppendFormat(
-                            " {0}.ID_SPOT_TYPE as id_m1, SPOT_TYPE as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            " {0}.id_spot_type as id_m1, spot_type as m1, {0}.id_spot_sub_type as id_m2, spot_sub_type as m2",
                             _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedMediaDetails.programTypologySpotSubType:
                         sql.AppendFormat(
-                            " {0}.ID_PROGRAM_TYPOLOGY as id_m1, PROGRAM_TYPOLOGY as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            " {0}.id_program_typology as id_m1, program_typology as m1, {0}.id_spot_sub_type as id_m2, spot_sub_type as m2",
                             _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedMediaDetails.programTypology:
                         sql.AppendFormat(
-                            " {0}.ID_PROGRAM_TYPOLOGY as id_m1, PROGRAM_TYPOLOGY as m1",
+                            " {0}.id_program_typology as id_m1, program_typology as m1",
                             _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedMediaDetails.mediaSpotSubType:
                         sql.AppendFormat(
-                            " {0}.id_media as id_m1, media as m1, {0}.ID_SPOT_SUB_TYPE as id_m2, SPOT_SUB_TYPE as m2",
+                            " {0}.id_media as id_m1, media as m1, {0}.id_spot_sub_type as id_m2, spot_sub_type as m2",
                             _dataTable.Prefix);
                         break;
                     default:
@@ -724,7 +724,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
             }
             if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat("{0} {1}.ID_AD_SLOGAN = {2}.ID_AD_SLOGAN", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
+                sql.AppendFormat("{0} {1}.id_ad_slogan = {2}.id_ad_slogan", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
                 linkWord = " and ";
             }
             #endregion
@@ -747,19 +747,19 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 
             if (sql.ToString().IndexOf(_recapInterestCenter.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat("{0} {1}.id_INTEREST_CENTER = {2}.id_INTEREST_CENTER", linkWord, _recapInterestCenter.Prefix, _dataTable.Prefix);
+                sql.AppendFormat("{0} {1}.id_interest_center = {2}.id_interest_center", linkWord, _recapInterestCenter.Prefix, _dataTable.Prefix);
             }
             if (sql.ToString().IndexOf(_recapSpotSubType.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat("{0} {1}.ID_SPOT_SUB_TYPE = {2}.ID_SPOT_SUB_TYPE", linkWord, _recapSpotSubType.Prefix, _dataTable.Prefix);
+                sql.AppendFormat("{0} {1}.id_spot_sub_type = {2}.id_spot_sub_type", linkWord, _recapSpotSubType.Prefix, _dataTable.Prefix);
             }
             if (sql.ToString().IndexOf(_recapSpotType.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat("{0} {1}.ID_SPOT_TYPE = {2}.ID_SPOT_TYPE", linkWord, _recapSpotType.Prefix, _dataTable.Prefix);
+                sql.AppendFormat("{0} {1}.id_spot_type = {2}.id_spot_type", linkWord, _recapSpotType.Prefix, _dataTable.Prefix);
             }
             if (sql.ToString().IndexOf(_recapAdSlogan.SqlWithPrefix) > -1)
             {
-                sql.AppendFormat("{0} {1}.ID_AD_SLOGAN = {2}.ID_AD_SLOGAN", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
+                sql.AppendFormat("{0} {1}.id_ad_slogan = {2}.id_ad_slogan", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
             }
             #endregion
 

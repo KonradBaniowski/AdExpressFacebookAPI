@@ -4,13 +4,13 @@
   <!-- TV -->
   <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="true" filterSpotSubType="true" mediaAgencyFlag="300">
     <!-- Units-->
-    <allowedUnits defaultUnit="tl">
+    <allowedUnits defaultUnit="spot">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>usd</allowedUnit>
       <allowedUnit>tl</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
-      <allowedUnit>versionNb</allowedUnit>      
+      <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -78,7 +78,7 @@
         <allowedRecapMediaLevelItem>spotType</allowedRecapMediaLevelItem>    <!-- spot Type -->
         <allowedRecapMediaLevelItem>spotSubType</allowedRecapMediaLevelItem>    <!-- spot Sub Type -->
         <allowedRecapMediaLevelItem>interestCenter</allowedRecapMediaLevelItem>      <!-- interest Center -->
-        <allowedRecapMediaLevelItem>programTypology</allowedRecapMediaLevelItem>      <!-- programTypology -->        
+        <!--<allowedRecapMediaLevelItem>programTypology</allowedRecapMediaLevelItem>      --><!-- programTypology -->        
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
     <!--Allowed universe levels-->
@@ -110,8 +110,8 @@
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
   </vehicle>
- 
- 
- 
+
+
+
 
 </vehicles>

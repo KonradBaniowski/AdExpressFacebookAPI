@@ -50,7 +50,11 @@ $(document).on('click', '#btnRenameResult', function () {
                     }
                 });
             }
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -87,7 +91,11 @@ $(document).on('click', '#btnMoveResult', function () {
                     $("#Result").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -153,8 +161,11 @@ $(document).on('click', '#btnRenameUnivers', function () {
                     }
                 });
             }
-            bootbox.alert(response.Message);
-
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -191,7 +202,11 @@ $(document).on('click', '#btnMoveUnivers', function () {
                     $("#Univers").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -228,7 +243,11 @@ $(document).on('click', '.btnDeleteUnivers', function () {
                                 $("#Univers").html(data);
                             }
                         });
-                        bootbox.alert(response.Message);
+                        var msgLabel = $('#Labels_Success').val();
+                        if (response.Message == "Success")
+                            bootbox.alert(msgLabel);
+                        else
+                            bootbox.alert(response.Message);
                     }
                 });
             }
@@ -268,7 +287,11 @@ $(document).on('click', '.btnDeleteResult', function () {
                                 $("#Result").html(data);
                             }
                         });
-                        bootbox.alert(response.Message);
+                        var msgLabel = $('#Labels_Success').val();
+                        if (response.Message == "Success")
+                            bootbox.alert(msgLabel);
+                        else
+                            bootbox.alert(response.Message);
                     }
                 });
             }
@@ -318,7 +341,11 @@ $(document).on('click', '#btnValidCreateResultDirectory', function () {
                     $("#Result").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -355,7 +382,11 @@ $(document).on('click', '#btnValidCreateUniversDirectory', function () {
                     $("#Univers").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -392,7 +423,11 @@ $(document).on('click', '#btnValidCreateAlertsDirectory', function () {
                     $("#Alerts").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -430,7 +465,11 @@ $(document).on('click', '#btnValidDropResultDirectory', function () {
                     $("#Result").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -467,7 +506,11 @@ $(document).on('click', '#btnValidDropUniversDirectory', function () {
                     $("#Univers").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -504,7 +547,11 @@ $(document).on('click', '#btnValidDropAlertsDirectory', function () {
                     $("#Alerts").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -544,7 +591,11 @@ $(document).on('click', '#btnValidRenameResultDirectory', function () {
                     $("#Result").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -583,7 +634,11 @@ $(document).on('click', '#btnValidRenameUniversDirectory', function () {
                     $("#Univers").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -622,7 +677,11 @@ $(document).on('click', '#btnValidRenameAlertsDirectory', function () {
                     $("#Alerts").html(data);
                 }
             });
-            bootbox.alert(response.Message);
+            var msgLabel = $('#Labels_Success').val();
+            if (response.Message == "Success")
+                bootbox.alert(msgLabel);
+            else
+                bootbox.alert(response.Message);
         }
     });
 });
@@ -648,9 +707,13 @@ $(document).on('click', '.btnLoadSession', function () {
             if (response.Success) {
                 window.location.href = response.RedirectUrl;
                 bootbox.alert("Redirecting to the results page.");
+            } else {
+                var msgLabel = $('#Labels_Success').val();
+                if (response.Message == "Success")
+                    bootbox.alert(msgLabel);
+                else
+                    bootbox.alert(response.Message);
             }
-            else
-                bootbox.alert(response.Message);
         }
     });
 });

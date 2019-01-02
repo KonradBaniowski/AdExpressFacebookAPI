@@ -94,6 +94,12 @@ namespace TNS.AdExpressI.MediaSchedule{
         /// </summary>
         /// <returns></returns>
         object[,] ComputeData();
+
+        /// <summary>
+        /// Get  data number row
+        /// </summary>
+        /// <returns></returns>
+      long CountData();
         #endregion
     }
 }

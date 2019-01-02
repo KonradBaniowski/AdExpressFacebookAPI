@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cells\CellCreativesTvInformation.cs" />
+    <Compile Include="CreativeResult\CreativePopUp.cs" />
     <Compile Include="InsertionsResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +61,10 @@
     <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
+      <Project>{446aa1fa-2ce3-49d1-99cc-6ebaeccda911}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>

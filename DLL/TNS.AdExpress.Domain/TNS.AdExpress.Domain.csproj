@@ -271,6 +271,9 @@
     <Content Include="Resources\AdExpress.en-ru.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resources\AdExpress.en-tr.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\AdExpress.en.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -284,6 +287,9 @@
     <Content Include="Resources\AdExpress.ru.xml" />
     <Content Include="Resources\AdExpress.sk.xml" />
     <Content Include="Resources\AdExpress.cz.xml" />
+    <Content Include="Resources\AdExpress.tr.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
