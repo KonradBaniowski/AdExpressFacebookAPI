@@ -309,7 +309,7 @@
     <column id="252" name="Category Name / Position / Sequence # of Commercial Break" webTextId="3227"  dbLabel="com_item_category || ' - ' || program_com_item_pos_type || ' - ' || program_com_break_rank || '/' || program_com_break_nb" dbLabelAlias="categor_name_position_sequence" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="253" name="Sequence # of commercial items / blocks broadcasted throughout the program" webTextId="3228"  dbLabel="program_com_item_rank || '/' || com_item_nb" dbLabelAlias="program_com_item_rank_com_item_nb" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="254" name="Commercial Item Category Name and Position" webTextId="3229"  dbLabel="com_item_category || '/' || program_com_item_pos_type" dbLabelAlias="com_item_category_pos_type" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="255" name="Media Code"    webTextId="3230" dbId="id_vehicle"   dbLabel="id_vehicle"  dbTablePrefixe="vh"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="255" name="Media Code"    webTextId="3230" dbId="id_media"   dbLabel="id_media"  dbTablePrefixe="md"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="256" name="Version Code"  webTextId="3231" dbId="id_slogan"    dbLabel="id_slogan"   dbTablePrefixe="slo"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="257" name="Campaign Code" webTextId="3232" dbId="id_campaign"  dbLabel="id_campaign" dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" />
     <column id="258" name="Program Genre" webTextId="3240" dbId="id_program_genre" dbLabel="program_genre" dbTable="program_genre" dbTablePrefixe="pgg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -496,14 +496,14 @@
       <columnItem id="202" name="Language of the Ad"   />                                                                     <!-- id_language_data_i -->
       <columnItem id="18" name="Duration" idDetailLevelMatching="19"/>                                                        <!-- duration -->
       <columnItem id="203" name="Version Name" />                                                                             <!-- slogan -->
-      <columnItem id="256" name="Version Code" idDetailLevelMatching="87"/>                                                   <!-- id_slogan -->
+      <columnItem id="256" name="Version Code" idDetailLevelMatching="87"/>                                                    <!-- id_slogan -->
       <columnItem id="204" name="Creative Agency"       />                                                                    <!-- id_creative_agency -->
       <columnItem id="205" name="Campaign"       />                                                                           <!-- campaign -->
       <columnItem id="257" name="Campaign Code"       />                                                                      <!-- id_campaign -->
       <columnItem id="206" name="Ad Slogan"        idDetailLevelMatching="83"/>                                               <!-- id_ad_slogan -->
       <columnItem id="9" name="Product" idDetailLevelMatching="10"/>                                                          <!-- id_product -->
       <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>                                                           <!-- id_brand -->
-      <!--<columnItem id="100" name="Sub brand" />-->                                                                         <!-- id_sub_brand -->
+      <!--<columnItem id="100" name="Sub brand" />                                                                                --><!-- id_sub_brand -->
       <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>                                                     <!-- id_group_ -->
       <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12" />                                                     <!-- id_subsector -->
       <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>                                                          <!-- id_sector -->

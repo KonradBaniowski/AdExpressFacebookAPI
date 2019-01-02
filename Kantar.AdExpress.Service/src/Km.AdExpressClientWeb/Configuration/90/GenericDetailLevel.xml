@@ -83,7 +83,7 @@
     <level id="76" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc"/>
     <level id="77" name="MediaGroup"    webTextId="3004" dbId="id_media_group" dbLabel="media_group" dbTable="media_group" dbTablePrefixe="meg"/>
     <level id="78" name="Canal"         webTextId="363" dbId="id_canal" dbLabel="canal" dbTable="canal" dbTablePrefixe="can"/>
-   
+
     <level id="79" name="MediaOwner"   webTextId="3145" dbId="id_media_owner" dbLabel="media_owner" dbTable="media_owner" dbTablePrefixe="mo"/>
     <level id="80" name="programTypology"      webTextId="3147" dbId="id_program_typology" dbLabel="program_typology" dbTable="program_typology" dbTablePrefixe="pt"/>
     <level id="81" name="spotType"      webTextId="3153" dbId="id_spot_type" dbLabel="spot_type" dbTable="spot_type" dbTablePrefixe="st"/>
@@ -459,7 +459,7 @@
       <levelItem id="80" name="programTypology"/>
       <levelItem id="82" name="spotSubType"/>
     </detailLevel>
-    
+
     <detailLevel id="94" name="famille\annonceur\marque">
       <levelItem id="11" name="Famille"/>
       <levelItem id="8" name="Annonceur"/>

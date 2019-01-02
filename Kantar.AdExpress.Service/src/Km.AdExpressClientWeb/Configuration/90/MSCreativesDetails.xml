@@ -3,6 +3,6 @@
   <vehicleGroups>
     <vehicle id="1" name="tv">
       <detailColumn id="19"/>
-    </vehicle>   
+    </vehicle>
   </vehicleGroups>
 </configuration>

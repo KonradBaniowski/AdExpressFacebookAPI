@@ -10,7 +10,7 @@
       <allowedUnit>tl</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
-      <allowedUnit>versionNb</allowedUnit>      
+      <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -110,8 +110,8 @@
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
   </vehicle>
- 
- 
- 
+
+
+
 
 </vehicles>

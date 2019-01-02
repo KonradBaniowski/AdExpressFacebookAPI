@@ -568,10 +568,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             case Vehicles.names.others:
                                                 if (row[Column.DataBaseField].ToString().Length > 0)
                                                     tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(
-                                                        Convert.ToString(row[Column.DataBaseField]), _webSession, _vehicleInformation.Id.GetHashCode());
+                                                        Convert.ToString(row[Column.DataBaseField]), _webSession, GetTvId());
                                                 else
                                                     tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(string.Empty,
-                                                        _webSession, _vehicleInformation.Id.GetHashCode());
+                                                        _webSession, GetTvId());
 
                                                 break;
                                         }
@@ -789,6 +789,11 @@ namespace TNS.AdExpressI.Portofolio.Engines
         protected virtual double GetTopDiffusion(double value)
         {
             return value;
+        }
+
+        protected virtual int GetTvId()
+        {
+            return _vehicleInformation.Id.GetHashCode();
         }
 
     }

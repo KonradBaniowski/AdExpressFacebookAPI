@@ -223,5 +223,10 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
 
             return value;
         }
+
+        protected override int GetTvId()
+        {
+            return Convert.ToInt32(VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv));
+        }
     }
 }

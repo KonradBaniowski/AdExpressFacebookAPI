@@ -16,5 +16,5 @@
   <unit id="occurence"   format="max0"      baseId ="insertion"   assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="total_insertion"      trendsField="insertion"   webTextId="940" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="volumeMms"   format="max0"      baseId ="insertion"   assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="total_insertion"      trendsField="insertion"   webTextId="2216" groupId="1" groupType="multi" groupTextId="2061"/>
   <unit id="numberPost"   format="max0"     baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellNumber"     field="number_post"       multimediaField="totalpost"                              webTextId="3029" groupId="1" groupType="multi" groupTextId="2061"/>
-  
+
 </units>

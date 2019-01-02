@@ -110,6 +110,9 @@ namespace Km.AdExpressClientWeb.Controllers
             else if (WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
             {
             }
+            else if (WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
+            {
+            }
             else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
             {
                 documents = _infosNewsService.GetInfosNews(idWS, this.HttpContext);
