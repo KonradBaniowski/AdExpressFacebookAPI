@@ -48,7 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     model.ClientServiceEmail = "ISBClientService@kantarmedia.com";
                     break;
                 default:
-                    model.ClientServicePhoneNumber = "01 30 74 87 78";
+                    model.ClientServicePhoneNumber = "01 30 74 87 73";
                     model.ClientServiceEmail = "sc.adexpress@kantarmedia.com";
                     break;
             }
