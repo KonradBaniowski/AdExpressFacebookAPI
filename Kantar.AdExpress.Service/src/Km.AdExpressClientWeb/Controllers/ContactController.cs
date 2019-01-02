@@ -44,7 +44,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     model.ClientServiceEmail = "aleksandra.misterska@kantarmedia.com";
                     break;
                 default:
-                    model.ClientServicePhoneNumber = "01 30 74 87 73";
+                    model.ClientServicePhoneNumber = "01 47 67 13 02";
                     model.ClientServiceEmail = "sc.adexpress@kantarmedia.com";
                     break;
             }
