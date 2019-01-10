@@ -15,7 +15,7 @@
         <unitformat name="durationminu"   format="00 h 00 m 00 S"                  excelFormat="00 h 00 m 00 S"                             asposeFormat="46"/>
         <unitformat name="shortduration"  format="0 m 00 s"                        excelFormat="0 m 00 s"                                   asposeFormat="45"/>
         <unitformat name="airtime"        format="#0:00:00;#0:00:00;"              excelFormat="#0:00:00;#0:00:00;&amp;nbsp\;"              asposeFormat="46"/>
-        <unitformat name="currency"       format="#,##0 €;-#,##0 €;"               excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"   asposeFormat="5"/>
+        <unitformat name="currency"       format="#,##0 TL;-#,##0 TL;"               excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"   asposeFormat="5"/>
         <unitformat name="codeEcran"          format="################;################;"  excelFormat="################################;&amp;nbsp\;"  asposeFormat="0"/>
         <unitformat name="pdm"            format="#,##0.00;-#,##0.00"              excelFormat="#,##0.00;-#,##0.00"                         asposeFormat="39"/>
       </unitformats>
@@ -45,7 +45,7 @@
         <unitformat name="durationminu"     format="00 h 00 m 00 S"                  excelFormat="00 h 00 m 00 S"                             asposeFormat="46"/>
         <unitformat name="shortduration"    format="0 m 00 s"                        excelFormat="0 m 00 s"                                   asposeFormat="45"/>
         <unitformat name="airtime"          format="#0:00:00;#0:00:00;"              excelFormat="#0:00:00;#0:00:00;&amp;nbsp\;"              asposeFormat="46"/>
-        <unitformat name="currency"         format="#,##0 €;-#,##0 €;"               excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"   asposeFormat="5"/>
+        <unitformat name="currency"         format="#,##0 TL;-#,##0 TL;"               excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"   asposeFormat="5"/>
         <unitformat name="codeEcran"          format="################;################;"  excelFormat="################################;&amp;nbsp\;"  asposeFormat="0"/>
         <unitformat name="pdm"              format="#,##0.00;-#,##0.00"              excelFormat="#,##0.00;-#,##0.00"                         asposeFormat="39"/>
       </unitformats>

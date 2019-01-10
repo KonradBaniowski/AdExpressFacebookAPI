@@ -1,5 +1,7 @@
 ﻿@*<p class="text-center">@(Model.Labels.NewsDescr)</p>*@
 @*IMG ACCUEIL*@
+@using TNS.AdExpress.Domain.Translation
+@model int
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10 padding-b-15">
     <a target="_blank" href="#">
         <img src="../Content/img/banner_sk.jpg" class="img-responsive" alt="Ad Express - Kantar Media">
@@ -9,11 +11,11 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-lr-10">
     <div class="panel panel-default panel-home">
         <div class="panel-heading">
-            <h4><i class="icon-bubble white"></i> News</h4>
+            <h4><i class="icon-bubble white"></i> @GestionWeb.GetWebWord(3118, Model)</h4>
         </div>
         <div class="panel-body information-fixed">
             <div class="media">
-                <div class="media-body">
+                @*<div class="media-body">
                     <div class="date pull-left">
                         <h4 class="text-center"><strong>13</strong></h4>
                         <h4 class="text-center"><small>JUL</small></h4>
@@ -26,7 +28,7 @@
                     <div class="content">
                         <p>News 1</p><br />
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

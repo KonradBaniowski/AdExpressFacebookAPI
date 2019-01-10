@@ -128,7 +128,7 @@
     <column id="67" name="Prix" webTextId="1936" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
 
     <column id="68" name="Somme Surface page" webTextId="2251" isSum="true"  dbLabel="area_page" dbLabelAlias="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
-    <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"/>
+    <column id="69" name="Somme Durée" webTextId="3256" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"/>
     <column id="70" name="Nombre de supports" webTextId="2252" isCountDistinct="true"  dbLabel="id_media" dbTablePrefixe="wp" dbLabelAlias="nb_supports" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="71" name="Nombre de supports press" webTextId="2252" dbLabel="id_media" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellIdsNumber" format="max0"/>
     <column id="72" name="Insertions" webTextId="1398" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -144,7 +144,7 @@
     <column id="82" name="Classe" webTextId="3167" dbId="id_subsector" dbLabel="subsector" dbTable="subsector" dbTablePrefixe="ssc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="12"/>
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="20"/>
     <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
+    <column id="85" name="TL" webTextId="1712" isSum="true"  dbLabel="expenditure_tl" dbLabelAlias="expenditure_tl" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
     <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
     <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
@@ -480,7 +480,7 @@
       <columnItem id="255" name="Media Code" idDetailLevelMatching="3"/>                                                      <!-- media -->
       <columnItem id="4" name="Content Type" idDetailLevelMatching="4"/>                                                      <!-- id_interest_center -->
       <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>                                                   <!-- id_media_owner -->
-      <columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>                                        <!-- id_media_seller -->
+      <!--<columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>-->                                 <!-- id_media_seller -->
       <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>                                             <!-- id_category -->
       <columnItem id="193" name="Periodicity"   />                                                                            <!-- id_periodicity -->
       <columnItem id="243" name="Program"  />                                                                                 <!-- id_program -->
@@ -815,7 +815,7 @@
       <columnItem id="255" name="Media Code" idDetailLevelMatching="3"/>
       <columnItem id="4" name="Content Type" idDetailLevelMatching="4"/>
       <columnItem id="192" name="Media Owner"  idDetailLevelMatching="79"/>
-      <columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>
+      <!--<columnItem id="5" name="The Company Selling the Ad" idDetailLevelMatching="5"/>-->
       <columnItem id="2" name="TV Broadcasting Type"  idDetailLevelMatching="2"/>
       <columnItem id="193" name="Periodicity"   />
       <columnItem id="243" name="Program"  />

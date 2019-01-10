@@ -228,5 +228,32 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         {
             return Convert.ToInt32(VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv));
         }
+
+        /// <summary>
+        /// Get column value depending on if the value has a separator or not
+        /// </summary>
+        /// <param name="column">Column</param>
+        /// <param name="value">Value of the cell</param>
+        /// <returns>Value</returns>
+        /// <remarks>We have add this method to solve cobranding problem for Russia</remarks>
+        protected override object GetColumnValue(GenericColumnItemInformation column, object value)
+        {
+
+            string s = string.Empty;
+            if (column.IsContainsSeparator)
+            {
+                if (value != null)
+                    s = SplitStringValue(value.ToString());
+                else
+                    s = string.Empty;
+                return s;
+            }
+
+            if (column.CellType.Equals("TNS.FrameWork.WebResultUI.CellNumber") && value == DBNull.Value)
+                return 0;
+
+            return value;
+
+        }
     }
 }
