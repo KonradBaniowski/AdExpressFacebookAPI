@@ -1019,12 +1019,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             dataType = "number",
                             format = format,
                             columnCssClass = "colStyle",
-                            width = "100",
+                            width = "110",
                             allowSorting = true
                         });
                     schemaFields.Add(new { name = $"PERIOD_COMP_{unitName}" });
                     columnsFixed.Add(new { columnKey = $"PERIOD_COMP_{unitName}", isFixed = false, allowFixing = false });
-                    tableWidth += 100;
+                    tableWidth += 110;
                 }
                 //PDM
                 if (_allowPdm)
@@ -1077,12 +1077,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             dataType = "number",
                             format = format,
                             columnCssClass = "colStyle",
-                            width = "100",
+                            width = "110",
                             allowSorting = true
                         });
                     schemaFields.Add(new { name = $"PERIOD_{unitName}" });
                     columnsFixed.Add(new { columnKey = $"PERIOD_{unitName}", isFixed = false, allowFixing = false });
-                    tableWidth += 100;
+                    tableWidth += 110;
                 }
                 else
                 {
@@ -1094,12 +1094,12 @@ namespace TNS.AdExpressI.MediaSchedule.Turkey
                             dataType = "number",
                             format = format,
                             columnCssClass = "colStyle",
-                            width = "100",
+                            width = "110",
                             allowSorting = true
                         });
                     schemaFields.Add(new { name = $"PERIOD_{unitName}" });
                     columnsFixed.Add(new { columnKey = $"PERIOD_{unitName}", isFixed = false, allowFixing = false });
-                    tableWidth += 100;
+                    tableWidth += 110;
                 }
             }
             #endregion

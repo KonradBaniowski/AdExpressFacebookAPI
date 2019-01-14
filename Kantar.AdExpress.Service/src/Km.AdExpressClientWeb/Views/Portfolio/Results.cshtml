@@ -486,16 +486,16 @@
                 if (val == 0)
                     return "";
 
-                var endHour = 2;
                 var s = val.toString();
-                var nbToFillWithZero = 6 - s.length;
-
-                if (s.length > 6)
-                    endHour += (s.length - 6) ;
-
+                var valLenght = s.length;
+                var hLenght = 2;
+                if (valLenght > 6)
+                    hLenght = valLenght - 4;
+                var nbToFillWithZero = 6 - valLenght;
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
-                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(endHour + 2, 2) + " S";
+                valLenght = s.length;
+                return s.substr(0, hLenght) + " H " + s.substr(valLenght - 4, 2) + " M " + s.substr(valLenght - 2, 2) + " S";
             }
 
             function GetColumnsFormatter(columns) {
