@@ -161,7 +161,7 @@ namespace TNS.AdExpressI.Insertions.Turkey
                             case GenericColumnItemInformation.Columns.Month:
                             case GenericColumnItemInformation.Columns.MonthYear:
                             case GenericColumnItemInformation.Columns.DayName:
-                                tab[cLine, index2] = new CellLabel(date.ToString(cultureInfo.GetFormatPattern(columnItemInformation1.StringFormat)));
+                                tab[cLine, index2] = new CellLabel(date.ToString(cultureInfo.GetFormatPattern(columnItemInformation1.StringFormat),cultureInfo));
                                 break;
                         }
                     }

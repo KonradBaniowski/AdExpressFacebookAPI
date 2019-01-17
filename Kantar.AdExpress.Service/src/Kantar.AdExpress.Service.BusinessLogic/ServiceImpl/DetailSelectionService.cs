@@ -256,7 +256,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.ShowStudyPeriod = !string.IsNullOrEmpty(domain.StudyPeriod);
             domain.ShowComparativePeriod = !string.IsNullOrEmpty(domain.ComparativePeriod);
             domain.ShowComparativePeriodType = !string.IsNullOrEmpty(domain.ComparativePeriodType);
-            domain.ShowPeriodDisponibilityType = !string.IsNullOrEmpty(domain.PeriodDisponibilityType);
+            domain.ShowPeriodDisponibilityType = false;//!string.IsNullOrEmpty(domain.PeriodDisponibilityType);
             domain.ShowIdSlogansLabel = !string.IsNullOrEmpty(domain.IdSlogansLabel);
             #endregion
 

@@ -699,10 +699,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
-                                        var columnLabel = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                        var columnValue = string.IsNullOrEmpty(Column.DataBaseAliasField)
                                             ? row[Column.DataBaseField]
                                             : row[Column.DataBaseAliasField];
-                                        curCell.SetCellValue(GetColumnValue(Column, columnLabel));
+                                        curCell.SetCellValue(GetColumnValue(Column, columnValue));
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
@@ -728,7 +728,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <param name="value">Value of the cell</param>
         /// <returns>Value</returns>
         /// <remarks>We have add this method to solve cobranding problem for Russia</remarks>
-        protected object GetColumnValue(GenericColumnItemInformation column, object value)
+        protected virtual object GetColumnValue(GenericColumnItemInformation column, object value)
         {
 
             string s = string.Empty;

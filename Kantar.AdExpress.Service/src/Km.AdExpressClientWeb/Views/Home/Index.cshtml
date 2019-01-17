@@ -93,7 +93,7 @@
                 Html.RenderPartial("_HomeNewsFi");
                 break;
             case CountryCode.TURKEY:
-                Html.RenderPartial("_HomeNewsTr");
+                Html.RenderPartial("_HomeNewsTr", Model.SiteLanguage);
                 break;
             case CountryCode.SLOVAKIA:
                 Html.RenderPartial("_HomeNewsSk", Model.SiteLanguage);
