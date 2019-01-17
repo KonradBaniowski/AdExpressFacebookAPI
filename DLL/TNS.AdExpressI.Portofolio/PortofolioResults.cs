@@ -1705,6 +1705,11 @@ namespace TNS.AdExpressI.Portofolio
             }
         }
 
+        public virtual  long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion

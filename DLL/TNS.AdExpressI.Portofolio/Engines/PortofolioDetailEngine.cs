@@ -397,7 +397,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 	    {
 	        return _webSession.GetValidUnitForResult();
 	    }
-        #endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
         #endregion
     }

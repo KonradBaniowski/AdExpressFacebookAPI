@@ -1136,6 +1136,12 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 sql = prList.GetExcludeItemsSql(true, prefix);
             return sql;
         }
+
+        public virtual long CountData()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion

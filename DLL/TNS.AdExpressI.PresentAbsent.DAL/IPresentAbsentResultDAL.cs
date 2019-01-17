@@ -144,6 +144,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
 		/// Exception throwed when an error occurs in the method</exception>
 		DataSet GetNbParutionData();
 
+        long CountData();
+
     }
 
 }

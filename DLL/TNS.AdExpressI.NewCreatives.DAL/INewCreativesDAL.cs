@@ -20,6 +20,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
     /// </summary>
     public interface INewCreativeResultDAL {
         DataSet GetData();
+
+        long CountData();
     }
 
 }

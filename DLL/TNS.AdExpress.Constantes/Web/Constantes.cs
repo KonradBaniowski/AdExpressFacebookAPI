@@ -350,15 +350,15 @@ namespace TNS.AdExpress.Constantes.Web
             selectedSpotSubTypes = 80,
         }
 
-        /// <summary>
-        /// Max allowed rows number to display
-        /// </summary>
-        public const int MAX_ALLOWED_ROWS_NB = 10000;
+	    /// <summary>
+	    /// Max allowed rows number to display
+	    /// </summary>
+	    public const int MAX_ALLOWED_ROWS_NB = 10000;
 
-        /// <summary>
-        /// Max allowed rows number to display
-        /// </summary>
-        public const int MAX_ALLOWED_DATA_ROWS = 44000;
+	    /// <summary>
+	    /// Max allowed rows number to display
+	    /// </summary>
+	    public const int MAX_ALLOWED_DATA_ROWS = 44000;
 
 	    /// <summary>
 	    /// Max allowed rows number to display in EXCEL page

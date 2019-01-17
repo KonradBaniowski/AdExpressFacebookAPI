@@ -266,13 +266,9 @@ namespace TNS.AdExpressI.Insertions.DAL
                 {
 
                     /* Get table for the current media type and according to the current module
-                     * */
-                    if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                        dataTable = GetDataTable(v, CstWeb.Module.Type.tvSponsorship);
-                    else if (Dates.Is4M(fromDate))
-                        dataTable = GetDataTable(v, CstWeb.Module.Type.alert);
-                    else
-                        dataTable = GetDataTable(v, CstWeb.Module.Type.analysis);
+                     * */                 
+
+                    dataTable = GetDataTable(v, fromDate);
 
                     if (!first)
                         sql.Append(" UNION ");
@@ -713,16 +709,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         {
             _creaConfig = true;
             var sql = new StringBuilder(5000);
-            /* Get the table name for a specific vehicle and depending on the module type
-             * Example : data_press, data_tv, data_radio ...
-             * */
-            Table tData;
-            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if (Dates.Is4M(fromDate))
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
-            else
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+            var tData = GetDataTable(vehicle, fromDate);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -789,6 +776,22 @@ namespace TNS.AdExpressI.Insertions.DAL
             #endregion
 
         }
+
+        protected  virtual Table GetDataTable(VehicleInformation vehicle, int fromDate)
+        {
+/* Get the table name for a specific vehicle and depending on the module type
+             * Example : data_press, data_tv, data_radio ...
+             * */
+            Table tData;
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
+            else if (Dates.Is4M(fromDate))
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
+            else
+                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+            return tData;
+        }
+
         #endregion
 
 
@@ -808,16 +811,7 @@ namespace TNS.AdExpressI.Insertions.DAL
         {
 
             var sql = new StringBuilder(5000);
-            /* Get the table name for a specific vehicle and depending on the module type
-             * Example : data_press, data_tv, data_radio ...
-             * */
-            Table tData;
-            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if (Dates.Is4M(fromDate))
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
-            else
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+            var tData = GetDataTable(vehicle, fromDate);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -902,16 +896,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
             var sql = new StringBuilder(5000);
             var detailLevelsIds = new ArrayList();
-            /* Get the table name for a specific vehicle and depending on the module type
-             * Example : data_press, data_tv, data_radio ...
-             * */
-            Table tData;
-            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-            else if (Dates.Is4M(fromDate))
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
-            else
-                tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+            var tData = GetDataTable(vehicle, fromDate);
             /* Get the data base shema
              * */
             Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
@@ -2227,12 +2212,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             //Ge table name
             string tableName = string.Empty;
 
-            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.tvSponsorship);
-            else if (Dates.Is4M(beginingDate))
-                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.alert);
-            else
-                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.analysis);
+            tableName = GetTableName(beginingDate, tableName, vehicleInformation);
 
             //Ge table prefix
             string tablePrefixe = GetTablePrefix();
@@ -2303,6 +2283,17 @@ namespace TNS.AdExpressI.Insertions.DAL
             }
 
             return sql.ToString();
+        }
+
+        protected virtual string GetTableName(string beginingDate, string tableName, VehicleInformation vehicleInformation)
+        {
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.tvSponsorship);
+            else if (Dates.Is4M(beginingDate))
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.alert);
+            else
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.analysis);
+            return tableName;
         }
 
         protected virtual string GetSloganField(VehicleInformation vehicleInformation, string tablePrefixe)
@@ -2643,13 +2634,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 /* Get the table name for a specific vehicle and depending on the module type
                  * Example : data_press, data_tv, data_radio ...
                  * */
-                Table tData;
-                if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
-                    tData = GetDataTable(vehicle, CstWeb.Module.Type.tvSponsorship);
-                else if (Dates.Is4M(fromDate))
-                    tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
-                else
-                    tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+                Table tData = GetDataTable( vehicle,  fromDate);
+             
                 /* Get the data base shema
                  * */
                 Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);

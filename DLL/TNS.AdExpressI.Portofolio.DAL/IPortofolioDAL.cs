@@ -84,5 +84,11 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 
         //DataSet GetPortfolioAlertParamsFlag(long alertId);
 
+        /// <summary>
+		/// Count data
+		/// </summary>
+		/// <returns></returns>
+		long CountData();
+
     }
 }

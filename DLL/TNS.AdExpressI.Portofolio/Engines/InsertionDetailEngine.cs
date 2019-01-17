@@ -796,5 +796,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
             return _vehicleInformation.Id.GetHashCode();
         }
 
+        protected virtual long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

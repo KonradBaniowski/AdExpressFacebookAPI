@@ -74,6 +74,11 @@ namespace TNS.AdExpressI.LostWon
         /// </summary>
         /// <returns>Computed data</returns>
         GridResult GetGridResult();
+        /// <summary>
+        /// Count result data
+        /// </summary>
+        /// <returns>Number of data rows</returns>
+        long CountData();
 
     }
 

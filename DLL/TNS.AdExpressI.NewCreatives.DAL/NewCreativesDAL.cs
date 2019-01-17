@@ -267,7 +267,10 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         #endregion
 
         public string BeginingDate { get { return _beginingDate; } set { _beginingDate = value; } }
-
+        public virtual long CountData()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

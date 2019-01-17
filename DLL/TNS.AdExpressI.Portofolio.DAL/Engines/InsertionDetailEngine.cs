@@ -272,7 +272,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					throw new PortofolioDALException("GetOrderByDetailMedia : This media is not treated. None related table.");
 			}
 		}
-		#endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
 
 

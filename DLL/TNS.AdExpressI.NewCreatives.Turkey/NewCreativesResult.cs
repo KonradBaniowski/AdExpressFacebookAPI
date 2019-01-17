@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
@@ -101,6 +102,27 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             }
         }
         #endregion
+
+        public override GridResult GetGridResult()
+        {
+           
+            long nbRows = CountData();
+            if (nbRows == 0)
+            {
+                GridResult gridResult = new GridResult();
+                gridResult.HasData = false;
+                return gridResult;
+            }
+            if (nbRows > AdExpress.Constantes.Web.Core.MAX_ALLOWED_DATA_ROWS)
+            {
+                GridResult gridResult = new GridResult();
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return (gridResult);
+            }
+
+            return base.GetGridResult();
+        }
 
         protected override void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
         {

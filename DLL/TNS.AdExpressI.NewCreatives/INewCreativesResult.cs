@@ -28,5 +28,7 @@ namespace TNS.AdExpressI.NewCreatives {
         /// <returns>Computed data</returns>
         ResultTable GetData();
         GridResult GetGridResult();
+
+        long CountData();
     }
 }

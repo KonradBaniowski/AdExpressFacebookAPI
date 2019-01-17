@@ -276,6 +276,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         {
             return DBConstantes.Fields.DATE_MEDIA_NUM;
         }
-        #endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
     }
 }

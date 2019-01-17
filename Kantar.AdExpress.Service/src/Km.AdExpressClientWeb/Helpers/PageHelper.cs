@@ -582,6 +582,19 @@ namespace Km.AdExpressClientWeb.Helpers
             //        return false;
             //}
         }
+
+        public static string GetContent(string idWebSession)
+        {
+            WebSession session = (WebSession)WebSession.Load(idWebSession);
+            string maxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows,
+                session.SiteLanguage);
+            string maxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis,
+                session.SiteLanguage);
+            string maxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine,
+                session.SiteLanguage);
+            return
+                    $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>";
+        }
     }
 
 }

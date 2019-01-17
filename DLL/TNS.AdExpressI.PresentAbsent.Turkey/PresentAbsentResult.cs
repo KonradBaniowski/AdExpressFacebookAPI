@@ -4,7 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.PresentAbsent.DAL;
@@ -349,6 +351,45 @@ namespace TNS.AdExpressI.PresentAbsent.Turkey
            
             return cLine;
 
+        }
+
+
+        public override GridResult GetGridResult()
+        {
+            var gridResult = new GridResult();
+
+            //Count nb rows
+            switch ((Int32)_session.CurrentTab)
+            {
+                case CompetitorMarketShare.ABSENT:
+                case CompetitorMarketShare.COMMON:
+                case CompetitorMarketShare.EXCLUSIF:
+                case CompetitorMarketShare.FORCES:
+                case CompetitorMarketShare.PORTEFEUILLE:
+                case CompetitorMarketShare.POTENTIELS:
+
+                    long nbRows = CountData();
+                    if (nbRows == 0)
+                    {
+                        gridResult.HasData = false;
+                        return gridResult;
+                    }
+                    if (nbRows > CstWeb.Core.MAX_ALLOWED_DATA_ROWS)
+                    {
+                        gridResult.HasData = true;
+                        gridResult.HasMoreThanMaxRowsAllowed = true;
+                        return gridResult;
+                    }
+
+                    break;
+                //case CompetitorMarketShare.SYNTHESIS:
+                //    this._result = CompetitorMarketShare.SYNTHESIS;
+                //    return GetSynthesisData();
+
+            }
+
+          
+            return base.GetGridResult();
         }
     }
 }

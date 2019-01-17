@@ -30,5 +30,7 @@ namespace TNS.AdExpressI.LostWon.DAL.Turkey
           
             return String.Empty;
         }
+
+
     }
 }

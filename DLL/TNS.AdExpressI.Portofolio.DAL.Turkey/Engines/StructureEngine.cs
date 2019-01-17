@@ -11,6 +11,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
 {
@@ -70,5 +71,131 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             }
         }
         #endregion
+
+        #region Dataset for tv or radio
+        /// <summary>
+        /// Get structure data 
+        /// </summary>
+        /// <remarks>Used for tv or radio</remarks>		
+        /// <returns>DataSet</returns>
+        public string  CountStructDataQuery()
+        {
+
+            #region variables
+            string tableName = "";
+            string fields = "";
+            StringBuilder sql = new StringBuilder(2000);
+            string product = "";
+            double hourBegin;
+            double hourEnd;
+            bool start = true;
+            #endregion
+
+            #region construction de la requête
+            try
+            {
+                //Table name
+                tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+
+            }
+            catch (Exception)
+            {
+                throw new PortofolioDALException("GetStructData : impossible to determine Table and Fields for the query.");
+            }
+
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                foreach (KeyValuePair<string, double> kpv in _hourBeginningList)
+                {
+                    if (!start) sql.Append("  union all ");
+
+                    //Fields
+                    fields = GetStructFields(kpv.Key);
+
+                    // Select 
+                    sql.Append("  select " + fields);
+
+                    // Tables
+                    sql.Append(" from " + tableName + " ");
+
+                    //Where
+                    sql.Append("  where ");
+
+                    // Period conditions
+                    sql.Append("  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num >= " + _beginingDate);
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num <= " + _endDate);
+
+                    // Hour interval
+                    hourBegin = kpv.Value;
+                    hourEnd = _hourEndList[kpv.Key];
+                    sql.Append(" " + GetHourInterval(hourBegin, hourEnd));
+
+                    #region Product Rights
+
+                    //Access Rights
+                    sql.Append(SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+
+                    //list products hap
+                    string listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    if (listProductHap != null && listProductHap.Length > 0)
+                        sql.Append(listProductHap);
+
+                    //List selected products
+                    product = GetProductData();
+                    if (product != null && product.Length > 0)
+                        sql.Append(product);
+                    #endregion
+
+                    #region Nomenclature Media (Rights and selection)
+
+                    sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+                    #region Media Rights
+                    sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+                    #endregion
+
+                    #region Media selection
+                    //Vehicle selection média (vehicle)
+
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle = " + _vehicleInformation.DatabaseId.ToString());
+
+                    //Media selection	
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media = " + _idMedia.ToString());
+                    #endregion
+
+                    #endregion
+
+                    start = false;
+                }
+
+            }
+            #endregion
+
+            return sql.ToString();
+        }
+        #endregion
+
+
+        protected override long CountDataRows()
+        {
+            StringBuilder sql = new StringBuilder(2000);
+            long nbRows = 0;
+
+            sql.Append(" select count(*) as NbROWS from "); //start count
+            sql.Append(CountStructDataQuery());
+            sql.Append(" ) "); //end count
+            try
+            {
+                var ds = _webSession.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1)
+                    nbRows = (Int64.Parse(ds.Tables[0].Rows[0]["NbROWS"].ToString()));
+            }
+            catch (Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to get data for GetStructData(int hourBegin, int hourEnd) : " + sql.ToString(), err));
+            }
+
+            return nbRows;
+        }
     }
 }

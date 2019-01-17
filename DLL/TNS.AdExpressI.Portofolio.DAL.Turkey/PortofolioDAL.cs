@@ -144,6 +144,51 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey
 
             return res.GetData();
         }
+        public override long CountData()
+        {
+            DAL.Engines.Engine res = null;
+
+            switch (_webSession.CurrentTab)
+            {
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    res = new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                    res = new Engines.CalendarEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                    switch (_vehicleInformation.Id)
+                    {
+                        case DBClassificationConstantes.Vehicles.names.others:
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
+                            res = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+                            break;
+                        default:
+                            throw (new PortofolioDALException("Impossible to identified current vehicle "));
+                    }
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                    res = GetStructData();
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_TYPOLOGY_BREAKDOWN:
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_BREAKDOWN:
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SUBTYPE_SPOTS_BREAKDOWN:
+                    res = new Engines.BreakdownEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, _level);
+                    break;
+                default:
+                    throw (new PortofolioDALException("Impossible to identified current tab "));
+            }
+
+            return res.CountData();
+        }
         #endregion
 
         #region Synthesis membres

@@ -1,13 +1,13 @@
 ﻿using Aspose.Cells;
 using Kantar.AdExpress.Service.Core.BusinessService;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Web;
 using System.Web.Mvc;
+using Km.AdExpressClientWeb.Helpers;
 using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Web.Core.Result;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 
@@ -35,6 +35,14 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = _presentAbsentService.CountDataRows(idWebSession, this.HttpContext);
+                if (nbRows > Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    return Content(PageHelper.GetContent(idWebSession));
+                }
+            }
             ResultTable data = _presentAbsentService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
@@ -65,6 +73,14 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = _presentAbsentService.CountDataRows(idWebSession, this.HttpContext);
+                if (nbRows > Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    return Content(PageHelper.GetContent(idWebSession));
+                }
+            }
             ResultTable data = _presentAbsentService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
@@ -96,5 +112,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private void export(ResultTable data)
         {
         }
+
+     
     }
 }

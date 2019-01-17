@@ -2123,7 +2123,7 @@ namespace TNS.AdExpressI.PresentAbsent
 
         }
 
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
             ResultTable resultTable = GetResult();
@@ -2589,6 +2589,22 @@ namespace TNS.AdExpressI.PresentAbsent
                )
             );
         }
+
+        public virtual long CountData()
+        {
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
+            object[] parameters = new object[1];
+            parameters[0] = _session;
+            IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+           return presentAbsentDAL.CountData();
+        }
+
         #endregion
+
+      
+
+
+
     }
 }

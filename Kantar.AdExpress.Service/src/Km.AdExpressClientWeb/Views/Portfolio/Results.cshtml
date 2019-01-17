@@ -564,6 +564,8 @@
                         if (data != null && data != "") {
 
                             if (data.hasMoreThanMaxRowsAllowed) {
+                                columnIndex = 1;
+                                createCookie("sortKey", columnIndex, 1);
                                 $("#allPeriodInsertionsSpots").hide();
                                 $("#GridPanel").show();
                                 $("#gridEmpty").show();

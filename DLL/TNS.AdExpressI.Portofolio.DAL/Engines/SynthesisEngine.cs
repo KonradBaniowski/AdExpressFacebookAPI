@@ -1672,6 +1672,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         {
             return null;
         }
-        #endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
     }
 }

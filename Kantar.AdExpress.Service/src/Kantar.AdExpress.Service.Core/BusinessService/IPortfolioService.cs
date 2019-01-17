@@ -18,5 +18,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         List<VehicleCover> GetVehicleCovers(string idWebSession, int resultType, HttpContextBase httpContext);
 
         List<VehiclePage> GetVehiclePages(string idWebSession,string mediaId, string dateMediaNum, string dateCoverNum, string nbPage, string media, HttpContextBase httpContext, string subFolder = null);
+
+        long CountDataRows(string idWebSession, HttpContextBase httpContext);
     }
 }

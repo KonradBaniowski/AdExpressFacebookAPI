@@ -17,6 +17,7 @@ using System.Web.Routing;
 using Aspose.Cells.Drawing;
 using Aspose.Cells.Rendering;
 using Infragistics.Imaging;
+using Km.AdExpressClientWeb.Helpers;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
@@ -84,6 +85,14 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = _portofolioService.CountDataRows(idWebSession, this.HttpContext);
+                if (nbRows > TNS.AdExpress.Constantes.Web.Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    return Content(PageHelper.GetContent(idWebSession));
+                }
+            }
             ResultTable data = _portofolioService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 

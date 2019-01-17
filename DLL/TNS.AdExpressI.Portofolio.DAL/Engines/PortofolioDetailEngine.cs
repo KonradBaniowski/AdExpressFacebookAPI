@@ -402,5 +402,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	    {
 	        return SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
         }
-    }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+	}
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -13,6 +14,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Insertions.DAL.Exceptions;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using Table = TNS.AdExpress.Domain.DataBaseDescription.Table;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpressI.Insertions.DAL.Turkey
 {
@@ -208,46 +210,46 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
                 if (begin > fromDate)
                 {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", begin, tData.Prefix);
-                    //if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                    //{
-                    //    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, begin);
-                    //}
+                    if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                    {
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, begin);
+                    }
                 }
                 else
                 {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
-                    //if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                    //{
-                    //    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
-                    //}
+                    if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                    {
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                    }
                 }
                 int end = Convert.ToInt32(_session.PeriodEndDate);
                 if (end < toDate)
                 {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", end, tData.Prefix);
-                    //if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                    //{
-                    //    sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, end);
-                    //}
+                    if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                    {
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, end);
+                    }
                 }
                 else
                 {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
-                    //if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                    //{
-                    //    sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
-                    //}
+                    if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                    {
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
+                    }
                 }
             }
             else
             {
                 sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                 sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
-                //if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                //{
-                //    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
-                //    sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
-                //}
+                if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                {
+                    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                    sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
+                }
             }
             #endregion
 
@@ -462,6 +464,57 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
                     sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
                     break;
             }
+
+
+        }
+
+        protected override Table GetDataTable(VehicleInformation vehicle, int fromDate)
+        {
+            /* Get the table name for a specific vehicle and depending on the module type
+                         * Example : data_press, data_tv, data_radio ...
+                         * */
+            Table tData;
+           
+             if (Dates.Is4M(fromDate))
+             {
+                 if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
+                     tData = WebApplicationParameters.GetDataTable(TableIds.dataSpotTvAlert,
+                         _session.IsSelectRetailerDisplay);
+                 else tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
+
+             }
+            else
+            {
+                if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
+                    tData = WebApplicationParameters.GetDataTable(TableIds.dataSpotTv,
+                        _session.IsSelectRetailerDisplay);
+                else tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
+
+            }
+            return tData;
+        }
+
+        protected override string GetTableName(string beginingDate, string tableName, VehicleInformation vehicleInformation)
+        {
+
+            if (Dates.Is4M(beginingDate))
+            {
+                if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataSpotTvAlert,
+                        _session.IsSelectRetailerDisplay).Label;
+                else tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.alert);
+            }
+
+            else
+            {
+                if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataSpotTv,
+                        _session.IsSelectRetailerDisplay).Label;
+                else
+                tableName = GetTableName(vehicleInformation, CstWeb.Module.Type.analysis);
+            }
+               
+            return tableName;
         }
 
     }

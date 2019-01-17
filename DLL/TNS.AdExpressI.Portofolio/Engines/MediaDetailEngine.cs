@@ -645,5 +645,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
             return gridResult;
         }
 
+        protected override long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

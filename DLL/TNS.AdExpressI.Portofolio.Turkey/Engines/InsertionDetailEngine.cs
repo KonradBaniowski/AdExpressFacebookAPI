@@ -228,5 +228,24 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
         {
             return Convert.ToInt32(VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv));
         }
+
+        protected override long CountDataRows()
+        {
+
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            var parameters = new object[6];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            parameters[5] = _timeSlot;
+            if (!string.IsNullOrEmpty(_timeSlot) || !string.IsNullOrEmpty(_dayOfWeek)) _allPeriod = false;
+            var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return portofolioDAL.CountData();
+        }
     }
 }

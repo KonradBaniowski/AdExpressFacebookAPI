@@ -884,5 +884,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 	    {
 	        return _webSession.GetValidUnitForResult();
 	    }
-    }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+	}
 }

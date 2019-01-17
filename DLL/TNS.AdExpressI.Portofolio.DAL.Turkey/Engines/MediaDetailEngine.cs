@@ -221,5 +221,69 @@ namespace TNS.AdExpressI.Portofolio.DAL.Turkey.Engines
             return sql;
         }
         #endregion
+
+        protected override long CountDataRows()
+        {
+            #region Variables
+            string selectFields = "";
+            string tableName = "";
+            string groupByFields = "";
+            string listProductHap = "";
+            string product = "";
+            string productsRights = "";
+            string mediaRights = "";
+            string sql = "";
+            long nbRows = 0;
+            #endregion
+
+            #region Build query
+
+            try
+            {
+                selectFields = GetFieldsDetailMedia();
+                tableName = SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+                groupByFields = GetGroupByDetailMedia();
+                //listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                product = GetProductData();
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to init query parameters", err));
+            }
+            sql +=" select count(*) as NbROWS from "; //start count
+            sql += "select " + selectFields;
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + "." + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
+            sql += " where id_media =" + _idMedia + "  ";
+            sql += " and date_media_num>=" + _beginingDate + " ";
+            sql += " and date_media_num<=" + _endDate + " ";
+            sql += GetCobrandingCondition();
+            sql += listProductHap;
+            sql += product;
+            sql += productsRights;
+            sql += " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+            sql += mediaRights;
+            sql += groupByFields;
+
+            sql += " ) "; //end count
+            #endregion
+
+            #region Execution query
+            try
+            {
+                var ds = _webSession.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1)
+                    nbRows = (Int64.Parse(ds.Tables[0].Rows[0]["NbROWS"].ToString()));
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioDALException("Impossible to load data for detail media portoflolio : " + sql.ToString(), err));
+            }
+            #endregion
+
+            return nbRows;
+        }
     }
 }

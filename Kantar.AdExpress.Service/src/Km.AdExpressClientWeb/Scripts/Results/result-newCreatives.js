@@ -309,6 +309,9 @@
             success: function (data) {
                 if (data != null && data != "") {
                     if (data.hasMoreThanMaxRowsAllowed) {
+                       
+                        columnIndex = 1;
+                        createCookie("sortKey", columnIndex, 1);
                         var message = '<div style="text-align:left">' + $('#Labels_MaxAllowedRows').val() + '<br \><ul><li>' + $('#Labels_MaxAllowedRowsBis').val() + '</li><li>' + $('#Labels_MaxAllowedRowsRefine').val() + '</li></ul>' + '</div>';
                         $("#gridLoader").addClass("hide");
                         $("#gridEmpty").show();
@@ -401,21 +404,20 @@
                         applySortedColumnCss: false,
                         columnSettings: columnsNotAllowedSorting,
                         firstSortDirection: 'descending',
-                        columnSorted: function (evt, ui) {
+                        columnSorted: function(evt, ui) {
                             columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
                             createCookie("sortKey", columnIndex, 1);
                             if (ui.direction == 'ascending') {
                                 sortOrder = "ASC";
                                 createCookie("sortOrder", 1, 1);
-                            }
-                            else if (ui.direction == 'descending') {
+                            } else if (ui.direction == 'descending') {
                                 sortOrder = "DESC";
                                 createCookie("sortOrder", 0, 1);
                             }
                         }
                     }
-                    ]
-            })
+                ]
+            });
 
             gridWidth = $("#grid_table_headers").width();
             gridWidth += $("#grid_table_headers_fixed").width();

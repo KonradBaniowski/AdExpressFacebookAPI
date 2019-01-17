@@ -447,7 +447,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
     }
 }

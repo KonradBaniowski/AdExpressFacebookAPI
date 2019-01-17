@@ -1253,6 +1253,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Recap Ad Slogan
         /// </summary>
         recapAdSlogan = 275,
+        /// <summary>
+        /// Data spot TV
+        /// </summary>
+        dataSpotTv = 276,
+        /// <summary>
+        /// Data alert spot TV
+        /// </summary>
+        dataSpotTvAlert =  277,
 
         /// <summary>
         /// Alert description

@@ -541,5 +541,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	    {
 	        return SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, DBConstantes.TableType.Type.dataVehicle, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 	    }
-    }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+	}
 }

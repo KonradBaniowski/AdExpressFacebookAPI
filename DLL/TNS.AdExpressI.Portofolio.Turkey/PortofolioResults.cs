@@ -90,6 +90,18 @@ namespace TNS.AdExpressI.Portofolio.Turkey
 
             return result.GetResultTable();
         }
+
+        public override GridResult GetGridResult()
+        {
+            if (_webSession.CurrentTab != AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS)
+            {
+                GridResult gridResult = new GridResult();
+                long nbRows = CountDataRows();
+                if (HandleGridMaxRows(nbRows, gridResult)) return gridResult;
+            }
+          
+            return base.GetGridResult();
+        }
         #endregion
 
         public override GridResult GetBreakdownGridResult(bool excel, DetailLevelItemInformation level)
@@ -328,6 +340,62 @@ namespace TNS.AdExpressI.Portofolio.Turkey
                 default:
                     throw new PortofolioException("GetHourIntevalList(): Vehicle unknown.");
             }
+        }
+
+        private bool HandleGridMaxRows(long nbRows, GridResult gridResult)
+        {
+
+            if (nbRows == 0)
+            {
+                gridResult.HasData = false;
+                return true;
+
+            }
+            if (nbRows > AdExpress.Constantes.Web.Core.MAX_ALLOWED_DATA_ROWS)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;
+                return true;
+
+            }
+            return false;
+        }
+
+        public override long CountDataRows()
+        {
+            Engines.SynthesisEngine result = null;
+           
+            try
+            {
+                switch (_webSession.CurrentTab)
+                {
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                        return new Engines.CalendarEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd).CountData(); 
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        return GetStructureEngine(true).CountData();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                        return  new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _showInsertions, _showCreatives).CountData();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        return new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd).CountData();                       
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                        result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
+                        break;
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_TYPOLOGY_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology)).CountData();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.program)).CountData();
+                    case AdExpress.Constantes.FrameWork.Results.Portofolio.SUBTYPE_SPOTS_BREAKDOWN:
+                        return new Engines.BreakdownEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.spotSubType)).CountData();
+                    default:
+                        throw (new PortofolioException("Impossible to identified current tab "));
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioException("Impossible to compute portofolio results", err));
+            }
+
+            return result.CountData();
         }
     }
 }

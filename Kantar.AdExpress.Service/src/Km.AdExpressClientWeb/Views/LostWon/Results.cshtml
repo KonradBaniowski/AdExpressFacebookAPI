@@ -514,6 +514,8 @@
                         if (data != null && data != "") {
 
                             if (data.hasMoreThanMaxRowsAllowed) {
+                                columnIndex = 1;
+                                createCookie("sortKey", columnIndex, 1);
                                 $("#gridLoader").addClass("hide");
                                 $("#gridEmpty").show();
                                 $("#gridEmpty").html("<div style='text-align:left'>@Model.Labels.MaxAllowedRows" + "<br\><ul><li>" + "@Model.Labels.MaxAllowedRowsBis" + "</li><li>" + "@Model.Labels.MaxAllowedRowsRefine" + "</li></ul></div>");

@@ -89,6 +89,11 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfoExcel
                 : WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
 
+            long nbRows;
+            GridResult gridResult = new GridResult();
+            nbRows = CountData();
+            if (HandleGridMaxRows( nbRows,  gridResult)) return gridResult;
+
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
             object[] parameters = new object[6];
             parameters[0] = _webSession;
@@ -98,8 +103,9 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             parameters[4] = _periodEnd;
             parameters[5] = _level;
 
-            GridResult gridResult = new GridResult();
-            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+          
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
++ _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             ds = portofolioDAL.GetData();
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
@@ -199,6 +205,43 @@ namespace TNS.AdExpressI.Portofolio.Turkey.Engines
             return gridResult;
         }
 
+        private bool HandleGridMaxRows( long nbRows,  GridResult gridResult)
+        {
+                   
+            if (nbRows == 0)
+            {
+                gridResult.HasData = false;
+                return true;
+
+            }
+            if (nbRows > WebCst.Core.MAX_ALLOWED_DATA_ROWS)
+            {
+                gridResult.HasData = true;
+                gridResult.HasMoreThanMaxRowsAllowed = true;                                 
+                    return true;
+                
+            }
+            return false;
+        }
+
         #endregion
+
+        protected override long CountDataRows()
+        {
+
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[6];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            parameters[5] = _level;
+
+            GridResult gridResult = new GridResult();
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
++ _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+           return portofolioDAL.CountData();
+        }
     }
 }

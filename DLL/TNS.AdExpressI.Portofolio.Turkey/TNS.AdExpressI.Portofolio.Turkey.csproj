@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engines\BreakdownEngine.cs" />
+    <Compile Include="Engines\CalendarEngine.cs" />
     <Compile Include="Engines\InsertionDetailEngine.cs" />
     <Compile Include="Engines\MediaDetailEngine.cs" />
     <Compile Include="Engines\PortofolioDetailEngine.cs" />

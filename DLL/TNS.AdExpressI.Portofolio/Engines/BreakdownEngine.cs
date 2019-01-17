@@ -68,6 +68,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             throw new PortofolioException("The method or operation is not implemented.");
         }
+
+        protected virtual long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

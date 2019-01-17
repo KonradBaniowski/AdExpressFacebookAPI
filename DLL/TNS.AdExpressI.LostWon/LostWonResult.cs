@@ -261,7 +261,7 @@ namespace TNS.AdExpressI.LostWon
         /// <returns>Computed data</returns>
         public ResultTable GetResult()
         {
-            return this.GetResult((Int32)_session.CurrentTab);
+            return GetResult((Int32)_session.CurrentTab);
         }
         /// <summary>
         /// Compute specified result
@@ -288,6 +288,20 @@ namespace TNS.AdExpressI.LostWon
         #endregion
 
         #region GetData
+
+        public virtual long CountData()
+        {
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
+            var parameters = new object[1];
+            parameters[0] = _session;
+            var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class,
+                false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return lostwonDAL.CountData();
+
+            
+        }
+
         /// <summary>
         /// Compute Result Data
         /// </summary>
@@ -2143,9 +2157,39 @@ namespace TNS.AdExpressI.LostWon
 
         }
 
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
+
+            //Count nb rows
+            switch ((Int32)_session.CurrentTab)
+            {
+                case DynamicAnalysis.LOST:
+                case DynamicAnalysis.LOYAL:
+                case DynamicAnalysis.LOYAL_DECLINE:
+                case DynamicAnalysis.LOYAL_RISE:
+                case DynamicAnalysis.PORTEFEUILLE:
+                case DynamicAnalysis.WON:
+                
+                    long nbRows = CountData();
+                    if (nbRows == 0)
+                    {
+                        gridResult.HasData = false;
+                        return gridResult;
+                    }
+                    if (nbRows > CstWeb.Core.MAX_ALLOWED_DATA_ROWS)
+                    {
+                        gridResult.HasData = true;
+                        gridResult.HasMoreThanMaxRowsAllowed = true;
+                        return (gridResult);
+                    }
+
+                    break;
+                //case DynamicAnalysis.SYNTHESIS:
+                //    return GetSynthesisData();
+             
+            }
+
             ResultTable resultTable = GetResult();
             string mediaSchedulePath = "/MediaSchedulePopUp";
             string pickanewsLink = "http://www.pickanews.com";
@@ -2176,7 +2220,7 @@ namespace TNS.AdExpressI.LostWon
                 gridResult.HasData = false;
                 return gridResult;
             }
-            else if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
+             if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
             {
                 gridResult.HasData = true;
                 gridResult.HasMoreThanMaxRowsAllowed = true;

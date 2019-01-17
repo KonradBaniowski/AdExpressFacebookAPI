@@ -501,7 +501,7 @@ namespace TNS.AdExpressI.NewCreatives
         }
 
 
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
 
@@ -727,6 +727,26 @@ namespace TNS.AdExpressI.NewCreatives
             gridResult.Unit = _webSession.Unit.ToString();
 
             return gridResult;
+        }
+
+        public virtual long CountData()
+        {
+            long nbRows = 0;
+         
+
+            if (_module.CountryDataAccessLayer == null)
+                throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            var parameters = new object[4];
+            parameters[0] = _webSession;
+            parameters[1] = _idSectors;
+            parameters[2] = _beginingDate;
+            parameters[3] = _endDate;
+            var newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return newCreativesDAL.CountData();                   
         }
     }
 

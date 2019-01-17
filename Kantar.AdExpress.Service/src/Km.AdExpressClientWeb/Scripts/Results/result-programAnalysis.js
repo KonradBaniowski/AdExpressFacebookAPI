@@ -396,6 +396,8 @@
             success: function (data) {
                 if (data != null && data != "") {
                     if (data.hasMoreThanMaxRowsAllowed) {
+                        columnIndex = 1;
+                        createCookie("sortKey", columnIndex, 1);
                         var message = '<div style="text-align:left">' + $('#Labels_MaxAllowedRows').val() + '<br \><ul><li>' + $('#Labels_MaxAllowedRowsBis').val() + '</li><li>' + $('#Labels_MaxAllowedRowsRefine').val() + '</li></ul>' + '</div>';
                         $("#gridLoader").addClass("hide");
                         $("#gridMessage").removeClass("hide");
