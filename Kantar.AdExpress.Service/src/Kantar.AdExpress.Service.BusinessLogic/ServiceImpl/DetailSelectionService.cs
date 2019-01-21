@@ -52,6 +52,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
                 webSessionSave.CustomerLogin = webSession.CustomerLogin;
                 webSessionSave.Source= webSession.Source;
+                webSessionSave.SiteLanguage = webSession.SiteLanguage;
                 result = LoadDetailsSelection(webSessionSave);
             }
             return result;
