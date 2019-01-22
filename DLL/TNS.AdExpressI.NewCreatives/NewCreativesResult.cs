@@ -158,7 +158,7 @@ namespace TNS.AdExpressI.NewCreatives
         /// Compute new creatives
         /// </summary>
         /// <returns>Compute Data</returns>
-        public ResultTable GetData()
+        public virtual ResultTable GetData()
         {
 
             #region Variables
@@ -753,15 +753,9 @@ namespace TNS.AdExpressI.NewCreatives
             return newCreativesDAL.CountData();                   
         }
 
-        public virtual ResultTable GetNewCreativeDetailsData()
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public virtual GridResult GetNewCreativeDetailsGridResult()
-        {
-            throw new NotImplementedException();
-        }
+    
     }
 
 }

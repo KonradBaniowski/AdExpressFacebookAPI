@@ -136,7 +136,28 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                 return (gridResult);
             }
 
-            return base.GetGridResult();
+            switch (_webSession.CurrentTab)
+            {
+            
+                case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA: //TODO: mettre planche new creatives details
+                    return GetNewCreativeDetailsGridResult();               
+                default:
+                    return base.GetGridResult();
+            }
+
+           
+        }
+
+        public override ResultTable GetData()
+        {
+            switch (_webSession.CurrentTab)
+            {
+
+                case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA: //TODO: mettre planche new creatives details
+                    return GetNewCreativeDetailsData();
+                default:
+                    return base.GetData();
+            }
         }
 
         protected override void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
@@ -156,7 +177,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             }
         }
 
-        public override ResultTable GetNewCreativeDetailsData()
+        protected  ResultTable GetNewCreativeDetailsData()
         {
             ResultTable tab = null;
             DataTable dt = null;
@@ -164,7 +185,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
 
             #region Chargement des données
             if (_module.CountryDataAccessLayer == null)
-                throw (new NullReferenceException("DAL layer is null for the new creative result"));
+                throw (new NullReferenceException("DAL layer is null for the new creative details result"));
             var parameters = new object[4];
             parameters[0] = _webSession;
             parameters[1] = _idSectors;
@@ -253,12 +274,98 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             }
             #endregion
 
-            throw new NotImplementedException();
+            return tab;
         }
 
-        public override GridResult GetNewCreativeDetailsGridResult()
+        protected  GridResult GetNewCreativeDetailsGridResult()
         {
-            throw new NotImplementedException();
+            try
+            {
+                GridResult gridResult = new GridResult();
+                gridResult.HasData = false;
+
+                ResultTable data = GetNewCreativeDetailsData();
+
+                if (data != null)
+                {
+                    data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                    data.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+
+                    int i, j, k;
+                    //int creativeIndexInResultTable = -1;
+                    object[,] gridData = new object[data.LinesNumber, data.ColumnsNumber + 2];
+                        //+2 car ID et PID en plus  -  //_data.LinesNumber
+                    List<object> columns = new List<object>();
+                    List<object> schemaFields = new List<object>();
+                    List<object> columnsFixed = new List<object>();
+
+
+                    columns.Add(new {headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true});
+                    schemaFields.Add(new {name = "ID"});
+                    columns.Add(new {headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true});
+                    schemaFields.Add(new {name = "PID"});
+
+                    if (data.NewHeaders != null)
+                    {
+                        for (j = 0; j < data.NewHeaders.Root.Count; j++)
+                        {
+                            //Key pour "Spot" = 869
+                            //key pour "Plan Media du produit" = 1478
+                            //Key pour "Visuel" = 1909
+
+                            columns.Add(
+                                new
+                                {
+                                    headerText = data.NewHeaders.Root[j].Label,
+                                    key = data.NewHeaders.Root[j].Key,
+                                    dataType = "string",
+                                    width = "*"
+                                });
+                            schemaFields.Add(new {name = data.NewHeaders.Root[j].Key});
+                            columnsFixed.Add(
+                                new {columnKey = data.NewHeaders.Root[j].Key, isFixed = true, allowFixing = true});
+                        }
+                    }
+                    else
+                    {
+                        columns.Add(new {headerText = "", key = "Visu", dataType = "string", width = "*"});
+                        schemaFields.Add(new {name = "Visu"});
+                    }
+
+
+                    for (i = 0; i < data.LinesNumber; i++) //_data.LinesNumber
+                    {
+                        gridData[i, 0] = i; // Pour column ID
+                        gridData[i, 1] = data.GetSortedParentIndex(i); // Pour column PID
+
+                        for (k = 1; k < data.ColumnsNumber - 1; k++)
+                        {
+                            gridData[i, k + 1] = data[i, k].RenderString();
+                        }
+                    }
+
+                  
+                    gridResult.NeedFixedColumns = false;
+
+                    gridResult.HasData = true;
+                    gridResult.Columns = columns;
+                    gridResult.Schema = schemaFields;
+                    gridResult.ColumnsFixed = columnsFixed;
+                    gridResult.Data = gridData;
+                }
+                else
+                {
+                    gridResult.HasData = false;
+                    return (gridResult);
+                }
+
+                return gridResult;
+
+            }
+            catch (Exception err)
+            {
+                throw (new Exception(err.Message));
+            }
         }
 
         #region SetResultTable

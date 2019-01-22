@@ -32,9 +32,6 @@ namespace TNS.AdExpressI.NewCreatives {
 
         long CountData();
 
-
-        ResultTable GetNewCreativeDetailsData();
-
-        GridResult GetNewCreativeDetailsGridResult();
+     
     }
 }
