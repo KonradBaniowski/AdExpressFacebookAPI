@@ -100,6 +100,10 @@ namespace TNS.AdExpressI.NewCreatives
         /// Define if show media schedule Link
         /// </summary>
         protected bool _showMediaSchedule = false;
+        /// <summary>
+        /// Column item list
+        /// </summary>
+        protected List<GenericColumnItemInformation> _columnItemList;
         #endregion
 
         #region Accessors
@@ -747,6 +751,16 @@ namespace TNS.AdExpressI.NewCreatives
                 _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             return newCreativesDAL.CountData();                   
+        }
+
+        public virtual ResultTable GetNewCreativeDetailsData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual GridResult GetNewCreativeDetailsGridResult()
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -29,6 +29,12 @@ namespace TNS.AdExpressI.NewCreatives {
         ResultTable GetData();
         GridResult GetGridResult();
 
+
         long CountData();
+
+
+        ResultTable GetNewCreativeDetailsData();
+
+        GridResult GetNewCreativeDetailsGridResult();
     }
 }
