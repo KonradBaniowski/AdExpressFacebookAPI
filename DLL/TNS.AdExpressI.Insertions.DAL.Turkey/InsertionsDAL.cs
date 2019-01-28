@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -181,6 +182,98 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
         }
         #endregion
 
+        #region GetPresentVehicles
+
+        /// <summary>
+        /// Get list of media type for which there're data in the database
+        /// </summary>
+        /// <param name="vehicles">List of Media type object to check</param>
+        /// <param name="filters">List identiifers selected by the customer. Used as data filters in the query ex. "</param>
+        /// <param name="fromDate">User Period beginning</param>
+        /// <param name="toDate">User Period End</param>
+        /// <param name="universId">User Univers Selection</param>
+        /// <param name="module">Current Module</param>
+        /// <param name="sloganNotNull">True if slogan not null</param>
+        /// <returns>List of vehicles present</returns>
+        public override List<VehicleInformation> GetPresentVehicles(List<VehicleInformation> vehicles, string filters
+                                                                   , int fromDate, int toDate, int universId,
+                                                                   TNS.AdExpress.Domain.Web.Navigation.Module module,
+                                                                   bool sloganNotNull)
+        {
+
+            if (_module.Id != CstWeb.Module.Name.NEW_CREATIVES)
+            {
+                return base.GetPresentVehicles(vehicles, filters, fromDate, toDate, universId, module, sloganNotNull);
+            }
+            else
+            {
+                var sql = new StringBuilder();
+                var found = new List<VehicleInformation>();
+                DataSet ds = null;
+                this._creaConfig = sloganNotNull;
+
+                try
+                {
+
+                    bool first = true;
+
+                    universId--;
+                    Table dataTable;
+                    /* Getting the database schema
+                     * */
+                    Schema sAdEx = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+
+                    /* For each meida type we check if we have data in data base
+                     * */
+                    foreach (VehicleInformation v in vehicles)
+                    {
+                        /* Get table for the current media type and according to the current module
+                            * */
+
+                        dataTable = WebApplicationParameters.GetDataTable(TableIds.spotTv,
+                            _session.IsSelectRetailerDisplay);
+
+                        if (!first)
+                            sql.Append(" UNION ");
+                        else
+                            first = false;
+
+                        sql.Append(" select id_slogan from ");
+
+                        sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
+                        sql.Append(" where ");
+                        /* Apply the differents univers filters : univers selected and rights
+                            * this method is more detailed below
+                            * */
+                        AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);
+                        sql.AppendFormat(" and rownum < 2 ");
+                    }
+
+                    /* Getting the data
+                     * */
+                    ds = _session.Source.Fill(sql.ToString());
+
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+
+                        /* initialisation of the foud list with media type for which we have foud data in the database
+                         * */
+                        found.AddRange(
+                            ds.Tables[0].Rows.Cast<DataRow>()
+                                .Select(row => VehiclesInformation.Get(Vehicles.names.tv)));
+                    }
+                }
+                catch (System.Exception err)
+                {
+                    throw new InsertionsDALException(string.Format("GetPresentVehicles::Unable to check there is data. {0}", sql.ToString()), err);
+                }
+
+                return found;
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Append Filters depending on client univers selection and rights
         /// </summary>
@@ -209,46 +302,61 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
                 int begin = Convert.ToInt32(_session.PeriodBeginningDate);
                 if (begin > fromDate)
                 {
-                    sql.AppendFormat(" {1}.date_media_num >= {0}", begin, tData.Prefix);
                     if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                     {
-                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, begin);
+                        sql.AppendFormat(" {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, begin);
+                    }
+                    else
+                    {
+                        sql.AppendFormat(" {1}.date_media_num >= {0}", begin, tData.Prefix);
                     }
                 }
                 else
                 {
-                    sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                     if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                     {
-                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                        sql.AppendFormat(" {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                    }
+                    else
+                    {
+                        sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                     }
                 }
                 int end = Convert.ToInt32(_session.PeriodEndDate);
                 if (end < toDate)
                 {
-                    sql.AppendFormat(" and {1}.date_media_num <= {0}", end, tData.Prefix);
                     if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                     {
                         sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, end);
                     }
+                    else
+                    {
+                        sql.AppendFormat(" and {1}.date_media_num <= {0}", end, tData.Prefix);
+                    }
                 }
                 else
                 {
-                    sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                     if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                     {
                         sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
+                    }
+                    else
+                    {
+                        sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                     }
                 }
             }
             else
             {
-                sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
-                sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                 if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                 {
-                    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                    sql.AppendFormat(" {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
                     sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
+                }
+                else
+                {
+                    sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
+                    sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                 }
             }
             #endregion
@@ -461,7 +569,8 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
                         , VehiclesInformation.Get(Vehicles.names.directMarketing).DatabaseId, tData.Prefix);
                     break;
                 default:
-                    sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+                    if (_module.Id != CstWeb.Module.Name.NEW_CREATIVES)
+                        sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
                     break;
             }
 
@@ -478,7 +587,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
              if (Dates.Is4M(fromDate))
              {
                  if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
-                     tData = WebApplicationParameters.GetDataTable(TableIds.dataSpotTvAlert,
+                     tData = WebApplicationParameters.GetDataTable(TableIds.spotTv,
                          _session.IsSelectRetailerDisplay);
                  else tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
 
@@ -486,7 +595,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
             else
             {
                 if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
-                    tData = WebApplicationParameters.GetDataTable(TableIds.dataSpotTv,
+                    tData = WebApplicationParameters.GetDataTable(TableIds.spotTv,
                         _session.IsSelectRetailerDisplay);
                 else tData = GetDataTable(vehicle, CstWeb.Module.Type.analysis);
 
@@ -515,6 +624,57 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
             }
                
             return tableName;
+        }
+
+        protected override void AppendSqlGroupByFields(StringBuilder sql, Table tData,
+           VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
+        {
+
+            string tmp = string.Empty;
+            bool first = true;
+
+            sql.Append(" group by");
+
+            /* Get SQL group by fields for the classification levels selected by the customer
+             * */
+            if (!_msCreaConfig && _session.DetailLevel != null)
+            {
+                tmp = _session.DetailLevel.GetSqlGroupByFields();
+                if (tmp.Length > 0)
+                {
+                    sql.AppendFormat(" {0}", tmp);
+                    first = false;
+                }
+            }
+
+            /* Get SQL group by fields for the classification columns defined in the Xml configuration file
+             * */
+
+            tmp = GenericColumns.GetSqlGroupByFields(columns, detailLevelIds);
+            if (vehicle.Id == Vehicles.names.directMarketing
+                || vehicle.Id == Vehicles.names.mailValo)
+            {
+                tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            }
+            if (tmp.Length > 0)
+            {
+                if (!first) sql.Append(",");
+                sql.AppendFormat(" {0}", tmp);
+                first = false;
+            }
+
+            /* Get SQL group by fields for classification column that need others columns information
+             * */
+            if (columns != null)
+            {
+                tmp = GenericColumns.GetSqlConstraintGroupByFields(columns);
+                if (!string.IsNullOrEmpty(tmp))
+                {
+                    if (!first) sql.Append(",");
+                    first = false;
+                    sql.AppendFormat(" {0}", tmp);
+                }
+            }
         }
 
     }

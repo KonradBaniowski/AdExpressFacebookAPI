@@ -199,8 +199,19 @@ namespace TNS.AdExpressI.Insertions.Cells
                         _adressId = Convert.ToInt64(row[_columnsName[i]]);
                     }
                 }
+                else if (g.Id == GenericColumnItemInformation.Columns.DateFirstAppearance)
+                {
+                    if (row[_columnsName[i]] != System.DBNull.Value)
+                    {
+                        CellLabel c = ((CellLabel)cCell);
+                        c.Label = row[_columnsName[i]].ToString().Replace(" 00:00:00", "");
+                    }
+                }
                 else if (cCell is CellUnit)
                 {
+                    if (g.Id == GenericColumnItemInformation.Columns.CreativeDuration && (cValue == null || cValue.Length == 0))
+                        cValue = "0";
+
                     if (g.Id == GenericColumnItemInformation.Columns.numberBoardSum && (cValue == null || cValue.Length == 0))
                         ((CellUnit)cCell).SetCellValue(null);
                     else ((CellUnit)cCell).Add(Convert.ToDouble(cValue));

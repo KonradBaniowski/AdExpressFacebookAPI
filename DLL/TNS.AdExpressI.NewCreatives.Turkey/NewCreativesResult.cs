@@ -139,7 +139,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             switch (_webSession.CurrentTab)
             {
             
-                case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA: //TODO: mettre planche new creatives details
+                case AdExpress.Constantes.FrameWork.Results.NewCreative.NEW_CREATIVE_DETAILS:
                     return GetNewCreativeDetailsGridResult();               
                 default:
                     return base.GetGridResult();
@@ -153,7 +153,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             switch (_webSession.CurrentTab)
             {
 
-                case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA: //TODO: mettre planche new creatives details
+                case AdExpress.Constantes.FrameWork.Results.NewCreative.NEW_CREATIVE_DETAILS:
                     return GetNewCreativeDetailsData();
                 default:
                     return base.GetData();
@@ -183,6 +183,14 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             DataTable dt = null;
             int iNbLine = 0;
 
+            #region Columns levels (Generic)
+            _columnItemList = WebApplicationParameters.InsertionsDetail.GetDetailColumns(_vehicleInformation.DatabaseId, _module.Id);
+
+            var columnIdList = _columnItemList.Select(column => (int)column.Id).Select(dummy => (long)dummy).ToList();
+
+            _webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
+            #endregion
+
             #region Chargement des données
             if (_module.CountryDataAccessLayer == null)
                 throw (new NullReferenceException("DAL layer is null for the new creative details result"));
@@ -209,15 +217,6 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                 TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
             #endregion
 
-            #region Columns levels (Generic)
-            var _columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(_vehicleInformation.DetailColumnId);
-
-            var columnIdList = _columnItemList.Select(column => (int)column.Id).Select(dummy => (long)dummy).ToList();
-
-            _webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
-
-            #endregion
-
             #region Rigths management des droits
             // Show creatives
 
@@ -225,7 +224,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
        
           
             //Show column product
-            bool showProduct = _webSession.CustomerLogin.CustormerFlagAccess(AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+            bool showProduct = true;//_webSession.CustomerLogin.CustormerFlagAccess(AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             #endregion
 
             #region Table nb rows
@@ -236,7 +235,6 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
             try
             {
                 var headers = new Headers();
-                _columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(_vehicleInformation.DetailColumnId);
 
                 foreach (GenericColumnItemInformation Column in _columnItemList)
                 {
@@ -257,8 +255,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                                 headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
                             break;
                         default:
-                            if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicleInformation.DetailColumnId, Column.Id))
-                                headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                            headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
                             break;
                     }
 
@@ -285,6 +282,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                 gridResult.HasData = false;
 
                 ResultTable data = GetNewCreativeDetailsData();
+                List<object> columnsNotAllowedSorting = new List<object>();
 
                 if (data != null)
                 {
@@ -302,7 +300,9 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
 
                     columns.Add(new {headerText = "ID", key = "ID", dataType = "number", width = "*", hidden = true});
                     schemaFields.Add(new {name = "ID"});
+                    columnsNotAllowedSorting.Add(new { columnKey = "ID", allowSorting = false });
                     columns.Add(new {headerText = "PID", key = "PID", dataType = "number", width = "*", hidden = true});
+                    columnsNotAllowedSorting.Add(new { columnKey = "PID", allowSorting = false });
                     schemaFields.Add(new {name = "PID"});
 
                     if (data.NewHeaders != null)
@@ -323,7 +323,8 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                                 });
                             schemaFields.Add(new {name = data.NewHeaders.Root[j].Key});
                             columnsFixed.Add(
-                                new {columnKey = data.NewHeaders.Root[j].Key, isFixed = true, allowFixing = true});
+                                new {columnKey = data.NewHeaders.Root[j].Key, isFixed = false, allowFixing = false});
+                            
                         }
                     }
                     else
@@ -332,6 +333,21 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                         schemaFields.Add(new {name = "Visu"});
                     }
 
+                    if (string.IsNullOrEmpty(_webSession.SortKey))
+                    {
+                        data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                        gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                        gridResult.SortKey = 1;
+                        _webSession.Sorting = ResultTable.SortOrder.NONE;
+                        _webSession.SortKey = "1";
+                        _webSession.Save();
+                    }
+                    else
+                    {
+                        data.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                        gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                        gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
+                    }
 
                     for (i = 0; i < data.LinesNumber; i++) //_data.LinesNumber
                     {
@@ -340,17 +356,20 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
 
                         for (k = 1; k < data.ColumnsNumber - 1; k++)
                         {
-                            gridData[i, k + 1] = data[i, k].RenderString();
+                            if (data[i, k] == null)
+                                gridData[i, k + 1] = string.Empty;
+                            else
+                                gridData[i, k + 1] = data[i, k].RenderString();
                         }
                     }
 
                   
                     gridResult.NeedFixedColumns = false;
-
                     gridResult.HasData = true;
                     gridResult.Columns = columns;
                     gridResult.Schema = schemaFields;
                     gridResult.ColumnsFixed = columnsFixed;
+                    gridResult.ColumnsNotAllowedSorting = columnsNotAllowedSorting;
                     gridResult.Data = gridData;
                 }
                 else
@@ -377,15 +396,11 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
         protected virtual void SetResultTable(DataTable dt, ResultTable tab)
         {
 
-            string dateMediaNum = string.Empty;
-            DateTime dateMedia;
             int iCurLine = 0;
             int iCurColumn = 0;
-            string[] files;
             string listVisual = "";
             Cell curCell = null;
             string date = "";
-            string temp = string.Empty;
             Assembly assembly;
             Type type;
 
@@ -394,16 +409,8 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                 // assembly loading
                 assembly = Assembly.Load(@"TNS.FrameWork.WebResultUI");
             
-
-                //string blur = TNS.AdExpress.Web.Functions.Rights.HasPressCopyright(_idMedia) ? string.Empty : "blur/";
                 foreach (DataRow row in dt.Rows)
                 {
-                    dateMedia = new DateTime(int.Parse(row["date_media_num"].ToString().Substring(0, 4)), int.Parse(row["date_media_num"].ToString().Substring(4, 2)), int.Parse(row["date_media_num"].ToString().Substring(6, 2)));
-                    dateMediaNum = dateMedia.DayOfWeek.ToString();
-
-                    //if (_dayOfWeek == dateMediaNum || _allPeriod)
-                    //{
-
                         tab.AddNewLine(LineType.level1);
                         iCurColumn = 1;
                         foreach (GenericColumnItemInformation Column in _columnItemList)
@@ -478,8 +485,8 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                                     break;
                               
                                 case GenericColumnItemInformation.Columns.product:
-                                    if (_showProduct && WebApplicationParameters.
-                                        GenericColumnsInformation.IsVisible(_vehicleInformation.DetailColumnId, Column.Id))
+                                    //if (_showProduct && WebApplicationParameters.
+                                    //    GenericColumnsInformation.IsVisible(_vehicleInformation.DetailColumnId, Column.Id))
                                     {
                                         type = assembly.GetType(Column.CellType);
                                         curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
@@ -511,19 +518,42 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                                         tab[iCurLine, iCurColumn++] = new CellLabel(GetLanguageLabel(languageId));
                                     }
                                     break;
-                                default:
-                                    if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicleInformation.DetailColumnId, Column.Id))
-                                    {
-                                        type = assembly.GetType(Column.CellType);
-                                        curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
-                                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
-                                        curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
-                                        var columnValue = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                case GenericColumnItemInformation.Columns.FirstTopDiffusion:
+                                    var airedTime = string.IsNullOrEmpty(Column.DataBaseAliasField)
                                             ? row[Column.DataBaseField]
                                             : row[Column.DataBaseAliasField];
-                                        curCell.SetCellValue( columnValue);
-                                        tab[iCurLine, iCurColumn++] = curCell;
-                                    }
+                                    var airredTimeCell = new CellAiredTime(GetTopDiffusion(Convert.ToDouble(airedTime)));
+                                    airredTimeCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                    tab[iCurLine, iCurColumn++] = airredTimeCell;
+                                    break;
+                                case GenericColumnItemInformation.Columns.DateFirstAppearance:
+                                    type = assembly.GetType(Column.CellType);
+                                    curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                        | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                    curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                    var v = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                        ? row[Column.DataBaseField]
+                                        : row[Column.DataBaseAliasField];
+
+                                    curCell.SetCellValue(v.ToString().Replace(" 00:00:00",""));
+
+                                    tab[iCurLine, iCurColumn++] = curCell;
+                                    break;
+                                default:
+                                    type = assembly.GetType(Column.CellType);
+                                    curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                                        | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
+                                    curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
+                                    var columnValue = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                        ? row[Column.DataBaseField]
+                                        : row[Column.DataBaseAliasField];
+
+                                    if (Column.CellType.Equals("TNS.FrameWork.WebResultUI.CellNumber") && columnValue == DBNull.Value)
+                                        curCell.SetCellValue(0);
+                                    else
+                                        curCell.SetCellValue(columnValue);
+
+                                    tab[iCurLine, iCurColumn++] = curCell;
                                     break;
                             }
                         }
@@ -541,7 +571,7 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
 
         protected virtual int GetTvId()
         {
-            return _vehicleInformation.Id.GetHashCode();
+            return Convert.ToInt32(VehiclesInformation.EnumToDatabaseId(Vehicles.names.tv));
         }
 
         private DateTime ToDateTime(string datetime, char dateSpliter = '-', char timeSpliter = ':',
@@ -579,5 +609,49 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
         }
         #endregion
 
+        public override long CountData()
+        {
+            long nbRows = 0;
+
+            _columnItemList = WebApplicationParameters.InsertionsDetail.GetDetailColumns(_vehicleInformation.DatabaseId, _module.Id);
+            var columnIdList = _columnItemList.Select(column => (int)column.Id).Select(dummy => (long)dummy).ToList();
+            _webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
+
+            if (_module.CountryDataAccessLayer == null)
+                throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            var parameters = new object[4];
+            parameters[0] = _webSession;
+            parameters[1] = _idSectors;
+            parameters[2] = _beginingDate;
+            parameters[3] = _endDate;
+            var newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return newCreativesDAL.CountData();
+        }
+
+        private double GetTopDiffusion(double value)
+        {
+            if (value.ToString().Length == 6)
+            {
+                //Hour
+                string h = value.ToString().Substring(0, 2);
+                // Minutes Seconds
+                string ms = value.ToString().Substring(2, 4);
+
+                // For Turkey 25h = 1h
+                if (h == "25")
+                    return Convert.ToDouble("1" + ms);
+
+                if (h == "24")
+                    return Convert.ToDouble(ms);
+
+                return value;
+            }
+
+            return value;
+        }
     }
 }
