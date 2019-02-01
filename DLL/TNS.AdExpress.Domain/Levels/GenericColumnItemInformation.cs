@@ -1312,7 +1312,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Media First Appeared
             /// </summary>
-            FirstTopDiffusion = 262
+            FirstTopDiffusion = 262,
+            /// <summary>
+            /// Spot Link
+            /// </summary>
+            SpotLink = 263
         }
 
         #endregion

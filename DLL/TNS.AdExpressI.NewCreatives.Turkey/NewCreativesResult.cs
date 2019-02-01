@@ -34,6 +34,8 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
         /// </summary>
         protected bool _showProduct;
 
+        private const string LINK_TO_CREATIVE_INDEX = "3263";
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -313,18 +315,12 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                             //key pour "Plan Media du produit" = 1478
                             //Key pour "Visuel" = 1909
 
-                            columns.Add(
-                                new
-                                {
-                                    headerText = data.NewHeaders.Root[j].Label,
-                                    key = data.NewHeaders.Root[j].Key,
-                                    dataType = "string",
-                                    width = "*"
-                                });
+                            if (data.NewHeaders.Root[j].Key != LINK_TO_CREATIVE_INDEX)
+                                columns.Add(new { headerText = data.NewHeaders.Root[j].Label, key = data.NewHeaders.Root[j].Key, dataType = "string", width = "*" });
+                            else
+                                columns.Add(new { headerText = data.NewHeaders.Root[j].Label, key = data.NewHeaders.Root[j].Key, dataType = "string", width = "*", hidden = true });
                             schemaFields.Add(new {name = data.NewHeaders.Root[j].Key});
-                            columnsFixed.Add(
-                                new {columnKey = data.NewHeaders.Root[j].Key, isFixed = false, allowFixing = false});
-                            
+                            columnsFixed.Add(new {columnKey = data.NewHeaders.Root[j].Key, isFixed = false, allowFixing = false});
                         }
                     }
                     else
@@ -359,7 +355,10 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                             if (data[i, k] == null)
                                 gridData[i, k + 1] = string.Empty;
                             else
-                                gridData[i, k + 1] = data[i, k].RenderString();
+                            {
+                                if (!(data[i, k] is CellExcelCreativesLink))
+                                    gridData[i, k + 1] = data[i, k].RenderString();
+                            }
                         }
                     }
 
@@ -536,6 +535,16 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
                                         : row[Column.DataBaseAliasField];
 
                                     curCell.SetCellValue(v.ToString().Replace(" 00:00:00",""));
+
+                                    tab[iCurLine, iCurColumn++] = curCell;
+                                    break;
+                                case GenericColumnItemInformation.Columns.SpotLink:
+                                    curCell = new CellExcelCreativesLink();
+                                    var spotLinkValue = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                        ? row[Column.DataBaseField]
+                                        : row[Column.DataBaseAliasField];
+
+                                    curCell.SetCellValue(spotLinkValue);
 
                                     tab[iCurLine, iCurColumn++] = curCell;
                                     break;

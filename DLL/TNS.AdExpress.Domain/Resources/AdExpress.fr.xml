@@ -2544,5 +2544,6 @@
     <item mnemonic="w3260" type="System.String">!</item>
     <item mnemonic="w3261" type="System.String">!</item>
     <item mnemonic="w3262" type="System.String">Tout supprimer</item>
+    <item mnemonic="w3263" type="System.String">!</item>
   </items>
 </localization>
