@@ -307,7 +307,7 @@
 
     <table enumId="269" description="Health : Canal" schemaEnumId="13" label="canal" prefix="cl"/>
 
-    <table enumId="271" description="Data : Spot TV" schemaEnumId="0" label="spot_tv" prefix="stv"/>
+    <table enumId="271" description="Data : Spot TV" schemaEnumId="0" label="spot_tv" prefix="wp"/>
     <table enumId="272" description="Data : Spot Sub Type" schemaEnumId="0" label="spot_sub_type" prefix="sst"/>
    
     <table enumId="273" description="Recap Data : Spot Type" schemaEnumId="4" label="spot_type" prefix="stp"/>

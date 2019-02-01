@@ -56,12 +56,16 @@
         this.SpotSubTypes = GetItems($('#__spotSubType').val());
     }
 
+    function ResultTypeFilter() {
+        this.ResultType = $('#resultType').val();
+    }
+
     function UserFilter() {
         this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
         this.PeriodDetailFilter = new PeriodDetailFilter();
         this.FormatFilter = new FormatFilter();
         this.SpotSubTypeFilter = new SpotSubTypeFilter();
-
+        this.ResultTypeFilter = new ResultTypeFilter();
     }
 
     var userFilter = new UserFilter();
@@ -106,6 +110,12 @@
 
     $('#periodDetailType').on('change', function (e) {
         userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+    });
+
+    $('#resultType').selectpicker();
+
+    $('#resultType').on('change', function (e) {
+        userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
     });
 
     $('#save-custom-detail-levels').on('click', function (e) {
@@ -280,6 +290,15 @@
         $("#grid").addClass("hide");
         $("#gridLoader").removeClass("hide");
         $("#collapseContainerOne").collapse('hide');
+
+        if ($('#resultType').val() == 0) {
+            $("#export-type").find("option").eq(1).show();
+            $('#export-type').selectpicker('refresh');
+        } else {
+            $("#export-type").find("option").eq(1).hide();
+            $('#export-type').selectpicker('refresh');
+        }
+
         CallSetOptions();
     });
 
@@ -349,6 +368,11 @@
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
                         });
+
+                        for (i = 0; i < cols.length; i++) {
+                            if (cols[i].key == "869") //Spot = 869
+                                cols[i].template = $("#colSpotTmpl").html();
+                        }
 
                         ds = new $.ig.DataSource({
                             type: "json",

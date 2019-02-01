@@ -807,6 +807,13 @@ namespace Km.AdExpressClientWeb.Controllers
                 //}
 
             }
+            else if (cell is CellExcelCreativesLink)
+            {
+                string sloganIdEncrypted = SecurityHelper.Encrypt(((CellExcelCreativesLink) cell).SloganId, SecurityHelper.CryptKey);
+                string dateEncrypted = SecurityHelper.Encrypt( DateTime.Today.ToShortDateString(), SecurityHelper.CryptKey);
+                int index = sheet.Hyperlinks.Add(cellRow, cellCol, 1, 1, ((CellExcelCreativesLink)cell).RenderString(sloganIdEncrypted, dateEncrypted));
+                sheet.Hyperlinks[index].TextToDisplay = "Link";
+            }
             else if (cell is CellEmpty)
                 sheet.Cells[cellRow, cellCol].Value = null;
             else

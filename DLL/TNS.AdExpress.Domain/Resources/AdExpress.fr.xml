@@ -2538,5 +2538,12 @@
     <item mnemonic="w3254" type="System.String">Aucune sélection</item>
     <item mnemonic="w3255" type="System.String">Success</item>
     <item mnemonic="w3256" type="System.String">!</item>
+    <item mnemonic="w3257" type="System.String">!</item>
+    <item mnemonic="w3258" type="System.String">!</item>
+    <item mnemonic="w3259" type="System.String">!</item>
+    <item mnemonic="w3260" type="System.String">!</item>
+    <item mnemonic="w3261" type="System.String">!</item>
+    <item mnemonic="w3262" type="System.String">Tout supprimer</item>
+    <item mnemonic="w3263" type="System.String">!</item>
   </items>
 </localization>

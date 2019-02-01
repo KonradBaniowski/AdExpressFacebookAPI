@@ -149,7 +149,41 @@
                     }
                 </div>
                 <div class='row'>
-                    <div class="col-md-4"></div>
+                    @if (@Model.ResultTypeOption.ResultType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(793, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.ResultTypeOption.ResultType.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.ResultTypeOption.ResultType.Items)
+                                                {
+                                                    if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4"></div>
+                    }
                     <div class="col-md-4">
                         <div class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">

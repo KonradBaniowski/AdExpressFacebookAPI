@@ -336,6 +336,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     resultTypeOption.ResultType.Id = "resultType";
                     resultTypeOption.ResultType.Items = new List<SelectItem>();
 
+                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES &&
+                        WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                        resultTypeOption.ResultType.Visible = true;
+
                     List<long> resultToShow = new List<long>();
                     var selectedMediaUniverse = GetSelectedUniverseMedia(_customerWebSession);
                     List<WebNavigation.ResultPageInformation> resultPages = _currentModule.GetValidResultsPage(selectedMediaUniverse);
@@ -945,6 +949,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                     case WebConstantes.Module.Name.NEW_CREATIVES:
                         _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                        _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
                         break;
                 }
 
@@ -1564,6 +1569,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     else
                     {
                         customerWebSession.CurrentTab = FrameWorkResults.ProductClassAnalysis.SUMMARY;
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                    }
+                    break;
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
+                    {
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                    }
+                    else
+                    {
+                        customerWebSession.CurrentTab = FrameWorkResults.NewCreative.NEW_CREATIVE_REPORT;
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     }
                     break;

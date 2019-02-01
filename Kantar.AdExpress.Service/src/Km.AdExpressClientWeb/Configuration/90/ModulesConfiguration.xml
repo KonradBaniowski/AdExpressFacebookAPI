@@ -1341,7 +1341,7 @@
           <allowedUnits>
             <allowedUnit>versionNb</allowedUnit>
           </allowedUnits>
-          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2557" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/NewCreativesResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="65" name="New Creative Report" traductioncode="3257" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/NewCreativesResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ProductDetailLevel>
               <defaultProductDetailLevels>
                 <defaultProductDetailLevel id="11" name="famille" />
@@ -1374,6 +1374,19 @@
                 <allowedProductLevelItem id="15" name="Groupe d'agence"/>
               </allowedProductLevelItems>
             </ProductDetailLevel>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="68" name="New Creative Details" traductioncode="3258" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/NewCreativesResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>

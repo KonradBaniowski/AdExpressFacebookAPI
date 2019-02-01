@@ -1296,7 +1296,27 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Program Genre
             /// </summary>
-            ProgramGenre = 258
+            ProgramGenre = 258,
+            /// <summary>
+            /// Creative Duration
+            /// </summary>
+            CreativeDuration = 259,
+            /// <summary>
+            /// Date First Appearance
+            /// </summary>
+            DateFirstAppearance = 260,
+            /// <summary>
+            /// Media First Appeared
+            /// </summary>
+            MediaFirstAppeared = 261,
+            /// <summary>
+            /// Media First Appeared
+            /// </summary>
+            FirstTopDiffusion = 262,
+            /// <summary>
+            /// Spot Link
+            /// </summary>
+            SpotLink = 263
         }
 
         #endregion

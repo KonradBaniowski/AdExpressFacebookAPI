@@ -271,6 +271,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         {
             throw new NotImplementedException();
         }
+
+        public virtual DataSet GetNewCreativeDetailsData()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -22,6 +22,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         DataSet GetData();
 
         long CountData();
+
+        DataSet GetNewCreativeDetailsData();
     }
 
 }

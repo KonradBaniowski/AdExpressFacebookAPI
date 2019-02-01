@@ -100,6 +100,10 @@ namespace TNS.AdExpressI.NewCreatives
         /// Define if show media schedule Link
         /// </summary>
         protected bool _showMediaSchedule = false;
+        /// <summary>
+        /// Column item list
+        /// </summary>
+        protected List<GenericColumnItemInformation> _columnItemList;
         #endregion
 
         #region Accessors
@@ -154,7 +158,7 @@ namespace TNS.AdExpressI.NewCreatives
         /// Compute new creatives
         /// </summary>
         /// <returns>Compute Data</returns>
-        public ResultTable GetData()
+        public virtual ResultTable GetData()
         {
 
             #region Variables
@@ -748,6 +752,10 @@ namespace TNS.AdExpressI.NewCreatives
                 | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             return newCreativesDAL.CountData();                   
         }
+
+       
+
+    
     }
 
 }

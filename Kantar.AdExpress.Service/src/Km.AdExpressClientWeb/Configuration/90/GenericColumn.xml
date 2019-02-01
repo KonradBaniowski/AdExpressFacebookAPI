@@ -313,6 +313,11 @@
     <column id="256" name="Version Code"  webTextId="3231" dbId="id_slogan"    dbLabel="id_slogan"   dbTablePrefixe="slo"  CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="257" name="Campaign Code" webTextId="3232" dbId="id_campaign"  dbLabel="id_campaign" dbTablePrefixe="ads" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran" />
     <column id="258" name="Program Genre" webTextId="3240" dbId="id_program_genre" dbLabel="program_genre" dbTable="program_genre" dbTablePrefixe="pgg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="259" name="Creative Duration" webTextId="3259" dbLabel="creativity_duration" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
+    <column id="260" name="Date First Appearance" webTextId="3260" dbLabel="date_creation" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel" /> <!--format="shortdatepattern"-->
+    <column id="261" name="Media First Appeared" webTextId="3261" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="3"/>
+    <column id="262" name="First Top Diffusion" webTextId="3172" dbLabel="first_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
+    <column id="263" name="Spot Link" webTextId="3263" dbLabel="id_slogan" dbTablePrefixe="slo"/>
     <!--End New levels for Turkey-->
   </columnItems>
 
@@ -961,6 +966,32 @@
       <columnItem id="9" name="Product"/>
       <columnItem id="203" name="Version" isKey="true"/>
       <columnItem id="75" name="Spot" visible="false"/>
+      <columnItem id="259" name="Creative Duration"/>
+      <columnItem id="260" name="Date First Appearance"/>
+      <columnItem id="261" name="Media First Appeared" idDetailLevelMatching="3"/>
+      <columnItem id="199" name="Spot Sub Type" idDetailLevelMatching="82"/>
+    </detailColumn>
+    <!--New Creative Spot Details-->
+    <detailColumn id="40" name="Spot detail">
+      <columnItem id="256" name="Version Code" idDetailLevelMatching="87"/>
+      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <!--<columnItem id="263" name="Spot Link"/>-->
+      <columnItem id="260" name="Date First Appearance"/>
+      <columnItem id="261" name="Media First Appeared" idDetailLevelMatching="3"/>
+      <columnItem id="243" name="Program"  />
+      <columnItem id="262" name="First Top Diffusion" />
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="101" name="Brand" />
+      <columnItem id="9" name="Product"/>
+      <columnItem id="203" name="Version" isKey="true"/>
+      <columnItem id="206" name="Ad Slogan" idDetailLevelMatching="83"/>
+      <columnItem id="44" name="Sector" idDetailLevelMatching="11"/>
+      <columnItem id="82" name="Sub Sector" idDetailLevelMatching="12"/>
+      <columnItem id="8" name="Product Type" idDetailLevelMatching="13"/>
+      <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>
+      <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>
+      <columnItem id="204" name="Creative Agency"/>
+      <!--<columnItem id="259" name="Creative Duration"/>-->
     </detailColumn>
   </detailColumns>
 </genericColumn>

@@ -2969,5 +2969,22 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
     }
     #endregion
 
+    #region New Creative
+    /// <summary>
+    /// Constante pour le Portefeuille d'un support
+    /// </summary>
+    public class NewCreative
+    {
+        /// <summary>
+        /// New Creative Report
+        /// </summary>
+        public const int NEW_CREATIVE_REPORT = 0;
+        /// <summary>
+        /// New Creative Detail
+        /// </summary>
+        public const int NEW_CREATIVE_DETAILS = 1;
+    }
+    #endregion
+
 }
 
