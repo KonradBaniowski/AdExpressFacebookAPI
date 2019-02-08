@@ -128,7 +128,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Poland
             // Product classification selection
             /* We can get the product classification selection by using _session.PrincipalProductUniverses[universId].GetSqlConditions(tData.Prefix, true)
              * */
-            if (_module.Id != CstWeb.Module.Name.NEW_CREATIVES && _session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
             {
                 if (universId < 0)
                 {
