@@ -286,18 +286,30 @@
         userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
     }
 
+    function InitNewCreativesOptions() {
+        if ($('#resultType').val() == 0) {
+            $("#export-type").find("option").eq(1).show();
+            $('#export-type').selectpicker('refresh');
+            $('#perioddetailTypeContainerDiv').css("display", "block");
+            $('#defaultDetailContainerDiv').css("display", "block");
+            $('#customDetailContainerDiv').css("display", "block");
+        } else {
+            $("#export-type").find("option").eq(1).hide();
+            $('#export-type').selectpicker('refresh');
+            $('#perioddetailTypeContainerDiv').css("display", "none");
+            $('#defaultDetailContainerDiv').css("display", "none");
+            $('#customDetailContainerDiv').css("display", "none");
+        }
+    }
+
+    InitNewCreativesOptions();
+
     $('#validate-options').on('click', function (e) {
         $("#grid").addClass("hide");
         $("#gridLoader").removeClass("hide");
         $("#collapseContainerOne").collapse('hide');
 
-        if ($('#resultType').val() == 0) {
-            $("#export-type").find("option").eq(1).show();
-            $('#export-type').selectpicker('refresh');
-        } else {
-            $("#export-type").find("option").eq(1).hide();
-            $('#export-type').selectpicker('refresh');
-        }
+        InitNewCreativesOptions();
 
         CallSetOptions();
     });

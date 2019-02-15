@@ -132,6 +132,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL.Turkey
                 sql.Append(" where " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
                 sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_creation <= to_date('" + _endDate + maxHour + "','yyyymmddHH24:MI:SS') ");
 
+                //SPOT SUB TYPEs
+                string spotSubTypes = _session.SelectedSpotSubTypes;
+                if (!string.IsNullOrEmpty(spotSubTypes))
+                {
+                    Table spotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.spotSubType);
+                    sql.Append($" and {WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.ID_{spotSubType.Label} in ({spotSubTypes}) ");
+
+                }
+
                 // Product Selection
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
@@ -318,6 +327,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL.Turkey
                 // Product Selection
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+
+                //SPOT SUB TYPEs
+                string spotSubTypes = _session.SelectedSpotSubTypes;
+                if (!string.IsNullOrEmpty(spotSubTypes))
+                {
+                    Table spotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.spotSubType);
+                    sql.Append($" and {WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix}.ID_{spotSubType.Label} in ({spotSubTypes}) ");
+
+                }
 
                 if (_session.GenericInsertionColumns.GetSqlJoins(_session.DataLanguage,
                     WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, null).Length > 0)

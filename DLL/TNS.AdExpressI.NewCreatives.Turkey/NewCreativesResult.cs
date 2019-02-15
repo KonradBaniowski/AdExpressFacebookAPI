@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Classification.DB;
@@ -548,6 +549,17 @@ namespace TNS.AdExpressI.NewCreatives.Turkey
 
                                     tab[iCurLine, iCurColumn++] = curCell;
                                     break;
+                                case GenericColumnItemInformation.Columns.SpotFileName:
+                                    var spotFileName = row[Column.DataBaseField].ToString();
+                                    if (string.IsNullOrEmpty(spotFileName))
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel(Path.GetFileName(spotFileName));
+                                    }
+                                        break;
                                 default:
                                     type = assembly.GetType(Column.CellType);
                                     curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static

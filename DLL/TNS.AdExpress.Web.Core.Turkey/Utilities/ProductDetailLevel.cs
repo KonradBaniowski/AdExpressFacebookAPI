@@ -26,7 +26,6 @@ namespace TNS.AdExpress.Web.Core.Turkey.Utilities
                     // Famille
                     levels.Add(11);
                     levels.Add(8);
-                    levels.Add(9);
                     break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
                     levels.Add(15);

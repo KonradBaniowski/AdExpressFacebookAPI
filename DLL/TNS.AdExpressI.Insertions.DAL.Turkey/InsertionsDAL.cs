@@ -373,8 +373,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
             // Product classification selection
             /* We can get the product classification selection by using _session.PrincipalProductUniverses[universId].GetSqlConditions(tData.Prefix, true)
              * */
-            if (_module.Id != AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES &&
-                _session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
             {
                 if (universId < 0)
                 {
@@ -556,7 +555,17 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
             }
             #endregion
 
-           
+            if (_module.Id == AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+            {
+                //SPOT SUB TYPEs
+                string spotSubTypes = _session.SelectedSpotSubTypes;
+                if (!string.IsNullOrEmpty(spotSubTypes))
+                {
+                    Table spotSubType = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.spotSubType);
+                    sql.Append($" and {tData.Prefix}.ID_{spotSubType.Label} in ({spotSubTypes}) ");
+
+                }
+            }
 
             switch (vehicle.Id)
             {
@@ -587,7 +596,7 @@ namespace TNS.AdExpressI.Insertions.DAL.Turkey
              if (Dates.Is4M(fromDate))
              {
                  if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES)
-                     tData = WebApplicationParameters.GetDataTable(TableIds.spotTv,
+                    tData = WebApplicationParameters.GetDataTable(TableIds.spotTv,
                          _session.IsSelectRetailerDisplay);
                  else tData = GetDataTable(vehicle, CstWeb.Module.Type.alert);
 

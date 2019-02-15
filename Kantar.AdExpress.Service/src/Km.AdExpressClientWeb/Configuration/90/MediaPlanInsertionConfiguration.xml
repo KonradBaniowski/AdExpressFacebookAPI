@@ -44,10 +44,10 @@
           <allowedMediaLevelItem id="11" name="Famille"/>
           <allowedMediaLevelItem id="12" name="Classe"/>
           <allowedMediaLevelItem id="13" name="Groupe"/>
-          <allowedMediaLevelItem id="14" name="Variété"/>
+          <!--<allowedMediaLevelItem id="14" name="Variété"/>-->
           <allowedMediaLevelItem id="18" name="Date"/>
           <allowedMediaLevelItem id="19" name="Durée"/>
-          <allowedMediaLevelItem id="21" name="Code écran"/>
+          <!--<allowedMediaLevelItem id="21" name="Code écran"/>-->
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>

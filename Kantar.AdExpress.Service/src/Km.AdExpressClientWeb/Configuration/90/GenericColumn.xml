@@ -318,6 +318,7 @@
     <column id="261" name="Media First Appeared" webTextId="3261" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="3"/>
     <column id="262" name="First Top Diffusion" webTextId="3172" dbLabel="first_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
     <column id="263" name="Spot Link" webTextId="3263" dbLabel="id_slogan" dbTablePrefixe="slo"/>
+    <column id="264" name="Spot File Name"  webTextId="3231" dbLabel="associated_file" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <!--End New levels for Turkey-->
   </columnItems>
 
@@ -973,9 +974,9 @@
     </detailColumn>
     <!--New Creative Spot Details-->
     <detailColumn id="40" name="Spot detail">
-      <columnItem id="256" name="Version Code" idDetailLevelMatching="87"/>
+      <!--<columnItem id="256" name="Version Code" idDetailLevelMatching="87" visible="false"/>-->
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
-      <!--<columnItem id="263" name="Spot Link"/>-->
+      <columnItem id="263" name="Spot Link"/>
       <columnItem id="260" name="Date First Appearance"/>
       <columnItem id="261" name="Media First Appeared" idDetailLevelMatching="3"/>
       <columnItem id="243" name="Program"  />
@@ -991,7 +992,11 @@
       <columnItem id="198" name="Spot Type"     idDetailLevelMatching="81"/>
       <columnItem id="199" name="Spot Sub Type"        idDetailLevelMatching="82"/>
       <columnItem id="204" name="Creative Agency"/>
-      <!--<columnItem id="259" name="Creative Duration"/>-->
+      <columnItem id="208" name="Purchasing Advertising"   />
+      <columnItem id="194" name="Program Status"  />
+      <columnItem id="195" name="Program Typology" idDetailLevelMatching="80" />
+      <columnItem id="259" name="Creative Duration"/>
+      <columnItem id="264" name="Spot File Name"/>
     </detailColumn>
   </detailColumns>
 </genericColumn>
