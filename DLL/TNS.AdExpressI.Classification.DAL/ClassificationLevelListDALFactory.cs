@@ -300,6 +300,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.adSloganException:
                     return new ProductBrand.AdSloganLevelListDAL(_language, _source);
+                //Create a list of Ad Slogan level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyException:
+                    return new ProductBrand.PurchasingAgencyLevelListDAL(_language, _source);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }

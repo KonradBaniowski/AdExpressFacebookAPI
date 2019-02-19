@@ -62,7 +62,7 @@
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
-            <!--<allowedMediaLevelItem id="89" name="Purchasing Agency"/>-->
+            <allowedMediaLevelItem id="89" name="Purchasing Agency"/>
             <!--<allowedMediaLevelItem id="14" name="Variété"/>
             <allowedMediaLevelItem id="17" name="Titre"/>
             <allowedMediaLevelItem id="26" name="Pays"/>-->
@@ -179,7 +179,7 @@
             <allowedProductLevelItem id="82" name="spotSubType"/>
             <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="83" name="AdSlogan"/>
-            <!--<allowedProductLevelItem id="89" name="Purchasing Agency"/>-->
+            <allowedProductLevelItem id="89" name="Purchasing Agency"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <ColumnDetailLevel>
@@ -479,7 +479,7 @@
             <allowedProductLevelItem id="82" name="spotSubType"/>
             <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <allowedProductLevelItem id="15" name="Groupe d'agence"/>
-            <!--<allowedProductLevelItem id="89" name="Purchasing Agency"/>-->
+            <allowedProductLevelItem id="89" name="Purchasing Agency"/>
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <ColumnDetailLevel>
@@ -803,7 +803,7 @@
             <allowedProductLevelItem id="80" name="programTypology"/>
             <allowedProductLevelItem id="88" name="programGenre"/>
             <allowedProductLevelItem id="82" name="spotSubType"/>
-            <!--<allowedProductLevelItem id="89" name="Purchasing Agency"/>-->
+            <allowedProductLevelItem id="89" name="Purchasing Agency"/>
             <!--<allowedProductLevelItem id="14" name="Variete"/>-->
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
           </allowedProductLevelItems>
@@ -1057,6 +1057,7 @@
             <allowedMediaLevelItem id="11" name="Famille"/>
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
+            <allowedMediaLevelItem id="89" name="Purchasing Agency"/>
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>

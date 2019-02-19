@@ -304,7 +304,15 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Program Genre en exception
             /// </summary>
-            programGenreException
+            programGenreException,
+            /// <summary>
+			/// Purchasing Agency en accès
+			/// </summary>
+			purchasingAgencyAccess,
+            /// <summary>
+            /// Purchasing Agency en exception
+            /// </summary>
+            purchasingAgencyException
         }
 		#endregion
 	}

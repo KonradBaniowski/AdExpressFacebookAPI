@@ -104,6 +104,7 @@
     <Compile Include="ProductBrand\ProgramGenreLevelListDAL.cs" />
     <Compile Include="ProductBrand\ProgramLevelListDAL.cs" />
     <Compile Include="ProductBrand\ProgramTypologyLevelListDAL.cs" />
+    <Compile Include="ProductBrand\PurchasingAgencyLevelListDAL.cs" />
     <Compile Include="ProductBrand\SpotSubTypeLevelListDAL.cs" />
     <Compile Include="ProductBrand\VpProductLevelListDAL.cs" />
     <Compile Include="ProductBrand\vpSegmentLevelListDAL.cs" />

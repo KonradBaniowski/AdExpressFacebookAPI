@@ -269,7 +269,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(858, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString() });
                     if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
-                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3239, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.productSlogan.GetHashCode().ToString() });
+                    {
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3239, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.productSlogan.GetHashCode().ToString()});
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3139, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.purchasingAgency.GetHashCode().ToString() });
+                    }
                 }
                    
 

@@ -197,7 +197,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                         sqlStr = string.Format("  {0}.id_product as id_p1, product as p1, {0}.id_ad_slogan as id_p2, ad_slogan as p2", _dataTable.Prefix);
                         break;
                     /***************************/
-
+                    case CstFormat.PreformatedProductDetails.purchasingAgency:
+                        sqlStr = string.Format(" {0}.id_purchasing_agency as id_p1, purchasing_agency as p1", _dataTable.Prefix);
+                        break;
                     default:
                         //throw new ASDynamicTablesDataAccessException("Le format de détail " + _session.PreformatedProductDetail.ToString() + " n'est pas un cas valide.");
                         sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1", _dataTable.Prefix);
@@ -437,7 +439,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
 
             if (sql.ToString().IndexOf("ad_slogan") > -1)
                 sql.AppendFormat(", {0} ", _recapAdSlogan.SqlWithPrefix);
-          
+
+            if (sql.ToString().IndexOf("purchasing_agency") > -1)
+                sql.AppendFormat(", {0} ", _recapPurchasingAgency.SqlWithPrefix);
             #endregion
 
         }
@@ -727,6 +731,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
                 sql.AppendFormat("{0} {1}.id_ad_slogan = {2}.id_ad_slogan", linkWord, _recapAdSlogan.Prefix, _dataTable.Prefix);
                 linkWord = " and ";
             }
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_purchasing_agency = {2}.id_purchasing_agency", linkWord, _recapPurchasingAgency.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
             #endregion
 
             #region nomenclature media
@@ -814,6 +823,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.Turkey
             {
                 sql.AppendFormat(" and {0}.id_language = {1}", _recapAdSlogan.Prefix, _session.DataLanguage);
                 sql.AppendFormat(" and {0}.activation < {1}", _recapAdSlogan.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
+
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapPurchasingAgency.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapPurchasingAgency.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             #endregion
 

@@ -356,6 +356,9 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.product));                 
                     levels.Add(Get(DetailLevelItemInformation.Levels.adSlogan));
                     break;
+                case CstFormat.PreformatedProductDetails.purchasingAgency:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.PurchasingAgency));
+                    break;
                 default:
                     throw (new ArgumentException("Performated detail not supported"));
                     break;

@@ -245,7 +245,11 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Niveau de nomenclature Program Genre
             /// </summary>
-            programGenre
+            programGenre,
+            /// <summary>
+            /// Niveau de nomenclature Purchasing Agency
+            /// </summary>
+            purchasingAgency
         }
 		#endregion
 
