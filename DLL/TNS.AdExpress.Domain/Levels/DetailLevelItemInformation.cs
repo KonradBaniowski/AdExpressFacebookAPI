@@ -369,7 +369,11 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Program Genre
             /// </summary>
-            programGenre = 88
+            programGenre = 88,
+            /// <summary>
+            /// Purchasing Agency
+            /// </summary>
+            PurchasingAgency = 89
         }
 		#endregion
 

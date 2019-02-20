@@ -740,6 +740,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                 case DetailLevelItemInformation.Levels.programGenre:
                                 case DetailLevelItemInformation.Levels.spotSubType:
                                 case DetailLevelItemInformation.Levels.adSlogan:
+                                case DetailLevelItemInformation.Levels.PurchasingAgency:
                                     return (true);
                                 #endregion
 

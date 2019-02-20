@@ -766,6 +766,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     tree.Checked = true;
                     webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.adSlogan, tree);
                     break;
+                case DetailLevelItemInformation.Levels.PurchasingAgency:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.purchasingAgency, tree);
+                    break;
             }
 
             webSession.Save();

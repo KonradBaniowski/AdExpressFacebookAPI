@@ -5441,6 +5441,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case (ClassificationConstantes.Level.type.adSlogan):
                         sql += " " + tablePrefixe + ".id_ad_slogan in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.adSloganAccess) + ")";
                         break;
+                    case (ClassificationConstantes.Level.type.purchasingAgency):
+                        sql += " " + tablePrefixe + ".id_purchasing_agency in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.purchasingAgencyAccess) + ")";
+                        break;
                 }
             }
 

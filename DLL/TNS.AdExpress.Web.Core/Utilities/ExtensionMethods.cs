@@ -54,6 +54,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         levels.Add(DetailLevelItemInformation.Levels.vehicle); break;
                     case TNSClassificationLevels.AD_SLOGAN:
                         levels.Add(DetailLevelItemInformation.Levels.adSlogan); break;
+                    case TNSClassificationLevels.PURCHASING_AGENCY:
+                        levels.Add(DetailLevelItemInformation.Levels.PurchasingAgency); break;
                     default:
                         throw (new Exception("Unknown classification identifier"));
                 }

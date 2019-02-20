@@ -94,6 +94,7 @@
     <level id="86" name="VersionName" webTextId="3156" dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="slogan" dbLabelAlias="slogan" convertNullDbLabel="true" dbTable="slogan" dbTablePrefixe="slo"/>
     <level id="87" name="VersionTk" webTextId="1888" dbId="id_slogan" dbLabel="id_slogan" dbTablePrefixe="slo"/>
     <level id="88" name="programGenre"      webTextId="3240" dbId="id_program_genre" dbLabel="program_genre" dbTable="program_genre" dbTablePrefixe="pgg"/>
+    <level id="89" name="PurchasingAgency"      webTextId="3139" dbId="id_purchasing_agency" dbLabel="purchasing_agency" dbTable="purchasing_agency" dbTablePrefixe="pura"/>
   </detaillevelItems>
 
   <detailLevels>

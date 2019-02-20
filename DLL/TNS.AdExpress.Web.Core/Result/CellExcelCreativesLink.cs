@@ -119,16 +119,16 @@ namespace TNS.AdExpress.Web.Core.Result
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append("https://adex.kantarmedia.com.tr/CreativeTr/" + _sloganId);
+            str.Append("https://creatives.kantarmedia.com.tr/CreativeTr/" + _sloganId);
 
             return str.ToString();
         }
 
-        public string RenderString(string sloganEncrypted, string dateEncrypted)
+        public string RenderString(string sloganEncrypted, string dateEncrypted, string languageEncrypted)
         {
             StringBuilder str = new StringBuilder();
 
-            str.AppendFormat("https://adex.kantarmedia.com.tr/CreativeTr/{0}/{1}", sloganEncrypted, dateEncrypted);
+            str.AppendFormat("https://creatives.kantarmedia.com.tr/CreativeTr/{0}/{1}/{2}", sloganEncrypted, dateEncrypted, languageEncrypted);
 
             return str.ToString();
         }

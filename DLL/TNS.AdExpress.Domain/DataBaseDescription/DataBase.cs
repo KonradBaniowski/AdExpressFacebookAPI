@@ -1277,7 +1277,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Media Owner
         /// </summary>
-        mediaOwner = 401
+        mediaOwner = 401,
+        /// <summary>
+        /// Purchasing Agency
+        /// </summary>
+        recapPurchasingAgency = 402
     }
     #endregion
 

@@ -106,6 +106,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
          protected Table _dataInternetSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
          protected Table _dataCinemaSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment);
         protected Table _dataTacticSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment);
+        protected Table _recapPurchasingAgency = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPurchasingAgency);
         #endregion
 
         #endregion
@@ -166,6 +167,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             _dataInternetSegment = WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
             _dataCinemaSegment = WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, _session.IsSelectRetailerDisplay);
             _dataTacticSegment = WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, _session.IsSelectRetailerDisplay);
+            _recapPurchasingAgency = WebApplicationParameters.GetDataTable(TableIds.recapPurchasingAgency, _session.IsSelectRetailerDisplay);
         }
         #endregion
 
@@ -467,7 +469,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
                 **/
                 && detail != CstFormat.PreformatedProductDetails.sectorAdvertiser
-                && detail != CstFormat.PreformatedProductDetails.subSectorAdvertiser;			
+                && detail != CstFormat.PreformatedProductDetails.subSectorAdvertiser
+                && detail != CstFormat.PreformatedProductDetails.purchasingAgency;			
 
             return GetVehicleTableName(!segment);
         }
@@ -613,6 +616,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         sqlStr = string.Format(" {0}.id_subsector as id_p1, subsector as p1, {0}.id_advertiser as id_p2, advertiser as p2", _dataTable.Prefix);
                         break;
                     /***************************/
+
+                    case CstFormat.PreformatedProductDetails.purchasingAgency:
+                        sqlStr = string.Format(" {0}.id_purchasing_agency as id_p1, purchasing_agency as p1", _dataTable.Prefix);
+                        break;
 
                     default:
                         //throw new ASDynamicTablesDataAccessException("Le format de détail " + _session.PreformatedProductDetail.ToString() + " n'est pas un cas valide.");
@@ -1032,6 +1039,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             if (sql.ToString().IndexOf("subsector") > -1)
                 sql.AppendFormat(", {0} ", _recapSubSector.SqlWithPrefix);
             /******************/
+            if (sql.ToString().IndexOf("purchasing_agency") > -1)
+                sql.AppendFormat(", {0} ", _recapPurchasingAgency.SqlWithPrefix);
             #endregion
 
         }
@@ -1089,6 +1098,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             if (sql.ToString().IndexOf(_recapAdvertiser.SqlWithPrefix) > -1)
             {
                 sql.AppendFormat("{0} {1}.id_advertiser = {2}.id_advertiser", linkWord, _recapAdvertiser.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_purchasing_agency = {2}.id_purchasing_agency", linkWord, _recapPurchasingAgency.Prefix, _dataTable.Prefix);
                 linkWord = " and ";
             }
             #endregion
@@ -1235,6 +1249,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					case CstFormat.PreformatedProductDetails.segmentAdvertiser:						
 					case CstFormat.PreformatedProductDetails.segmentProduct:						
 					case CstFormat.PreformatedProductDetails.segmentBrand:
+                    case CstFormat.PreformatedProductDetails.purchasingAgency:
                     /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
                     **/
                     case CstFormat.PreformatedProductDetails.sectorAdvertiser:
@@ -1399,6 +1414,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 sql.AppendFormat(" and {0}.activation < {1}", _recapSubSector.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             /***********************************/
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapPurchasingAgency.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapPurchasingAgency.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
             #endregion
 
             #region nomenclature media

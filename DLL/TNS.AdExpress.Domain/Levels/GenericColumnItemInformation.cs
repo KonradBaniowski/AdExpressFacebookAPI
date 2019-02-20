@@ -1316,7 +1316,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Spot Link
             /// </summary>
-            SpotLink = 263
+            SpotLink = 263,
+            /// <summary>
+            /// Spot File Name
+            /// </summary>
+            SpotFileName = 264
         }
 
         #endregion

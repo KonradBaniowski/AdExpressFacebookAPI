@@ -1044,6 +1044,10 @@ namespace TNS.AdExpress.Constantes.Web
                 ///  Table detailed by  Product /slogan
                 /// </summary>
                 productSlogan,
+                /// <summary>
+                /// Purchasing Agency
+                /// </summary>
+                purchasingAgency
             }
 
 
