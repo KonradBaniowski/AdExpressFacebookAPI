@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassificationDAL.cs" />
+    <Compile Include="ClassificationItemsDAL.cs" />
     <Compile Include="VehiclesDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

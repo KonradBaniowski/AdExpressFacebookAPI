@@ -1333,7 +1333,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Health Product
         /// </summary>
-        allHealthProduct = 10
+        allHealthProduct = 10,
+        /// <summary>
+        /// All Media Program
+        /// </summary>
+        allMediaProgram = 11,
+        /// <summary>
+        /// All Media Spot Type
+        /// </summary>
+        allMediaSpotType = 12
     }
     #endregion
 

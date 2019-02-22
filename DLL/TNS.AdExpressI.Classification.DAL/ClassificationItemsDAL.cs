@@ -145,7 +145,7 @@ namespace TNS.AdExpressI.Classification.DAL
                  * The number 33 corresponds to the identifier of the country, here France.
                  *  If the dimension is vehicle (classification brand), the search will be done on a view called "ADEXPR03.ALL_MEDIA_33".
                  * ALL_MEDIA_33 corresponds to the label of the view.*/
-                oView = GetView(_dimension);
+                oView = GetCustomView(_dimension, classificationLevelLabel);
 
                 /* Obtains customer's rights for product brand classification   */
                 classificationRight = GetRights(_dimension);
@@ -307,7 +307,7 @@ namespace TNS.AdExpressI.Classification.DAL
                  * The number 33 corresponds to the identifier of the country, here France.
                  *  If the dimension is vehicle (classification brand), the search will be done on a view called "ADEXPR03.ALL_MEDIA_33".
                  * ALL_MEDIA_33 corresponds to the label of the view.*/
-                oView = GetView(_dimension);
+                oView = GetCustomView(_dimension, classificationLevelLabel, selectedItemTableName);
 
                 /* Obtains customer's rights for product brand classification   */
                 classificationRight = GetRights(_dimension);
@@ -458,7 +458,7 @@ namespace TNS.AdExpressI.Classification.DAL
                * The number 33 corresponds to the identifier of the country, here France.
                *  If the dimension is vehicle (classification brand), the search will be done on a view called "ADEXPR03.ALL_MEDIA_33".
                * ALL_MEDIA_33 corresponds to the label of the view.*/
-                oView = GetView(_dimension);
+                oView = GetCustomView(_dimension, classificationLevelLabel);
 
                 /* Obtains customer's rights for product brand classification   */
                 classificationRight = GetRights(_dimension);
@@ -668,6 +668,25 @@ namespace TNS.AdExpressI.Classification.DAL
         #region Protected Methods
 
         #region GetView
+        /// <summary>
+        /// This method is used in order to get a cutom View accoring to classification Level Label + dimension
+        /// IMPORTANT: Giving that this is the base class, we only need to get default View according to the dimension,
+        /// This is why we call directly GetView(dimension).
+        /// In case a child class needs to get a custom View, it could override this method (Example: Turkey).
+        ///  </summary>
+        /// <param name="dimension">dimension</param>
+        /// <param name="classificationLevelLabel">Classification Level Label</param>
+        /// <returns>View</returns>
+        protected virtual View GetCustomView(Dimension dimension, string classificationLevelLabel)
+        {
+            return GetView(dimension);
+        }
+
+        protected virtual View GetCustomView(Dimension dimension, string classificationLevelLabel, string selectedItemTableName)
+        {
+            return GetView(dimension);
+        }
+
         /// <summary>
         /// Search of classification items is done on a View of product or vehicle classification.
         ///  In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
