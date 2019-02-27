@@ -285,7 +285,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\gdpr.css" />
     <Content Include="Content\img\48\export_logo_km.png" />
     <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\48\logo_kantarmedia.png" />
@@ -298,11 +297,7 @@
     <Content Include="Content\img\421\logo_kantarmedia.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\90\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\banner_sk.jpg" />
-    <Content Include="Content\img\banner_tr.jpg" />
-    <Content Include="Content\img\Banniere EXPERIENCES.PNG" />
-    <Content Include="Content\img\Banniere PICKANEWS.PNG" />
     <Content Include="Content\img\sponsorship\29082.png" />
     <Content Include="Content\img\sponsorship\29104.png" />
     <Content Include="Content\img\sponsorship\29105.png" />
@@ -318,12 +313,6 @@
     <Content Include="Content\LoginFiles\images\ui-bg_highlight-soft_45_9c1e8d_1x100.png" />
     <Content Include="Content\LoginFiles\jquery.ui.theme.css" />
     <Content Include="Content\LoginFiles\Site.css" />
-    <Content Include="Content\site-En.css" />
-    <Content Include="Content\site-Fr.css" />
-    <Content Include="Content\site-Tk.css" />
-    <Content Include="IgniteUI\js\modules\i18n\infragistics.ui.grid-tr.js" />
-    <Content Include="Scripts\gdpr\gdpr.js" />
-    <Content Include="Scripts\gdpr\jquery.ihavecookies.js" />
     <Content Include="_app_offline.htm" />
     <Content Include="Configuration\90\AdExpressConfiguration.xml" />
     <Content Include="Configuration\90\AdNetTrackDetailLevel.xml" />
@@ -378,9 +367,7 @@
     <Content Include="Configuration\33\BaalList.xml" />
     <Content Include="Configuration\33\CampaignTypes.xml" />
     <Content Include="Configuration\33\CoreLayersConfiguration.xml" />
-    <Content Include="Configuration\33\CreativesAccess.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Configuration\33\CreativesAccess.xml" />
     <Content Include="Configuration\33\CreativesConfiguration.xml" />
     <Content Include="Configuration\33\CssConfiguration.xml" />
     <Content Include="Configuration\33\CustomerErrorMail.xml" />
@@ -1890,13 +1877,6 @@
     <Content Include="Views\Shared\_LayoutPublic2.cshtml" />
     <Content Include="Views\Home\_ModulesPl.cshtml" />
     <Content Include="Views\Home\_HomeNewsPl.cshtml" />
-    <Content Include="Views\PrivacyPolicy\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutPrivacy.cshtml" />
-    <Content Include="Views\CookiePolicy\Index.cshtml" />
-    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyFr.cshtml" />
-    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyEn.cshtml" />
-    <Content Include="Views\CookiePolicy\_CookiePolicyFr.cshtml" />
-    <Content Include="Views\CookiePolicy\_CookiePolicyEn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
