@@ -46,8 +46,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch(Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -72,8 +75,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch(Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -97,8 +103,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }

@@ -67,6 +67,11 @@ gtag('config', 'UA-10360228-9');
                                     <i class="glyphicon glyphicon-asterisk"></i>
                                 </a>
                             </li>
+                            <li title="@GestionWeb.GetWebWord(3272, ViewBag.SiteLanguage)">
+                                <a href="@Url.Action("Index", "CookieSettings")">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                </a>
+                            </li>
                         </text>
                     }
                 </ul>
@@ -120,7 +125,7 @@ gtag('config', 'UA-10360228-9');
 
     @RenderSection("scripts", required: false)
 
-
+    
 
 </body>
 </html>

@@ -56,7 +56,10 @@
             fixedCookieTypeDesc: 'These are cookies that are essential for the website to work correctly.',
             onAccept: function () { },
             uncheckBoxes: false,
-            displayAdvancedBtn: true
+            displayAdvancedBtn: true,
+            siteLanguage: 33,
+            isStoredInDb: false,
+            creationDate: '2000-01-01'
         }, options);
 
         var myCookie = getCookie('cookieControl');
@@ -113,7 +116,45 @@
                 $.each($('input[name="gdpr[]"]').serializeArray(), function (i, field) {
                     prefs.push(field.value);
                 });
-                setCookie('cookieControlPrefs', JSON.stringify(prefs), 365);
+
+                var serverParams = {
+                    prefs: JSON.stringify(prefs)
+                };
+
+                var d = new Date();
+                var day = '' + d.getDate();
+                var month = '' + (d.getMonth() + 1);
+                var year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                settings.creationDate = year + "-" + month + "-" + day;
+
+                var params = {
+                    prefs: prefs,
+                    siteLanguage: parseInt(settings.siteLanguage),
+                    storedInDb: settings.isStoredInDb,
+                    creationDate: settings.creationDate
+                };
+
+                if (settings.isStoredInDb) {
+                    $.ajax({
+                        url: '/Account/SetPrivacySettings',
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        datatype: "json",
+                        data: serverParams,
+                        error: function (xmlHttpRequest, errorText, thrownError) {
+                        },
+                        success: function (data) {
+                            //CallAnalysisResult();
+                            //alert("data = " + data);
+                        }
+                    });
+                }
+
+                setCookie('cookieControlPrefs', JSON.stringify(params), settings.expires);
 
                 // Run callback function
                 settings.onAccept.call(this);

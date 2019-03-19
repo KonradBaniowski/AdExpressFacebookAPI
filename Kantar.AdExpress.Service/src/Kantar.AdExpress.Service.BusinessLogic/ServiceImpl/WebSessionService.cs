@@ -241,8 +241,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -369,8 +373,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -535,8 +543,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -811,8 +822,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
                 throw;
             }
         }
@@ -889,8 +904,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -1640,16 +1658,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private static void SetLog(SaveMediaSelectionRequest request, WebSession webSession, Exception ex)
         {
-            CustomerWebException cwe = new CustomerWebException(webSession, ex);
-            cwe.Browser = request.ClientInformation.Browser;
-            cwe.VersionBrowser = request.ClientInformation.BrowserVersion;
-            cwe.MinorVersionBrowser = request.ClientInformation.BrowserMinorVersion;
-            cwe.Platform = request.ClientInformation.BrowserPlatform;
-            cwe.UserAgent = request.ClientInformation.UserAgent;
-            cwe.UserHostAddress = request.ClientInformation.UserHostAddress;
-            cwe.Url = request.ClientInformation.Url.ToString();
-            cwe.ServerName = request.ClientInformation.ServerMachineName;
-            Logger.Log(LogLevel.Error, cwe.GetLog());
+            if (webSession.EnableTroubleshooting)
+            {
+                CustomerWebException cwe = new CustomerWebException(webSession, ex);
+                cwe.Browser = request.ClientInformation.Browser;
+                cwe.VersionBrowser = request.ClientInformation.BrowserVersion;
+                cwe.MinorVersionBrowser = request.ClientInformation.BrowserMinorVersion;
+                cwe.Platform = request.ClientInformation.BrowserPlatform;
+                cwe.UserAgent = request.ClientInformation.UserAgent;
+                cwe.UserHostAddress = request.ClientInformation.UserHostAddress;
+                cwe.Url = request.ClientInformation.Url.ToString();
+                cwe.ServerName = request.ClientInformation.ServerMachineName;
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+            }
         }
 
         private void SetInsertOption(WebSession webSession, List<long> mediaIds)

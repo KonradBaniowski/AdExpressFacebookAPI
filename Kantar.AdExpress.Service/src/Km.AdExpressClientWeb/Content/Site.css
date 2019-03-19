@@ -3188,3 +3188,8 @@ input[type=checkbox][disabled] + label {
 .ui-widget-content-a-prf {
     color: #ffffff!important;
 }
+
+.cookies-settings-container {
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+}

@@ -8,13 +8,19 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Date.DAL;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using TNS.AdExpress.Domain.Translation;
 using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Helpers;
+using Newtonsoft.Json;
 using NLog;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.DataAccess;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.FrameWork.DB.Common;
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -38,6 +44,32 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguageCode = siteLanguage;
+            
+
+            if (WebApplicationParameters.EnableGdpr)
+            {
+                switch (WebApplicationParameters.CountryCode)
+                {
+                    case CountryCode.FRANCE:
+                        ViewBag.PolicyUpdateDate = System.Configuration.ConfigurationManager.AppSettings["PolicyUpdateDateFr"];
+                        break;
+                    case CountryCode.POLAND:
+                        ViewBag.PolicyUpdateDate = System.Configuration.ConfigurationManager.AppSettings["PolicyUpdateDatePl"];
+                        break;
+                    case CountryCode.SLOVAKIA:
+                        ViewBag.PolicyUpdateDate = System.Configuration.ConfigurationManager.AppSettings["PolicyUpdateDateSk"];
+                        break;
+                    case CountryCode.FINLAND:
+                        ViewBag.PolicyUpdateDate = System.Configuration.ConfigurationManager.AppSettings["PolicyUpdateDateFi"];
+                        break;
+                    case CountryCode.TURKEY:
+                        ViewBag.PolicyUpdateDate = System.Configuration.ConfigurationManager.AppSettings["PolicyUpdateDateTr"];
+                        break;
+                    default:
+                        throw new Exception("Get PolicyUpdateDate : Country Code not handled !!!");
+                }
+            }
+
             LoginViewModel model = new LoginViewModel
             {
                 ErrorMessage = GestionWeb.GetWebWord(880, Convert.ToInt32(siteLanguage)),
@@ -96,6 +128,19 @@ namespace Km.AdExpressClientWeb.Controllers
                 return View(model);
             }
 
+            if (WebApplicationParameters.EnableGdpr)
+            {
+                var cookieControl = Request.Cookies["cookieControl"];
+                var cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+
+                if (cookieControl == null && cookieControlPrefs == null)
+                {
+                    ModelState.AddModelError("", GestionWeb.GetWebWord(3273, Convert.ToInt32(model.SiteLanguage)));
+                    model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
+                    return View(model);
+                }
+            }
+
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
             //MOCK List<>MODULE  
@@ -105,22 +150,22 @@ namespace Km.AdExpressClientWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    message = string.Format("The user {0} has been sucessfully logged with the following password {1}.", model.Email, model.Password);
-                    Logger.Log(LogLevel.Info, message);
+                    //message = string.Format("The user {0} has been sucessfully logged with the following password {1}.", model.Email, model.Password);
+                    //Logger.Log(LogLevel.Info, message);
                     return RedirectToAction("webSession", new { SiteLanguage = model.SiteLanguage });
                 case SignInStatus.LockedOut:
-                    message = string.Format("The user {0} has been locked out with the following password {1}.", model.Email, model.Password);
-                    Logger.Log(LogLevel.Info, message);
+                    //message = string.Format("The user {0} has been locked out with the following password {1}.", model.Email, model.Password);
+                    //Logger.Log(LogLevel.Info, message);
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
-                    message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. A verification code will be sent shortly.", model.Email, model.Password);
-                    Logger.Log(LogLevel.Info, message);
+                    //message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. A verification code will be sent shortly.", model.Email, model.Password);
+                    //Logger.Log(LogLevel.Info, message);
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
                     ModelState.AddModelError("", GestionWeb.GetWebWord(880, Convert.ToInt32(model.SiteLanguage)));
                     model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
-                    message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. The login page will be reloaded.", model.Email, model.Password);
-                    Logger.Log(LogLevel.Info, message);
+                    //message = string.Format("The user {0} has sucessfully tried to login with the following password {1}. The login page will be reloaded.", model.Email, model.Password);
+                    //Logger.Log(LogLevel.Info, message);
                     return View(model);
             }
         }
@@ -148,10 +193,62 @@ namespace Km.AdExpressClientWeb.Controllers
                 right.SetRights();
                 if (WebApplicationParameters.VehiclesFormatInformation.Use)
                     right.SetBannersAssignement();
+
                 //newRight.HasModuleAssignmentAlertsAdExpress();
                 if (_webSession == null) _webSession = new WebSession(right);
                 _webSession.IdSession = idWS;
                 _webSession.SiteLanguage = _siteLanguage;
+
+                if (WebApplicationParameters.EnableGdpr)
+                {
+                    var cookieControl = Request.Cookies["cookieControl"];
+                    var cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+
+                    if (cookieControlPrefs != null)
+                    {
+                        var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
+
+                        var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistiques"));
+                        var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
+                        int enableTrackingDb = 0;
+                        int enableTroubleshootingDb = 0;
+
+                        if (enableTracking != null)
+                        {
+                            _webSession.EnableTracking = true;
+                            enableTrackingDb = 1;
+                        }
+                        else
+                            _webSession.EnableTracking = false;
+
+                        if (enableTroubleshooting != null)
+                        {
+                            _webSession.EnableTroubleshooting = true;
+                            enableTroubleshootingDb = 1;
+                        }
+                        else
+                            _webSession.EnableTroubleshooting = false;
+
+                        if (!cookies.storedInDb)
+                        {
+                            IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                            var expDateCookie = DateTime.Now.AddDays(395);
+                            RightDAL.SetAllPrivacySettings(Source, Convert.ToInt32(idLogin), enableTrackingDb, enableTroubleshootingDb, expDateCookie);
+
+                            cookies.storedInDb = true;
+                            cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd");
+                            cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                            cookieControlPrefs.Expires = expDateCookie;
+                            Response.Cookies.Add(cookieControlPrefs);
+                        }
+                    }
+                }
+                else
+                {
+                    _webSession.EnableTracking = true;
+                    _webSession.EnableTroubleshooting = true;
+                }
+
                 // Année courante pour les recaps                    
                 TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
@@ -490,6 +587,45 @@ namespace Km.AdExpressClientWeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public int SetPrivacySettings(string prefs)
+        {
+            var cookies = JsonConvert.DeserializeObject<List<string>>(prefs);
+
+            var cla = new ClaimsPrincipal(User.Identity);
+            var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+
+            TNS.AdExpress.Web.Core.Sessions.WebSession session = (TNS.AdExpress.Web.Core.Sessions.WebSession)TNS.AdExpress.Web.Core.Sessions.WebSession.Load(idWS);
+
+            var enableTracking = cookies.FirstOrDefault(s => s.Contains("Statistiques"));
+            var enableTroubleshooting = cookies.FirstOrDefault(s => s.Contains("Diagnostic"));
+            int enableTrackingDb = 0;
+            int enableTroubleshootingDb = 0;
+
+            if (enableTracking != null)
+            {
+                session.EnableTracking = true;
+                enableTrackingDb = 1;
+            }
+            else
+                session.EnableTracking = false;
+
+            if (enableTroubleshooting != null)
+            {
+                session.EnableTroubleshooting = true;
+                enableTroubleshootingDb = 1;
+            }
+            else
+                session.EnableTroubleshooting = false;
+
+            session.Save();
+
+            IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+            RightDAL.SetPrivacySettings(Source, session.CustomerLogin.IdLogin, enableTrackingDb, enableTroubleshootingDb);
+
+            return 1;
+        }
+
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
@@ -555,5 +691,6 @@ namespace Km.AdExpressClientWeb.Controllers
             }
         }
         #endregion
+
     }
 }

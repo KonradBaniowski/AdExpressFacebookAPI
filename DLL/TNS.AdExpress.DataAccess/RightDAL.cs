@@ -868,6 +868,114 @@ namespace TNS.AdExpress.DataAccess {
         }
         #endregion
 
+        #region Privacy Settings
+
+        public static DataSet GetPrivacySettings(IDataSource source, Int64 loginId)
+        {
+            #region Tables initilization
+            Table login;
+            Schema mau;
+            try
+            {
+                login = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+                mau = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
+            }
+            #endregion
+
+            #region Request
+            string sql = "select id_login, login, enable_tracking, enable_troubleshooting, date_exp_cookie";
+            sql += " from " + login.SqlWithPrefix + " ";
+            sql += " where id_login=" + loginId + "";
+            sql += " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
+            #endregion
+
+            #region Execute request
+            try
+            {
+                return (source.Fill(sql));
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to retreive privacy settings : " + sql, err));
+            }
+            #endregion
+        }
+
+        public static void SetAllPrivacySettings(IDataSource source, Int64 loginId, int enableTracking, int enableTroubleshooting, DateTime dateExpCookie)
+        {
+            #region Tables initilization
+            Table login;
+            try
+            {
+                login = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
+            }
+            #endregion
+
+            #region Request
+            StringBuilder sql = new StringBuilder(500);
+            sql.AppendFormat("update {0} ", login.SqlWithPrefix);
+            sql.AppendFormat("set ENABLE_TRACKING = {0} ", enableTracking);
+            sql.AppendFormat(", ENABLE_TROUBLESHOOTING = {0} ", enableTroubleshooting);
+            sql.AppendFormat(", DATE_EXP_COOKIE = TO_DATE('{0}', 'DD/MM/YYYY')", dateExpCookie.ToString("dd/MM/yyyy"));
+            sql.AppendFormat(" where id_login = {0} ", loginId);
+            #endregion
+
+            #region Execute request
+            try
+            {
+                source.Update(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to retreive privacy settings : " + sql, err));
+            }
+            #endregion
+        }
+
+        public static void SetPrivacySettings(IDataSource source, Int64 loginId, int enableTracking, int enableTroubleshooting)
+        {
+            #region Tables initilization
+            Table login;
+            try
+            {
+                login = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
+            }
+            #endregion
+
+            #region Request
+            StringBuilder sql = new StringBuilder(500);
+            sql.AppendFormat("update {0} ", login.SqlWithPrefix);
+            sql.AppendFormat("set ENABLE_TRACKING = {0} ", enableTracking);
+            sql.AppendFormat(", ENABLE_TROUBLESHOOTING = {0} ", enableTroubleshooting);
+            sql.AppendFormat(" where id_login = {0} ", loginId);
+            #endregion
+
+            #region Execute request
+            try
+            {
+                source.Update(sql.ToString());
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightDALException("Impossible to retreive privacy settings : " + sql, err));
+            }
+            #endregion
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Medthods

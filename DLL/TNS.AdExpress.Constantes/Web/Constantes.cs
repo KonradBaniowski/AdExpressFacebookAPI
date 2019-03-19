@@ -343,11 +343,22 @@ namespace TNS.AdExpress.Constantes.Web
             /// Spends per GRP
             /// </summary>
             spendsGrp = 79,
-
             /// <summary>
             /// Selected Spot Sub Types
             /// </summary>
             selectedSpotSubTypes = 80,
+            /// <summary>
+            /// Enable Tracking
+            /// </summary>
+            enableTracking = 81,
+            /// <summary>
+            /// Enable Troubleshooting
+            /// </summary>
+            enableTroubleshooting = 82,
+            /// <summary>
+            /// Date Expiration Cookie
+            /// </summary>
+            dateExpCookie = 83
         }
 
 	    /// <summary>

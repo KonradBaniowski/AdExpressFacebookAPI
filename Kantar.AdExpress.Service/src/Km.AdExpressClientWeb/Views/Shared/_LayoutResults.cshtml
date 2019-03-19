@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css/" + WebApplicationParameters.CountryCode + "/" + ViewBag.SiteLanguageName)
     
-  
+    
 
     <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" /> 
     
@@ -61,6 +61,26 @@ gtag('config', 'UA-10360228-9');
                             <i class="glyphicon glyphicon-comment"></i>
                         </a>
                     </li>
+                    @if (WebApplicationParameters.EnableGdpr)
+                    {
+                        <text>
+                            <li title="@GestionWeb.GetWebWord(3244, ViewBag.SiteLanguage)">
+                                <a href="@Url.Action("Index", "PrivacyPolicy", new {siteLanguage = ViewBag.SiteLanguage})">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </a>
+                            </li>
+                            <li title="@GestionWeb.GetWebWord(3245, ViewBag.SiteLanguage)">
+                                <a href="@Url.Action("Index", "CookiePolicy", new {siteLanguage = ViewBag.SiteLanguage})">
+                                    <i class="glyphicon glyphicon-asterisk"></i>
+                                </a>
+                            </li>
+                            <li title="@GestionWeb.GetWebWord(3272, ViewBag.SiteLanguage)">
+                                <a href="@Url.Action("Index", "CookieSettings")">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                </a>
+                            </li>
+                        </text>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -103,7 +123,7 @@ gtag('config', 'UA-10360228-9');
 
     @RenderSection("scripts", required: false)
     
-
+    
 
 </body>
 </html>

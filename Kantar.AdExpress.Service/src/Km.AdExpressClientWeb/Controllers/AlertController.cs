@@ -11,7 +11,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.DataAccess;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -92,6 +94,60 @@ namespace Km.AdExpressClientWeb.Controllers
             sortOrderCookie.Value = session.Sorting.GetHashCode().ToString();
             sortOrderCookie.Expires = DateTime.Now.AddDays(1);
             System.Web.HttpContext.Current.Response.Cookies.Add(sortOrderCookie);
+
+            if (WebApplicationParameters.EnableGdpr)
+            {
+                var cookieControl = Request.Cookies["cookieControl"];
+                var cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+
+                if (cookieControlPrefs != null)
+                {
+                    var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
+
+                    var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistiques"));
+                    var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
+                    int enableTrackingDb = 0;
+                    int enableTroubleshootingDb = 0;
+
+                    if (enableTracking != null)
+                    {
+                        session.EnableTracking = true;
+                        enableTrackingDb = 1;
+                    }
+                    else
+                        session.EnableTracking = false;
+
+                    if (enableTroubleshooting != null)
+                    {
+                        session.EnableTroubleshooting = true;
+                        enableTroubleshootingDb = 1;
+                    }
+                    else
+                        session.EnableTroubleshooting = false;
+
+                    if (!cookies.storedInDb)
+                    {
+                        TNS.FrameWork.DB.Common.IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                        var expDateCookie = DateTime.Now.AddDays(395);
+                        RightDAL.SetAllPrivacySettings(Source, session.CustomerLogin.IdLogin, enableTrackingDb, enableTroubleshootingDb, expDateCookie);
+
+                        cookies.storedInDb = true;
+                        cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                        cookieControlPrefs.Expires = expDateCookie;
+                        Response.Cookies.Add(cookieControlPrefs);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            else
+            {
+                session.EnableTracking = true;
+                session.EnableTroubleshooting = true;
+            }
 
             var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ, this.HttpContext);
             return RedirectToAction("Results", redirectUrl);

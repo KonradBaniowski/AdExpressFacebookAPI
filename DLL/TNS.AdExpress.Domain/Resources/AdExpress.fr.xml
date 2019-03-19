@@ -2545,5 +2545,15 @@
     <item mnemonic="w3261" type="System.String">!</item>
     <item mnemonic="w3262" type="System.String">Tout supprimer</item>
     <item mnemonic="w3263" type="System.String">!</item>
+    <item mnemonic="w3264" type="System.String">Ce site internet utilise des cookies et d'autres technologies similaires afin de collecter des informations sans lesquels il ne pourrait pas fonctionner normalement. En plus, le site collecte des informations qui nous permettent de réaliser des statistiques de visites ainsi que l'identification des erreurs. Pour plus d’informations, nous vous invitons à consulter la</item>
+    <item mnemonic="w3265" type="System.String">Ok, tout accepter</item>
+    <item mnemonic="w3266" type="System.String">Personnaliser</item>
+    <item mnemonic="w3267" type="System.String">Sélectionnez les cookies à accepter</item>
+    <item mnemonic="w3268" type="System.String">Statistiques</item>
+    <item mnemonic="w3269" type="System.String">Ce site collecte certaines informations de connexions et d'utilisations qui ont pour but d’analyser et quantifier la fréquentation du site.</item>
+    <item mnemonic="w3270" type="System.String">Diagnostic</item>
+    <item mnemonic="w3271" type="System.String">Ce site collecte des informations qui nous permettrons d'identifier les erreurs d'utilisation du site (Login, Navigateur, OS, IP, Sélection client, Message d'erreur)</item>
+    <item mnemonic="w3272" type="System.String">Configuration des Cookies</item>
+    <item mnemonic="w3273" type="System.String">Vous devez accepter les cookies pour acceder à votre compte</item>
   </items>
 </localization>

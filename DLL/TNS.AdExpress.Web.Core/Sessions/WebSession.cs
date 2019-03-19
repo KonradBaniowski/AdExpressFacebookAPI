@@ -2400,6 +2400,89 @@ namespace TNS.AdExpress.Web.Core.Sessions
             }
         }
 
+        #region Accessors Privacy Settings
+        /// <summary>
+        /// Get or Set Enable Tracking
+        /// </summary>
+        public bool EnableTracking
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.enableTracking))
+                {
+                    try
+                    {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.enableTracking];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.enableTracking] = true;
+                    }
+                }
+                return true;
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.enableTracking] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Enable Troubleshooting
+        /// </summary>
+        public bool EnableTroubleshooting
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.enableTroubleshooting))
+                {
+                    try
+                    {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.enableTroubleshooting];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.enableTroubleshooting] = true;
+                    }
+                }
+                return true;
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.enableTroubleshooting] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Enable Tracking
+        /// </summary>
+        public DateTime DateExpCookie
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.dateExpCookie))
+                {
+                    try
+                    {
+                        return (DateTime)userParameters[CoreConstantes.SessionParamters.dateExpCookie];
+                    }
+                    catch
+                    {
+                        userParameters[CoreConstantes.SessionParamters.dateExpCookie] = new DateTime(2000, 1, 1);
+                    }
+                }
+                return new DateTime(2000, 1, 1);
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.dateExpCookie] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+        #endregion
+
         #region Accesseurs Répartition
         /// <summary>
         /// Obtient /définit le format spot
@@ -4320,7 +4403,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                DATracking.NewConnection(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
+                if (EnableTracking)
+                {
+                    DATracking.NewConnection(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
+                }
             }
             catch (System.Exception) { }
         }
@@ -4332,8 +4418,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-
-                DATracking.SetModule(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
+                if (EnableTracking)
+                {
+                    DATracking.SetModule(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
+                }
             }
             catch (System.Exception) { }
         }
@@ -4346,7 +4434,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
+                if (EnableTracking)
+                {
+                    DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
+                }
             }
             catch (System.Exception) { }
         }
@@ -4358,9 +4449,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (EnableTracking)
+                {
+                    Module moduleSelected = customerLogin.GetModule(currentModule);
+                    Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                    DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
             }
             catch (System.Exception) { }
 
@@ -4375,10 +4469,13 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 try
                 {
-                    Module moduleSelected = customerLogin.GetModule(currentModule);
-                    Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                    //customerLogin.HtModulesList.Clear();
-                    DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    if (EnableTracking)
+                    {
+                        Module moduleSelected = customerLogin.GetModule(currentModule);
+                        Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                        //customerLogin.HtModulesList.Clear();
+                        DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    }
                 }
                 catch (System.Exception) { }
             }
@@ -4398,11 +4495,14 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.group_agencyAgencyProduct:
                     try
                     {
-                        //customerLogin.ModuleList();
-                        Module moduleSelected = customerLogin.GetModule(currentModule);
-                        Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                        //customerLogin.HtModulesList.Clear();
-                        DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                        if (EnableTracking)
+                        {
+                            //customerLogin.ModuleList();
+                            Module moduleSelected = customerLogin.GetModule(currentModule);
+                            Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                            //customerLogin.HtModulesList.Clear();
+                            DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                        }
                     }
                     catch (System.Exception) { }
                     break;
@@ -4418,7 +4518,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
+                if (EnableTracking)
+                {
+                    DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int) periodType);
+                }
             }
             catch (System.Exception) { }
 
@@ -4431,8 +4534,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                _units.ForEach(unit => DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit));
-               
+                if (EnableTracking)
+                {
+                    _units.ForEach(unit => DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int) unit));
+                }
             }
             catch (System.Exception) { }
         }
@@ -4444,12 +4549,15 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                //customerLogin.ModuleList();
-                Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                //customerLogin.HtModulesList.Clear();
+                if (EnableTracking)
+                {
+                    //customerLogin.ModuleList();
+                    Module moduleSelected = customerLogin.GetModule(currentModule);
+                    Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                    //customerLogin.HtModulesList.Clear();
 
-                DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
             }
             catch (System.Exception) { }
 
@@ -4462,10 +4570,13 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                //customerLogin.ModuleList();
-                Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (EnableTracking)
+                {
+                    //customerLogin.ModuleList();
+                    Module moduleSelected = customerLogin.GetModule(currentModule);
+                    Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                    DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
             }
             catch (System.Exception) { }
         }
@@ -4477,12 +4588,15 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             try
             {
-                //customerLogin.ModuleList();
-                Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                //customerLogin.HtModulesList.Clear();
+                if (EnableTracking)
+                {
+                    //customerLogin.ModuleList();
+                    Module moduleSelected = customerLogin.GetModule(currentModule);
+                    Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
+                    //customerLogin.HtModulesList.Clear();
 
-                DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
             }
             catch (System.Exception) { }
 
