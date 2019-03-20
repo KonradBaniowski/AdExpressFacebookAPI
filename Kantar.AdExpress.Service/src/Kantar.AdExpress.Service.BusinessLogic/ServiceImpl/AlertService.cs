@@ -71,7 +71,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 webSession.Source = webSession.CustomerLogin.Source;
                 //_siteLanguage = webSession.SiteLanguage;
                 webSession.IdSession = idSession;
-
+                
                 // Opening connection
                 webSession.Source.Open();
 
@@ -156,8 +156,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (System.Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, session);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (session.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, session);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
 
@@ -192,8 +195,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -254,8 +260,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 catch (Exception ex)
                 {
-                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                    if (webSession.EnableTroubleshooting)
+                    {
+                        CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                        Logger.Log(LogLevel.Error, cwe.GetLog());
+                    }
 
                     throw;
                 }

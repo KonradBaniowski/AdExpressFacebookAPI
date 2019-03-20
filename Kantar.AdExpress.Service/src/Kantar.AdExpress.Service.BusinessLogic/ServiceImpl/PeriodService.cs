@@ -84,8 +84,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.Success = false;
                 result.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
             }
             return result;
@@ -145,8 +148,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", _customerSession.IdSession, _customerSession.UserAgent, _customerSession.CustomerLogin.Login, _customerSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace);
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 result.Success = false;
                 result.ErrorMessage = message; //"Une erreur est survenue. Impossible de recupérer la date de début du calendrier";//TODO : a mettre dans ressources
@@ -184,8 +191,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.ErrorMessage = ex.Message;
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -573,8 +583,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, exception.Message, exception.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, exception.Message, exception.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -582,8 +595,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.ErrorMessage = ex.Message;
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -621,8 +637,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.IncompleteDataForQuery, webSession.SiteLanguage);
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, exception.Message, exception.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, exception.Message, exception.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -630,8 +649,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 result.ErrorMessage = ex.Message;
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -933,8 +955,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 response.Success = false;
                 response.ErrorMessage = "Une erreur est survenue. Impossible de sauvegarder les dates sélectionnées";//TODO : a mettre dans ressources
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }

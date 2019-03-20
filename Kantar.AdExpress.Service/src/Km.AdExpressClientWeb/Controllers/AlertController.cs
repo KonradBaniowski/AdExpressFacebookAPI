@@ -11,7 +11,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Km.AdExpressClientWeb.Helpers;
+using Newtonsoft.Json;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.DataAccess;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -92,6 +95,120 @@ namespace Km.AdExpressClientWeb.Controllers
             sortOrderCookie.Value = session.Sorting.GetHashCode().ToString();
             sortOrderCookie.Expires = DateTime.Now.AddDays(1);
             System.Web.HttpContext.Current.Response.Cookies.Add(sortOrderCookie);
+
+            if (WebApplicationParameters.EnableGdpr)
+            {
+                HttpCookie cookieControlPrefs = null;
+                string cookieName = "cookieControlPrefs-" + session.CustomerLogin.IdLogin.ToString().Encrypt(Helpers.SecurityHelper.CryptKey);
+                var cookiesKeys = Request.Cookies.AllKeys;
+                var found = cookiesKeys.FirstOrDefault(n => n == "cookieControlPrefs");
+
+                if (!string.IsNullOrEmpty(found))
+                {
+                    cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+                }
+                else
+                {
+                    foreach (var key in cookiesKeys)
+                    {
+                        if (key.StartsWith("cookieControlPrefs"))
+                        {
+                            var id = key.Split('-')[1].Decrypt(Helpers.SecurityHelper.CryptKey);
+                            if (id == session.CustomerLogin.IdLogin.ToString())
+                            {
+                                cookieControlPrefs = Request.Cookies[key];
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (cookieControlPrefs != null)
+                {
+                    var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
+
+                    var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistiques"));
+                    var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
+                    int enableTrackingDb = 0;
+                    int enableTroubleshootingDb = 0;
+
+                    if (enableTracking != null)
+                    {
+                        session.EnableTracking = true;
+                        enableTrackingDb = 1;
+                    }
+                    else
+                        session.EnableTracking = false;
+
+                    if (enableTroubleshooting != null)
+                    {
+                        session.EnableTroubleshooting = true;
+                        enableTroubleshootingDb = 1;
+                    }
+                    else
+                        session.EnableTroubleshooting = false;
+
+                    if (!cookies.storedInDb)
+                    {
+                        TNS.FrameWork.DB.Common.IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                        var expDateCookie = DateTime.Now.AddDays(395);
+                        RightDAL.SetAllPrivacySettings(Source, session.CustomerLogin.IdLogin, enableTrackingDb, enableTroubleshootingDb, expDateCookie);
+
+                        cookies.storedInDb = true;
+                        cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        cookies.expDate = expDateCookie.ToString("yyyy-MM-dd");
+                        cookies.guid = Helpers.SecurityHelper.Encrypt(session.CustomerLogin.Login, Helpers.SecurityHelper.CryptKey);
+                        cookieControlPrefs.Name = cookieName;
+                        cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                        cookieControlPrefs.Expires = expDateCookie;
+                        Response.Cookies.Add(cookieControlPrefs);
+                        var cookieTmp = Response.Cookies["cookieControlPrefs"];
+                        if (cookieTmp != null)
+                            cookieTmp.Expires = DateTime.Now.AddDays(-1);
+                    }
+                    else
+                    {
+                        TNS.FrameWork.DB.Common.IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                        bool allowTracking = false;
+                        bool allowTroubleshooting = false;
+                        DateTime expDate = new DateTime(2000, 1, 1);
+                        RightDAL.GetPrivacySettings(Source, session.CustomerLogin.IdLogin, out allowTracking, out allowTroubleshooting, out expDate);
+
+                        cookies.prefs = new List<string>();
+
+                        if (allowTracking)
+                        {
+                            cookies.prefs.Add("Statistiques");
+                            session.EnableTracking = true;
+                        }
+                        else
+                            session.EnableTracking = false;
+
+                        if (allowTroubleshooting)
+                        {
+                            cookies.prefs.Add("Diagnostic");
+                            session.EnableTroubleshooting = true;
+                        }
+                        else
+                            session.EnableTroubleshooting = false;
+
+                        cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd");
+                        cookies.expDate = expDate.ToString("yyyy-MM-dd");
+                        cookieControlPrefs.Expires = expDate;
+                        cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                        Response.Cookies.Add(cookieControlPrefs);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            else
+            {
+                session.EnableTracking = true;
+                session.EnableTroubleshooting = true;
+            }
 
             var redirectUrl = _alertService.GetRedirectUrl(session, idWS, occ, this.HttpContext);
             return RedirectToAction("Results", redirectUrl);

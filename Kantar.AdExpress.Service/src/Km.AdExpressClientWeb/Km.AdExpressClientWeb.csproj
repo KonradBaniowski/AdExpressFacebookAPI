@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AdvertisingAgencyController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyExportController.cs" />
     <Compile Include="Controllers\CookiePolicyController.cs" />
+    <Compile Include="Controllers\CookieSettingsController.cs" />
     <Compile Include="Controllers\PortfolioAlertController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
     <Compile Include="Controllers\CampaignAnalysisController.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
+    <Compile Include="Models\CookieSettingsModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
     <Compile Include="Models\Health\DataCostContract.cs" />
     <Compile Include="Models\Health\HealthMediaSelectionViewModel.cs" />
@@ -1895,6 +1897,7 @@
     <Content Include="Views\PrivacyPolicy\_PrivacyPolicyEn.cshtml" />
     <Content Include="Views\CookiePolicy\_CookiePolicyFr.cshtml" />
     <Content Include="Views\CookiePolicy\_CookiePolicyEn.cshtml" />
+    <Content Include="Views\CookieSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1925,6 +1928,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{a4dede88-c99e-495f-98f2-e2762520f4be}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>

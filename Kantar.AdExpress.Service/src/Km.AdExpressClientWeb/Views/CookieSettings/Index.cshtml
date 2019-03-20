@@ -1,0 +1,137 @@
+﻿@using TNS.AdExpress.Domain.Translation
+@using TNS.AdExpress.Domain.Web
+@model Km.AdExpressClientWeb.Models.CookieSettingsModel
+
+@{
+    ViewBag.Title = "Cookies Settings";
+    Layout = "~/Views/Shared/_LayoutMyAdexpress.cshtml";
+    string enableTracking = Model.EnableTracking ? "checked = \"checked\"" : "";
+    string enableTroubleshooting = Model.EnableTroubleshooting ? "checked = \"checked\"" : "";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-b-20">
+        <h1 class=""><i class="icon-settings blue"></i>&nbsp;@GestionWeb.GetWebWord(3272, Model.SiteLanguage)</h1>
+        @GestionWeb.GetWebWord(3264, Model.SiteLanguage)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-b-20 cookies-settings-container">
+        <h3>@GestionWeb.GetWebWord(3267, Model.SiteLanguage)</h3>
+        <ul>
+            <li style="list-style-type: none;">
+                <input type="checkbox" name="gdpr[]" value="necessary" checked="checked" disabled="disabled"> 
+                <label title="@GestionWeb.GetWebWord(3249, Model.SiteLanguage)">@GestionWeb.GetWebWord(3248, Model.SiteLanguage)</label>
+                <p style="text-align: left">@GestionWeb.GetWebWord(3249, Model.SiteLanguage)</p>
+            </li>
+            <li style="list-style-type: none;">
+                <input type="checkbox" id="gdpr-cookietype-Statistiques" name="gdpr[]" value="Statistiques" @enableTracking data-auto="off"> 
+                <label for="gdpr-cookietype-Statistiques" title="@GestionWeb.GetWebWord(3269, Model.SiteLanguage)">@GestionWeb.GetWebWord(3268, Model.SiteLanguage)</label>
+                <p style="text-align: left">@GestionWeb.GetWebWord(3269, Model.SiteLanguage)</p>
+            </li>
+            <li style="list-style-type: none;">
+                <input type="checkbox" id="gdpr-cookietype-Diagnostic" name="gdpr[]" value="Diagnostic" @enableTroubleshooting data-auto="off"> 
+                <label for="gdpr-cookietype-Diagnostic" title="@GestionWeb.GetWebWord(3271, Model.SiteLanguage)">@GestionWeb.GetWebWord(3270, Model.SiteLanguage)</label>
+                <p style="text-align: left">@GestionWeb.GetWebWord(3271, Model.SiteLanguage)</p>
+            </li>
+        </ul>
+        <button id="validate-cookies-settings" class="btn btn-valider pull-right">@GestionWeb.GetWebWord(3040, Model.SiteLanguage)&nbsp;<i class="fa fa-check"></i></button>
+    </div>
+</div>
+
+@if (WebApplicationParameters.EnableGdpr)
+{
+    <input type="hidden" id="SiteLanguage" value="@Model.SiteLanguage" />
+    <input type="hidden" id="CookieName" value="@ViewBag.CookieName" />
+    <input type="hidden" id="Guid" value="@ViewBag.Guid" />
+}
+@section scripts {
+    <script>
+        $('body').on('click',
+            '#validate-cookies-settings',
+            function() {
+
+                // If 'data-auto' is set to ON, tick all checkboxes because
+                // the user hasn't clicked the customise cookies button
+                $('input[name="gdpr[]"][data-auto="on"]').prop('checked', true);
+
+                // Save users cookie preferences (in a cookie!)
+                var prefs = [];
+                $.each($('input[name="gdpr[]"]').serializeArray(),
+                    function(i, field) {
+                        prefs.push(field.value);
+                    });
+
+                var cookieValue = getCookie($('#CookieName').val());
+                var creationDate = JSON.parse(cookieValue).creationDate;
+                var expDate = JSON.parse(cookieValue).expDate;
+
+                var serverParams = {
+                    prefs: JSON.stringify(prefs)
+                };
+
+                var params = {
+                    prefs: prefs,
+                    siteLanguage: parseInt($('#SiteLanguage').val()),
+                    storedInDb: true,
+                    creationDate: creationDate,
+                    expDate: expDate,
+                    guid: $('#Guid').val()
+                };
+
+                $.ajax({
+                    url: '/Account/SetPrivacySettings',
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "POST",
+                    datatype: "json",
+                    data: serverParams,
+                    error: function(xmlHttpRequest, errorText, thrownError) {
+                    },
+                    success: function(data) {
+                        //CallAnalysisResult();
+                        //alert("data = " + data);
+                    }
+                });
+
+                setCookie($('#CookieName').val(), JSON.stringify(params), expDate);
+            });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Set Cookie
+        |--------------------------------------------------------------------------
+        |
+        | Sets cookie with 'name' and value of 'value' for 'expiry_days'.
+        |
+        */
+        var setCookie = function (name, value, expDate) {
+            var d = toDate(expDate);
+            var expires = "expires=" + d.toUTCString();
+            console.log("expires = ", expires);
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            return getCookie(name);
+        };
+
+        var getCookie = function (name) {
+            var cookie_name = name + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookie_name) === 0) {
+                    return c.substring(cookie_name.length, c.length);
+                }
+            }
+            return false;
+        };
+
+        function toDate(dateStr) {
+            var parts = dateStr.split("-");
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+    </script>
+}

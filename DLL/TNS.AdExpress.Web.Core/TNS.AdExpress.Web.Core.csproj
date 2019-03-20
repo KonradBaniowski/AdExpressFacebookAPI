@@ -167,6 +167,7 @@
     <Compile Include="Exceptions\VehicleException.cs" />
     <Compile Include="PurchaseModeList.cs" />
     <Compile Include="Result\CellExcelCreativesLink.cs" />
+    <Compile Include="Sessions\GdprCookie.cs" />
     <Compile Include="SpotSubTypes.cs" />
     <Compile Include="Utilities\Converters.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
