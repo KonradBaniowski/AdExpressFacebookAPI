@@ -43,6 +43,8 @@
 @if (WebApplicationParameters.EnableGdpr)
 {
     <input type="hidden" id="SiteLanguage" value="@Model.SiteLanguage" />
+    <input type="hidden" id="CookieName" value="@ViewBag.CookieName" />
+    <input type="hidden" id="Guid" value="@ViewBag.Guid" />
 }
 @section scripts {
     <script>
@@ -61,8 +63,9 @@
                         prefs.push(field.value);
                     });
 
-                var cookieValue = getCookie("cookieControlPrefs");
+                var cookieValue = getCookie($('#CookieName').val());
                 var creationDate = JSON.parse(cookieValue).creationDate;
+                var expDate = JSON.parse(cookieValue).expDate;
 
                 var serverParams = {
                     prefs: JSON.stringify(prefs)
@@ -72,7 +75,9 @@
                     prefs: prefs,
                     siteLanguage: parseInt($('#SiteLanguage').val()),
                     storedInDb: true,
-                    creationDate: creationDate
+                    creationDate: creationDate,
+                    expDate: expDate,
+                    guid: $('#Guid').val()
                 };
 
                 $.ajax({
@@ -89,7 +94,7 @@
                     }
                 });
 
-                setCookie('cookieControlPrefs', JSON.stringify(params), 395);
+                setCookie($('#CookieName').val(), JSON.stringify(params), expDate);
             });
 
         /*
@@ -100,10 +105,10 @@
         | Sets cookie with 'name' and value of 'value' for 'expiry_days'.
         |
         */
-        var setCookie = function(name, value, expiry_days) {
-            var d = new Date();
-            d.setTime(d.getTime() + (expiry_days * 24 * 60 * 60 * 1000));
+        var setCookie = function (name, value, expDate) {
+            var d = toDate(expDate);
             var expires = "expires=" + d.toUTCString();
+            console.log("expires = ", expires);
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
             return getCookie(name);
         };
@@ -123,5 +128,10 @@
             }
             return false;
         };
+
+        function toDate(dateStr) {
+            var parts = dateStr.split("-");
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
     </script>
 }

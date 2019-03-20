@@ -17,10 +17,9 @@
     | Displays the cookie message on first visit or 30 days after their
     | last visit.
     |
-    | @param event - 'reinit' to reopen the cookie message
     |
     */
-    $.fn.ihavecookies = function (options, event) {
+    $.fn.ihavecookies = function (options) {
 
         var $element = $(this);
 
@@ -59,20 +58,19 @@
             displayAdvancedBtn: true,
             siteLanguage: 33,
             isStoredInDb: false,
-            creationDate: '2000-01-01'
+            creationDate: '2000-01-01',
+            forceReInit: false
         }, options);
 
-        var myCookie = getCookie('cookieControl');
-        var myCookiePrefs = getCookie('cookieControlPrefs');
-        if (!myCookie || !myCookiePrefs || event == 'reinit') {
+        var myCookiePrefs = checkCookieName();
+
+        if (!myCookiePrefs || settings.forceReInit) {
             // Remove all instances of the cookie message so it's not duplicated
             $('#gdpr-cookie-message').remove();
 
             // Set the 'necessary' cookie type checkbox which can not be unchecked
             var cookieTypes = '<li><input type="checkbox" name="gdpr[]" value="necessary" checked="checked" disabled="disabled"> <label title="' + settings.fixedCookieTypeDesc + '">' + settings.fixedCookieTypeLabel + '</label><p style="text-align:left">' + settings.fixedCookieTypeDesc + '</p></li>';
 
-            // Generate list of cookie type checkboxes
-            preferences = JSON.parse(myCookiePrefs);
             $.each(settings.cookieTypes, function (index, field) {
                 if (field.type !== '' && field.value !== '') {
                     var cookieTypeDescription = '';
@@ -91,21 +89,13 @@
             setTimeout(function () {
                 $($element).append(cookieMessage);
                 $('#gdpr-cookie-message').hide().fadeIn('slow', function () {
-                    // If reinit'ing, open the advanced section of message
-                    // and re-check all previously selected options.
-                    if (event == 'reinit') {
-                        $('#gdpr-cookie-advanced').trigger('click');
-                        $.each(preferences, function (index, field) {
-                            $('input#gdpr-cookietype-' + field).prop('checked', true);
-                        });
-                    }
                 });
             }, settings.delay);
 
             // When accept button is clicked drop cookie
             $('body').on('click', '#gdpr-cookie-accept', function () {
-                // Set cookie
-                dropCookie(true, settings.expires);
+                // Hide PopUp
+                hidePopup();
 
                 // If 'data-auto' is set to ON, tick all checkboxes because
                 // the user hasn't clicked the customise cookies button
@@ -173,12 +163,6 @@
                 });
             });
 
-        } else {
-            var cookieVal = true;
-            if (myCookie == 'false') {
-                cookieVal = false;
-            }
-            dropCookie(cookieVal, settings.expires);
         }
 
         // Uncheck any checkboxes on page load
@@ -188,36 +172,15 @@
 
     };
 
-    // Method to get cookie value
-    $.fn.ihavecookies.cookie = function () {
-        var preferences = getCookie('cookieControlPrefs');
-        return JSON.parse(preferences);
-    };
-
-    // Method to check if user cookie preference exists
-    $.fn.ihavecookies.preference = function (cookieTypeValue) {
-        var control = getCookie('cookieControl');
-        var preferences = getCookie('cookieControlPrefs');
-        preferences = JSON.parse(preferences);
-        if (control === false) {
-            return false;
-        }
-        if (preferences === false || preferences.indexOf(cookieTypeValue) === -1) {
-            return false;
-        }
-        return true;
-    };
-
     /*
     |--------------------------------------------------------------------------
-    | Drop Cookie
+    | Hide PopUp
     |--------------------------------------------------------------------------
     |
     | Function to drop the cookie with a boolean value of true.
     |
     */
-    var dropCookie = function (value, expiryDays) {
-        setCookie('cookieControl', value, expiryDays);
+    var hidePopup = function () {
         $('#gdpr-cookie-message').fadeOut('fast', function () {
             $(this).remove();
         });
@@ -261,6 +224,15 @@
             }
         }
         return false;
+    };
+
+    var checkCookieName = function () {
+        var found = document.cookie.search(/\bcookieControlPrefs\S*=/);
+
+        if (found == -1)
+            return false;
+
+        return true;
     };
 
 }(jQuery));

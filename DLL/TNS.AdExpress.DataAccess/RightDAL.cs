@@ -870,7 +870,7 @@ namespace TNS.AdExpress.DataAccess {
 
         #region Privacy Settings
 
-        public static DataSet GetPrivacySettings(IDataSource source, Int64 loginId)
+        public static void GetPrivacySettings(IDataSource source, Int64 loginId, out bool enableTracking, out bool enableTroubleshooting, out DateTime dateExpCookie)
         {
             #region Tables initilization
             Table login;
@@ -896,7 +896,20 @@ namespace TNS.AdExpress.DataAccess {
             #region Execute request
             try
             {
-                return (source.Fill(sql));
+                DataSet ds = source.Fill(sql);
+
+                enableTracking = false;
+                enableTroubleshooting = false;
+                dateExpCookie = new DateTime(2000, 1, 1);
+
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+
+                    enableTracking = Convert.ToInt32(row[2]) != 0;
+                    enableTroubleshooting = Convert.ToInt32(row[3]) != 0;
+                    dateExpCookie = DateTime.Parse(row[4].ToString());
+                }
             }
             catch (System.Exception err)
             {

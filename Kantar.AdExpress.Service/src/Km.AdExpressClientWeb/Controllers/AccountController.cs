@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Web;
 using TNS.AdExpress.Domain.Translation;
 using Km.AdExpressClientWeb.I18n;
 using Km.AdExpressClientWeb.Helpers;
@@ -44,10 +45,11 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(Convert.ToInt32(siteLanguage));
             ViewBag.SiteLanguageCode = siteLanguage;
-            
 
             if (WebApplicationParameters.EnableGdpr)
             {
+                ViewBag.ForceCookieReInit = false;
+
                 switch (WebApplicationParameters.CountryCode)
                 {
                     case CountryCode.FRANCE:
@@ -130,13 +132,49 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (WebApplicationParameters.EnableGdpr)
             {
-                var cookieControl = Request.Cookies["cookieControl"];
-                var cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+                var cookiesKeys = Request.Cookies.AllKeys;
+                List<string> rgpdCookies = new List<string>();
 
-                if (cookieControl == null && cookieControlPrefs == null)
+                foreach (var key in cookiesKeys)
+                {
+                    if(key.StartsWith("cookieControlPrefs"))
+                        rgpdCookies.Add(key);
+                }
+
+                if (rgpdCookies.Count == 0)
                 {
                     ModelState.AddModelError("", GestionWeb.GetWebWord(3273, Convert.ToInt32(model.SiteLanguage)));
                     model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
+                    return View(model);
+                }
+
+                bool cookieExist = false;
+                foreach (var cookie in rgpdCookies)
+                {
+                    var cookieValue = Request.Cookies[cookie];
+
+                    if (cookieValue != null)
+                    {
+                        var prefs = JsonConvert.DeserializeObject<GdprCookie>(cookieValue.Value);
+
+                        if (string.IsNullOrEmpty(prefs.guid))
+                        {
+                            cookieExist = true;
+                            break;
+                        }
+
+                        if (Helpers.SecurityHelper.Decrypt(prefs.guid, Helpers.SecurityHelper.CryptKey).ToLower() == model.Email.ToLower())
+                        {
+                            cookieExist = true;
+                        }
+                    }
+                }
+
+                if (!cookieExist)
+                {
+                    ModelState.AddModelError("", GestionWeb.GetWebWord(3273, Convert.ToInt32(model.SiteLanguage)));
+                    model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
+                    ViewBag.ForceCookieReInit = true;
                     return View(model);
                 }
             }
@@ -201,8 +239,30 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 if (WebApplicationParameters.EnableGdpr)
                 {
-                    var cookieControl = Request.Cookies["cookieControl"];
-                    var cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+                    HttpCookie cookieControlPrefs = null;
+                    string cookieName = "cookieControlPrefs-" + idLogin.Encrypt(Helpers.SecurityHelper.CryptKey);
+                    var cookiesKeys = Request.Cookies.AllKeys;
+                    var found = cookiesKeys.FirstOrDefault(n => n == "cookieControlPrefs");
+
+                    if (!string.IsNullOrEmpty(found))
+                    {
+                        cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+                    }
+                    else
+                    {
+                        foreach (var key in cookiesKeys)
+                        {
+                            if (key.StartsWith("cookieControlPrefs"))
+                            {
+                                var id = key.Split('-')[1].Decrypt(Helpers.SecurityHelper.CryptKey);
+                                if (id == idLogin)
+                                {
+                                    cookieControlPrefs = Request.Cookies[key];
+                                    break;
+                                }
+                            }
+                        }
+                    }
 
                     if (cookieControlPrefs != null)
                     {
@@ -237,8 +297,46 @@ namespace Km.AdExpressClientWeb.Controllers
 
                             cookies.storedInDb = true;
                             cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd");
+                            cookies.expDate = expDateCookie.ToString("yyyy-MM-dd");
+                            cookies.guid = Helpers.SecurityHelper.Encrypt(login, Helpers.SecurityHelper.CryptKey);
+                            cookieControlPrefs.Name = cookieName;
                             cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                             cookieControlPrefs.Expires = expDateCookie;
+                            Response.Cookies.Add(cookieControlPrefs);
+                            var cookieTmp = Response.Cookies["cookieControlPrefs"];
+                            if (cookieTmp != null)
+                                cookieTmp.Expires = DateTime.Now.AddDays(-1);
+                        }
+                        else
+                        {
+                            IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                            bool allowTracking = false;
+                            bool allowTroubleshooting = false;
+                            DateTime expDate = new DateTime(2000, 1, 1);
+                            RightDAL.GetPrivacySettings(Source, Convert.ToInt32(idLogin), out allowTracking, out allowTroubleshooting, out expDate);
+
+                            cookies.prefs = new List<string>();
+
+                            if (allowTracking)
+                            {
+                                cookies.prefs.Add("Statistiques");
+                                _webSession.EnableTracking = true;
+                            }
+                            else
+                                _webSession.EnableTracking = false;
+
+                            if (allowTroubleshooting)
+                            {
+                                cookies.prefs.Add("Diagnostic");
+                                _webSession.EnableTroubleshooting = true;
+                            }
+                            else
+                                _webSession.EnableTroubleshooting = false;
+
+                            cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd");
+                            cookies.expDate = expDate.ToString("yyyy-MM-dd");
+                            cookieControlPrefs.Expires = expDate;
+                            cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                             Response.Cookies.Add(cookieControlPrefs);
                         }
                     }

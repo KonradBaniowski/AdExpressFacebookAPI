@@ -1005,31 +1005,6 @@ namespace TNS.AdExpress
         }
         #endregion
 
-        #region Get Privacy Settings
-        /// <summary>
-        /// Get Privacy Settings
-        /// </summary>
-        /// <param name="enableTracking">Enable Tracking</param>
-        /// <param name="enableTroubleshooting">Enable Troubleshooting</param>
-        /// <param name="dateExpCookie">Date Expiration Cookie</param>
-        public void GetPrivacySettings(out bool enableTracking, out bool enableTroubleshooting, out DateTime dateExpCookie)
-        {
-            var ds = RightDAL.GetPrivacySettings(Source, _loginId);
-            enableTracking = false;
-            enableTroubleshooting = false;
-            dateExpCookie = new DateTime(2000, 1, 1);
-
-            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
-            {
-                DataRow row = ds.Tables[0].Rows[0];
-
-                enableTracking = Convert.ToInt32(row[2]) != 0;
-                enableTroubleshooting = Convert.ToInt32(row[3]) != 0;
-                dateExpCookie = DateTime.Parse(row[4].ToString());
-            }
-        }
-        #endregion
-
         #region Flags rights
 
         /// <summary>

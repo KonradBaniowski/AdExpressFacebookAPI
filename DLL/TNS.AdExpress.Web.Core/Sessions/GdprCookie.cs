@@ -29,5 +29,15 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// Creation Date
         /// </summary>
         public string creationDate { get; set; }
+
+        /// <summary>
+        /// Expiration Date
+        /// </summary>
+        public string expDate { get; set; }
+
+        /// <summary>
+        /// GUID
+        /// </summary>
+        public string guid { get; set; }
     }
 }
