@@ -281,7 +281,8 @@ namespace TNS.AdExpressI.ProductClassReports
             ResultTable resultTable = GetGenericProductClassReport();
             GridResult gridResult = new GridResult();
 
-            if (resultTable != null && resultTable.LinesNumber > 0)
+            if (resultTable != null && resultTable.LinesNumber>0)
+
             {
                 if (resultTable.LinesNumber > WebCst.Core.MAX_ALLOWED_ROWS_NB)
                 {
