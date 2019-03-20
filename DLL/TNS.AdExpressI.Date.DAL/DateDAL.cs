@@ -578,9 +578,11 @@ namespace TNS.AdExpressI.Date.DAL {
             {
                 //if selected year is equal to last loaded year, get last complete trimester
                 //Else get last selected month of the previous year
-                if (int.Parse(EndPeriod.Substring(0, 4)) == int.Parse(_session.LastAvailableRecapMonth.Substring(0, 4)))
+                if ((int.Parse(EndPeriod.Substring(0, 4)) == int.Parse(_session.LastAvailableRecapMonth.Substring(0, 4))) &&
+                    int.Parse(EndPeriod.Substring(4,2)) > int.Parse(_session.LastAvailableRecapMonth.Substring(4, 2))  
+                    )
                 {
-                    absoluteEndPeriod = _session.LastAvailableRecapMonth.Substring(0, 4) + (int.Parse(_session.LastAvailableRecapMonth.Substring(4, 2)) - int.Parse(_session.LastAvailableRecapMonth.Substring(4, 2)) % divisor).ToString("00");
+                    absoluteEndPeriod = _session.LastAvailableRecapMonth.Substring(0, 4) + (int.Parse(_session.LastAvailableRecapMonth.Substring(4, 2)) - int.Parse(EndPeriod.Substring(4, 2)) % divisor).ToString("00");
                     //if study month is greather than the last loaded month, get back to the last loaded month
                     if (int.Parse(EndPeriod) > int.Parse(absoluteEndPeriod))
                     {

@@ -692,26 +692,28 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
             try
-            {
-                if (webSession.PeriodType == CstPeriodType.nLastYear)
-                {
-                    var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
-                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
-                    webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
-                }
-                else
-                {
-                    //previous month
-                    var endDate = new DateTime(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month));
-                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
-                    webSession.PeriodEndDate = endDate.ToString(endDateFormat);
-                }
+            {  if (webSession.PeriodType == CstPeriodType.nLastYear)
+                    {
+                        var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                        webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
+                        webSession.PeriodEndDate = endDate.ToString("yyyyMMdd");
+                    }
+                    else
+                    {
+                        //previous month
+                        var endDate = new DateTime(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month, DateTime.DaysInMonth(DateTime.Now.AddYears(-years).AddMonths(-1).Year, DateTime.Now.AddYears(-years).AddMonths(-1).Month));
+                        webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                        webSession.PeriodEndDate = endDate.ToString(endDateFormat);
+                    }
 
-                webSession.Save();
-                webSession.Source.Close();
-                result.Success = true;
-                result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
-                result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+                    webSession.Save();
+                    webSession.Source.Close();
+                    result.Success = true;
+                    result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
+                    result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+                
+
+             
             }
             catch (Exception ex)
             {
@@ -776,25 +778,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             try
             {
 
-                if (DateTime.Now.Year > webSession.DownLoadDate)
-                {
-                    webSession.PeriodBeginningDate = downloadDate.AddYears(-years).AddMonths(months).ToString(startDateFormat);
-                    webSession.PeriodEndDate = downloadDate.AddYears(-years).ToString(endDateFormat);
+            
 
+
+                    if (DateTime.Now.Year > webSession.DownLoadDate)
+                    {
+                        webSession.PeriodBeginningDate =
+                            downloadDate.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                        webSession.PeriodEndDate = downloadDate.AddYears(-years).ToString(endDateFormat);
+
+                    }
+                    else
+                    {
+                        webSession.PeriodBeginningDate =
+                            DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
+                        webSession.PeriodEndDate = DateTime.Now.AddYears(-years).ToString(endDateFormat);
+                    if (string.IsNullOrEmpty(result.ErrorMessage) && int.Parse(webSession.PeriodEndDate.Substring(0, 4)) != int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)))
+                    {
+                        result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.AnalysisPeriodErrorMsg, webSession.SiteLanguage);
+
+                    }
                 }
-                else
-                {
-                    webSession.PeriodBeginningDate = DateTime.Now.AddYears(-years).AddMonths(months).ToString(startDateFormat);
-                    webSession.PeriodEndDate = DateTime.Now.AddYears(-years).ToString(endDateFormat);
-                }
-                webSession.ComparativeStudy = IsComparativeStudy(request.StudyId);
+                    webSession.ComparativeStudy = IsComparativeStudy(request.StudyId);
 
 
-                webSession.Save();
-                webSession.Source.Close();
-                result.Success = true;
-                result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
-                result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+                    webSession.Save();
+                    webSession.Source.Close();
+                    result.Success = string.IsNullOrEmpty(result.ErrorMessage);
+                    result.StartYear = int.Parse(webSession.PeriodBeginningDate.Substring(0, 4));
+                    result.EndYear = int.Parse(webSession.PeriodEndDate.Substring(0, 4));
+              
             }
             catch (Exception ex)
             {
@@ -886,6 +899,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodEndDate))
                 webSession.PeriodEndDate = absolutEndPeriod;
+            if (string.IsNullOrEmpty(result.ErrorMessage) && int.Parse(webSession.PeriodEndDate.Substring(0, 4)) != int.Parse(webSession.PeriodBeginningDate.Substring(0, 4)))
+            {
+                result.ErrorMessage = GestionWeb.GetWebWord(LanguageConstantes.AnalysisPeriodErrorMsg, webSession.SiteLanguage);
+              
+            }
         }
         private void DefaultSlidingPeriodValidation(PeriodSaveRequest request, PeriodResponse response, WebSession webSession, HttpContextBase httpContext)
         {
