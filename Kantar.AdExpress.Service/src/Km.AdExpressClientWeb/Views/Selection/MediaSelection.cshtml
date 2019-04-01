@@ -35,14 +35,16 @@
                                 <i class="fa fa-eye"></i> @Model.Labels.SelectMedia
                             </h3>
                         </a>
-
-                        <span class="pull-right">
-                            <small class="v-super">@Model.Labels.PreSelection</small>
-                            <label class="i-switch" id="switch">
-                                <input type="checkbox" for="switch" id="preselection">
-                                <i></i>
-                            </label>
-                        </span>
+                        @if (!string.IsNullOrEmpty(Model.Labels.PreSelection))
+                        {
+                            <span class="pull-right">
+                                <small class="v-super">@Model.Labels.PreSelection</small>
+                                <label class="i-switch" id="switch">
+                                    <input type="checkbox" for="switch" id="preselection">
+                                    <i></i>
+                                </label>
+                            </span>
+                        }
                         <div class="clearfix"></div>
                     </div>
                 }

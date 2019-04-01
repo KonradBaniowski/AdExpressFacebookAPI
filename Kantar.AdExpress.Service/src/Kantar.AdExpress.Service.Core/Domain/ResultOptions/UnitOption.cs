@@ -8,6 +8,8 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
     public class UnitOption
     {
-        public SelectControl Unit { get; set; }
+        public UnitSelectControl Unit { get; set; }
+
+         
     }
 }

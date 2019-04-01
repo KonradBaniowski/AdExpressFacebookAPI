@@ -93,10 +93,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
 						productFieldNameWithoutTablePrefix = _webSession.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
 						if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-							dataFieldsForGadWithoutTablePrefix = ", " + SQLGenerator.GetFieldsAddressForGad("");
+							dataFieldsForGadWithoutTablePrefix = GetFieldsAddressForGad();
 						sql = "";
-                        string unitSelect = SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
-                        if(unitSelect!=null && unitSelect.Length>0) unitSelect = ", " + unitSelect;
+					    string unitSelect = GetUnitFieldsNameUnionForPortofolio();
+                        if (unitSelect!=null && unitSelect.Length>0) unitSelect = ", " + unitSelect;
                         sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + unitSelect;
                         if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
                         {
@@ -189,7 +189,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
                 if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
-                    unitFields = SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    unitFields = GetUnitFieldsName4M(type);
                 }
                 else
                 {
@@ -352,7 +352,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	    #endregion
 
 
-        public string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
+        public virtual string GetUnitFieldsName(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe) {
             List<UnitInformation> unitsList = webSession.GetValidUnitForResult();
             var sqlUnit = new StringBuilder();
             if(!string.IsNullOrEmpty(dataTablePrefixe))
@@ -381,11 +381,31 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return sqlUnit.ToString();
         }
 
+	    protected virtual string GetFieldsAddressForGad()
+	    {
+	        return ", " + SQLGenerator.GetFieldsAddressForGad("");
+	    }
+
         #region Get Group By
-	    protected virtual string GetUnit(int i, List<UnitInformation> unitsList)
+        protected virtual string GetUnit(int i, List<UnitInformation> unitsList)
 	    {
 	        return string.Format("{0} as {1}", unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
 	    }
         #endregion
-    }
+
+	    protected virtual string GetUnitFieldsNameUnionForPortofolio()
+	    {
+	        return SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
+        }
+
+	    protected virtual string GetUnitFieldsName4M(DBConstantes.TableType.Type type)
+	    {
+	        return SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+        }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+	}
 }

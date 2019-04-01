@@ -58,6 +58,27 @@
         </div>
     </div>
 </div>
+<!-- Modal lien video radio -->
+<div id="creativeModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header-kantar-popup">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="font-normal" style="color:white;"><i></i></h4>
+            </div>
+            <div class="modal-body">
+                <div class="media video-audio-container">
+                    <video id="creativeStream" class="hide" width="100%" controls="controls" preload="auto" autoplay>
+                        Votre navigateur ne gère pas l'élément
+                    </video>
+                    <div id="mediaLoader">
+                        <center><img src="~/IgniteUI/css/structure/images/ui-anim_basic_16x16.gif" /></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <input type="hidden" id="current-url" value="@newCreativesResults" />
 @Html.HiddenFor(e => e.Labels.Timeout)
 @Html.HiddenFor(e => e.Labels.TimeoutBis)
@@ -96,6 +117,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+            <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -111,15 +137,85 @@
     }
 
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        if (typeof jQuery === "undefined") { throw new Error("jQuery") }
+            if (typeof jQuery === "undefined") { throw new Error("jQuery") }
 
-        // Set text for select picker
-        $.fn.selectpicker.defaults = {
-            all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
-        };
-    });
+            // Set text for select picker
+            $.fn.selectpicker.defaults = {
+                all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)',
+                selectAllText: '@GestionWeb.GetWebWord(3252, Model.Presentation.SiteLanguage)',
+                deselectAllText: '@GestionWeb.GetWebWord(3253, Model.Presentation.SiteLanguage)',
+                noneSelectedText: '@GestionWeb.GetWebWord(3254, Model.Presentation.SiteLanguage)'
+            };
+       
+
+            function AutoPlayCreativeModal() {
+                $("#creativeStream").attr('src', '');
+
+                $("#creativeModal").on('shown.bs.modal', function (event) {
+                    $('#creativeModal h4 > i').attr("class", 'fa iconInsertionCreative iconInsertionCreative');
+                    var button = $(event.relatedTarget);// Button that triggered the modal
+                    var datas = button.data('creative').toString(); // Extract info from data-* attributes
+                    datas = datas.replace(/\[|\]/g, '');
+                    datas = datas.split(",");
+
+                    if (datas[0] === null || datas[0] == "" || datas[0] == 0 || datas[0] == "0") {
+                        alert("Les fichiers média ne sont pas disponibles.");
+                    }
+                    else {
+                        var parameters = {
+                            idVersion: datas[0],
+                            idVehicle: datas[2]
+                        };
+                        $.ajax({
+                            url: '@Url.Action("GetCreativePath", "Insertions")',
+                            contentType: "application/x-www-form-urlencoded",
+                            type: 'POST',
+                            datatype: 'JSON',
+                            data: parameters,
+                            error: function (xmlHttpRequest, errorText, thrownError) {
+                                alert("Erreur lors de la recuperation de url de la version");
+                            },
+                            success: function (response) {
+                                if (response != null) {
+                                    var url = response.PathReadingFile;
+                                    var urlDownload = response.PathDownloadingFile;
+                                    if (url) {
+                                        $("#creativeStream").attr('src', url);
+                                        $("#mediaLoader").addClass("hide");
+                                        $("#creativeStream").removeClass("hide");
+                                        $("#creativeStream").load();
+                                    }
+                                    if (urlDownload) {
+                                        $("#creativeModal .modal-footer").removeClass("hide");
+                                        $("#creativeModal .modal-footer > a").attr("href", urlDownload);
+                                        //$("#creativeModal .modal-footer > a").attr("download", parameters.idVersion);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $("#creativeModal").on('hide.bs.modal', function () {
+                    $("#creativeStream").attr('src', '');
+                    $("#creativeStream").addClass("hide");
+                    $("#mediaLoader").removeClass("hide");
+                    $("#creativeModal .modal-footer").addClass("hide");
+                });
+            }
+
+            AutoPlayCreativeModal();
+        });
+    </script>
+
+    <script id="colSpotTmpl" type="text/template">
+        {{if ${869}.startsWith('[') && ${869}.endsWith(']') }}
+        <a class="triggerModal" href='#creativeModal' data-toggle='modal' data-creative="${869}"><i class='fa iconInsertionCreative iconInsertionCreative'></i></a>
+        {{else}}
+        ${869}
+        {{/if}}
     </script>
 
     @Scripts.Render("~/bundles/results")

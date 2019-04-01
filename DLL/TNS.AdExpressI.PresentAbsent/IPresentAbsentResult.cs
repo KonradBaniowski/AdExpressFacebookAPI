@@ -77,6 +77,8 @@ namespace TNS.AdExpressI.PresentAbsent
         /// <returns>Computed data</returns>
         GridResult GetGridResult();
 
+        long CountData();
+
     }
 
 }

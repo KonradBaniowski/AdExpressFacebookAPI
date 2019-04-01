@@ -3174,3 +3174,22 @@ video::-webkit-media-controls-panel {
 .sk-module-title {
     font-size: 23px!important;
 }
+
+input[type=checkbox][disabled] + label {
+    color: #777777;
+    cursor: not-allowed;
+}
+
+.media-schedule-option input[type=checkbox][disabled].with-font ~ label:before {
+    content: "\f0c8";
+    color: #777;
+}
+
+.ui-widget-content-a-prf {
+    color: #ffffff!important;
+}
+
+.cookies-settings-container {
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+}

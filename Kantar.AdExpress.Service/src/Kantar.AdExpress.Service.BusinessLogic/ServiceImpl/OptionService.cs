@@ -1,4 +1,4 @@
-﻿#define Debug
+﻿
 using Kantar.AdExpress.Service.Core.BusinessService;
 using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using System;
@@ -30,6 +30,10 @@ using Kantar.AdExpress.Service.Core.Domain;
 using NLog;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using System.Linq;
+using System.Web.UI.WebControls;
+using System.Windows.Forms;
+
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -260,7 +264,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2290, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.monthly.GetHashCode().ToString() });
                 PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(848, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.weekly.GetHashCode().ToString() });
                 DateTime begin = WebCore.Utilities.Dates.GetPeriodBeginningDate(_customerWebSession.PeriodBeginningDate, _customerWebSession.PeriodType);
-                if (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                if ((_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE) || (begin >= DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)))
                 {
                     PeriodDetail.PeriodDetailType.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2289, _customerWebSession.SiteLanguage), Value = ConstantesPeriod.DisplayLevel.dayly.GetHashCode().ToString() });
                 }
@@ -279,6 +283,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS
                     || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
                     _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE &&
+                    WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY)
+                {
+                    _customerWebSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                    PeriodDetail.PeriodDetailType.Visible = true;
+                }
+                else if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE)
+                    PeriodDetail.PeriodDetailType.Visible = false;
 
                 PeriodDetail.PeriodDetailType.SelectedId = _customerWebSession.DetailPeriod.GetHashCode().ToString();
 
@@ -323,6 +336,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     resultTypeOption.ResultType.Id = "resultType";
                     resultTypeOption.ResultType.Items = new List<SelectItem>();
 
+                    if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES &&
+                        WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                        resultTypeOption.ResultType.Visible = true;
+
                     List<long> resultToShow = new List<long>();
                     var selectedMediaUniverse = GetSelectedUniverseMedia(_customerWebSession);
                     List<WebNavigation.ResultPageInformation> resultPages = _currentModule.GetValidResultsPage(selectedMediaUniverse);
@@ -347,6 +364,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
                 string[] vehicles = vehicleListId.Split(',');
                 bool autopromoEvaliantOption = false;
+                bool filterSpotSubType = false;
+
                 bool insertOption = false;
                 foreach (string cVehicle in vehicles)
                 {
@@ -363,6 +382,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case Vehicles.names.internationalPress:
                             if (WebApplicationParameters.AllowInsetOption) insertOption = true;
                             break;
+                        case Vehicles.names.tv:
+                            filterSpotSubType = WebApplicationParameters.UseSpotSubType
+                 && _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES;
+                            break;
                     }
                 }
                 #endregion
@@ -371,52 +394,80 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 UnitOption unitOption = new UnitOption();
 
-                unitOption.Unit = new SelectControl();
+                unitOption.Unit = new UnitSelectControl();
                 unitOption.Unit.Id = "unit";
                 unitOption.Unit.Items = new List<SelectItem>();
                 var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
                 var vehicleInformation = VehiclesInformation.Get(Convert.ToInt64(vehicles[0]));
-                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                List<UnitInformation> units;
+
+                //if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                //    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                //{
+                //    units = GetValidUnitForResult(_customerWebSession.CurrentModule, FrameWorkResults.Portofolio.CALENDAR);
+                //}
+                //else
+                    units = _customerWebSession.GetValidUnitForResult();
+
                 for (int i = 0; i < units.Count; i++)
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
                 }
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
-                    (!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
-                {
-                    _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
-                }
 
-                foreach (UnitInformation currentUnit in units)
+                if ((_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                      || !WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY)))
                 {
-                    if (currentUnit.Id != ConstantesSession.Unit.volume || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                    if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA &&
+                        (!_customerWebSession.ReachedModule ||
+                         !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
                     {
-                        if (currentUnit.Id != ConstantesSession.Unit.volumeMms || _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
-                            unitOption.Unit.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(currentUnit.WebTextId, _customerWebSession.SiteLanguage), Value = currentUnit.Id.GetHashCode().ToString() });
-                        else if (_customerWebSession.Unit == ConstantesSession.Unit.volumeMms)
-                            _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                                .GetResultPageInformation(_customerWebSession.CurrentTab)
+                                .GetDefaultUnit(vehicleInformation.Id)
+                        };
                     }
-                    else if (_customerWebSession.Unit == ConstantesSession.Unit.volume)
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
                 }
 
-                if (!units.Contains(UnitsInformation.Get(_customerWebSession.Unit)))
+                AddUnitOptions(units, unitOption);
+
+                var exceptUnits = units.Intersect(UnitsInformation.Get(_customerWebSession.Units));
+                if (!exceptUnits.Any())
                 {
                     if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
+                    {
+                        _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    }
                     else
-                        _customerWebSession.Unit = units[0].Id;
+                        _customerWebSession.Units = new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
-                    if (ContainsDefaultCurrency(units))
-                        _customerWebSession.Unit = UnitsInformation.DefaultCurrency;
-                    else
-                        _customerWebSession.Unit = units[0].Id;
+                    _customerWebSession.Units = ContainsDefaultCurrency(units)
+                        ? new List<ConstantesSession.Unit> {UnitsInformation.DefaultCurrency}
+                        : new List<ConstantesSession.Unit> {units[0].Id};
                 }
 
-                unitOption.Unit.SelectedId = _customerWebSession.Unit.GetHashCode().ToString();
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES
+                    && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit> { ConstantesSession.Unit.versionNb };
+                }
+
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                   && WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    unitOption.Unit.Visible = true;
+                }
+
+                unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
+
+                
 
                 options.UnitOption = unitOption;
                 #endregion
@@ -493,12 +544,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 options.AutoPromoOption = autoPromoOption;
                 #endregion
 
-                #region FormatOption
+
+
+                #region FormatOption              
                 FormatOption formatOption = new FormatOption();
 
                 formatOption.Format = new SelectControl();
                 formatOption.Format.Id = "format";
-                formatOption.Format.Visible = autopromoEvaliantOption;
+                formatOption.Format.Visible = autopromoEvaliantOption ;
                 formatOption.Format.Items = new List<SelectItem>();
 
                 var activeBannersFormatList = new List<FilterItem>(_customerWebSession.GetValidFormatList(_customerWebSession.GetVehiclesSelected()).Values);
@@ -521,12 +574,38 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 options.FormatOption = formatOption;
                 #endregion
 
+                #region Spot Sub Type Option
+                if (filterSpotSubType)
+                {
+                    SpotSubTypeOption spotSubTypeOption = new SpotSubTypeOption();
+                    spotSubTypeOption.SubType = new SelectControl();
+                    spotSubTypeOption.SubType.Id = "__spotSubType";
+                    spotSubTypeOption.SubType.Visible = filterSpotSubType;
+                    spotSubTypeOption.SubType.Items = new List<SelectItem>();
+
+                    var spotSubTypeItems = SpotSubTypes.GetItems()[_customerWebSession.DataLanguage];
+                    if (spotSubTypeItems.Any())
+                    {
+                        spotSubTypeItems.ForEach(spotSubType =>
+                        {
+                            spotSubTypeOption.SubType.Items.Add(new SelectItem { Text = spotSubType.Label, Value = spotSubType.Id.ToString() });
+                        });
+                        spotSubTypeOption.SubType.SelectedId = !string.IsNullOrEmpty(_customerWebSession.SelectedSpotSubTypes) ? 
+                            string.Join(",", spotSubTypeItems.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray())
+                            : string.Empty;
+                    }
+                    else
+                    {
+                        spotSubTypeOption.SubType.Visible = false;
+                    }
+                    options.SpotSubTypeOption = spotSubTypeOption;
+                }              
+                #endregion
+
                 #region PurchaseModeOption
-                bool showPurchaseMode = false;
-                if (WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
-                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-                    && _customerWebSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
-                    showPurchaseMode = true;
+                bool showPurchaseMode = WebApplicationParameters.UsePurchaseMode && _customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_PURCHASE_MODE_DISPLAY_FLAG)
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR
+                    && _customerWebSession.CurrentModule != WebConstantes.Module.Name.TABLEAU_DYNAMIQUE;
 
                 PurchaseModeOption purchaseModeOption = new PurchaseModeOption();
 
@@ -623,6 +702,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
                 #endregion
 
+                #region PDV
+                if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY &&
+                    (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                  || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE))
+                {
+                    CheckBoxOption pdv = new CheckBoxOption();
+                    pdv.Id = "pdvEvol";
+
+                    pdv.Value = _customerWebSession.PDV;
+
+                    options.PDV = pdv;
+                }
+                #endregion
+
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                 {
                     #region Evolution
@@ -682,17 +775,81 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 else
                     options.IsSelectRetailerDisplay = false;
 
+                #region GRP Turkey
+                //CheckBoxOption grp = new CheckBoxOption();
+                //grp.Id = "grp";
+                //grp.Value = _customerWebSession.Grp;
+                //options.Grp = grp;
+
+                //CheckBoxOption grp30S = new CheckBoxOption();
+                //grp30S.Id = "grp30S";
+                //grp30S.Value = _customerWebSession.Grp30S;
+                //options.Grp30S = grp30S;
+
+                //CheckBoxOption spendsGrp = new CheckBoxOption();
+                //spendsGrp.Id = "spendsGrp";
+                //spendsGrp.Value = _customerWebSession.SpendsGrp;
+                //options.SpendsGrp = spendsGrp;
+
+                //if (_customerWebSession.Unit == ConstantesSession.Unit.euro
+                //    || _customerWebSession.Unit == ConstantesSession.Unit.tl
+                //    || _customerWebSession.Unit == ConstantesSession.Unit.usd)
+                //    options.SpendsSelected = true;
+                #endregion
+
                 _customerWebSession.ReachedModule = true;
                 _customerWebSession.Save();
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
             return options;
+        }
+
+        private void AddUnitOptions(List<UnitInformation> units, UnitOption unitOption)
+        {
+            foreach (UnitInformation currentUnit in units)
+            {
+               
+
+                if (currentUnit.Id == ConstantesSession.Unit.volume &&
+                   !_customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    continue;
+                }
+
+                if (currentUnit.Id == ConstantesSession.Unit.volumeMms &&
+                    !_customerWebSession.CustomerLogin.CustormerFlagAccess(ConstantesDB.Flags.ID_VOLUME_DISPLAY))
+                {
+                    _customerWebSession.Units = new List<ConstantesSession.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    continue;
+                }
+
+
+                    unitOption.Unit.Items.Add(new SelectItem
+                {
+                    Text = GestionWeb.GetWebWord(currentUnit.WebTextId,
+                               _customerWebSession.SiteLanguage),
+                    Value = currentUnit.Id.GetHashCode().ToString(),
+                    GroupId = currentUnit.GroupId,
+                    GroupType = currentUnit.GroupType,
+                    GroupTextId = currentUnit.GroupTextId
+                    });
+            }
         }
 
         public void SetOptions(string idWebSession, UserFilter userFilter, HttpContextBase httpContext)
@@ -722,11 +879,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 }
 
                 if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE
-                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
-                    )
+                    || _customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
                 {
                     SetGenericColumnLevelDetailOptions(userFilter);
                     _customerWebSession.Percentage = userFilter.PDM;
+                    if (WebApplicationParameters.CountryCode == WebConstantes.CountryCode.TURKEY)
+                        _customerWebSession.PDV = userFilter.PDV;
                 }
 
 
@@ -794,6 +952,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         break;
                     case WebConstantes.Module.Name.NEW_CREATIVES:
                         _customerWebSession.GenericProductDetailLevel = _customerGenericDetailLevel;
+                        _customerWebSession.CurrentTab = userFilter.ResultTypeFilter.ResultType;
                         break;
                 }
 
@@ -810,9 +969,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region UnitFilter
                 if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
 
-                    && userFilter.UnitFilter.Unit != WebConstantes.CustomerSessions.Unit.none.GetHashCode()
+                    && !userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
                     )
-                    _customerWebSession.Unit = (ConstantesSession.Unit)userFilter.UnitFilter.Unit;
+                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
                 #endregion
 
                 #region PercentageFilter
@@ -826,6 +985,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string vehicleListId = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, Right.type.vehicleAccess);
                 string[] vehicles = vehicleListId.Split(',');
                 bool autopromoEvaliantOption = false;
+                bool filterSpotSubType = false;
                 bool insertOption = false;
                 foreach (string cVehicle in vehicles)
                 {
@@ -841,6 +1001,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
                         case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
                             insertOption = true;
+                            break;
+                        case Vehicles.names.tv:
+                            filterSpotSubType = WebApplicationParameters.UseSpotSubType
+                 && _customerWebSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES;
                             break;
                     }
                 }
@@ -863,6 +1027,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #region FormatFilter
                 if (autopromoEvaliantOption && userFilter.FormatFilter.Formats != null)
                     _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
+                #endregion
+
+                #region SpotSub type filter
+                if (filterSpotSubType && !string.IsNullOrEmpty(userFilter.SpotSubTypeFilter?.SpotSubTypes))
+                    _customerWebSession.SelectedSpotSubTypes = userFilter.SpotSubTypeFilter.SpotSubTypes;
                 #endregion
 
                 #region PurchaseModeFilter
@@ -912,12 +1081,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _customerWebSession.IsSelectRetailerDisplay = userFilter.IsSelectRetailerDisplay;
                 }
 
+                //_customerWebSession.Grp = userFilter.Grp;
+                //_customerWebSession.Grp30S = userFilter.Grp30S;
+                //_customerWebSession.SpendsGrp = userFilter.SpendsGrp;
+
                 _customerWebSession.Save();
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -970,8 +1146,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -1402,6 +1581,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     }
                     break;
+                case WebConstantes.Module.Name.NEW_CREATIVES:
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
+                    {
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                    }
+                    else
+                    {
+                        customerWebSession.CurrentTab = FrameWorkResults.NewCreative.NEW_CREATIVE_REPORT;
+                        resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
+                    }
+                    break;
                 default:
                     resultTypeOption.ResultType.SelectedId = _customerWebSession.CurrentTab.ToString();
                     break;
@@ -1459,8 +1649,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -1501,6 +1694,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             }
             return hasMediaLevel;
+        }
+
+        /// <summary>
+        /// Get Valid Unit List for a specific result
+        /// </summary>
+        /// <returns>Valid Unit List for a specific result</returns>
+        public List<UnitInformation> GetValidUnitForResult(long currentModule, int currentTab)
+        {
+            WebNavigation.Module moduleDescription = WebNavigation.ModulesList.GetModule(currentModule);
+            WebNavigation.ResultPageInformation resultPageInformation = moduleDescription.GetResultPageInformation(currentTab);
+            Dictionary<Int64, VehicleInformation> vehcileInformationList = _customerWebSession.GetVehiclesSelected();
+            List<Vehicles.names> vehicleList = new List<Vehicles.names>();
+            foreach (var cVehicleInformation in vehcileInformationList.Values)
+            {
+                vehicleList.Add(cVehicleInformation.Id);
+            }
+
+            List<UnitInformation> units = resultPageInformation.GetValidUnits(vehicleList);
+
+            return units;
         }
 
     }

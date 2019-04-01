@@ -56,8 +56,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -76,8 +79,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -186,8 +192,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -340,7 +349,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 MediaSchedulePeriod period = null;
                 Int64 moduleId = CustomerSession.CurrentModule;
                 ConstantePeriod.DisplayLevel periodDisplay = CustomerSession.DetailPeriod;
-                WebConstantes.CustomerSessions.Unit oldUnit = CustomerSession.Unit;
+                List<WebConstantes.CustomerSessions.Unit> oldUnits = CustomerSession.Units;
                 // TODO : Commented temporarily for new AdExpress
                 //if (UseCurrentUnit) webSession.Unit = CurrentUnit;
                 object[] param = null;
@@ -437,14 +446,17 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CustomerSession.CurrentModule = moduleId;
                 CustomerSession.DetailPeriod = periodDisplay;
                 CustomerSession.CurrentTab = oldCurrentTab;
-                CustomerSession.Unit = oldUnit;
+                CustomerSession.Units = oldUnits;
                 CustomerSession.ReferenceUniversMedia = oldReferenceUniversMedia;
 
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -496,11 +508,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 if (mediaTypeIds.Count == 1 && VehiclesInformation.Get(mediaTypeIds[0]).Id == Vehicles.names.adnettrack)
                 {
                     webSession.SiteLanguage = creativeMediaScheduleRequest.SiteLanguage;
-                    webSession.Unit = WebConstantes.CustomerSessions.Unit.occurence;
+                    webSession.Units = new List<WebConstantes.CustomerSessions.Unit>
+                    {
+                        WebConstantes.CustomerSessions.Unit.occurence
+                    };
                     SetAdNetTrackProductSelection(webSession, Convert.ToInt64(creativeMediaScheduleRequest.CreativeIds));
                     SetSessionProductDetailLevel(webSession, Convert.ToInt32(productListId[0]), DetailLevelItemInformation.Levels.product);
                 }
-                else webSession.Unit = UnitsInformation.DefaultCurrency;
+                else webSession.Units = new List<WebConstantes.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency};
 
                 webSession.LastReachedResultUrl = string.Empty;
 
@@ -733,6 +748,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     tree.Checked = true;
                     webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.subBrand, tree);
                     break;
+                case DetailLevelItemInformation.Levels.program:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programTkAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programTkAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.program, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.programTypology:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programTypologyAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.programTypology, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.programGenre:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.programGenreAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.programGenreAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.programGenre, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.spotSubType:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.spotSubTypeAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.spotSubType, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.adSlogan:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.adSloganAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.adSlogan, tree);
+                    break;
+                case DetailLevelItemInformation.Levels.PurchasingAgency:
+                    levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyAccess, id.ToString());
+                    tree.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.purchasingAgencyAccess, id, levels[id]);
+                    tree.Checked = true;
+                    webSession.ProductDetailLevel = new ProductLevelSelection(TNS.AdExpress.Constantes.Classification.Level.type.purchasingAgency, tree);
+                    break;
             }
 
             webSession.Save();
@@ -777,7 +828,56 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 new AdNetTrackProductSelection(TNS.AdExpress.Constantes.FrameWork.Results.AdNetTrackMediaSchedule.Type.visual, id);
 
         }
+
+
+
         #endregion
+
+        public long CountMediaScheduleData(string idWebSession, HttpContextBase httpContext)
+        {
+           long result = 0;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, "", "", httpContext);
+                result = mediaScheduleResult.CountData();
+            }
+            catch (Exception ex)
+            {
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                throw;
+            }
+            return result;
+        }
+
+        public long CountMediaScheduleData(string idWebSession, string zoomDate, string idVehicle, HttpContextBase httpContext)
+        {
+           long result = 0;
+            CustomerSession = (WebSession)WebSession.Load(idWebSession);
+
+            try
+            {
+                IMediaScheduleResults mediaScheduleResult = InitMediaScheduleCall(idWebSession, zoomDate, idVehicle, httpContext);
+                result = mediaScheduleResult.CountData();
+            }
+            catch (Exception ex)
+            {
+                if (CustomerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, CustomerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                throw;
+            }
+            return result;
+        }
 
     }
 }

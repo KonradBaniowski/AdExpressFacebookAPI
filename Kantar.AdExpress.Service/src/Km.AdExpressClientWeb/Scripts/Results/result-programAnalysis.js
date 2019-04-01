@@ -235,10 +235,15 @@
             return "";
 
         var s = val.toString();
-        var nbToFillWithZero = 6 - s.length;
+        var valLenght = s.length;
+        var hLenght = 2;
+        if (valLenght > 6)
+            hLenght = valLenght - 4;
+        var nbToFillWithZero = 6 - valLenght;
         for (var i = 0; i < nbToFillWithZero; i++)
             s = "0" + s;
-        return s.substr(0, 2) + " H " + s.substr(2, 2) + " M " + s.substr(4, 2) + " S";
+        valLenght = s.length;
+        return s.substr(0, hLenght) + " H " + s.substr(valLenght - 4, 2) + " M " + s.substr(valLenght - 2, 2) + " S";
     }
 
     function GetColumnsFormatter(columns) {
@@ -396,6 +401,8 @@
             success: function (data) {
                 if (data != null && data != "") {
                     if (data.hasMoreThanMaxRowsAllowed) {
+                        columnIndex = 1;
+                        createCookie("sortKey", columnIndex, 1);
                         var message = '<div style="text-align:left">' + $('#Labels_MaxAllowedRows').val() + '<br \><ul><li>' + $('#Labels_MaxAllowedRowsBis').val() + '</li><li>' + $('#Labels_MaxAllowedRowsRefine').val() + '</li></ul>' + '</div>';
                         $("#gridLoader").addClass("hide");
                         $("#gridMessage").removeClass("hide");

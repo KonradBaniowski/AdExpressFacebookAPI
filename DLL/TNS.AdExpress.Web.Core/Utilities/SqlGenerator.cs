@@ -2875,6 +2875,68 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
         }
 
+        public static string GetUnitFieldNameSumWithAliasMulti(WebSession webSession, DBConstantes.TableType.Type type)
+        {
+            StringBuilder sql = new StringBuilder();
+            string prefixe = "";
+            string adexprSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+            if (!string.IsNullOrEmpty(prefixe))
+                prefixe += ".";
+            else
+                prefixe = "";
+            switch (type)
+            {
+                case DBConstantes.TableType.Type.dataVehicle4M:
+                case DBConstantes.TableType.Type.dataVehicle:
+                    try
+                    {
+                        List<UnitInformation> unitInformations = webSession.GetSelectedUnits();
+                        foreach (var unit in unitInformations)
+                        {
+                            if (unit.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                            {
+                                sql.AppendFormat("sum({0}{1}) as {2}, ", prefixe, unit.DatabaseField, unit.Id.ToString());
+                            }
+                            else
+                            {
+                                sql.AppendFormat("to_char({0}{1}) as {2}, ", prefixe, unit.DatabaseField, unit.Id.ToString());
+                            }
+                        }
+                        return sql.ToString().Substring(0, sql.Length - 2);
+                    }
+                    catch
+                    {
+                        throw new SQLGeneratorException("Not managed unit (Alert Module)");
+                    }
+                case DBConstantes.TableType.Type.webPlan:
+                    try
+                    {
+                        List<UnitInformation> unitInformations = webSession.GetSelectedUnits();
+                        foreach (var unit in unitInformations)
+                        {
+                            if (unit.Id != WebConstantes.CustomerSessions.Unit.versionNb)
+                            {
+                                sql.AppendFormat("sum({0}{1}) as {2}, ", prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                            }
+                            else
+                            {
+                                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FRANCE)
+                                    sql.AppendFormat("{0}.LISTNUM_TO_CHAR({1}{2}) as {3}", adexprSchema, prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                                else
+                                    sql.AppendFormat("{0}{1} as {2}, ", prefixe, unit.DatabaseMultimediaField, unit.Id.ToString());
+                            }
+                        }
+                        return sql.ToString().Substring(0, sql.Length - 2);
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Not managed unit (Analysis Module)"));
+                    }
+                default:
+                    throw (new SQLGeneratorException("The type of module is not managed for the selection of unit"));
+            }
+        }
+
         /// <summary>
         /// Détermine le nom du champ à utiliser pour l'unité
         /// 
@@ -2921,6 +2983,29 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 return webSession.GetSelectedUnit().Id.ToString();
             }
             catch {
+                throw new SQLGeneratorException("Not managed unit (Alert Module)");
+            }
+        }
+
+        /// <summary>
+        /// Get Units Alias
+        /// </summary>
+        /// <param name="webSession">Web session</param>
+        /// <returns>Units alias list</returns>
+        public static List<string> GetUnitsAlias(WebSession webSession)
+        {
+            try
+            {
+                List<string> unitsFieldName = new List<string>();
+                List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+                foreach(var unit in unitsInformation)
+                    unitsFieldName.Add(unit.Id.ToString());
+
+                return unitsFieldName;
+            }
+            catch
+            {
                 throw new SQLGeneratorException("Not managed unit (Alert Module)");
             }
         }
@@ -4833,6 +4918,31 @@ namespace TNS.AdExpress.Web.Core.Utilities
             return sqlUnit.ToString();
         }
 
+        public static string GetUnitFieldsNameMulti(WebSession webSession, DBConstantes.TableType.Type type, string dataTablePrefixe)
+        {
+            List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+            StringBuilder sqlUnit = new StringBuilder();
+            if (dataTablePrefixe != null && dataTablePrefixe.Length > 0)
+                dataTablePrefixe += ".";
+            else
+                dataTablePrefixe = "";
+            for (int i = 0; i < unitsList.Count; i++)
+            {
+                if (i > 0) sqlUnit.Append(",");
+                switch (type)
+                {
+                    case DBConstantes.TableType.Type.dataVehicle:
+                    case DBConstantes.TableType.Type.dataVehicle4M:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseField, unitsList[i].Id.ToString());
+                        break;
+                    case DBConstantes.TableType.Type.webPlan:
+                        sqlUnit.AppendFormat("sum({0}{1}) as {2}", dataTablePrefixe, unitsList[i].DatabaseMultimediaField, unitsList[i].Id.ToString());
+                        break;
+                }
+            }
+            return sqlUnit.ToString();
+        }
+
         /// <summary>
         /// Get unit field to use in query
         /// </summary>
@@ -4862,6 +4972,100 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     catch {
                         throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
                     }
+
+                default:
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
+
+            }
+        }
+
+        /// <summary>
+        /// Get unit field to use in query
+        /// </summary>
+        ///<param name="webSession">Web session</param>
+        /// <param name="vehicleId">Vehicle id</param>
+        /// <param name="periodType">Period type</param>
+        /// <returns>Unit field name</returns>
+        public static List<string> GetUnitsFieldName(WebSession webSession, Int64 vehicleId, CstPeriod.PeriodBreakdownType periodType)
+        {
+            List<string> unitsFieldName = new List<string>();
+            List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+            switch (periodType)
+            {
+                case CstPeriod.PeriodBreakdownType.week:
+                case CstPeriod.PeriodBreakdownType.month:
+
+                    try
+                    {
+                        foreach (var unit in unitsInformation)
+                        {
+                            unitsFieldName.Add(unit.DatabaseMultimediaField);
+                        }
+
+                        return unitsFieldName;
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+
+                    try
+                    {
+                        foreach(var unitInformation in unitsInformation)
+                        {
+                            unitsFieldName.Add(UnitsInformation.List[unitInformation.Id].DatabaseField);
+                        }
+
+                        return unitsFieldName;
+                    }
+                    catch
+                    {
+                        throw (new SQLGeneratorException("Selected unit detail is uncorrect. Unable to determine unit field."));
+                    }
+
+                default:
+                    throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
+
+            }
+        }
+
+        /// <summary>
+        /// Get unit field to use in query
+        /// </summary>
+        ///<param name="webSession">Web session</param>
+        /// <param name="vehicleId">Vehicle id</param>
+        /// <param name="periodType">Period type</param>
+        /// <returns>Unit field name</returns>
+        public static string GetUnitsFieldNameWithAlias(WebSession webSession, Int64 vehicleId, CstPeriod.PeriodBreakdownType periodType)
+        {
+            string unitsFieldName = string.Empty;
+            List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+            switch (periodType)
+            {
+                case CstPeriod.PeriodBreakdownType.week:
+                case CstPeriod.PeriodBreakdownType.month:
+                 
+                    foreach (var unit in unitsInformation)
+                    {
+                        unitsFieldName += $"sum({unit.DatabaseMultimediaField}) as {unit.Id.ToString()}, ";
+                    }
+                        
+                    return unitsFieldName.Substring(0, unitsFieldName.Length - 2);
+
+                case CstPeriod.PeriodBreakdownType.data:
+                case CstPeriod.PeriodBreakdownType.data_4m:
+                   
+                    foreach (var unit in unitsInformation)
+                    {
+                        unitsFieldName += $"sum({UnitsInformation.List[unit.Id].DatabaseField}) as {unit.Id.ToString()}, ";
+                    }
+
+                    return unitsFieldName.Substring(0, unitsFieldName.Length - 2);
 
                 default:
                     throw (new SQLGeneratorException("Selected period detail is uncorrect. Unable to determine unit field."));
@@ -4915,6 +5119,47 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
         }
 
+        public static string GetUnitFieldsNameForPortofolioMulti(WebSession webSession, DBConstantes.TableType.Type type)
+        {
+            return GetUnitFieldsNameForPortofolioMulti(webSession, type, string.Empty);
+        }
+
+        public static string GetUnitFieldsNameForPortofolioMulti(WebSession webSession, DBConstantes.TableType.Type type, string prefixe)
+        {
+            try
+            {
+                List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList)
+                {
+                    if (currentUnit.Id != CstCustomerSessions.Unit.versionNb)
+                    {
+                        switch (type)
+                        {
+                            case DBConstantes.TableType.Type.dataVehicle:
+                            case DBConstantes.TableType.Type.dataVehicle4M:
+                                if (!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLDetailledSum("");
+                                break;
+                            case DBConstantes.TableType.Type.webPlan:
+                                if (!first) sqlUnit += ", ";
+                                else first = false;
+                                sqlUnit += currentUnit.GetSQLSum("");
+                                break;
+                        }
+                    }
+                }
+                return sqlUnit;
+            }
+            catch
+            {
+                throw new SQLGeneratorException("GetUnitFieldsNameForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
+            }
+        }
+
 
         /// <summary>
         /// Obtient les champs unités à utiliser en fonction du media
@@ -4937,6 +5182,28 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         else first = false;
                         sqlUnit += currentUnit.GetSQLUnionSum();
                     }
+                }
+                return sqlUnit;
+            }
+            catch
+            {
+                throw new SQLGeneratorException("GetUnitFieldsNameUnionForPortofolio(WebSession webSession,DBClassificationConstantes.Vehicles.names vehicleName, DBConstantes.TableType.Type type)-->The type of module is not managed for the selection of unit.");
+            }
+        }
+
+        public static string GetUnitFieldsNameUnionForPortofolioMulti(WebSession webSession)
+        {
+            try
+            {
+                List<UnitInformation> unitsList = webSession.GetSelectedUnits();
+                string sqlUnit = "";
+                bool first = true;
+
+                foreach (UnitInformation currentUnit in unitsList)
+                {
+                    if (!first) sqlUnit += ", ";
+                    else first = false;
+                    sqlUnit += currentUnit.GetSQLUnionSum();
                 }
                 return sqlUnit;
             }
@@ -5158,6 +5425,24 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         break;
                     case (ClassificationConstantes.Level.type.brand):
                         sql += " " + tablePrefixe + ".id_brand in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.brandAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.program):
+                        sql += " " + tablePrefixe + ".id_program in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programTkAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.programTypology):
+                        sql += " " + tablePrefixe + ".id_program_typology in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programTypologyAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.programGenre):
+                        sql += " " + tablePrefixe + ".id_program_genre in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.programGenreAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.spotSubType):
+                        sql += " " + tablePrefixe + ".id_spot_sub_type in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.spotSubTypeAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.adSlogan):
+                        sql += " " + tablePrefixe + ".id_ad_slogan in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.adSloganAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.purchasingAgency):
+                        sql += " " + tablePrefixe + ".id_purchasing_agency in (" + webSession.GetSelection(webSession.ProductDetailLevel.ListElement, CustomerRightConstante.type.purchasingAgencyAccess) + ")";
                         break;
                 }
             }

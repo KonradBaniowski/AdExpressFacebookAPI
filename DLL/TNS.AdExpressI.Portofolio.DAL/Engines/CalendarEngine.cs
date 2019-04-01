@@ -84,8 +84,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 ref unitFieldNameSumWithAlias, ref dataGroupby, ref mediaRights, ref productsRights, ref detailProductOrderBy, 
                 ref dataJointForInsert, ref listProductHap, ref dataTableNameForGad, ref dataFieldsForGad, ref dataJointForGad);
 
-			sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ","+unitFieldNameSumWithAlias;
-			sql += ", " + DBConstantes.Fields.DATE_MEDIA_NUM + "";
+            sql += " select " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad + ","+unitFieldNameSumWithAlias;
+			sql += ", " + GetDateMediaNumFieldWithAlias() + "";
 			sql += " from " + mediaAgencyTable + dataTableName;
 			if (detailProductTablesNames.Length > 0)
 				sql += ", " + detailProductTablesNames;
@@ -158,17 +158,17 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += listProductHap;
 			// Group by
 			sql += " group by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media, " + detailProductFields + dataFieldsForGad;
-			sql += "," + DBConstantes.Fields.DATE_MEDIA_NUM + "";
+			sql += "," + GetDateMediaNumField() + "";
             
             sql += dataGroupby; // hashcode pour Evaliant
             
 			// Order by
 			sql += " order by " + detailProductOrderBy + "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media";
-			sql += "," + DBConstantes.Fields.DATE_MEDIA_NUM + "";
-			#endregion
+			sql += "," + GetDateMediaNumField() + "";
+            #endregion
 
-			#region Execution de la requête
-			try {
+            #region Execution de la requête
+            try {
 				return _webSession.Source.Fill(sql.ToString());
 			}
 			catch (System.Exception err) {
@@ -265,5 +265,23 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             return string.Format("{0} as {1}", unitInformation.DatabaseMultimediaField, unitInformation.Id.ToString());
 	    }
         #endregion
+
+        #region Global Query in case of per day/week/month option
+        protected virtual string GetDateMediaNumFieldWithAlias()
+	    {
+	        return DBConstantes.Fields.DATE_MEDIA_NUM;
+	    }
+
+        protected virtual string GetDateMediaNumField()
+        {
+            return DBConstantes.Fields.DATE_MEDIA_NUM;
+        }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
     }
 }

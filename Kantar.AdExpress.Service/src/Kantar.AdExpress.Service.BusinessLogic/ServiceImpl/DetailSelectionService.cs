@@ -52,6 +52,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 var webSessionSave = (WebSession)MyResultsDAL.GetResultMySession(idMySession.ToString(), webSession);
                 webSessionSave.CustomerLogin = webSession.CustomerLogin;
                 webSessionSave.Source= webSession.Source;
+                webSessionSave.SiteLanguage = webSession.SiteLanguage;
                 result = LoadDetailsSelection(webSessionSave);
             }
             return result;
@@ -112,7 +113,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = _webSession.Source;
-            param[1] = _webSession.SiteLanguage;
+            param[1] = _webSession.DataLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             //TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
@@ -161,7 +162,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             #region Unité :
-            domain.UniteLabel = GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage);
+            GetUnitLabels(_webSession, domain);
             #endregion
 
             #region Slogan :
@@ -256,11 +257,23 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             domain.ShowStudyPeriod = !string.IsNullOrEmpty(domain.StudyPeriod);
             domain.ShowComparativePeriod = !string.IsNullOrEmpty(domain.ComparativePeriod);
             domain.ShowComparativePeriodType = !string.IsNullOrEmpty(domain.ComparativePeriodType);
-            domain.ShowPeriodDisponibilityType = !string.IsNullOrEmpty(domain.PeriodDisponibilityType);
+            domain.ShowPeriodDisponibilityType = false;//!string.IsNullOrEmpty(domain.PeriodDisponibilityType);
             domain.ShowIdSlogansLabel = !string.IsNullOrEmpty(domain.IdSlogansLabel);
             #endregion
 
             return domain;
+        }
+
+        private static void GetUnitLabels(WebSession webSession, DetailSelectionResponse domain)
+        {
+
+            var units = webSession.GetSelectedUnits();
+           List<string>  unitLabels =new List<string>();
+            units.ForEach(unit =>
+            {
+                unitLabels.Add(GestionWeb.GetWebWord(unit.WebTextId, webSession.SiteLanguage));
+            });
+            domain.UniteLabel = String.Join(", ", unitLabels);
         }
 
         private static void ExtractTreeFromAdExpressUniverse(Dictionary<int, AdExpressUniverse> Principal, List<Tree> treeDefined, ClassificationLevelListDALFactory factoryLevels, int SiteLanguage, long currentModule, bool defaultFcbUniverse = false)
@@ -451,7 +464,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = webSession.Source;
-            param[1] = webSession.SiteLanguage;
+            param[1] = webSession.DataLanguage;
             ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             result.ModuleLabel = adExpressUniverse.FirstOrDefault().Value.UniverseDimension.ToString();
             switch (adExpressUniverse.FirstOrDefault().Value.UniverseDimension)
@@ -486,7 +499,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
             object[] param = new object[2];
             param[0] = _webSession.Source;
-            param[1] = _webSession.SiteLanguage;
+            param[1] = _webSession.DataLanguage;
 
             TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 

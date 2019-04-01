@@ -189,8 +189,19 @@ namespace TNS.AdExpress.Domain.Translation
 
         public string GetAsposeFormatPatternFromStringFormat(string stringFormat)
         {
-            if (stringFormat == null || stringFormat.Length == 0 || stringFormat.Length < 5) throw new ArgumentNullException(" StringFormat is null");
-            string formatKey = stringFormat.Substring(3, stringFormat.Length - 4);
+          //  if (string.IsNullOrEmpty(stringFormat) || stringFormat.Length < 5) throw new ArgumentNullException(" StringFormat is null");
+            string formatKey;
+            try
+            {
+                if (string.IsNullOrEmpty(stringFormat) || stringFormat.Length < 5) throw new ArgumentNullException(" StringFormat is null");
+                formatKey = stringFormat.Substring(3, stringFormat.Length - 4);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+          
             if (!_asposeFormat.ContainsKey(formatKey.ToLower())) throw new ArgumentException(string.Format("The pattern {0} is not defined ", formatKey));
             return _asposeFormat[formatKey.ToLower()];
         }

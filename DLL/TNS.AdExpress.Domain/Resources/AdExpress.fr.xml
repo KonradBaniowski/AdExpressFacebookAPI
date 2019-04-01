@@ -2409,5 +2409,152 @@
     <item mnemonic="w3131" type="System.String">Le document PowerPoint </item>
     <item mnemonic="w3132" type="System.String">AdExpress -- Fichier PowerPoint Alerte Plan Média</item>
     <item mnemonic="w3133" type="System.String">Champs requis</item>   
+    <item mnemonic="w3134" type="System.String">TL</item>
+    <item mnemonic="w3135" type="System.String">Turkish Liras</item>
+    <item mnemonic="w3136" type="System.String">$</item>
+
+    <item mnemonic="w3137" type="System.String">!</item>
+    <item mnemonic="w3138" type="System.String">!</item>
+    <item mnemonic="w3139" type="System.String">!</item>
+    <item mnemonic="w3140" type="System.String">!</item>
+    <item mnemonic="w3141" type="System.String">!</item>
+    <item mnemonic="w3142" type="System.String">!</item>
+    <item mnemonic="w3143" type="System.String">!</item>
+
+    <item mnemonic="w3144" type="System.String">!</item>
+    <item mnemonic="w3145" type="System.String">!</item>
+    <item mnemonic="w3146" type="System.String">!</item>
+    <item mnemonic="w3147" type="System.String">!</item>
+    <item mnemonic="w3148" type="System.String">!</item>
+    <item mnemonic="w3149" type="System.String">Vous devez sélectionner au moins une unité</item>
+    <item mnemonic="w3150" type="System.String">!</item>
+    <item mnemonic="w3151" type="System.String">!</item>
+    <item mnemonic="w3152" type="System.String">!</item>
+    <item mnemonic="w3153" type="System.String">!</item>
+    <item mnemonic="w3154" type="System.String">!</item>
+    <item mnemonic="w3155" type="System.String">!</item>
+    <item mnemonic="w3156" type="System.String">!</item>
+    <item mnemonic="w3157" type="System.String">!</item>
+
+    <item mnemonic="w3158" type="System.String">!</item>
+    <item mnemonic="w3159" type="System.String">!</item>
+    <item mnemonic="w3160" type="System.String">!</item>
+    <item mnemonic="w3161" type="System.String">!</item>
+    <item mnemonic="w3162" type="System.String">!</item>
+    <item mnemonic="w3163" type="System.String">!</item>
+    <item mnemonic="w3164" type="System.String">!</item>
+    <item mnemonic="w3165" type="System.String">!</item>
+    <item mnemonic="w3166" type="System.String">!</item>
+    <item mnemonic="w3167" type="System.String">!</item>
+    <item mnemonic="w3168" type="System.String">!</item>
+    <item mnemonic="w3169" type="System.String">!</item>
+    <item mnemonic="w3170" type="System.String">!</item>
+    <item mnemonic="w3171" type="System.String">!</item>
+    <item mnemonic="w3172" type="System.String">!</item>
+    <item mnemonic="w3173" type="System.String">!</item>
+    <item mnemonic="w3174" type="System.String">!</item>
+    <item mnemonic="w3175" type="System.String">!</item>
+    <item mnemonic="w3176" type="System.String">!</item>
+    <item mnemonic="w3177" type="System.String">!</item>
+    <item mnemonic="w3178" type="System.String">!</item>
+    <item mnemonic="w3179" type="System.String">!</item>
+    <item mnemonic="w3180" type="System.String">!</item>
+    <item mnemonic="w3181" type="System.String">!</item>
+    <item mnemonic="w3182" type="System.String">!</item>
+    <item mnemonic="w3183" type="System.String">!</item>
+    <item mnemonic="w3184" type="System.String">!</item>
+    <item mnemonic="w3185" type="System.String">!</item>
+    <item mnemonic="w3186" type="System.String">!</item>
+    <item mnemonic="w3187" type="System.String">!</item>
+    <item mnemonic="w3188" type="System.String">!</item>
+    <item mnemonic="w3189" type="System.String">!</item>
+
+    <item mnemonic="w3190" type="System.String">!</item>
+    <item mnemonic="w3191" type="System.String">!</item>
+    <item mnemonic="w3192" type="System.String">!</item>
+
+    <item mnemonic="w3193" type="System.String">!</item>
+    <item mnemonic="w3194" type="System.String">!</item>
+    <item mnemonic="w3195" type="System.String">!</item>
+
+    <item mnemonic="w3196" type="System.String">!</item>
+    <item mnemonic="w3197" type="System.String">!</item>
+    <item mnemonic="w3198" type="System.String">!</item>
+    <item mnemonic="w3199" type="System.String">!</item>
+    <item mnemonic="w3200" type="System.String">!</item>
+    <item mnemonic="w3201" type="System.String">!</item>
+    <item mnemonic="w3202" type="System.String">!</item>
+    <item mnemonic="w3203" type="System.String">!</item>
+    <item mnemonic="w3204" type="System.String">!</item>
+    <item mnemonic="w3205" type="System.String">!</item>
+    <item mnemonic="w3206" type="System.String">!</item>
+    <item mnemonic="w3207" type="System.String">!</item>
+    <item mnemonic="w3208" type="System.String">!</item>
+    <item mnemonic="w3209" type="System.String">!</item>
+    <item mnemonic="w3210" type="System.String">!</item>
+    <item mnemonic="w3211" type="System.String">!</item>
+    <item mnemonic="w3212" type="System.String">!</item>
+    <item mnemonic="w3213" type="System.String">Classe/Groupe</item>
+    <item mnemonic="w3214" type="System.String">!</item>
+    <item mnemonic="w3215" type="System.String">!</item>
+    <item mnemonic="w3216" type="System.String">!</item>
+    <item mnemonic="w3217" type="System.String">!</item>
+    <item mnemonic="w3218" type="System.String">!</item>
+    <item mnemonic="w3219" type="System.String">!</item>
+    <item mnemonic="w3220" type="System.String">!</item>
+    <item mnemonic="w3221" type="System.String">!</item>
+    <item mnemonic="w3222" type="System.String">!</item>
+    <item mnemonic="w3223" type="System.String">!</item>
+    <item mnemonic="w3224" type="System.String">!</item>
+    <item mnemonic="w3225" type="System.String">!</item>
+    <item mnemonic="w3226" type="System.String">!</item>
+    <item mnemonic="w3227" type="System.String">!</item>
+    <item mnemonic="w3228" type="System.String">!</item>
+    <item mnemonic="w3229" type="System.String">!</item>
+    <item mnemonic="w3230" type="System.String">!</item>
+    <item mnemonic="w3231" type="System.String">!</item>
+    <item mnemonic="w3232" type="System.String">!</item>
+    <item mnemonic="w3233" type="System.String">!</item>
+    <item mnemonic="w3234" type="System.String">!</item>
+    <item mnemonic="w3235" type="System.String">!</item>
+    <item mnemonic="w3236" type="System.String">!</item>
+    <item mnemonic="w3237" type="System.String">!</item>
+    <item mnemonic="w3238" type="System.String">!</item>
+    <item mnemonic="w3239" type="System.String">!</item>
+    <item mnemonic="w3240" type="System.String">!</item>
+    <item mnemonic="w3241" type="System.String">!</item>
+    <item mnemonic="w3242" type="System.String">!</item>
+    <item mnemonic="w3243" type="System.String">!</item>
+    <item mnemonic="w3244" type="System.String">Politique de confidentialité</item>
+    <item mnemonic="w3245" type="System.String">Politique de cookies</item>
+    <item mnemonic="w3246" type="System.String">Ce site internet utilise des cookies et d'autres technologies similaires afin de collecter des informations sans lesquels il ne pourrait pas fonctionner normalement. Pour plus d’informations, nous vous invitons à consulter la</item>
+    <item mnemonic="w3247" type="System.String">Je comprends !</item>
+    <item mnemonic="w3248" type="System.String">Nécessaire</item>
+    <item mnemonic="w3249" type="System.String">Ces cookies sont nécessaires au bon fonctionnement du site.</item>
+    <item mnemonic="w3250" type="System.String">Cookies et Confidentialité</item>
+    <item mnemonic="w3251" type="System.String">Votre demande a été prise en compte.</item>
+    <item mnemonic="w3252" type="System.String">Tout sélectionner</item>
+    <item mnemonic="w3253" type="System.String">Tout désélectionner</item>
+    <item mnemonic="w3254" type="System.String">Aucune sélection</item>
+    <item mnemonic="w3255" type="System.String">Success</item>
+    <item mnemonic="w3256" type="System.String">!</item>
+    <item mnemonic="w3257" type="System.String">!</item>
+    <item mnemonic="w3258" type="System.String">!</item>
+    <item mnemonic="w3259" type="System.String">!</item>
+    <item mnemonic="w3260" type="System.String">!</item>
+    <item mnemonic="w3261" type="System.String">!</item>
+    <item mnemonic="w3262" type="System.String">Tout supprimer</item>
+    <item mnemonic="w3263" type="System.String">!</item>
+    <item mnemonic="w3264" type="System.String">Ce site internet utilise des cookies et d'autres technologies similaires afin de collecter des informations sans lesquels il ne pourrait pas fonctionner normalement. En plus, le site collecte des informations qui nous permettent de réaliser des statistiques de visites ainsi que l'identification des erreurs. Pour plus d’informations, nous vous invitons à consulter la</item>
+    <item mnemonic="w3265" type="System.String">Ok, tout accepter</item>
+    <item mnemonic="w3266" type="System.String">Personnaliser</item>
+    <item mnemonic="w3267" type="System.String">Sélectionnez les cookies à accepter</item>
+    <item mnemonic="w3268" type="System.String">Statistiques</item>
+    <item mnemonic="w3269" type="System.String">Ce site collecte certaines informations de connexions et d'utilisations qui ont pour but d’analyser et quantifier la fréquentation du site.</item>
+    <item mnemonic="w3270" type="System.String">Diagnostic</item>
+    <item mnemonic="w3271" type="System.String">Ce site collecte des informations qui nous permettrons d'identifier les erreurs d'utilisation du site (Login, Navigateur, OS, IP, Sélection client, Message d'erreur)</item>
+    <item mnemonic="w3272" type="System.String">Configuration des Cookies</item>
+    <item mnemonic="w3273" type="System.String">Vous devez accepter les cookies pour acceder à votre compte</item>
+    <item mnemonic="w3274" type="System.String">Pour toute information concernant le traitement des données à caractère personnel, veuillez vous référer à la politique de confidentialité en bas de page.</item>
   </items>
 </localization>

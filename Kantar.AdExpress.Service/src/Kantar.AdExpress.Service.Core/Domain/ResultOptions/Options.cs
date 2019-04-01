@@ -23,7 +23,9 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public FormatOption FormatOption { get; set; }
 
-        public PurchaseModeOption PurchaseModeOption { get; set; }
+       
+
+    public PurchaseModeOption PurchaseModeOption { get; set; }
 
         public ResultTypeOption ResultTypeOption { get; set; }
 
@@ -46,5 +48,15 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool IsSelectRetailerDisplay { get; set; }
 
         public PercentageOption PercentageOption { get; set; }
+
+        public CheckBoxOption Grp { get; set; }
+
+        public CheckBoxOption Grp30S { get; set; }
+
+        public CheckBoxOption SpendsGrp { get; set; }
+
+        public bool SpendsSelected { get; set; }
+
+        public  SpotSubTypeOption SpotSubTypeOption { get; set; }            
     }
 }

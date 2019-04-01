@@ -1,0 +1,52 @@
+﻿@using TNS.AdExpress.Constantes.Web
+@using TNS.AdExpress.Domain.Translation;
+@using TNS.AdExpress.Domain.Web;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | AdExpress</title>
+    @Styles.Render("~/Content/Login-files")
+    <meta http-equiv="X-UA-Compatible" content="IE=10, IE=11, IE=edge" />
+</head>
+
+
+<body id="privacypage">
+
+    <div id="header">
+        <div id="logo">
+            <div id="position">
+                <div id="logocontent">
+                    <a href="javascript:history.back()">
+                        <img id="km_logo" src="/Content/LoginFiles/images/@WebApplicationParameters.CountryCode/All_master_logos_Small_300dpi_Kantar_Media.png" alt="Kantar Media">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="privacy_wrapper">
+        <div class="privacy_left_side">
+            @RenderBody()
+        </div>
+        <div id="bottom">
+        </div>
+    </div>
+
+    <div id="footercontainer">
+        <div id="footer">&copy; @DateTime.Now.Year @GestionWeb.GetWebWord(3115, ViewBag.SiteLanguageCode) | <a href="@Url.Action("Index", "PrivacyPolicy", new { siteLanguage = ViewBag.SiteLanguageCode})" class="" target="_blank">@GestionWeb.GetWebWord(3244, ViewBag.SiteLanguageCode)</a> | <a href="@Url.Action("Index", "CookiePolicy", new { siteLanguage = ViewBag.SiteLanguageCode})" class="" target="_blank">@GestionWeb.GetWebWord(3245, ViewBag.SiteLanguageCode)</a></div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/language-choice")
+
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+

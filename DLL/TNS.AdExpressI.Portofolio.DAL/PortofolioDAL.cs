@@ -25,6 +25,7 @@ using TNS.AdExpress.Domain.Classification;
 //using TNS.AdExpress.Web.Exceptions;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Units;
 using TNS.FrameWork.DB.Common;
@@ -79,6 +80,10 @@ namespace TNS.AdExpressI.Portofolio.DAL
         /// Ventilation type list for press result
         /// </summary>
         protected List<PortofolioStructure.Ventilation> _ventilationTypeList = null;
+        /// <summary>
+        /// Level
+        /// </summary>
+        protected DetailLevelItemInformation _level;
         #endregion
 
         #region Constructor
@@ -86,11 +91,11 @@ namespace TNS.AdExpressI.Portofolio.DAL
         /// Constructor
         /// </summary>
         /// <param name="webSession">Customer Session</param>
-		/// <param name="vehicleInformation">Vehicle name</param>
+        /// <param name="vehicleInformation">Vehicle name</param>
         /// <param name="idMedia">Media Id</param>
         /// <param name="beginingDate">begining Date</param>
         /// <param name="endDate">end Date</param>
-		protected PortofolioDAL(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string beginingDate, string endDate)
+        protected PortofolioDAL(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string beginingDate, string endDate)
         {
             if (webSession == null) throw (new ArgumentNullException("Customer session is null"));
             if (beginingDate == null || beginingDate.Length == 0) throw (new ArgumentException("Begining Date is invalid"));
@@ -158,6 +163,21 @@ namespace TNS.AdExpressI.Portofolio.DAL
         this(webSession, vehicleInformation, idMedia, beginingDate, endDate)
         {
             _ventilationTypeList = ventilationTypeList;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="vehicleInformation">Vehicle name</param>
+        /// <param name="idMedia">Media Id</param>
+        /// <param name="beginingDate">begining Date</param>
+        /// <param name="endDate">end Date</param>
+        /// <param name="level">Level</param>
+        protected PortofolioDAL(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string beginingDate, string endDate, DetailLevelItemInformation level)
+            : this(webSession, vehicleInformation, idMedia, beginingDate, endDate)
+        {
+            _level = level;
         }
 
         /// <summary>
@@ -248,6 +268,15 @@ namespace TNS.AdExpressI.Portofolio.DAL
             var res = new Engines.SynthesisEngine(_webSession,
                 _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
             return res.GetEcranData();
+        }
+
+        /// <summary>
+        /// Get Custom Ecran Data
+        /// </summary>
+        /// <returns>Ecrans</returns>
+        public virtual DataSet GetCustomEcranData()
+        {
+            return null;
         }
 
         #region TableOfIssue
@@ -1012,7 +1041,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship:
                 case DBClassificationConstantes.Vehicles.names.radioMusic:
-                    sql += " select  distinct ID_COBRANDING_ADVERTISER";
+                    sql += " select  distinct date_media_num, commercial_break, ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
                     sql += string.Format(" ,{0} ",
@@ -1025,7 +1054,7 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 case DBClassificationConstantes.Vehicles.names.tvSponsorship:
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.tvAnnounces:
-                    sql += "select  distinct id_commercial_break ";
+                    sql += "select  distinct date_media_num, id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
                     sql += string.Format(" ,{0} ",
@@ -1107,6 +1136,12 @@ namespace TNS.AdExpressI.Portofolio.DAL
                 sql = prList.GetExcludeItemsSql(true, prefix);
             return sql;
         }
+
+        public virtual long CountData()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion

@@ -123,8 +123,14 @@
     <Compile Include="Domain\HealthMediaResponse.cs" />
     <Compile Include="Domain\MSCreative.cs" />
     <Compile Include="Domain\MSCreatives.cs" />
+    <Compile Include="Domain\News.cs" />
+    <Compile Include="Domain\NewsItem.cs" />
     <Compile Include="Domain\Period.cs" />
     <Compile Include="Domain\PortfolioAlertResultResponse.cs" />
+    <Compile Include="Domain\ResultOptions\SpotSubTypeFilter.cs" />
+    <Compile Include="Domain\ResultOptions\GroupItems.cs" />
+    <Compile Include="Domain\ResultOptions\SpotSubTypeOption.cs" />
+    <Compile Include="Domain\ResultOptions\UnitSelectControl.cs" />
     <Compile Include="Domain\UserCriteria.cs" />
     <Compile Include="Domain\PostModel.cs" />
     <Compile Include="Domain\ResultOptions\AutoPromoFilter.cs" />

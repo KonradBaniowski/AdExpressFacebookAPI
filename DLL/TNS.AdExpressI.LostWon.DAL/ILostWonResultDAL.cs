@@ -37,6 +37,8 @@ namespace TNS.AdExpressI.LostWon.DAL
 
 		DataSet GetNbParutionData();
 
+        long CountData();
+
 
     }
 

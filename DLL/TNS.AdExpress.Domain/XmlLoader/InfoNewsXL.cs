@@ -21,7 +21,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 		 /// Load Info news items
         /// </summary>
         /// <param name="dataSource">Data Source</param>
-		public static void LoadInfoNews(IDataSource dataSource, ref RulesLayer rulesLayer, Dictionary<WebCst.ModuleInfosNews.Directories, Results.InfoNewsItem> infoNewsItems, List<Results.InfoNewsItem> infoNewsSortedItems) {
+		public static void LoadInfoNews(IDataSource dataSource, ref RulesLayer rulesLayer, Dictionary<WebCst.ModuleInfosNews.Directories, Results.InfoNewsItem> infoNewsItems, List<Results.InfoNewsItem> infoNewsSortedItems, ref string _newsVirtualDirectory, ref string _newsFileName, ref bool _enableNews) {
 			
 			 XmlTextReader reader=null;
 			 WebCst.ModuleInfosNews.Directories id;
@@ -52,6 +52,20 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								 if (reader.GetAttribute("name") != null && reader.GetAttribute("assemblyName") != null && reader.GetAttribute("class") != null &&
 									reader.GetAttribute("name").Length > 0 && reader.GetAttribute("assemblyName").Length > 0 && reader.GetAttribute("class").Length > 0) {
 									 rulesLayer = new RulesLayer(reader.GetAttribute("name"), reader.GetAttribute("assemblyName"), reader.GetAttribute("class"));
+                                }
+                                break;
+                            case "news":
+						         if (reader.GetAttribute("physicalPath") != null)
+						         {
+						             _newsVirtualDirectory = reader.GetAttribute("physicalPath");
+						         }
+						         if (reader.GetAttribute("file") != null)
+						         {
+                                    _newsFileName = reader.GetAttribute("file");
+						         }
+                                if (reader.GetAttribute("enableNews") != null)
+                                {
+                                    _enableNews = bool.Parse(reader.GetAttribute("enableNews"));
                                 }
                                 break;
 						 }

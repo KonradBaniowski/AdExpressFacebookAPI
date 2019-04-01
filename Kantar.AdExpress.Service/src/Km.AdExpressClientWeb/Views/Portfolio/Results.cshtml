@@ -206,6 +206,12 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+            <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.dv.js"></script>
@@ -444,14 +450,14 @@
 
             function UnitFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number");
+                    return $.ig.formatter(parseFloat(val), "number");
 
                 return "";
             }
 
             function PageFormatter(val) {
                 if (val > 0)
-                    return $.ig.formatter(val, "number", "#,##0.###");
+                    return $.ig.formatter(parseFloat(val), "number", "#,##0.###");
 
                 return "";
             }
@@ -480,16 +486,16 @@
                 if (val == 0)
                     return "";
 
-                var endHour = 2;
                 var s = val.toString();
-                var nbToFillWithZero = 6 - s.length;
-
-                if (s.length > 6)
-                    endHour += (s.length - 6) ;
-
+                var valLenght = s.length;
+                var hLenght = 2;
+                if (valLenght > 6)
+                    hLenght = valLenght - 4;
+                var nbToFillWithZero = 6 - valLenght;
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
-                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(endHour + 2, 2) + " S";
+                valLenght = s.length;
+                return s.substr(0, hLenght) + " H " + s.substr(valLenght - 4, 2) + " M " + s.substr(valLenght - 2, 2) + " S";
             }
 
             function GetColumnsFormatter(columns) {
@@ -558,6 +564,8 @@
                         if (data != null && data != "") {
 
                             if (data.hasMoreThanMaxRowsAllowed) {
+                                columnIndex = 1;
+                                createCookie("sortKey", columnIndex, 1);
                                 $("#allPeriodInsertionsSpots").hide();
                                 $("#GridPanel").show();
                                 $("#gridEmpty").show();
@@ -990,16 +998,58 @@
                 }
             });
 
+            function getFirstUnit() {
+                if ($('#unit').val() != null && $('#unit').val() !== undefined)
+                    return $('#unit').val()[0];
+            }
+
             $('#unit').selectpicker();
 
             $('#unit').on('change', function (e) {
                 userFilter.UnitFilter.Unit = $('#unit').val();
+                $('#unit_mono').selectpicker('val', getFirstUnit());
+            });
+
+            $('#unit_mono').selectpicker();
+            $('#unit_mono').selectpicker('val', getFirstUnit());
+
+            $('#unit_mono').on('change', function (e) {
+                userFilter.UnitFilter.Unit = $('#unit_mono').val();
+                $('#unit').selectpicker('val', $('#unit_mono').val());
             });
 
             $('#resultType').selectpicker();
 
+            if ($('#resultType').val() == "6") {
+                $('#perioddetailTypeContainer').css({ 'display': "block" });
+                $('#unitTypeContainerMono').css({ 'display': "block" });
+            } else {
+                $('#perioddetailTypeContainer').css({ 'display': "none" });
+                $('#unitTypeContainerMono').css({ 'display': "none" });
+            }
+
+            if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {
+                $('#unitTypeContainer').css({ 'display': "block" });
+
+            } else {
+                $('#unitTypeContainer').css({ 'display': "none" });
+            }
+
             $('#resultType').on('change', function (e) {
                 userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
+                if (userFilter.ResultTypeFilter.ResultType == "6") {
+                    $('#perioddetailTypeContainer').css({ 'display': "block" });
+                    $('#unitTypeContainerMono').css({ 'display': "block" });
+                } else {
+                    $('#perioddetailTypeContainer').css({ 'display': "none" });
+                    $('#unitTypeContainerMono').css({ 'display': "none" });
+                }
+
+                if ($('#resultType').val() != "0" && $('#resultType').val() != "6") {
+                    $('#unitTypeContainer').css({ 'display': "block" });
+                } else {
+                    $('#unitTypeContainer').css({ 'display': "none" });
+                }
             });
 
             $('#insertion').selectpicker();

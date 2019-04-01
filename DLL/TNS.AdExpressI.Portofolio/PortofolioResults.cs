@@ -383,22 +383,7 @@ namespace TNS.AdExpressI.Portofolio
                     }
                 }
 
-                if (string.IsNullOrEmpty(_webSession.SortKey) ||
-                (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
-                {
-                    resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
-                    gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
-                    gridResult.SortKey = 1;
-                    _webSession.Sorting = ResultTable.SortOrder.NONE;
-                    _webSession.SortKey = "1";
-                    _webSession.Save();
-                }
-                else
-                {
-                    resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
-                    gridResult.SortOrder = _webSession.Sorting.GetHashCode();
-                    gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
-                }
+                SetSort(ref gridResult, ref resultTable, indexInResultTableAllowSortingList);
 
                 //table body rows
                 for (int i = 0; i < resultTable.LinesNumber; i++) //_data.LinesNumber
@@ -1439,7 +1424,7 @@ namespace TNS.AdExpressI.Portofolio
         }
 
 
-        public Engines.StructureEngine GetStructureEngine(bool excel)
+        public virtual Engines.StructureEngine GetStructureEngine(bool excel)
         {
             Engines.StructureEngine result = null;
             switch (_vehicleInformation.Id)
@@ -1472,13 +1457,17 @@ namespace TNS.AdExpressI.Portofolio
             return result;
         }
 
-
-        public GridResult GetStructureGridResult(bool excel)
+        public virtual GridResult GetStructureGridResult(bool excel)
         {
             return GetStructureEngine(excel).GetGridResult();
         }
 
-        public GridResult GetDetailMediaGridResult(bool excel)
+        public virtual GridResult GetBreakdownGridResult(bool excel, DetailLevelItemInformation level)
+        {
+            throw new PortofolioException("The method or operation is not implemented.");
+        }
+
+        public virtual GridResult GetDetailMediaGridResult(bool excel)
         {
             Engines.MediaDetailEngine result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel);
             StringBuilder t = new StringBuilder(5000);
@@ -1515,7 +1504,7 @@ namespace TNS.AdExpressI.Portofolio
         }
 
 
-        private void ComputeGridData(GridResult gridResult, ResultTable _data)
+        protected virtual void ComputeGridData(GridResult gridResult, ResultTable _data)
         {
             _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
@@ -1583,7 +1572,7 @@ namespace TNS.AdExpressI.Portofolio
 
 
         #region GridResult
-        public GridResult GetDetailMediaPopUpGridResult()
+        public virtual GridResult GetDetailMediaPopUpGridResult()
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
@@ -1694,6 +1683,31 @@ namespace TNS.AdExpressI.Portofolio
 
             return gridResult;
 
+        }
+
+        protected virtual void SetSort(ref GridResult gridResult, ref ResultTable resultTable, List<int> indexInResultTableAllowSortingList)
+        {
+            if (string.IsNullOrEmpty(_webSession.SortKey) ||
+               (!string.IsNullOrEmpty(_webSession.SortKey) && !indexInResultTableAllowSortingList.Contains(Convert.ToInt32(_webSession.SortKey))))
+            {
+                resultTable.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = ResultTable.SortOrder.NONE.GetHashCode();
+                gridResult.SortKey = 1;
+                _webSession.Sorting = ResultTable.SortOrder.NONE;
+                _webSession.SortKey = "1";
+                _webSession.Save();
+            }
+            else
+            {
+                resultTable.Sort(_webSession.Sorting, Convert.ToInt32(_webSession.SortKey)); //Important, pour hierarchie du tableau Infragistics
+                gridResult.SortOrder = _webSession.Sorting.GetHashCode();
+                gridResult.SortKey = Convert.ToInt32(_webSession.SortKey);
+            }
+        }
+
+        public virtual  long CountDataRows()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

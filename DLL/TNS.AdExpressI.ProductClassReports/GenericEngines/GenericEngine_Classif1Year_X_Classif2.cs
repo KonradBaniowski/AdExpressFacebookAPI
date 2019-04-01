@@ -224,6 +224,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                         ? "M2,ID_M2" : "M1,ID_M1,M2,ID_M2";
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
+                case CstFormat.PreformatedMediaDetails.vehicleInterestCenterMedia:
                     sortStr = "M2,ID_M2,M3,ID_M3";
                     break;
                 default:

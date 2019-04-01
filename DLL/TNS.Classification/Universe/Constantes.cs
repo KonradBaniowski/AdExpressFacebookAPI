@@ -211,6 +211,48 @@ namespace TNS.Classification.Universe {
         /// Grp Pharma level
         /// </summary>
         public const Int64 GRP_PHARMA = 32;
+        /// <summary>
+        /// Advertiser type level
+        /// </summary>
+        public const Int64 ADVERTISER_TYPE = 33;
+
+        /// <summary>
+        /// Ad Slogan level
+        /// </summary>
+        public const Int64 AD_SLOGAN = 34;
+        /// <summary>
+        /// Purchasing  agency level
+        /// </summary>
+        public const Int64 PURCHASING_AGENCY = 35;
+        /// <summary>
+        /// Creative  agency level
+        /// </summary>
+        public const Int64 CREATIVE_AGENCY = 36;
+        /// <summary>
+        /// Spot  genre level
+        /// </summary>
+        public const Int64 SPOT_GENRE = 37;
+        /// <summary>
+        /// Spot sub genre level
+        /// </summary>
+        public const Int64 SPOT_SUB_GENRE = 38;
+
+        /// <summary>
+        /// Media Owner level
+        /// </summary>
+        public const Int64 MEDIA_OWNER = 39;
+        /// <summary>
+        /// Program level
+        /// </summary>
+        public const Int64 PROGRAM = 40;
+        /// <summary>
+        /// Program Typology level
+        /// </summary>
+        public const Int64 PROGRAM_TYPOLOGY = 41;
+        /// <summary>
+        /// Spot Sub Type level
+        /// </summary>
+        public const Int64 SPOT_SUB_TYPE = 42;
     }
     #endregion
 }

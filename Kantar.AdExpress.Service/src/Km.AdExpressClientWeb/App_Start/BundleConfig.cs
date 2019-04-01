@@ -62,6 +62,9 @@ namespace Km.AdExpressClientWeb
              .Include("~/Content/LoginFiles/Site.css", new CssRewriteUrlTransform())
              .Include("~/Content/LoginFiles/jquery.ui.theme.css", new CssRewriteUrlTransform()));
 
+            bundles.Add(new StyleBundle("~/Content/Gdpr")
+             .Include("~/Content/gdpr.css", new CssRewriteUrlTransform()));
+
             #region CSS Alerte Portefeuille
 
             bundles.Add(new StyleBundle("~/Content/css/portfolio-alert"));
@@ -72,10 +75,15 @@ namespace Km.AdExpressClientWeb
 
             #region CSS spécifique par langues
             //Francais 
-            bundles.Add(new StyleBundle("~/Content/css/33/FR"));
+            bundles.Add(new StyleBundle("~/Content/css/33/FR").Include(
+                "~/Content/site-Fr.css"
+            ));
 
             //Anglais 
-            bundles.Add(new StyleBundle("~/Content/css/33/EN"));
+            bundles.Add(new StyleBundle("~/Content/css/33/EN").Include(
+                "~/Content/site-En.css"
+            ));
+
             bundles.Add(new StyleBundle("~/Content/css/35/EN").Include(
                 "~/Content/site-Fi_en.css"
             ));
@@ -84,9 +92,14 @@ namespace Km.AdExpressClientWeb
             bundles.Add(new StyleBundle("~/Content/css/35/FI").Include(
                 "~/Content/site-Fi.css"
             ));
+
+            //Turkey 
+            bundles.Add(new StyleBundle("~/Content/css/90/EN").Include(
+                "~/Content/site-Tk.css"
+            ));
             #endregion
 
-            
+
 
             bundles.Add(new ScriptBundle("~/bundles/module-selection").Include(
                   "~/Scripts/module-selection/module-selection.js"));
@@ -176,6 +189,10 @@ namespace Km.AdExpressClientWeb
 
             bundles.Add(new ScriptBundle("~/bundles/language-choice").Include(
                   "~/Scripts/app/language-choice.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/gdpr").Include(
+               "~/Scripts/gdpr/jquery.ihavecookies.js",
+               "~/Scripts/gdpr/gdpr.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/analysis").Include(
                         "~/Scripts/market/market-analysis.js",

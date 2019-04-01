@@ -54,9 +54,15 @@
         this.ResultType = $('#resultType').val();
     }
 
+
+    function UnitFilter() {
+        this.Unit = $('#unit').val();
+    }
+
     function UserFilter() {
         this.MediaDetailLevel = new MediaDetailLevel();
         this.ProductDetailLevel = new ProductDetailLevel();
+        this.UnitFilter = new UnitFilter();
         this.Evol = false;
         this.PDM = false;
         this.PDV = false;
@@ -64,6 +70,10 @@
     }
 
     var userFilter = new UserFilter();
+
+
+   
+
     function CallSetOptions() {
         $.ajax({
             url: '/Analysis/SetResultOptions',
@@ -209,6 +219,12 @@
         CallSetOptions();
     });
 
+    $('#unit').selectpicker();
+
+    $('#unit').on('change', function (e) {
+        userFilter.UnitFilter.Unit = $('#unit').val();
+    });
+
     //$(document).on('click', '.ui-iggrid-header.ui-widget-header', function (event) {
     $(document).on('click', '*[id*=grid_table_g]', function (event) {
         var field = $(this);
@@ -265,6 +281,8 @@
             success: function (data) {
                 if (data != null && data != "") {
                     if (data.hasMoreThanMaxRowsAllowed) {
+                        columnIndex = 1;
+                        createCookie("sortKey", columnIndex, 1);
                         var message = '<div style="text-align:left">' + $('#Labels_MaxAllowedRows').val() + '<br \><ul><li>' + $('#Labels_MaxAllowedRowsBis').val() + '</li><li>' + $('#Labels_MaxAllowedRowsRefine').val() + '</li></ul>' + '</div>';
                         $("#gridLoader").addClass("hide");
                         $("#gridEmpty").show();
@@ -412,6 +430,8 @@
             bootbox.alert(error);
         }
     }
+
+  
 
     //Export
     $("#btn-save-result").click(function () {

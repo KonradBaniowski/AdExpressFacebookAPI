@@ -57,6 +57,18 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         private string _strFormat = "N";
         private  string _assembly = "";
+        /// <summary>
+        /// Group Id used in select control
+        /// </summary>
+        private int _groupId = 0;
+        /// <summary>
+        /// Group Selection Type
+        /// </summary>
+        private GroupSelection.GroupType _groupType = GroupSelection.GroupType.mono;
+        /// <summary>
+        /// Group Text Id
+        /// </summary>
+        private Int64 _groupTextId;
         #endregion
 
         #region Constructor
@@ -70,7 +82,7 @@ namespace TNS.AdExpress.Domain.Units {
         /// <param name="databaseField">Field name in occurencies data</param>
         /// <param name="databaseMultimediaField">Field name in aggregated data</param>
         /// <param name="assembly">assembly</param>
-        public UnitInformation(string id, string format, Int64 webTextId, Int64 webTextSignId ,string baseId, string cellType, string databaseField, string databaseMultimediaField, string databaseTrendsField, string assembly)
+        public UnitInformation(string id, string format, Int64 webTextId, Int64 webTextSignId ,string baseId, string cellType, string databaseField, string databaseMultimediaField, string databaseTrendsField, string assembly, int groupId, GroupSelection.GroupType groupType, Int64 groupTextId)
         {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
@@ -83,6 +95,9 @@ namespace TNS.AdExpress.Domain.Units {
             }
             _webTextId=webTextId;
             _webTextSignId = webTextSignId;
+            _groupId = groupId;
+            _groupType = groupType;
+            _groupTextId = groupTextId;
             if (_assembly != null || _assembly.Length > 0) _assembly = assembly;
             try {
                 _id=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),id,true);
@@ -168,6 +183,27 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         public string StringFormat {
             get { return "{0:"+_strFormat+"}"; }
+        }
+        /// <summary>
+        /// Get Group Id
+        /// </summary>
+        public int GroupId
+        {
+            get { return _groupId; }
+        }
+        /// <summary>
+        /// Get Group Type
+        /// </summary>
+        public GroupSelection.GroupType GroupType
+        {
+            get { return _groupType; }
+        }
+        /// <summary>
+        /// Get Group Text Id
+        /// </summary>
+        public Int64 GroupTextId
+        {
+            get { return _groupTextId; }
         }
         #endregion
 

@@ -104,6 +104,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+            <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -224,6 +229,7 @@
                 this.ResultTypeFilter = new ResultTypeFilter();
                 this.InitializeProduct = false;
                 this.PDM = false;
+                this.PDV = false;
                 this.IsSelectRetailerDisplay = false;
             }
 
@@ -369,16 +375,16 @@
                 if (val == 0)
                     return "";
 
-                var endHour = 2;
                 var s = val.toString();
-                var nbToFillWithZero = 6 - s.length;
-
-                if (s.length > 6)
-                    endHour += (s.length - 6);
-
+                var valLenght = s.length;
+                var hLenght = 2;
+                if (valLenght > 6)
+                    hLenght = valLenght - 4;
+                var nbToFillWithZero = 6 - valLenght;
                 for (var i = 0; i < nbToFillWithZero; i++)
                     s = "0" + s;
-                return s.substr(0, endHour) + " H " + s.substr(endHour, 2) + " M " + s.substr(endHour + 2, 2) + " S";
+                valLenght = s.length;
+                return s.substr(0, hLenght) + " H " + s.substr(valLenght - 4, 2) + " M " + s.substr(valLenght - 2, 2) + " S";
             }
 
             function PercentFormatter(val) {
@@ -409,6 +415,9 @@
                                 if (elem.group[i].key.indexOf("pdm") > -1) {
                                     elem.group[i].formatter = PercentFormatter;
                                 }
+                                if (elem.group[i].key.indexOf("pdv") > -1) {
+                                    elem.group[i].formatter = PercentFormatter;
+                                }
                             }
                         } else if (elem.key.indexOf("unit") > -1) {
                             if (unit == "duration")
@@ -421,6 +430,9 @@
                             elem.formatter = EvolFormatter;
                         }
                         else if (elem.key.indexOf("pdm") > -1) {
+                            elem.formatter = PercentFormatter;
+                        }
+                        else if (elem.key.indexOf("pdv") > -1) {
                             elem.formatter = PercentFormatter;
                         }
                     });
@@ -700,11 +712,33 @@
             $("#set-pdm").click(function () {
                 if ($(this).prop('checked') == true) {
                     userFilter.PDM = true;
+                    userFilter.PDV = false;
+                    $("#set-pdv").prop('checked', false);
                 }
                 else {
                     userFilter.PDM = false;
                 }
             });
+
+            //PDV
+            if ($("#set-pdv").prop('checked') == true) {
+                userFilter.PDV = true;
+            }
+            else {
+                 userFilter.PDV = false;
+            }
+
+            $("#set-pdv").click(function () {
+                if ($(this).prop('checked') == true) {
+                    userFilter.PDV = true;
+                    userFilter.PDM = false;
+                    $("#set-pdm").prop('checked', false);
+                }
+                else {
+                    userFilter.PDV = false;
+                }
+            });
+            //END PDV
 
             $('#save-custom-detail-levels').on('click', function (e) {
                 var levels = $('#l1Detail').val() + ',' + $('#l2Detail').val() + ',' + $('#l3Detail').val();
@@ -791,10 +825,16 @@
                 if (userFilter.ResultTypeFilter.ResultType == 4 || userFilter.ResultTypeFilter.ResultType == 5) {// 4: tab Forces  5: tab Potentiels
                     $("#set-pdm").prop('checked', true);
                     userFilter.PDM = true;
+                    $("#set-pdv").prop('checked', false);
+                    $("#set-pdv").prop('disabled', true);
+                    userFilter.PDV = false;
                 } else if (userFilter.ResultTypeFilter.ResultType == 6) {//6 tab synthesis
                     $("#set-pdm").prop('checked', false);
                     userFilter.PDM = false;
+                    $("#set-pdv").prop('disabled', false);
                 }
+                else
+                    $("#set-pdv").prop('disabled', false);
             });
 
             $('#insertion').selectpicker();

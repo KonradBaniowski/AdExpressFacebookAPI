@@ -25,6 +25,9 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 
         public PurchaseModeFilter PurchaseModeFilter { get; set; }
 
+
+        public SpotSubTypeFilter SpotSubTypeFilter { get; set; }
+
         public ResultTypeFilter ResultTypeFilter { get; set; }
 
         public bool InitializeMedia { get; set; }
@@ -44,5 +47,11 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool IsSelectRetailerDisplay { get; set; }
 
         public PercentageFilter PercentageFilter { get; set; }
+
+        public bool Grp { get; set; }
+
+        public bool Grp30S { get; set; }
+
+        public bool SpendsGrp { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@using TNS.AdExpress.Constantes.Web
+
+@{
+    ViewBag.Title = "Cookies Policy";
+    Layout = "~/Views/Shared/_LayoutPrivacy.cshtml";
+}
+
+<div>
+    @if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.FRANCE))
+    {
+        Html.RenderPartial("_CookiePolicyFr");
+    }
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.UK))
+    {
+        Html.RenderPartial("_CookiePolicyEn");
+    }
+</div>
+
+
+<div class="reponsive-hide-xs row height20"></div>
+<div class="reponsive-hide-xs row height20"></div>

@@ -17,6 +17,7 @@ using NLog;
 using System;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -33,15 +34,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             OptionsAnalysis options = new OptionsAnalysis();
             try
             {
-                _showSegment = _customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG);
+                _showSegment = _customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)
+                    &&  !WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY)
+                ;
                 options.SiteLanguage = _customerWebSession.SiteLanguage;
 
                 GenericLevelOption mediaDetail = new GenericLevelOption();
                 GenericLevelOption productDetail = new GenericLevelOption();
 
-                #region Unit
+                #region Unitf
                 VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                _customerWebSession.Unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule).GetResultPageInformation(_customerWebSession.CurrentTab).GetDefaultUnit(vehicle.Id);
+                _customerWebSession.Units = new List<SessionCst.Unit>
+                {
+                    WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                        .GetResultPageInformation(_customerWebSession.CurrentTab)
+                        .GetDefaultUnit(vehicle.Id)
+                };
                 #endregion
 
                 if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia)
@@ -84,6 +92,48 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1544, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString() });
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
                                     mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1143, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString() });
+                                if (
+                                    WebApplicationParameters.CountryCode.Equals(
+                                        TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                                {
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) 
+                                        && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
+                                        && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.interestCenter))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3236, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.categoryInterestCenterMedia.GetHashCode().ToString() });
+
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.programTypology))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3242, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.programTypology.GetHashCode().ToString()
+                                        });
+
+
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)                                      
+                                        && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3234, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSpotSubType.GetHashCode().ToString()
+                                        });
+
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType)
+                                     && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotType))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3235, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.spotTypeSpotSubType.GetHashCode().ToString()
+                                        });
+
+                                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.spotSubType)
+                                   && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.programTypology))
+                                        mediaDetail.LevelDetail.Items.Add(new SelectItem
+                                        {
+                                            Text = GestionWeb.GetWebWord(3243, _customerWebSession.SiteLanguage),
+                                            Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.programTypologySpotSubType.GetHashCode().ToString()
+                                        });
+                                }
                                 break;
                             case ClassificationCst.DB.Vehicles.names.press:
                             case ClassificationCst.DB.Vehicles.names.newspaper:
@@ -146,8 +196,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 productDetail.LevelDetail.Id = "productDetail";
                 productDetail.LevelDetail.Visible = true;
                 productDetail.LevelDetail.Items = new List<SelectItem>();
-
                 long productLabelCode = 1164;
+
+              
 
                 if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
                 {
@@ -174,28 +225,56 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1145, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString() });
                 //modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
                 if (_showSegment)
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1577, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString() });
-                if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1578, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString() });
-                if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {
-                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1579, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString() });
+                    productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1577, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString() });
+
+                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1578, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString() });
+                    if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1579, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString() });
+                    }
+
                 }
+
+
                 productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1146, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString() });
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1147, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString() });
                 }
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1148, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString() });
+                    if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1109, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrandProduct.GetHashCode().ToString() });
+                }
+                    
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
                 {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1149, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString() });
                     if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                    {
                         productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2736, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brandProduct.GetHashCode().ToString() });
+                        if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                        {
+                            productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3237, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.brandProductSlogan.GetHashCode().ToString() });
+                            productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3238, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.productBrand.GetHashCode().ToString() });
+
+                        }
+
+                    }
                 }
                 if (_customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                {
                     productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(858, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString() });
+                    if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                    {
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3239, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.productSlogan.GetHashCode().ToString()});
+                        productDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(3139, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedProductDetails.purchasingAgency.GetHashCode().ToString() });
+                    }
+                }
+                   
 
                 try
                 {
@@ -318,6 +397,54 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 resultTypeOption.ResultType.SelectedId = _customerWebSession.PreformatedTable.GetHashCode().ToString();
                 #endregion
 
+                #region UnitOption
+
+                UnitOption unitOption = new UnitOption();
+
+                unitOption.Unit = new UnitSelectControl();
+                unitOption.Unit.Id = "unit";
+                unitOption.Unit.Items = new List<SelectItem>();
+                var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+               
+                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                for (int i = 0; i < units.Count; i++)
+                {
+                    unitInformationDictionary.Add(units[i].Id, units[i]);
+                }
+                if ((!_customerWebSession.ReachedModule || !unitInformationDictionary.ContainsKey(_customerWebSession.Unit)))
+                {
+                    _customerWebSession.Units = new List<SessionCst.Unit>
+                    {
+                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                            .GetResultPageInformation(_customerWebSession.CurrentTab)
+                            .GetDefaultUnit(vehicle.Id)
+                    };
+                }
+
+                AddUnitOptions(units, unitOption);
+
+                var exceptUnits = units.Intersect(UnitsInformation.Get(_customerWebSession.Units));
+                if (!exceptUnits.Any())
+                {
+                    if (ContainsDefaultCurrency(units))
+                    {
+                        _customerWebSession.Units = new List<SessionCst.Unit>
+                        {
+                            UnitsInformation.DefaultCurrency
+                        };
+                    }
+                    else
+                        _customerWebSession.Units = new List<SessionCst.Unit> { units[0].Id };
+                }
+
+               
+                unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
+
+
+
+                options.UnitOption = unitOption;
+                #endregion
+
                 options.MediaDetailLevel = mediaDetail;
                 options.ProductDetailLevel = productDetail;
                 options.Evol = evol;
@@ -336,8 +463,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -349,12 +479,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             _customerWebSession = (WebSession)WebSession.Load(idWebSession);
             try
             {
-                _customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails)userFilter.MediaDetailLevel.LevelDetailValue;
-                _customerWebSession.PreformatedProductDetail = (SessionCst.PreformatedDetails.PreformatedProductDetails)userFilter.ProductDetailLevel.LevelDetailValue;
+                #region UnitFilter
+
+                if (!userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
+                )
+                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
+
+                #endregion
+
+                _customerWebSession.PreformatedMediaDetail =
+                    (SessionCst.PreformatedDetails.PreformatedMediaDetails) userFilter.MediaDetailLevel.LevelDetailValue;
+                _customerWebSession.PreformatedProductDetail =
+                    (SessionCst.PreformatedDetails.PreformatedProductDetails)
+                    userFilter.ProductDetailLevel.LevelDetailValue;
                 _customerWebSession.Evolution = userFilter.Evol;
                 _customerWebSession.PDM = userFilter.PDM;
                 _customerWebSession.PDV = userFilter.PDV;
-                _customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables)userFilter.ResultTypeFilter.ResultType;
+                _customerWebSession.PreformatedTable =
+                    (SessionCst.PreformatedDetails.PreformatedTables) userFilter.ResultTypeFilter.ResultType;
 
                 if (WebApplicationParameters.UseRetailer)
                 {
@@ -365,11 +507,42 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
         }
+
+        private void AddUnitOptions(List<UnitInformation> units, UnitOption unitOption)
+        {
+            foreach (UnitInformation currentUnit in units)
+            {
+
+                unitOption.Unit.Items.Add(new SelectItem
+                {
+                    Text = GestionWeb.GetWebWord(currentUnit.WebTextId,
+                           _customerWebSession.SiteLanguage),
+                    Value = currentUnit.Id.GetHashCode().ToString(),
+                    GroupId = currentUnit.GroupId,
+                    GroupType = currentUnit.GroupType,
+                    GroupTextId = currentUnit.GroupTextId
+                });
+            }
+        }
+
+        #region Unit Option Methodes
+        private bool ContainsDefaultCurrency(List<UnitInformation> units)
+        {
+            foreach (UnitInformation currentUnit in units)
+                if (currentUnit.Id == UnitsInformation.DefaultCurrency)
+                    return true;
+
+            return false;
+        }
+        #endregion
     }
 }

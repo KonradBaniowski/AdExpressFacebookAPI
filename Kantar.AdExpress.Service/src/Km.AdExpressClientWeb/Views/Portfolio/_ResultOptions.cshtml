@@ -1,8 +1,13 @@
 ﻿@model Kantar.AdExpress.Service.Core.Domain.ResultOptions.Options
+@using TNS.AdExpress.Constantes.Web
 @using TNS.AdExpress.Domain.Translation;
 @using TNS.AdExpress.Domain.Web;
 @{
     var optionsNb = 1;
+    string multiple = Model.UnitOption.Unit.EnableMultiple ? "multiple" : string.Empty;
+    bool displayGroups = Model.UnitOption.Unit.EnableGroups;
+    string data_max_options = "";
+    string monoUnit = "_mono";
 }
 
 <div class="panel-group panel-group-results panel-group-options" id="media-accordion" role="tablist" aria-multiselectable="true">
@@ -48,38 +53,7 @@
                         </div>
                     </div>
 
-                    @if (@Model.UnitOption.Unit.Visible)
-                    {
-                        <div class="col-md-4">
-                            <div class="panel-primary panel-options-results">
-                                <div class="panel-heading head-options-results">
-                                    <p class="panel-title options ">
-                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
-                                    </p>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body mi-padder">
-                                        <div class="selectoptioncontainer">
-                                            <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
-                                                @foreach (var item in Model.UnitOption.Unit.Items)
-                                                {
-                                                    if (item.Value == Model.UnitOption.Unit.SelectedId)
-                                                    {
-                                                        <option value="@item.Value" selected>@item.Text</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        optionsNb++;
-                    }
+                    
                     @if (@Model.InsertionOption.Insertion.Visible)
                     {
                         <div class="col-md-4">
@@ -346,6 +320,126 @@
                             </div>
                         </div>
                     </div>
+                
+                    @if (@Model.UnitOption.Unit.Visible)
+                    {
+                        <div class="col-md-4" id="unitTypeContainer">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker" @multiple>
+                                                @foreach (var group in Model.UnitOption.Unit.Groups)
+                                                {
+                                                    if (group.GroupType == GroupSelection.GroupType.mono)
+                                                    {
+                                                        data_max_options = "data-max-options=1";
+                                                    }
+                                                    else
+                                                    {
+                                                        data_max_options = "";
+                                                    }
+                                                    <optgroup label="@group.GroupName" @data_max_options>
+                                                        @foreach (var item in group.Items)
+                                                        {
+                                                            if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
+                                                            {
+                                                                <option value="@item.Value" selected>@item.Text</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Value">@item.Text</option>
+                                                            }
+                                                        }
+                                                    </optgroup>
+                                                }
+                                            </select>
+
+                                            @*<select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.UnitOption.Unit.Items)
+                                                {
+                                                    if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="unitTypeContainerMono">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(304, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.UnitOption.Unit.Id@monoUnit" class="selectdatepicker">
+                                                    @foreach (var item in Model.UnitOption.Unit.Items)
+                                                    {
+                                                        if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
+                                                        {
+                                                            <option value="@item.Value" selected>@item.Text</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    }
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        optionsNb++;
+                    }
+                
+                    @if (@Model.PeriodDetail.PeriodDetailType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(2288, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.PeriodDetail.PeriodDetailType.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.PeriodDetail.PeriodDetailType.Items)
+                                                {
+                                                    if (item.Value == Model.PeriodDetail.PeriodDetailType.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     @{
                         optionsNb++;
                         if (optionsNb == 3)

@@ -264,8 +264,56 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             ///  VP media type in exception
             /// </summary>
-            vpVehicleException
-		}
+            vpVehicleException,
+            /// <summary>
+			///  Program Turkey en accès
+			/// </summary>
+			programTkAccess,
+            /// <summary>
+            /// Program Turkey en exception
+            /// </summary>
+            programTkException,
+            /// <summary>
+            /// Program typology en accès
+            /// </summary>
+            programTypologyAccess,
+            /// <summary>
+            /// Program typology en exception
+            /// </summary>
+            programTypologyException,
+            /// <summary>
+			/// Spot Sub Type en accès
+			/// </summary>
+			spotSubTypeAccess,
+            /// <summary>
+            /// Spot Sub Type en exception
+            /// </summary>
+            spotSubTypeException,
+            /// <summary>
+			/// Ad Slogan en accès
+			/// </summary>
+			adSloganAccess,
+            /// <summary>
+            /// Ad Slogan en exception
+            /// </summary>
+            adSloganException,
+            /// <summary>
+            ///  Program Genre en accès
+            /// </summary>
+            programGenreAccess,
+            /// <summary>
+            /// Program Genre en exception
+            /// </summary>
+            programGenreException,
+            /// <summary>
+			/// Purchasing Agency en accès
+			/// </summary>
+			purchasingAgencyAccess,
+            /// <summary>
+            /// Purchasing Agency en exception
+            /// </summary>
+            purchasingAgencyException
+        }
 		#endregion
 	}
 

@@ -8,6 +8,7 @@ using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
+using FrameWorkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.Appm
@@ -70,7 +71,7 @@ namespace TNS.AdExpressI.MediaSchedule.Appm
         protected override void AppendInsertionLink(object[,] data, StringBuilder t, string themeName, int line, string cssClasse, int level)
         {
 
-            if (level >= L2_COLUMN_INDEX && data[line, level] != null)
+            if (level >= FrameWorkResults.MediaSchedule.L2_COLUMN_INDEX && data[line, level] != null)
             {
                 t.AppendFormat("<td align=\"center\" class=\"{0}\"><a href=\"javascript:PopUpInsertion('{1}','{2}');\"><img border=0 src=\"/App_Themes/{4}/Images/Common/picto_plus.gif\"></a></td>"
                     , cssClasse
@@ -94,7 +95,7 @@ namespace TNS.AdExpressI.MediaSchedule.Appm
         /// <returns>Filters as "id1" (idX replace by -1 if required depending on the current level)</returns>
         protected override string GetLevelFilter(object[,] data, int line, int level)
         {
-            return string.Format("{0}", data[line, L2_ID_COLUMN_INDEX]);
+            return string.Format("{0}", data[line, FrameWorkResults.MediaSchedule.L2_ID_COLUMN_INDEX]);
         }
         #endregion
 

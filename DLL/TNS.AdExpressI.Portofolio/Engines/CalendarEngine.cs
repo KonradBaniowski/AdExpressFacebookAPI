@@ -395,9 +395,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			//une colonne par date de parution
 			parutions.Sort();
-			foreach (Int32 parution in parutions) {
-				headers.Root.Add(new Header(true, Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long)parution));
-			}
+			foreach (Int32 parution in parutions)
+			{
+			    if (_webSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.dayly)
+			        headers.Root.Add(new Header(true, Dates.DateToString(Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString()).Value, _webSession.SiteLanguage), (long) parution));
+			    else
+                    headers.Root.Add(new Header(true, Dates.getPeriodTxt(_webSession, parution.ToString()), (long)parution)); //parution.ToString().Substring(4,2) + "/" + parution.ToString().Substring(0, 4)
+            }
 			if (!_webSession.Percentage) {
                 cellFactory = _webSession.GetCellUnitFactory();
 			}
@@ -443,7 +447,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
     }
 }

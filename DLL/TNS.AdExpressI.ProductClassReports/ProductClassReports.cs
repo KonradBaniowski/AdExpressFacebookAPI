@@ -147,7 +147,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <returns>Data Result</returns>
         public ResultTable GetGenericProductClassReport(int resultType)
         {
-            return this.GetGenericProductClassReport(resultType, false);
+            return GetGenericProductClassReport(resultType, false);
         }
         /// <summary>
         /// Compute Product Class Report depending on type or fesult specified in user session
@@ -165,7 +165,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <returns>Data Result</returns>
         public ResultTable GetGenericProductClassReportExcel(int resultType)
         {
-            return this.GetGenericProductClassReport(resultType, true);
+            return GetGenericProductClassReport(resultType, true);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <param name="excel">Report as Excel output ? </param>
         /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
         /// <returns>Data Result</returns>
-        virtual protected ResultTable GetGenericProductClassReport(int resultType, bool excel)
+        protected virtual ResultTable GetGenericProductClassReport(int resultType, bool excel)
         {
             switch (resultType)
             {
@@ -282,6 +282,7 @@ namespace TNS.AdExpressI.ProductClassReports
             GridResult gridResult = new GridResult();
 
             if (resultTable != null && resultTable.LinesNumber>0)
+
             {
                 if (resultTable.LinesNumber > WebCst.Core.MAX_ALLOWED_ROWS_NB)
                 {

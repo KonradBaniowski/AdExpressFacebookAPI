@@ -78,34 +78,35 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         protected string _keyWord = "";
 
         #region Tables
-        Table _recapVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
-        Table _recapCategory = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
-        Table _recapMedia = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
-        Table _recapGroup = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapGroup);
-        Table _recapSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSegment);
-        Table _recapBrand = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapBrand);
-        Table _recapProduct = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapProduct);
-        Table _recapAdvertiser = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapAdvertiser);
+        protected Table _recapVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+        protected  Table _recapCategory = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+        protected Table _recapMedia = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+        protected Table _recapGroup = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapGroup);
+        protected Table _recapSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSegment);
+        protected Table _recapBrand = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapBrand);
+        protected Table _recapProduct = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapProduct);
+        protected Table _recapAdvertiser = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapAdvertiser);
         /* WARNING !!! the two following tables are added temporarily in order to add specific levels for the Finnish version
         **/
-        Table _recapSector = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSector);
-        Table _recapSubSector = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSubSector);
-        Table _dataRadio = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio);
-        Table _dataTV = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv);
-        Table _dataPluri = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri);
-        Table _dataPress = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress);
-        Table _dataOutdoor = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor);
-        Table _dataInternet = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet);
-        Table _dataCinema = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema);
-        Table _dataTactic = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic);
-        Table _dataRadioSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
-        Table _dataTVSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment);
-        Table _dataPluriSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment);
-        Table _dataPressSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment);
-        Table _dataOutdoorSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
-        Table _dataInternetSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
-        Table _dataCinemaSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment);
-        Table _dataTacticSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment);
+        protected Table _recapSector = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSector);
+        protected Table _recapSubSector = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapSubSector);
+        protected Table _dataRadio = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio);
+        protected Table _dataTV = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv);
+        protected Table _dataPluri = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri);
+        protected Table _dataPress = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress);
+        protected Table _dataOutdoor = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor);
+        protected Table _dataInternet = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet);
+        protected Table _dataCinema = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema);
+        protected Table _dataTactic = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic);
+         protected Table _dataRadioSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
+         protected Table _dataTVSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment);
+         protected Table _dataPluriSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment);
+         protected Table _dataPressSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment);
+         protected Table _dataOutdoorSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
+         protected Table _dataInternetSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
+         protected Table _dataCinemaSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment);
+        protected Table _dataTacticSegment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment);
+        protected Table _recapPurchasingAgency = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPurchasingAgency);
         #endregion
 
         #endregion
@@ -166,6 +167,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             _dataInternetSegment = WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
             _dataCinemaSegment = WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, _session.IsSelectRetailerDisplay);
             _dataTacticSegment = WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, _session.IsSelectRetailerDisplay);
+            _recapPurchasingAgency = WebApplicationParameters.GetDataTable(TableIds.recapPurchasingAgency, _session.IsSelectRetailerDisplay);
         }
         #endregion
 
@@ -467,7 +469,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
                 **/
                 && detail != CstFormat.PreformatedProductDetails.sectorAdvertiser
-                && detail != CstFormat.PreformatedProductDetails.subSectorAdvertiser;			
+                && detail != CstFormat.PreformatedProductDetails.subSectorAdvertiser
+                && detail != CstFormat.PreformatedProductDetails.purchasingAgency;			
 
             return GetVehicleTableName(!segment);
         }
@@ -614,6 +617,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         break;
                     /***************************/
 
+                    case CstFormat.PreformatedProductDetails.purchasingAgency:
+                        sqlStr = string.Format(" {0}.id_purchasing_agency as id_p1, purchasing_agency as p1", _dataTable.Prefix);
+                        break;
+
                     default:
                         //throw new ASDynamicTablesDataAccessException("Le format de détail " + _session.PreformatedProductDetail.ToString() + " n'est pas un cas valide.");
                         sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1", _dataTable.Prefix);
@@ -643,7 +650,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
             object[] param = new object[1];
             param[0] = _session;
-            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, 
+                cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
@@ -671,55 +679,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 			  firstMonth + 1];
             string[] previousYearMonths = (_session.ComparativeStudy) ? new string[months.GetUpperBound(0) + 1] : null;
 			string[] persoPreviousYearMonths = (_session.ComparativeStudy) ? new string[months.GetUpperBound(0) + 1] : null;
-            //création de la liste des champs période
+            GetMonthsFileds(sql, months, year, firstMonth, persoMonths, previousYearMonths, previousYear, persoPreviousYearMonths);
             bool first = true;
-            for (i = 0; i < months.Length; i++)
-            {
-                months[i] = string.Format("sum(exp_euro_n{0}_{1})", year, (i + firstMonth));
-				persoMonths[i] = string.Format("exp_euro_n{0}_{1}", year, (i + firstMonth));
-				if (_session.ComparativeStudy) {
-					previousYearMonths[i] = string.Format("sum(exp_euro_n{0}_{1})", previousYear, (i + firstMonth));
-					persoPreviousYearMonths[i] = string.Format("exp_euro_n{0}_{1}", previousYear, (i + firstMonth));
-				}
-            }
-
-            //Year
-            if (_reportFormat.ToString().IndexOf("_Year") > -1 || _reportFormat == CstFormat.PreformatedTables.productYear_X_Media)
-            {
-
-                string comparativeStudyMonths = "";
-
-                for (i = 0; i < months.Length; i++)
-                {
-
-                    if (i == months.Length - 1 && months.Length > 1)
-                    {
-                        sql.AppendFormat("exp_euro_n{0}_{1}) as N{0}", year, (i + firstMonth));
-                        comparativeStudyMonths = string.Format ("{0} exp_euro_n{1}_{2}) as N{1}", comparativeStudyMonths, previousYear, (i + firstMonth));
-                    }
-                    else if (i == 0 && months.Length > 1)
-                    {
-                        sql.AppendFormat(", sum(exp_euro_n{0}_{1} + ", year, (i + firstMonth));
-                        comparativeStudyMonths = string.Format("{0} sum(exp_euro_n{1}_{2} + ", comparativeStudyMonths, previousYear, (i + firstMonth));
-                    }
-                    else if (months.Length == 1)
-                    {
-                        sql.AppendFormat(", sum(exp_euro_n{0}_{1}) as N{0}", year, (i + firstMonth));
-                        comparativeStudyMonths = string.Format("{0} sum(exp_euro_n{1}_{2}) as N{1}", comparativeStudyMonths, previousYear, (i + firstMonth));
-                    }
-                    else
-                    {
-                        sql.AppendFormat("exp_euro_n{0}_{1} + ", year, (i + firstMonth));
-                        comparativeStudyMonths = string.Format("{0} exp_euro_n{1}_{2} + ", comparativeStudyMonths, previousYear, (i + firstMonth));
-                    }
-                }
-                if (_session.ComparativeStudy)
-                    sql.AppendFormat(", {0}", comparativeStudyMonths);
-
-
-
-            }
-
             //Cumul,
             if (_reportFormat.ToString().IndexOf("_Cumul") > -1)
             {
@@ -945,6 +906,61 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         }
 
+        protected virtual void GetMonthsFileds(StringBuilder sql, string[] months, string year, int firstMonth,
+            string[] persoMonths, string[] previousYearMonths, string previousYear, string[] persoPreviousYearMonths)
+        {
+            int i;
+//création de la liste des champs période
+
+            for (i = 0; i < months.Length; i++)
+            {
+                months[i] = string.Format("sum(exp_euro_n{0}_{1})", year, (i + firstMonth));
+                persoMonths[i] = string.Format("exp_euro_n{0}_{1}", year, (i + firstMonth));
+                if (_session.ComparativeStudy)
+                {
+                    previousYearMonths[i] = string.Format("sum(exp_euro_n{0}_{1})", previousYear, (i + firstMonth));
+                    persoPreviousYearMonths[i] = string.Format("exp_euro_n{0}_{1}", previousYear, (i + firstMonth));
+                }
+            }
+
+            //Year
+            if (_reportFormat.ToString().IndexOf("_Year") > -1 ||
+                _reportFormat == CstFormat.PreformatedTables.productYear_X_Media)
+            {
+                string comparativeStudyMonths = "";
+
+                for (i = 0; i < months.Length; i++)
+                {
+                    if (i == months.Length - 1 && months.Length > 1)
+                    {
+                        sql.AppendFormat("exp_euro_n{0}_{1}) as N{0}", year, (i + firstMonth));
+                        comparativeStudyMonths = string.Format("{0} exp_euro_n{1}_{2}) as N{1}", comparativeStudyMonths,
+                            previousYear, (i + firstMonth));
+                    }
+                    else if (i == 0 && months.Length > 1)
+                    {
+                        sql.AppendFormat(", sum(exp_euro_n{0}_{1} + ", year, (i + firstMonth));
+                        comparativeStudyMonths = string.Format("{0} sum(exp_euro_n{1}_{2} + ", comparativeStudyMonths,
+                            previousYear, (i + firstMonth));
+                    }
+                    else if (months.Length == 1)
+                    {
+                        sql.AppendFormat(", sum(exp_euro_n{0}_{1}) as N{0}", year, (i + firstMonth));
+                        comparativeStudyMonths = string.Format("{0} sum(exp_euro_n{1}_{2}) as N{1}", comparativeStudyMonths,
+                            previousYear, (i + firstMonth));
+                    }
+                    else
+                    {
+                        sql.AppendFormat("exp_euro_n{0}_{1} + ", year, (i + firstMonth));
+                        comparativeStudyMonths = string.Format("{0} exp_euro_n{1}_{2} + ", comparativeStudyMonths, previousYear,
+                            (i + firstMonth));
+                    }
+                }
+                if (_session.ComparativeStudy)
+                    sql.AppendFormat(", {0}", comparativeStudyMonths);
+            }
+        }
+
         protected virtual void AppendMediaFields(StringBuilder sql, int mediaIndex)
         {
             #region Champs nomenclature media
@@ -1023,6 +1039,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             if (sql.ToString().IndexOf("subsector") > -1)
                 sql.AppendFormat(", {0} ", _recapSubSector.SqlWithPrefix);
             /******************/
+            if (sql.ToString().IndexOf("purchasing_agency") > -1)
+                sql.AppendFormat(", {0} ", _recapPurchasingAgency.SqlWithPrefix);
             #endregion
 
         }
@@ -1082,6 +1100,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 sql.AppendFormat("{0} {1}.id_advertiser = {2}.id_advertiser", linkWord, _recapAdvertiser.Prefix, _dataTable.Prefix);
                 linkWord = " and ";
             }
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat("{0} {1}.id_purchasing_agency = {2}.id_purchasing_agency", linkWord, _recapPurchasingAgency.Prefix, _dataTable.Prefix);
+                linkWord = " and ";
+            }
             #endregion
 
             #region nomenclature media
@@ -1099,6 +1122,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             {
                 sql.AppendFormat("{0} {1}.id_media = {2}.id_media", linkWord, _recapMedia.Prefix, _dataTable.Prefix);
             }
+
+          
             #endregion
 
 
@@ -1224,6 +1249,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					case CstFormat.PreformatedProductDetails.segmentAdvertiser:						
 					case CstFormat.PreformatedProductDetails.segmentProduct:						
 					case CstFormat.PreformatedProductDetails.segmentBrand:
+                    case CstFormat.PreformatedProductDetails.purchasingAgency:
                     /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
                     **/
                     case CstFormat.PreformatedProductDetails.sectorAdvertiser:
@@ -1290,7 +1316,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         }
 
-        private void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
+        protected virtual  void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
         {
             if (vehicleIds.Any(plurimediaDbIds.Contains) && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
             {
@@ -1388,6 +1414,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 sql.AppendFormat(" and {0}.activation < {1}", _recapSubSector.Prefix, CstDB.ActivationValues.UNACTIVATED);
             }
             /***********************************/
+            if (sql.ToString().IndexOf(_recapPurchasingAgency.SqlWithPrefix) > -1)
+            {
+                sql.AppendFormat(" and {0}.id_language = {1}", _recapPurchasingAgency.Prefix, _session.DataLanguage);
+                sql.AppendFormat(" and {0}.activation < {1}", _recapPurchasingAgency.Prefix, CstDB.ActivationValues.UNACTIVATED);
+            }
             #endregion
 
             #region nomenclature media

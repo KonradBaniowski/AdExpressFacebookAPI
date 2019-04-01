@@ -11,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
         GridResultResponse GetGridResult(string idWebSession, HttpContextBase httpContext);
 
         ResultTable GetResultTable(string idWebSession, HttpContextBase httpContext);
+
+        long CountDataRows(string idWebSession, HttpContextBase httpContext);
     }
 }

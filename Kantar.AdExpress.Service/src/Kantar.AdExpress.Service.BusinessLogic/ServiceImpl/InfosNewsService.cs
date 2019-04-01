@@ -6,7 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Web;
+using Kantar.AdExpress.Service.DataAccess.Xml;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -66,12 +68,33 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
-               // throw;
+                // throw;
             }
             return documents;
+        }
+
+        public News GetNews(string idWebSession, HttpContextBase httpContext)
+        {
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+            string newsPhysicalDirectory = WebApplicationParameters.InfoNewsInformations.NewsPhysicalDirectory;
+            string newsFileName = WebApplicationParameters.InfoNewsInformations.NewsFileName;
+            bool enableNews = WebApplicationParameters.InfoNewsInformations.EnableNews;
+
+            News news = new News();
+
+            if (enableNews)
+            {
+                news = NewsXL.LoadNews(newsPhysicalDirectory + newsFileName);
+                SetNewsMonth(news, _customerSession.SiteLanguage, httpContext);
+            }
+
+            return news;
         }
 
         private string[] GetDirectoryFiles(string pathDirectory)
@@ -111,6 +134,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             #endregion
 
             return (fileNameTemp);
+        }
+
+        private void SetNewsMonth(News news, int siteLanguage, HttpContextBase httpContext)
+        {
+            try
+            {
+                var language = WebApplicationParameters.AllowedLanguages.Values.FirstOrDefault(i => i.Id == siteLanguage);
+
+                foreach (var newsItem in news.NewsList)
+                {
+                    newsItem.Month = newsItem.Date.ToString("MMM", language.CultureInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+            }
         }
     }
 }

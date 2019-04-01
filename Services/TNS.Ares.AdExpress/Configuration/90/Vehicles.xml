@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<vehicles>
+
+  <!-- TV -->
+  <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="true" filterSpotSubType="true" mediaAgencyFlag="300">
+    <!-- Units-->
+    <allowedUnits defaultUnit="spot">
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>usd</allowedUnit>
+      <allowedUnit>tl</allowedUnit>
+      <allowedUnit>duration</allowedUnit>
+      <allowedUnit>spot</allowedUnit>
+      <allowedUnit>versionNb</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                      <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>                     <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>                        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>               <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaOwner</allowedMediaLevelItem>                   <!-- Media Owner -->
+        <allowedMediaLevelItem>program</allowedMediaLevelItem>                      <!-- Program -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>                       <!-- Version -->
+        <allowedMediaLevelItem>sloganName</allowedMediaLevelItem>                   <!-- Version Name -->
+        <allowedMediaLevelItem>programTypology</allowedMediaLevelItem>              <!-- Program Typology -->
+        <allowedMediaLevelItem>programGenre</allowedMediaLevelItem>                 <!-- Program Genre -->
+        <allowedMediaLevelItem>spotType</allowedMediaLevelItem>                     <!-- Spot Type -->
+        <allowedMediaLevelItem>spotSubType</allowedMediaLevelItem>                  <!-- Spot Sub Type -->
+        <allowedMediaLevelItem>spotRankType</allowedMediaLevelItem>                 <!-- Spot Rank Type -->
+        <allowedMediaLevelItem>programComItemPositionType</allowedMediaLevelItem>   <!-- Program Commercial Item Position Type -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>               <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>                   <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>                        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>                      <!-- Produit -->
+        <allowedMediaLevelItem>adSlogan</allowedMediaLevelItem>                     <!-- Ad Slogan -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>                       <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                    <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>                        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>                      <!-- Variété -->
+        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>             --><!-- Groupe d'agences --><!--
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>                       --><!-- Agence -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>                        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>                      <!-- Pays -->
+        <!-- Pays -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent> <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>    <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>          <!-- Titre -->
+    </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25" trendsDefaultMediaSelectionDetailLevel="2">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
+        <defaultMediaSelectionDetailLevel id="25" name="Catégorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/>    <!-- Support -->
+        <allowedMediaSelectionLevelItem id="2"/>    <!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/>    <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/>    <!-- Régie -->
+        <allowedMediaSelectionLevelItem id="17"/>   <!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
+    <!-- Détailled columns in insertions-->
+    <detailColumn id="8"/>
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>    <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>   <!-- Categorie -->
+        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>      <!-- Support -->
+        <allowedRecapMediaLevelItem>spotType</allowedRecapMediaLevelItem>    <!-- spot Type -->
+        <allowedRecapMediaLevelItem>spotSubType</allowedRecapMediaLevelItem>    <!-- spot Sub Type -->
+        <allowedRecapMediaLevelItem>interestCenter</allowedRecapMediaLevelItem>      <!-- interest Center -->
+        <!--<allowedRecapMediaLevelItem>programTypology</allowedRecapMediaLevelItem>      --><!-- programTypology -->        
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+      <allowedUniverseLevel id="24" name="program_type"/>
+      <allowedUniverseLevel id="23" name="program"/>
+      <allowedUniverseLevel id="31" name="form_sponsorship"/>
+    </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
+  </vehicle>
+
+
+
+
+</vehicles>

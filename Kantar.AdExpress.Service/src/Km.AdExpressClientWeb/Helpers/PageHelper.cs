@@ -11,6 +11,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using System.Web.Mvc;
+using Kantar.AdExpress.Service.Core.Domain.ResultOptions;
 using TNS.Alert.Domain;
 
 namespace Km.AdExpressClientWeb.Helpers
@@ -257,7 +258,7 @@ namespace Km.AdExpressClientWeb.Helpers
                 NoSelectedItemLabel = GestionWeb.GetWebWord(LanguageConstantes.NoSelectedItemLabel, siteLanguage),
                 FilterLabel = GestionWeb.GetWebWord(LanguageConstantes.FilterLabel, siteLanguage),
                 CancelLabel = GestionWeb.GetWebWord(LanguageConstantes.CancelLabel, siteLanguage),
-
+                UnitSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.UnitSelectionLabel, siteLanguage)
             };
 
 
@@ -432,6 +433,10 @@ namespace Km.AdExpressClientWeb.Helpers
                 case TNS.AdExpress.Constantes.Web.CountryCode.POLAND:
                     exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
                     break;
+                case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportGrossResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportGrossResult, siteLanguage), Visible = true });
+                    exportTypeViewModels.Add(new ExportTypeViewModel { Id = ExportPptResult, Label = GestionWeb.GetWebWord(LanguageConstantes.ExportPptResult, siteLanguage), Visible = true });
+                    break;
             }
 
             SetExportTypesVisibilityByModule(exportTypeViewModels, currentModule);
@@ -447,11 +452,8 @@ namespace Km.AdExpressClientWeb.Helpers
                     ids.Add(ExportFormattedResult);
                     ids.Add(ExportGrossResult);
                     ids.Add(ExportResultWithValue);
-                    if (WebApplicationParameters.CountryCode != CountryCode.TURKEY)
-                    {
-                        ids.Add(ExportPdfResult);
-                        ids.Add(ExportPptResult);
-                    }
+                    ids.Add(ExportPdfResult);
+                    ids.Add(ExportPptResult);
                     break;
                 case Module.Name.ANALYSE_DYNAMIQUE:
                 case Module.Name.ANALYSE_PORTEFEUILLE:
@@ -495,6 +497,103 @@ namespace Km.AdExpressClientWeb.Helpers
             clientInformation.Url = httpContext.Request.Url.ToString();
             clientInformation.ServerMachineName = httpContext.Server.MachineName;
             return clientInformation;
+        }
+
+        public static bool CanSelectMultipleUnit(string countryCode)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    return true;                   
+               default:
+                    return false;
+              
+            }
+        }
+
+        public static bool CanDisplayGroups(string countryCode)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    return true;
+                default:
+                    return false;
+
+            }
+        }
+
+        public static void SetGroupItems(int siteLanguage, string countryCode, UnitSelectControl units)
+        {
+            switch (countryCode)
+            {
+                case CountryCode.TURKEY:
+                    units.Groups = new List<GroupItems>();
+
+                    foreach (var group in units.Items.Select(i => new { i.GroupId, i.GroupType, i.GroupTextId }).Distinct())
+                    {
+                        var GroupItems = new GroupItems
+                        {
+                            GroupId = group.GroupId,
+                            GroupType = group.GroupType,
+                            GroupTextId = group.GroupTextId,
+                            GroupName = GestionWeb.GetWebWord(group.GroupTextId, siteLanguage)
+                        };
+                        GroupItems.Items = units.Items.Where(i => i.GroupId == group.GroupId).ToList();
+                        units.Groups.Add(GroupItems);
+                    }
+                    break;
+                default:
+                    units.Groups = null;
+                    break;
+            }
+        }
+
+        public static void SetGrp(string countryCode, Options options)
+        {
+            //options.Grp.Visible = false;
+            //options.Grp30S.Visible = false;
+            //options.SpendsGrp.Visible = false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        options.Grp.Visible = true;
+            //        options.Grp30S.Visible = true;
+            //        options.SpendsGrp.Visible = true;
+            //        break;
+            //    default:
+            //        options.Grp.Visible = false;
+            //        options.Grp30S.Visible = false;
+            //        options.SpendsGrp.Visible = false;
+            //        break;
+            //}
+        }
+
+        public static bool IsGrpAvailable(string countryCode)
+        {
+            return false;
+            // Remove comment in case turkey wants GRP
+            //switch (countryCode)
+            //{
+            //    case CountryCode.TURKEY:
+            //        return true;
+            //    default:
+            //        return false;
+            //}
+        }
+
+        public static string GetContent(string idWebSession)
+        {
+            WebSession session = (WebSession)WebSession.Load(idWebSession);
+            string maxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows,
+                session.SiteLanguage);
+            string maxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis,
+                session.SiteLanguage);
+            string maxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine,
+                session.SiteLanguage);
+            return
+                    $"<div style='text-align:left'>{maxAllowedRows}<br\\><ul><li>{maxAllowedRowsBis}</li><li>{maxAllowedRowsRefine}</li></ul></div>";
         }
     }
 

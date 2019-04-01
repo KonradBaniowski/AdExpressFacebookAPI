@@ -52,10 +52,20 @@
         this.Formats = GetItems($('#format').val());
     }
 
+    function SpotSubTypeFilter() {
+        this.SpotSubTypes = GetItems($('#__spotSubType').val());
+    }
+
+    function ResultTypeFilter() {
+        this.ResultType = $('#resultType').val();
+    }
+
     function UserFilter() {
         this.GenericDetailLevelFilter = new GenericDetailLevelFilter();
         this.PeriodDetailFilter = new PeriodDetailFilter();
         this.FormatFilter = new FormatFilter();
+        this.SpotSubTypeFilter = new SpotSubTypeFilter();
+        this.ResultTypeFilter = new ResultTypeFilter();
     }
 
     var userFilter = new UserFilter();
@@ -100,6 +110,12 @@
 
     $('#periodDetailType').on('change', function (e) {
         userFilter.PeriodDetailFilter.PeriodDetailType = $('#periodDetailType').val();
+    });
+
+    $('#resultType').selectpicker();
+
+    $('#resultType').on('change', function (e) {
+        userFilter.ResultTypeFilter.ResultType = $('#resultType').val();
     });
 
     $('#save-custom-detail-levels').on('click', function (e) {
@@ -161,6 +177,13 @@
 
     $('#format').on('change', function (e) {
         userFilter.FormatFilter.Formats = GetItems($('#format').val());
+    });
+    
+
+    $('#__spotSubType').selectpicker();
+
+    $('#__spotSubType').on('change', function (e) {
+        userFilter.SpotSubTypeFilter.SpotSubTypes = GetItems($('#__spotSubType').val());
     });
 
     $('#defaultDetail').selectpicker();
@@ -263,10 +286,31 @@
         userFilter.GenericDetailLevelFilter.L4DetailValue = -1;
     }
 
+    function InitNewCreativesOptions() {
+        if ($('#resultType').val() == 0) {
+            $("#export-type").find("option").eq(1).show();
+            $('#export-type').selectpicker('refresh');
+            $('#perioddetailTypeContainerDiv').css("display", "block");
+            $('#defaultDetailContainerDiv').css("display", "block");
+            $('#customDetailContainerDiv').css("display", "block");
+        } else {
+            $("#export-type").find("option").eq(1).hide();
+            $('#export-type').selectpicker('refresh');
+            $('#perioddetailTypeContainerDiv').css("display", "none");
+            $('#defaultDetailContainerDiv').css("display", "none");
+            $('#customDetailContainerDiv').css("display", "none");
+        }
+    }
+
+    InitNewCreativesOptions();
+
     $('#validate-options').on('click', function (e) {
         $("#grid").addClass("hide");
         $("#gridLoader").removeClass("hide");
         $("#collapseContainerOne").collapse('hide');
+
+        InitNewCreativesOptions();
+
         CallSetOptions();
     });
 
@@ -296,6 +340,9 @@
             success: function (data) {
                 if (data != null && data != "") {
                     if (data.hasMoreThanMaxRowsAllowed) {
+                       
+                        columnIndex = 1;
+                        createCookie("sortKey", columnIndex, 1);
                         var message = '<div style="text-align:left">' + $('#Labels_MaxAllowedRows').val() + '<br \><ul><li>' + $('#Labels_MaxAllowedRowsBis').val() + '</li><li>' + $('#Labels_MaxAllowedRowsRefine').val() + '</li></ul>' + '</div>';
                         $("#gridLoader").addClass("hide");
                         $("#gridEmpty").show();
@@ -333,6 +380,11 @@
                         var schema = new $.ig.DataSchema("array", {
                             fields: data.schema
                         });
+
+                        for (i = 0; i < cols.length; i++) {
+                            if (cols[i].key == "869") //Spot = 869
+                                cols[i].template = $("#colSpotTmpl").html();
+                        }
 
                         ds = new $.ig.DataSource({
                             type: "json",
@@ -388,21 +440,20 @@
                         applySortedColumnCss: false,
                         columnSettings: columnsNotAllowedSorting,
                         firstSortDirection: 'descending',
-                        columnSorted: function (evt, ui) {
+                        columnSorted: function(evt, ui) {
                             columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
                             createCookie("sortKey", columnIndex, 1);
                             if (ui.direction == 'ascending') {
                                 sortOrder = "ASC";
                                 createCookie("sortOrder", 1, 1);
-                            }
-                            else if (ui.direction == 'descending') {
+                            } else if (ui.direction == 'descending') {
                                 sortOrder = "DESC";
                                 createCookie("sortOrder", 0, 1);
                             }
                         }
                     }
-                    ]
-            })
+                ]
+            });
 
             gridWidth = $("#grid_table_headers").width();
             gridWidth += $("#grid_table_headers_fixed").width();

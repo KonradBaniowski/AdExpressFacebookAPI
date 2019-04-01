@@ -106,18 +106,29 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			return ComputeData();
 		}
 
-		/// <summary>
-		/// Get result table
+        /// <summary>
+		/// Get data
 		/// </summary>
 		/// <returns></returns>
-		protected abstract DataSet ComputeData();
+		public virtual long CountData()
+        {
+            return CountDataRows();
+        }
 
-		#region Get Product Data
-		/// <summary>
-		/// Récupère la liste produit de référence
-		/// </summary>
-		/// <returns>la liste produit de référence</returns>
-		protected virtual string GetProductData() {
+        /// <summary>
+        /// Get result table
+        /// </summary>
+        /// <returns></returns>
+        protected abstract DataSet ComputeData();
+
+        protected abstract long CountDataRows();
+
+        #region Get Product Data
+        /// <summary>
+        /// Récupère la liste produit de référence
+        /// </summary>
+        /// <returns>la liste produit de référence</returns>
+        protected virtual string GetProductData() {
 			string sql = "";
 			if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
 				sql = _webSession.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);

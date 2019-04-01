@@ -86,6 +86,11 @@
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
             break;
+        case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
+            <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
+            <script src="~/IgniteUI/js/infragistics.core.js"></script>
+            <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
@@ -238,6 +243,82 @@
 
             }
 
+            function UnitFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number");
+
+                return "";
+            }
+
+            function PageFormatter(val) {
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "#,##0.###");
+
+                return "";
+            }
+
+            function EvolFormatter(val) {
+                //if (isNaN(val))
+                //    return '';
+
+                if (val == "+Infinity")
+                    return '+<img src="../Content/img/g.gif" />';
+                else if (val == "-Infinity")
+                    return '-<img src="../Content/img/r.gif" />';
+
+                if (val > 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/g.gif" />';
+
+                if (val < 0)
+                    return $.ig.formatter(val, "number", "percent") + '<img src="../Content/img/r.gif" />';
+
+                if (val == 0)
+                    return '<img src="../Content/img/o.gif" />';
+
+                return '';
+            }
+
+            function DurationFormatter(val) {
+
+                if (val == 0)
+                    return "";
+
+                var s = val.toString();
+                var valLenght = s.length;
+                var hLenght = 2;
+                if (valLenght > 6)
+                    hLenght = valLenght - 4;
+                var nbToFillWithZero = 6 - valLenght;
+                for (var i = 0; i < nbToFillWithZero; i++)
+                    s = "0" + s;
+                valLenght = s.length;
+                return s.substr(0, hLenght) + " H " + s.substr(valLenght - 4, 2) + " M " + s.substr(valLenght - 2, 2) + " S";
+            }
+
+            function GetColumnsFormatter(columns) {
+
+                if (columns != null) {
+
+                    columns.forEach(function (elem) {
+                        if (elem.key.length > 0 && (elem.key.startsWith("PERIOD") || elem.key.startsWith("PERIOD_COMP"))) {
+                            if (elem.key.endsWith("duration"))
+                                elem.formatter = DurationFormatter;
+                            else if (elem.key.endsWith("pages"))
+                                elem.formatter = PageFormatter;
+                            else
+                                elem.formatter = UnitFormatter;
+                        }
+                        else if (elem.key.length > 0 && elem.key.startsWith("EVOL")) {
+                            elem.formatter = EvolFormatter;
+                        }
+                    });
+
+                    return columns;
+                }
+
+                return columns;
+            }
+
             function CallMediaScheduleResult(zoomDateParam) {
 
                 $("#gridMessage").addClass("hide");
@@ -274,7 +355,7 @@
                             }
                             else {
                                 dataTreeGrid = data.datagrid;
-                                cols = data.columns;
+                                cols = GetColumnsFormatter(data.columns);
                                 colsFixed = data.columnsfixed;
                                 needFixedColumns = data.needfixedcolumns;
                                 hasMSCreatives = data.hasMSCreatives;
@@ -308,7 +389,7 @@
             }
 
             CallMediaScheduleResult(paramsUrl.ZoomDate);
-
+           
             function CallMSCreativesResult(zoomDateParam) {
 
                 zoomDate = zoomDateParam;

@@ -61,6 +61,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool hidePlurimediaEvol = false;
             bool usePurchaseMode = false;
             bool showPickaNews = false;
+            bool useSpotSubType = false;
             #endregion
 
             try {
@@ -234,6 +235,12 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     usePurchaseMode = bool.Parse(reader.GetAttribute("use"));
                                 }
                                 break;
+                            case "spotSubType":
+                                if (reader.GetAttribute("use") != null && reader.GetAttribute("use").Length > 0)
+                                {
+                                    useSpotSubType = bool.Parse(reader.GetAttribute("use"));
+                                }
+                                break;
                             case "plurimediaEvol":
                                 if (reader.GetAttribute("hidePlurimediaEvol") != null && reader.GetAttribute("hidePlurimediaEvol").Length > 0) {
                                     hidePlurimediaEvol = bool.Parse(reader.GetAttribute("hidePlurimediaEvol"));
@@ -267,6 +274,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.HidePlurimediaEvol = hidePlurimediaEvol;
                 WebApplicationParameters.UsePurchaseMode = usePurchaseMode;
                 WebApplicationParameters.ShowPickaNews = showPickaNews;
+                WebApplicationParameters.UseSpotSubType = useSpotSubType;
             }
 
             #region Error Management

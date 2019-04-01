@@ -118,6 +118,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         {
             return BuildGridResult();
         }
+        public virtual long CountData()
+        {
+            return CountDataRows();
+            
+        }
 
         #region Data for vehicle view
         /// <summary>
@@ -234,6 +239,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract GridResult BuildGridResult();
+
+	    protected virtual long CountDataRows()
+	    {
+            throw new NotImplementedException();
+
+        }
 
 
         #endregion

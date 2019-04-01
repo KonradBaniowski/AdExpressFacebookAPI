@@ -129,6 +129,10 @@ namespace Km.AdExpressClientWeb
                 if (WebApplicationParameters.UsePurchaseMode)
                     PurchaseModeList.Init();
 
+
+                if (WebApplicationParameters.UseSpotSubType)
+                    SpotSubTypes.Init();
+
             }
           
             catch (System.Exception E)

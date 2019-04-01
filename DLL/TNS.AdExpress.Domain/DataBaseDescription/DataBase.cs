@@ -1228,10 +1228,39 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         canal= 269,
 
 
+
         /// <summary>
         /// Recap Social Segment
         /// </summary>
         leFac = 270,
+        /// <summary>
+        /// Spot TV data
+        /// </summary>
+        spotTv = 271,
+        /// <summary>
+        /// Spot Sub type
+        /// </summary>
+        spotSubType = 272,
+        /// <summary>
+        /// Recap Spot type
+        /// </summary>
+        recapSpotType = 273,
+        /// <summary>
+        /// Recap Spot Sub type
+        /// </summary>
+        recapSpotSubType = 274,
+        /// <summary>
+        /// Recap Ad Slogan
+        /// </summary>
+        recapAdSlogan = 275,
+        /// <summary>
+        /// Data spot TV
+        /// </summary>
+        dataSpotTv = 276,
+        /// <summary>
+        /// Data alert spot TV
+        /// </summary>
+        dataSpotTvAlert =  277,
 
         /// <summary>
         /// Alert description
@@ -1244,7 +1273,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Static Nav Session
         /// </summary>
-        staticNav = 400
+        staticNav = 400,
+        /// <summary>
+        /// Media Owner
+        /// </summary>
+        mediaOwner = 401,
+        /// <summary>
+        /// Purchasing Agency
+        /// </summary>
+        recapPurchasingAgency = 402
     }
     #endregion
 
@@ -1296,7 +1333,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Health Product
         /// </summary>
-        allHealthProduct = 10
+        allHealthProduct = 10,
+        /// <summary>
+        /// All Media Program
+        /// </summary>
+        allMediaProgram = 11,
+        /// <summary>
+        /// All Media Spot Type
+        /// </summary>
+        allMediaSpotType = 12
     }
     #endregion
 

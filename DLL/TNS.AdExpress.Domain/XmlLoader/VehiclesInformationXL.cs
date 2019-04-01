@@ -58,6 +58,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             CustomerSessions.Unit defaultAllowUnit;
             AllowUnits allowUnits = new AllowUnits(); 
             Int64 mediaAgencyFlag = -1;
+            bool filterSpotSubType = false;
             #endregion
 
             try {
@@ -93,6 +94,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									defaultMediaSelectionDetailLevel = null;
                                     trendsDefaultMediaSelectionDetailLevel = null;                                  
 									autopromo = false;
+                                    filterSpotSubType = false;
 									allowedUniverseLevels = new List<long>();
                                     mediaAgencyFlag = -1;
                                 }
@@ -112,6 +114,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
                                 if (reader.GetAttribute("mediaAgencyFlag") != null && reader.GetAttribute("mediaAgencyFlag").Length > 0)
                                     mediaAgencyFlag = Int64.Parse(reader.GetAttribute("mediaAgencyFlag"));
+                                if (reader.GetAttribute("filterSpotSubType") != null && reader.GetAttribute("filterSpotSubType").Length > 0)
+                                    filterSpotSubType = bool.Parse(reader.GetAttribute("filterSpotSubType"));
                                 break;
                             case "allowedUnits":
                                 defaultAllowUnit = (CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), reader.GetAttribute("defaultUnit"));
@@ -205,6 +209,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 					vhInfo.Autopromo = autopromo;
 					vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                     vhInfo.MediaAgencyFlag = mediaAgencyFlag;
+                    vhInfo.FilterSpotSubType = filterSpotSubType;
                     list.Add(vhInfo);
                 }
             }

@@ -204,6 +204,12 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql += " and " + UnitsInformation.Get(TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.spot).DatabaseField + " =  " + _cobrandindConditionValue;
 			return sql;
 		}
-		#endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 	}
 }

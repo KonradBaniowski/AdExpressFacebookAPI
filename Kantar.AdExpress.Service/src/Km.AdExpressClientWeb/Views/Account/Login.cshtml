@@ -1,4 +1,6 @@
 ﻿@using Km.AdExpressClientWeb.Models;
+@using TNS.AdExpress.Domain.Translation
+@using TNS.AdExpress.Domain.Web
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
@@ -50,12 +52,31 @@
 
 
 @Html.HiddenFor(e => e.ErrorMessage)
-
+@if (WebApplicationParameters.EnableGdpr)
+{
+    <input type="hidden" id="CookiesMessage" value="@GestionWeb.GetWebWord(3264, Model.SiteLanguage)" />
+    <input type="hidden" id="MoreInfoLabel" value="@GestionWeb.GetWebWord(3245, Model.SiteLanguage)" />
+    <input type="hidden" id="AcceptBtnLabel" value="@GestionWeb.GetWebWord(3265, Model.SiteLanguage)" />
+    <input type="hidden" id="AdvancedBtnLabel" value="@GestionWeb.GetWebWord(3266, Model.SiteLanguage)" />
+    <input type="hidden" id="CookieTypesTitle" value="@GestionWeb.GetWebWord(3267, Model.SiteLanguage)" />
+    <input type="hidden" id="FixedCookieTypeLabel" value="@GestionWeb.GetWebWord(3248, Model.SiteLanguage)" />
+    <input type="hidden" id="FixedCookieTypeDesc" value="@GestionWeb.GetWebWord(3249, Model.SiteLanguage)" />
+    <input type="hidden" id="CookiesTitle" value="@GestionWeb.GetWebWord(3250, Model.SiteLanguage)" />
+    <input type="hidden" id="CookieStat" value="@GestionWeb.GetWebWord(3268, Model.SiteLanguage)" />
+    <input type="hidden" id="CookieStatDesc" value="@GestionWeb.GetWebWord(3269, Model.SiteLanguage)" />
+    <input type="hidden" id="CookieDiagnostic" value="@GestionWeb.GetWebWord(3270, Model.SiteLanguage)" />
+    <input type="hidden" id="CookieDiagnosticDesc" value="@GestionWeb.GetWebWord(3271, Model.SiteLanguage)" />
+    <input type="hidden" id="SiteLanguage" value="@Model.SiteLanguage" />
+    <input type="hidden" id="PolicyUpdateDate" value="@ViewBag.PolicyUpdateDate" />
+    <input type="hidden" id="ForceCookieReInit" value="@ViewBag.ForceCookieReInit" />
+}
 <input type="hidden" id="current-url" value="/Account/Login" />
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/account")
-
+    @if(WebApplicationParameters.EnableGdpr) {
+        @Scripts.Render("~/bundles/gdpr")
+    }
 }

@@ -241,8 +241,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -369,8 +373,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     response.ErrorMessage = ex.Message;
                 }
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -535,8 +543,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -600,7 +611,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 _webSession.PeriodEndDate = "";
                 _webSession.Graphics = true;
 
-                _webSession.Unit = UnitsInformation.DefaultCurrency;
+                _webSession.Units = new List<CstWeb.CustomerSessions.Unit> { UnitsInformation.DefaultCurrency };
+
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
+                    && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                {
+                    _webSession.Units = new List<CstWeb.CustomerSessions.Unit> {CstWeb.CustomerSessions.Unit.versionNb };
+                }
+
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
+                   && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+                {
+                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.tl);
+                    _webSession.Units.Add(CstWeb.CustomerSessions.Unit.duration);
+                }
 
                 TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
                 if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
@@ -727,6 +751,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     _webSession.SelectedPurchaseModeList = string.Join(",", purchaseModeList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
                 }
 
+              
                 _webSession.ComparativeStudy = false;
                 if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
                 {
@@ -797,8 +822,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
                 throw;
             }
         }
@@ -875,8 +904,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -1063,12 +1095,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     , AppDomain.CurrentDomain.BaseDirectory, cl.AssemblyName), cl.Class, false
                     , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
-                _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
-
-                var current = new System.Windows.Forms.TreeNode("ChoixMedia");
-                System.Windows.Forms.TreeNode vehicle = null;
+                //System.Windows.Forms.TreeNode vehicle = null;
+                System.Windows.Forms.TreeNode current = new System.Windows.Forms.TreeNode("ChoixMedia");
                 int pluriWordCode = 210;
-                var vehicleNames = DBConstantes.Vehicles.names.plurimedia;
+                DBConstantes.Vehicles.names vehicleNames = DBConstantes.Vehicles.names.plurimedia;
+
+                if (WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
+                {
+
+                    _webSession.LastAvailableRecapMonth =
+                        dateDAL.CheckAvailableDateForMedia(
+                            VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.tv));                    
+                    pluriWordCode = 206;
+                    vehicleNames = DBConstantes.Vehicles.names.tv;
+
+                }
+                else
+                {
+                    _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));                 
+                }
 
                 if (WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.FRANCE))
                 {
@@ -1077,13 +1122,26 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         _webSession.LastAvailableRecapMonth = mmsLastAvailableRecapMonth;
                 }
 
-                //Creating new plurimedia	node	             
-                vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
+                //Creating new plurimedia	node
+                System.Windows.Forms.TreeNode vehicle;
+                if (WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
                 {
-                    Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, vehicleNames.GetHashCode(),
-                    GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
-                    Checked = true
-                };
+                   vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
+                    {
+                        Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(vehicleNames),
+                  GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
+                        Checked = true
+                    };
+                }
+                else
+                {
+                     vehicle = new TreeNode(GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage))
+                    {
+                        Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, vehicleNames.GetHashCode(),
+                  GestionWeb.GetWebWord(pluriWordCode, _webSession.SiteLanguage)),
+                        Checked = true
+                    };
+                }              
                 current.Nodes.Add(vehicle);
 
                 //Tracking
@@ -1129,7 +1187,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
                 object[] param = new object[1];
                 param[0] = _webSession;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
++ cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 
                 if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00")))
@@ -1599,16 +1658,19 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private static void SetLog(SaveMediaSelectionRequest request, WebSession webSession, Exception ex)
         {
-            CustomerWebException cwe = new CustomerWebException(webSession, ex);
-            cwe.Browser = request.ClientInformation.Browser;
-            cwe.VersionBrowser = request.ClientInformation.BrowserVersion;
-            cwe.MinorVersionBrowser = request.ClientInformation.BrowserMinorVersion;
-            cwe.Platform = request.ClientInformation.BrowserPlatform;
-            cwe.UserAgent = request.ClientInformation.UserAgent;
-            cwe.UserHostAddress = request.ClientInformation.UserHostAddress;
-            cwe.Url = request.ClientInformation.Url.ToString();
-            cwe.ServerName = request.ClientInformation.ServerMachineName;
-            Logger.Log(LogLevel.Error, cwe.GetLog());
+            if (webSession.EnableTroubleshooting)
+            {
+                CustomerWebException cwe = new CustomerWebException(webSession, ex);
+                cwe.Browser = request.ClientInformation.Browser;
+                cwe.VersionBrowser = request.ClientInformation.BrowserVersion;
+                cwe.MinorVersionBrowser = request.ClientInformation.BrowserMinorVersion;
+                cwe.Platform = request.ClientInformation.BrowserPlatform;
+                cwe.UserAgent = request.ClientInformation.UserAgent;
+                cwe.UserHostAddress = request.ClientInformation.UserHostAddress;
+                cwe.Url = request.ClientInformation.Url.ToString();
+                cwe.ServerName = request.ClientInformation.ServerMachineName;
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+            }
         }
 
         private void SetInsertOption(WebSession webSession, List<long> mediaIds)

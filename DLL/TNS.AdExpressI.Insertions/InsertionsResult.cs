@@ -1176,7 +1176,7 @@ namespace TNS.AdExpressI.Insertions
                     case CstDBClassif.Vehicles.names.tvAnnounces:
                     case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                     case CstDBClassif.Vehicles.names.others:
-                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        tab[cLine, 1] = c = GetCellCreativesTvInformation(vehicle, columns, columnsName, cells);
                         break;
                     case CstDBClassif.Vehicles.names.adnettrack:
                     case CstDBClassif.Vehicles.names.internet:
@@ -1215,6 +1215,12 @@ namespace TNS.AdExpressI.Insertions
             return new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module);
         }
 
+        protected virtual CellCreativesTvInformation GetCellCreativesTvInformation(VehicleInformation vehicle, List<GenericColumnItemInformation> columns
+            , List<string> columnsName, List<Cell> cells)
+        {
+            return new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
+        }
+
 
         protected virtual void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
             List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet)
@@ -1242,8 +1248,7 @@ namespace TNS.AdExpressI.Insertions
                     case Vehicles.names.tvAnnounces:
                     case Vehicles.names.tvNonTerrestrials:
                     case Vehicles.names.others:
-                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns,
-                            columnsName, cells, _module, idColumnsSet);
+                        tab[cLine, 1] = c = GetCellCreativesTvInformation( vehicle, columns, columnsName, cells, idColumnsSet);
                         break;
                     case Vehicles.names.adnettrack:
                     case Vehicles.names.internet:
@@ -1280,8 +1285,13 @@ namespace TNS.AdExpressI.Insertions
         {
             return
                 new CellCreativesRadioInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
+        }
 
-
+        protected virtual CellCreativesTvInformation GetCellCreativesTvInformation(VehicleInformation vehicle, List<GenericColumnItemInformation> columns,
+            List<string> columnsName, List<Cell> cells, long idColumnsSet)
+        {
+            return
+                new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
         }
 
         #region GetLineNumber
@@ -1942,7 +1952,7 @@ namespace TNS.AdExpressI.Insertions
         #endregion
 
 
-        private void ComputeGridData(GridResult gridResult, ResultTable _data, int nbLine)
+        protected  virtual void ComputeGridData(GridResult gridResult, ResultTable _data, int nbLine)
         {
             _data.Sort(ResultTable.SortOrder.NONE, 1); //Important, pour hierarchie du tableau Infragistics
             _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
@@ -2027,7 +2037,7 @@ namespace TNS.AdExpressI.Insertions
         }
 
 
-        public GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        public virtual GridResult GetInsertionsGridResult(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
         {
             GridResult gridResult = new GridResult();
             gridResult.HasData = false;
@@ -2261,6 +2271,24 @@ namespace TNS.AdExpressI.Insertions
 
             return columns;
         }
+
+
+
         #endregion
+
+        #region CountInsertions
+
+        public long CountInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId,
+         string zoomDate)
+        {
+            _getCreatives = false;
+            _zoomDate = zoomDate;
+            _universId = universId;
+            return _dalLayer.CountInsertionsData(vehicle, fromDate, toDate, universId, filters);
+           
+        }
+
+        #endregion
+
     }
 }

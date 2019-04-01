@@ -7,6 +7,8 @@
   <!--<smtp host="195.168.127.142" from="tnsadexpress@tns-global.sk" errorEmailList="youssef.rkaina@tnsmi.fr;alexandre.rousseau@tnsmi.fr;benjamin.masson@tnsmi.fr;guillaume.facon@tnsmi.fr" mailPort="25"/>-->
   <!--<smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>-->
   <smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="youssef.rkaina@kantarmedia.com" mailPort="25"/>
+  <!-- Turkey -->
+  <!--<smtp host="172.22.181.20" from="adexTR@kantarmedia.com.tr" errorEmailList="dede.mussuma@kantarmedia.com;youssef.rkaina@kantarmedia.com" mailPort="25"/>-->
   <server server_id="1" host="frmitch-vmls03" port="30000" />
   <server server_id="2" host="frmitch-ditd058" port="30000" />
   <server server_id="3" host="kmchmvls004" port="30000" />
@@ -20,4 +22,6 @@
   <!--Poland-->
   <!--<server server_id="8" host="TSWROWBE001" port="30000" />-->
   <server server_id="6" host="KMWLWDAT008" port="30000" />
+  <!-- Turkey -->
+  <server server_id="8" host="KMISBADXEXP" port="30000" />
 </servers>

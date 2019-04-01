@@ -5,6 +5,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using TNS.FrameWork.WebResultUI;
@@ -251,7 +252,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 mediaSchedule = 1;
             }
 
-            iNbCol = nbColumsProduct + creatives + insertions + mediaSchedule + _webSession.GetValidUnitForResult().Count;
+            iNbCol = nbColumsProduct + creatives + insertions + mediaSchedule + GetValidUnitForResult().Count;
 
             cellFactories = new CellUnitFactory[iNbCol];
             lineDelegates = new AffectLine[iNbCol];
@@ -291,7 +292,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case DBClassificationConstantes.Vehicles.names.search:
                 case DBClassificationConstantes.Vehicles.names.social:
 
-                    foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
+                    foreach (UnitInformation currentUnit in GetValidUnitForResult()) {
                         headers.Root.Add(new Header(true, 
                             GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
                         type = assembly.GetType(currentUnit.CellType);
@@ -391,7 +392,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+	    protected virtual List<UnitInformation> GetValidUnitForResult()
+	    {
+	        return _webSession.GetValidUnitForResult();
+	    }
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
         #endregion
     }

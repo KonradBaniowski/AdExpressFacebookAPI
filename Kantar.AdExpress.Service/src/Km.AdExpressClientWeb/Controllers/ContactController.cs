@@ -43,6 +43,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     model.ClientServicePhoneNumber = "+48 71 78 75 300";
                     model.ClientServiceEmail = "aleksandra.misterska@kantarmedia.com";
                     break;
+                case CountryCode.TURKEY:
+                    model.ClientServicePhoneNumber = "+90 212 312 34 01";
+                    model.ClientServiceEmail = "ISBClientService@kantarmedia.com";
+                    break;
                 default:
                     model.ClientServicePhoneNumber = "01 47 67 13 02";
                     model.ClientServiceEmail = "sc.adexpress@kantarmedia.com";

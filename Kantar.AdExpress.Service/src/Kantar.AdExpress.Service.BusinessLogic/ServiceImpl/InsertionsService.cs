@@ -79,7 +79,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return insertionResponse;
                 }
 
-                if (idVehicle.HasValue)
+                if (idVehicle.HasValue) 
                 {
                     insertionResponse.IdVehicle = idVehicle.Value;
                 }
@@ -181,22 +181,6 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     return insertionResponse;
                 }
 
-                //TODO: A GERER pour les exports Excel
-                //if (this._renderType != RenderType.html)
-                //{
-                //    var columns = _customerWebSession.GenericInsertionColumns.Columns;
-                //    var columnIds = (columns.Where(
-                //        g =>
-                //        g.Id != GenericColumnItemInformation.Columns.associatedFile &&
-                //        g.Id != GenericColumnItemInformation.Columns.associatedFileMax &&
-                //        g.Id != GenericColumnItemInformation.Columns.poster &&
-                //        g.Id != GenericColumnItemInformation.Columns.visual).Select(g => g.Id.GetHashCode()))
-                //        .Select(dummy => (long)dummy).ToList();
-                //    _customerWebSession.GenericInsertionColumns = new GenericColumns(columnIds);
-
-                //    result.RenderType = _renderType;
-                //}
-
 
                 insertionResponse.GridResult = insertionResult.GetInsertionsGridResult(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
 
@@ -204,8 +188,12 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             catch (Exception ex)
             {
                 insertionResponse.Message = GestionWeb.GetWebWord(959, _customerWebSession.SiteLanguage);
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -250,8 +238,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -300,8 +291,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -407,8 +401,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -435,8 +432,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, custSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (custSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, custSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -561,7 +561,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
         {
             List<Int64> vehicleList = new List<Int64>();
             string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-            if (listStr != null && listStr.Length > 0)
+            if (!string.IsNullOrEmpty(listStr))
             {
                 string[] list = listStr.Split(',');
                 for (int i = 0; i < list.Length; i++)
@@ -575,6 +575,56 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             return vehicleList;
         }
+
+        public long CountInsertions(string idWebSession, string ids, string zoomDate, int idUnivers, long moduleId, long idVehicle,
+            HttpContextBase httpContext, bool isExcel = false)
+        {
+            _customerWebSession = (WebSession)WebSession.Load(idWebSession);
+            ResultTable result = null;
+            try
+            {
+                IInsertionsResult insertionResult = InitInsertionCall(_customerWebSession, moduleId, httpContext);
+                VehicleInformation vehicle = VehiclesInformation.Get(idVehicle);
+                //date
+                TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType = _customerWebSession.PeriodType;
+                string periodBegin = _customerWebSession.PeriodBeginningDate;
+                string periodEnd = _customerWebSession.PeriodEndDate;
+                if (!string.IsNullOrEmpty(zoomDate))
+                {
+                    periodType = _customerWebSession.DetailPeriod == TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.weekly
+                        ? TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateWeek : TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateMonth;
+                    _fromDate = Convert.ToInt32(
+                        Dates.Max(Dates.getZoomBeginningDate(zoomDate, periodType),
+                            Dates.GetPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                        );
+                    _toDate = Convert.ToInt32(
+                        Dates.Min(Dates.getZoomEndDate(zoomDate, periodType),
+                            Dates.GetPeriodEndDate(periodEnd, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
+                        );
+                }
+                else
+                {
+                    _fromDate = Convert.ToInt32(Dates.getZoomBeginningDate(periodBegin, periodType).ToString("yyyyMMdd"));
+                    _toDate = Convert.ToInt32(Dates.getZoomEndDate(periodEnd, periodType).ToString("yyyyMMdd"));
+                }
+
+               
+
+                return insertionResult.CountInsertions(vehicle, _fromDate, _toDate, ids, idUnivers, zoomDate);
+            }
+            catch (Exception ex)
+            {
+                if (_customerWebSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerWebSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                throw;
+            }
+           
+        }
+
         #endregion
 
     }

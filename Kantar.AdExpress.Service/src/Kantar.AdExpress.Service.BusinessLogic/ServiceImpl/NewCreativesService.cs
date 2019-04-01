@@ -46,8 +46,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch(Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -72,12 +75,43 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch(Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
             return data;
+        }
+
+        public long CountDataRows(string idWebSession, HttpContextBase httpContext)
+        {
+            long nbRows = 0;
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+            try
+            {
+                var module = ModulesList.GetModule(WebConstantes.Module.Name.NEW_CREATIVES);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                var parameters = new object[1];
+                parameters[0] = _customerSession;
+                var result = (INewCreativesResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                nbRows = result.CountData();
+            }
+            catch (Exception ex)
+            {
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                throw;
+            }
+            return nbRows;
         }
     }
 }

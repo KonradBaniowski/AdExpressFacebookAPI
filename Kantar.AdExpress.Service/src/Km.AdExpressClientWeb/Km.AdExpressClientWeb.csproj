@@ -198,6 +198,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyController.cs" />
     <Compile Include="Controllers\AdvertisingAgencyExportController.cs" />
+    <Compile Include="Controllers\CookiePolicyController.cs" />
+    <Compile Include="Controllers\CookieSettingsController.cs" />
     <Compile Include="Controllers\PortfolioAlertController.cs" />
     <Compile Include="Controllers\AlertController.cs" />
     <Compile Include="Controllers\CampaignAnalysisController.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\NewCreativesExportController.cs" />
     <Compile Include="Controllers\PortfolioDetailMediaExportController.cs" />
+    <Compile Include="Controllers\PrivacyPolicyController.cs" />
     <Compile Include="Controllers\ProductClassAnalysisExportController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -240,6 +243,7 @@
     <Compile Include="I18n\LabelsHelper.cs" />
     <Compile Include="Models\Alert\CreateAlertModel.cs" />
     <Compile Include="Models\Contact\ContactViewModel.cs" />
+    <Compile Include="Models\CookieSettingsModel.cs" />
     <Compile Include="Models\DetailSelection\DetailSelectionViewModel.cs" />
     <Compile Include="Models\Health\DataCostContract.cs" />
     <Compile Include="Models\Health\HealthMediaSelectionViewModel.cs" />
@@ -285,6 +289,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\gdpr.css" />
     <Content Include="Content\img\48\export_logo_km.png" />
     <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\48\logo_kantarmedia.png" />
@@ -297,7 +302,9 @@
     <Content Include="Content\img\421\logo_kantarmedia.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\90\Kantar_Media_BMPro_SW_RGB.png" />
     <Content Include="Content\img\banner_sk.jpg" />
+    <Content Include="Content\img\banner_tr.jpg" />
     <Content Include="Content\img\sponsorship\29082.png" />
     <Content Include="Content\img\sponsorship\29104.png" />
     <Content Include="Content\img\sponsorship\29105.png" />
@@ -313,6 +320,12 @@
     <Content Include="Content\LoginFiles\images\ui-bg_highlight-soft_45_9c1e8d_1x100.png" />
     <Content Include="Content\LoginFiles\jquery.ui.theme.css" />
     <Content Include="Content\LoginFiles\Site.css" />
+    <Content Include="Content\site-En.css" />
+    <Content Include="Content\site-Fr.css" />
+    <Content Include="Content\site-Tk.css" />
+    <Content Include="IgniteUI\js\modules\i18n\infragistics.ui.grid-tr.js" />
+    <Content Include="Scripts\gdpr\gdpr.js" />
+    <Content Include="Scripts\gdpr\jquery.ihavecookies.js" />
     <Content Include="_app_offline.htm" />
     <Content Include="Configuration\90\AdExpressConfiguration.xml" />
     <Content Include="Configuration\90\AdNetTrackDetailLevel.xml" />
@@ -1877,6 +1890,14 @@
     <Content Include="Views\Shared\_LayoutPublic2.cshtml" />
     <Content Include="Views\Home\_ModulesPl.cshtml" />
     <Content Include="Views\Home\_HomeNewsPl.cshtml" />
+    <Content Include="Views\PrivacyPolicy\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPrivacy.cshtml" />
+    <Content Include="Views\CookiePolicy\Index.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyFr.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyEn.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicyFr.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicyEn.cshtml" />
+    <Content Include="Views\CookieSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1907,6 +1928,10 @@
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{e25dbd07-256d-4078-a3c9-27153081629f}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{a4dede88-c99e-495f-98f2-e2762520f4be}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0ad4151f-074c-4c7d-9ffc-6de8d186626a}</Project>

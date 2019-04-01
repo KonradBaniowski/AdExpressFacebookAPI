@@ -33,11 +33,16 @@ namespace TNS.AdExpress.Domain.Translation{
                     Poland.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
                     return Poland.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
                 }
-                else {
-                    Global.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
-                    return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+
+                if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.TURKEY)
+                {
+                    Turkey.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
+                    return Turkey.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
                 }
-				//return _list[langue].GetWebWord(code);
+
+			    Global.CurrentCultureInfo = WebApplicationParameters.AllowedLanguages[langue].CultureInfo;
+			    return Global.GetValue("w" + code.ToString(), WebApplicationParameters.AllowedLanguages[langue].CultureInfo).ToString();
+			    //return _list[langue].GetWebWord(code);
 
 			}
 			catch(System.Exception){

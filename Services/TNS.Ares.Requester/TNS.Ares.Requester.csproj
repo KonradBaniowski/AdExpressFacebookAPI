@@ -153,6 +153,12 @@
     <Content Include="Configuration\AdExpress\48\PluginConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\AdExpress\90\Database.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\AdExpress\90\PluginConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\EasyMusic\33\Database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -62,7 +62,7 @@
                                         <select id="@Model.UnitOption.Unit.Id" class="selectdatepicker">
                                             @foreach (var item in Model.UnitOption.Unit.Items)
                                             {
-                                                if (item.Value == Model.UnitOption.Unit.SelectedId)
+                                                if (Model.UnitOption.Unit.SelectedIds.Contains(item.Value))
                                                 {
                                                     <option value="@item.Value" selected>@item.Text</option>
                                                 }
@@ -79,7 +79,9 @@
                     </div>
 
 
-
+                    @{
+                        optionsNb++;
+                    }
 
                     @if (@Model.GenericColumnDetailLevelOption.L1Detail.Visible)
                     {
@@ -414,6 +416,22 @@
                             }
                             <label for="set-pdm">@GestionWeb.GetWebWord(806, Model.SiteLanguage)</label>
                         </div>
+                        
+                        @if (Model.PDV != null)
+                        {
+                            <div class="checkbox padder media-schedule-option">
+                                @if (Model.PDV.Value)
+                                {
+                                    <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font" checked/>
+                                }
+                                else
+                                {
+                                    <input id="set-pdv" type="checkbox" name="set-pdv" class="with-font"/>
+                                }
+                                <label for="set-pdv">@GestionWeb.GetWebWord(1166, Model.SiteLanguage)</label>
+                            </div>
+                        }
+
                         @if (WebApplicationParameters.UseRetailer)
                         {
                             <div class="checkbox padder media-schedule-option">

@@ -112,6 +112,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdExpressContext.cs" />
@@ -134,6 +138,7 @@
     <Compile Include="Repository\AddressRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\Mau\LoginRepository.cs" />
+    <Compile Include="Xml\NewsXL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

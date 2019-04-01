@@ -71,6 +71,8 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
             ViewBag.SiteLanguage = siteLanguage;
 
+            var news = _infosNewsService.GetNews(idWS, this.HttpContext);
+
             List<Documents> documents = new List<Documents>();
 
             //Added temporarily for Finland and ireland
@@ -108,6 +110,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 });
             }
             else if (WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
+            {
+            }
+            else if (WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
             {
             }
             else if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
@@ -150,6 +155,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 ModuleRight = res,
                 Modules = resList,
                 Documents = documents,
+                News = news,
                 EncryptedLogin = encryptedLogin,
                 EncryptedPassword = encryptedPassword,
                 SiteLanguage = WebApplicationParameters.DefaultLanguage, // Default

@@ -62,6 +62,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
         private const string CALENDARLANGUAGESK = "sk";
+        private const string CALENDARLANGUAGETR = "tr";
         private int _siteLanguage = WebApplicationParameters.DefaultLanguage;
 
 
@@ -241,6 +242,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
                     periodModel.LanguageName = CALENDARLANGUAGESK;
                     break;
+                case TNS.AdExpress.Constantes.DB.Language.TURKEY:
+                    periodModel.LanguageName = CALENDARLANGUAGETR;
+                    break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;
                     break;
@@ -318,7 +322,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 Presentation = pageHelper.LoadPresentationBar(result.WebSession.SiteLanguage, result.ControllerDetails),
                 Labels = pageHelper.LoadPageLabels(result.WebSession.SiteLanguage, _controller),
                 IsAlertVisible = PageHelper.IsAlertVisible(WebApplicationParameters.CountryCode, idSession),
-                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage)
+                ExportTypeViewModels = PageHelper.GetExportTypes(WebApplicationParameters.CountryCode, WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA, _siteLanguage),
+                GrpAvailable = PageHelper.IsGrpAvailable(WebApplicationParameters.CountryCode)
             };
 
             return View(model);
@@ -350,7 +355,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             string jsonData = JsonConvert.SerializeObject(gridResult.Data);
 
-            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit };
+            var obj = new { datagrid = jsonData, columns = gridResult.Columns, schema = gridResult.Schema, columnsfixed = gridResult.ColumnsFixed, columnsNotAllowedSorting = gridResult.ColumnsNotAllowedSorting, needfixedcolumns = gridResult.NeedFixedColumns, hasMSCreatives = gridResult.HasMSCreatives, unit = gridResult.Unit, units = gridResult.Units };
             jsonModel = Json(obj, JsonRequestBehavior.AllowGet);
             jsonModel.MaxJsonLength = Int32.MaxValue;
 
@@ -405,6 +410,10 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
+            options.UnitOption.Unit.EnableMultiple = PageHelper.CanSelectMultipleUnit(WebApplicationParameters.CountryCode);
+            options.UnitOption.Unit.EnableGroups = PageHelper.CanDisplayGroups(WebApplicationParameters.CountryCode);
+            PageHelper.SetGroupItems(options.SiteLanguage, WebApplicationParameters.CountryCode, options.UnitOption.Unit);
+            PageHelper.SetGrp(WebApplicationParameters.CountryCode, options);
             return PartialView("_ResultOptions", options);
         }
 
@@ -523,7 +532,8 @@ namespace Km.AdExpressClientWeb.Controllers
                 TimeoutBis = GestionWeb.GetWebWord(LanguageConstantes.TimeoutBis, siteLanguage),
                 MaxAllowedRows = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRows, siteLanguage),
                 MaxAllowedRowsBis = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsBis, siteLanguage),
-                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage)
+                MaxAllowedRowsRefine = GestionWeb.GetWebWord(LanguageConstantes.MaxAllowedRowsRefine, siteLanguage),
+                UnitSelectionLabel = GestionWeb.GetWebWord(LanguageConstantes.UnitSelectionLabel, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

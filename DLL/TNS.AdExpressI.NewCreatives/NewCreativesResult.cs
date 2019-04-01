@@ -100,6 +100,10 @@ namespace TNS.AdExpressI.NewCreatives
         /// Define if show media schedule Link
         /// </summary>
         protected bool _showMediaSchedule = false;
+        /// <summary>
+        /// Column item list
+        /// </summary>
+        protected List<GenericColumnItemInformation> _columnItemList;
         #endregion
 
         #region Accessors
@@ -154,7 +158,7 @@ namespace TNS.AdExpressI.NewCreatives
         /// Compute new creatives
         /// </summary>
         /// <returns>Compute Data</returns>
-        public ResultTable GetData()
+        public virtual ResultTable GetData()
         {
 
             #region Variables
@@ -250,13 +254,7 @@ namespace TNS.AdExpressI.NewCreatives
                         }
                         iCurLine = tab.AddNewLine(lineTypes[i]);
                         tab[iCurLine, 1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _webSession.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _webSession);
-                        if (_webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == i)
-                        {
-                            if (row["id_address"] != DBNull.Value)
-                            {
-                                cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
-                            }
-                        }
+                        SetAddressId(i, row, cellLevels);
                         level = _webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(i);
 
                         // version
@@ -281,6 +279,19 @@ namespace TNS.AdExpressI.NewCreatives
 
             return tab;
         }
+
+        protected virtual void SetAddressId(int i, DataRow row, AdExpressCellLevel[] cellLevels)
+        {
+            if (_webSession.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) ==
+                i)
+            {
+                if (row["id_address"] != DBNull.Value)
+                {
+                    cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
+                }
+            }
+        }
+
         #endregion
 
         #region InitLine
@@ -310,7 +321,7 @@ namespace TNS.AdExpressI.NewCreatives
 
         #region SetLine
         protected delegate void SetLine(ResultTable oTab, Int32 iLineIndex, DataRow dr);
-        protected void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
+        protected virtual void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
         {
             if (row != null)
             {
@@ -494,7 +505,7 @@ namespace TNS.AdExpressI.NewCreatives
         }
 
 
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
 
@@ -721,6 +732,30 @@ namespace TNS.AdExpressI.NewCreatives
 
             return gridResult;
         }
+
+        public virtual long CountData()
+        {
+            long nbRows = 0;
+         
+
+            if (_module.CountryDataAccessLayer == null)
+                throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            var parameters = new object[4];
+            parameters[0] = _webSession;
+            parameters[1] = _idSectors;
+            parameters[2] = _beginingDate;
+            parameters[3] = _endDate;
+            var newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                , AppDomain.CurrentDomain.BaseDirectory, _module.CountryDataAccessLayer.AssemblyName),
+                _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return newCreativesDAL.CountData();                   
+        }
+
+       
+
+    
     }
 
 }

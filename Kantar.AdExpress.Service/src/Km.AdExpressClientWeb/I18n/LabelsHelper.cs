@@ -200,13 +200,32 @@ namespace Km.AdExpressClientWeb.I18n
                 KantarUrl = GestionWeb.GetWebWord(LanguageConstantes.KantarUrl, siteLanguage),
                 ReturToLogin = GestionWeb.GetWebWord(LanguageConstantes.ReturToLogin, siteLanguage),
                 RequiredFields = GestionWeb.GetWebWord(LanguageConstantes.RequiredFields, siteLanguage),
-                IdSlogansLabel = GestionWeb.GetWebWord(LanguageConstantes.IdSlogansLabel, siteLanguage)
+                IdSlogansLabel = GestionWeb.GetWebWord(LanguageConstantes.IdSlogansLabel, siteLanguage),
+
+                CookiesMessage = GestionWeb.GetWebWord(LanguageConstantes.CookiesMessage, siteLanguage),
+                MoreInfoLabel = GestionWeb.GetWebWord(LanguageConstantes.MoreInfoLabel, siteLanguage),
+                AcceptBtnLabel = GestionWeb.GetWebWord(LanguageConstantes.AcceptBtnLabel, siteLanguage),
+                FixedCookieTypeLabel = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeLabel, siteLanguage),
+                FixedCookieTypeDesc = GestionWeb.GetWebWord(LanguageConstantes.FixedCookieTypeDesc, siteLanguage),
+                CookiesTitle = GestionWeb.GetWebWord(LanguageConstantes.CookiesTitle, siteLanguage),
+                Success = GestionWeb.GetWebWord(LanguageConstantes.Success, siteLanguage),
+
+                AdvancedBtnLabel = GestionWeb.GetWebWord(LanguageConstantes.AdvancedBtnLabel, siteLanguage),
+                CookieTypesTitle = GestionWeb.GetWebWord(LanguageConstantes.CookieTypesTitle, siteLanguage),
+                CookieStat = GestionWeb.GetWebWord(LanguageConstantes.CookieStat, siteLanguage),
+                CookieStatDesc = GestionWeb.GetWebWord(LanguageConstantes.CookieStatDesc, siteLanguage),
+                CookieDiagnostic = GestionWeb.GetWebWord(LanguageConstantes.CookieDiagnostic, siteLanguage),
+                CookieDiagnosticDesc = GestionWeb.GetWebWord(LanguageConstantes.CookieDiagnosticDesc, siteLanguage),
+                ContactPrivacyDesc = GestionWeb.GetWebWord(LanguageConstantes.ContactPrivacyDesc, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)
                 || WebApplicationParameters.CountryCode.Equals(CountryCode.SLOVAKIA)
                 || WebApplicationParameters.CountryCode.Equals(CountryCode.POLAND))
                 result.PreSelection = GestionWeb.GetWebWord(LanguageConstantes.PreSelectionWithoutEvaliant, siteLanguage);
+
+            if (WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
+                result.PreSelection = string.Empty;
 
             return result;
         }

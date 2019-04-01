@@ -103,6 +103,16 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <param name="idMedia">Id media</param>
         /// <param name="periodBeginning">Period Beginning </param>
         /// <param name="periodEnd">Period End</param>
+        public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
+            : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
         /// <param name="adBreak">Ad break</param>
         /// <param name="dayOfWeek">Day of week</param>
         /// <param name="excel">Excel</param>
@@ -558,10 +568,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             case Vehicles.names.others:
                                                 if (row[Column.DataBaseField].ToString().Length > 0)
                                                     tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(
-                                                        Convert.ToString(row[Column.DataBaseField]), _webSession, _vehicleInformation.Id.GetHashCode());
+                                                        Convert.ToString(row[Column.DataBaseField]), _webSession, GetTvId());
                                                 else
                                                     tab[iCurLine, iCurColumn++] = new CellTvCreativeLink(string.Empty,
-                                                        _webSession, _vehicleInformation.Id.GetHashCode());
+                                                        _webSession, GetTvId());
 
                                                 break;
                                         }
@@ -579,6 +589,12 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                     break;
                                 case GenericColumnItemInformation.Columns.dateParution:// Parution Date and  diffusion Date
                                 case GenericColumnItemInformation.Columns.dateDiffusion:
+                                case GenericColumnItemInformation.Columns.dateMediaNum:
+                                case GenericColumnItemInformation.Columns.Day:
+                                case GenericColumnItemInformation.Columns.Month:
+                                case GenericColumnItemInformation.Columns.Year:
+                                case GenericColumnItemInformation.Columns.MonthYear:
+                                case GenericColumnItemInformation.Columns.DayName:
                                     if (_showDate)
                                     {
                                         type = assembly.GetType(Column.CellType);
@@ -594,8 +610,24 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
+                                case GenericColumnItemInformation.Columns.ProgramBeginningTime:
+                                case GenericColumnItemInformation.Columns.ProgramEndingTime:
+                                case GenericColumnItemInformation.Columns.CommercialBreakBeginningTime:
+                                case GenericColumnItemInformation.Columns.CommercialBreakEndingTime:
+                                    var s = row[Column.DataBaseField].ToString();
+                                    if (!string.IsNullOrEmpty(s))
+                                    {
+                                        DateTime d = ToDateTime(row[Column.DataBaseField].ToString());
+                                        tab[iCurLine, iCurColumn++] = new CellDate(d, string.Format("{{0:{0}}}", Column.StringFormat));
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    break;
                                 case GenericColumnItemInformation.Columns.topDiffusion:
                                 case GenericColumnItemInformation.Columns.idTopDiffusion:
+                                case GenericColumnItemInformation.Columns.SpotEndTime:
                                     if (_showTopDiffusion)
                                     {
                                         long TOP_DIFFUSION_VISIBILITY_DATE = 20170904;
@@ -619,7 +651,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         if (row[Column.DataBaseField].ToString().Length > 0
                                             && !(MEDIA_IDS_TOP_DIFFUSION_VISIBILITY.Contains(idMedia) && dateNum < TOP_DIFFUSION_VISIBILITY_DATE))
-                                            curCell = new CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+                                            curCell = new CellAiredTime(GetTopDiffusion(Convert.ToDouble(row[Column.DataBaseField])));
                                         else
                                             curCell = new CellEmpty();//new CellAiredTime(0);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
@@ -638,6 +670,28 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
+                                case GenericColumnItemInformation.Columns.WeekNumber:
+                                    var weekNb = GetColumnValue(Column, row[Column.DataBaseField]).ToString();
+                                    if (string.IsNullOrEmpty(weekNb))
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel(weekNb.Insert(4, " / "));
+                                    }
+                                    break;
+                                case GenericColumnItemInformation.Columns.LanguageOfTheAd:
+                                    var languageId = GetColumnValue(Column, row[Column.DataBaseField]).ToString();
+                                    if (string.IsNullOrEmpty(languageId))
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel("");
+                                    }
+                                    else
+                                    {
+                                        tab[iCurLine, iCurColumn++] = new CellLabel(GetLanguageLabel(languageId));
+                                    }
+                                    break;
                                 default:
                                     if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
                                     {
@@ -645,7 +699,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
                                         curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
                                             | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                         curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
-                                        curCell.SetCellValue(GetColumnValue(Column, row[Column.DataBaseField]));
+                                        var columnValue = string.IsNullOrEmpty(Column.DataBaseAliasField)
+                                            ? row[Column.DataBaseField]
+                                            : row[Column.DataBaseAliasField];
+                                        curCell.SetCellValue(GetColumnValue(Column, columnValue));
                                         tab[iCurLine, iCurColumn++] = curCell;
                                     }
                                     break;
@@ -671,7 +728,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// <param name="value">Value of the cell</param>
         /// <returns>Value</returns>
         /// <remarks>We have add this method to solve cobranding problem for Russia</remarks>
-        protected object GetColumnValue(GenericColumnItemInformation column, object value)
+        protected virtual object GetColumnValue(GenericColumnItemInformation column, object value)
         {
 
             string s = string.Empty;
@@ -694,6 +751,54 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region GetLanguageLabel
+        private string GetLanguageLabel(string languageId)
+        {
+            switch (languageId)
+            {
+                case "90":
+                    return GestionWeb.GetWebWord(3241, _webSession.SiteLanguage).ToUpper();
+                case "44":
+                    return GestionWeb.GetWebWord(2478, _webSession.SiteLanguage).ToUpper();
+                default:
+                    return "";
+            }
+        }
+        #endregion
 
+        private DateTime ToDateTime(string datetime, char dateSpliter = '-', char timeSpliter = ':',
+            char millisecondSpliter = ',')
+        {
+            datetime = datetime.Trim();
+            datetime = datetime.Replace("  ", " ");
+            string[] body = datetime.Split(' ');
+            string[] date = body[0].Split(dateSpliter);
+            int hour = 0, minute = 0, second = 0, millisecond = 0;
+            if (body.Length == 2)
+            {
+                string[] tpart = body[1].Split(millisecondSpliter);
+                string[] time = tpart[0].Split(timeSpliter);
+                hour = Convert.ToInt32(time[0]);
+                minute = Convert.ToInt32(time[1]);
+                if (time.Length == 3) second = Convert.ToInt32(time[2]);
+                if (tpart.Length == 2) millisecond = Convert.ToInt32(tpart[1]);
+            }
+            return new DateTime(1970, 1, 1, hour, minute, second, millisecond);
+        }
+
+        protected virtual double GetTopDiffusion(double value)
+        {
+            return value;
+        }
+
+        protected virtual int GetTvId()
+        {
+            return _vehicleInformation.Id.GetHashCode();
+        }
+
+        protected virtual long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

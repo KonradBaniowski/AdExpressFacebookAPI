@@ -1377,6 +1377,24 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             }
         }
 
+        protected virtual string GetUnitsFieldNameSumUnionWithAlias(WebSession webSession)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                List<UnitInformation> unitsInformation = webSession.GetSelectedUnits();
+
+                foreach (var unit in unitsInformation)
+                    sql.AppendFormat("sum({0}) as {0}, ", unit.Id.ToString());
+
+                return sql.ToString().Substring(0, sql.Length - 2); ;
+            }
+            catch
+            {
+                throw new MediaScheduleDALException("Not managed unit (Alert Module)");
+            }
+        }
+
         /// <summary>
         /// Obtient le code SQL des champs correspondant aux éléments du niveau de détail
         /// </summary>
@@ -1433,6 +1451,69 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         {
             return string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
         }
+
+
+
         #endregion
+
+        public long  CountMediaScheduleData()
+        {
+           return  CountData(string.Empty, _session.GenericMediaDetailLevel, false);
+
+        }
+
+        /// <summary>
+        /// Count Data  of Media Schedule
+        /// </summary>
+        /// <param name="additionalWhereClause">Additional conditions if required</param>
+        /// <param name="detailLevel">Clasification details</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <returns>DataSet containing Data</returns>
+        protected virtual long CountData(string additionalWhereClause, GenericDetailLevel detailLevel, bool isComparative)
+        {
+
+            #region Variables
+          
+            StringBuilder sql = new StringBuilder();
+            
+
+            #endregion
+
+         
+
+            #region Execution de la requête
+            try
+            {
+
+                #region Query Building
+                sql.Append(" select count(*) as NbROWS from ( ");
+                if (isComparative)
+                {
+                    sql.Append(GetMasterQuery(additionalWhereClause, detailLevel, _periodComparative, isComparative, string.Empty, string.Empty));
+
+                }
+                else
+                {
+                    sql.Append(GetMasterQuery(additionalWhereClause, detailLevel, _period, isComparative, "date_num, max(period_count) as period_count,", ", date_num"));
+
+                }
+                #endregion
+                sql.Append(" )  ");
+
+
+                var ds = _session.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1)
+                    return (Int64.Parse(ds.Tables[0].Rows[0]["NbROWS"].ToString()));
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new MediaScheduleDALException("Unable to count Media Schedule Data : " + sql, err));
+            }
+            #endregion
+
+            return 0;
+
+        }
     }
 }

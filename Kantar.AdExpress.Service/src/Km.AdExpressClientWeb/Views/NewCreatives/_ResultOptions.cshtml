@@ -21,7 +21,7 @@
         <div id="collapseContainerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-sans text-left options-control">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div id="perioddetailTypeContainerDiv" class="col-md-4">
                         <div id="perioddetailTypeContainer" class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
@@ -49,8 +49,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="panel-primary panel-options-results">
+                    <div id="defaultDetailContainerDiv" class="col-md-4">
+                        <div id="defaultDetailContainer" class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
                                     @GestionWeb.GetWebWord(1886, Model.SiteLanguage)
@@ -113,11 +113,79 @@
 
                         </div>
                     }
+                    @if (@Model.SpotSubTypeOption!=null && @Model.SpotSubTypeOption.SubType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(3148, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.SpotSubTypeOption.SubType.Id" class="selectdatepicker" multiple data-actions-box="true">
+                                                
+                                                @foreach (var item in Model.SpotSubTypeOption.SubType.Items)
+                                                {
+                                                    if (!string.IsNullOrEmpty(Model.SpotSubTypeOption.SubType.SelectedId) && Model.SpotSubTypeOption.SubType.SelectedId.Contains(item.Value))
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }                                                 
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                   
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
                 </div>
                 <div class='row'>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <div class="panel-primary panel-options-results">
+                    @if (@Model.ResultTypeOption.ResultType.Visible)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel-primary panel-options-results">
+                                <div class="panel-heading head-options-results">
+                                    <p class="panel-title options ">
+                                        @GestionWeb.GetWebWord(793, Model.SiteLanguage)
+                                    </p>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body mi-padder">
+                                        <div class="selectoptioncontainer">
+                                            <select id="@Model.ResultTypeOption.ResultType.Id" class="selectdatepicker">
+                                                @foreach (var item in Model.ResultTypeOption.ResultType.Items)
+                                                {
+                                                    if (item.Value == Model.ResultTypeOption.ResultType.SelectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4"></div>
+                    }
+                    <div id="customDetailContainerDiv" class="col-md-4">
+                        <div id="customDetailContainer" class="panel-primary panel-options-results">
                             <div class="panel-heading head-options-results">
                                 <p class="panel-title options ">
                                     @GestionWeb.GetWebWord(1896, Model.SiteLanguage)

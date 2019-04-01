@@ -43,6 +43,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             string format = "";
             UnitInformation unit;
             string assembly = "";
+            int groupId = 0;
+            GroupSelection.GroupType groupType = GroupSelection.GroupType.mono;
+            Int64 groupTextId;
             #endregion
 
             try {
@@ -89,7 +92,13 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else format = reader.GetAttribute("format");
                                 if (reader.GetAttribute("assembly") == null || reader.GetAttribute("assembly").Length == 0) assembly = "";
                                 else assembly = reader.GetAttribute("assembly");
-                                unit = new UnitInformation(id, format, webTextId, webTextSignId, baseId, cellType, databaseField, databaseMultimediaField, databaseTrendsField, assembly);
+                                if (reader.GetAttribute("groupId") == null || reader.GetAttribute("groupId").Length == 0) groupId = 0;
+                                else groupId = int.Parse(reader.GetAttribute("groupId"));
+                                if (reader.GetAttribute("groupType") == null || reader.GetAttribute("groupType").Length == 0) groupType = GroupSelection.GroupType.mono;
+                                else groupType = (GroupSelection.GroupType)Enum.Parse(typeof(GroupSelection.GroupType), reader.GetAttribute("groupType"), true);
+                                if (reader.GetAttribute("groupTextId") == null || reader.GetAttribute("groupTextId").Length == 0) groupTextId = 0;
+                                else groupTextId = Int64.Parse(reader.GetAttribute("groupTextId"));
+                                unit = new UnitInformation(id, format, webTextId, webTextSignId, baseId, cellType, databaseField, databaseMultimediaField, databaseTrendsField, assembly, groupId, groupType, groupTextId);
                                 list.Add(unit);
                                 break;
                         }

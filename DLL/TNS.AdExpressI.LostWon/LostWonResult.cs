@@ -261,7 +261,7 @@ namespace TNS.AdExpressI.LostWon
         /// <returns>Computed data</returns>
         public ResultTable GetResult()
         {
-            return this.GetResult((Int32)_session.CurrentTab);
+            return GetResult((Int32)_session.CurrentTab);
         }
         /// <summary>
         /// Compute specified result
@@ -288,6 +288,20 @@ namespace TNS.AdExpressI.LostWon
         #endregion
 
         #region GetData
+
+        public virtual long CountData()
+        {
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
+            var parameters = new object[1];
+            parameters[0] = _session;
+            var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class,
+                false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            return lostwonDAL.CountData();
+
+            
+        }
+
         /// <summary>
         /// Compute Result Data
         /// </summary>
@@ -1107,7 +1121,11 @@ namespace TNS.AdExpressI.LostWon
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand))
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.program) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.programTypology) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.spotSubType) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.PurchasingAgency))
                 && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null
                 )
             {
@@ -1175,6 +1193,7 @@ namespace TNS.AdExpressI.LostWon
             #endregion
 
             bool computePDM = _session.Percentage;
+            bool computePDV = _session.PDV;
 
             #region Parutions
             Dictionary<string, double> resNbParution = null;
@@ -1212,6 +1231,7 @@ namespace TNS.AdExpressI.LostWon
             #region Unit selection
             CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
             InitFinalLineValuesDelegate initValues = null;
+            InitPdvFinalLineValuesDelegate initPdvValues = null;
             SetFinalLineDelegate setValues = null;
             switch (_session.Unit)
             {
@@ -1221,6 +1241,7 @@ namespace TNS.AdExpressI.LostWon
                     break;
                 default:
                     initValues = new InitFinalLineValuesDelegate(InitFinalDoubleValuesLine);
+                    initPdvValues = new InitPdvFinalLineValuesDelegate(InitPdvFinalDoubleValuesLine);
                     setValues = new SetFinalLineDelegate(SetFinalDoubleLine);
                     break;
             }
@@ -1232,7 +1253,10 @@ namespace TNS.AdExpressI.LostWon
             levels[0] = new CellLevel(-1, GestionWeb.GetWebWord(805, _session.SiteLanguage), 0, cLine);
             tabResult[cLine, levelIndex] = levels[0];
             if (_showMediaSchedule) tabResult[cLine, msIndex] = new CellMediaScheduleLink(levels[0], _session);
-            initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+            if (computePDV)
+                initPdvValues(tabResult, cLine, cellUnitFactory, null, computePDV, NIndex, N1Index, EvolIndex);
+            else
+                initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
             #endregion
 
             #region Nombre parutions by media
@@ -1296,7 +1320,10 @@ namespace TNS.AdExpressI.LostWon
 
                 #region Init Line
                 cLine = InitFinalLine(tabData, tabResult, i, levels[((CellLevel)tabData[i, 1]).Level - 1], msIndex);
-                initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
+                if (computePDV)
+                    initPdvValues(tabResult, cLine, cellUnitFactory, ((CellLevel)tabResult[cLine, 1]).ParentLevel, computePDV, NIndex, N1Index, EvolIndex);
+                else
+                    initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
                 cLevel = (CellLevel)tabResult[cLine, 1];
                 #endregion
 
@@ -1314,6 +1341,104 @@ namespace TNS.AdExpressI.LostWon
 
             return (tabResult);
         }
+
+        #region PDV
+        protected delegate Int32 InitPdvFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level, bool isPDV, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);
+        protected virtual Int32 InitPdvFinalDoubleValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, CellLevel level, bool isPDV, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
+        {
+
+            // Units
+            if (isPDV)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, NIndex] = new CellPDM(0.0, null);
+                    ((CellPDM) toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, NIndex] = new CellPDM(0.0, (CellPDM)toTab[level.LineIndexInResultTable, NIndex]);
+                    ((CellPDM)toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            else
+            {
+                toTab[toLine, NIndex] = cellFactory.Get(0.0);
+            }
+            //year N
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
+            {
+                if (isPDV)
+                {
+                    if (level == null)
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, null);
+                        ((CellPDM) toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                    else
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[level.LineIndexInResultTable, k]);
+                        ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //year N1
+            if (isPDV)
+            {
+                if (level == null)
+                {
+                    toTab[toLine, N1Index] = new CellPDM(0.0, null);
+                    ((CellPDM) toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
+                }
+                else
+                {
+                    toTab[toLine, N1Index] = new CellPDM(0.0, (CellPDM)toTab[level.LineIndexInResultTable, N1Index]);
+                    ((CellPDM)toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
+                }
+            }
+            else
+            {
+                toTab[toLine, N1Index] = cellFactory.Get(0.0);
+            }
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
+            {
+                if (isPDV)
+                {
+                    if (level == null)
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, null);
+                        ((CellPDM) toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                    else
+                    {
+                        toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[level.LineIndexInResultTable, k]);
+                        ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                }
+                else
+                {
+                    toTab[toLine, k] = cellFactory.Get(0.0);
+                }
+            }
+            //Evol
+            CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
+            cEvol.StringFormat = "{0:percentage}";
+            toTab[toLine, EvolIndex] = cEvol;
+            for (Int32 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            {
+                cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
+                cEvol.StringFormat = "{0:percentage}";
+                toTab[toLine, k] = cEvol;
+            }
+
+            return toLine;
+
+        }
+        #endregion
 
         #region InitFinalLineValuesDelegate
         protected delegate Int32 InitFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);
@@ -2036,9 +2161,39 @@ namespace TNS.AdExpressI.LostWon
 
         }
 
-        public GridResult GetGridResult()
+        public virtual GridResult GetGridResult()
         {
             GridResult gridResult = new GridResult();
+
+            //Count nb rows
+            switch ((Int32)_session.CurrentTab)
+            {
+                case DynamicAnalysis.LOST:
+                case DynamicAnalysis.LOYAL:
+                case DynamicAnalysis.LOYAL_DECLINE:
+                case DynamicAnalysis.LOYAL_RISE:
+                case DynamicAnalysis.PORTEFEUILLE:
+                case DynamicAnalysis.WON:
+                
+                    long nbRows = CountData();
+                    if (nbRows == 0)
+                    {
+                        gridResult.HasData = false;
+                        return gridResult;
+                    }
+                    if (nbRows > CstWeb.Core.MAX_ALLOWED_DATA_ROWS)
+                    {
+                        gridResult.HasData = true;
+                        gridResult.HasMoreThanMaxRowsAllowed = true;
+                        return (gridResult);
+                    }
+
+                    break;
+                //case DynamicAnalysis.SYNTHESIS:
+                //    return GetSynthesisData();
+             
+            }
+
             ResultTable resultTable = GetResult();
             string mediaSchedulePath = "/MediaSchedulePopUp";
             string pickanewsLink = "http://www.pickanews.com";
@@ -2069,7 +2224,7 @@ namespace TNS.AdExpressI.LostWon
                 gridResult.HasData = false;
                 return gridResult;
             }
-            else if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
+             if (nbLines > CstWeb.Core.MAX_ALLOWED_ROWS_NB)
             {
                 gridResult.HasData = true;
                 gridResult.HasMoreThanMaxRowsAllowed = true;

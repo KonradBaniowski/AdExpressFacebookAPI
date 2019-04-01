@@ -48,6 +48,7 @@ namespace Km.AdExpressClientWeb.Controllers
         private const string CALENDARLANGUAGEFR = "fr";
         private const string CALENDARLANGUAGEFI = "fi";
         private const string CALENDARLANGUAGESK = "sk";
+        private const string CALENDARLANGUAGETR = "tr";
         private const int MarketPageId = 2;
         private const int MediaPageId = 6;
         private int _siteLanguage = 33;
@@ -231,6 +232,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 case TNS.AdExpress.Constantes.DB.Language.SLOVAKIA:
                     periodModel.LanguageName = CALENDARLANGUAGESK;
                     break;
+                case TNS.AdExpress.Constantes.DB.Language.TURKEY:
+                    periodModel.LanguageName = CALENDARLANGUAGETR;
+                    break;
                 default:
                     periodModel.LanguageName = CALENDARLANGUAGEEN;
                     break;
@@ -399,6 +403,10 @@ namespace Km.AdExpressClientWeb.Controllers
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
             Options options = _optionService.GetOptions(idWebSession, this.HttpContext);
+            options.UnitOption.Unit.EnableMultiple = PageHelper.CanSelectMultipleUnit(WebApplicationParameters.CountryCode);
+            options.UnitOption.Unit.EnableGroups = PageHelper.CanDisplayGroups(WebApplicationParameters.CountryCode);
+            PageHelper.SetGroupItems(options.SiteLanguage, WebApplicationParameters.CountryCode, options.UnitOption.Unit);
+            PageHelper.SetGrp(WebApplicationParameters.CountryCode, options);
             return PartialView("_ResultOptions", options);
         }
 

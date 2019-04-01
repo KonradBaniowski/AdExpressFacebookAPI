@@ -107,7 +107,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         /// Get Data for new creatives
         /// </summary>
         /// <returns>Data for new creatives</returns>
-        public DataSet GetData() {
+        public virtual DataSet GetData() {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
@@ -214,20 +214,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 
                 // order by
                 sql.Append(" order by " + detailProductOrderBy + ", date_creation ");
+
+                return _session.Source.Fill(sql.ToString());
             }
             catch(Exception err) {
                 throw (new NewCreativesDALException("Unable to build request for new creatives : " + sql, err));
             }
             #endregion
 
-            #region Execution de la requête
-            try {
-                return _session.Source.Fill(sql.ToString());
-            }
-            catch(System.Exception err) {
-                throw (new NewCreativesDALException("Unable to load data for new creatives : " + sql, err));
-            }
-            #endregion
+          
 
         }
 
@@ -259,7 +254,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="isRetailerSelection">Is Retailer Selectioned</param>
         /// <returns>Table</returns>
-        private Table GetTable(VehicleInformation vehicle, bool isRetailerSelection) {
+        protected virtual Table GetTable(VehicleInformation vehicle, bool isRetailerSelection) {
             switch (vehicle.Id) {
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.GetDataTable(TableIds.banners, isRetailerSelection);
@@ -272,7 +267,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         #endregion
 
         public string BeginingDate { get { return _beginingDate; } set { _beginingDate = value; } }
+        public virtual long CountData()
+        {
+            throw new NotImplementedException();
+        }
 
+        public virtual DataSet GetNewCreativeDetailsData()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -636,7 +636,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
 
                         //Add GAD fields for Sql SELECT clause without prefix
                         if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-                            dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                            dataFieldsForGadWithoutTablePrefix = GetFieldsForGadWithoutTablePrefix();
 
                         //SELECT clause
                         sql = new StringBuilder();
@@ -922,9 +922,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
                 {
                     try
                     {
-                        dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
-                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
-                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                        InitGadParams(tblGad, ref dataTableNameForGad, ref dataFieldsForGad, ref dataJointForGad);
                     }
                     catch (SQLGeneratorException)
                     {
@@ -1346,6 +1344,28 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
         }
         #endregion
 
+        #region Get Fields For Gad Without Table Prefix
+        /// <summary>
+        /// Get Fields For Gad Without Table Prefix
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetFieldsForGadWithoutTablePrefix()
+        {
+            return ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+        }
+        #endregion
+
+        #region Init Gad Params
+        /// <summary>
+        /// Init Gad Params
+        /// </summary>
+        protected virtual void InitGadParams(Table tblGad, ref string dataTableNameForGad, ref string dataFieldsForGad, ref string dataJointForGad)
+        {
+            dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
+            dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+            dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+        }
+        #endregion
 
         /// <summary>
         /// Get Data Source
@@ -1382,6 +1402,166 @@ namespace TNS.AdExpressI.PresentAbsent.DAL
             levelsIds.Add(8);
             GenericDetailLevel levels = new GenericDetailLevel(levelsIds);
             return levels;
+        }
+
+       
+        public virtual long CountData()
+        {
+            long nbRows = 0;
+
+            #region Constantes
+            //Prefix of defaut result table
+            string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            #endregion
+
+            #region Variables
+
+            StringBuilder sql = new StringBuilder();
+            StringBuilder sql4M = new StringBuilder();
+            StringBuilder sqlDataVehicle = new StringBuilder();
+            StringBuilder sqlWebPlan = new StringBuilder();
+            string groupByFieldNameWithoutTablePrefix = string.Empty;
+            string groupByOptional = string.Empty;
+            string orderFieldName = string.Empty, orderFieldNameWithoutTablePrefix = string.Empty;
+            string orderClause = string.Empty;
+            string productFieldNameWithoutTablePrefix = string.Empty, unitField = string.Empty, dataFieldsForGadWithoutTablePrefix = string.Empty;
+
+            //Customer period selected
+            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+
+            //vehicle-level detail in column
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+            #endregion
+
+            #region Building SQL query
+            try
+            {
+                //Get Product detail levels fields for Sql ORDER clause
+                orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
+
+                //Get Product detail levels fields for Sql ORDER clause without prefix
+                orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
+
+                //Get Product detail levels fields for Sql GROUP BY clause without prefix
+                groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
+
+                /*To optimize the queries, data tables requested vary depending on the period,
+				 *  the media selected by the customer. */
+                if (customerPeriod.Is4M)
+                {
+
+                    /*If the period is selected within the last 4 months. 
+					Use the tables containing data of only last 4 months only 4 months. ex : DATA_TV_4M*/
+                    sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
+                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    sql = sql4M;
+                }
+                else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
+                {
+
+                    /*Use the tables whose history covers the last three years and detailed per day. ex : DATA_TV */
+                    sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
+                    orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                }
+                else
+                {
+
+                    /*If the beginning period is less than the last 4 months 
+					 * and the data are detailed per day you must select 
+					 * the tables whose history covers the last three years and detailed per day. ex : DATA_TV */
+                    if (customerPeriod.IsDataVehicle)
+                    {
+                        sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
+                        sql = sqlDataVehicle;
+                        orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    }
+
+                    /*If the format of period selected is monthly (ex. 200912) you must select 
+					 * the tables whose periods are detail by months . ex : ADEXPR03.WEB_PLAN_MEDIA_WEEK or ADEXPR03.WEB_PLAN_MEDIA_MONTH */
+                    if (customerPeriod.IsWebPlan)
+                    {
+                        sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
+                        sql = sqlWebPlan;
+                        orderClause = string.Format(" order by {0}, {1}.id_media", orderFieldNameWithoutTablePrefix, DATA_TABLE_PREFIXE);
+                    }
+
+                    /* If the period selected contains dates in two formats : monthly and per day, So you can use the two type of table.*/
+                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+                    {
+
+                        if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack
+                            || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile)
+                            && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                        {
+                            //Adding "slogan number" field for evaliant medium field
+                            groupByOptional = string.Format(", versionNb ");
+                        }
+
+                        //Get Product detail levels fields for Sql SELECT clause without prefix
+                        productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
+
+                        //Add GAD fields for Sql SELECT clause without prefix
+                        if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+                            dataFieldsForGadWithoutTablePrefix = GetFieldsForGadWithoutTablePrefix();
+
+                        //SELECT clause
+                        sql = new StringBuilder();
+                        sql.Append(" select count(*) from (");
+
+                        if (columnDetailLevel.Id != DetailLevelItemInformation.Levels.media)
+                            sql.AppendFormat(" select id_media, {2}, {0}{1}", productFieldNameWithoutTablePrefix, dataFieldsForGadWithoutTablePrefix, columnDetailLevel.DataBaseIdField);
+                        else sql.AppendFormat(" select id_media, {0}{1}", productFieldNameWithoutTablePrefix, dataFieldsForGadWithoutTablePrefix);
+
+                        sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+
+                        //FROM clause
+                        sql.Append(" from (");
+
+                        //UNION ALL with queries on two different tables due to the type of period (monthly or per day)
+                        sql.Append(sqlDataVehicle);
+                        sql.Append(" UNION ALL");
+                        sql.Append(sqlWebPlan);
+                        sql.Append(" ) ");
+
+                        //GROUP BY clause
+                        if (columnDetailLevel.Id != DetailLevelItemInformation.Levels.media)
+                            sql.AppendFormat(" group by id_media, {3}, {0}{1} {2}", groupByFieldNameWithoutTablePrefix, dataFieldsForGadWithoutTablePrefix, groupByOptional, columnDetailLevel.DataBaseIdField);
+                        else sql.AppendFormat(" group by id_media, {0}{1} {2}", groupByFieldNameWithoutTablePrefix, dataFieldsForGadWithoutTablePrefix, groupByOptional);
+
+                        //ORDER BY clause
+                        orderClause = string.Format(" order by {0}, id_media", orderFieldNameWithoutTablePrefix);
+
+                     
+                    }
+                }
+                sql.Append(orderClause);
+
+                sql.Insert(0, " select count(*) as NbROWS from ( ");//start count statement
+                sql.Append(" ) ");//end count data rows
+            }
+            catch (System.Exception err)
+            {
+                throw (new PresentAbsentDALException("Unable to build request for present/absent report : " + sql, err));
+            }
+            #endregion
+
+            #region Execution of the query
+            try
+            {
+                var ds = _session.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1)
+                    nbRows = (Int64.Parse(ds.Tables[0].Rows[0]["NbROWS"].ToString()));
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new PresentAbsentDALException("Unable to load data for present/absent report : " + sql, err));
+            }
+
+            #endregion
+
+            return nbRows;
+
         }
     }
 }

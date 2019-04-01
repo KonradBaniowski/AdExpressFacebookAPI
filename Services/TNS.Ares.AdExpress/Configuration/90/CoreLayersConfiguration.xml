@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <layers>
+    <layer id="dataAccess" name="layer of data access" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL"/>
+    <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Turkey.dll" class="TNS.AdExpressI.Classification.DAL.Turkey.ClassificationDAL"/>
+    <layer id="date" name="layer of date functions" assemblyName="TNS.AdExpressI.Date.Default.dll" class="TNS.AdExpressI.Date.Default.Date"/>
+    <layer id="dateDAL" name="layer of date DataAccess" assemblyName="TNS.AdExpressI.Date.DAL.Default.dll" class="TNS.AdExpressI.Date.DAL.Default.DateDAL"/>
+    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationLevelListDALFactory"/>
+    <layer id="sourceProvider" name="layer of classification" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.SourceProvider"/>
+    <layer id="insertions" name="insertions layer" assemblyName="TNS.AdExpressI.Insertions.Turkey.dll" class="TNS.AdExpressI.Insertions.Turkey.InsertionsResult"/>
+    <layer id="insertionsDAL" name="insertions DAL layer" assemblyName="TNS.AdExpressI.Insertions.DAL.Turkey.dll" class="TNS.AdExpressI.Insertions.DAL.Turkey.InsertionsDAL"/>
+    <layer id="creativesUtilities" name="layer of creatives Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.Creatives"/>
+    <layer id="creativePopUp" name="layer of creative Pop Up" assemblyName="TNS.AdExpressI.Insertions.Turkey.dll" class="TNS.AdExpressI.Insertions.Turkey.CreativeResult.CreativePopUp"/>
+    <layer id="mediaDetailLevelUtilities" name="layer of media Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.MediaDetailLevel"/>
+    <layer id="productDetailLevelUtilities" name="layer of product Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.ProductDetailLevel"/>
+    <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Default.dll" class="TNS.AdExpressI.Visual.Default.Visual"/>
+    
+    <layer id="gad" name="layer of GAD results" assemblyName="TNS.AdExpressI.GAD.Default.dll" class="TNS.AdExpressI.GAD.Default.GadResults"/>
+    <layer id="gadDAL" name="layer of GAD DAL" assemblyName="TNS.AdExpressI.GAD.DAL.Default.dll" class="TNS.AdExpressI.GAD.DAL.Default.GadDAL"/>
+    
+    <layer id="leFac" name="layer of leFac results" assemblyName="KM.AdExpressI.LeFac.dll" class="KM.AdExpressI.LeFac.LeFacResults"/>
+    <layer id="leFacDAL" name="layer of leFac DAL" assemblyName="KM.AdExpressI.LeFac.DAL.Default.dll" class="KM.AdExpressI.LeFac.DAL.Default.LeFacDAL"/>
+  </layers>
+</configuration>

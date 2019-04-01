@@ -421,40 +421,82 @@ namespace TNS.AdExpressI.Date.DAL {
             string lastAvailableDate = (DateTime.Now.Year - (nbYears - 1)).ToString();
 
             string sql = "";
-
-
             DataSet ds;
 
             #region Construction de la requete
             sql = "select ";
-            // Cas ou l'année en cours est différente de la dernière année chargée
-            if (DateTime.Now.Year > _session.DownLoadDate)
+            
+            if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
             {
-                for (int i = nbYears; i > 0; i--)
+                string unitLabel = _session.Unit.ToString();
+                string expenditurePrefix = "";
+                if(_session.Unit == WebConstantes.CustomerSessions.Unit.euro)
+                    expenditurePrefix = "exp_";
+
+                // Cas ou l'année en cours est différente de la dernière année chargée
+                if (DateTime.Now.Year > _session.DownLoadDate)
                 {
-                    for (int j = 1; j <= 12; j++)
+                    for (int i = nbYears; i > 0; i--)
                     {
-                        sql += " max(exp_euro_" + ((i - 1 != 0) ? "N" + (i - 1) : "N") + "_" + j + ") as N"
-                            + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        for (int j = 1; j <= 12; j++)
+                        {
+                            sql += " max("+ expenditurePrefix + unitLabel + "_" + ((i - 1 != 0) ? "N" + (i - 1) : "N") + "_" + j + ") as N"
+                                + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        }
                     }
                 }
+                else
+                {
+                    nbYears = nbYears - 1;
+                    for (int i = nbYears; i >= 0; i--)
+                    {
+                        for (int j = 1; j <= 12; j++)
+                        {
+                            sql += " max("+ expenditurePrefix + unitLabel + "_" + ((i != 0) ? "N" + i : "N") + "_" + j + ") as N"
+                                + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        }
+                    }
+                }
+
+                sql = sql.Remove(sql.Length - 1, 1);
+
+                sql += " from " +
+                       SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(
+                           VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay) + _session.Unit.ToString();
             }
             else
             {
-                nbYears = nbYears - 1;
-                for (int i = nbYears; i >= 0; i--)
+                // Cas ou l'année en cours est différente de la dernière année chargée
+                if (DateTime.Now.Year > _session.DownLoadDate)
                 {
-                    for (int j = 1; j <= 12; j++)
+                    for (int i = nbYears; i > 0; i--)
                     {
-                        sql += " max(exp_euro_" + ((i != 0) ? "N" + i : "N") + "_" + j + ") as N"
-                            + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        for (int j = 1; j <= 12; j++)
+                        {
+                            sql += " max(exp_euro_" + ((i - 1 != 0) ? "N" + (i - 1) : "N") + "_" + j + ") as N"
+                                + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        }
                     }
                 }
+                else
+                {
+                    nbYears = nbYears - 1;
+                    for (int i = nbYears; i >= 0; i--)
+                    {
+                        for (int j = 1; j <= 12; j++)
+                        {
+                            sql += " max(exp_euro_" + ((i != 0) ? "N" + i : "N") + "_" + j + ") as N"
+                                + (DateTime.Now.Year - i) + j.ToString("0#") + ",";
+                        }
+                    }
+                }
+
+                sql = sql.Remove(sql.Length - 1, 1);
+
+                sql += " from " +
+                     SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(
+                         VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
             }
-
-            sql = sql.Remove(sql.Length - 1, 1);
-
-            sql += " from " + SQLGenerator.getVehicleTableNameForSectorAnalysisResultSegmentLevel(VehiclesInformation.DatabaseIdToEnum(idVehicle), _session.IsSelectRetailerDisplay);
             #endregion
 
             #region Exécution de la requete

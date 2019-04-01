@@ -50,13 +50,19 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Data Set</returns>
         DataSet GetEcranData();
-		
+
+        /// <summary>
+        /// Get custom adbreak data
+        /// </summary>
+        /// <returns>Data Set</returns>
+        DataSet GetCustomEcranData();
+
         /// <summary>
         /// Get dates list
         /// </summary>
         /// <param name="conditionEndDate">Add condition end date</param>
         /// <returns>Data Set</returns>
-		DataSet GetListDate(bool conditionEndDate, DBConstantes.TableType.Type tableType);			
+        DataSet GetListDate(bool conditionEndDate, DBConstantes.TableType.Type tableType);			
 		/// <summary>
 		/// Checks if media belong t category
 		/// </summary>
@@ -77,6 +83,12 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         //DataSet GetPortfolioAlertParamsUniverse(long alertId);
 
         //DataSet GetPortfolioAlertParamsFlag(long alertId);
+
+        /// <summary>
+		/// Count data
+		/// </summary>
+		/// <returns></returns>
+		long CountData();
 
     }
 }

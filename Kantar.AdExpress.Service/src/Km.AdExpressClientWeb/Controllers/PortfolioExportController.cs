@@ -17,6 +17,8 @@ using System.Web.Routing;
 using Aspose.Cells.Drawing;
 using Aspose.Cells.Rendering;
 using Infragistics.Imaging;
+using Km.AdExpressClientWeb.Helpers;
+using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Translation;
@@ -83,6 +85,14 @@ namespace Km.AdExpressClientWeb.Controllers
         {
             var claim = new ClaimsPrincipal(User.Identity);
             string idWebSession = claim.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.TURKEY))
+            {
+                var nbRows = _portofolioService.CountDataRows(idWebSession, this.HttpContext);
+                if (nbRows > TNS.AdExpress.Constantes.Web.Core.MAX_ALLOWED_EXCEL_ROWS_NB)
+                {
+                    return Content(PageHelper.GetContent(idWebSession));
+                }
+            }
             ResultTable data = _portofolioService.GetResultTable(idWebSession, this.HttpContext);
             WebSession session = (WebSession)WebSession.Load(idWebSession);
 
@@ -180,7 +190,7 @@ namespace Km.AdExpressClientWeb.Controllers
         public void Export(Workbook document, ResultTable data, WebSession session, bool isExportBrut = false, ResultTable.SortOrder sortOrder = ResultTable.SortOrder.NONE, int columnIndex = 1, bool isInsertionExport = false)
         {
             this.cInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
-            
+
             data.Sort(sortOrder, columnIndex); //Important, pour hierarchie du tableau Infragistics
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfo;
 
@@ -265,7 +275,7 @@ namespace Km.AdExpressClientWeb.Controllers
                             if (detailLevel != null)
                             {
                                 Header headerTmp = new Header(GestionWeb.GetWebWord(detailLevel[l].WebTextId, session.SiteLanguage));
-                            
+
                                 headerBase.Add(headerTmp);
                             }
                         }
@@ -700,10 +710,17 @@ namespace Km.AdExpressClientWeb.Controllers
             }
             else if (cell is CellDate)
             {
-
-                sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
-
-                SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                if (string.IsNullOrEmpty(((CellDate)cell).StringFormat))
+                {
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date.ToShortDateString();
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                }
+                else
+                {
+                    sheet.Cells[cellRow, cellCol].Value = ((CellDate)cell).Date;
+                    SetAsposeCustomFormat(session, sheet.Cells[cellRow, cellCol], ((CellDate)cell).StringFormat);
+                    SetIndentLevel(sheet.Cells[cellRow, cellCol], 1, false);
+                }
             }
             else if (cell is CellUnit)
             {
@@ -789,6 +806,14 @@ namespace Km.AdExpressClientWeb.Controllers
                 //    MEFCell(item, sheet, cellRow, cellCol, lineType, lstColEvol);
                 //}
 
+            }
+            else if (cell is CellExcelCreativesLink)
+            {
+                string sloganIdEncrypted = SecurityHelper.Encrypt(((CellExcelCreativesLink)cell).SloganId, SecurityHelper.CryptKey);
+                string dateEncrypted = SecurityHelper.Encrypt(DateTime.Today.ToShortDateString(), SecurityHelper.CryptKey);
+                string languageEncrypted = SecurityHelper.Encrypt(session.SiteLanguage.ToString(), SecurityHelper.CryptKey);
+                int index = sheet.Hyperlinks.Add(cellRow, cellCol, 1, 1, ((CellExcelCreativesLink)cell).RenderString(sloganIdEncrypted, dateEncrypted, languageEncrypted));
+                sheet.Hyperlinks[index].TextToDisplay = GestionWeb.GetWebWord(3263, session.SiteLanguage);
             }
             else if (cell is CellEmpty)
                 sheet.Cells[cellRow, cellCol].Value = null;
@@ -1007,7 +1032,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                 cellRow++;
 
-               
+
 
 
                 #region New version
@@ -1269,6 +1294,16 @@ namespace Km.AdExpressClientWeb.Controllers
             cell.SetStyle(style);
         }
 
+        private void SetAsposeCustomFormat(WebSession session, Aspose.Cells.Cell cell, string stringFormat)
+        {
+            Style style = cell.GetStyle();
+            AdExpressCultureInfo cultureInfo = WebApplicationParameters.AllowedLanguages[session.SiteLanguage].CultureInfoExcel;
+
+            style.Custom = cultureInfo.GetExcelFormatPatternFromStringFormat(stringFormat);
+
+            cell.SetStyle(style);
+        }
+
         private void SetDecimalFormat(Aspose.Cells.Cell cell)
         {
             Style style = cell.GetStyle();
@@ -1310,7 +1345,10 @@ namespace Km.AdExpressClientWeb.Controllers
 
             foreach (HeaderBase item in root)
             {
-                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
+                if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                    && item.Count > 0) || item is HeaderGroup)
                 {
                     int tmp = NbRow(item, session);
 
@@ -1332,14 +1370,20 @@ namespace Km.AdExpressClientWeb.Controllers
             int nbCol = 0;
             int maxCol = 0;
 
-            if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && root.Count > 0) || root is HeaderGroup)
+            if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                && root.Count > 0) || root is HeaderGroup)
             {
                 if (root.Capacity == 0)
                     maxCol++;
 
                 foreach (HeaderBase item in root)
                 {
-                    if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && item.Count > 0) || item is HeaderGroup)
+                    if (((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                        || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                        || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                        && item.Count > 0) || item is HeaderGroup)
                     {
                         int tmp = NbColumn(item, session);
 
@@ -1391,7 +1435,10 @@ namespace Km.AdExpressClientWeb.Controllers
                     BorderStyle(sheet, rowStart, colStart, CellBorderType.Hair, HeaderBorderTab);
                 }
 
-                if (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES && header.Count > 0)
+                if ((session.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE && session.CurrentTab == CompetitorMarketShare.SYNTHESIS)
+                    || (session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE && session.CurrentTab == DynamicAnalysis.SYNTHESIS))
+                    && header.Count > 0)
                 {
                     DrawHeaders(header, sheet, session, rowStart + rowSpan, colStart);
                 }

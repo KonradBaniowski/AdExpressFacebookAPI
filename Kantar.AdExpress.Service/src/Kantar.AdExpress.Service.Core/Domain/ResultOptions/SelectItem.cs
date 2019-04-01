@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNS.AdExpress.Constantes.Web;
 
 namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
 {
@@ -15,5 +16,11 @@ namespace Kantar.AdExpress.Service.Core.Domain.ResultOptions
         public bool slogan { get; set; }
 
         public bool Enabled { get; set; }
+
+        public int GroupId { get; set; }
+
+        public GroupSelection.GroupType GroupType { get; set; }
+
+        public Int64 GroupTextId { get; set; }
     }
 }

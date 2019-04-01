@@ -330,18 +330,57 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// Selected Mms Banners Format List
             /// </summary>
-            selectedMmsBannersFormatList = 76
-		}
+            selectedMmsBannersFormatList = 76,
+            /// <summary>
+            /// GRP
+            /// </summary>
+            grp = 77,
+            /// <summary>
+            /// GRP 30s
+            /// </summary>
+            grp30s = 78,
+            /// <summary>
+            /// Spends per GRP
+            /// </summary>
+            spendsGrp = 79,
+            /// <summary>
+            /// Selected Spot Sub Types
+            /// </summary>
+            selectedSpotSubTypes = 80,
+            /// <summary>
+            /// Enable Tracking
+            /// </summary>
+            enableTracking = 81,
+            /// <summary>
+            /// Enable Troubleshooting
+            /// </summary>
+            enableTroubleshooting = 82,
+            /// <summary>
+            /// Date Expiration Cookie
+            /// </summary>
+            dateExpCookie = 83
+        }
 
-        /// <summary>
-        /// Max allowed rows number to display
-        /// </summary>
-        public const int MAX_ALLOWED_ROWS_NB = 10000;
+	    /// <summary>
+	    /// Max allowed rows number to display
+	    /// </summary>
+	    public const int MAX_ALLOWED_ROWS_NB = 10000;
+
+	    /// <summary>
+	    /// Max allowed rows number to display
+	    /// </summary>
+	    public const int MAX_ALLOWED_DATA_ROWS = 44000;
+
+	    /// <summary>
+	    /// Max allowed rows number to display in EXCEL page
+	    /// </summary>
+	    public const int MAX_ALLOWED_EXCEL_ROWS_NB = 140000;
 
         /// <summary>
         /// Max allowed rows number to display in insertions/versions page
         /// </summary>
         public const int MAX_ALLOWED_INSERTION_VERSION_ROWS_NB = 30000;
+      
     }
 
     /// <summary>
@@ -686,7 +725,11 @@ namespace TNS.AdExpress.Constantes.Web
             /// <summary>
             /// number of post
             /// </summary>
-            numberPost =28
+            numberPost =28,
+            /// <summary>
+            /// Turkish Lira
+            /// </summary>
+            tl=29
 		}
 		#endregion
 
@@ -999,199 +1042,279 @@ namespace TNS.AdExpress.Constantes.Web
                 /// <summary>
                /// Table detailed by Advertiser / SubSector
                 /// </summary>
-               advertiserSubSector
-			}
+               advertiserSubSector,
+                /// <summary>
+                ///  Table detailed by Brand / Product /slogan
+                /// </summary>
+                brandProductSlogan,
+                /// <summary>
+                ///  Table detailed by Product / Brand
+                /// </summary>
+                productBrand,
+                /// <summary>
+                ///  Table detailed by  Product /slogan
+                /// </summary>
+                productSlogan,
+                /// <summary>
+                /// Purchasing Agency
+                /// </summary>
+                purchasingAgency
+            }
 
-	
-			/// <summary>
-            /// Preformated Media Details levels for media classification
-			/// </summary>
-			public enum PreformatedMediaDetails
-			{
-				/// <summary>
-				/// Tableau donnant le total des Médias
-				/// </summary>
-				vehiculeTotal,
-				/// <summary>
-                ///  Table detailed by Media 
-				/// </summary>
-				vehicle,
-				/// <summary>
-				/// Tableau détaillé par média et catégories
-				/// </summary>
-				vehicleCategory,
-				/// <summary>
-				/// Tableau détaillé par média,catégories et supports
-				/// </summary>
-				vehicleCategoryMedia,
-				/// <summary>
-				/// Tableau détaillé par média et centre d'intérêts
-				/// </summary>
-				vehicleInterestCenter,
-				/// <summary>
-				/// Tableau détaillé par média , centre d'intérêts et supports
-				/// </summary>
-				vehicleInterestCenterMedia,
-				/// <summary>
-                ///  Table detailed by Media /Vehicle
-				/// </summary>
-				vehicleMedia,
-				/// <summary>
-				/// Tableau détaillé par Media et régie
-				/// </summary>
-				vehicleMediaSeller,
-				/// <summary>
-				/// Tableau détaillé par media, régie et supports
-				/// </summary>
-				vehicleMediaSellerMedia,
-				/// <summary>
-				/// Tableau détaillé par régie et supports
-				/// </summary>
-				mediaSellerMedia,
-				/// <summary>
-				/// Tableau détaillé par régie, media et supports
-				/// </summary>
-				mediaSellerVehicleMedia,
-				/// <summary>
-				/// Tableau détaillé par régie et centre d'intérêt
-				/// </summary>
-				mediaSellerInterestCenter,
-				/// <summary>
-				/// Tableau détaillé par régie, centre d'intérêt et supports
-				/// </summary>
-				mediaSellerInterestCenterMedia,
-				/// <summary>
-				/// Tableau détaillé par Media / Catégories / Supports / Accroches
-				/// </summary>
-				vehicleCategoryMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Media / Supports / Accroches 
-				/// </summary>
-				vehicleMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Media / Centres d'intérêt / Supports / Accroches 
-				/// </summary>
-				vehicleInterestCenterMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Media / Régies / Supports / Accroches
-				/// </summary>
-				vehicleMediaSellerMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Régies / Supports / Accroches
-				/// </summary>
-				mediaSellerMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Régies / Media / Supports/ Accroches
-				/// </summary>
-				mediaSellerVehicleMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Régies / Centres d'intérêt / Supports / Accroches
-				/// </summary>
-				mediaSellerInterestCenterMediaSlogan,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Supports 
-				/// </summary>
-				sloganMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Media / Supports
-				/// </summary>
-				sloganVehicleMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Media / Catégories / Supports 
-				/// </summary>
-				sloganVehicleCategoryMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Media / Centres d'intérêt / Supports
-				/// </summary>
-				sloganVehicleInterestCenterMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Media / Régies/Supports
-				/// </summary>
-				sloganVehicleMediaSellerMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Régies / Supports
-				/// </summary>
-				sloganMediaSellerMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Régies / Media / Supports
-				/// </summary>
-				sloganMediaSellerVehicleMedia,
-				/// <summary>
-				/// Tableau détaillé par Accroches / Régies /Centres d'intérêt / Supports
-				/// </summary>
-				sloganMediaSellerInterestCenterMedia,
-				/// <summary>
-				/// Tableau détaillé par Media / Titre/ Supports
-				/// </summary>
-				vehicleTitleMedia,
-				/// <summary>
-                ///  Table detailed by Vehicle
-				/// </summary>
-				Media,
-				/// <summary>
-				/// Tableau détaillé par Genre d'émissions / Emissions
-				/// </summary>
-				programTypeProgram,
-				/// <summary>
-				/// Tableau détaillé par Formes de parrainage
-				/// </summary>
-				sponsorshipForm,
-                /// <summary>
-                /// Table detailed by Media / country / vehicle
-                /// </summary>
-				vehicleCountryMedia,
-                /// <summary>
-                /// Table detailed by Media /Region
-                /// </summary>
-                vehicleRegion,
-                /// <summary>
-                /// Table detailed by Region
-                /// </summary>
-                region,
-                /// <summary>
-                /// Table detailed by Media /Region/Vehicle
-                /// </summary>
-                vehicleRegionMedia,
-                /// <summary>
-                /// Table detailed by Region/ Media
-                /// </summary>
-                regionVehicle,
-                /// <summary>
-                /// Tableau détaillé par catégorie
-                /// </summary>
-                category,
-                /// <summary>
-                /// Tableau détaillé par Régie
-                /// </summary>
-                mediaSeller,
-                /// <summary>
-                /// Tableau détaillé par Régie / Media
-                /// </summary>
-                mediaSellerVehicle,
-                /// <summary>
-                /// Tableau détaillé par Régie / Catégorie
-                /// </summary>
-                mediaSellerCategory,
-                /// <summary>
-                /// Table detailed by Region/ Vehicle
-                /// </summary>
-                regionMedia,
-                /// <summary>
-                /// Table detailed by Title
-                /// </summary>
-                title,
-                /// <summary>
-                /// Table detailed by Vehicle\Title
-                /// </summary>
-                vehicleTitle,
-                /// <summary>
-                /// Table detailed by Régies\Title
-                /// </summary>
-                mediaSellerTitle
-			}
 
-	
-			/// <summary>
+		    /// <summary>
+		    /// Preformated Media Details levels for media classification
+		    /// </summary>
+		    public enum PreformatedMediaDetails
+		    {
+		        /// <summary>
+		        /// Tableau donnant le total des Médias
+		        /// </summary>
+		        vehiculeTotal,
+
+		        /// <summary>
+		        ///  Table detailed by Media 
+		        /// </summary>
+		        vehicle,
+
+		        /// <summary>
+		        /// Tableau détaillé par média et catégories
+		        /// </summary>
+		        vehicleCategory,
+
+		        /// <summary>
+		        /// Tableau détaillé par média,catégories et supports
+		        /// </summary>
+		        vehicleCategoryMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par média et centre d'intérêts
+		        /// </summary>
+		        vehicleInterestCenter,
+
+		        /// <summary>
+		        /// Tableau détaillé par média , centre d'intérêts et supports
+		        /// </summary>
+		        vehicleInterestCenterMedia,
+
+		        /// <summary>
+		        ///  Table detailed by Media /Vehicle
+		        /// </summary>
+		        vehicleMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media et régie
+		        /// </summary>
+		        vehicleMediaSeller,
+
+		        /// <summary>
+		        /// Tableau détaillé par media, régie et supports
+		        /// </summary>
+		        vehicleMediaSellerMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par régie et supports
+		        /// </summary>
+		        mediaSellerMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par régie, media et supports
+		        /// </summary>
+		        mediaSellerVehicleMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par régie et centre d'intérêt
+		        /// </summary>
+		        mediaSellerInterestCenter,
+
+		        /// <summary>
+		        /// Tableau détaillé par régie, centre d'intérêt et supports
+		        /// </summary>
+		        mediaSellerInterestCenterMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media / Catégories / Supports / Accroches
+		        /// </summary>
+		        vehicleCategoryMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media / Supports / Accroches 
+		        /// </summary>
+		        vehicleMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media / Centres d'intérêt / Supports / Accroches 
+		        /// </summary>
+		        vehicleInterestCenterMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media / Régies / Supports / Accroches
+		        /// </summary>
+		        vehicleMediaSellerMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régies / Supports / Accroches
+		        /// </summary>
+		        mediaSellerMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régies / Media / Supports/ Accroches
+		        /// </summary>
+		        mediaSellerVehicleMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régies / Centres d'intérêt / Supports / Accroches
+		        /// </summary>
+		        mediaSellerInterestCenterMediaSlogan,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Supports 
+		        /// </summary>
+		        sloganMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Media / Supports
+		        /// </summary>
+		        sloganVehicleMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Media / Catégories / Supports 
+		        /// </summary>
+		        sloganVehicleCategoryMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Media / Centres d'intérêt / Supports
+		        /// </summary>
+		        sloganVehicleInterestCenterMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Media / Régies/Supports
+		        /// </summary>
+		        sloganVehicleMediaSellerMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Régies / Supports
+		        /// </summary>
+		        sloganMediaSellerMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Régies / Media / Supports
+		        /// </summary>
+		        sloganMediaSellerVehicleMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Accroches / Régies /Centres d'intérêt / Supports
+		        /// </summary>
+		        sloganMediaSellerInterestCenterMedia,
+
+		        /// <summary>
+		        /// Tableau détaillé par Media / Titre/ Supports
+		        /// </summary>
+		        vehicleTitleMedia,
+
+		        /// <summary>
+		        ///  Table detailed by Vehicle
+		        /// </summary>
+		        Media,
+
+		        /// <summary>
+		        /// Tableau détaillé par Genre d'émissions / Emissions
+		        /// </summary>
+		        programTypeProgram,
+
+		        /// <summary>
+		        /// Tableau détaillé par Formes de parrainage
+		        /// </summary>
+		        sponsorshipForm,
+
+		        /// <summary>
+		        /// Table detailed by Media / country / vehicle
+		        /// </summary>
+		        vehicleCountryMedia,
+
+		        /// <summary>
+		        /// Table detailed by Media /Region
+		        /// </summary>
+		        vehicleRegion,
+
+		        /// <summary>
+		        /// Table detailed by Region
+		        /// </summary>
+		        region,
+
+		        /// <summary>
+		        /// Table detailed by Media /Region/Vehicle
+		        /// </summary>
+		        vehicleRegionMedia,
+
+		        /// <summary>
+		        /// Table detailed by Region/ Media
+		        /// </summary>
+		        regionVehicle,
+
+		        /// <summary>
+		        /// Tableau détaillé par catégorie
+		        /// </summary>
+		        category,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régie
+		        /// </summary>
+		        mediaSeller,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régie / Media
+		        /// </summary>
+		        mediaSellerVehicle,
+
+		        /// <summary>
+		        /// Tableau détaillé par Régie / Catégorie
+		        /// </summary>
+		        mediaSellerCategory,
+
+		        /// <summary>
+		        /// Table detailed by Region/ Vehicle
+		        /// </summary>
+		        regionMedia,
+
+		        /// <summary>
+		        /// Table detailed by Title
+		        /// </summary>
+		        title,
+
+		        /// <summary>
+		        /// Table detailed by Vehicle\Title
+		        /// </summary>
+		        vehicleTitle,
+
+		        /// <summary>
+		        /// Table detailed by Régies\Title
+		        /// </summary>
+		        mediaSellerTitle,
+		        /// <summary>
+		        /// Table detailed by Vehicle\Spot Sub type
+		        /// </summary>
+		        mediaSpotSubType,
+		        /// <summary>
+		        /// Table detailed by Spot Type\Spot Sub type
+		        /// </summary>
+		        spotTypeSpotSubType,
+                /// <summary>
+                /// Tableau détaillé par Categorie , centre d'intérêts et supports
+                /// </summary>
+                categoryInterestCenterMedia,
+                /// <summary>
+                /// Tableau détaillé par Program typology
+                /// </summary>
+                programTypology,
+                /// <summary>
+                /// Table detailed by program Typology\Spot Sub type
+                /// </summary>
+                programTypologySpotSubType,
+            }
+
+
+		    /// <summary>
 			/// Niveau de détails préformatés pour les périodes
 			/// </summary>
 			public enum PreformatedPeriodDetails
@@ -4135,6 +4258,28 @@ namespace TNS.AdExpress.Constantes.Web
         }
 	}
 
-	#endregion
+    #endregion
 
+    #region Common Layers
+    /// <summary>
+    /// contains all constantes to identify Group Selection
+    /// </summary>
+    public class GroupSelection
+    {
+        /// <summary>
+        /// Group Type
+        /// </summary>
+        public enum GroupType
+        {
+            /// <summary>
+            /// Mono Selection
+            /// </summary>
+            mono = 0,
+            /// <summary>
+            ///Multi Selection
+            /// </summary>
+            multi = 1
+        }
+    }
+    #endregion
 }

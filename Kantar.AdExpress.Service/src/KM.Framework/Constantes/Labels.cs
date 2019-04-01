@@ -244,7 +244,24 @@ namespace KM.Framework.Constantes
         public string ReturToLogin { get; set; } //3130
 
         public string RequiredFields { get; set; } //3133
-	public string IdSlogansLabel { get; set; } //1888
+	    public string IdSlogansLabel { get; set; } //1888
 
+        public string UnitSelectionLabel { get; set; } //3149
+
+        public string CookiesMessage { get; set; } //3246
+        public string MoreInfoLabel { get; set; } //3245
+        public string AcceptBtnLabel { get; set; } //3247
+        public string FixedCookieTypeLabel { get; set; } //3248
+        public string FixedCookieTypeDesc { get; set; } //3249
+        public string CookiesTitle { get; set; } //3250
+        public string Success { get; set; } //3255
+
+        public string AdvancedBtnLabel { get; set; } //3266
+        public string CookieTypesTitle { get; set; } //3267
+        public string CookieStat { get; set; } //3268
+        public string CookieStatDesc { get; set; } //3269
+        public string CookieDiagnostic { get; set; } //3270
+        public string CookieDiagnosticDesc { get; set; } //3271
+        public string ContactPrivacyDesc { get; set; } //3274
     }
 }

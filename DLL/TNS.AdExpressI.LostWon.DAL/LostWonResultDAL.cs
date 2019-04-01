@@ -158,8 +158,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                     }
 
                     productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
-                    if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-                        dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                    dataFieldsForGadWithoutTablePrefix = GetDataFieldsForGadWithoutTablePrefix(dataFieldsForGadWithoutTablePrefix);
 
                     sql = new StringBuilder();
                     sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
@@ -200,8 +199,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                         sql = sqlWebPlan;
                     }
 
-                    if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
-                        dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                    dataFieldsForGadWithoutTablePrefix = GetDataFieldsForGadWithoutTablePrefix(dataFieldsForGadWithoutTablePrefix);
+
                     groupByFieldNameWithoutTablePrefix = string.Format(" id_media, columnDetailLevel, date_num, {0} {1}"
                         , groupByFieldNameWithoutTablePrefix
                         , dataFieldsForGadWithoutTablePrefix);
@@ -248,6 +247,14 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             #endregion
         }
+
+        protected virtual string GetDataFieldsForGadWithoutTablePrefix(string dataFieldsForGadWithoutTablePrefix)
+        {
+            if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+                dataFieldsForGadWithoutTablePrefix = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+            return dataFieldsForGadWithoutTablePrefix;
+        }
+
         #endregion
 
         #region GetSynthesisData
@@ -1251,6 +1258,175 @@ namespace TNS.AdExpressI.LostWon.DAL
         {
             return string.Format(", {0}.{1} ", dataTablePrefixe, u.DatabaseMultimediaField);
         }
+
+        public virtual long CountData()
+        {
+            long nbRows = 0;
+            #region Constantes
+            string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            #endregion
+
+            #region Variables
+            StringBuilder sql = new StringBuilder();
+            StringBuilder sql4M = new StringBuilder();
+            StringBuilder sqlDataVehicle = new StringBuilder();
+            StringBuilder sqlWebPlan = new StringBuilder();
+            StringBuilder sqlTemp = new StringBuilder();
+            string groupByFieldNameWithoutTablePrefix = string.Empty;
+            string orderFieldName = string.Empty;
+            string orderFieldNameWithoutTablePrefix = string.Empty;
+            string productFieldNameWithoutTablePrefix = string.Empty;
+            string unitFieldSumWithAlias = string.Empty;
+            string dataFieldsForGadWithoutTablePrefix = string.Empty;
+            string groupByOptional = string.Empty;
+            string orderByOptional = string.Empty;
+            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+            UnitInformation u = _session.GetSelectedUnit();
+            #endregion
+
+            #region Construction de la requête
+            try
+            {
+                orderFieldName = _session.GenericProductDetailLevel.GetSqlOrderFields();
+                orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
+                groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
+                unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
+
+                if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) 
+                    && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                {
+                    groupByOptional = string.Format(", {0}", u.Id.ToString());
+                }
+
+                if (customerPeriod.Is4M)
+                {
+                    sql4M.Append(GetRequest(CstDB.TableType.Type.dataVehicle4M));
+
+                    if (customerPeriod.IsDataVehicle)
+                    {
+                        sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
+                        sqlTemp = sqlDataVehicle;
+                    }
+
+                    if (customerPeriod.IsWebPlan)
+                    {
+                        sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
+                        sqlTemp = sqlWebPlan;
+                    }
+
+                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+                    {
+                        sqlTemp = new StringBuilder();
+                        sqlTemp.AppendFormat("{0} UNION ALL {1}", sqlDataVehicle, sqlWebPlan);
+                    }
+
+                    productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
+                    dataFieldsForGadWithoutTablePrefix = GetDataFieldsForGadWithoutTablePrefix(dataFieldsForGadWithoutTablePrefix);
+
+                    sql = new StringBuilder();
+                
+                    sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
+                        , productFieldNameWithoutTablePrefix
+                        , dataFieldsForGadWithoutTablePrefix
+                        , unitFieldSumWithAlias);
+                    sql.Append(" from (");
+                    sql.Append(sql4M);
+                    sql.Append(" UNION ALL ");
+                    sql.Append(sqlTemp);
+                    sql.Append(" ) ");
+                    groupByFieldNameWithoutTablePrefix = string.Format("id_media, columnDetailLevel, date_num, {0} {1}"
+                        , groupByFieldNameWithoutTablePrefix
+                        , dataFieldsForGadWithoutTablePrefix);
+                    sql.AppendFormat(" group by {0}{1}", groupByFieldNameWithoutTablePrefix, groupByOptional);
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
+                    sql.AppendFormat(" order by {0} {1}", orderFieldNameWithoutTablePrefix, orderByOptional);
+
+                   
+
+                }
+                else if (!customerPeriod.IsDataVehicle && !customerPeriod.IsWebPlan)
+                {
+                   
+
+                    sql.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, {1}.id_media, date_num ", orderFieldName, DATA_TABLE_PREFIXE);
+                    sql.AppendFormat(" order by {0} {1} ", orderFieldNameWithoutTablePrefix, orderByOptional);
+
+                   
+                }
+                else
+                {
+
+                    if (customerPeriod.IsDataVehicle)
+                    {
+                        sqlDataVehicle.Append(GetRequest(CstDB.TableType.Type.dataVehicle));
+                        sql = sqlDataVehicle;
+                    }
+
+                    if (customerPeriod.IsWebPlan)
+                    {
+                        sqlWebPlan.Append(GetRequest(CstDB.TableType.Type.webPlan));
+                        sql = sqlWebPlan;
+                    }
+
+                    dataFieldsForGadWithoutTablePrefix = GetDataFieldsForGadWithoutTablePrefix(dataFieldsForGadWithoutTablePrefix);
+
+                    groupByFieldNameWithoutTablePrefix = string.Format(" id_media, columnDetailLevel, date_num, {0} {1}"
+                        , groupByFieldNameWithoutTablePrefix
+                        , dataFieldsForGadWithoutTablePrefix);
+                    if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan)
+                    {
+                        productFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlFieldsWithoutTablePrefix();
+                        sql = new StringBuilder();
+                     
+
+                        sql.AppendFormat(" select id_media, columnDetailLevel, {0} {1}, date_num, {2}"
+                            , productFieldNameWithoutTablePrefix
+                            , dataFieldsForGadWithoutTablePrefix
+                            , unitFieldSumWithAlias);
+                        sql.Append(" from (");
+                        sql.Append(sqlDataVehicle);
+                        sql.Append(" UNION ALL ");
+                        sql.Append(sqlWebPlan);
+                        sql.Append(" ) ");
+                        sql.AppendFormat(" group by {0}{1}", groupByFieldNameWithoutTablePrefix, groupByOptional);
+                    }
+                    orderFieldNameWithoutTablePrefix = string.Format(" {0}, id_media, date_num ", orderFieldNameWithoutTablePrefix);
+                    sql.AppendFormat(" order by {0} {1}", orderFieldNameWithoutTablePrefix, orderByOptional);
+
+                 
+
+                }
+
+                sql.Insert(0, " select count(*) as NbROWS from ( ");//start count statement
+                sql.Append(" ) ");//end count statement
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new DynamicDALException("Error while building request for dynamic report : " + sql, err));
+            }
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                var ds = _session.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1)
+                    return (Int64.Parse(ds.Tables[0].Rows[0]["NbROWS"].ToString()));
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new DynamicDALException("Unable to load data for dynamic report : " + sql, err));
+            }
+
+            #endregion
+
+            return nbRows;
+        }
+
         #endregion
 
     }

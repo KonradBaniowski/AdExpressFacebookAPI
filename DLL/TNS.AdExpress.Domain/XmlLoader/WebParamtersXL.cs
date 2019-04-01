@@ -154,5 +154,56 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             return (directoryName);
         }
         #endregion
+
+        #region Enable GDPR
+        /// <summary>
+        /// Load GDPR Configuration
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <returns>Enable GDPR Flag</returns>
+        public static bool LoadEnableGdpr(IDataSource source)
+        {
+
+            XmlTextReader reader = null;
+            bool enableGdpr = false;
+            try
+            {
+                reader = (XmlTextReader)source.GetSource();
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        switch (reader.LocalName)
+                        {
+                            case "configuration":
+                                if (reader.GetAttribute("enableGdpr") != null && reader.GetAttribute("enableGdpr").Length > 0)
+                                {
+                                    enableGdpr = bool.Parse(reader.GetAttribute("enableGdpr")); ;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                #region Fermeture du fichier
+                if (source.GetSource() != null) source.Close();
+                #endregion
+
+            }
+            #region Traitement des erreurs
+            catch (System.Exception e)
+            {
+
+                #region Fermeture du fichier
+                if (source.GetSource() != null) source.Close();
+                #endregion
+
+                throw (new XmlException("Impossible load directory name", e));
+            }
+            #endregion
+
+            return (enableGdpr);
+        }
+        #endregion
     }
 }

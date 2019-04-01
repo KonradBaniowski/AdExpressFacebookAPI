@@ -30,18 +30,28 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// Screen code
 		/// </summary>
 		protected string _adBreak;
-		#endregion
+        #endregion
 
-		#region Constructor
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="webSession">Client Session</param>
-		/// <param name="vehicleInformation">Vehicle information</param>
-		/// <param name="idMedia">Id media</param>
-		/// <param name="periodBeginning">Period Beginning </param>
-		/// <param name="periodEnd">Period End</param>
-		public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Module module, Int64 idMedia, string periodBeginning, string periodEnd, string adBreak)
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicleInformation">Vehicle information</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
+        public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Module module, Int64 idMedia, string periodBeginning, string periodEnd)
+            : base(webSession, vehicleInformation, module, idMedia, periodBeginning, periodEnd) { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicleInformation">Vehicle information</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
+        public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Module module, Int64 idMedia, string periodBeginning, string periodEnd, string adBreak)
 			: base(webSession, vehicleInformation, module, idMedia, periodBeginning, periodEnd) {
 			_adBreak = adBreak;	
 		}
@@ -262,7 +272,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					throw new PortofolioDALException("GetOrderByDetailMedia : This media is not treated. None related table.");
 			}
 		}
-		#endregion
+
+	    protected override long CountDataRows()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 
 
 

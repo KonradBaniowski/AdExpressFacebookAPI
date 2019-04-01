@@ -44,18 +44,20 @@ namespace TNS.AdExpressI.Portofolio.Engines
         /// Dal portofolio Synthesis
         /// </summary>
         protected IPortofolioDAL _portofolioDAL = null;
+        protected DataEcran _dataEcran = null;
+        protected DataUnit _dataUnit = null;
         #endregion
 
         #region Constructor
         /// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="webSession">Client Session</param>
-		/// <param name="vehicle">Vehicle</param>
-		/// <param name="idMedia">Id media</param>
-		/// <param name="periodBeginning">Period Beginning </param>
-		/// <param name="periodEnd">Period End</param>
-		public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicle">Vehicle</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
+        public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
             : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd)
         {
 
@@ -1589,7 +1591,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 // Durée moyenne d'un écran
 
                 data = new List<ICell>(2);
-                data.Add(new CellLabel(GestionWeb.GetWebWord(1414, _webSession.SiteLanguage)));
+                data.Add(new CellLabel(GetAverageDurationOfSpostLabel()));
                 CellDuration cD1 = new CellDuration(Convert.ToDouble(((long)averageDurationEcran).ToString()));
                 cD1.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.duration).StringFormat;
                 cD1.CssClass = "left";
@@ -1645,7 +1647,8 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 data.Add(new CellLabel(GestionWeb.GetWebWord(1415, _webSession.SiteLanguage)));
 
                 //data.Add(new CellLabel(nbrSpotByEcran.ToString("0.00")));
-                CellNumber cell = new CellNumber((double)nbrSpotByEcran);
+                double nbrSpotByEcranRound = Math.Round((double) nbrSpotByEcran, 2);
+                CellNumber cell = new CellNumber(nbrSpotByEcranRound);
                 cell.StringFormat = "{0:max2}";
                 cell.AsposeFormat = 4;
                 cell.CssClass = "left";
@@ -1658,6 +1661,11 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region Average duration of a spot Label
+        protected virtual string GetAverageDurationOfSpostLabel()
+        {
+            return GestionWeb.GetWebWord(1414, _webSession.SiteLanguage);
+        }
         #endregion
 
         #endregion
@@ -1676,7 +1684,6 @@ namespace TNS.AdExpressI.Portofolio.Engines
             List<ICell> dataInvestisment = null;
             List<ICell> dataProductNumber = null;
             List<ICell> dataAdvertiserNumber = null;
-            DataEcran dataEcran = null;
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
             #endregion
 
@@ -1692,10 +1699,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             #region Building Data Result
 
-            DataUnit dataUnit = new DataUnit(_portofolioDAL, _vehicleInformation);
+            _dataUnit = new DataUnit(_portofolioDAL, _vehicleInformation);
 
             #region Get Priority Data
-            dataInvestisment = ComputeDataInvestissementsTotal(dataUnit);
+            dataInvestisment = ComputeDataInvestissementsTotal(_dataUnit);
             dataProductNumber = ComputeDataProductNumber();
             dataAdvertiserNumber = ComputeDataAdvertiserNumber();
 
@@ -1718,7 +1725,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
             {
-                dataEcran = new DataEcran(_portofolioDAL, _vehicleInformation, isAlertModule);
+                _dataEcran = new DataEcran(_portofolioDAL, _vehicleInformation, isAlertModule);
             }
 
             #endregion
@@ -1732,8 +1739,23 @@ namespace TNS.AdExpressI.Portofolio.Engines
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
+            #region Media Type
+            dataTemp = ComputeDataMediaType();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Interest center
+            dataTemp = ComputeDataInterestCenter();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
             #region Category
             dataTemp = ComputeDataCategory();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Media Owner
+            dataTemp = ComputeDataMediaOwner();
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1743,12 +1765,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #endregion
 
             #region Volume for Marketing Direct
-            dataTemp = ComputeDataVolumeForMarketingDirect(dataUnit);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Interest center
-            dataTemp = ComputeDataInterestCenter();
+            dataTemp = ComputeDataVolumeForMarketingDirect(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1758,7 +1775,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #endregion
 
             #region number board and newtwork type
-            dataTemp = ComputeDataNumberBoard(dataUnit);
+            dataTemp = ComputeDataNumberBoard(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
 
             dataTemp = ComputeDataNetworkType(isAlertModule);
@@ -1769,7 +1786,7 @@ namespace TNS.AdExpressI.Portofolio.Engines
             List<ICell> dataPageNumber = ComputeDataPageNumber();
             if (dataPageNumber != null) data.AddRange(dataPageNumber);
 
-            List<ICell> dataAdNumber = ComputeDataAdNumber(dataUnit);
+            List<ICell> dataAdNumber = ComputeDataAdNumber(_dataUnit);
             if (dataAdNumber != null) data.AddRange(dataAdNumber);
 
             if (dataAdNumber != null && dataAdNumber.Count == 2 && dataAdNumber[1] is CellUnit
@@ -1789,21 +1806,30 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #endregion
 
             #region Cas tv, radio
-            dataTemp = ComputeDataSpotNumber(dataUnit);
+            dataTemp = ComputeDataSpotNumber(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
 
-            dataTemp = ComputeDataEcranNumber(dataEcran);
+            if (_webSession.CustomerPeriodSelected.IsSliding4M)
+            {
+                dataTemp = ComputeCommercialItemNumber();
+                if (dataTemp != null) data.AddRange(dataTemp);
+            }
+
+            dataTemp = ComputeDataEcranNumber(_dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
 
-            dataTemp = ComputeDataTotalDuration(dataUnit);
+            dataTemp = ComputeDataTotalDuration(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
 
-            dataTemp = ComputeDataEvaliantInsertionNumber(dataUnit);
+            dataTemp = ComputeDataAverageDuration(_dataUnit, _dataEcran);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataEvaliantInsertionNumber(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
             #region Cas MMS
-            dataTemp = ComputeDataMmsInsertionNumber(dataUnit);
+            dataTemp = ComputeDataMmsInsertionNumber(_dataUnit);
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1826,10 +1852,10 @@ namespace TNS.AdExpressI.Portofolio.Engines
             #endregion
 
             #region Cas tv, radio, others
-            dataTemp = ComputeDataAverageDurationEcran(dataEcran);
+            dataTemp = ComputeDataAverageDurationEcran(_dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
 
-            dataTemp = ComputeDataSpotNumberByEcran(dataEcran);
+            dataTemp = ComputeDataSpotNumberByEcran(_dataEcran);
             if (dataTemp != null) data.AddRange(dataTemp);
             #endregion
 
@@ -1843,6 +1869,43 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             throw new NotImplementedException();
         }
+
+        #region ComputeDataMediaType
+        protected virtual List<ICell> ComputeDataMediaType()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeDataMediaOwner
+        protected virtual List<ICell> ComputeDataMediaOwner()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeCommercialItemNumber
+        protected virtual List<ICell> ComputeCommercialItemNumber()
+        {
+            return null;
+        }
+        #endregion
+
+        #region ComputeDataAverageDuration
+        protected virtual List<ICell> ComputeDataAverageDuration(DataUnit dataUnit, DataEcran dataEcran)
+        {
+            return null;
+        }
+
+        protected override long CountDataRows()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #endregion
@@ -1973,6 +2036,22 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region GetAverageDuration
+        /// <summary>
+        /// Get Average Duration of a spot
+        /// </summary>
+        public virtual decimal GetAverageDuration()
+        {
+            string duration = GetTotalDuration();
+            string spotsNb = GetSpotNumber();
+
+            if(!string.IsNullOrEmpty(duration) && !string.IsNullOrEmpty(spotsNb))
+                return (decimal.Parse(duration) / decimal.Parse(spotsNb));
+
+            return 0;
+        }
+        #endregion
+
         #region GetInvestment
         /// <summary>
         /// GetInvestment
@@ -1982,6 +2061,18 @@ namespace TNS.AdExpressI.Portofolio.Engines
 
             if (_vehicleInformation.AllowedUnitEnumList.Contains(UnitsInformation.DefaultCurrency) && _dt.Columns.Contains(UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString().Length > 0)
                 return (_dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
+
+            return ("0");
+        }
+
+        /// <summary>
+        /// GetInvestment by currency
+        /// </summary>
+        public virtual string GetInvestmentByCurrency(WebCst.CustomerSessions.Unit unit)
+        {
+
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(unit) && _dt.Columns.Contains(UnitsInformation.List[unit].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[unit].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[unit].Id.ToString()].ToString());
 
             return ("0");
         }
@@ -2071,6 +2162,21 @@ namespace TNS.AdExpressI.Portofolio.Engines
         }
         #endregion
 
+        #region GetDuration
+        /// <summary>
+        /// Get Duration
+        /// </summary>
+        public virtual decimal GetDuration()
+        {
+            if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
+            {
+                return decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString());
+            }
+
+            return 0;
+        }
+        #endregion
+
         #region GetAverageDuration
         /// <summary>
         /// Get Average Duration of a spot
@@ -2079,10 +2185,48 @@ namespace TNS.AdExpressI.Portofolio.Engines
         {
             if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
             {
-                return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+                decimal insertionNb = decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+
+                if (insertionNb > 0)
+                    return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / insertionNb);
             }
-            else return 0;
+
+            return 0;
         }
+        #endregion
+
+        #region GetAverageDurationInBreak
+        /// <summary>
+        /// Get Average Duration of a spot in the break
+        /// </summary>
+        public virtual decimal GetAverageDurationInBreak()
+        {
+            if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
+            {
+                decimal spotNb = decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString());
+
+                if (spotNb > 0)
+                    return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / spotNb);
+            }
+
+            return 0;
+        }
+        #endregion
+
+        #region GetSpotNumber
+
+        /// <summary>
+        /// Get Spot Number
+        /// </summary>
+        public virtual decimal GetSpotNumber()
+        {
+            if (_dt != null && _dt.Rows[0]["nbre_spot"] != System.DBNull.Value)
+            {
+                return decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString());
+            }
+            return 0;
+        }
+
         #endregion
 
         #region GetSpotNumberByEcran
@@ -2098,7 +2242,9 @@ namespace TNS.AdExpressI.Portofolio.Engines
             {
                 if (_dt != null && _dt.Rows[0]["nbre_spot"] != System.DBNull.Value)
                 {
-                    nbrSpotByEcran = (decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+                    decimal insertionNb = decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+                    if (insertionNb > 0)
+                        nbrSpotByEcran = (decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()) / insertionNb);
                 }
                 else nbrSpotByEcran = 0;
             }

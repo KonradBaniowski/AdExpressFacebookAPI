@@ -25,6 +25,7 @@ using NLog;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
+using TNS.AdExpress.Domain.Level;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -68,6 +69,15 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
                         gridResult = portofolioResult.GetStructureGridResult(false);
                         break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_TYPOLOGY_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.programTypology));
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.PROGRAM_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.program));
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SUBTYPE_SPOTS_BREAKDOWN:
+                        gridResult = portofolioResult.GetBreakdownGridResult(false, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.spotSubType));
+                        break;
                     default:
                         gridResult = portofolioResult.GetGridResult();
                         break;
@@ -75,8 +85,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -98,8 +111,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -124,8 +140,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -195,8 +214,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -252,8 +274,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -319,6 +344,36 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
 
         #endregion
+
+        public long CountDataRows(string idWebSession, HttpContextBase httpContext)
+        {
+            long nbRows = 0;
+            _customerSession = (WebSession)WebSession.Load(idWebSession);
+            try
+            {
+                
+
+                var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                var parameters = new object[1];
+                parameters[0] = _customerSession;
+                var portofolioResult = (IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+                nbRows = portofolioResult.CountDataRows();
+            }
+            catch (Exception ex)
+            {
+                if (_customerSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _customerSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                throw;
+            }
+            return nbRows;
+        }
 
     }
 }

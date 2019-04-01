@@ -90,15 +90,92 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 	}
 	#endregion
 
-	#region Plans média
+    public class MediaSchedule: CommonMother
+    {
+        #region Line Constants
+        /// <summary>
+        /// Index of line "Total"
+        /// </summary>
+        public const int TOTAL_LINE_INDEX = 1;
+        #endregion
 
-	/// <summary>
-	/// Constantes des plans média
-	/// </summary>
-	/// 	/// <remarks>
-	/// Cette classe est hérité par les autres classes des constantes des plans média
-	/// </remarks>
-	public class MotherMediaPlan:CommonMother{
+        #region Column Indexes
+        /// <summary>
+        /// Index of N1 label
+        /// </summary>
+        public const int L1_COLUMN_INDEX = 0;
+        /// <summary>
+        /// Index of N2 label
+        /// </summary>
+        public const int L2_COLUMN_INDEX = 1;
+        /// <summary>
+        /// Index of N3 label
+        /// </summary>
+        public const int L3_COLUMN_INDEX = 2;
+        /// <summary>
+        /// Index of N4 label
+        /// </summary>
+        public const int L4_COLUMN_INDEX = 3;
+        /// <summary>
+        /// Index of periodicity column
+        /// </summary>
+        public const int PERIODICITY_COLUMN_INDEX = 4;
+        /// <summary>
+        /// Index of total column
+        /// </summary>
+        public const int TOTAL_COLUMN_INDEX = 5;
+        /// <summary>
+        /// Index de la colonne des pdms dans le tableau en mémoire
+        /// </summary>
+        public const int PDM_COLUMN_INDEX = 6;
+        /// <summary>
+        /// Index de la colonne du niveau 1
+        /// </summary>
+        public const int L1_ID_COLUMN_INDEX = 7;
+        /// <summary>
+        /// Index de la colonne du niveau 2
+        /// </summary>
+        public const int L2_ID_COLUMN_INDEX = 8;
+        /// <summary>
+        /// Index de la colonne du niveau 3
+        /// </summary>
+        public const int L3_ID_COLUMN_INDEX = 9;
+        /// <summary>
+        /// Index de la colonne du niveau 4
+        /// </summary>
+        public const int L4_ID_COLUMN_INDEX = 10;
+        /// <summary>
+        /// Index of total column de l'annee de comparaison
+        /// </summary>
+        public const int TOTAL_COMPARATIVE_COLUMN_INDEX = 11;
+        /// <summary>
+        /// Index de la colonne des pdms de l'annee de comparaison dans le tableau en mémoire
+        /// </summary>
+        public const int PDM_COMPARATIVE_COLUMN_INDEX = 12;
+        /// <summary>
+        /// Evolution des annees comparés
+        /// </summary>
+        public const int EVOL_COLUMN_INDEX = 13;
+        #endregion
+
+        public const string TOTAL_COLUMN_INDEX_KEY = "TOTAL_COLUMN_INDEX";
+        public const string PDM_COLUMN_INDEX_KEY = "PDM_COLUMN_INDEX";
+        public const string TOTAL_COMPARATIVE_COLUMN_INDEX_KEY = "TOTAL_COMPARATIVE_COLUMN_INDEX";
+        public const string PDM_COMPARATIVE_COLUMN_INDEX_KEY = "PDM_COMPARATIVE_COLUMN_INDEX";
+        public const string EVOL_COLUMN_INDEX_KEY = "EVOL_COLUMN_INDEX";
+        public const string SPEND_PER_GRP_COLUMN_INDEX_KEY = "SPEND_PER_GRP_COLUMN_INDEX";
+        public const string YEAR_COLUMN_INDEX_KEY = "YEAR_COLUMN_INDEX";
+    }
+
+    #region Plans média
+
+    /// <summary>
+    /// Constantes des plans média
+    /// </summary>
+    /// 	/// <remarks>
+    /// Cette classe est hérité par les autres classes des constantes des plans média
+    /// </remarks>
+    public class MotherMediaPlan:CommonMother{
 
 		#region Enumérateur
 		/// <summary>
@@ -317,8 +394,10 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		/// </summary>
 		public const int ID_CATEGORY_COUMN_INDEX=8;
 
-		#endregion
-	}
+     
+
+        #endregion
+    }
 
 
 	/// <summary>
@@ -1918,12 +1997,24 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		/// Calendrier d'action
 		/// </summary>
 		public const int CALENDAR=6;
-
-		#region Détail d'un portefeuille
-		/// <summary>
-		/// Index de la colonne id Media
+        /// <summary>
+		/// Program Typology Breakdown
 		/// </summary>
-		public	const int MEDIA_ID_COLUMN_INDEX=0;
+		public const int PROGRAM_TYPOLOGY_BREAKDOWN = 7;
+        /// <summary>
+		/// Program Breakdown
+		/// </summary>
+		public const int PROGRAM_BREAKDOWN = 8;
+        /// <summary>
+		/// Sub-type of Spots Breakdown
+		/// </summary>
+		public const int SUBTYPE_SPOTS_BREAKDOWN = 9;
+
+        #region Détail d'un portefeuille
+        /// <summary>
+        /// Index de la colonne id Media
+        /// </summary>
+        public	const int MEDIA_ID_COLUMN_INDEX=0;
 		/// <summary>
 		/// Index de l'identifiant de l'élément N
 		/// </summary>
@@ -2330,7 +2421,15 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// <summary>
             /// Spot Data
             /// </summary>
-            spotData
+            spotData,
+            /// <summary>
+            /// Media Owner
+            /// </summary>
+            mediaOwner,
+            /// <summary>
+            /// Commercial Item Number
+            /// </summary>
+            commercialItemNumber
         }
 	}
 
@@ -2867,6 +2966,23 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
         /// Summary
         /// </summary>
         public const int SUMMARY = 5;
+    }
+    #endregion
+
+    #region New Creative
+    /// <summary>
+    /// Constante pour le Portefeuille d'un support
+    /// </summary>
+    public class NewCreative
+    {
+        /// <summary>
+        /// New Creative Report
+        /// </summary>
+        public const int NEW_CREATIVE_REPORT = 0;
+        /// <summary>
+        /// New Creative Detail
+        /// </summary>
+        public const int NEW_CREATIVE_DETAILS = 1;
     }
     #endregion
 

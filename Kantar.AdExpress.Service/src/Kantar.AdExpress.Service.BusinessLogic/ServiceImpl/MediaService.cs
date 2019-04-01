@@ -68,8 +68,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 string message = String.Format("IdWebSession: {0}\n User Agent: {1}\n Login: {2}\n password: {3}\n error: {4}\n StackTrace: {5}\n Module: {6}", idWebSession, webSession.UserAgent, webSession.CustomerLogin.Login, webSession.CustomerLogin.PassWord, ex.InnerException + ex.Message, ex.StackTrace, GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule), webSession.SiteLanguage));
                 result.ErrorMessage = message;
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -112,17 +115,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
         private static void SetLog(HealthMediaRequest healthMediaRequest, WebSession webSession, Exception ex)
         {
-            CustomerWebException cwe = new CustomerWebException(webSession, ex);
-            cwe.Browser = healthMediaRequest.ClientInformation.Browser;
-            cwe.VersionBrowser = healthMediaRequest.ClientInformation.BrowserVersion;
-            cwe.MinorVersionBrowser = healthMediaRequest.ClientInformation.BrowserMinorVersion;
-            cwe.Platform = healthMediaRequest.ClientInformation.BrowserPlatform;
-            cwe.UserAgent = healthMediaRequest.ClientInformation.UserAgent;
-            cwe.UserHostAddress = healthMediaRequest.ClientInformation.UserHostAddress;
-            cwe.Url = healthMediaRequest.ClientInformation.Url;
-            cwe.ServerName = healthMediaRequest.ClientInformation.ServerMachineName;
+            if (webSession.EnableTroubleshooting)
+            {
+                CustomerWebException cwe = new CustomerWebException(webSession, ex);
+                cwe.Browser = healthMediaRequest.ClientInformation.Browser;
+                cwe.VersionBrowser = healthMediaRequest.ClientInformation.BrowserVersion;
+                cwe.MinorVersionBrowser = healthMediaRequest.ClientInformation.BrowserMinorVersion;
+                cwe.Platform = healthMediaRequest.ClientInformation.BrowserPlatform;
+                cwe.UserAgent = healthMediaRequest.ClientInformation.UserAgent;
+                cwe.UserHostAddress = healthMediaRequest.ClientInformation.UserHostAddress;
+                cwe.Url = healthMediaRequest.ClientInformation.Url;
+                cwe.ServerName = healthMediaRequest.ClientInformation.ServerMachineName;
 
-            Logger.Log(LogLevel.Error, cwe.GetLog());
+                Logger.Log(LogLevel.Error, cwe.GetLog());
+            }
         }
 
         private List<Core.Domain.Media> LoadHealthMedias(WebSession _webSession)
@@ -171,8 +177,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 result.ErrorMessage = message;
                 result.Success = false;
 
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -190,8 +199,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }
@@ -459,17 +471,22 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             //Plurimedia
             VehicleInformation vehicleInfo = new VehicleInformation();
-            vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
-            Core.Domain.Media pluremedia = new Core.Domain.Media();
-            if (vehicleInfo != null)
+
+            if (!WebApplicationParameters.CountryCode.Equals(CstWeb.CountryCode.TURKEY))
             {
-                pluremedia.Id = vehicleInfo.DatabaseId;
-                pluremedia.MediaEnum = VhCstes.plurimedia;
-                pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia, webSession.SiteLanguage);
-                vehiclesList.Add(pluremedia);
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+                Core.Domain.Media pluremedia = new Core.Domain.Media();
+                if (vehicleInfo != null)
+                {
+                    pluremedia.Id = vehicleInfo.DatabaseId;
+                    pluremedia.MediaEnum = VhCstes.plurimedia;
+                    pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia,
+                        webSession.SiteLanguage);
+                    vehiclesList.Add(pluremedia);
+                }
             }
-                    
-           
+
+
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 dtVehicle = ds.Tables[0];
 

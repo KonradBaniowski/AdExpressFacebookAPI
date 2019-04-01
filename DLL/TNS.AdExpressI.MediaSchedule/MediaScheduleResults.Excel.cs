@@ -161,16 +161,16 @@ namespace TNS.AdExpressI.MediaSchedule
             {
                 if (_session.ComparativeStudy)
                 {
-                    firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                    firstPeriodIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + 1;
                 }
                 else
                 {
-                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                    firstPeriodIndex =  CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
                 }
             }
             else
             {
-                firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                firstPeriodIndex =  CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
             }
 
             firstPeriodIndex += nbColYear;
@@ -257,13 +257,13 @@ namespace TNS.AdExpressI.MediaSchedule
 
                     int nbtot;
                     if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                        nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                        nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                     else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                     {
-                        nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
+                        nbtot = Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
                     }
                     else
-                        nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
+                        nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
 
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
@@ -292,13 +292,13 @@ namespace TNS.AdExpressI.MediaSchedule
           
                 int nbtot;
                 if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                    nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                    nbtot = Units.ConvertUnitValueToString(((CellIdsNumber)data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                 {
-                    nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
+                    nbtot = Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                 }
                 else
-                    nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COLUMN_INDEX])).Length;
+                    nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX])).Length;
 
                 int nbSpace = (nbtot - 1) / 3;
                 int nbCharTotal = nbtot + nbSpace - 5;
@@ -604,10 +604,10 @@ namespace TNS.AdExpressI.MediaSchedule
                         {
 
                             #region Level 1
-                            case L1_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
-                                    if (i == TOTAL_LINE_INDEX)
+                                    if (i == CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)
                                     {
                                         cssClasse = _style.CellLevelTotal;
                                         cssClasseNb = _style.CellLevelTotalNb;
@@ -628,7 +628,9 @@ namespace TNS.AdExpressI.MediaSchedule
 
                                     if (_allowVersion)
                                     {
-                                        if (i != TOTAL_LINE_INDEX && IsShowPickaNewsLink(L1_COLUMN_INDEX))
+
+                                        if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
+
                                         {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
                                         }
@@ -640,7 +642,9 @@ namespace TNS.AdExpressI.MediaSchedule
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (i != TOTAL_LINE_INDEX && IsShowPickaNewsLink(L1_COLUMN_INDEX))
+
+                                        if (i != CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX && !IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX))
+
                                         {
                                             AppendInsertionLink(data, t, themeName, i, cssClasse, j);
                                         }
@@ -663,19 +667,23 @@ namespace TNS.AdExpressI.MediaSchedule
                             #endregion
 
                             #region Level 2
-                            case L2_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
                                     classifLabels[1] = Convert.ToString(data[i, j]);
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 2);
                                     if (_allowVersion)
                                     {
-                                        if (IsShowPickaNewsLink(L2_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" ></td>");
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (IsShowPickaNewsLink(L2_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+
                                         else t.AppendFormat("<td align=\"center\" ></td>");
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -691,19 +699,23 @@ namespace TNS.AdExpressI.MediaSchedule
                             #endregion
 
                             #region Level 3
-                            case L3_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX:
                                 if (data[i, j] != null)
                                 {
                                     classifLabels[2] = Convert.ToString(data[i, j]);
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 3);
                                     if (_allowVersion)
                                     {
-                                        if (IsShowPickaNewsLink(L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\"></td>");
                                     }
                                     if (_allowInsertions)
                                     {
-                                        if (IsShowPickaNewsLink(L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+
+                                        if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+
                                         else t.AppendFormat("<td align=\"center\"></td>");
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -719,17 +731,21 @@ namespace TNS.AdExpressI.MediaSchedule
                             #endregion
 
                             #region Level 4
-                            case L4_COLUMN_INDEX:
+                            case CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX:
                                 classifLabels[3] = Convert.ToString(data[i, j]);
                                 AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, string.Empty, labColSpan, fp, unit, classifLabels, 4);
                                 if (_allowVersion)
                                 {
-                                    if (IsShowPickaNewsLink(L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\" ></td>");
                                 }
                                 if (_allowInsertions)
                                 {
-                                    if (IsShowPickaNewsLink(L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+
+                                    if (!IsAgencyLevelType(CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+
                                     else t.AppendFormat("<td align=\"center\"></td>");
                                 }
                                 if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -882,16 +898,16 @@ namespace TNS.AdExpressI.MediaSchedule
                 {
                     if (_session.ComparativeStudy)
                     {
-                        firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                        firstPeriodIndex = CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX + 1;
                     }
                     else
                     {
-                        firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                        firstPeriodIndex =  CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
                     }
                 }
                 else
                 {
-                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                    firstPeriodIndex =  CstFrameWorkResult.MediaSchedule.L4_ID_COLUMN_INDEX + 1;
                 }
                 firstPeriodIndex += nbColYear;
 
@@ -968,7 +984,7 @@ namespace TNS.AdExpressI.MediaSchedule
                     {
                         styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow + 1, colTotal);
                     }
-                    int nbtot = Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
+                    int nbtot = Units.ConvertUnitValueToString(data[1, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
                     nbColTabFirst++;
@@ -1210,7 +1226,7 @@ namespace TNS.AdExpressI.MediaSchedule
                             switch (j)
                             {
                                 #region Level 1
-                                case L1_COLUMN_INDEX:
+                                case CstFrameWorkResult.MediaSchedule.L1_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
 
@@ -1222,7 +1238,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                         }
 
                                         #region Style define
-                                        if (i == TOTAL_LINE_INDEX)
+                                        if (i == CstFrameWorkResult.MediaSchedule.TOTAL_LINE_INDEX)
                                         {
                                             style = "MediaPlanCellLevelTotal";
                                             styleNb = "MediaPlanCellLevelTotalNb";
@@ -1242,12 +1258,12 @@ namespace TNS.AdExpressI.MediaSchedule
 
                                         #region Total
                                         if (_allowTotal)
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal, styleExcel);
                                         #endregion
 
                                         #region PDM
                                         if (_allowPdm)
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm, styleExcel);
                                         #endregion
 
                                         #region Totals years
@@ -1263,7 +1279,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                 #endregion
 
                                 #region Level 2
-                                case L2_COLUMN_INDEX:
+                                case CstFrameWorkResult.MediaSchedule.L2_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
 
@@ -1288,12 +1304,12 @@ namespace TNS.AdExpressI.MediaSchedule
 
                                         #region Total
                                         if (_allowTotal)
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX]), cellRow, colTotal, colFirstMediaPlan, styleNb, formatTotal, styleExcel);
                                         #endregion
 
                                         #region PDM
                                         if (_allowPdm)
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX]), cellRow, colPdm, colFirstMediaPlan, stylePdmNb, formatPdm, styleExcel);
                                         #endregion
 
                                         #region Totals years
@@ -1311,7 +1327,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                 #endregion
 
                                 #region Level 3
-                                case L3_COLUMN_INDEX:
+                                case CstFrameWorkResult.MediaSchedule.L3_COLUMN_INDEX:
                                     if (data[i, j] != null)
                                     {
                                         WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "MediaPlanCellLevelL3", null, styleExcel);
@@ -1331,7 +1347,7 @@ namespace TNS.AdExpressI.MediaSchedule
                                 #endregion
 
                                 #region Level 4
-                                case L4_COLUMN_INDEX:
+                                case CstFrameWorkResult.MediaSchedule.L4_COLUMN_INDEX:
                                     WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "MediaPlanCellLevelL4", null, styleExcel);
                                     //AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule)
@@ -1489,30 +1505,30 @@ namespace TNS.AdExpressI.MediaSchedule
                 {
                     if (_allowTotal)
                     {
-                        if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                        if (data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
                             t.AppendFormat("<td >{0}</td>"                               
-                                , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp));//class=\"{0}\"
+                                , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp));//class=\"{0}\"
                         else
                             t.AppendFormat("<td >&nbsp;</td>");//class=\"{0}\"
                     }
                     if (_allowPdm)
                     {
                         t.AppendFormat("<td >{0}</td>"                          
-                            , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]));//class=\"{0}\"
+                            , string.Format(fp, "{0:percentWOSign}", data[line, CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX]));//class=\"{0}\"
                     }
                 }
                 if (_allowTotal)
                 {
-                    if (data[line, TOTAL_COLUMN_INDEX] != null)
+                    if (data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX] != null)
                         t.AppendFormat("<td>{0}</td>"                          
-                            , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp));
+                            , Units.ConvertUnitValueToString(((CellIdsNumber)data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp));
                     else
                         t.AppendFormat("<td>&nbsp;</td>");
                 }
                 if (_allowPdm)
                 {
                     t.AppendFormat("<td >{0}</td>"                       
-                        , string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]));
+                        , string.Format(fp, "{0:pdm}", data[line, CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX]));
                 }
             }
             else
@@ -1535,15 +1551,15 @@ namespace TNS.AdExpressI.MediaSchedule
                     if (_allowTotal)
                     {
                         string s = string.Empty;
-                        if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
+                        if (data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX] != null)
                         {
                             if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                             {
-                                s = Units.ConvertUnitValueToString(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
+                                s = Units.ConvertUnitValueToString(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
                             }
                             else
                             {
-                                s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX])).Trim();
+                                s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COMPARATIVE_COLUMN_INDEX])).Trim();
                             }
                         }
                         else s = "&nbsp;";
@@ -1554,7 +1570,7 @@ namespace TNS.AdExpressI.MediaSchedule
                     if (_allowPdm)
                     {
                         t.AppendFormat("<td >{0}</td>"                          
-                            , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]));
+                            , string.Format(fp, "{0:percentWOSign}", data[line, CstFrameWorkResult.MediaSchedule.PDM_COMPARATIVE_COLUMN_INDEX]));
                     }
                 }
                 if (_allowTotal)
@@ -1562,11 +1578,11 @@ namespace TNS.AdExpressI.MediaSchedule
                     string s = string.Empty;
                     if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                     {
-                        s = Units.ConvertUnitValueToString(data[line, TOTAL_COLUMN_INDEX], _session.Unit, fp).Trim();
+                        s = Units.ConvertUnitValueToString(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX], _session.Unit, fp).Trim();
                     }
                     else
                     {
-                        s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, TOTAL_COLUMN_INDEX])).Trim();
+                        s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, CstFrameWorkResult.MediaSchedule.TOTAL_COLUMN_INDEX])).Trim();
                     }
 
                     t.AppendFormat("<td>{0}</td>"                      
@@ -1575,7 +1591,7 @@ namespace TNS.AdExpressI.MediaSchedule
                 if (_allowPdm)
                 {
                     t.AppendFormat("<td>{0}</td>"                       
-                        , string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]));
+                        , string.Format(fp, "{0:pdm}", data[line, CstFrameWorkResult.MediaSchedule.PDM_COLUMN_INDEX]));
 
                 }
             }
@@ -1583,7 +1599,7 @@ namespace TNS.AdExpressI.MediaSchedule
             {
                 //Evol
                 StringBuilder str = new StringBuilder();
-                double evol = (double)data[line, EVOL_COLUMN_INDEX];
+                double evol = (double)data[line, CstFrameWorkResult.MediaSchedule.EVOL_COLUMN_INDEX];
                 if (evol != 0)
                 {
                     if (Double.IsInfinity(evol))

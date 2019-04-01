@@ -182,7 +182,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                                     #endregion
 
                                     if (!string.IsNullOrEmpty(_idUnit))
-                                        webSession.Unit = (WebCst.CustomerSessions.Unit)int.Parse(_idUnit);
+                                        webSession.Units = new List<WebCst.CustomerSessions.Unit> {(WebCst.CustomerSessions.Unit)int.Parse(_idUnit)};
 
                                     idStaticNavSession = (webSession.CurrentModule == WebCst.Module.Name.CELEBRITIES) ? ExportResultsDAL.Save(webSession, AnubisCst.Result.type.apis) :
                                         ExportResultsDAL.Save(webSession, resultType);
@@ -218,7 +218,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     }
                     #endregion
                     response.Success = true;
-                    response.Message = (webSession.SiteLanguage == 33) ? "Votre demande a été prise en compte" : "You have successfully created your export file. You will receive an email shortly.";
+                    response.Message = GestionWeb.GetWebWord(3251, webSession.SiteLanguage);
                 }
                 catch (System.Exception ex)
                 {
@@ -231,8 +231,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             }
             catch (Exception ex)
             {
-                CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
-                Logger.Log(LogLevel.Error, cwe.GetLog());
+                if (webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(httpContext, ex.Message, ex.StackTrace, webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
 
                 throw;
             }

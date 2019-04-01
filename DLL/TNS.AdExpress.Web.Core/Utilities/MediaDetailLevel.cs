@@ -680,6 +680,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                                 #region Version
                                 case DetailLevelItemInformation.Levels.slogan:
+                                case DetailLevelItemInformation.Levels.sloganName:
                                     if (
                                         currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                                         // Sélection par produit ou marque ou annonceur
@@ -732,8 +733,14 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                     return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE));
                                 #endregion
 
-                                #region Sub Brand
+                                #region Sub Brand, Program, Program Typology, Sub Type of Spots
                                 case DetailLevelItemInformation.Levels.subBrand:
+                                case DetailLevelItemInformation.Levels.program:
+                                case DetailLevelItemInformation.Levels.programTypology:
+                                case DetailLevelItemInformation.Levels.programGenre:
+                                case DetailLevelItemInformation.Levels.spotSubType:
+                                case DetailLevelItemInformation.Levels.adSlogan:
+                                case DetailLevelItemInformation.Levels.PurchasingAgency:
                                     return (true);
                                 #endregion
 
@@ -885,6 +892,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
 
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
@@ -1157,6 +1165,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
 
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) &&
@@ -1217,6 +1226,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 
                         #region Version
                         case DetailLevelItemInformation.Levels.slogan:
+                        case DetailLevelItemInformation.Levels.sloganName:
                             if (
                                 currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.slogan && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)
                                 )
