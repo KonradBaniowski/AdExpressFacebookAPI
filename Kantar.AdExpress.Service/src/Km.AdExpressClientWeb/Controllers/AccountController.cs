@@ -268,7 +268,7 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
                         var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
 
-                        var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistiques"));
+                        var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistics"));
                         var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
                         int enableTrackingDb = 0;
                         int enableTroubleshootingDb = 0;
@@ -296,8 +296,8 @@ namespace Km.AdExpressClientWeb.Controllers
                             RightDAL.SetAllPrivacySettings(Source, Convert.ToInt32(idLogin), enableTrackingDb, enableTroubleshootingDb, expDateCookie);
 
                             cookies.storedInDb = true;
-                            cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd");
-                            cookies.expDate = expDateCookie.ToString("yyyy-MM-dd");
+                            cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                            cookies.expDate = expDateCookie.ToString("yyyy-MM-dd-HH-mm-ss");
                             cookies.guid = Helpers.SecurityHelper.Encrypt(login, Helpers.SecurityHelper.CryptKey);
                             cookieControlPrefs.Name = cookieName;
                             cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
@@ -319,7 +319,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
                             if (allowTracking)
                             {
-                                cookies.prefs.Add("Statistiques");
+                                cookies.prefs.Add("Statistics");
                                 _webSession.EnableTracking = true;
                             }
                             else
@@ -333,8 +333,8 @@ namespace Km.AdExpressClientWeb.Controllers
                             else
                                 _webSession.EnableTroubleshooting = false;
 
-                            cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd");
-                            cookies.expDate = expDate.ToString("yyyy-MM-dd");
+                            cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd-HH-mm-ss");
+                            cookies.expDate = expDate.ToString("yyyy-MM-dd-HH-mm-ss");
                             cookieControlPrefs.Expires = expDate;
                             cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                             Response.Cookies.Add(cookieControlPrefs);
@@ -695,7 +695,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             TNS.AdExpress.Web.Core.Sessions.WebSession session = (TNS.AdExpress.Web.Core.Sessions.WebSession)TNS.AdExpress.Web.Core.Sessions.WebSession.Load(idWS);
 
-            var enableTracking = cookies.FirstOrDefault(s => s.Contains("Statistiques"));
+            var enableTracking = cookies.FirstOrDefault(s => s.Contains("Statistics"));
             var enableTroubleshooting = cookies.FirstOrDefault(s => s.Contains("Diagnostic"));
             int enableTrackingDb = 0;
             int enableTroubleshootingDb = 0;

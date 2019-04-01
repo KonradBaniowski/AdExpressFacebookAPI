@@ -102,7 +102,7 @@
                 Html.RenderPartial("_HomeNewsPl", Model.SiteLanguage);
                 break;
             default:
-                Html.RenderPartial("_HomeNewsFr");
+                Html.RenderPartial("_HomeNewsFr", Model.News);
                 break;
         }
 

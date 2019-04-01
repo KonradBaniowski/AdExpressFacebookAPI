@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <infoNews>
   <RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.Default.dll" class="TNS.AdExpressI.InfosNews.Default.InfoNewsResult"/>
+  <news enableNews ="false"/>
   <directories>
     <!--
     <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/InfoNews/AdvertisingExpenditureByCategory/" physicalPath="\\TSESPWBE010\GenericInfoNews\AdvertisingExpenditureByCategory"/>

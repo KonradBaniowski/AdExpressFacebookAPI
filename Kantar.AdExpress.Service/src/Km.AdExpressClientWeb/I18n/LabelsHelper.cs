@@ -216,6 +216,7 @@ namespace Km.AdExpressClientWeb.I18n
                 CookieStatDesc = GestionWeb.GetWebWord(LanguageConstantes.CookieStatDesc, siteLanguage),
                 CookieDiagnostic = GestionWeb.GetWebWord(LanguageConstantes.CookieDiagnostic, siteLanguage),
                 CookieDiagnosticDesc = GestionWeb.GetWebWord(LanguageConstantes.CookieDiagnosticDesc, siteLanguage),
+                ContactPrivacyDesc = GestionWeb.GetWebWord(LanguageConstantes.ContactPrivacyDesc, siteLanguage)
             };
 
             if (WebApplicationParameters.CountryCode.Equals(CountryCode.FINLAND)

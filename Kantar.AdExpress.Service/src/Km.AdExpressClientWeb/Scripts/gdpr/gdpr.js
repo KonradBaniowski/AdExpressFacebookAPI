@@ -33,12 +33,12 @@
         uncheckBoxes: true,
         cookieTypes: [
              {
-                 type: $('#CookieStat').val(),
+                 type: 'Statistics',
                  value: $('#CookieStat').val(),
                  description: $('#CookieStatDesc').val()
              },
              {
-                 type: $('#CookieDiagnostic').val(),
+                 type: 'Diagnostic',
                  value: $('#CookieDiagnostic').val(),
                  description: $('#CookieDiagnosticDesc').val()
              }
@@ -57,7 +57,7 @@
 
     function toDate(dateStr) {
         var parts = dateStr.split("-");
-        return new Date(parts[0], parts[1] - 1, parts[2]);
+        return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
     }
 
     function getCookie(name) {

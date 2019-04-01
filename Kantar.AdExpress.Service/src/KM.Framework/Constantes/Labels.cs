@@ -262,5 +262,6 @@ namespace KM.Framework.Constantes
         public string CookieStatDesc { get; set; } //3269
         public string CookieDiagnostic { get; set; } //3270
         public string CookieDiagnosticDesc { get; set; } //3271
+        public string ContactPrivacyDesc { get; set; } //3274
     }
 }

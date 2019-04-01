@@ -11,5 +11,7 @@ namespace Kantar.AdExpress.Service.Core.BusinessService
     public interface IInfosNewsService
     {
         List<Documents> GetInfosNews(string idWebSession, HttpContextBase httpContext);
+
+        News GetNews(string idWebSession, HttpContextBase httpContext);
     }
 }

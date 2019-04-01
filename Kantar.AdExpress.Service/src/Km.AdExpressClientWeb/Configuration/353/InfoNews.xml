@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <infoNews>
+  <news enableNews ="false"/>
 <!--<RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.France.dll" class="TNS.AdExpressI.InfosNews.France.InfoNewsResult"/>
 <directories>
   <directory id="adExNews" description="adEx News" webTextId="2589" virtualPath="/AdExNews/" physicalPath="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\" nbMaxItemsToShow="12"/>

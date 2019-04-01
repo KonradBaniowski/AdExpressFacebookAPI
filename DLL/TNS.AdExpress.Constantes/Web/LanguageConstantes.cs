@@ -311,6 +311,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CookieStatDesc = 3269;
         public const long CookieDiagnostic = 3270;
         public const long CookieDiagnosticDesc = 3271;
+        public const long ContactPrivacyDesc = 3274;
         #endregion
     }
 }

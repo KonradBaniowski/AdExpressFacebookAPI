@@ -2555,5 +2555,6 @@
     <item mnemonic="w3271" type="System.String">Ce site collecte des informations qui nous permettrons d'identifier les erreurs d'utilisation du site (Login, Navigateur, OS, IP, Sélection client, Message d'erreur)</item>
     <item mnemonic="w3272" type="System.String">Configuration des Cookies</item>
     <item mnemonic="w3273" type="System.String">Vous devez accepter les cookies pour acceder à votre compte</item>
+    <item mnemonic="w3274" type="System.String">Pour toute information concernant le traitement des données à caractère personnel, veuillez vous référer à la politique de confidentialité en bas de page.</item>
   </items>
 </localization>

@@ -32,15 +32,27 @@ namespace TNS.AdExpress.Domain.Results {
 		/// Sorted Info news items
 		/// </summary>
 		List<Results.InfoNewsItem> _infoNewsSortedItems = new List<InfoNewsItem>();
-		#endregion
+        /// <summary>
+        /// News Virtual Directory
+        /// </summary>
+	    protected string _newsPhysicalDirectory = string.Empty;
+        /// <summary>
+        /// News File Name
+        /// </summary>
+	    protected string _newsFileName = string.Empty;
+        /// <summary>
+        /// Enable News
+        /// </summary>
+        protected bool _enableNews = false;
+        #endregion
 
-		#region Constructor		
+        #region Constructor		
         /// <summary>
         /// Constructor
         /// </summary>
         public InfoNews(IDataSource source)
         {
-			 InfoNewsXL.LoadInfoNews(source, ref _rulesLayer, _infoNewsItems, _infoNewsSortedItems);
+			 InfoNewsXL.LoadInfoNews(source, ref _rulesLayer, _infoNewsItems, _infoNewsSortedItems, ref _newsPhysicalDirectory, ref _newsFileName, ref _enableNews);
 		}
 		#endregion
 
@@ -66,6 +78,29 @@ namespace TNS.AdExpress.Domain.Results {
 			get { return _rulesLayer; }
 			set { _rulesLayer = value; }
 		}
-
-	}
+        /// <summary>
+		/// Get/Set News Physical Directory
+		/// </summary>
+		public string NewsPhysicalDirectory
+        {
+            get { return _newsPhysicalDirectory; }
+            set { _newsPhysicalDirectory = value; }
+        }
+        /// <summary>
+        /// Get/Set News File Name
+        /// </summary>
+        public string NewsFileName
+        {
+            get { return _newsFileName; }
+            set { _newsFileName = value; }
+        }
+        /// <summary>
+        /// Get/Set Enable News
+        /// </summary>
+        public bool EnableNews
+        {
+            get { return _enableNews; }
+            set { _enableNews = value; }
+        }
+    }
 }

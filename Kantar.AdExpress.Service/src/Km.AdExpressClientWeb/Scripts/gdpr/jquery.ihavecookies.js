@@ -58,7 +58,7 @@
             displayAdvancedBtn: true,
             siteLanguage: 33,
             isStoredInDb: false,
-            creationDate: '2000-01-01',
+            creationDate: '2000-01-01-00-00-00',
             forceReInit: false
         }, options);
 
@@ -115,11 +115,17 @@
                 var day = '' + d.getDate();
                 var month = '' + (d.getMonth() + 1);
                 var year = d.getFullYear();
+                var hours = '' + d.getHours();
+                var minutes = '' + d.getMinutes();
+                var seconds = '' + d.getSeconds();
 
                 if (month.length < 2) month = '0' + month;
                 if (day.length < 2) day = '0' + day;
+                if (hours.length < 2) hours = '0' + hours;
+                if (minutes.length < 2) minutes = '0' + minutes;
+                if (seconds.length < 2) seconds = '0' + seconds;
 
-                settings.creationDate = year + "-" + month + "-" + day;
+                settings.creationDate = year + "-" + month + "-" + day + "-" + hours + "-" + minutes + "-" + seconds;
 
                 var params = {
                     prefs: prefs,
