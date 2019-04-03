@@ -10,9 +10,17 @@
     {
         Html.RenderPartial("_PrivacyPolicyFr");
     }
-    else if(ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.UK))
+    else if(ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.UK) || ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.POLAND))
     {
         Html.RenderPartial("_PrivacyPolicyEn");
+    }
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.SLOVAKIA))
+    {
+        Html.RenderPartial("_PrivacyPolicySk");
+    }
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.FINLAND))
+    {
+        Html.RenderPartial("_PrivacyPolicyFi");
     }
 </div>
 

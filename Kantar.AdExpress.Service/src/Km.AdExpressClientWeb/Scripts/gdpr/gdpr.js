@@ -34,12 +34,12 @@
         cookieTypes: [
              {
                  type: 'Statistics',
-                 value: $('#CookieStat').val(),
+                 value: 'Statistics',
                  description: $('#CookieStatDesc').val()
              },
              {
                  type: 'Diagnostic',
-                 value: $('#CookieDiagnostic').val(),
+                 value: 'Diagnostic',
                  description: $('#CookieDiagnosticDesc').val()
              }
         ]
