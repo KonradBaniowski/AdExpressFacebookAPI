@@ -1778,7 +1778,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             string format = cInfo.GetFormatPatternFromStringFormat(UnitsInformation.Get(_session.Unit).StringFormat);
-
+            string unitName = _session.GetSelectedUnit().Id.ToString();
 
             if (_allowPickaNews)
             {
@@ -1795,9 +1795,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                 {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabel, key = "PERIOD_COMP", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
-                    schemaFields.Add(new { name = "PERIOD_COMP" });
-                    columnsFixed.Add(new { columnKey = "PERIOD_COMP", isFixed = false, allowFixing = false });
+                    columns.Add(new { headerText = periodLabel, key = $"PERIOD_COMP_{unitName}", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
+                    schemaFields.Add(new { name = $"PERIOD_COMP_{unitName}" });
+                    columnsFixed.Add(new { columnKey = $"PERIOD_COMP_{unitName}", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
                 //PDM
@@ -1817,16 +1817,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                 {
                     periodLabel = TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.shortDatePattern);
-                    columns.Add(new { headerText = periodLabel, key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
-                    schemaFields.Add(new { name = "PERIOD" });
-                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = false, allowFixing = false });
+                    columns.Add(new { headerText = periodLabel, key = $"PERIOD_{unitName}", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
+                    schemaFields.Add(new { name = $"PERIOD_{unitName}" });
+                    columnsFixed.Add(new { columnKey = $"PERIOD_{unitName}", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
                 else
                 {
-                    columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = "PERIOD", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
-                    schemaFields.Add(new { name = "PERIOD" });
-                    columnsFixed.Add(new { columnKey = "PERIOD", isFixed = false, allowFixing = false });
+                    columns.Add(new { headerText = GestionWeb.GetWebWord(805, _session.SiteLanguage), key = $"PERIOD_{unitName}", dataType = "number", format = format, columnCssClass = "colStyle", width = "100", allowSorting = true });
+                    schemaFields.Add(new { name = $"PERIOD_{unitName}" });
+                    columnsFixed.Add(new { columnKey = $"PERIOD_{unitName}", isFixed = false, allowFixing = false });
                     tableWidth += 100;
                 }
             }

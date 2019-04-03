@@ -406,7 +406,16 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 unitOption.Unit.Items = new List<SelectItem>();
                 var unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
                
-                List<UnitInformation> units = _customerWebSession.GetValidUnitForResult();
+                List<UnitInformation> units;
+                var unit = WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
+                    .GetResultPageInformation(_customerWebSession.CurrentTab)
+                    .GetDefaultUnit(vehicle.Id);
+
+                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                    units = _customerWebSession.GetValidUnitForResult();
+                else
+                    units = new List<UnitInformation> {UnitsInformation.Get(unit)};
+
                 for (int i = 0; i < units.Count; i++)
                 {
                     unitInformationDictionary.Add(units[i].Id, units[i]);
@@ -415,9 +424,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 {
                     _customerWebSession.Units = new List<SessionCst.Unit>
                     {
-                        WebNavigation.ModulesList.GetModule(_customerWebSession.CurrentModule)
-                            .GetResultPageInformation(_customerWebSession.CurrentTab)
-                            .GetDefaultUnit(vehicle.Id)
+                       unit
                     };
                 }
 
@@ -440,9 +447,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                
                 unitOption.Unit.SelectedIds = _customerWebSession.Units.Select(u => u.GetHashCode().ToString()).ToList();
 
-
-
                 options.UnitOption = unitOption;
+
+                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                    options.UnitOption.Unit.Visible = true;
                 #endregion
 
                 options.MediaDetailLevel = mediaDetail;
