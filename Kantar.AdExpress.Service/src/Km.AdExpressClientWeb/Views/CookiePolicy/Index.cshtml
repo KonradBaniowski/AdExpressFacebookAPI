@@ -10,9 +10,17 @@
     {
         Html.RenderPartial("_CookiePolicyFr");
     }
-    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.UK))
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.UK) || ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.POLAND))
     {
         Html.RenderPartial("_CookiePolicyEn");
+    }
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.SLOVAKIA))
+    {
+        Html.RenderPartial("_CookiePolicySk");
+    }
+    else if (ViewBag.SiteLanguageCode.ToString().Equals(CountryCode.FINLAND))
+    {
+        Html.RenderPartial("_CookiePolicyFi");
     }
 </div>
 
