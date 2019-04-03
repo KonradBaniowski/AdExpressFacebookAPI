@@ -1898,6 +1898,10 @@
     <Content Include="Views\CookiePolicy\_CookiePolicyFr.cshtml" />
     <Content Include="Views\CookiePolicy\_CookiePolicyEn.cshtml" />
     <Content Include="Views\CookieSettings\Index.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicySk.cshtml" />
+    <Content Include="Views\PrivacyPolicy\_PrivacyPolicyFi.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicySk.cshtml" />
+    <Content Include="Views\CookiePolicy\_CookiePolicyFi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
