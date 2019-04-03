@@ -967,11 +967,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region UnitFilter
-                if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
 
-                    && !userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
+                if (!WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+                    if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
+                        && _customerWebSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE
+                        && !userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
                     )
-                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
+                        _customerWebSession.Units = userFilter.UnitFilter.Unit;
+                }
+                else
+                {
+                    if (_customerWebSession.CurrentModule != WebConstantes.Module.Name.NEW_CREATIVES
+
+                        && !userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
+                    )
+                        _customerWebSession.Units = userFilter.UnitFilter.Unit;
+                }
+
                 #endregion
 
                 #region PercentageFilter

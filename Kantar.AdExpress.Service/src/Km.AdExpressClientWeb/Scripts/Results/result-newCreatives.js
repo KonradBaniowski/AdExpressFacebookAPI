@@ -287,7 +287,7 @@
     }
 
     function InitNewCreativesOptions() {
-        if ($('#resultType').val() == 0) {
+        if ($('#resultType').val() == 0 || typeof $('#resultType').val() === 'undefined') {
             $("#export-type").find("option").eq(1).show();
             $('#export-type').selectpicker('refresh');
             $('#perioddetailTypeContainerDiv').css("display", "block");
