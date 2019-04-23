@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configurations>
+<<<<<<< HEAD
  <configuration directoryName="33" countryName="France" webSiteUri="http://adexpress.kantarmedia.fr/" enableGdpr="true"/>
 
    <!--<configuration directoryName="90" countryName="Turkey" webSiteUri="" />-->
+=======
+  <configuration directoryName="33" countryName="France" webSiteUri="http://adexpress.kantarmedia.fr/" enableGdpr="true"/>
+
+  <!--<configuration directoryName="90" countryName="Turkey" webSiteUri="" />-->
+>>>>>>> 984d8b8646ed7e7e7aefa45ac740491f17eb4dfa
 
   <!--<configuration directoryName="333" countryName="France"/>-->
   <!--<configuration directoryName="420" countryName="Czech Republic"/>-->
-  <!--<configuration directoryName="48" countryName="Poland"/>-->
-  <!--<configuration directoryName="35" countryName="Finland" webSiteUri="http://www.tnsadexpress.fi/" />-->
-  <!--<configuration directoryName="421" countryName="Slovakia"/>-->
+  <!--<configuration directoryName="48" countryName="Poland" enableGdpr="true"/>-->
+  <!--<configuration directoryName="35" countryName="Finland" webSiteUri="http://www.tnsadexpress.fi/" enableGdpr="true"/>-->
+   <!--<configuration directoryName="421" countryName="Slovakia" enableGdpr="true"/>-->
   <!--<configuration directoryName="4211" countryName="Slovakia"/>-->
   <!--<configuration directoryName="7" countryName="Russia"/>-->
   <!--<configuration directoryName="353" countryName="Ireland" webSiteUri="http://adexpress.kantarmedia.ie/"/>-->
