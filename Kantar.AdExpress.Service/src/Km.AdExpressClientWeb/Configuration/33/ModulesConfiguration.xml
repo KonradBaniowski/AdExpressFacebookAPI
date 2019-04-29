@@ -972,11 +972,11 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.France.dll" class="TNS.AdExpressI.ProductClassReports.DAL.France.ProductClassReportDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
         <ResultLimitation size="50000"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">      
-        </ModuleAllowedMediaUniverse>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleCategories list="11,12,35,52,69,80,86,90,323,330,332,23,33,34,55,81,89,91,95,336,341,19,25,41,58,70,77,84,191,301,322,331,24,59,76,329,339,26,37,46,64,97,98,327,334,14,21,27,31,44,56,60,79,82,94,221,261,328,333,335,13,17,18,28,51,61,68,78,83,96,241,321,324,325,326,337,22,38,39,54,57,63,171,338,394"/>
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">      
         </ModuleAllowedMediaUniverse>-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="11,12,13,14,17,18,19,21,22,23,24,25,27,28,31,33,34,35,37,38,39,41,46,51,52,61,68,69,70,76,81,82,83,84,90,91,171,191,221,241,301,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,341,404"/>
+        </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>          
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">

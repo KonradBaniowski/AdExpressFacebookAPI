@@ -60,6 +60,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			#region Variables
 			object[,] data;
             bool isPluri = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimedia
+                || VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID) == CstDBClassif.Vehicles.names.plurimediaExtended
                 ;
 
 			int i,j,k;

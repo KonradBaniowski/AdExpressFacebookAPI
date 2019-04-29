@@ -6,6 +6,7 @@ $(document).ready(function () {
     var searchId = '18';
     var dooh = '22';
     var plurimedia = '50';
+    var plurimediaExtended = '52';
    
    
     if ($('#Multiple').val() == "True") {
@@ -57,7 +58,7 @@ $(document).ready(function () {
             $('.tuile-medias-active[data-attr-id="' + idList + '"]').toggleClass("tuile-medias tuile-medias-active")
         }
         idList = id;
-        if (idList == plurimedia) {
+        if (idList == plurimedia || idList == plurimediaExtended) {
             $('.panel.panel-primary.panel-results.optional-area').hide();
         }
         else {

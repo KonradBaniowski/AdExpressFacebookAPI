@@ -387,6 +387,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 case CstDBClassif.Vehicles.names.newspaper:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.plurimediaExtended:
                 case CstDBClassif.Vehicles.names.plurimedia:            
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
@@ -1156,6 +1157,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
             //on ne teste pas le vehicle si on est en pluri
             var plurimediaDbIds = new List<long> {VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimedia).DatabaseId};
+
+            if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.plurimediaExtended))
+            {
+                plurimediaDbIds.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimediaExtended).DatabaseId);
+            }
             long? plurimediaWithoutMmsId = null;
                        
             if (vehicleIds.Any() && vehicleIds.All(p => !plurimediaDbIds.Contains(p)) )
