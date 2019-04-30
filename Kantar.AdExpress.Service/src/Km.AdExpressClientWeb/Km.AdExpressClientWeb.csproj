@@ -290,8 +290,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\gdpr.css" />
+    <Content Include="Content\img\33\export_logo_km_old.png" />
+    <Content Include="Content\img\33\Kantar_Media_BMPro_SW_RGB_old.png" />
+    <Content Include="Content\img\33\logo_kantarmedia_old.png" />
+    <Content Include="Content\img\353\export_logo_km_old.png" />
+    <Content Include="Content\img\353\Kantar_Media_BMPro_SW_RGB_old.png" />
+    <Content Include="Content\img\353\logo_kantarmedia_old.png" />
+    <Content Include="Content\img\35\export_logo_km_old.png" />
+    <Content Include="Content\img\35\Kantar_Media_BMPro_SW_RGB_old.png" />
+    <Content Include="Content\img\35\logo_kantarmedia2_old.png" />
+    <Content Include="Content\img\35\logo_kantarmedia_old.png" />
+    <Content Include="Content\img\35\tnsLogo2_old.png" />
+    <Content Include="Content\img\421\export_logo_km_old.png" />
+    <Content Include="Content\img\421\Kantar_Media_BMPro_SW_RGB_old.png" />
+    <Content Include="Content\img\421\logo_kantarmedia_old.png" />
     <Content Include="Content\img\48\export_logo_km.png" />
+    <Content Include="Content\img\48\export_logo_km_old.png" />
     <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\48\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\48\logo_kantarmedia.png" />
     <Content Include="Content\img\421\export_logo_km.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -302,18 +318,31 @@
     <Content Include="Content\img\421\logo_kantarmedia.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\48\logo_kantarmedia_old.png" />
+    <Content Include="Content\img\90\export_logo_km_old.png" />
     <Content Include="Content\img\90\Kantar_Media_BMPro_SW_RGB.png" />
+    <Content Include="Content\img\90\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\banner_sk.jpg" />
+    <Content Include="Content\img\banner_sk_old.jpg" />
     <Content Include="Content\img\banner_tr.jpg" />
+    <Content Include="Content\img\banner_tr_old.jpg" />
+    <Content Include="Content\img\Kantar_Media_BMPro_SW_RGB_old2.png" />
+    <Content Include="Content\img\logo_kantarmedia_old2.png" />
     <Content Include="Content\img\sponsorship\29082.png" />
     <Content Include="Content\img\sponsorship\29104.png" />
     <Content Include="Content\img\sponsorship\29105.png" />
     <Content Include="Content\LoginFiles\images\33\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\33\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\35\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\35\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\420\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\420\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\421\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\421\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\48\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\48\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\90\All_master_logos_Small_300dpi_Kantar_Media.png" />
+    <Content Include="Content\LoginFiles\images\90\All_master_logos_Small_300dpi_Kantar_Media_old.png" />
     <Content Include="Content\LoginFiles\images\kantar_media_favicon.png" />
     <Content Include="Content\LoginFiles\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Content\LoginFiles\images\ui-bg_glass_95_fef1ec_1x400.png" />
@@ -323,6 +352,7 @@
     <Content Include="Content\site-En.css" />
     <Content Include="Content\site-Fr.css" />
     <Content Include="Content\site-Tk.css" />
+    <Content Include="favicon_old.ico" />
     <Content Include="IgniteUI\js\modules\i18n\infragistics.ui.grid-tr.js" />
     <Content Include="Scripts\gdpr\gdpr.js" />
     <Content Include="Scripts\gdpr\jquery.ihavecookies.js" />
