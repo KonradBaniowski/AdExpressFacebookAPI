@@ -16,11 +16,11 @@
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.France.dll" class="TNS.AdExpressI.MediaSchedule.DAL.France.MediaScheduleResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
-        </ModuleAllowedMediaUniverse>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="8,5,6,3,10,19,7,18,20,2,11,1,9,15,21"/>         
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
         </ModuleAllowedMediaUniverse>-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11,15,18,20,22,23"/> 
+        </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />

@@ -1322,6 +1322,7 @@ input {
 
 .tuile-medias i {
     color: #00C8FF;
+     
 }
 
 .w-full {
@@ -1378,10 +1379,11 @@ a {
 }
 
 .tuile-medias-active {
-    background-color: #00C8FF;
+    background-color:  rgba(0, 200,255, 0.5); /*  #00C8FF */; 
     color: #fff;
     -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+ 
 }
 
 .information-title-width {

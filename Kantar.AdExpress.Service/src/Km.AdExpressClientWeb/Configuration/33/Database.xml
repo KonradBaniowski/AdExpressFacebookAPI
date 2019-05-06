@@ -307,6 +307,12 @@
 
     <table enumId="269" description="Health : Canal" schemaEnumId="13" label="canal" prefix="cl"/>
 
+    <table enumId="278" description="Data: Audio Digital" schemaEnumId="0" label="data_audio_digital" prefix="wp"/>
+    <table enumId="279" description="Data: Audio Digital 4M" schemaEnumId="0" label="data_audio_digital_4M" prefix="wp"/>
+
+    <table enumId="280" description="Recap Data: Audio Digital" schemaEnumId="4" label="recap_audio_digital" prefix="rcp"/>
+    <table enumId="281" description="Recap Data: Audio Digital Segment" schemaEnumId="4" label="recap_audio_digital_segment" prefix="rcp"/>
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

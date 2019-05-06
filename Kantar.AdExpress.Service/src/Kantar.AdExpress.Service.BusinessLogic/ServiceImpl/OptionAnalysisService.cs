@@ -149,6 +149,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
                             case ClassificationCst.DB.Vehicles.names.social:
+                            case ClassificationCst.DB.Vehicles.names.audioDigital:
                             case ClassificationCst.DB.Vehicles.names.plurimediaExtended:
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))

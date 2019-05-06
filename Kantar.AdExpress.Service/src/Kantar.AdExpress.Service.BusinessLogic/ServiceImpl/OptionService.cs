@@ -1490,6 +1490,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 case ClassificationCst.DB.Vehicles.names.mms:
                 case ClassificationCst.DB.Vehicles.names.search:
                 case ClassificationCst.DB.Vehicles.names.social:
+                case ClassificationCst.DB.Vehicles.names.audioDigital:
                     return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
                         || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:

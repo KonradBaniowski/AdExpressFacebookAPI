@@ -1261,6 +1261,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Data alert spot TV
         /// </summary>
         dataSpotTvAlert =  277,
+        /// <summary>
+        /// Data  audio digital
+        /// </summary>
+        dataAudioDigital= 278,
+        /// <summary>
+        /// Data alert audio digital
+        /// </summary>
+        dataAudioDigitalAlert = 279,
+        /// <summary>
+        /// Recap Audio Digital
+        /// </summary>
+        recapAudioDigital = 280,
+        /// <summary>
+        /// Recap Audio Digital segment
+        /// </summary>
+        recapAudioDigitalSegment = 281,
 
         /// <summary>
         /// Alert description

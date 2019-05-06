@@ -131,6 +131,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.mms:
                 case DBClassificationConstantes.Vehicles.names.search:
                 case DBClassificationConstantes.Vehicles.names.social:
+                case DBClassificationConstantes.Vehicles.names.audioDigital:
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -272,6 +273,9 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.social:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataSocial, _session.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.audioDigital:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, _session.IsSelectRetailerDisplay).Sql;
+                    break;
             }
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
@@ -313,6 +317,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.mms:
                 case DBClassificationConstantes.Vehicles.names.search:
                 case DBClassificationConstantes.Vehicles.names.social:
+                case DBClassificationConstantes.Vehicles.names.audioDigital:
                     /* Select min date from the list of max date
                      * */
                     sql += " select min(last_date) as last_date ";

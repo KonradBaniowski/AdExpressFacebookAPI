@@ -411,7 +411,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         : WebApplicationParameters.GetDataTable(TableIds.recapSearchSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.social:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapSocial, _session.IsSelectRetailerDisplay)
-                        : WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, _session.IsSelectRetailerDisplay);  
+                        : WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.audioDigital:
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapAudioDigital, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapAudioDigitalSegment, _session.IsSelectRetailerDisplay);
                 default:
                     throw new ProductClassReportsDALException(string.Format("Vehicle n° {0} is not allowed.", _vehicle.GetHashCode()));
             }
@@ -1324,19 +1327,26 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         protected virtual  void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
         {
-            if (vehicleIds.Any(plurimediaDbIds.Contains) && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
+            if (vehicleIds.Any(plurimediaDbIds.Contains) &&
+                VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
             {
-                var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());               
+                var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());
 
                 //Filter Plurimedia Offline
                 switch (vehicleName)
                 {
-                    case CstDBClassif.Vehicles.names.plurimedia :
+                    case CstDBClassif.Vehicles.names.plurimedia:
+                        var ids = new List<Int64>();
+                        ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.search).DatabaseId);
+                        if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.audioDigital))
+                        {
+                            ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.audioDigital).DatabaseId);
+                        }
                         sql.AppendFormat("  and  {0}.id_vehicle not in ( {1}) "
-              , _dataTable.Prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.search).DatabaseId);
-                        break;                                   
+                            , _dataTable.Prefix, string.Join(",", ids));
+                        break;
                 }
-             
+
             }
         }
 
