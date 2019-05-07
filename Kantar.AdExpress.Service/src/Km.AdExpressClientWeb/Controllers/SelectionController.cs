@@ -189,7 +189,7 @@ namespace Km.AdExpressClientWeb.Controllers
                 model.Presentation = helper.LoadPresentationBar(result.SiteLanguage, result.ControllerDetails);
                 foreach (var e in model.Medias)
                 {
-                    e.icon = IconSelector.getIcon(e.MediaEnum);
+                    e.icon = IconSelector.GetSvg(e.MediaEnum);
                 }
                 model.Medias = model.Medias.OrderBy(p => p.Disabled).ToList();
                 ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(result.SiteLanguage);

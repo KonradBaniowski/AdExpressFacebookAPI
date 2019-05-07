@@ -1642,7 +1642,11 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
             if (!WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
             {
-                ids.Add(VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId);
+                ids.Add(VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia).DatabaseId);              
+            }
+            if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.FRANCE))
+            {             
+                ids.Add(VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimediaExtended).DatabaseId);
             }
 
             foreach (DataRow row in dtVehicle.Rows)

@@ -140,7 +140,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 MAIN_LEVELS = DetailLevelItemsInformation.Translate(_session.PreformatedMediaDetail);
                 SECOND_LEVELS = DetailLevelItemsInformation.Translate(_session.PreformatedProductDetail);
                 //Fake level to replace total line
-                if (_vehicle == Vehicles.names.plurimedia )
+                if (_vehicle == Vehicles.names.plurimedia || _vehicle == Vehicles.names.plurimediaExtended)
                 {
                     MAIN_LEVELS.Insert(0, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.slogan));
                 }
