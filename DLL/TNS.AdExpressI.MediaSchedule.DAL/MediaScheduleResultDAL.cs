@@ -1281,6 +1281,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
                         case CstDBClassif.Vehicles.names.mms:
                         case CstDBClassif.Vehicles.names.search:
                         case CstDBClassif.Vehicles.names.social:
+                        case CstDBClassif.Vehicles.names.audioDigital:
                             return (" 1 as period_count ");
                         default:
                             throw (new MediaScheduleDALException("Unable to determine the media periodicity"));

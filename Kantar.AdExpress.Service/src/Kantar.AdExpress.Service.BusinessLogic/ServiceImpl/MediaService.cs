@@ -345,7 +345,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
             VehicleInformation vehicleInfo = new VehicleInformation();
             if (vehiclesInfos.ContainsKey(VhCstes.plurimedia))
-                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);           
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+            else
+                 if (vehiclesInfos.ContainsKey(VhCstes.plurimediaExtended))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaExtended);
             else
                 vehicleInfo = null;
             webSession.SelectionUniversMedia.Nodes.Clear();
@@ -483,6 +486,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.Plurimedia,
                         webSession.SiteLanguage);
                     vehiclesList.Add(pluremedia);
+                }
+                //Plurimedia extended   
+                if (VehiclesInformation.Contains(VhCstes.plurimediaExtended))
+                {
+                    vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaExtended);
+                    pluremedia = new Core.Domain.Media();
+                    if (vehicleInfo != null)
+                    {
+                        pluremedia.Id = vehicleInfo.DatabaseId;
+                        pluremedia.MediaEnum = VhCstes.plurimediaExtended;
+                        pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.PlurimediaExtended,
+                            webSession.SiteLanguage);
+                        vehiclesList.Add(pluremedia);
+                    }
                 }
             }
 

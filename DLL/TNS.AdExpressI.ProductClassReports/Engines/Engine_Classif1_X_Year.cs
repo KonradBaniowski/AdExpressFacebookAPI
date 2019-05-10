@@ -152,7 +152,8 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			}
 			//if productXyear or plurimedia ==> add total line
             if (_session.PreformatedTable == CstFormat.PreformatedTables.product_X_Year
-                || vehicle == CstDBClassif.Vehicles.names.plurimedia 
+                || vehicle == CstDBClassif.Vehicles.names.plurimedia
+                  || vehicle == CstDBClassif.Vehicles.names.plurimediaExtended
                )
             {
                 nbLine++;
@@ -283,6 +284,7 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 
 			    bool monoMedia = _session.PreformatedTable == CstFormat.PreformatedTables.media_X_Year
 			                     && (vehicle != CstDBClassif.Vehicles.names.plurimedia 
+                                 && vehicle != CstDBClassif.Vehicles.names.plurimediaExtended
                                 );
 			    //pluri et présentation nomenclature media
 
