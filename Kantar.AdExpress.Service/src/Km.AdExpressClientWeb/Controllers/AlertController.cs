@@ -99,7 +99,7 @@ namespace Km.AdExpressClientWeb.Controllers
             if (WebApplicationParameters.EnableGdpr)
             {
                 HttpCookie cookieControlPrefs = null;
-                string cookieName = "cookieControlPrefs-" + session.CustomerLogin.IdLogin.ToString().Encrypt(Helpers.SecurityHelper.CryptKey);
+                string cookieName = "cookieControlPrefs-" + session.CustomerLogin.IdLogin.ToString();
                 var cookiesKeys = Request.Cookies.AllKeys;
                 var found = cookiesKeys.FirstOrDefault(n => n == "cookieControlPrefs");
 
@@ -113,8 +113,8 @@ namespace Km.AdExpressClientWeb.Controllers
                     {
                         if (key.StartsWith("cookieControlPrefs"))
                         {
-                            var id = key.Split('-')[1].Decrypt(Helpers.SecurityHelper.CryptKey);
-                            if (id == session.CustomerLogin.IdLogin.ToString())
+                            var id = key.Split('-')[1];
+                            if (Convert.ToInt64(id) == session.CustomerLogin.IdLogin)
                             {
                                 cookieControlPrefs = Request.Cookies[key];
                                 break;
@@ -157,7 +157,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         cookies.storedInDb = true;
                         cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
                         cookies.expDate = expDateCookie.ToString("yyyy-MM-dd-HH-mm-ss");
-                        cookies.guid = Helpers.SecurityHelper.Encrypt(session.CustomerLogin.Login, Helpers.SecurityHelper.CryptKey);
+                        cookies.guid = Helpers.SecurityHelper.Encrypt(session.CustomerLogin.Login.ToLower(), Helpers.SecurityHelper.CryptKey);
                         cookieControlPrefs.Name = cookieName;
                         cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                         cookieControlPrefs.Expires = expDateCookie;

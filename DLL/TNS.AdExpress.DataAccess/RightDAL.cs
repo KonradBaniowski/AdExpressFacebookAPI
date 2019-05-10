@@ -937,7 +937,7 @@ namespace TNS.AdExpress.DataAccess {
             sql.AppendFormat("update {0} ", login.SqlWithPrefix);
             sql.AppendFormat("set ENABLE_TRACKING = {0} ", enableTracking);
             sql.AppendFormat(", ENABLE_TROUBLESHOOTING = {0} ", enableTroubleshooting);
-            sql.AppendFormat(", DATE_EXP_COOKIE = TO_DATE('{0}', 'DD/MM/YYYY')", dateExpCookie.ToString("dd/MM/yyyy"));
+            sql.AppendFormat(", DATE_EXP_COOKIE = TO_DATE('{0}', 'DD/MM/YYYY HH24:MI:SS')", dateExpCookie.ToString("dd/MM/yyyy HH:mm:ss"));
             sql.AppendFormat(" where id_login = {0} ", loginId);
             #endregion
 

@@ -71,7 +71,18 @@ namespace Km.AdExpressClientWeb.Controllers
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(siteLanguage);
             ViewBag.SiteLanguage = siteLanguage;
 
-            var news = _infosNewsService.GetNews(idWS, this.HttpContext);
+            News news = new News();
+            news.NewsList = new List<NewsItem>();
+
+            try
+            {
+                news = _infosNewsService.GetNews(idWS, this.HttpContext);
+            }
+            catch (Exception e)
+            {
+                news = new News();
+                news.NewsList = new List<NewsItem>();
+            }
 
             List<Documents> documents = new List<Documents>();
 
