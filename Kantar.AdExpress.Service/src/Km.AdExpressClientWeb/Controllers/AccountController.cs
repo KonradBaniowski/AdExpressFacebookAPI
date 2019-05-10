@@ -22,6 +22,9 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.DataAccess;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.FrameWork.DB.Common;
+using System.Net.Http;
+using TNS.AdExpress.Web.Utilities.Exceptions;
+
 
 namespace Km.AdExpressClientWeb.Controllers
 {
@@ -82,8 +85,17 @@ namespace Km.AdExpressClientWeb.Controllers
             if (!String.IsNullOrEmpty(err))
             {
                 _userManager.SignOut();
-                ModelState.AddModelError("", GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage)));
-                model.ErrorMessage = GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage));
+
+                if (err.Equals("Error while initializing session !!!"))
+                {
+                    ModelState.AddModelError("", "Error while initializing session !!!");
+                    model.ErrorMessage = "Error while initializing session !!!";
+                }
+                else
+                {
+                    ModelState.AddModelError("", GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage)));
+                    model.ErrorMessage = GestionWeb.GetWebWord(3110, Convert.ToInt32(siteLanguage));
+                }
             }
 
             return View(model);
@@ -132,7 +144,20 @@ namespace Km.AdExpressClientWeb.Controllers
 
             if (WebApplicationParameters.EnableGdpr)
             {
-                var cookiesKeys = Request.Cookies.AllKeys;
+                string[] cookiesKeys = {};
+
+                try
+                {
+                    cookiesKeys = Request.Cookies.AllKeys;
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", GestionWeb.GetWebWord(3273, Convert.ToInt32(model.SiteLanguage)));
+                    model.Labels = LabelsHelper.LoadPageLabels(Convert.ToInt32(model.SiteLanguage));
+                    ViewBag.ForceCookieReInit = true;
+                    return View(model);
+                }
+
                 List<string> rgpdCookies = new List<string>();
 
                 foreach (var key in cookiesKeys)
@@ -212,169 +237,175 @@ namespace Km.AdExpressClientWeb.Controllers
         [Authorize(Roles = Role.ADEXPRESS)]
         public ActionResult WebSession(int siteLanguage = -1)
         {
-            if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
-
-            var cla = new ClaimsPrincipal(User.Identity);
-            var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
-            var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
-            var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
-            var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
-
             WebSession _webSession = null;
             int _siteLanguage = WebApplicationParameters.DefaultLanguage;
-            if (_siteLanguage != siteLanguage) _siteLanguage = siteLanguage;
-            var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
-            if (right != null && right.CanAccessToAdExpress())
+
+            try
             {
-                right.SetModuleRights();
-                right.SetFlagsRights();
-                right.SetRights();
-                if (WebApplicationParameters.VehiclesFormatInformation.Use)
-                    right.SetBannersAssignement();
+                if (siteLanguage == -1) siteLanguage = WebApplicationParameters.DefaultLanguage;
 
-                //newRight.HasModuleAssignmentAlertsAdExpress();
-                if (_webSession == null) _webSession = new WebSession(right);
-                _webSession.IdSession = idWS;
-                _webSession.SiteLanguage = _siteLanguage;
-
-                if (WebApplicationParameters.EnableGdpr)
+                var cla = new ClaimsPrincipal(User.Identity);
+                var idLogin = cla.Claims.Where(e => e.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+                var login = cla.Claims.Where(e => e.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
+                var password = cla.Claims.Where(e => e.Type == ClaimTypes.Hash).Select(c => c.Value).SingleOrDefault();
+                var idWS = cla.Claims.Where(e => e.Type == ClaimTypes.UserData).Select(c => c.Value).SingleOrDefault();
+                
+                if (_siteLanguage != siteLanguage) _siteLanguage = siteLanguage;
+                var right = new TNS.AdExpress.Right(long.Parse(idLogin), login, password, _siteLanguage);
+                if (right != null && right.CanAccessToAdExpress())
                 {
-                    HttpCookie cookieControlPrefs = null;
-                    string cookieName = "cookieControlPrefs-" + idLogin.Encrypt(Helpers.SecurityHelper.CryptKey);
-                    var cookiesKeys = Request.Cookies.AllKeys;
-                    var found = cookiesKeys.FirstOrDefault(n => n == "cookieControlPrefs");
+                    right.SetModuleRights();
+                    right.SetFlagsRights();
+                    right.SetRights();
+                    if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                        right.SetBannersAssignement();
 
-                    if (!string.IsNullOrEmpty(found))
+                    //newRight.HasModuleAssignmentAlertsAdExpress();
+                    if (_webSession == null) _webSession = new WebSession(right);
+                    _webSession.IdSession = idWS;
+                    _webSession.SiteLanguage = _siteLanguage;
+
+                    if (WebApplicationParameters.EnableGdpr)
                     {
-                        cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
-                    }
-                    else
-                    {
-                        foreach (var key in cookiesKeys)
+                        HttpCookie cookieControlPrefs = null;
+                        string cookieName = "cookieControlPrefs-" + idLogin;
+                        var cookiesKeys = Request.Cookies.AllKeys;
+                        var found = cookiesKeys.FirstOrDefault(n => n == "cookieControlPrefs");
+
+                        if (!string.IsNullOrEmpty(found))
                         {
-                            if (key.StartsWith("cookieControlPrefs"))
+                            cookieControlPrefs = Request.Cookies["cookieControlPrefs"];
+                        }
+                        else
+                        {
+                            foreach (var key in cookiesKeys)
                             {
-                                var id = key.Split('-')[1].Decrypt(Helpers.SecurityHelper.CryptKey);
-                                if (id == idLogin)
+                                if (key.StartsWith("cookieControlPrefs"))
                                 {
-                                    cookieControlPrefs = Request.Cookies[key];
-                                    break;
+                                    var id = key.Split('-')[1];
+                                    if (Convert.ToInt64(id) == Convert.ToInt64(idLogin))
+                                    {
+                                        cookieControlPrefs = Request.Cookies[key];
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (cookieControlPrefs != null)
-                    {
-                        var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
-
-                        var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistics"));
-                        var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
-                        int enableTrackingDb = 0;
-                        int enableTroubleshootingDb = 0;
-
-                        if (enableTracking != null)
+                        if (cookieControlPrefs != null)
                         {
-                            _webSession.EnableTracking = true;
-                            enableTrackingDb = 1;
-                        }
-                        else
-                            _webSession.EnableTracking = false;
+                            var cookies = JsonConvert.DeserializeObject<GdprCookie>(cookieControlPrefs.Value);
 
-                        if (enableTroubleshooting != null)
-                        {
-                            _webSession.EnableTroubleshooting = true;
-                            enableTroubleshootingDb = 1;
-                        }
-                        else
-                            _webSession.EnableTroubleshooting = false;
+                            var enableTracking = cookies.prefs.FirstOrDefault(s => s.Contains("Statistics"));
+                            var enableTroubleshooting = cookies.prefs.FirstOrDefault(s => s.Contains("Diagnostic"));
+                            int enableTrackingDb = 0;
+                            int enableTroubleshootingDb = 0;
 
-                        if (!cookies.storedInDb)
-                        {
-                            IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
-                            var expDateCookie = DateTime.Now.AddDays(395);
-                            RightDAL.SetAllPrivacySettings(Source, Convert.ToInt32(idLogin), enableTrackingDb, enableTroubleshootingDb, expDateCookie);
-
-                            cookies.storedInDb = true;
-                            cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-                            cookies.expDate = expDateCookie.ToString("yyyy-MM-dd-HH-mm-ss");
-                            cookies.guid = Helpers.SecurityHelper.Encrypt(login, Helpers.SecurityHelper.CryptKey);
-                            cookieControlPrefs.Name = cookieName;
-                            cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
-                            cookieControlPrefs.Expires = expDateCookie;
-                            Response.Cookies.Add(cookieControlPrefs);
-                            var cookieTmp = Response.Cookies["cookieControlPrefs"];
-                            if (cookieTmp != null)
-                                cookieTmp.Expires = DateTime.Now.AddDays(-1);
-                        }
-                        else
-                        {
-                            IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
-                            bool allowTracking = false;
-                            bool allowTroubleshooting = false;
-                            DateTime expDate = new DateTime(2000, 1, 1);
-                            RightDAL.GetPrivacySettings(Source, Convert.ToInt32(idLogin), out allowTracking, out allowTroubleshooting, out expDate);
-
-                            cookies.prefs = new List<string>();
-
-                            if (allowTracking)
+                            if (enableTracking != null)
                             {
-                                cookies.prefs.Add("Statistics");
                                 _webSession.EnableTracking = true;
+                                enableTrackingDb = 1;
                             }
                             else
                                 _webSession.EnableTracking = false;
 
-                            if (allowTroubleshooting)
+                            if (enableTroubleshooting != null)
                             {
-                                cookies.prefs.Add("Diagnostic");
                                 _webSession.EnableTroubleshooting = true;
+                                enableTroubleshootingDb = 1;
                             }
                             else
                                 _webSession.EnableTroubleshooting = false;
 
-                            cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd-HH-mm-ss");
-                            cookies.expDate = expDate.ToString("yyyy-MM-dd-HH-mm-ss");
-                            cookieControlPrefs.Expires = expDate;
-                            cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
-                            Response.Cookies.Add(cookieControlPrefs);
+                            if (!cookies.storedInDb)
+                            {
+                                IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                                var expDateCookie = DateTime.Now.AddDays(395);
+                                RightDAL.SetAllPrivacySettings(Source, Convert.ToInt32(idLogin), enableTrackingDb, enableTroubleshootingDb, expDateCookie);
+
+                                cookies.storedInDb = true;
+                                cookies.creationDate = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                                cookies.expDate = expDateCookie.ToString("yyyy-MM-dd-HH-mm-ss");
+                                cookies.guid = Helpers.SecurityHelper.Encrypt(login.ToLower(), Helpers.SecurityHelper.CryptKey);
+                                cookieControlPrefs.Name = cookieName;
+                                cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                                cookieControlPrefs.Expires = expDateCookie;
+                                Response.Cookies.Add(cookieControlPrefs);
+                                var cookieTmp = Response.Cookies["cookieControlPrefs"];
+                                if (cookieTmp != null)
+                                    cookieTmp.Expires = DateTime.Now.AddDays(-1);
+                            }
+                            else
+                            {
+                                IDataSource Source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                                bool allowTracking = false;
+                                bool allowTroubleshooting = false;
+                                DateTime expDate = new DateTime(2000, 1, 1);
+                                RightDAL.GetPrivacySettings(Source, Convert.ToInt32(idLogin), out allowTracking, out allowTroubleshooting, out expDate);
+
+                                cookies.prefs = new List<string>();
+
+                                if (allowTracking)
+                                {
+                                    cookies.prefs.Add("Statistics");
+                                    _webSession.EnableTracking = true;
+                                }
+                                else
+                                    _webSession.EnableTracking = false;
+
+                                if (allowTroubleshooting)
+                                {
+                                    cookies.prefs.Add("Diagnostic");
+                                    _webSession.EnableTroubleshooting = true;
+                                }
+                                else
+                                    _webSession.EnableTroubleshooting = false;
+
+                                cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd-HH-mm-ss");
+                                cookies.expDate = expDate.ToString("yyyy-MM-dd-HH-mm-ss");
+                                cookieControlPrefs.Expires = expDate;
+                                cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                                Response.Cookies.Add(cookieControlPrefs);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    _webSession.EnableTracking = true;
-                    _webSession.EnableTroubleshooting = true;
-                }
+                    else
+                    {
+                        _webSession.EnableTracking = true;
+                        _webSession.EnableTroubleshooting = true;
+                    }
 
-                // Année courante pour les recaps                    
-                TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
-                if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
+                    // Année courante pour les recaps                    
+                    TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
-                //TODO : a modifier
-               // if(!WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
+                    //TODO : a modifier
+                    // if(!WebApplicationParameters.CountryCode.Equals(CountryCode.TURKEY))
                     _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
 
-                // On met à jour IDataSource à partir de la session elle même.
-                _webSession.Source = right.Source;
-                //Sauvegarder la session
-                _webSession.Save();
-                // Tracking (NewConnection)
-                // On obtient l'adresse IP: 
-                _webSession.OnNewConnection(this.Request.UserHostAddress);
-            }
-            ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
+                    // On met à jour IDataSource à partir de la session elle même.
+                    _webSession.Source = right.Source;
+                    //Sauvegarder la session
+                    _webSession.Save();
+                    // Tracking (NewConnection)
+                    // On obtient l'adresse IP: 
+                    _webSession.OnNewConnection(this.Request.UserHostAddress);
+                }
 
+                ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(_siteLanguage);
 
-            //TODO
-            try
-            {
-                var navigationSession = (WebSession)TNS.AdExpress.Web.Core.Sessions.WebSession.Load(idWS);
+                var navigationSession = (WebSession) TNS.AdExpress.Web.Core.Sessions.WebSession.Load(idWS);
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Login", new { returnUrl = "", siteLanguage = _siteLanguage, err = "nm" });
+                if (_webSession.EnableTroubleshooting)
+                {
+                    CustomerWebException cwe = new CustomerWebException(this.HttpContext, ex.Message, ex.StackTrace, _webSession);
+                    Logger.Log(LogLevel.Error, cwe.GetLog());
+                }
+
+                return RedirectToAction("Login", new {returnUrl = "", siteLanguage = _siteLanguage, err = "Error while initializing session !!!"});
             }
 
             return RedirectToAction("Index", "Home");

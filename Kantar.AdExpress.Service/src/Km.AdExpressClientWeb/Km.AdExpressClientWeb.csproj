@@ -1975,6 +1975,10 @@
       <Project>{631c0a5e-19f9-4f90-b80c-03a4f59a8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DLL\TNS.AdExpress.Web.Utilities\TNS.AdExpress.Web.Utilities.csproj">
+      <Project>{37a35645-337e-484f-9c81-b9009d6950a2}</Project>
+      <Name>TNS.AdExpress.Web.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DLL\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
       <Project>{8889ed07-01ce-4f3a-a296-3a2c4b21989c}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
