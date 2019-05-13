@@ -384,21 +384,27 @@
     <Content Include="Images\33\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\33\LogoAdExpress220_Old.jpg" />
     <Content Include="Images\33\LogoAdExpressWater.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\33\LogoAdExpressWater.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\33\LogoAdExpress_Old.jpg" />
     <Content Include="Images\35\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\35\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\35\LogoAdExpress220_Old.jpg" />
+    <Content Include="Images\35\LogoAdExpress_Old.jpg" />
     <Content Include="Images\35\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\421\LogoAdExpress220_Old.jpg" />
+    <Content Include="Images\421\LogoAdExpress_Old.jpg" />
     <Content Include="Images\44\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -414,6 +420,8 @@
     <Content Include="Images\48\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\48\LogoAdExpress220_Old.jpg" />
+    <Content Include="Images\48\LogoAdExpress_Old.jpg" />
     <Content Include="Images\7\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -435,6 +443,8 @@
     <Content Include="Images\421\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Common\logo_Tns_Old.bmp" />
+    <Content Include="Images\Common\logo_Tns_Old_Old.bmp" />
     <Content Include="Images\g.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

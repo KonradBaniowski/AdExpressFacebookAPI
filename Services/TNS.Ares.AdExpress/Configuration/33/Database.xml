@@ -296,7 +296,7 @@
     <table enumId="258" description="Recap Data: Search Segment" schemaEnumId="4" label="recap_search_segment" prefix="rcp"/>
 
     <table enumId="259" description="Mapping: Banners Country" schemaEnumId="0" label="banners_country" prefix="bc"/>
-    
+
     <table enumId="260" description="Classif: Purchase Mode" schemaEnumId="0" label="purchase_mode_mms" prefix="pmm"/>
 
     <table enumId="265" description="Data: Social" schemaEnumId="0" label="data_social" prefix="wp"/>
@@ -311,10 +311,13 @@
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
+
+    <table enumId="401" description="Classif: Media Owner" schemaEnumId="0" label="media_owner" prefix="mo"/>
+    <table enumId="402" description="Recap: Purchasin Agency" schemaEnumId="4" label="purchasing_agency" prefix="recap_pa"/>
   </tables>
   <views>
-    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="tall_media_" prefix="allm"/>
-    <view enumId="1" description="Classif: all product" schemaEnumId="0" label="tall_product_" prefix="allp"/>
+    <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
+    <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
     <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>

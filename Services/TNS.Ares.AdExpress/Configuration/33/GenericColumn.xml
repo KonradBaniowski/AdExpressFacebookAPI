@@ -85,7 +85,7 @@
     <column id="37" name="Genre d'émissions" webTextId="2050" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="23"/>
     <column id="38" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="24"/>
     <column id="39" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="25"/>
-    <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
+    <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="daynamepattern"/>
     <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
     <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
