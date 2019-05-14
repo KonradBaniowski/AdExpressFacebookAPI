@@ -19,6 +19,7 @@
         <unitformat name="currency"           format="#,##0 €;-#,##0 €;"                   excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"      asposeFormat="5"/>
         <unitformat name="codeEcran"          format="################;################;"  excelFormat="################################;&amp;nbsp\;"  asposeFormat="0"/>
         <unitformat name="pdm"                format="#,##0.00;-#,##0.00"                  excelFormat="#,##0.00;-#,##0.00"                            asposeFormat="39"/>
+        <unitformat name="pages"              format="#,##0.##;-#,##0.##"                  excelFormat="#,##0.##;-#,##0.##"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="dd/MM/yyyy"             excelFormat="dd/MM/yyyy"/>
@@ -45,6 +46,7 @@
         <unitformat name="currency"           format="#,##0 €;-#,##0 €;"                     excelFormat="#,###,###,##0.0;-#,###,###,##0.0;&amp;nbsp\;"            asposeFormat="5"/>
         <unitformat name="codeEcran"          format="################;################;"    excelFormat="################;################;&amp;nbsp\;"           asposeFormat="0"/>
         <unitformat name="pdm"                format="#,##0.00;-#,##0.00"                    excelFormat="#,##0.00;-#,##0.00"                                      asposeFormat="39"/>
+        <unitformat name="pages"              format="#,##0.##;-#,##0.##"                    excelFormat="#,##0.##;-#,##0.##"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
