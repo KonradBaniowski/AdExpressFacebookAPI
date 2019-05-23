@@ -492,9 +492,14 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             {
                 #region UnitFilter
 
-                if (!userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
+                if (WebApplicationParameters.CountryCode.Equals(WebConstantes.CountryCode.TURKEY))
+                {
+
+                    if (!userFilter.UnitFilter.Unit.Contains(WebConstantes.CustomerSessions.Unit.none)
                 )
-                    _customerWebSession.Units = userFilter.UnitFilter.Unit;
+                        _customerWebSession.Units = userFilter.UnitFilter.Unit;
+                }
+
 
                 #endregion
 
