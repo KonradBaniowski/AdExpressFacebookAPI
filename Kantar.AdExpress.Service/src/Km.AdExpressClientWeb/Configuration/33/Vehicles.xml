@@ -1692,11 +1692,11 @@
         <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>
         <!-- Categorie -->
-        <allowedMediaLevelItem>media</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>media</allowedMediaLevelItem>-->
         <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
         <!-- Centre d'interet -->      
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->
         <!-- Régie -->      
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
         <!-- Groupe de société -->
@@ -1718,7 +1718,7 @@
         <!-- Groupe d'agences -->
         <allowedMediaLevelItem>agency</allowedMediaLevelItem>
         <!-- Agence -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->
         <!-- Titre -->
         <allowedMediaLevelItem>country</allowedMediaLevelItem>
         <!-- Pays -->
