@@ -41,7 +41,7 @@
     </column>
     <column id="16" name="Top de diffusion radio" webTextId="860" dbLabel="id_top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
     <column id="17" name="Top de diffusion télévision" webTextId="860" dbLabel="top_diffusion" CellType="TNS.FrameWork.WebResultUI.CellAiredTime" format="airtime"/>
-    <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"/>
+    <column id="18" name="Durée" webTextId="861"  dbLabel="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"  dbTablePrefixe="wp" dbRelatedTablePrefixe="wp"/>
     <column id="19" name="Position radio" webTextId="862"  dbLabel="rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="20" name="Position télévision" webTextId="862"  dbLabel="id_rank" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="21" name="Durée écran" webTextId="597"  dbLabel="duration_commercial_break" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
@@ -243,6 +243,7 @@
     <column id="189" name="Target"      webTextId="1991" dbId="id_target"  dbLabel="target"   dbTable="target"   dbTablePrefixe="tg" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="74"/>
     <column id="190" name="Wave"      webTextId="1762" dbId="id_wave"  dbLabel="wave"   dbTable="wave"   dbTablePrefixe="wv" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="75"/>
     <column id="191" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc" CellType="TNS.FrameWork.WebResultUI.CellLabel" idLevel="76"/>
+    <column id="265" name="ArppPubTv"  webTextId="3276"   dbId="id_arpp_pub_tv" dbLabel="pub_id" dbTable="arpp_pub_tv"  dbTablePrefixe="arpt" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false" useActivation="false" CellType="TNS.FrameWork.WebResultUI.CellLabel" />  
   </columnItems>
 
   <detailColumns>
@@ -308,6 +309,7 @@
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
@@ -414,6 +416,7 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="51" name="Prix du 30 sec"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
     </detailColumn>
     <!--Presse-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
@@ -672,6 +675,7 @@
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
     </detailColumn>
     <!--Radio-->
     <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">

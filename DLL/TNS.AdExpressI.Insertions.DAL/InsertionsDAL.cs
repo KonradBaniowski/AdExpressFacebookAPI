@@ -934,6 +934,7 @@ namespace TNS.AdExpressI.Insertions.DAL
 
                 // Append data tables
                 AppendSqlTables(sAdExpr03, tData, sql, columns, detailLevelsIds);
+               // AppendArrpTvTables(sql, vehicle);
 
                 sql.Append(" Where ");
 
@@ -951,6 +952,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                     sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
                 }
                 sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
+                //AppendArrpTvJoins(sql, vehicle);
 
                 // Append Group by
                 AppendSqlGroupByFields(sql, tData, vehicle, detailLevelsIds, columns);
@@ -981,6 +983,18 @@ namespace TNS.AdExpressI.Insertions.DAL
 
         }
         #endregion
+
+        protected virtual void AppendArrpTvTables(StringBuilder sql, VehicleInformation vehicle)
+        {
+            if (vehicle.Id == Vehicles.names.tv)
+                sql.Append(" ,adexpr03.arpp_pub_tv arpt ");
+        }
+
+        protected virtual void AppendArrpTvJoins(StringBuilder sql, VehicleInformation vehicle)
+        {
+            if (vehicle.Id == Vehicles.names.tv)
+                sql.Append(" and arpt.id_arpp_pub_tv = slo.id_arpp_pub_tv ");
+        }
 
         #region Get version  detail
 
@@ -1280,7 +1294,8 @@ namespace TNS.AdExpressI.Insertions.DAL
                 || vehicle.Id == CstDBClassif.Vehicles.names.tvNonTerrestrials
                 ) && !hasCategory)
             {
-                sql.AppendFormat(" {0}.id_category,", tData.Prefix);
+
+                sql.AppendFormat(" {0}.id_category,", tData.Prefix);               
             }
 
             return detailLevelSelected;

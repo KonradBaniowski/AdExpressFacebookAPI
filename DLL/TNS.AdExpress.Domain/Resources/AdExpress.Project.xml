@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly>
   <name>AdExpress.Localization</name>
-  <compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>
+  <compiler>C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319</compiler>
   <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7.2 Tools</alinker>
   <projects>
     <project id="Global">
