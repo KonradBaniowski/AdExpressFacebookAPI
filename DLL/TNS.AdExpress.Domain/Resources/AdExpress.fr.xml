@@ -2557,6 +2557,6 @@
     <item mnemonic="w3273" type="System.String">Vous devez accepter les cookies pour acceder à votre compte</item>
     <item mnemonic="w3274" type="System.String">Pour toute information concernant le traitement des données à caractère personnel, veuillez vous référer à la politique de confidentialité en bas de page.</item>
     <item mnemonic="w3275" type="System.String">PLURIMEDIA ELARGI</item>
-    <item mnemonic="w3276" type="System.String">Pub ID</item>   
+    <item mnemonic="w3276" type="System.String">ARPP</item>   
   </items>
 </localization>

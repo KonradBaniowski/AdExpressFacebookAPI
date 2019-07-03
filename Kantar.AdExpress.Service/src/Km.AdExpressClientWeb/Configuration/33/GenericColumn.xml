@@ -128,7 +128,7 @@
     <column id="67" name="Prix" webTextId="1936" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
 
     <column id="68" name="Somme Surface page" webTextId="2251" isSum="true"  dbLabel="area_page" dbLabelAlias="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
-    <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19"/>
+    <column id="69" name="Somme Durée" webTextId="861" isSum="true"  dbLabel="duration" dbLabelAlias="duration" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration" idLevel="19" dbTablePrefixe="wp" dbRelatedTablePrefixe="wp"/>
     <column id="70" name="Nombre de supports" webTextId="2252" isCountDistinct="true"  dbLabel="id_media" dbTablePrefixe="wp" dbLabelAlias="nb_supports" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="71" name="Nombre de supports press" webTextId="2252" dbLabel="id_media" dbTablePrefixe="wp"  CellType="TNS.FrameWork.WebResultUI.CellIdsNumber" format="max0"/>
     <column id="72" name="Insertions" webTextId="1398" isSum="true"  dbLabel="insertion" dbLabelAlias="insertion" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -295,6 +295,7 @@
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
@@ -308,8 +309,7 @@
       <columnItem id="21" name="Durée écran"/>
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
-      <columnItem id="265" name="ArppPubTv"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>     
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
@@ -334,6 +334,7 @@
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
       <columnItem id="40" name="Jour semaine"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -399,6 +400,7 @@
     <!--TV-->
     <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
       <columnItem id="10" name="Spot"/>
+      <columnItem id="265" name="ArppPubTv"/>
       <columnItem id="49" name="Date de diffusion"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="43" name="Agence Media"/>
@@ -416,7 +418,7 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="51" name="Prix du 30 sec"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
-      <columnItem id="265" name="ArppPubTv"/>
+     
     </detailColumn>
     <!--Presse-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
@@ -497,6 +499,7 @@
       <columnItem id="70" name="nb Support"/>
       <columnItem id="87" name="Gad" visible="false"/>
       <columnItem id="75" name="Spot"/>
+      <columnItem id="265" name="ArppPubTv"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
@@ -599,6 +602,7 @@
       <columnItem id="70" name="nb Support"/>
       <columnItem id="85" name="Budget"/>
       <columnItem id="75" name="Spot"/>
+      <columnItem id="265" name="ArppPubTv"/>
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
@@ -664,6 +668,7 @@
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <columnItem id="265" name="ArppPubTv"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
@@ -674,8 +679,7 @@
       <columnItem id="21" name="Durée écran"/>
       <columnItem id="22" name="Nombre Spots écran"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
-      <columnItem id="265" name="ArppPubTv"/>
+      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>    
     </detailColumn>
     <!--Radio-->
     <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">
