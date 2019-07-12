@@ -408,7 +408,9 @@ namespace Km.AdExpressClientWeb.Controllers
                 return RedirectToAction("Login", new {returnUrl = "", siteLanguage = _siteLanguage, err = "Error while initializing session !!!"});
             }
 
-            return RedirectToAction("Index", "Home");
+            // return RedirectToAction("Index", "Home");
+            return RedirectToLocal("/Home/Index");
+
         }
 
         //
@@ -713,7 +715,8 @@ namespace Km.AdExpressClientWeb.Controllers
         public ActionResult LogOff()
         {
             _userManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return RedirectToLocal("/Home/Index");
         }
 
         [HttpPost]
