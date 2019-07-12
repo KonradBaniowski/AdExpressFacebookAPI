@@ -1,6 +1,7 @@
 ﻿using Km.AdExpressClientWeb.App_Start;
 using System;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -30,6 +31,7 @@ namespace Km.AdExpressClientWeb
         {
             try
             {
+                MvcHandler.DisableMvcResponseHeader = true;
                 //CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
             }
             catch (System.Exception error)
@@ -64,6 +66,14 @@ namespace Km.AdExpressClientWeb
             AutoMapperConfig.Configure();
             LoadConfigurations();
 
+        }
+
+        protected void Application_PreSendRequestHeaders()
+        {
+            if (HttpContext.Current != null)
+            {
+                HttpContext.Current.Response.Headers.Remove("Server");
+            }
         }
 
         protected static void LoadConfigurations()
@@ -162,5 +172,7 @@ namespace Km.AdExpressClientWeb
             }
 
         }
+
+      
     }
 }
