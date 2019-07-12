@@ -19,36 +19,40 @@
     <div id="loginwidget">
         @if (TempData["Success"] != null)
         {
-            using (Html.BeginForm("Index", "Home",  FormMethod.Get,new { role = "form", id = "formContact", enctype = "multipart/form-data" }))
+            using (Html.BeginForm("Index", "Home", FormMethod.Get, new { role = "form", id = "formContact", enctype = "multipart/form-data" }))
             {
-                 <div class="pg-loginDescription">
-                     <div class="forgotcontact">
-                         <span>@Model.Labels.ContactInformationsRegisterLabel – @Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</span><br><br>
+                @Html.AntiForgeryToken()
 
-                         <span>@learnMoreAboutUsCancelLabel  </span>
-                         <a href="@Model.Labels.KantarUrl" class="link">@Model.Labels.FindOutMoreLabel</a>
+                <div class="pg-loginDescription">
+                    <div class="forgotcontact">
+                        <span>@Model.Labels.ContactInformationsRegisterLabel – @Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</span><br><br>
 
-                     </div>
-                     <br>
-                 </div>
+                        <span>@learnMoreAboutUsCancelLabel  </span>
+                        <a href="@Model.Labels.KantarUrl" class="link">@Model.Labels.FindOutMoreLabel</a>
+
+                    </div>
+                    <br>
+                </div>
                 <div class="loginbox_container">
-                   
+
                     <input id="signin" type="submit" value="@Model.Labels.ReturToLogin" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
                 </div>
                 <input type="hidden" name="siteLanguage" id="siteLanguage" value="@(ViewBag.SiteLanguage)" />
-            }         
+            }
         }
         else
         {
             using (Html.BeginForm("ContactUs", "Contact", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "formLogin", enctype = "multipart/form-data" }))
             {
+                @Html.AntiForgeryToken()
+
                 <div class="pg-loginDescription">@Model.PresentationModel.ModuleDescription</div>
 
                 <div class="loginbox_container">
                     <div id="usrcpn" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.Company, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.CompanyDescription), id = "company", autocomplete = "off", tabindex = "1" })
-                         
+
                             @Html.ValidationMessageFor(m => m.Company, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -62,7 +66,7 @@
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrjob"  class="borderContainer">
+                    <div id="usrjob" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.JobTitle, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.TitleLabel), id = "userjob", autocomplete = "off", tabindex = "3" })
                             @Html.ValidationMessageFor(m => m.JobTitle, "", new { @class = "text-danger" })
@@ -70,7 +74,7 @@
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrphone"  class="borderContainer">
+                    <div id="usrphone" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.PhoneNumberDescription), id = "userphone", autocomplete = "off", tabindex = "4" })
                             @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
@@ -78,7 +82,7 @@
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrmail"  class="borderContainer">
+                    <div id="usrmail" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.Mail, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.MailDescription), id = "usermail", autocomplete = "off", tabindex = "5" })
                             @Html.ValidationMessageFor(m => m.Mail, "", new { @class = "text-danger" })
@@ -86,7 +90,7 @@
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrcountry"  class="borderContainer">
+                    <div id="usrcountry" class="borderContainer">
                         <div>
                             @Html.TextBoxFor(m => m.Country, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.CountryDescription), id = "usercountry", autocomplete = "off", tabindex = "6" })
                             @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
@@ -94,25 +98,25 @@
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrquestion"  class="borderContainer">
+                    <div id="usrquestion" class="borderContainer">
                         <div>
-                            @Html.DropDownListFor(m => m.QuestionTag, Model.QuestionsTagItem, Model.Labels.QuestionTagDefault, new { @class = "input",  id = "userquestion", autocomplete = "off", tabindex = "7" })                           
+                            @Html.DropDownListFor(m => m.QuestionTag, Model.QuestionsTagItem, Model.Labels.QuestionTagDefault, new { @class = "input", id = "userquestion", autocomplete = "off", tabindex = "7" })
                         </div>
                     </div>
                 </div>
                 <div class="loginbox_container">
-                    <div id="usrcomment"  >
+                    <div id="usrcomment">
                         <div>
-                            @Html.TextAreaFor(m => m.Comment, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.CommentDescription), rows = "1", cols="50", id = "usercomment", autocomplete = "off", tabindex = "8" })
+                            @Html.TextAreaFor(m => m.Comment, new { @class = "input", placeholder = string.Format("*{0}", Model.Labels.CommentDescription), rows = "1", cols = "50", id = "usercomment", autocomplete = "off", tabindex = "8" })
                             @Html.ValidationMessageFor(m => m.Comment, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
-               
-              
 
-                <div class="pg-required-text" >*@Model.Labels.RequiredFields</div>
-              
+
+
+                <div class="pg-required-text">*@Model.Labels.RequiredFields</div>
+
                 <div>
                     <br />
                     <span style="font-style: italic; text-align: left;">
@@ -127,17 +131,17 @@
                 <div class="loginbox_container">
                     <a id="contact_cancel" href="@Url.Action("Login", "Account", new {siteLanguage = ViewBag.SiteLanguage})" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" tabindex="9">
                         @Model.Labels.CancelLabel
-                    </a>                   
+                    </a>
                 </div>
                 <div class="loginbox_container">
-                    <div style="padding-top:.2rem;padding-bottom:.2rem;" >@Model.Labels.ClientService.<br>@Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</div>
+                    <div style="padding-top:.2rem;padding-bottom:.2rem;">@Model.Labels.ClientService.<br>@Model.Labels.PhoneNumberDescription : @Model.ClientServicePhoneNumber – @Model.Labels.Email : @Model.ClientServiceEmail</div>
                 </div>
                 <input type="hidden" name="siteLang" id="siteLang" value="@(ViewBag.SiteLanguage)" />
 
             }
         }
 
-                </div>
+    </div>
 </div>
 
 <!----End New DESGIN-->
