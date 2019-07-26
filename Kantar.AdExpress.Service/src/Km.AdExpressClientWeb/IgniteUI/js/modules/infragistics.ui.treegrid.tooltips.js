@@ -1,12 +1,12 @@
-﻿/*!@license
- * Infragistics.Web.ClientUI Tree Grid 15.2.20152.2081
+/*!@license
+ * Infragistics.Web.ClientUI Tree Grid 19.1.20
  *
- * Copyright (c) 2011-2015 Infragistics Inc.
+ * Copyright (c) 2011-2019 Infragistics Inc.
  *
  * http://www.infragistics.com/
  *
  * Depends on:
- *	jquery-1.4.4.js
+ *	jquery-1.9.1.js
  *	jquery.ui.core.js
  *	jquery.ui.widget.js
  *	infragistics.dataSource.js
@@ -16,4 +16,4 @@
  *	infragistics.ui.grid.framework.js
  *	infragistics.ui.grid.tooltips.js
  */
-if(typeof jQuery!=="function"){throw new Error("jQuery is undefined")}(function($){$.widget("ui.igTreeGridTooltips",$.ui.igGridTooltips,{_create:function(){this.element.data($.ui.igGridTooltips.prototype.widgetName,this.element.data($.ui.igTreeGridTooltips.prototype.widgetName));$.ui.igGridTooltips.prototype._create.apply(this,arguments)},_getDataView:function(){return this.grid.dataSource.flatDataView()},_getRowIndex:function(element,row){return element.closest("tbody").children("tr:visible:not([data-container='true'],[data-grouprow='true'])").index(row)},destroy:function(){$.ui.igGridTooltips.prototype.destroy.apply(this,arguments);this.element.removeData($.ui.igGridTooltips.prototype.widgetName)}});$.extend($.ui.igTreeGridTooltips,{version:"15.2.20152.2081"})})(jQuery);
+(function(factory){if(typeof define==="function"&&define.amd){define(["./infragistics.ui.treegrid","./infragistics.ui.grid.tooltips"],factory)}else{return factory(jQuery)}})(function($){$.widget("ui.igTreeGridTooltips",$.ui.igGridTooltips,{options:{inherit:false},_create:function(){this.element.data($.ui.igGridTooltips.prototype.widgetName,this.element.data($.ui.igTreeGridTooltips.prototype.widgetName));$.ui.igGridTooltips.prototype._create.apply(this,arguments)},_getDataView:function(){return this.grid.dataSource.flatDataView()},_getRowIndex:function(element,row){return element.closest("tbody").children("tr:visible:not([data-container='true'],"+"[data-grouprow='true'],"+"[data-new-row='true'])").index(row)},destroy:function(){this._superApply(arguments);this.element.removeData($.ui.igGridTooltips.prototype.widgetName)}});$.extend($.ui.igTreeGridTooltips,{version:"19.1.20"});return $});

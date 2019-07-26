@@ -221,9 +221,10 @@
 @section Scripts{
     <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
     <script src="~/IgniteUI/js/infragistics.core.js"></script>
-    <script src="~/IgniteUI/js/infragistics.dv.js"></script>
     <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+    <script src="~/IgniteUI/js/infragistics.dv.js"></script>
     <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+    <script type="text/javaScript">$.ig.util.language = 'fr';</script>
 
     <script id="titleTmpl" type="text/template">
         {{if parseInt(${IdPage}) != 0}}
@@ -266,7 +267,7 @@
         {{if parseInt(${IdPage}) != 0}}
         <img class="imgPageFacebook" style="max-width:18px;" data-post="${IdPage}" src="" />
         {{/if}}
-        <a class="pageNameFacebookLink" data-pagefb="${IdPageFacebook}" >${PageName}</a>
+        <a class="pageNameFacebookLink" data-pagefb="${IdPageFacebook}">${PageName}</a>
     </script>
 
     <script id="fanTmpl" type="text/template">
@@ -276,7 +277,7 @@
             {{/if}}
         </div>
     </script>
-    
+
 
     <script id="LikeTooltipTemplate" type="text/x-ig-tmpl">
         <div><label class='bold'>${item.Like}</label> Like</div>
@@ -317,7 +318,7 @@
         <div>Facebook Référents: <label class='bold'>${item.ReferentFBPercent}</label> %</div>
         <div>Mois: <label class='bold'>${item.Month}</label></div>
     </script>
-    
+
     @Scripts.Render("~/bundles/results")
     @Scripts.Render("~/bundles/socialMedia-results")
     @Scripts.Render("~/bundles/detail-selection")
