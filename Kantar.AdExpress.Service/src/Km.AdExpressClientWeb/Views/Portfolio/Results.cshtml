@@ -48,7 +48,7 @@
     <div class='uil-ring-css' style=' top:40%'><div></div></div>
 </div>
 
-<div class="panel-group panel-group-results panel-black-results hide" id="resaccord" style="margin-bottom:20px;">
+<div class="panel-group panel-group-results panel-black-results hide" id="resaccord" style="margin-bottom:20px">
     <div id="allPeriodInsertionsSpots" class="text-center margin-bot-30"></div>
     <div id="GridPanel" class="panel panel-primary panel-results">
         <a data-toggle="collapse">
@@ -176,53 +176,60 @@
         case TNS.AdExpress.Constantes.Web.CountryCode.FRANCE:
             <script src="~/IgniteUI/js/i18n/infragistics-fr.js"></script>
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'fr';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.UK:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
             if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             }
             else
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'en';</script>
             }
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'sk';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
             <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script> // Pour graph
             break;
         default:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
-            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
+            <script src="~/IgniteUI/js/infragistics.dv.js"></script>
             if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             }
             else
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'en';</script>
             }
             break;
     }
@@ -342,6 +349,7 @@
             }
 
             var userFilter = new UserFilter();
+            var gridWidth;
 
             var renderGrid = function (success, error) {
                 if (success) {
@@ -369,30 +377,27 @@
                                     name: "ColumnFixing",
                                     fixingDirection: "left",
                                     columnSettings: colsFixed
-                                }
-                                ,
+                                },
                                 {
                                     name: "Sorting",
                                     type: "local",
                                     applySortedColumnCss: false,
                                     columnSettings: columnsNotAllowedSorting,
-                                    firstSortDirection : 'descending',
-                                    columnSorted: function (evt, ui) {
+                                    firstSortDirection: 'descending',
+                                    columnSorted: function(evt, ui) {
                                         columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
                                         createCookie("sortKey", columnIndex, 1);
                                         if (ui.direction == 'ascending') {
                                             sortOrder = "ASC";
                                             createCookie("sortOrder", 1, 1);
-                                        }
-                                        else if (ui.direction == 'descending') {
+                                        } else if (ui.direction == 'descending') {
                                             sortOrder = "DESC";
                                             createCookie("sortOrder", 0, 1);
                                         }
                                     }
                                 }
-
                             ]
-                        })
+                        });
                     }
                     else {
                         $("#grid").igTreeGrid({
@@ -412,33 +417,39 @@
                                     mode: "allLevels",
                                     pageSize: 100
                                 },
-                                 {
-                                     name: "Sorting",
-                                     type: "local",
-                                     applySortedColumnCss: false,
-                                     columnSettings: columnsNotAllowedSorting,
-                                     firstSortDirection : 'descending',
-                                     columnSorted: function (evt, ui) {
-                                         columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
-                                         createCookie("sortKey", columnIndex, 1);
-                                         if (ui.direction == 'ascending') {
-                                             sortOrder = "ASC";
-                                             createCookie("sortOrder", 1, 1);
-                                         }
-                                         else if (ui.direction == 'descending') {
-                                             sortOrder = "DESC";
-                                             createCookie("sortOrder", 0, 1);
-                                         }
-                                     }
-                                 }
-
+                                {
+                                    name: "Sorting",
+                                    type: "local",
+                                    applySortedColumnCss: false,
+                                    columnSettings: columnsNotAllowedSorting,
+                                    firstSortDirection: 'descending',
+                                    columnSorted: function(evt, ui) {
+                                        columnIndex = ui.columnKey.replace(/^\D+|\D+$/g, "");
+                                        createCookie("sortKey", columnIndex, 1);
+                                        if (ui.direction == 'ascending') {
+                                            sortOrder = "ASC";
+                                            createCookie("sortOrder", 1, 1);
+                                        } else if (ui.direction == 'descending') {
+                                            sortOrder = "DESC";
+                                            createCookie("sortOrder", 0, 1);
+                                        }
+                                    }
+                                }
                             ]
-                        })
+                        });
                     }
+
+                    gridWidth = $("#grid_table_headers").width();
+                    gridWidth += $("#grid_table_headers_fixed").width();
+
+                    if (gridWidth > 1120)
+                        gridWidth = 1120;
+
+                    $("#grid").igTreeGrid("option", "width", gridWidth + "px");
 
                     $("#grid").igTreeGrid({
                         rowCollapsed: function (evt, ui) {
-                            $("#grid_table_container").attr("style", "position: relative; height: 530px;");
+                            $("#grid_table_container").attr("style", "position: relative; height: 530px; width: " + gridWidth + "px;");
                         }
                     });
 
@@ -579,7 +590,9 @@
                                     $("#allPeriodInsertionsSpots").show();
                                 }
 
-                                if(data.datagrid != null && data.datagrid != "null" ){
+                                if (data.datagrid != null && data.datagrid != "null") {
+                                    if (userFilter.ResultTypeFilter.ResultType == "6")
+                                        $("#resaccord").removeClass("hide");
                                     $("#GridPanel").show();
                                     dataTreeGrid = data.datagrid;
                                     cols = GetColumnsFormatter(data.columns);

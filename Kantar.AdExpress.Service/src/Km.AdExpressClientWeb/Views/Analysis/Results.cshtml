@@ -71,6 +71,7 @@
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fr.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'fr';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.UK:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
@@ -79,21 +80,25 @@
             if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             }
             else
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'en';</script>
             }
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.FINLAND:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.SLOVAKIA:
             <script src="~/IgniteUI/js/infragistics.core.js"></script>
             <script src="~/IgniteUI/js/infragistics.lob.js"></script>
             <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-sk.js"></script>
+            <script type="text/javaScript">$.ig.util.language = 'sk';</script>
             break;
         case TNS.AdExpress.Constantes.Web.CountryCode.TURKEY:
             <script src="~/IgniteUI/js/modules/i18n/infragistics.ui.grid-tr.js"></script>
@@ -106,15 +111,17 @@
             if (WebApplicationParameters.CountryCode == TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-fi.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'fi';</script>
             }
             else
             {
                 <script src="~/IgniteUI/js/modules/i18n/regional/infragistics.ui.regional-en.js"></script>
+                <script type="text/javaScript">$.ig.util.language = 'en';</script>
             }
             break;
     }
 
-<script>
+    <script>
     $(document).ready(function () {
 
         if (typeof jQuery === "undefined") { throw new Error("jQuery") }
@@ -124,7 +131,7 @@
             all: '@GestionWeb.GetWebWord(201, Model.Presentation.SiteLanguage)'
         };
     });
-</script>
+    </script>
 
     @Scripts.Render("~/bundles/analysis-results")
     @Scripts.Render("~/bundles/cookies")
