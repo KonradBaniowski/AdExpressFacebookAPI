@@ -1235,6 +1235,33 @@ namespace TNS.AdExpress
         }
 
         #endregion
+        /// <summary>
+        /// Has Access To MultiMedia Extended
+        /// </summary>
+        /// <returns></returns>
+        public bool HasAccessToMultiMediaExtended()
+        {
+            return CustormerFlagAccess(Flags.ID_MULTIMEDIA_EXTENDED_ACCESS_FLAG) || CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG)
+                || CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG);
+        }
+        /// <summary>
+        /// Has Access To Digital Media
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <returns></returns>
+        public bool HasAccessToDigitalMedia(Constantes.Classification.DB.Vehicles.names vehicle)
+        {
+            switch (vehicle)
+            {               
+             
+                case Constantes.Classification.DB.Vehicles.names.search:
+                    return CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG);
+                case Constantes.Classification.DB.Vehicles.names.audioDigital:
+                    return CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG);                                 
+                default:
+                    return false;                  
+            }
+        }
 
         #region Recap Access Vehicle list
         /// <summary>

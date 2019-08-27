@@ -1374,6 +1374,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //!!!!!!!!!!!!!!!! Pas de gestion des droits de la nomenclature media dans les recap (src : G Facon le 27/09/2004)
 
 			sql.Append(" " + FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix));
+
+            FilterOnDigitalMediaTypes(sql);
         }
         #endregion
 
@@ -1538,7 +1540,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         #endregion
 
 
-       
+       protected virtual void FilterOnDigitalMediaTypes(StringBuilder sql){}
 
         #endregion
 

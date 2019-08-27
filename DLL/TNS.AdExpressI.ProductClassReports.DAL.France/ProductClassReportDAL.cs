@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 
@@ -48,6 +50,23 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.France
 
             #endregion
         }
+
+        protected override void FilterOnDigitalMediaTypes(StringBuilder sql) {
+            if (VehiclesInformation.Contains(AdExpress.Constantes.Classification.DB.Vehicles.names.audioDigital) 
+                && !_session.CustomerLogin.CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG))
+            {
+                long id = VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.audioDigital).DatabaseId;
+                sql.AppendFormat(" and {0}.id_vehicle not in ({1}) ", _dataTable.Prefix, id);
+            }
+
+            if (VehiclesInformation.Contains(AdExpress.Constantes.Classification.DB.Vehicles.names.search)
+               && !_session.CustomerLogin.CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG))
+            {
+                long id = VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.search).DatabaseId;
+                sql.AppendFormat(" and  {0}.id_vehicle not in ({1}) ", _dataTable.Prefix, id);
+            }
+        }
+
 
     }
 }
