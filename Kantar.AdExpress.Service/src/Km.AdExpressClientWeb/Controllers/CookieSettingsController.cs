@@ -29,7 +29,7 @@ namespace Km.AdExpressClientWeb.Controllers
 
             ViewBag.SiteLanguage = session.SiteLanguage;
             ViewBag.SiteLanguageName = PageHelper.GetSiteLanguageName(session.SiteLanguage);
-            ViewBag.CookieName = "cookieControlPrefs-" + session.CustomerLogin.IdLogin.ToString().Encrypt(Helpers.SecurityHelper.CryptKey);
+            ViewBag.CookieName = "cookieControlPrefs-" + session.CustomerLogin.IdLogin.ToString();
             ViewBag.Guid = session.CustomerLogin.Login.Encrypt(Helpers.SecurityHelper.CryptKey);
 
             return View(model);
