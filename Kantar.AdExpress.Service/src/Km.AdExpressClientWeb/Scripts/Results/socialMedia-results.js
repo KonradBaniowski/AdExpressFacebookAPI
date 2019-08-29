@@ -109,6 +109,7 @@
 
                     ds.dataBind();
 
+                    $("#grid_table_scroll").attr("style", "height: 100%");
                     
                     CallTopPostsAll();
                     if (data.concurSelected) {
