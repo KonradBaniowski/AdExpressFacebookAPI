@@ -211,6 +211,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 case CstDBClassif.Vehicles.names.mms:
                 case CstDBClassif.Vehicles.names.search:
                 case CstDBClassif.Vehicles.names.social:
+                case CstDBClassif.Vehicles.names.paidSocial:
                 case CstDBClassif.Vehicles.names.audioDigital:
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;

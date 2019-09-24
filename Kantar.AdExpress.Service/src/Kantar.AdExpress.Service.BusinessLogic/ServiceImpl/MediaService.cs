@@ -535,6 +535,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 case VhCstes.search:                 
                 case VhCstes.audioDigital:
+                case VhCstes.paidSocial:
                     return true;
                 default:
                     return false;

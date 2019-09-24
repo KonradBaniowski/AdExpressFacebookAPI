@@ -1277,6 +1277,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Recap Audio Digital segment
         /// </summary>
         recapAudioDigitalSegment = 281,
+        /// <summary>
+        /// Data  Paid Social
+        /// </summary>
+        dataPaidSocial = 282,
+        /// <summary>
+        /// Data alert Paid Social
+        /// </summary>
+        dataPaidSocialAlert = 283,
+        /// <summary>
+        /// Recap Paid Social
+        /// </summary>
+        recapPaidSocial = 284,
+        /// <summary>
+        /// Recap Paid Social segment
+        /// </summary>
+        recapPaidSocialSegment = 285,
 
         /// <summary>
         /// Alert description

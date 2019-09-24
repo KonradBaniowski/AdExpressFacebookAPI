@@ -137,6 +137,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
                             && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
                             containsSocial = true;
+                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.paidSocial)
+                          && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.paidSocial).DatabaseId.ToString())
+                            containsSocial = true;
 
                     }
                     if (levelsSelected.Count == 0)

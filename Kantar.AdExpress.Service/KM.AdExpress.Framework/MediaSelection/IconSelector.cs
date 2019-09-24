@@ -135,6 +135,7 @@ namespace KM.AdExpress.Framework.MediaSelection
                     icon = "pictoTVPan-Euro.svg";
                     break;
                 case Vehicles.names.social:
+                case Vehicles.names.paidSocial:
                     icon = "pictoSocial.svg";
                     break;
                 default:

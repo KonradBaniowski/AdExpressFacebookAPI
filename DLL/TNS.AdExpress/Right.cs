@@ -1257,7 +1257,9 @@ namespace TNS.AdExpress
                 case Constantes.Classification.DB.Vehicles.names.search:
                     return CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG);
                 case Constantes.Classification.DB.Vehicles.names.audioDigital:
-                    return CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG);                                 
+                    return CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG);
+                case Constantes.Classification.DB.Vehicles.names.paidSocial:
+                    return CustormerFlagAccess(Flags.ID_PAID_SOCIAL_ACCESS_FLAG);
                 default:
                     return false;                  
             }

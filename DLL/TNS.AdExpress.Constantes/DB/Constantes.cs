@@ -1887,6 +1887,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifiant du flag accès au média AUDIO DIGITAL
         /// </summary>
         public const Int64 ID_AUDIO_DIGITAL_ACCESS_FLAG = 380;
+        /// <summary>
+        /// Identifiant du flag accès au média PAID DIGITAL
+        /// </summary>
+        public const Int64 ID_PAID_SOCIAL_ACCESS_FLAG = 381;
 
     }
 	#endregion

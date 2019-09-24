@@ -3173,6 +3173,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapSocial, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.audioDigital:
                     return WebApplicationParameters.GetDataTable(TableIds.recapAudioDigital, isRetailerSelected).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.paidSocial:
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, isRetailerSelected).Sql;
                 default:
 					throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
@@ -3229,6 +3231,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.audioDigital:
                     return WebApplicationParameters.GetDataTable(TableIds.recapAudioDigitalSegment, isRetailerSelected).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.paidSocial:
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, isRetailerSelected).Sql;
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
@@ -3814,6 +3818,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataSocial, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPaidSocial, isRetailerSelected).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3883,6 +3889,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataSocialAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAudioDigitalAlert, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPaidSocialAlert, isRetailerSelected).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3973,6 +3981,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataSocial, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPaidSocial, isRetailerSelected).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -4042,6 +4052,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataSocialAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAudioDigitalAlert, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPaidSocialAlert, isRetailerSelected).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -4106,6 +4118,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataSocialAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.audioDigital:
                             return WebApplicationParameters.GetDataTable(TableIds.dataAudioDigitalAlert, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.paidSocial:
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPaidSocialAlert, isRetailerSelected).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine table to use."));
                     }
@@ -4156,6 +4170,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataSocial, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.audioDigital:
                             return WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.paidSocial:
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPaidSocial, isRetailerSelected).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine the table to use"));
                     }
@@ -4861,6 +4877,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.dataSocial, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPaidSocial, isRetailerSelected);
                 default:
                     throw new SQLGeneratorException("Unknown vehicle.");
             }

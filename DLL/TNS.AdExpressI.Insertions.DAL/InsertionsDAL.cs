@@ -2500,6 +2500,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                  && vehicleInformation.Id != CstDBClassif.Vehicles.names.mms
                  && vehicleInformation.Id != CstDBClassif.Vehicles.names.search
                    && vehicleInformation.Id != CstDBClassif.Vehicles.names.social
+                    && vehicleInformation.Id != CstDBClassif.Vehicles.names.paidSocial
                  && vehicleInformation.Id != CstDBClassif.Vehicles.names.mailValo)
                 || _session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE));
         }
