@@ -551,7 +551,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 
                 formatOption.Format = new SelectControl();
                 formatOption.Format.Id = "format";
-                formatOption.Format.Visible = autopromoEvaliantOption ;
+                formatOption.Format.Visible = WebApplicationParameters.VehiclesFormatInformation.Use;
                 formatOption.Format.Items = new List<SelectItem>();
 
                 var activeBannersFormatList = new List<FilterItem>(_customerWebSession.GetValidFormatList(_customerWebSession.GetVehiclesSelected()).Values);
@@ -1038,7 +1038,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 #endregion
 
                 #region FormatFilter
-                if (autopromoEvaliantOption && userFilter.FormatFilter.Formats != null)
+                if (WebApplicationParameters.VehiclesFormatInformation.Use && userFilter.FormatFilter.Formats != null)
                     _customerWebSession.SelectedBannersFormatList = userFilter.FormatFilter.Formats;
                 #endregion
 

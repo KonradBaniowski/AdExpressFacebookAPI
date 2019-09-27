@@ -4771,7 +4771,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 {
                     List<long> formatIdList = null;
                     
-                    if(vehicleInformationList.ContainsKey(Vehicles.names.adnettrack.GetHashCode()))
+                    if(vehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.adnettrack).DatabaseId))
                         formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
                     
                     List<Int64> vehicleIdList = new List<VehicleInformation>(vehicleInformationList.Values).ConvertAll(p => p.DatabaseId);
