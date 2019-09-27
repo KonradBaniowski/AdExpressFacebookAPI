@@ -1241,7 +1241,7 @@ namespace TNS.AdExpress
         /// <returns></returns>
         public bool HasAccessToMultiMediaExtended()
         {
-            return CustormerFlagAccess(Flags.ID_MULTIMEDIA_EXTENDED_ACCESS_FLAG) || CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG)
+            return CustormerFlagAccess(Flags.ID_PAID_SOCIAL_ACCESS_FLAG) || CustormerFlagAccess(Flags.ID_PAID_SEARCH_ACCESS_FLAG)
                 || CustormerFlagAccess(Flags.ID_AUDIO_DIGITAL_ACCESS_FLAG);
         }
         /// <summary>

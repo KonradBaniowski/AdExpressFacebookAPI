@@ -132,33 +132,20 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
                         tmpNode.Checked = true;
                         levelsSelected.Add(tmpNode);
-                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search)
-                            && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
-                            containsSearch = true;
+                    
                         if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
                             && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
-                            containsSocial = true;
-                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.paidSocial)
-                          && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.paidSocial).DatabaseId.ToString())
-                            containsPaidSocial = true;
-
+                            containsSocial = true;                       
                     }
+
                     if (levelsSelected.Count == 0)
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
-                    }
-                    else if (containsSearch && levelsSelected.Count > 1)
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
-                    }
+                    }                   
                     else if (containsSocial && levelsSelected.Count > 1)
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
-                    }
-                    else if (containsPaidSocial && levelsSelected.Count > 1)
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
-                    }
+                    }                   
                     else
                     {
 

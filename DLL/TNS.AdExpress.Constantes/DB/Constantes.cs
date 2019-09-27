@@ -1875,10 +1875,10 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifiant du flag accès aux codes SIRET
         /// </summary>
         public const Int64 ID_CODE_SIRET_ACCESS_FLAG = 368;
-        /// <summary>
-        /// Identifiant du flag accès au média PLURIMEDIA ELARGI
-        /// </summary>
-        public const Int64 ID_MULTIMEDIA_EXTENDED_ACCESS_FLAG = 378;
+        ///// <summary>
+        ///// Identifiant du flag accès au média PLURIMEDIA ELARGI
+        ///// </summary>
+        //public const Int64 ID_MULTIMEDIA_EXTENDED_ACCESS_FLAG = 378;
         /// <summary>
         /// Identifiant du flag accès au média PAID SEARCH
         /// </summary>

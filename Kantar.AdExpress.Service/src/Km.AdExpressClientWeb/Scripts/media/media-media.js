@@ -69,7 +69,7 @@ $(document).ready(function () {
     function selectMultiple(e) {
         $(this).toggleClass("tuile-medias tuile-medias-active")
         var id = $(this).attr("data-attr-id");
-        if (id == searchId) {
+       /* if (id == searchId) {
             $.each(idList, function (index, value) {
                 if (value != searchId) {
                     $('.tuile-medias-active[data-attr-id="' + value + '"]').toggleClass("tuile-medias tuile-medias-active");
@@ -79,7 +79,7 @@ $(document).ready(function () {
             idList = [];
             idList.push(id);
         }
-        else {
+        else { */
 
             var index = $.inArray(id, idList);
             if (index > -1) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
                 manageDoohSelection(id);
                 idList.push(id);
             }
-        }
+       /* } */
     }
 
     function preselection() {
