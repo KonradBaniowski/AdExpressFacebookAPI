@@ -95,6 +95,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Finland
                         case CstDBClassif.Vehicles.names.adnettrack:
                         case CstDBClassif.Vehicles.names.cinema:
                         case CstDBClassif.Vehicles.names.search:
+                        case CstDBClassif.Vehicles.names.paidSocial:
                             return (" 1 as period_count ");
                         case CstDBClassif.Vehicles.names.directMarketing:
                             return (" 7 as period_count ");

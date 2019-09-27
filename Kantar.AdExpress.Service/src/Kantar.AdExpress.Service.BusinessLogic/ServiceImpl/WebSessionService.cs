@@ -125,6 +125,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     System.Windows.Forms.TreeNode tmpNode;
                     bool containsSearch = false;
                     bool containsSocial = false;
+                    bool containsPaidSocial = false;
                     foreach (var item in request.MediaIds)
                     {
                         tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
@@ -137,6 +138,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
                             && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
                             containsSocial = true;
+                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.paidSocial)
+                          && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.paidSocial).DatabaseId.ToString())
+                            containsPaidSocial = true;
 
                     }
                     if (levelsSelected.Count == 0)
@@ -148,6 +152,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
                     }
                     else if (containsSocial && levelsSelected.Count > 1)
+                    {
+                        response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
+                    }
+                    else if (containsPaidSocial && levelsSelected.Count > 1)
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
                     }

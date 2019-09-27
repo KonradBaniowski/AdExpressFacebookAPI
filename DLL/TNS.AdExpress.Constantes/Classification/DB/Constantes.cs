@@ -253,6 +253,10 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// </summary>
             plurimediaExtended = 54,
             /// <summary>
+            /// Paid Social
+            /// </summary>
+            paidSocial = 55,
+            /// <summary>
             /// Web Promotion
             /// </summary>
             webPromotion =9999

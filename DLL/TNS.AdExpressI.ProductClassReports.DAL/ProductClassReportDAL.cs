@@ -415,6 +415,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 case CstDBClassif.Vehicles.names.audioDigital:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapAudioDigital, _session.IsSelectRetailerDisplay)
                         : WebApplicationParameters.GetDataTable(TableIds.recapAudioDigitalSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.paidSocial:
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapPaidSocialSegment, _session.IsSelectRetailerDisplay);
                 default:
                     throw new ProductClassReportsDALException(string.Format("Vehicle n° {0} is not allowed.", _vehicle.GetHashCode()));
             }
@@ -1341,6 +1344,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.audioDigital))
                         {
                             ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.audioDigital).DatabaseId);
+                        }
+                        if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.paidSocial))
+                        {
+                            ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.paidSocial).DatabaseId);
                         }
                         sql.AppendFormat("  and  {0}.id_vehicle not in ( {1}) "
                             , _dataTable.Prefix, string.Join(",", ids));

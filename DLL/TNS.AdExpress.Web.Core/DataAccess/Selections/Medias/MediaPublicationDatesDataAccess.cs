@@ -202,6 +202,9 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataAudioDigital, webSession.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataPaidSocial, webSession.IsSelectRetailerDisplay).Sql;
+                    break;
 
             }
 
@@ -239,6 +242,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.search:
                 case DBClassificationConstantes.Vehicles.names.social:
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
 

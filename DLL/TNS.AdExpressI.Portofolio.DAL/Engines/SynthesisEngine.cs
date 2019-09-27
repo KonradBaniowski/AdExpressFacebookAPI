@@ -821,6 +821,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataSearchAlert : TableIds.dataSearch, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.social:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataSocialAlert : TableIds.dataSocial, _webSession.IsSelectRetailerDisplay).Label;
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataPaidSocialAlert : TableIds.dataPaidSocial, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.audioDigital:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataAudioDigitalAlert : TableIds.dataAudioDigital, _webSession.IsSelectRetailerDisplay).Label;
                 default:

@@ -65,6 +65,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL.France
                 long id = VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.search).DatabaseId;
                 sql.AppendFormat(" and  {0}.id_vehicle not in ({1}) ", _dataTable.Prefix, id);
             }
+            if (VehiclesInformation.Contains(AdExpress.Constantes.Classification.DB.Vehicles.names.paidSocial)
+               && !_session.CustomerLogin.CustormerFlagAccess(Flags.ID_PAID_SOCIAL_ACCESS_FLAG))
+            {
+                long id = VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.paidSocial).DatabaseId;
+                sql.AppendFormat(" and  {0}.id_vehicle not in ({1}) ", _dataTable.Prefix, id);
+            }
         }
 
 

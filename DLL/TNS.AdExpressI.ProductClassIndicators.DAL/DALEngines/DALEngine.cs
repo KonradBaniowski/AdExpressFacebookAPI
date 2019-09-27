@@ -253,7 +253,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 case CstDBClassif.Vehicles.names.search:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapSearch, _session.IsSelectRetailerDisplay)
                         : WebApplicationParameters.GetDataTable(TableIds.recapSearchSegment, _session.IsSelectRetailerDisplay);
-
+                case CstDBClassif.Vehicles.names.paidSocial:
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.social:
                     return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapSocial, _session.IsSelectRetailerDisplay)
                         : WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, _session.IsSelectRetailerDisplay);

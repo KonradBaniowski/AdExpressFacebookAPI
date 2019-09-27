@@ -19,7 +19,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
         </ModuleAllowedMediaUniverse>-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11,15,18,20,22,23"/> 
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11,15,18,20,22,23,24"/> 
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -436,11 +436,11 @@
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.France.dll" class="TNS.AdExpressI.LostWon.DAL.France.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">
-        </ModuleAllowedMediaUniverse>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="2,7,9,20,3,8,6,11,1,15,5,10,18,21"/>
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">
         </ModuleAllowedMediaUniverse>-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="2,7,9,20,3,8,6,11,1,15,5,10,18,21,24"/>
+        </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
@@ -797,11 +797,11 @@
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.France.dll" class="TNS.AdExpressI.Portofolio.DAL.France.PortofolioDAL"/>
         <ProductRights branches="product|advertiser|brand"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">     
-        </ModuleAllowedMediaUniverse>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="18,1,2,6,11,3,20,5,8,9,10,15,7,21"/>
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">     
         </ModuleAllowedMediaUniverse>-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="18,1,2,6,11,3,20,5,8,9,10,15,7,21,24"/>
+        </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
@@ -975,7 +975,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">      
         </ModuleAllowedMediaUniverse>-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleCategories list="11,12,13,14,17,18,19,21,22,23,24,25,27,28,31,33,34,35,37,38,39,41,46,51,52,61,68,69,70,76,81,82,83,84,90,91,171,191,221,241,301,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,341,404"/>
+          <ModuleCategories list="11,12,13,14,17,18,19,21,22,23,24,25,27,28,31,33,34,35,37,38,39,41,46,51,52,61,68,69,70,76,81,82,83,84,90,91,171,191,221,241,301,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,341,404,408"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>          

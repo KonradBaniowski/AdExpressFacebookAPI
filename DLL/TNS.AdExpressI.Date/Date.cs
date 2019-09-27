@@ -641,6 +641,7 @@ namespace TNS.AdExpressI.Date {
                 case Vehicles.names.search:
                 case Vehicles.names.social:
                 case Vehicles.names.audioDigital:
+                case Vehicles.names.paidSocial:
                     lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
                     startYear--;
                     if (lastDate.Length == 0) lastDate = startYear + "1231";
