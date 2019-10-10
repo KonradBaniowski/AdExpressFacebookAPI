@@ -27,6 +27,7 @@ namespace Kantar.AdExpress.Bootstrapper
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 ExpireTimeSpan = TimeSpan.FromHours(8),
+                CookieSecure = CookieSecureOption.Always,
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
