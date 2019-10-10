@@ -109,7 +109,7 @@
             var d = toDate(expDate);
             var expires = "expires=" + d.toUTCString();
             console.log("expires = ", expires);
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            document.cookie = name + "=" + value + ";" + expires + ";path=/" + "; secure";
             return getCookie(name);
         };
 
