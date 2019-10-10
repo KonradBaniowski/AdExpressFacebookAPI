@@ -89,11 +89,13 @@ namespace Km.AdExpressClientWeb.Controllers
             HttpCookie sortKeyCookie = System.Web.HttpContext.Current.Request.Cookies["sortKey"] ?? new HttpCookie("sortKey");
             sortKeyCookie.Value = session.SortKey;
             sortKeyCookie.Expires = DateTime.Now.AddDays(1);
+            sortKeyCookie.Secure = true;
             System.Web.HttpContext.Current.Response.Cookies.Add(sortKeyCookie);
 
             HttpCookie sortOrderCookie = System.Web.HttpContext.Current.Request.Cookies["sortOrder"] ?? new HttpCookie("sortOrder");
             sortOrderCookie.Value = session.Sorting.GetHashCode().ToString();
             sortOrderCookie.Expires = DateTime.Now.AddDays(1);
+            sortOrderCookie.Secure = true;
             System.Web.HttpContext.Current.Response.Cookies.Add(sortOrderCookie);
 
             if (WebApplicationParameters.EnableGdpr)
@@ -161,6 +163,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         cookieControlPrefs.Name = cookieName;
                         cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                         cookieControlPrefs.Expires = expDateCookie;
+                        cookieControlPrefs.Secure = true;
                         Response.Cookies.Add(cookieControlPrefs);
                         var cookieTmp = Response.Cookies["cookieControlPrefs"];
                         if (cookieTmp != null)
@@ -196,6 +199,7 @@ namespace Km.AdExpressClientWeb.Controllers
                         cookies.expDate = expDate.ToString("yyyy-MM-dd-HH-mm-ss");
                         cookieControlPrefs.Expires = expDate;
                         cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
+                        cookieControlPrefs.Secure = true;
                         Response.Cookies.Add(cookieControlPrefs);
                     }
                 }

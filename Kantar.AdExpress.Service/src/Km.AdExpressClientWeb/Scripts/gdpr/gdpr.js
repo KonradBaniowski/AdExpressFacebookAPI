@@ -10,7 +10,7 @@
             var creationDate = JSON.parse(cookieValue).creationDate;
 
             if (toDate(policyUpdateDate) > toDate(creationDate)) {
-                document.cookie = "" + element + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "" + element + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" + "; secure";
             }
         }
     });

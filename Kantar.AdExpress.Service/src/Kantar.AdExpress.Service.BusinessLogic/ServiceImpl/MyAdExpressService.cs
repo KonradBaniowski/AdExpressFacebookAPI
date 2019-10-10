@@ -414,11 +414,13 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 HttpCookie sortKeyCookie = HttpContext.Current.Request.Cookies["sortKey"] ?? new HttpCookie("sortKey");
                 sortKeyCookie.Value = webSession.SortKey;
                 sortKeyCookie.Expires = DateTime.Now.AddDays(1);
+                sortKeyCookie.Secure = true;
                 HttpContext.Current.Response.Cookies.Add(sortKeyCookie);
 
                 HttpCookie sortOrderCookie = HttpContext.Current.Request.Cookies["sortOrder"] ?? new HttpCookie("sortOrder");
                 sortOrderCookie.Value = webSession.Sorting.GetHashCode().ToString();
                 sortOrderCookie.Expires = DateTime.Now.AddDays(1);
+                sortOrderCookie.Secure = true;
                 HttpContext.Current.Response.Cookies.Add(sortOrderCookie);
             }
             catch (System.Exception ex)
