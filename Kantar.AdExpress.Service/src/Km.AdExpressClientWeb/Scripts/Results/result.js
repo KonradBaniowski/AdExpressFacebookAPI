@@ -194,7 +194,7 @@ $(document).on('click', '#btnExport', function (event) {
     if (remember) {
         var date = new Date();
         date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));   // add 1 day
-        document.cookie = "mail=" + email + "; expires=" + date.toGMTString();
+        document.cookie = "mail=" + email + "; expires=" + date.toGMTString() + "; secure";
         //console.log(document.cookie);
     }
     var type = $('#ExportType').val();

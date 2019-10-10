@@ -330,6 +330,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 cookieControlPrefs.Name = cookieName;
                                 cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                                 cookieControlPrefs.Expires = expDateCookie;
+                                cookieControlPrefs.Secure = true;
                                 Response.Cookies.Add(cookieControlPrefs);
                                 var cookieTmp = Response.Cookies["cookieControlPrefs"];
                                 if (cookieTmp != null)
@@ -364,6 +365,7 @@ namespace Km.AdExpressClientWeb.Controllers
                                 cookies.creationDate = expDate.AddDays(-395).ToString("yyyy-MM-dd-HH-mm-ss");
                                 cookies.expDate = expDate.ToString("yyyy-MM-dd-HH-mm-ss");
                                 cookieControlPrefs.Expires = expDate;
+                                cookieControlPrefs.Secure = true;
                                 cookieControlPrefs.Value = JsonConvert.SerializeObject(cookies);
                                 Response.Cookies.Add(cookieControlPrefs);
                             }
