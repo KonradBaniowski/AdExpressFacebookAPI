@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44361</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -291,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\gdpr.css" />
+    <Content Include="Content\img\201910 Bannière EXPERIENCES AdExpress.png" />
     <Content Include="Content\img\33\export_logo_km_old.png" />
     <Content Include="Content\img\33\Kantar_Media_BMPro_SW_RGB_old.png" />
     <Content Include="Content\img\33\logo_kantarmedia_old.png" />
