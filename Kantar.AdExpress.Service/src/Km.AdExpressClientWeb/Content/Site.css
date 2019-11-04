@@ -1356,6 +1356,13 @@ input {
     min-height: 125px;
 }
 
+.padder-v-media {
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: 125px;
+}
+
 .top {
     position: relative;
     top: 0;
