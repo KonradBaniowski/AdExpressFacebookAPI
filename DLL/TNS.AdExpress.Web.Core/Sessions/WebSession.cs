@@ -4765,37 +4765,38 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>Common Valid Format List</returns>
         public Dictionary<Int64, FilterItem> GetValidFormatList(Dictionary<Int64, VehicleInformation> vehicleInformationList)
         {
-           
-                var activeBannersFormatList = new Dictionary<Int64, FilterItem>();
-                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+
+            var activeBannersFormatList = new Dictionary<Int64, FilterItem>();
+            if (WebApplicationParameters.VehiclesFormatInformation.Use)
+            {
+                List<long> formatIdList = null;
+
+                if (vehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.adnettrack).DatabaseId)
+                    || vehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.evaliantMobile).DatabaseId))
+                    formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
+
+                List<Int64> vehicleIdList = new List<VehicleInformation>(vehicleInformationList.Values).ConvertAll(p => p.DatabaseId);
+                if (formatIdList == null || formatIdList.Count == 0)
                 {
-                    List<long> formatIdList = null;
-                    
-                    if(vehicleInformationList.ContainsKey(VehiclesInformation.Get(Vehicles.names.adnettrack).DatabaseId))
-                        formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
-                    
-                    List<Int64> vehicleIdList = new List<VehicleInformation>(vehicleInformationList.Values).ConvertAll(p => p.DatabaseId);
-                    if (formatIdList == null || formatIdList.Count == 0)
+                    activeBannersFormatList = VehiclesFormatList.GetList(vehicleIdList);
+                }
+                else
+                {
+                    foreach (var cFilterItem in VehiclesFormatList.GetList(vehicleIdList).Values)
                     {
-                        activeBannersFormatList = VehiclesFormatList.GetList(vehicleIdList);
-                    }
-                    else
-                    {
-                        foreach (var cFilterItem in VehiclesFormatList.GetList(vehicleIdList).Values)
-                        {
-                            activeBannersFormatList.Add(
+                        activeBannersFormatList.Add(
+                            cFilterItem.Id
+                            , new FilterItem(
                                 cFilterItem.Id
-                                , new FilterItem(
-                                    cFilterItem.Id
-                                    , cFilterItem.Label
-                                    , formatIdList.Contains(cFilterItem.Id)
-                                    )
-                                );
-                        }
+                                , cFilterItem.Label
+                                , formatIdList.Contains(cFilterItem.Id)
+                                )
+                            );
                     }
                 }
-                return activeBannersFormatList;
-           
+            }
+            return activeBannersFormatList;
+
         }
         /// <summary>
         /// Get Valid Format List

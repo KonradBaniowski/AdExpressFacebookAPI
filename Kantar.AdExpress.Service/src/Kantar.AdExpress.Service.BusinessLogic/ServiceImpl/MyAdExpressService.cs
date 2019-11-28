@@ -1308,6 +1308,25 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             if (!webSession.ComparativeStudy || !webSessionSave.Evolution)
                                 webSession.Evolution = false;
 
+                            #region Format Banners
+                            string selectedBannersFormatList = webSession.SelectedBannersFormatList;
+                            if (!string.IsNullOrEmpty(selectedBannersFormatList))
+                            {
+                                List<long> formatIdList = null;
+                                List<long> newFormatIdList = new List<long>();
+                                formatIdList = webSession.CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(webSession.GetVehiclesSelected()));
+                                foreach (var format in selectedBannersFormatList.Split(','))
+                                {
+                                    if (formatIdList.Contains(Convert.ToInt64(format)))
+                                    {
+                                        newFormatIdList.Add(Convert.ToInt64(format));
+                                    }
+                                }
+                                webSession.SelectedBannersFormatList = string.Join(",", newFormatIdList);
+                            }
+
+                            #endregion
+
                             webSession.Format = webSessionSave.Format;
                             webSession.NamedDay = webSessionSave.NamedDay;
                             webSession.TimeInterval = webSessionSave.TimeInterval;
