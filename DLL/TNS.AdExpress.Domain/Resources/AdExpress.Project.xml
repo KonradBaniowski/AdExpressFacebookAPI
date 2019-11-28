@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly>
   <name>AdExpress.Localization</name>
-  <compiler>C:\Windows\Microsoft.NET\Framework\v4.0.30319</compiler>
-  <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin</alinker>
+  <compiler>C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319</compiler>
+  <alinker>C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7.2 Tools</alinker>
   <projects>
     <project id="Global">
       <files>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ie.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
       </files>
     </project>
     <project id="Poland">
       <files>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-pln.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-pln.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
     <project id="Turkey">
       <files>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-tr.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.tr.xml</file>
-        <file>F:\Dev\Github\AdExpress (mvc5)\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-tr.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.tr.xml</file>
+        <file>D:\Dev\Github\AdExpress\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
       </files>
     </project>
   </projects>
   <outputs>
-    <dir>F:\Dev\Github\AdExpress (mvc5)\Libs</dir>
+    <dir>D:\Dev\Github\AdExpress\Libs</dir>
   </outputs>
 </assembly>

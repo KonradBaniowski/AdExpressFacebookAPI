@@ -387,6 +387,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 case CstDBClassif.Vehicles.names.newspaper:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.plurimediaExtended:
                 case CstDBClassif.Vehicles.names.plurimedia:            
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
                         : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
@@ -410,7 +411,13 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         : WebApplicationParameters.GetDataTable(TableIds.recapSearchSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.social:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapSocial, _session.IsSelectRetailerDisplay)
-                        : WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, _session.IsSelectRetailerDisplay);  
+                        : WebApplicationParameters.GetDataTable(TableIds.recapSocialSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.audioDigital:
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapAudioDigital, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapAudioDigitalSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.paidSocial:
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapPaidSocial, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapPaidSocialSegment, _session.IsSelectRetailerDisplay);
                 default:
                     throw new ProductClassReportsDALException(string.Format("Vehicle n° {0} is not allowed.", _vehicle.GetHashCode()));
             }
@@ -1156,6 +1163,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
             //on ne teste pas le vehicle si on est en pluri
             var plurimediaDbIds = new List<long> {VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimedia).DatabaseId};
+
+            if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.plurimediaExtended))
+            {
+                plurimediaDbIds.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.plurimediaExtended).DatabaseId);
+            }
             long? plurimediaWithoutMmsId = null;
                        
             if (vehicleIds.Any() && vehicleIds.All(p => !plurimediaDbIds.Contains(p)) )
@@ -1318,19 +1330,30 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         protected virtual  void ExcludeMediaTypes(List<long> plurimediaDbIds, List<long> vehicleIds,StringBuilder sql)
         {
-            if (vehicleIds.Any(plurimediaDbIds.Contains) && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
+            if (vehicleIds.Any(plurimediaDbIds.Contains) &&
+                VehiclesInformation.Contains(CstDBClassif.Vehicles.names.search))
             {
-                var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());               
+                var vehicleName = VehiclesInformation.DatabaseIdToEnum(vehicleIds.First());
 
                 //Filter Plurimedia Offline
                 switch (vehicleName)
                 {
-                    case CstDBClassif.Vehicles.names.plurimedia :
+                    case CstDBClassif.Vehicles.names.plurimedia:
+                        var ids = new List<Int64>();
+                        ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.search).DatabaseId);
+                        if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.audioDigital))
+                        {
+                            ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.audioDigital).DatabaseId);
+                        }
+                        if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.paidSocial))
+                        {
+                            ids.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.paidSocial).DatabaseId);
+                        }
                         sql.AppendFormat("  and  {0}.id_vehicle not in ( {1}) "
-              , _dataTable.Prefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.search).DatabaseId);
-                        break;                                   
+                            , _dataTable.Prefix, string.Join(",", ids));
+                        break;
                 }
-             
+
             }
         }
 
@@ -1358,6 +1381,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //!!!!!!!!!!!!!!!! Pas de gestion des droits de la nomenclature media dans les recap (src : G Facon le 27/09/2004)
 
 			sql.Append(" " + FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix));
+
+            FilterOnDigitalMediaTypes(sql);
         }
         #endregion
 
@@ -1522,7 +1547,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         #endregion
 
 
-       
+       protected virtual void FilterOnDigitalMediaTypes(StringBuilder sql){}
 
         #endregion
 

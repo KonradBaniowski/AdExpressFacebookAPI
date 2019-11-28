@@ -125,32 +125,27 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     System.Windows.Forms.TreeNode tmpNode;
                     bool containsSearch = false;
                     bool containsSocial = false;
+                    bool containsPaidSocial = false;
                     foreach (var item in request.MediaIds)
                     {
                         tmpNode = new System.Windows.Forms.TreeNode(item.ToString());
                         tmpNode.Tag = new LevelInformation(CstWebCustomer.Right.type.vehicleAccess, item, item.ToString());
                         tmpNode.Checked = true;
                         levelsSelected.Add(tmpNode);
-                        if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.search)
-                            && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.search).DatabaseId.ToString())
-                            containsSearch = true;
+                    
                         if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.social)
                             && item.ToString() == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.social).DatabaseId.ToString())
-                            containsSocial = true;
-
+                            containsSocial = true;                       
                     }
+
                     if (levelsSelected.Count == 0)
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(1052, _webSession.SiteLanguage);
-                    }
-                    else if (containsSearch && levelsSelected.Count > 1)
-                    {
-                        response.ErrorMessage = GestionWeb.GetWebWord(3011, _webSession.SiteLanguage);
-                    }
+                    }                   
                     else if (containsSocial && levelsSelected.Count > 1)
                     {
                         response.ErrorMessage = GestionWeb.GetWebWord(3030, _webSession.SiteLanguage);
-                    }
+                    }                   
                     else
                     {
 

@@ -239,27 +239,23 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Search
             /// </summary>
-            social = 35,
-            ///// <summary>
-            ///// Plurimédia without Mms
-            ///// </summary>
-            //PlurimediaWithoutMms = 51,           
-            ///// <summary>
-            ///// Plurimédia Online
-            /////  </summary>
-            //plurimediaOnline = 53,
-            ///// <summary>
-            ///// Plurimédia With Search
-            /////  </summary>
-            //plurimediaWithSearch = 54,
-            ///// <summary>
-            ///// Plurimédia Offline
-            /////  </summary>
-            //plurimediaOffline = 55,
+            social = 35,          
             /// <summary>
             /// DOOH
             /// </summary>
             dooh = 52,
+            /// <summary>
+            /// Audio Digital
+            /// </summary>
+            audioDigital = 53,
+            /// <summary>
+            /// pluri media extended
+            /// </summary>
+            plurimediaExtended = 54,
+            /// <summary>
+            /// Paid Social
+            /// </summary>
+            paidSocial = 55,
             /// <summary>
             /// Web Promotion
             /// </summary>

@@ -1320,7 +1320,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Spot File Name
             /// </summary>
-            SpotFileName = 264
+            SpotFileName = 264,
+            /// <summary>
+            /// ARPP PUB TV
+            /// </summary>
+            arppPubTv = 265
         }
 
         #endregion

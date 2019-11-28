@@ -640,7 +640,9 @@ namespace TNS.AdExpressI.Date {
                 case Vehicles.names.mms:
                 case Vehicles.names.search:
                 case Vehicles.names.social:
-					lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
+                case Vehicles.names.audioDigital:
+                case Vehicles.names.paidSocial:
+                    lastDate = MediaSelection.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
                     startYear--;
                     if (lastDate.Length == 0) lastDate = startYear + "1231";
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));

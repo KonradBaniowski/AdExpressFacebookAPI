@@ -47,4 +47,10 @@
   <flag id="365" description="Accès détail DOOH"/>
   <flag id="368" description="Accès AUX Codes SIRET"/>
   <flag id="373" description="Accès AUX LeFac"/>
+
+  <flag id="379" description="Accès PAID SEARCH"/>
+  <flag id="380" description="Accès AUDIO DIGITAL"/>
+  <flag id="381" description="Accès PAID SOCIAL"/>
+  
+  
 </flags>

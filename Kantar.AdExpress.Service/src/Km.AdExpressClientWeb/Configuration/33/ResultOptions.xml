@@ -19,6 +19,7 @@
   <bannersFormat use="true">
     <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners"               formatTableName="groupFormatBanners"/>
     <allowVehicle id="20" description="mms"     rightBannersType="None"                   dataTableName="groupFormatBanners"    formatTableName="groupFormatBanners" excludedFormats="0,4"/>
+    <allowVehicle id="15" description="Evaliant Mobile"     rightBannersType="FormatEvaliantInternet"                   dataTableName="banners_mobile"    formatTableName="groupFormatBanners" excludedFormats="0,4"/>
   </bannersFormat>
   <retailer use="false"/>
   <vpConfiguration>

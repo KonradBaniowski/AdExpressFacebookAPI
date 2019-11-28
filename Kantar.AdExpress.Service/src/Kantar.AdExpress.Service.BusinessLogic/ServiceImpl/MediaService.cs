@@ -23,6 +23,7 @@ using TNS.AdExpress.Web.Utilities.Exceptions;
 using System.Web;
 using System.Collections;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.DB;
 
 namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
 {
@@ -345,7 +346,10 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             var levels = GetVehicleLabel(ids, webSession, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle));
             VehicleInformation vehicleInfo = new VehicleInformation();
             if (vehiclesInfos.ContainsKey(VhCstes.plurimedia))
-                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);           
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimedia);
+            else
+                 if (vehiclesInfos.ContainsKey(VhCstes.plurimediaExtended))
+                vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaExtended);
             else
                 vehicleInfo = null;
             webSession.SelectionUniversMedia.Nodes.Clear();
@@ -484,6 +488,21 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                         webSession.SiteLanguage);
                     vehiclesList.Add(pluremedia);
                 }
+                //Plurimedia extended   
+                if (VehiclesInformation.Contains(VhCstes.plurimediaExtended) &&
+                    webSession.CustomerLogin.HasAccessToMultiMediaExtended())
+                {
+                    vehicleInfo = VehiclesInformation.Get(VhCstes.plurimediaExtended);
+                    pluremedia = new Core.Domain.Media();
+                    if (vehicleInfo != null)
+                    {
+                        pluremedia.Id = vehicleInfo.DatabaseId;
+                        pluremedia.MediaEnum = VhCstes.plurimediaExtended;
+                        pluremedia.Label = GestionWeb.GetWebWord(CstWeb.LanguageConstantes.PlurimediaExtended,
+                            webSession.SiteLanguage);
+                        vehiclesList.Add(pluremedia);
+                    }
+                }
             }
 
 
@@ -493,7 +512,9 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             foreach (var item in dtVehicle.AsEnumerable())
             {
                 int id = int.Parse(item.ItemArray[0].ToString());
-                if (VehiclesInformation.Contains(id))
+                if (VehiclesInformation.Contains(id) 
+                    && (!IsDigitalMedia(VehiclesInformation.DatabaseIdToEnum(id)) || webSession.CustomerLogin.HasAccessToDigitalMedia(VehiclesInformation.DatabaseIdToEnum(id)))
+                    )
                 {
                     Core.Domain.Media medium = new Core.Domain.Media();
                     medium.Id = id;
@@ -506,6 +527,24 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
             response.Media = vehiclesList;
             return response;
         }
+
+        private bool IsDigitalMedia(VhCstes vehicle)
+        {
+            switch (vehicle)
+            {
+
+                case VhCstes.search:                 
+                case VhCstes.audioDigital:
+                case VhCstes.paidSocial:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        
+
+       
 
 
 

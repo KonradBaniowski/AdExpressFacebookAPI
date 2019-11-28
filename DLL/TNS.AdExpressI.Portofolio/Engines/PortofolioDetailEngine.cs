@@ -291,6 +291,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case DBClassificationConstantes.Vehicles.names.mms:
                 case DBClassificationConstantes.Vehicles.names.search:
                 case DBClassificationConstantes.Vehicles.names.social:
+                case DBClassificationConstantes.Vehicles.names.paidSocial:
+                case DBClassificationConstantes.Vehicles.names.audioDigital:
 
                     foreach (UnitInformation currentUnit in GetValidUnitForResult()) {
                         headers.Root.Add(new Header(true, 

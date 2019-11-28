@@ -19,7 +19,7 @@
     <level id="16" name="Agence" webTextId="1891" dbId="id_advertising_agency" dbLabel="advertising_agency" dbTable="advertising_agency" dbTablePrefixe="adva" toTrack="true"/>
     <level id="17" name="Titre" webTextId="1976" dbId="id_title" dbLabel="title" dbTable="title" dbTablePrefixe="tt"/>
     <level id="18" name="Date" webTextId="895"  dbId="date_media_num" dbIdAlias="date_num" dbLabel="date_media_num" dbLabelAlias="date_media_num" dbTablePrefixe="wp"/>
-    <level id="19" name="Durée" webTextId="1933"  dbId="duration" dbIdAlias="id_duration" dbLabel="duration" dbLabelAlias="duration"/>
+    <level id="19" name="Durée" webTextId="1933"  dbId="duration" dbIdAlias="id_duration" dbLabel="duration" dbLabelAlias="duration" dbTablePrefixe="wp"/>
     <level id="20" name="Format" webTextId="1420"  dbId="id_format" dbLabel="format"   dbTable="format" dbTablePrefixe="fo" dbExternalJoin="true"/>
     <level id="21" name="Code écran" webTextId="1934"  dbId="id_commercial_break" dbIdAlias="commercial_break" dbLabel="id_commercial_break" dbLabelAlias="id_commercial_break"/>
     <level id="22" name="Format affiche" webTextId="1420"  dbId="type_board" dbIdAlias="id_type_board" dbLabel="type_board" dbLabelAlias="type_board"/>

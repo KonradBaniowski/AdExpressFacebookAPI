@@ -114,6 +114,43 @@ namespace TNS.AdExpress.Web.Core {
             return filterItems;
         }
 
+        /// <summary>
+        /// Method used to get the list of all banners format for all vehicles in vehicleIdList
+        /// </summary>
+        /// <param name="vehicleIdList">Vehicle identifier List</param>
+        /// <returns>The list of banners format</returns>
+        public static Dictionary<Int64, FilterItem> GetAllList(List<Int64> vehicleIdList)
+        {
+            var filterItems = new Dictionary<Int64, FilterItem>();
+            bool first = true;
+            foreach (var cVehicleId in vehicleIdList)
+            {
+                if (_list.ContainsKey(cVehicleId))
+                {
+                    if (first)
+                    {
+                        filterItems = GetList(cVehicleId);
+                        first = false;
+                    }
+                    else
+                    {
+                        var cFilterItems = GetList(cVehicleId);
+
+                        foreach (var cFilterItem in new List<FilterItem>(cFilterItems.Values))
+                        {
+                            if (!filterItems.ContainsKey(cFilterItem.Id))
+                                filterItems.Add(cFilterItem.Id, new FilterItem(
+                                    cFilterItem.Id
+                                    , cFilterItem.Label
+                                    , true
+                                ));
+                        }
+                    }
+                }
+            }
+            return filterItems;
+        }
+
         #endregion
 
 

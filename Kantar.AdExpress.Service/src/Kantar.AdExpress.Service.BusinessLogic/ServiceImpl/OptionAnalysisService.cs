@@ -52,7 +52,7 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                 };
                 #endregion
 
-                if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia)
+                if (vehicle.Id != DBConstantesClassification.Vehicles.names.plurimedia && vehicle.Id != DBConstantesClassification.Vehicles.names.plurimediaExtended)
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
                 else
                     _customerWebSession.PreformatedMediaDetail = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle;
@@ -149,6 +149,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                             case ClassificationCst.DB.Vehicles.names.mms:
                             case ClassificationCst.DB.Vehicles.names.search:
                             case ClassificationCst.DB.Vehicles.names.social:
+                            case ClassificationCst.DB.Vehicles.names.audioDigital:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaExtended:
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
                                 if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
                                     mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1142, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString() });
@@ -162,7 +164,8 @@ namespace Kantar.AdExpress.Service.BusinessLogic.ServiceImpl
                     {
                         switch (vehicleInfo.Id)
                         {
-                            case ClassificationCst.DB.Vehicles.names.plurimedia:                          
+                            case ClassificationCst.DB.Vehicles.names.plurimedia:
+                            case ClassificationCst.DB.Vehicles.names.plurimediaExtended:
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(1141, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString() });
                                 mediaDetail.LevelDetail.Items.Add(new SelectItem { Text = GestionWeb.GetWebWord(2652, _customerWebSession.SiteLanguage), Value = SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString() });                               
                                 break;

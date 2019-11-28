@@ -312,6 +312,7 @@ namespace TNS.AdExpress.Constantes.Web
         public const long CookieDiagnostic = 3270;
         public const long CookieDiagnosticDesc = 3271;
         public const long ContactPrivacyDesc = 3274;
+        public const long PlurimediaExtended = 3275;
         #endregion
     }
 }

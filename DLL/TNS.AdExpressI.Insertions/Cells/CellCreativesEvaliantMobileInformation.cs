@@ -76,6 +76,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         ///// Chemin de la page des plans médias AdNetTrack / Evaliant mobile
         ///// </summary>
         //private const string MEDIA_SCHEDULE_PATH = "/Private/Results/AdNetTrackMediaSchedule.aspx";
+        /// <summary>
+        /// HTML5 id
+        /// </summary>
+        private const string HTML5_ID = "HTML5";
         #endregion
 
         #region Properties
@@ -367,6 +371,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                         height);
                     output.Append("\n </OBJECT>");
                 }
+                else if (_format.ToUpper() == HTML5_ID)
+                {
+                    output.AppendFormat("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" ></iframe>", _visuals[0].Replace("\\", "/"), width, height);
+                }
                 else
                 {
                     // Other type of media
@@ -407,6 +415,10 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     // Flash banner
                     outputLink.AppendFormat("{0}", _visuals[0]);
+                }
+                else if (_format.ToUpper() == HTML5_ID)
+                {
+                    outputLink.AppendFormat("{0}", _visuals[0].Replace("\\", "/"));
                 }
                 else
                 {
@@ -538,7 +550,7 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region type
             //TODO : a modifier (cote js egalement)
-            if (_format == JPEG_ID)
+            if (_format == JPEG_ID || _format == HTML5_ID)
                 str.Append("[" + _format.ToUpper() + "]");
             else
                 str.Append("[]");
