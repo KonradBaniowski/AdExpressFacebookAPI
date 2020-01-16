@@ -409,6 +409,10 @@ namespace TNS.AdExpressI.Insertions.CreativeResult
                     IsEvaliantFileExists(out realFormatFound, out windowsFormatFound);
                     GetEvaliantCreativePathes();
                     break;
+                case CstClassificationVehicle.names.evaliantMobile:
+                   
+                    GetEvaliantCreativePathes();
+                    break;
                 default:
                     _webSession.Source.Close();
                     _popUp.Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}",
