@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 namespace TNS.AdExpressI.Insertions.Cells
 {
@@ -72,6 +73,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// Flash text
         /// </summary>
         private const string FLASH_TEXT = "FLASH";
+        /// <summary>
+        /// MP4 id
+        /// </summary>
+        private const string MP4_ID = "MP4";
         ///// <summary>
         ///// Chemin de la page des plans médias AdNetTrack / Evaliant mobile
         ///// </summary>
@@ -80,6 +85,12 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// HTML5 id
         /// </summary>
         private const string HTML5_ID = "HTML5";
+
+        /// <summary>
+        /// MP4 id
+        /// </summary>
+        private const string WEBM = "WEBM";
+        private bool _hasCreationDownloadRights = false;
         #endregion
 
         #region Properties
@@ -120,6 +131,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             this._universId = universId;
             this._zoomDate = zoomDate;
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+            {
+                //L'utilisateur a accès aux créations en téléchargement
+                _hasCreationDownloadRights = true;
+            }
         }
         /// <summary>
         /// Constructeur
@@ -130,6 +146,11 @@ namespace TNS.AdExpressI.Insertions.Cells
         {
             this._universId = universId;
             this._zoomDate = zoomDate;
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DOWNLOAD_ACCESS_FLAG))
+            {
+                //L'utilisateur a accès aux créations en téléchargement
+                _hasCreationDownloadRights = true;
+            }
         }
         #endregion
 
@@ -166,11 +187,11 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     _idVersion = Convert.ToInt64(row[g.DataBaseField]);
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerEvaliantMobileDimension)
+                if (g.Id == GenericColumnItemInformation.Columns.bannerEvaliantMobileDimension || g.Id == GenericColumnItemInformation.Columns.bannerInternetDimension)
                 {
                     _dimension = row[g.DataBaseField].ToString();
                 }
-                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat)
+                if (g.Id == GenericColumnItemInformation.Columns.bannerFormat || g.Id == GenericColumnItemInformation.Columns.bannerInternetFormat)
                 {
                     _format = row[g.DataBaseField].ToString();
                 }
@@ -371,6 +392,11 @@ namespace TNS.AdExpressI.Insertions.Cells
                         height);
                     output.Append("\n </OBJECT>");
                 }
+                else if ( _format.ToUpper() == MP4_ID || _format.ToUpper() == WEBM)
+                {
+                    string embededType = string.Empty; //"video/mp4";
+                    AppendVideoLink(output, embededType, _visuals[0]);
+                }
                 else if (_format.ToUpper() == HTML5_ID)
                 {
                     output.AppendFormat("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" ></iframe>", _visuals[0].Replace("\\", "/"), width, height);
@@ -416,6 +442,11 @@ namespace TNS.AdExpressI.Insertions.Cells
                     // Flash banner
                     outputLink.AppendFormat("{0}", _visuals[0]);
                 }
+                else if (_format.ToUpper() == MP4_ID || _format.ToUpper() == WEBM)
+                {
+                    string embededType = string.Empty; //"video/mp4";
+                    AppendVideoLink(outputLink, embededType, _visuals[0]);
+                }
                 else if (_format.ToUpper() == HTML5_ID)
                 {
                     outputLink.AppendFormat("{0}", _visuals[0].Replace("\\", "/"));
@@ -424,7 +455,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                 {
                     // Other type of media
                     outputImg.AppendFormat("{0}", _visuals[0]);
-                    outputLink.AppendFormat("{0}", _url);
+                    //outputLink.AppendFormat("{0}", _url);
+                    _format = "";
                 }
             }
             else
@@ -550,15 +582,20 @@ namespace TNS.AdExpressI.Insertions.Cells
 
             #region type
             //TODO : a modifier (cote js egalement)
-            if (_format == JPEG_ID || _format == HTML5_ID)
+            //if (_format == JPEG_ID || _format == HTML5_ID)
                 str.Append("[" + _format.ToUpper() + "]");
-            else
-                str.Append("[]");
+            //else
+            //    str.Append("[]");
             #endregion
 
             return str.ToString();
         }
         #endregion
+
+        private void AppendVideoLink(StringBuilder output, string embededType, string fileName)
+        {
+            output.AppendFormat("{0},{1}", fileName, _hasCreationDownloadRights);
+        }
 
     }
 
