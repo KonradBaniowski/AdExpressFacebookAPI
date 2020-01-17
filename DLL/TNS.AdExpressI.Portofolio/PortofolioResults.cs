@@ -35,6 +35,8 @@ using System.Linq;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Domain.Units;
+using System.Web;
+using System.Security.Cryptography;
 
 namespace TNS.AdExpressI.Portofolio
 {
@@ -592,12 +594,20 @@ namespace TNS.AdExpressI.Portofolio
                         //url += couvPath + ",";
                         if (mediaAntidated)
                         {
-                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                            string mediaId = Encrypt(alertParams.MediaId.ToString(), CryptKey);
+                            string dateCoverNum = Encrypt(dt.Rows[0]["date_media_num"].ToString(), CryptKey);
+                            string dateMediaNumEncrypted = Encrypt(dt.Rows[0]["date_media_num"].ToString(), CryptKey);
+                            string mediaName = Encrypt(alertParams.MediaName, CryptKey);
+                            lienCheminDeFer = "https://adrequest.kantarmedia.fr/PortofolioCreationMedia/" + mediaId + "/" + dateCoverNum + "/" + dateMediaNumEncrypted + "/" + mediaName;
                             couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_media_num"].ToString() + @"/coe001.jpg";
                         }
                         else
                         {
-                            lienCheminDeFer = "http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParams.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&nameMedia=" + alertParams.MediaName;
+                            string mediaId = Encrypt(alertParams.MediaId.ToString(), CryptKey);
+                            string dateCoverNum = Encrypt(dt.Rows[0]["date_cover_num"].ToString(), CryptKey);
+                            string dateMediaNumEncrypted = Encrypt(dt.Rows[0]["date_cover_num"].ToString(), CryptKey);
+                            string mediaName = Encrypt(alertParams.MediaName, CryptKey);
+                            lienCheminDeFer = "https://adrequest.kantarmedia.fr/PortofolioCreationMedia/" + mediaId + "/" + dateCoverNum + "/" + dateMediaNumEncrypted + "/" + mediaName;
                             couvPath = @"/ImagesPresse/" + alertParams.MediaId + @"/" + dt.Rows[0]["date_cover_num"].ToString() + @"/coe001.jpg";
                         }
 
@@ -1714,6 +1724,21 @@ namespace TNS.AdExpressI.Portofolio
 
         #endregion
 
+        public const string CryptKey = "8!b?#B$3";
+
+        private Byte[] IV = new byte[] { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
+        public  string Encrypt( string stringToEncrypt, String SEncryptionKey)
+        {
+            byte[] key = System.Text.Encoding.UTF8.GetBytes(SEncryptionKey);
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            byte[] inputByteArray = System.Text.Encoding.UTF8.GetBytes(stringToEncrypt);
+            MemoryStream ms = new MemoryStream();
+            CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(key, IV), CryptoStreamMode.Write);
+            cs.Write(inputByteArray, 0, inputByteArray.Length);
+            cs.FlushFinalBlock();
+            return HttpServerUtility.UrlTokenEncode(ms.ToArray());
+        }
 
     }
 }
